@@ -1,0 +1,37 @@
+
+java_binary(
+    name = "resolver",
+    main_class = "com.google.devtools.bazel.workspace.GenerateWorkspace",
+    visibility = ["//visibility:public"],
+    srcs = glob(["src/main/java/**/*.java"]),
+    runtime_deps = [
+        "//others/migration-tooling:migration_tools___org_codehaus_plexus__plexus_interpolation",
+        "//others/migration-tooling:migration_tools___org_codehaus_plexus__plexus_utils",
+    ],
+    deps = [
+        "//others/migration-tooling:migration_tools___com_google_guava__guava",
+        "//others/migration-tooling:migration_tools___com_google_code_findbugs__jsr305",
+        "//others/migration-tooling:migration_tools___org_apache_commons__commons_lang3",
+
+        "//others/migration-tooling:migration_tools___com_beust__jcommander",
+        
+        '//others/migration-tooling:migration_tools___org_apache_maven__maven_aether_provider',
+        '//others/migration-tooling:migration_tools___org_apache_maven__maven_model',
+        '//others/migration-tooling:migration_tools___org_apache_maven__maven_model_builder',
+        '//others/migration-tooling:migration_tools___org_apache_maven__maven_repository_metadata',
+        '//others/migration-tooling:migration_tools___org_apache_maven__maven_artifact',
+
+        "//others/migration-tooling:migration_tools___org_apache_httpcomponents__httpclient",
+        '//others/migration-tooling:migration_tools___org_apache_httpcomponents__httpcore',
+        
+        '//others/migration-tooling:migration_tools___org_eclipse_aether__aether_api',
+        '//others/migration-tooling:migration_tools___org_eclipse_aether__aether_spi',
+        '//others/migration-tooling:migration_tools___org_eclipse_aether__aether_connector_basic',
+        '//others/migration-tooling:migration_tools___org_eclipse_aether__aether_transport_http',
+        '//others/migration-tooling:migration_tools___org_eclipse_aether__aether_transport_classpath',
+        '//others/migration-tooling:migration_tools___org_eclipse_aether__aether_transport_wagon',
+        '//others/migration-tooling:migration_tools___org_eclipse_aether__aether_transport_file',
+        '//others/migration-tooling:migration_tools___org_eclipse_aether__aether_impl',
+        '//others/migration-tooling:migration_tools___org_eclipse_aether__aether_util',
+        ],
+)

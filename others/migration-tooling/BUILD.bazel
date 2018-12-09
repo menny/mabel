@@ -1,0 +1,34 @@
+# Taken from https://raw.githubusercontent.com/bazelbuild/migration-tooling/
+# Includes many changes
+load(":dependencies.bzl", "generate_migration_tools_transitive_dependency_rules")
+generate_migration_tools_transitive_dependency_rules()
+
+load("//rules/maven_deps:maven_deps_workspace_generator.bzl", "deps_workspace_generator_rule")
+
+deps_workspace_generator_rule(name = 'main_deps',
+    maven_deps = [
+        "com.google.guava:guava:20.0",
+        "com.beust:jcommander:1.72",
+        "org.eclipse.aether:aether-api:1.1.0",
+        "org.eclipse.aether:aether-spi:1.1.0",
+        "org.eclipse.aether:aether-impl:1.1.0",
+        "org.eclipse.aether:aether-util:1.1.0",
+        "org.eclipse.aether:aether-transport-http:1.1.0",
+        "org.eclipse.aether:aether-transport-classpath:1.1.0",
+        "org.eclipse.aether:aether-transport-wagon:1.1.0",
+        "org.eclipse.aether:aether-transport-file:1.1.0",
+        "org.eclipse.aether:aether-connector-basic:1.1.0",
+        "org.apache.maven:maven-aether-provider:3.2.3",
+        "org.apache.maven:maven-model:3.2.3",
+        "org.apache.maven:maven-model-builder:3.2.3",
+        "org.apache.maven:maven-repository-metadata:3.2.3",
+        "org.apache.maven:maven-artifact:3.5.0",
+        "org.codehaus.plexus:plexus-interpolation:1.24",
+        "org.codehaus.plexus:plexus-utils:3.0.24",
+        "org.apache.httpcomponents:httpclient:4.5.3",
+        "org.apache.commons:commons-lang3:jar:3.8.1",
+        "com.google.code.findbugs:jsr305:3.0.2",
+    ],
+    output_deps_file_path = 'others/migration-tooling/dependencies.bzl',
+    rule_prefix = 'migration_tools',
+    macro_prefix = 'migration_tools')
