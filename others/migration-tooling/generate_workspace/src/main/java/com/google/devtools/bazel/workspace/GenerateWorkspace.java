@@ -20,7 +20,6 @@ import com.google.common.base.Preconditions;
 import com.google.devtools.bazel.workspace.maven.DefaultModelResolver;
 import com.google.devtools.bazel.workspace.maven.Resolver;
 import com.google.devtools.bazel.workspace.maven.Rule;
-import com.google.devtools.bazel.workspace.output.AbstractWriter;
 import com.google.devtools.bazel.workspace.output.BzlWriter;
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
@@ -39,7 +38,7 @@ public class GenerateWorkspace {
         MethodHandles.lookup().lookupClass().getName());
 
     private final Resolver resolver;
-    private final AbstractWriter resultWriter;
+    private final BzlWriter resultWriter;
 
     public static void main(String[] args) {
         GenerateWorkspaceOptions options = new GenerateWorkspaceOptions();
