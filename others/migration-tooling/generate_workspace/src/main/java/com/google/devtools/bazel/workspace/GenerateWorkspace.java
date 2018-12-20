@@ -21,7 +21,6 @@ import com.google.devtools.bazel.workspace.maven.DefaultModelResolver;
 import com.google.devtools.bazel.workspace.maven.Resolver;
 import com.google.devtools.bazel.workspace.maven.Rule;
 import com.google.devtools.bazel.workspace.output.BzlWriter;
-import java.lang.invoke.MethodHandles;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +33,7 @@ import org.apache.maven.model.Repository;
  */
 public class GenerateWorkspace {
 
-    private final static Logger logger = Logger.getLogger(
-        MethodHandles.lookup().lookupClass().getName());
+    private final static Logger logger = Logger.getLogger("GenerateWorkspace");
 
     private final Resolver resolver;
     private final BzlWriter resultWriter;
@@ -66,7 +64,7 @@ public class GenerateWorkspace {
 
     private GenerateWorkspace(String[] args, List<String> blacklist, List<String> repositories, String rulePrefix, String macroPrefix) {
         this.resolver = new Resolver(new DefaultModelResolver(buildRepositories(repositories)), blacklist, rulePrefix + "___");
-        this.resultWriter = new BzlWriter(args, "", macroPrefix);
+        this.resultWriter = new BzlWriter(args, macroPrefix);
     }
 
     private static List<Repository> buildRepositories(List<String> repositories) {
@@ -128,7 +126,7 @@ public class GenerateWorkspace {
     }
 
     private void writeResults() {
-        resultWriter.write(resolver.getRules());
+        resultWriter.write(resolver.getRules(), "generate_workspace.bzl");
     }
 
     public static boolean isEmpty(CharSequence text) {

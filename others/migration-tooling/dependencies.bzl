@@ -235,6 +235,7 @@ def generate_migration_tools_transitive_dependency_rules():
     )
 
 
+
     native.java_import(
         name = "migration_tools___org_eclipse_aether__aether-transport-wagon__1_1_0",
         jars = ["@migration_tools___org_eclipse_aether__aether_transport_wagon//file"],
@@ -258,6 +259,7 @@ def generate_migration_tools_transitive_dependency_rules():
     )
 
 
+
     native.java_import(
         name = "migration_tools___org_eclipse_aether__aether-util__1_1_0",
         jars = ["@migration_tools___org_eclipse_aether__aether_util//file"],
@@ -275,6 +277,7 @@ def generate_migration_tools_transitive_dependency_rules():
     )
 
 
+
     native.java_import(
         name = "migration_tools___org_apache_maven__maven-model__3_2_3",
         jars = ["@migration_tools___org_apache_maven__maven_model//file"],
@@ -290,6 +293,7 @@ def generate_migration_tools_transitive_dependency_rules():
         actual = "migration_tools___org_apache_maven__maven-model__3_2_3",
         visibility = ["//visibility:public"],
     )
+
 
 
     native.java_import(
@@ -313,6 +317,7 @@ def generate_migration_tools_transitive_dependency_rules():
         actual = "migration_tools___org_apache_maven__maven-model-builder__3_2_3",
         visibility = ["//visibility:public"],
     )
+
 
 
     native.java_import(
@@ -340,6 +345,7 @@ def generate_migration_tools_transitive_dependency_rules():
     )
 
 
+
     native.java_import(
         name = "migration_tools___org_apache_maven__maven-repository-metadata__3_2_3",
         jars = ["@migration_tools___org_apache_maven__maven_repository_metadata//file"],
@@ -355,6 +361,7 @@ def generate_migration_tools_transitive_dependency_rules():
         actual = "migration_tools___org_apache_maven__maven-repository-metadata__3_2_3",
         visibility = ["//visibility:public"],
     )
+
 
 
     native.java_import(
@@ -390,6 +397,7 @@ def generate_migration_tools_transitive_dependency_rules():
     )
 
 
+
     native.java_import(
         name = "migration_tools___org_eclipse_aether__aether-api__1_1_0",
         jars = ["@migration_tools___org_eclipse_aether__aether_api//file"],
@@ -399,6 +407,7 @@ def generate_migration_tools_transitive_dependency_rules():
         actual = "migration_tools___org_eclipse_aether__aether-api__1_1_0",
         visibility = ["//visibility:public"],
     )
+
 
 
     native.java_import(
@@ -420,6 +429,7 @@ def generate_migration_tools_transitive_dependency_rules():
     )
 
 
+
     native.java_import(
         name = "migration_tools___org_apache_commons__commons-lang3__3_8_1",
         jars = ["@migration_tools___org_apache_commons__commons_lang3//file"],
@@ -429,6 +439,7 @@ def generate_migration_tools_transitive_dependency_rules():
         actual = "migration_tools___org_apache_commons__commons-lang3__3_8_1",
         visibility = ["//visibility:public"],
     )
+
 
 
     native.java_import(
@@ -442,6 +453,7 @@ def generate_migration_tools_transitive_dependency_rules():
     )
 
 
+
     native.java_import(
         name = "migration_tools___commons-logging__commons-logging__1_2",
         jars = ["@migration_tools___commons_logging__commons_logging//file"],
@@ -453,6 +465,7 @@ def generate_migration_tools_transitive_dependency_rules():
     )
 
 
+
     native.java_import(
         name = "migration_tools___org_codehaus_plexus__plexus-interpolation__1_24",
         jars = ["@migration_tools___org_codehaus_plexus__plexus_interpolation//file"],
@@ -462,6 +475,7 @@ def generate_migration_tools_transitive_dependency_rules():
         actual = "migration_tools___org_codehaus_plexus__plexus-interpolation__1_24",
         visibility = ["//visibility:public"],
     )
+
 
 
     native.java_import(
@@ -485,6 +499,7 @@ def generate_migration_tools_transitive_dependency_rules():
     )
 
 
+
     native.java_import(
         name = "migration_tools___org_slf4j__jcl-over-slf4j__1_6_2",
         jars = ["@migration_tools___org_slf4j__jcl_over_slf4j//file"],
@@ -500,6 +515,7 @@ def generate_migration_tools_transitive_dependency_rules():
         actual = "migration_tools___org_slf4j__jcl-over-slf4j__1_6_2",
         visibility = ["//visibility:public"],
     )
+
 
 
     native.java_import(
@@ -523,6 +539,7 @@ def generate_migration_tools_transitive_dependency_rules():
     )
 
 
+
     native.java_import(
         name = "migration_tools___com_google_code_findbugs__jsr305__3_0_2",
         jars = ["@migration_tools___com_google_code_findbugs__jsr305//file"],
@@ -532,6 +549,7 @@ def generate_migration_tools_transitive_dependency_rules():
         actual = "migration_tools___com_google_code_findbugs__jsr305__3_0_2",
         visibility = ["//visibility:public"],
     )
+
 
 
     native.java_import(
@@ -545,6 +563,7 @@ def generate_migration_tools_transitive_dependency_rules():
     )
 
 
+
     native.java_import(
         name = "migration_tools___org_codehaus_plexus__plexus-utils__3_0_24",
         jars = ["@migration_tools___org_codehaus_plexus__plexus_utils//file"],
@@ -556,6 +575,7 @@ def generate_migration_tools_transitive_dependency_rules():
     )
 
 
+
     native.java_import(
         name = "migration_tools___org_slf4j__slf4j-api__1_6_2",
         jars = ["@migration_tools___org_slf4j__slf4j_api//file"],
@@ -565,6 +585,7 @@ def generate_migration_tools_transitive_dependency_rules():
         actual = "migration_tools___org_slf4j__slf4j-api__1_6_2",
         visibility = ["//visibility:public"],
     )
+
 
 
     native.java_import(
@@ -584,6 +605,7 @@ def generate_migration_tools_transitive_dependency_rules():
     )
 
 
+
     native.java_import(
         name = "migration_tools___org_codehaus_plexus__plexus-component-annotations__1_5_5",
         jars = ["@migration_tools___org_codehaus_plexus__plexus_component_annotations//file"],
@@ -593,6 +615,7 @@ def generate_migration_tools_transitive_dependency_rules():
         actual = "migration_tools___org_codehaus_plexus__plexus-component-annotations__1_5_5",
         visibility = ["//visibility:public"],
     )
+
 
 
     native.java_import(
@@ -616,6 +639,7 @@ def generate_migration_tools_transitive_dependency_rules():
     )
 
 
+
     native.java_import(
         name = "migration_tools___org_eclipse_aether__aether-transport-file__1_1_0",
         jars = ["@migration_tools___org_eclipse_aether__aether_transport_file//file"],
@@ -637,6 +661,7 @@ def generate_migration_tools_transitive_dependency_rules():
     )
 
 
+
     native.java_import(
         name = "migration_tools___commons-codec__commons-codec__1_9",
         jars = ["@migration_tools___commons_codec__commons_codec//file"],
@@ -646,6 +671,7 @@ def generate_migration_tools_transitive_dependency_rules():
         actual = "migration_tools___commons-codec__commons-codec__1_9",
         visibility = ["//visibility:public"],
     )
+
 
 
     native.java_import(
@@ -663,6 +689,7 @@ def generate_migration_tools_transitive_dependency_rules():
         actual = "migration_tools___org_eclipse_aether__aether-spi__1_1_0",
         visibility = ["//visibility:public"],
     )
+
 
 
     native.java_import(
@@ -684,5 +711,6 @@ def generate_migration_tools_transitive_dependency_rules():
         actual = "migration_tools___org_apache_httpcomponents__httpclient__4_5_3",
         visibility = ["//visibility:public"],
     )
+
 
 
