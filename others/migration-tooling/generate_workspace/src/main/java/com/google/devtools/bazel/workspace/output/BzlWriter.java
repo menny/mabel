@@ -26,9 +26,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
+import java.util.Locale;
 import java.util.function.Function;
 import java.util.logging.Logger;
 import net.evendanan.bazel.mvn.RuleFormatter;
+import net.evendanan.timing.TaskTiming;
+import net.evendanan.timing.TimingData;
 
 /**
  * Writes WORKSPACE and BUILD file definitions to a .bzl file.
@@ -91,7 +94,23 @@ public class BzlWriter {
             outputStream.print(RULE_INDENT);
             outputStream.println("pass");
         } else {
+            final TaskTiming timer = new TaskTiming();
+            logger.info(String.format("Writing %d Bazel rules...", rules.size()));
+            timer.start();
+            timer.setTotalTasks(rules.size());
+
             for (Rule rule : rules) {
+                final TimingData data = timer.taskDone();
+                final String estimatedTimeLeft;
+                if (data.doneTasks >= 10) {
+                    estimatedTimeLeft = String.format(Locale.US, ", %s left", TaskTiming.humanReadableTime(data.estimatedTimeLeft));
+                } else {
+                    estimatedTimeLeft = "";
+                }
+                System.out.println(
+                    String.format(Locale.US, "** Writing rule %d out of %d (%.2f%%%s): %s...",
+                        data.doneTasks, data.totalTasks, 100 * data.ratioOfDone, estimatedTimeLeft,
+                        rule.mavenGeneratedName()));
                 outputStream.println(HTTP_FILE.formatRule(rule));
                 outputStream.println();
             }

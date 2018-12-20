@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.logging.Logger;
 import net.evendanan.bazel.mvn.RuleClassifiers;
+import net.evendanan.timing.TaskTiming;
+import net.evendanan.timing.TimingData;
 import org.apache.maven.model.Repository;
 
 /**
@@ -84,6 +86,7 @@ public class GenerateWorkspace {
     }
 
     private void generateFromArtifacts(List<String> artifacts) {
+        final TaskTiming timer = new TaskTiming();
         List<Rule> rules = new ArrayList<>();
         logger.info(String.format("Processing %s root artifacts...", artifacts.size()));
 
@@ -91,39 +94,23 @@ public class GenerateWorkspace {
             resolver.createRule(artifact).ifPresent(rules::add);
         }
 
-        final long startTime = System.currentTimeMillis();
+        timer.start();
+        timer.setTotalTasks(artifacts.size());
         for (int ruleIndex = 0; ruleIndex < rules.size(); ruleIndex++) {
             final Rule rule = rules.get(ruleIndex);
-            final float ratioOfDone = ruleIndex / (float) artifacts.size();
+            final TimingData timingData = timer.taskDone();
             final String estimatedTimeLeft;
-            if (ruleIndex >= 10) {
-                final long duration = System.currentTimeMillis() - startTime;
-                estimatedTimeLeft = String.format(", %s left", humanReadableTime((long) (duration / ratioOfDone) - duration));
+            if (ruleIndex >= 3) {
+                estimatedTimeLeft = String.format(Locale.US, ", %s left", TaskTiming.humanReadableTime(timingData.estimatedTimeLeft));
             } else {
                 estimatedTimeLeft = "";
             }
             System.out.println(
-                String.format(Locale.US, "** Processing rule %d out of %d (%.2f%%%s): %s...", (ruleIndex + 1), rules.size(), 100 * ratioOfDone, estimatedTimeLeft,
+                String.format(Locale.US, "** Processing rule %d out of %d (%.2f%%%s): %s...",
+                    timingData.doneTasks, timingData.totalTasks, 100 * timingData.ratioOfDone, estimatedTimeLeft,
                     rule.mavenGeneratedName()));
             resolver.resolveRuleArtifacts(rule);
         }
-    }
-
-    private static String humanReadableTime(long milliseconds) {
-        final long secondsInMilli = 1000;
-        final long minutesInMilli = secondsInMilli * 60;
-
-        String timeString = "";
-
-        long elapsedMinutes = milliseconds / minutesInMilli;
-        milliseconds = milliseconds % minutesInMilli;
-        if (elapsedMinutes > 0) {
-            timeString += elapsedMinutes + " minutes and ";
-        }
-        long elapsedSeconds = milliseconds / secondsInMilli;
-        timeString += elapsedSeconds + " seconds";
-
-        return timeString;
     }
 
     private void writeResults() {

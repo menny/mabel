@@ -1,6 +1,6 @@
 # The following dependencies were calculated from:
 #
-# generate_workspace --repository=https://maven.google.com/ --repository=https://jcenter.bintray.com/ --repository=https://repo1.maven.org/maven2/ --artifact=com.google.guava:guava:20.0 --artifact=com.beust:jcommander:1.72 --artifact=org.eclipse.aether:aether-api:1.1.0 --artifact=org.eclipse.aether:aether-spi:1.1.0 --artifact=org.eclipse.aether:aether-impl:1.1.0 --artifact=org.eclipse.aether:aether-util:1.1.0 --artifact=org.eclipse.aether:aether-transport-http:1.1.0 --artifact=org.eclipse.aether:aether-transport-classpath:1.1.0 --artifact=org.eclipse.aether:aether-transport-wagon:1.1.0 --artifact=org.eclipse.aether:aether-transport-file:1.1.0 --artifact=org.eclipse.aether:aether-connector-basic:1.1.0 --artifact=org.apache.maven:maven-aether-provider:3.2.3 --artifact=org.apache.maven:maven-model:3.2.3 --artifact=org.apache.maven:maven-model-builder:3.2.3 --artifact=org.apache.maven:maven-repository-metadata:3.2.3 --artifact=org.apache.maven:maven-artifact:3.5.0 --artifact=org.codehaus.plexus:plexus-interpolation:1.24 --artifact=org.codehaus.plexus:plexus-utils:3.0.24 --artifact=org.apache.httpcomponents:httpclient:4.5.3 --artifact=org.apache.commons:commons-lang3:jar:3.8.1 --artifact=com.google.code.findbugs:jsr305:3.0.2 --rule_prefix=migration_tools --macro_prefix=migration_tools
+# generate_workspace --repository=https://maven.google.com/ --repository=https://jcenter.bintray.com/ --repository=https://repo1.maven.org/maven2/ --artifact=com.google.guava:guava:20.0 --artifact=com.beust:jcommander:1.72 --artifact=org.eclipse.aether:aether-api:1.1.0 --artifact=org.eclipse.aether:aether-spi:1.1.0 --artifact=org.eclipse.aether:aether-impl:1.1.0 --artifact=org.eclipse.aether:aether-util:1.1.0 --artifact=org.eclipse.aether:aether-transport-http:1.1.0 --artifact=org.eclipse.aether:aether-transport-classpath:1.1.0 --artifact=org.eclipse.aether:aether-transport-wagon:1.1.0 --artifact=org.eclipse.aether:aether-transport-file:1.1.0 --artifact=org.eclipse.aether:aether-connector-basic:1.1.0 --artifact=org.apache.maven:maven-aether-provider:3.2.3 --artifact=org.apache.maven:maven-model:3.2.3 --artifact=org.apache.maven:maven-model-builder:3.2.3 --artifact=org.apache.maven:maven-repository-metadata:3.2.3 --artifact=org.apache.maven:maven-artifact:3.5.0 --artifact=org.codehaus.plexus:plexus-interpolation:1.24 --artifact=org.codehaus.plexus:plexus-utils:3.0.24 --artifact=org.apache.httpcomponents:httpclient:4.5.3 --artifact=org.apache.commons:commons-lang3:jar:3.8.1 --artifact=com.google.code.findbugs:jsr305:3.0.2 --artifact=junit:junit:4.12 --artifact=org.mockito:mockito-core:2.23.4 --rule_prefix=migration_tools --macro_prefix=migration_tools
 
 
 # Loading a drop-in replacement for native.http_file
@@ -32,6 +32,19 @@ def generate_migration_tools_workspace_rules():
         name = "migration_tools___org_eclipse_aether__aether_util",
         urls = ["https://jcenter.bintray.com/org/eclipse/aether/aether-util/1.1.0/aether-util-1.1.0.jar"],
         downloaded_file_path = "aether-util-1.1.0.jar",
+        )
+
+    http_file(
+        name = "migration_tools___org_mockito__mockito_core",
+        urls = ["https://jcenter.bintray.com/org/mockito/mockito-core/2.23.4/mockito-core-2.23.4.jar"],
+        downloaded_file_path = "mockito-core-2.23.4.jar",
+        )
+
+    # com.kohlschutter.junixsocket:junixsocket-native-common:jar:2.0.4
+    http_file(
+        name = "migration_tools___com_kohlschutter_junixsocket__junixsocket_common",
+        urls = ["https://jcenter.bintray.com/com/kohlschutter/junixsocket/junixsocket-common/2.0.4/junixsocket-common-2.0.4.jar"],
+        downloaded_file_path = "junixsocket-common-2.0.4.jar",
         )
 
     # org.apache.maven:maven-aether-provider:jar:3.2.3 got requested version
@@ -68,6 +81,13 @@ def generate_migration_tools_workspace_rules():
         downloaded_file_path = "maven-aether-provider-3.2.3.jar",
         )
 
+    # com.kohlschutter.junixsocket:junixsocket-native-common:jar:2.0.4
+    http_file(
+        name = "migration_tools___org_scijava__native_lib_loader",
+        urls = ["https://jcenter.bintray.com/org/scijava/native-lib-loader/2.0.2/native-lib-loader-2.0.2.jar"],
+        downloaded_file_path = "native-lib-loader-2.0.2.jar",
+        )
+
     # org.eclipse.aether:aether-transport-http:jar:1.1.0 got requested version
     # org.eclipse.aether:aether-spi:jar:1.1.0 got requested version
     # org.eclipse.aether:aether-transport-classpath:jar:1.1.0 got requested version
@@ -83,6 +103,13 @@ def generate_migration_tools_workspace_rules():
         downloaded_file_path = "aether-api-1.1.0.jar",
         )
 
+    # junit:junit:jar:4.12
+    http_file(
+        name = "migration_tools___org_hamcrest__hamcrest_core",
+        urls = ["https://jcenter.bintray.com/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"],
+        downloaded_file_path = "hamcrest-core-1.3.jar",
+        )
+
     http_file(
         name = "migration_tools___org_apache_maven__maven_artifact",
         urls = ["https://jcenter.bintray.com/org/apache/maven/maven-artifact/3.5.0/maven-artifact-3.5.0.jar"],
@@ -94,6 +121,13 @@ def generate_migration_tools_workspace_rules():
         name = "migration_tools___org_apache_commons__commons_lang3",
         urls = ["https://jcenter.bintray.com/org/apache/commons/commons-lang3/3.8.1/commons-lang3-3.8.1.jar"],
         downloaded_file_path = "commons-lang3-3.8.1.jar",
+        )
+
+    # log4j:log4j:bundle:1.2.17
+    http_file(
+        name = "migration_tools___org_apache_openejb__javaee_api",
+        urls = ["https://jcenter.bintray.com/org/apache/openejb/javaee-api/5.0-2/javaee-api-5.0-2.jar"],
+        downloaded_file_path = "javaee-api-5.0-2.jar",
         )
 
     http_file(
@@ -116,6 +150,14 @@ def generate_migration_tools_workspace_rules():
         downloaded_file_path = "plexus-interpolation-1.24.jar",
         )
 
+    # com.kohlschutter.junixsocket:junixsocket-common:jar:2.0.4
+    # com.kohlschutter.junixsocket:junixsocket-native-common:jar:2.0.4 got requested version
+    http_file(
+        name = "migration_tools___log4j__log4j",
+        urls = ["https://jcenter.bintray.com/log4j/log4j/1.2.17/log4j-1.2.17.jar"],
+        downloaded_file_path = "log4j-1.2.17.jar",
+        )
+
     http_file(
         name = "migration_tools___org_eclipse_aether__aether_connector_basic",
         urls = ["https://jcenter.bintray.com/org/eclipse/aether/aether-connector-basic/1.1.0/aether-connector-basic-1.1.0.jar"],
@@ -129,11 +171,25 @@ def generate_migration_tools_workspace_rules():
         downloaded_file_path = "jcl-over-slf4j-1.6.2.jar",
         )
 
+    # org.mockito:mockito-core:jar:2.23.4
+    http_file(
+        name = "migration_tools___net_bytebuddy__byte_buddy",
+        urls = ["https://jcenter.bintray.com/net/bytebuddy/byte-buddy/1.9.3/byte-buddy-1.9.3.jar"],
+        downloaded_file_path = "byte-buddy-1.9.3.jar",
+        )
+
     # org.apache.maven:maven-aether-provider:jar:3.2.3 wanted version 0.9.0.M2
     http_file(
         name = "migration_tools___org_eclipse_aether__aether_impl",
         urls = ["https://jcenter.bintray.com/org/eclipse/aether/aether-impl/1.1.0/aether-impl-1.1.0.jar"],
         downloaded_file_path = "aether-impl-1.1.0.jar",
+        )
+
+    # org.mockito:mockito-core:jar:2.23.4
+    http_file(
+        name = "migration_tools___org_objenesis__objenesis",
+        urls = ["https://jcenter.bintray.com/org/objenesis/objenesis/2.6/objenesis-2.6.jar"],
+        downloaded_file_path = "objenesis-2.6.jar",
         )
 
     http_file(
@@ -174,6 +230,21 @@ def generate_migration_tools_workspace_rules():
         downloaded_file_path = "wagon-provider-api-1.0.jar",
         )
 
+    # net.bytebuddy:byte-buddy-agent:jar:1.9.3 got requested version
+    # net.bytebuddy:byte-buddy:jar:1.9.3
+    http_file(
+        name = "migration_tools___com_google_code_findbugs__findbugs_annotations",
+        urls = ["https://jcenter.bintray.com/com/google/code/findbugs/findbugs-annotations/3.0.1/findbugs-annotations-3.0.1.jar"],
+        downloaded_file_path = "findbugs-annotations-3.0.1.jar",
+        )
+
+    # org.mockito:mockito-core:jar:2.23.4
+    http_file(
+        name = "migration_tools___net_bytebuddy__byte_buddy_agent",
+        urls = ["https://jcenter.bintray.com/net/bytebuddy/byte-buddy-agent/1.9.3/byte-buddy-agent-1.9.3.jar"],
+        downloaded_file_path = "byte-buddy-agent-1.9.3.jar",
+        )
+
     # org.apache.maven:maven-model-builder:jar:3.2.3 got requested version
     # org.apache.maven:maven-aether-provider:jar:3.2.3
     http_file(
@@ -194,11 +265,24 @@ def generate_migration_tools_workspace_rules():
         downloaded_file_path = "aether-transport-file-1.1.0.jar",
         )
 
+    http_file(
+        name = "migration_tools___junit__junit",
+        urls = ["https://jcenter.bintray.com/junit/junit/4.12/junit-4.12.jar"],
+        downloaded_file_path = "junit-4.12.jar",
+        )
+
     # org.apache.httpcomponents:httpclient:jar:4.5.3
     http_file(
         name = "migration_tools___commons_codec__commons_codec",
         urls = ["https://jcenter.bintray.com/commons-codec/commons-codec/1.9/commons-codec-1.9.jar"],
         downloaded_file_path = "commons-codec-1.9.jar",
+        )
+
+    # net.bytebuddy:byte-buddy-agent:jar:1.9.3
+    http_file(
+        name = "migration_tools___com_kohlschutter_junixsocket__junixsocket_native_common",
+        urls = ["https://jcenter.bintray.com/com/kohlschutter/junixsocket/junixsocket-native-common/2.0.4/junixsocket-native-common-2.0.4.jar"],
+        downloaded_file_path = "junixsocket-native-common-2.0.4.jar",
         )
 
     # org.eclipse.aether:aether-transport-http:jar:1.1.0 got requested version
@@ -273,6 +357,46 @@ def generate_migration_tools_transitive_dependency_rules():
     native.alias(
         name = "migration_tools___org_eclipse_aether__aether_util",
         actual = "migration_tools___org_eclipse_aether__aether-util__1_1_0",
+        visibility = ["//visibility:public"],
+    )
+
+
+
+    native.java_import(
+        name = "migration_tools___org_mockito__mockito-core__2_23_4",
+        jars = ["@migration_tools___org_mockito__mockito_core//file"],
+        deps = [
+            ":migration_tools___net_bytebuddy__byte_buddy_agent",
+            ":migration_tools___net_bytebuddy__byte_buddy",
+            ":migration_tools___org_objenesis__objenesis",
+        ],
+        exports = [
+            ":migration_tools___net_bytebuddy__byte_buddy_agent",
+            ":migration_tools___net_bytebuddy__byte_buddy",
+            ":migration_tools___org_objenesis__objenesis",
+        ],
+    )
+    native.alias(
+        name = "migration_tools___org_mockito__mockito_core",
+        actual = "migration_tools___org_mockito__mockito-core__2_23_4",
+        visibility = ["//visibility:public"],
+    )
+
+
+
+    native.java_import(
+        name = "migration_tools___com_kohlschutter_junixsocket__junixsocket-common__2_0_4",
+        jars = ["@migration_tools___com_kohlschutter_junixsocket__junixsocket_common//file"],
+        deps = [
+            ":migration_tools___log4j__log4j",
+        ],
+        exports = [
+            ":migration_tools___log4j__log4j",
+        ],
+    )
+    native.alias(
+        name = "migration_tools___com_kohlschutter_junixsocket__junixsocket_common",
+        actual = "migration_tools___com_kohlschutter_junixsocket__junixsocket-common__2_0_4",
         visibility = ["//visibility:public"],
     )
 
@@ -399,12 +523,36 @@ def generate_migration_tools_transitive_dependency_rules():
 
 
     native.java_import(
+        name = "migration_tools___org_scijava__native-lib-loader__2_0_2",
+        jars = ["@migration_tools___org_scijava__native_lib_loader//file"],
+    )
+    native.alias(
+        name = "migration_tools___org_scijava__native_lib_loader",
+        actual = "migration_tools___org_scijava__native-lib-loader__2_0_2",
+        visibility = ["//visibility:public"],
+    )
+
+
+
+    native.java_import(
         name = "migration_tools___org_eclipse_aether__aether-api__1_1_0",
         jars = ["@migration_tools___org_eclipse_aether__aether_api//file"],
     )
     native.alias(
         name = "migration_tools___org_eclipse_aether__aether_api",
         actual = "migration_tools___org_eclipse_aether__aether-api__1_1_0",
+        visibility = ["//visibility:public"],
+    )
+
+
+
+    native.java_import(
+        name = "migration_tools___org_hamcrest__hamcrest-core__1_3",
+        jars = ["@migration_tools___org_hamcrest__hamcrest_core//file"],
+    )
+    native.alias(
+        name = "migration_tools___org_hamcrest__hamcrest_core",
+        actual = "migration_tools___org_hamcrest__hamcrest-core__1_3",
         visibility = ["//visibility:public"],
     )
 
@@ -443,6 +591,18 @@ def generate_migration_tools_transitive_dependency_rules():
 
 
     native.java_import(
+        name = "migration_tools___org_apache_openejb__javaee-api__5_0-2",
+        jars = ["@migration_tools___org_apache_openejb__javaee_api//file"],
+    )
+    native.alias(
+        name = "migration_tools___org_apache_openejb__javaee_api",
+        actual = "migration_tools___org_apache_openejb__javaee-api__5_0-2",
+        visibility = ["//visibility:public"],
+    )
+
+
+
+    native.java_import(
         name = "migration_tools___com_beust__jcommander__1_72",
         jars = ["@migration_tools___com_beust__jcommander//file"],
     )
@@ -473,6 +633,21 @@ def generate_migration_tools_transitive_dependency_rules():
     native.alias(
         name = "migration_tools___org_codehaus_plexus__plexus_interpolation",
         actual = "migration_tools___org_codehaus_plexus__plexus-interpolation__1_24",
+        visibility = ["//visibility:public"],
+    )
+
+
+
+    native.java_import(
+        name = "migration_tools___log4j__log4j__1_2_17",
+        jars = ["@migration_tools___log4j__log4j//file"],
+        deps = [
+            ":migration_tools___org_apache_openejb__javaee_api",
+        ],
+    )
+    native.alias(
+        name = "migration_tools___log4j__log4j",
+        actual = "migration_tools___log4j__log4j__1_2_17",
         visibility = ["//visibility:public"],
     )
 
@@ -519,6 +694,21 @@ def generate_migration_tools_transitive_dependency_rules():
 
 
     native.java_import(
+        name = "migration_tools___net_bytebuddy__byte-buddy__1_9_3",
+        jars = ["@migration_tools___net_bytebuddy__byte_buddy//file"],
+        deps = [
+            ":migration_tools___com_google_code_findbugs__findbugs_annotations",
+        ],
+    )
+    native.alias(
+        name = "migration_tools___net_bytebuddy__byte_buddy",
+        actual = "migration_tools___net_bytebuddy__byte-buddy__1_9_3",
+        visibility = ["//visibility:public"],
+    )
+
+
+
+    native.java_import(
         name = "migration_tools___org_eclipse_aether__aether-impl__1_1_0",
         jars = ["@migration_tools___org_eclipse_aether__aether_impl//file"],
         deps = [
@@ -535,6 +725,18 @@ def generate_migration_tools_transitive_dependency_rules():
     native.alias(
         name = "migration_tools___org_eclipse_aether__aether_impl",
         actual = "migration_tools___org_eclipse_aether__aether-impl__1_1_0",
+        visibility = ["//visibility:public"],
+    )
+
+
+
+    native.java_import(
+        name = "migration_tools___org_objenesis__objenesis__2_6",
+        jars = ["@migration_tools___org_objenesis__objenesis//file"],
+    )
+    native.alias(
+        name = "migration_tools___org_objenesis__objenesis",
+        actual = "migration_tools___org_objenesis__objenesis__2_6",
         visibility = ["//visibility:public"],
     )
 
@@ -607,6 +809,34 @@ def generate_migration_tools_transitive_dependency_rules():
 
 
     native.java_import(
+        name = "migration_tools___com_google_code_findbugs__findbugs-annotations__3_0_1",
+        jars = ["@migration_tools___com_google_code_findbugs__findbugs_annotations//file"],
+    )
+    native.alias(
+        name = "migration_tools___com_google_code_findbugs__findbugs_annotations",
+        actual = "migration_tools___com_google_code_findbugs__findbugs-annotations__3_0_1",
+        visibility = ["//visibility:public"],
+    )
+
+
+
+    native.java_import(
+        name = "migration_tools___net_bytebuddy__byte-buddy-agent__1_9_3",
+        jars = ["@migration_tools___net_bytebuddy__byte_buddy_agent//file"],
+        deps = [
+            ":migration_tools___com_kohlschutter_junixsocket__junixsocket_native_common",
+            ":migration_tools___com_google_code_findbugs__findbugs_annotations",
+        ],
+    )
+    native.alias(
+        name = "migration_tools___net_bytebuddy__byte_buddy_agent",
+        actual = "migration_tools___net_bytebuddy__byte-buddy-agent__1_9_3",
+        visibility = ["//visibility:public"],
+    )
+
+
+
+    native.java_import(
         name = "migration_tools___org_codehaus_plexus__plexus-component-annotations__1_5_5",
         jars = ["@migration_tools___org_codehaus_plexus__plexus_component_annotations//file"],
     )
@@ -663,12 +893,52 @@ def generate_migration_tools_transitive_dependency_rules():
 
 
     native.java_import(
+        name = "migration_tools___junit__junit__4_12",
+        jars = ["@migration_tools___junit__junit//file"],
+        deps = [
+            ":migration_tools___org_hamcrest__hamcrest_core",
+        ],
+        exports = [
+            ":migration_tools___org_hamcrest__hamcrest_core",
+        ],
+    )
+    native.alias(
+        name = "migration_tools___junit__junit",
+        actual = "migration_tools___junit__junit__4_12",
+        visibility = ["//visibility:public"],
+    )
+
+
+
+    native.java_import(
         name = "migration_tools___commons-codec__commons-codec__1_9",
         jars = ["@migration_tools___commons_codec__commons_codec//file"],
     )
     native.alias(
         name = "migration_tools___commons_codec__commons_codec",
         actual = "migration_tools___commons-codec__commons-codec__1_9",
+        visibility = ["//visibility:public"],
+    )
+
+
+
+    native.java_import(
+        name = "migration_tools___com_kohlschutter_junixsocket__junixsocket-native-common__2_0_4",
+        jars = ["@migration_tools___com_kohlschutter_junixsocket__junixsocket_native_common//file"],
+        deps = [
+            ":migration_tools___com_kohlschutter_junixsocket__junixsocket_common",
+            ":migration_tools___org_scijava__native_lib_loader",
+            ":migration_tools___log4j__log4j",
+        ],
+        exports = [
+            ":migration_tools___com_kohlschutter_junixsocket__junixsocket_common",
+            ":migration_tools___org_scijava__native_lib_loader",
+            ":migration_tools___log4j__log4j",
+        ],
+    )
+    native.alias(
+        name = "migration_tools___com_kohlschutter_junixsocket__junixsocket_native_common",
+        actual = "migration_tools___com_kohlschutter_junixsocket__junixsocket-native-common__2_0_4",
         visibility = ["//visibility:public"],
     )
 

@@ -53,6 +53,18 @@ java_library(
     deps = [
         ":resolver_lib",
         ":classifier_lib",
+        ":timing_lib",
+        "//others/migration-tooling:migration_tools___com_google_guava__guava",
+        "//others/migration-tooling:migration_tools___com_google_code_findbugs__jsr305",
+        "//others/migration-tooling:migration_tools___org_apache_commons__commons_lang3",
+        ],
+)
+
+java_library(
+    name = "timing_lib",
+    srcs = glob(["src/main/java/net/evendanan/timing/*.java"]),
+    runtime_deps = [],
+    deps = [
         "//others/migration-tooling:migration_tools___com_google_guava__guava",
         "//others/migration-tooling:migration_tools___com_google_code_findbugs__jsr305",
         "//others/migration-tooling:migration_tools___org_apache_commons__commons_lang3",
@@ -68,6 +80,7 @@ java_binary(
         ":resolver_lib",
         ":classifier_lib",
         ":writer_lib",
+        ":timing_lib",
         "//others/migration-tooling:migration_tools___com_google_guava__guava",
         "//others/migration-tooling:migration_tools___com_google_code_findbugs__jsr305",
         "//others/migration-tooling:migration_tools___org_apache_commons__commons_lang3",
@@ -76,4 +89,33 @@ java_binary(
 
         '//others/migration-tooling:migration_tools___org_apache_maven__maven_model',
         ],
+)
+
+
+java_test(name = "timing_data",
+  deps=[":timing_lib", "//others/migration-tooling:migration_tools___junit__junit"],
+  srcs=["src/main/javatest/net/evendanan/timing/TimingDataTest.java"],
+  size="small",
+  test_class = "net.evendanan.timing.TimingDataTest",
+)
+
+java_test(name = "timing_timer",
+  deps=[":timing_lib", "//others/migration-tooling:migration_tools___junit__junit"],
+  srcs=[
+      "src/main/javatest/net/evendanan/timing/TaskTimingTest.java",
+      "src/main/javatest/net/evendanan/timing/TimingDataTest.java"
+        ],
+  size="small",
+  test_class = "net.evendanan.timing.TaskTimingTest",
+)
+
+java_test(name = "classifiers",
+  deps=[
+      ":classifier_lib",
+      "//others/migration-tooling:migration_tools___junit__junit",
+       "//others/migration-tooling:migration_tools___org_mockito__mockito_core"
+       ],
+  srcs=["src/main/javatest/net/evendanan/bazel/mvn/RuleClassifiersTest.java"],
+  size="small",
+  test_class = "net.evendanan.bazel.mvn.RuleClassifiersTest",
 )
