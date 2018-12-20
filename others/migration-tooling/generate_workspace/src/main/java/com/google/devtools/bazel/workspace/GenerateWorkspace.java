@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Logger;
+import net.evendanan.bazel.mvn.RuleClassifiers;
 import org.apache.maven.model.Repository;
 
 /**
@@ -126,11 +127,7 @@ public class GenerateWorkspace {
     }
 
     private void writeResults() {
-        resultWriter.write(resolver.getRules(), "generate_workspace.bzl");
-    }
-
-    public static boolean isEmpty(CharSequence text) {
-        return text == null || text.length() == 0;
+        resultWriter.write(resolver.getRules(), RuleClassifiers::ruleClassifier, "generate_workspace.bzl");
     }
 
 }

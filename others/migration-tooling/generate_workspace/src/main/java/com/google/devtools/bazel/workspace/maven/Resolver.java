@@ -19,7 +19,6 @@ import static com.google.devtools.bazel.workspace.maven.VersionResolver.defaultR
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.google.devtools.bazel.workspace.GenerateWorkspace;
 import java.lang.invoke.MethodHandles;
 import java.util.Collection;
 import java.util.HashSet;
@@ -36,7 +35,6 @@ import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Exclusion;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Repository;
-import org.apache.maven.model.building.ModelSource;
 import org.apache.maven.model.resolution.UnresolvableModelException;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.util.artifact.JavaScopes;
@@ -169,7 +167,7 @@ public class Resolver {
         Set<String> topLevelScopes,
         Set<String> exclusions,
         @Nullable Rule parent) {
-        String scope = GenerateWorkspace.isEmpty(dependency.getScope()) ? JavaScopes.COMPILE : dependency.getScope();
+        String scope = isEmpty(dependency.getScope()) ? JavaScopes.COMPILE : dependency.getScope();
         if (parent == null) {
             // Top-level scopes get pulled in based on the user-provided scopes.
             if (!topLevelScopes.contains(scope)) {
@@ -286,5 +284,9 @@ public class Resolver {
                 logger.warning("Error setting version: " + e.getLocalizedMessage());
             }
         }
+    }
+
+    public static boolean isEmpty(CharSequence text) {
+        return text == null || text.length() == 0;
     }
 }

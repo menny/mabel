@@ -1,9 +1,7 @@
 
-java_binary(
-    name = "resolver",
-    main_class = "com.google.devtools.bazel.workspace.GenerateWorkspace",
-    visibility = ["//visibility:public"],
-    srcs = glob(["src/main/java/**/*.java"]),
+java_library(
+    name = "resolver_lib",
+    srcs = glob(["src/main/java/com/google/devtools/bazel/workspace/maven/*.java"]),
     runtime_deps = [
         "//others/migration-tooling:migration_tools___org_codehaus_plexus__plexus_interpolation",
         "//others/migration-tooling:migration_tools___org_codehaus_plexus__plexus_utils",
@@ -14,7 +12,7 @@ java_binary(
         "//others/migration-tooling:migration_tools___org_apache_commons__commons_lang3",
 
         "//others/migration-tooling:migration_tools___com_beust__jcommander",
-        
+
         '//others/migration-tooling:migration_tools___org_apache_maven__maven_aether_provider',
         '//others/migration-tooling:migration_tools___org_apache_maven__maven_model',
         '//others/migration-tooling:migration_tools___org_apache_maven__maven_model_builder',
@@ -23,7 +21,7 @@ java_binary(
 
         "//others/migration-tooling:migration_tools___org_apache_httpcomponents__httpclient",
         '//others/migration-tooling:migration_tools___org_apache_httpcomponents__httpcore',
-        
+
         '//others/migration-tooling:migration_tools___org_eclipse_aether__aether_api',
         '//others/migration-tooling:migration_tools___org_eclipse_aether__aether_spi',
         '//others/migration-tooling:migration_tools___org_eclipse_aether__aether_connector_basic',
@@ -33,5 +31,49 @@ java_binary(
         '//others/migration-tooling:migration_tools___org_eclipse_aether__aether_transport_file',
         '//others/migration-tooling:migration_tools___org_eclipse_aether__aether_impl',
         '//others/migration-tooling:migration_tools___org_eclipse_aether__aether_util',
+        ],
+)
+
+java_library(
+    name = "classifier_lib",
+    srcs = glob(["src/main/java/net/evendanan/bazel/mvn/*.java"]),
+    runtime_deps = [],
+    deps = [
+        ":resolver_lib",
+        "//others/migration-tooling:migration_tools___com_google_guava__guava",
+        "//others/migration-tooling:migration_tools___com_google_code_findbugs__jsr305",
+        "//others/migration-tooling:migration_tools___org_apache_commons__commons_lang3",
+        ],
+)
+
+java_library(
+    name = "writer_lib",
+    srcs = glob(["src/main/java/com/google/devtools/bazel/workspace/output/*.java"]),
+    runtime_deps = [],
+    deps = [
+        ":resolver_lib",
+        ":classifier_lib",
+        "//others/migration-tooling:migration_tools___com_google_guava__guava",
+        "//others/migration-tooling:migration_tools___com_google_code_findbugs__jsr305",
+        "//others/migration-tooling:migration_tools___org_apache_commons__commons_lang3",
+        ],
+)
+
+java_binary(
+    name = "resolver",
+    main_class = "com.google.devtools.bazel.workspace.GenerateWorkspace",
+    visibility = ["//visibility:public"],
+    srcs = glob(["src/main/java/com/google/devtools/bazel/workspace/*.java"]),
+    deps = [
+        ":resolver_lib",
+        ":classifier_lib",
+        ":writer_lib",
+        "//others/migration-tooling:migration_tools___com_google_guava__guava",
+        "//others/migration-tooling:migration_tools___com_google_code_findbugs__jsr305",
+        "//others/migration-tooling:migration_tools___org_apache_commons__commons_lang3",
+
+        "//others/migration-tooling:migration_tools___com_beust__jcommander",
+
+        '//others/migration-tooling:migration_tools___org_apache_maven__maven_model',
         ],
 )

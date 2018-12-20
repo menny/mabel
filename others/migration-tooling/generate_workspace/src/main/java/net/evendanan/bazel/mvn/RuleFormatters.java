@@ -1,4 +1,4 @@
-package com.google.devtools.bazel.workspace.output;
+package net.evendanan.bazel.mvn;
 
 import com.google.devtools.bazel.workspace.maven.Rule;
 import java.util.Arrays;
@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class RuleFormatters {
 
-    static final String RULE_INDENT = "    ";
+    public static final String RULE_INDENT = "    ";
     static final String RULE_ARGUMENTS_INDENT = RULE_INDENT + RULE_INDENT;
 
     public static class CompositeFormatter implements RuleFormatter {

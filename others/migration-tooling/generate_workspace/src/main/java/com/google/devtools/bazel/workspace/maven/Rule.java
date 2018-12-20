@@ -20,7 +20,6 @@ import static java.util.stream.Stream.concat;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.google.devtools.bazel.workspace.GenerateWorkspace;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
@@ -111,7 +110,7 @@ public final class Rule implements Comparable<Rule> {
     }
 
     public void setPackaging(String packaging) {
-        if (GenerateWorkspace.isEmpty(packaging) || "bundle".equals(packaging)) {
+        if (Resolver.isEmpty(packaging) || "bundle".equals(packaging)) {
             return;
         }
 

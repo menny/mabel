@@ -1,4 +1,4 @@
-package com.google.devtools.bazel.workspace.output;
+package net.evendanan.bazel.mvn;
 
 import com.google.devtools.bazel.workspace.maven.Rule;
 import java.io.IOException;

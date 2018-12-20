@@ -14,8 +14,8 @@
 
 package com.google.devtools.bazel.workspace.output;
 
-import static com.google.devtools.bazel.workspace.output.RuleFormatters.HTTP_FILE;
-import static com.google.devtools.bazel.workspace.output.RuleFormatters.RULE_INDENT;
+import static net.evendanan.bazel.mvn.RuleFormatters.HTTP_FILE;
+import static net.evendanan.bazel.mvn.RuleFormatters.RULE_INDENT;
 
 import com.google.devtools.bazel.workspace.maven.Rule;
 import java.io.FileNotFoundException;
@@ -26,7 +26,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
+import java.util.function.Function;
 import java.util.logging.Logger;
+import net.evendanan.bazel.mvn.RuleFormatter;
 
 /**
  * Writes WORKSPACE and BUILD file definitions to a .bzl file.
@@ -44,7 +46,7 @@ public class BzlWriter {
         this.macrosPrefix = macrosPrefix;
     }
 
-    public void write(Collection<Rule> rules, String outputFile) {
+    public void write(Collection<Rule> rules, Function<Rule, RuleFormatter> formatterMapper, String outputFile) {
         final Path generatedFile = Paths.get(outputFile);
         try {
             createParentDirectory(generatedFile);
@@ -53,7 +55,7 @@ public class BzlWriter {
             return;
         }
         try (PrintStream outputStream = new PrintStream(generatedFile.toFile())) {
-            writeBzl(outputStream, rules);
+            writeBzl(outputStream, formatterMapper, rules);
         } catch (FileNotFoundException e) {
             logger.severe("Could not write " + generatedFile + ": " + e.getMessage());
             return;
@@ -72,7 +74,7 @@ public class BzlWriter {
         outputStream.println();
     }
 
-    private void writeBzl(PrintStream outputStream, Collection<Rule> rules) {
+    private void writeBzl(PrintStream outputStream, Function<Rule, RuleFormatter> formatterMapper, Collection<Rule> rules) {
         writeHeader(outputStream, argv);
 
         outputStream.println("# Loading a drop-in replacement for native.http_file");
@@ -106,7 +108,7 @@ public class BzlWriter {
             outputStream.println("pass");
         } else {
             rules.forEach(rule -> {
-                outputStream.println(RuleClassifiers.ruleClassifier(rule).formatRule(rule));
+                outputStream.println(formatterMapper.apply(rule).formatRule(rule));
                 outputStream.println();
             });
         }
