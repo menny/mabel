@@ -31,7 +31,7 @@ Note: You might need to also import `http_archive` rules into your workspace: `l
 
 Add this repository to your WORKSPACE (set `bazel_mvn_deps_version` to the latest [commit](https://github.com/menny/bazel-mvn-deps/commits/master)):
 ```
-bazel_mvn_deps_version = "fcc00b0fef92aa7d1f3935ee2e390ec4c3d5101f"
+bazel_mvn_deps_version = "08bd8e7a9f328a03154aabe90d9b9d8010c2515e"
 http_archive(
     name = "bazel_mvn_deps_rule",
     urls = ["https://github.com/menny/bazel-mvn-deps/archive/%s.zip" % bazel_mvn_deps_version],
@@ -39,12 +39,12 @@ http_archive(
     strip_prefix = "bazel-mvn-deps-%s" % bazel_mvn_deps_version
 )
 
-load("@bazel_mvn_deps_rule//others/migration-tooling:dependencies.bzl", "generate_migration_tools_workspace_rules")
-generate_migration_tools_workspace_rules()
+load("@bazel_mvn_deps_rule//resolver:bazel_mvn_deps_dependencies.bzl", "generate_bazel_mvn_deps_workspace_rules")
+generate_bazel_mvn_deps_workspace_rules()
 ```
 
 ### target definition
-In your module's `BUILD.bazel` file (let's say `others/migration-tooling/BUILD.bazel`) load the dependencies rule:
+In your module's `BUILD.bazel` file (let's say `resolver/BUILD.bazel`) load the dependencies rule:
 ```
 load("@bazel_mvn_deps_rule//rules/maven_deps:maven_deps_workspace_generator.bzl", "deps_workspace_generator_rule")
 ```
@@ -57,11 +57,11 @@ deps_workspace_generator_rule(name = 'main_deps',
         "com.google.code.findbugs:jsr305:3.0.2",
         "com.google.auto.value:auto-value:1.6.3"
     ],
-    output_deps_file_path = 'others/migration-tooling/dependencies.bzl',
+    output_deps_file_path = 'resolver/dependencies.bzl',
     rule_prefix = 'mvn_main',
     macro_prefix = 'migration_tools')
 ```
-In this example above we defined the target `//others/migration-tooling:main_deps` with 4 maven dependencies:
+In this example above we defined the target `//resolver:main_deps` with 4 maven dependencies:
 
 * `com.google.guava:guava:20.0`
 * `org.apache.commons:commons-lang3:jar:3.8.1`
@@ -71,7 +71,7 @@ In this example above we defined the target `//others/migration-tooling:main_dep
 ### Resolving the dependency graph
 To generate the transitive rules for the required `maven_deps`, you'll run the target:
 ```
-bazel run //others/migration-tooling:main_deps
+bazel run //resolver:main_deps
 ```
 
 This will retrieve all the transitive dependencies and resolve conflicts. We will store the resolved dependencies graph (Bazel rules) in the file `others/migration-tooling/dependencies.bzl`. The generated rules will have a prefix `mvn_main` and the generated macros will have the prefix `migration_tools`. These prefixes allows you to generate several graphs for different cases (for example, compile vs annotation-processor stages). This file will need to be checked into your repository, same as [Yarn's lock file](https://yarnpkg.com/lang/en/docs/yarn-lock/).<br/>
@@ -79,14 +79,14 @@ This will retrieve all the transitive dependencies and resolve conflicts. We wil
 ### Using the generated Maven dependencies
 In modules you which to use those dependencies, first load the generated transitive rules in your module's `BUILD.bazel` file:
 ```
-load("//others/migration-tooling:dependencies.bzl", "generate_migration_tools_transitive_dependency_rules")
+load("//resolver:dependencies.bzl", "generate_migration_tools_transitive_dependency_rules")
 generate_migration_tools_transitive_dependency_rules()
 ```
 
-This will make the rules available in any target defined in that `BUILD.bazel` file as `//others/migration-tooling:mvn_main___XXX`:
-* `com.google.guava:guava:20.0` as `//others/migration-tooling:mvn_main___com_google_guava__guava`
-* `org.apache.commons:commons-lang3:jar:3.8.1` as `//others/migration-tooling:mvn_main___com_google_code_findbugs__jsr305`
-* `com.google.code.findbugs:jsr305:3.0.2` as `//others/migration-tooling:mvn_main___org_apache_commons__commons_lang3`
+This will make the rules available in any target defined in that `BUILD.bazel` file as `//resolver:mvn_main___XXX`:
+* `com.google.guava:guava:20.0` as `//resolver:mvn_main___com_google_guava__guava`
+* `org.apache.commons:commons-lang3:jar:3.8.1` as `//resolver:mvn_main___com_google_code_findbugs__jsr305`
+* `com.google.code.findbugs:jsr305:3.0.2` as `//resolver:mvn_main___org_apache_commons__commons_lang3`
 
 #### Annotation-Processors
 
@@ -94,8 +94,8 @@ For dependencies that are detected as annotation-processors we are creating a [`
 [`processor_class`](https://docs.bazel.build/versions/master/be/java.html#java_plugin.processor_class), and then wrap all of these rules in a `java_library` rule that
 [exports](https://docs.bazel.build/versions/master/be/java.html#java_library.exported_plugins) the plugins.<br/>
 In the example above we included `com.google.auto.value:auto-value:1.6.3`, which is a Java annotation-processor, we create the following rules:
-* `//others/migration-tooling:mvn_main___com_google_auto_value__auto_value` - which does not generate API.
-* `//others/migration-tooling:mvn_main___com_google_auto_value__auto_value_generate_api` - which _does_ [generate API](https://docs.bazel.build/versions/master/be/java.html#java_plugin.generates_api).
+* `//resolver:mvn_main___com_google_auto_value__auto_value` - which does not generate API.
+* `//resolver:mvn_main___com_google_auto_value__auto_value_generate_api` - which _does_ [generate API](https://docs.bazel.build/versions/master/be/java.html#java_plugin.generates_api).
 
 Please, read the [Bazel docs](https://docs.bazel.build/versions/master/be/java.html#java_plugin.generates_api) about which variant you want.<br/>
 Also, since we are wrapping the `java_plugin` rules in a `java_library` rules, you should add them to the `deps` list of your rule, and not to the `plugins` list.
