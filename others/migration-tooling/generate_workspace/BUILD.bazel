@@ -119,7 +119,8 @@ java_test(name = "classifiers",
   srcs=["src/main/javatest/net/evendanan/bazel/mvn/RuleClassifiersTest.java"],
   resources = [
       "src/main/javatest/net/evendanan/bazel/mvn/resourses/dataenum-processor-1.0.2.jar",
-      "src/main/javatest/net/evendanan/bazel/mvn/resourses/dataenum-1.0.2.jar"
+      "src/main/javatest/net/evendanan/bazel/mvn/resourses/dataenum-1.0.2.jar",
+      "src/main/javatest/net/evendanan/bazel/mvn/resourses/mockk-1.0.jar",
    ],
   resource_strip_prefix = "others/migration-tooling/generate_workspace/src/main/javatest/net/evendanan/bazel/mvn/resourses/",
   size="small",

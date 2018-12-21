@@ -11,7 +11,6 @@ import org.mockito.Mockito;
 
 public class FormattersTests {
 
-
     @Test
     public void testAarFormatter() {
         final String ruleText = RuleFormatters.AAR_IMPORT.formatRule(
@@ -60,6 +59,18 @@ public class FormattersTests {
         Assert.assertEquals(JAVA_PLUGIN_TEXT, ruleText);
     }
 
+    @Test
+    public void testKotlinImport() {
+        final String ruleText = RuleFormatters.KOTLIN_IMPORT.formatRule(
+            createMockRule("kotlin_lib",
+                "https://some_url",
+                Arrays.asList("dep1", "dep2"),
+                Arrays.asList("export1", "export2"),
+                Arrays.asList("runtime1", "runtime2")));
+
+        Assert.assertEquals(KOTLIN_IMPORT_TEXT, ruleText);
+    }
+
     private static Rule createMockRule(String mavenDep, String url, List<String> depsLabels, List<String> exportsLabels, List<String> runtimeLabels) {
         final Rule rule = Mockito.mock(Rule.class);
 
@@ -100,12 +111,12 @@ public class FormattersTests {
                                                    + "            \":safe_mvn__dep2\",\n"
                                                    + "        ],\n"
                                                    + "        exports = [\n"
-                                                   + "            \":safe_mvn__export1\",\n"
                                                    + "            \":safe_mvn__export2\",\n"
+                                                   + "            \":safe_mvn__export1\",\n"
                                                    + "        ],\n"
                                                    + "        runtime_deps = [\n"
-                                                   + "            \":safe_mvn__runtime2\",\n"
                                                    + "            \":safe_mvn__runtime1\",\n"
+                                                   + "            \":safe_mvn__runtime2\",\n"
                                                    + "        ],\n"
                                                    + "    )\n"
                                                    + "    native.alias(\n"
@@ -121,12 +132,12 @@ public class FormattersTests {
                                                   + "        deps = [\n"
                                                   + "            \":safe_mvn__dep2\",\n"
                                                   + "            \":safe_mvn__dep1\",\n"
-                                                  + "            \":safe_mvn__runtime1\",\n"
                                                   + "            \":safe_mvn__runtime2\",\n"
+                                                  + "            \":safe_mvn__runtime1\",\n"
                                                   + "        ],\n"
                                                   + "        exports = [\n"
-                                                  + "            \":safe_mvn__export2\",\n"
                                                   + "            \":safe_mvn__export1\",\n"
+                                                  + "            \":safe_mvn__export2\",\n"
                                                   + "        ],\n"
                                                   + "    )\n"
                                                   + "    native.alias(\n"
@@ -141,12 +152,12 @@ public class FormattersTests {
                                                    + "        processor_class = \"com.example.Processor\",\n"
                                                    + "        generates_api = 0,\n"
                                                    + "        deps = [\n"
-                                                   + "            \":safe_mvn__dep2\",\n"
-                                                   + "            \":safe_mvn__export2\",\n"
                                                    + "            \":safe_mvn__runtime1\",\n"
-                                                   + "            \":safe_mvn__runtime2\",\n"
-                                                   + "            \":safe_mvn__dep1\",\n"
                                                    + "            \":safe_mvn__export1\",\n"
+                                                   + "            \":safe_mvn__dep2\",\n"
+                                                   + "            \":safe_mvn__runtime2\",\n"
+                                                   + "            \":safe_mvn__export2\",\n"
+                                                   + "            \":safe_mvn__dep1\",\n"
                                                    + "        ],\n"
                                                    + "        )\n"
                                                    + "    native.alias(\n"
@@ -160,12 +171,12 @@ public class FormattersTests {
                                                    + "        processor_class = \"com.example.Processor\",\n"
                                                    + "        generates_api = 1,\n"
                                                    + "        deps = [\n"
-                                                   + "            \":safe_mvn__dep2\",\n"
-                                                   + "            \":safe_mvn__export2\",\n"
                                                    + "            \":safe_mvn__runtime1\",\n"
-                                                   + "            \":safe_mvn__runtime2\",\n"
-                                                   + "            \":safe_mvn__dep1\",\n"
                                                    + "            \":safe_mvn__export1\",\n"
+                                                   + "            \":safe_mvn__dep2\",\n"
+                                                   + "            \":safe_mvn__runtime2\",\n"
+                                                   + "            \":safe_mvn__export2\",\n"
+                                                   + "            \":safe_mvn__dep1\",\n"
                                                    + "        ],\n"
                                                    + "        )\n"
                                                    + "    native.alias(\n"
@@ -174,4 +185,23 @@ public class FormattersTests {
                                                    + "        visibility = [\"//visibility:public\"],\n"
                                                    + "    )\n"
                                                    + "\n";
+
+    private static final String KOTLIN_IMPORT_TEXT = "    kt_jvm_import(\n"
+                                                     + "        name = \"mvn__kotlin_lib\",\n"
+                                                     + "        jars = [\n"
+                                                     + "            \":safe_mvn__dep2\",\n"
+                                                     + "            \":safe_mvn__dep1\",\n"
+                                                     + "            \"@safe_mvn__kotlin_lib//file\",\n"
+                                                     + "        ],\n"
+                                                     + "        runtime_deps = [\n"
+                                                     + "            \":safe_mvn__runtime2\",\n"
+                                                     + "            \":safe_mvn__runtime1\",\n"
+                                                     + "        ],\n"
+                                                     + "    )\n"
+                                                     + "    native.alias(\n"
+                                                     + "        name = \"safe_mvn__kotlin_lib\",\n"
+                                                     + "        actual = \"mvn__kotlin_lib\",\n"
+                                                     + "        visibility = [\"//visibility:public\"],\n"
+                                                     + "    )\n"
+                                                     + "\n";
 }

@@ -6,7 +6,9 @@ import com.google.devtools.bazel.workspace.maven.Rule;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class RuleFormatters {
 
@@ -42,6 +44,25 @@ public class RuleFormatters {
         builder.append(RULE_ARGUMENTS_INDENT).append("jars = [\"@").append(rule.safeRuleFriendlyName()).append("//file\"],\n");
         addListArgument(builder, "deps", rule.getDeps());
         addListArgument(builder, "exports", rule.getExportDeps());
+        addListArgument(builder, "runtime_deps", rule.getRuntimeDeps());
+
+        builder.append(RULE_INDENT).append(")\n");
+
+        addAlias(builder, rule);
+
+        return builder.toString();
+    };
+
+    @VisibleForTesting
+    static final RuleFormatter KOTLIN_IMPORT = rule -> {
+        StringBuilder builder = new StringBuilder();
+        builder.append(RULE_INDENT).append("kt_jvm_import").append("(\n");
+        builder.append(RULE_ARGUMENTS_INDENT).append("name = \"").append(rule.mavenGeneratedName()).append("\",\n");
+
+        final Set<String> deps = new HashSet<>(convertRulesToStrings(rule.getDeps()));
+        deps.add(String.format(Locale.US, "@%s//file", rule.safeRuleFriendlyName()));
+
+        addStringListArgument(builder, "jars", deps);
         addListArgument(builder, "runtime_deps", rule.getRuntimeDeps());
 
         builder.append(RULE_INDENT).append(")\n");
@@ -134,10 +155,21 @@ public class RuleFormatters {
     }
 
     private static void addListArgument(StringBuilder builder, String name, Collection<Rule> labels) {
+        addStringListArgument(builder, name, convertRulesToStrings(labels));
+    }
+
+    private static Collection<String> convertRulesToStrings(final Collection<Rule> labels) {
+        return labels.stream()
+            .map(Rule::safeRuleFriendlyName)
+            .map(ruleName -> String.format(Locale.US, ":%s", ruleName))
+            .collect(Collectors.toList());
+    }
+
+    private static void addStringListArgument(StringBuilder builder, String name, Collection<String> labels) {
         if (!labels.isEmpty()) {
             builder.append(RULE_ARGUMENTS_INDENT).append(name).append(" = [\n");
-            for (Rule r : labels) {
-                builder.append(RULE_ARGUMENTS_INDENT).append(RULE_INDENT).append("\":").append(r.safeRuleFriendlyName()).append("\",\n");
+            for (String r : labels) {
+                builder.append(RULE_ARGUMENTS_INDENT).append(RULE_INDENT).append("\"").append(r).append("\",\n");
             }
             builder.append(RULE_ARGUMENTS_INDENT).append("],\n");
         }

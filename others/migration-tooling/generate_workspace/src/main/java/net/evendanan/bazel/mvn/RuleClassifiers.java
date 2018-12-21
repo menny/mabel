@@ -51,7 +51,8 @@ public class RuleClassifiers {
         try (JarInputStream zipInputStream = new JarInputStream(networkInputStream, false)) {
             JarEntry jarEntry = zipInputStream.getNextJarEntry();
             while (jarEntry != null) {
-                if (jarEntry.getName().equalsIgnoreCase("META-INF/services/javax.annotation.processing.Processor")) {
+                final String jarEntryName = jarEntry.getName();
+                if (jarEntryName.equalsIgnoreCase("META-INF/services/javax.annotation.processing.Processor")) {
                     StringBuilder contentBuilder = new StringBuilder();
                     final byte[] buffer = new byte[1024];
                     int read = 0;
@@ -60,6 +61,8 @@ public class RuleClassifiers {
                     }
 
                     return parseServicesProcessorFileContent(contentBuilder.toString());
+                } else if (jarEntryName.startsWith("META-INF/") && jarEntryName.endsWith(".kotlin_module")) {
+                    return Optional.of(RuleFormatters.KOTLIN_IMPORT);
                 }
                 zipInputStream.closeEntry();
                 jarEntry = zipInputStream.getNextJarEntry();
