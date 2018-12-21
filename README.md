@@ -85,8 +85,8 @@ generate_migration_tools_transitive_dependency_rules()
 
 This will make the rules available in any target defined in that `BUILD.bazel` file as `//resolver:mvn_main___XXX`:
 * `com.google.guava:guava:20.0` as `//resolver:mvn_main___com_google_guava__guava`
-* `org.apache.commons:commons-lang3:jar:3.8.1` as `//resolver:mvn_main___com_google_code_findbugs__jsr305`
-* `com.google.code.findbugs:jsr305:3.0.2` as `//resolver:mvn_main___org_apache_commons__commons_lang3`
+* `org.apache.commons:commons-lang3:jar:3.8.1` as `//resolver:mvn_main___org_apache_commons__commons_lang3`
+* `com.google.code.findbugs:jsr305:3.0.2` as `//resolver:mvn_main___com_google_code_findbugs__jsr305`
 
 #### Annotation-Processors
 
