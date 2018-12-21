@@ -3,17 +3,21 @@ package net.evendanan.bazel.mvn;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
 import com.google.devtools.bazel.workspace.maven.Rule;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class RuleFormatters {
 
     public static final String RULE_INDENT = "    ";
-    static final String RULE_ARGUMENTS_INDENT = RULE_INDENT + RULE_INDENT;
+    private static final String RULE_ARGUMENTS_INDENT = RULE_INDENT + RULE_INDENT;
 
     public static class CompositeFormatter implements RuleFormatter {
 
@@ -74,10 +78,16 @@ public class RuleFormatters {
 
     static class JavaPluginFormatter implements RuleFormatter {
 
-        private final String processorClass;
+        private static final String API_POST_FIX = "_generate_api";
+        private final List<String> processorClasses;
 
-        JavaPluginFormatter(final String processorClass) {
-            this.processorClass = processorClass;
+        JavaPluginFormatter(final Collection<String> processorClasses) {
+            this.processorClasses = ImmutableList.copyOf(processorClasses);
+        }
+
+        @VisibleForTesting
+        List<String> getProcessorClasses() {
+            return processorClasses;
         }
 
         @Override
@@ -88,25 +98,46 @@ public class RuleFormatters {
             deps.addAll(rule.getExportDeps());
 
             StringBuilder builder = new StringBuilder();
+            for (int processorClassIndex = 0; processorClassIndex < processorClasses.size(); processorClassIndex++) {
+                final String processorClass = processorClasses.get(processorClassIndex);
+
+                builder.append(RULE_INDENT).append("native.java_plugin").append("(\n");
+                builder.append(RULE_ARGUMENTS_INDENT).append("name = \"").append(rule.mavenGeneratedName()).append("_").append(processorClassIndex).append("\",\n");
+                builder.append(RULE_ARGUMENTS_INDENT).append("processor_class = \"").append(processorClass).append("\",\n");
+                builder.append(RULE_ARGUMENTS_INDENT).append("generates_api = 0").append(",\n");
+                addListArgument(builder, "deps", deps);
+                builder.append(RULE_ARGUMENTS_INDENT).append(")\n");
+
+                builder.append(RULE_INDENT).append("native.java_plugin").append("(\n");
+                builder.append(RULE_ARGUMENTS_INDENT).append("name = \"").append(rule.mavenGeneratedName()).append(API_POST_FIX).append("_").append(processorClassIndex)
+                    .append("\",\n");
+                builder.append(RULE_ARGUMENTS_INDENT).append("processor_class = \"").append(processorClass).append("\",\n");
+                builder.append(RULE_ARGUMENTS_INDENT).append("generates_api = 1").append(",\n");
+                addListArgument(builder, "deps", deps);
+                builder.append(RULE_ARGUMENTS_INDENT).append(")\n");
+            }
+
+            //composite plugins
             builder.append(RULE_INDENT).append("native.java_plugin").append("(\n");
             builder.append(RULE_ARGUMENTS_INDENT).append("name = \"").append(rule.mavenGeneratedName()).append("\",\n");
-            builder.append(RULE_ARGUMENTS_INDENT).append("processor_class = \"").append(processorClass).append("\",\n");
             builder.append(RULE_ARGUMENTS_INDENT).append("generates_api = 0").append(",\n");
             addListArgument(builder, "deps", deps);
+            addStringListArgument(builder, "plugins", IntStream.range(0, processorClasses.size())
+                .mapToObj(index -> rule.mavenGeneratedName() + "_" + index)
+                .collect(Collectors.toList()));
+            builder.append(RULE_ARGUMENTS_INDENT).append(")\n");
+
+            builder.append(RULE_INDENT).append("native.java_plugin").append("(\n");
+            builder.append(RULE_ARGUMENTS_INDENT).append("name = \"").append(rule.mavenGeneratedName()).append(API_POST_FIX).append("\",\n");
+            builder.append(RULE_ARGUMENTS_INDENT).append("generates_api = 1").append(",\n");
+            addListArgument(builder, "deps", deps);
+            addStringListArgument(builder, "plugins", IntStream.range(0, processorClasses.size())
+                .mapToObj(index -> rule.mavenGeneratedName() + API_POST_FIX + "_" + index)
+                .collect(Collectors.toList()));
             builder.append(RULE_ARGUMENTS_INDENT).append(")\n");
 
             addAlias(builder, rule);
-
-            //same rule, but with generate_api
-            final String postFix = "_generate_api";
-            builder.append(RULE_INDENT).append("native.java_plugin").append("(\n");
-            builder.append(RULE_ARGUMENTS_INDENT).append("name = \"").append(rule.mavenGeneratedName()).append(postFix).append("\",\n");
-            builder.append(RULE_ARGUMENTS_INDENT).append("processor_class = \"").append(processorClass).append("\",\n");
-            builder.append(RULE_ARGUMENTS_INDENT).append("generates_api = 1").append(",\n");
-            addListArgument(builder, "deps", deps);
-            builder.append(RULE_ARGUMENTS_INDENT).append(")\n");
-
-            addAlias(builder, rule, postFix);
+            addAlias(builder, rule, API_POST_FIX);
 
             return builder.toString();
         }
@@ -167,8 +198,10 @@ public class RuleFormatters {
 
     private static void addStringListArgument(StringBuilder builder, String name, Collection<String> labels) {
         if (!labels.isEmpty()) {
+            ArrayList<String> sortedLabels = new ArrayList<>(labels);
+            Collections.sort(sortedLabels);
             builder.append(RULE_ARGUMENTS_INDENT).append(name).append(" = [\n");
-            for (String r : labels) {
+            for (String r : sortedLabels) {
                 builder.append(RULE_ARGUMENTS_INDENT).append(RULE_INDENT).append("\"").append(r).append("\",\n");
             }
             builder.append(RULE_ARGUMENTS_INDENT).append("],\n");

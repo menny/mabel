@@ -74,21 +74,16 @@ public class RuleClassifiers {
 
     private static Optional<RuleFormatter> parseServicesProcessorFileContent(final String processorContent) {
         if (processorContent != null && processorContent.length() > 0) {
-            final List<RuleFormatter> processors = Arrays.stream(processorContent.split("\n", -1))
+            final List<String> processors = Arrays.stream(processorContent.split("\n", -1))
                 .filter(s -> s != null && s.length() > 0)
                 .map(String::trim)
                 .filter(s -> !s.isEmpty())
-                .map(RuleClassifiers::createProcessorFormatter)
                 .collect(Collectors.toList());
 
             if (processors.size() > 0) {
-                return Optional.of(new RuleFormatters.CompositeFormatter(processors));
+                return Optional.of(new RuleFormatters.JavaPluginFormatter(processors));
             }
         }
         return Optional.empty();
-    }
-
-    private static RuleFormatter createProcessorFormatter(final String processorClassName) {
-        return new RuleFormatters.JavaPluginFormatter(processorClassName);
     }
 }
