@@ -1,10 +1,12 @@
 # Bazel mvn deps
-A simple Maven dependency graph generator for Bazel.
+
+A simple, extensible, Maven dependency graph generator for Bazel.
 
 Unlike other build systems, Bazel does not provide a dependency management service as part of the build and
 does not provide a way to specify a Maven dependency (which will be resolved transitively) and be available during compilation.
 <br/>
 There are several attempts to solve this problem (such as [sync-deps](https://github.com/spotify/bazel-tools/tree/master/sync-deps), [gmaven](https://github.com/bazelbuild/gmaven_rules), [migration-tooling](https://github.com/bazelbuild/migration-tooling) and [bazel-deps](https://github.com/johnynek/bazel-deps)), but some do not support Kotlin or Android, some do not support customized Maven repositories, etc.
+<br/>
 <br/>
 This WORKSPACE will provide `deps_workspace_generator_rule` rule which allows you to create a set of rules which can be used as dependencies based on a given list of Maven dependencies. The rule will output the dependencies-graph to a file (similar to Yarn's lock-file).
 
@@ -106,6 +108,7 @@ For [Kotlin](https://github.com/bazelbuild/rules_kotlin), we create a `kt_jvm_im
 depends on the `kt_jvm_library`.<br/>
 
 If your dependencies contain Kotlin rules, you'll need to pass the kt rule-impl to the transitive rules generation macro (in the example above, it is `generate_migration_tools_transitive_dependency_rules`):
+
 ```python
 load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_import", "kt_jvm_library")
 
@@ -113,7 +116,9 @@ load("//resolver:dependencies.bzl", "generate_migration_tools_transitive_depende
 generate_migration_tools_transitive_dependency_rules(kt_jvm_import = kt_jvm_import, kt_jvm_library = kt_jvm_library)
 ```
 <br/>
+
 There is a problem with this, at the moment: `kt_jvm_library` in _master_ does not allow no-source-libraries. So, until the [fix](https://github.com/bazelbuild/rules_kotlin/pull/170) is merged, you can use my branch of the rules:
+
 ```python
 rules_kotlin_version = "no-src-support"
 http_archive(
