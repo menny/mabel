@@ -307,7 +307,8 @@ def generate_bazel_mvn_deps_workspace_rules():
 
 
 # Transitive rules macro to be run in the BUILD.bazel file.
-def generate_bazel_mvn_deps_transitive_dependency_rules():
+# If you use kt rules, you MUST provide the correct rule implementation when call this macro.
+def generate_bazel_mvn_deps_transitive_dependency_rules(kt_jvm_import=None, kt_jvm_library=None):
     native.java_import(
         name = "bazel_mvn_deps___org_apache_httpcomponents__httpcore__4_4_6",
         jars = ["@bazel_mvn_deps___org_apache_httpcomponents__httpcore__4_4_6//file"],
