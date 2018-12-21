@@ -94,23 +94,7 @@ public class BzlWriter {
             outputStream.print(RULE_INDENT);
             outputStream.println("pass");
         } else {
-            final TaskTiming timer = new TaskTiming();
-            logger.info(String.format("Writing %d Bazel rules...", rules.size()));
-            timer.start();
-            timer.setTotalTasks(rules.size());
-
             for (Rule rule : rules) {
-                final TimingData data = timer.taskDone();
-                final String estimatedTimeLeft;
-                if (data.doneTasks >= 10) {
-                    estimatedTimeLeft = String.format(Locale.US, ", %s left", TaskTiming.humanReadableTime(data.estimatedTimeLeft));
-                } else {
-                    estimatedTimeLeft = "";
-                }
-                System.out.println(
-                    String.format(Locale.US, "** Writing rule %d out of %d (%.2f%%%s): %s...",
-                        data.doneTasks, data.totalTasks, 100 * data.ratioOfDone, estimatedTimeLeft,
-                        rule.mavenGeneratedName()));
                 outputStream.println(HTTP_FILE.formatRule(rule));
                 outputStream.println();
             }
@@ -126,7 +110,23 @@ public class BzlWriter {
             outputStream.print(RULE_INDENT);
             outputStream.println("pass");
         } else {
+            final TaskTiming timer = new TaskTiming();
+            logger.info(String.format("Writing %d Bazel rules...", rules.size()));
+            timer.start();
+            timer.setTotalTasks(rules.size());
+
             rules.forEach(rule -> {
+                final TimingData data = timer.taskDone();
+                final String estimatedTimeLeft;
+                if (data.doneTasks >= 10) {
+                    estimatedTimeLeft = String.format(Locale.US, ", %s left", TaskTiming.humanReadableTime(data.estimatedTimeLeft));
+                } else {
+                    estimatedTimeLeft = "";
+                }
+                System.out.println(
+                    String.format(Locale.US, "** Writing rule %d out of %d (%.2f%%%s): %s...",
+                        data.doneTasks, data.totalTasks, 100 * data.ratioOfDone, estimatedTimeLeft,
+                        rule.mavenGeneratedName()));
                 outputStream.println(formatterMapper.apply(rule).formatRule(rule));
                 outputStream.println();
             });

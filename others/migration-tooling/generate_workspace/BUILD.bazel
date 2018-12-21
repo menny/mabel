@@ -68,6 +68,8 @@ java_library(
         "//others/migration-tooling:migration_tools___com_google_guava__guava",
         "//others/migration-tooling:migration_tools___com_google_code_findbugs__jsr305",
         "//others/migration-tooling:migration_tools___org_apache_commons__commons_lang3",
+
+        "//others/migration-tooling:migration_tools___com_google_auto_value__auto_value_generate_api"
         ],
 )
 
@@ -88,6 +90,8 @@ java_binary(
         "//others/migration-tooling:migration_tools___com_beust__jcommander",
 
         '//others/migration-tooling:migration_tools___org_apache_maven__maven_model',
+
+        "//others/migration-tooling:migration_tools___com_google_auto_value__auto_value"
         ],
 )
 
