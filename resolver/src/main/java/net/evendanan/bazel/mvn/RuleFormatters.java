@@ -65,14 +65,17 @@ public class RuleFormatters {
     static final RuleFormatter KOTLIN_IMPORT = rule -> {
         StringBuilder builder = new StringBuilder();
         builder.append(RULE_INDENT).append("kt_jvm_import").append("(\n");
+        builder.append(RULE_ARGUMENTS_INDENT).append("name = \"").append(rule.mavenGeneratedName()).append("_kotlin_jar").append("\",\n");
+        builder.append(RULE_ARGUMENTS_INDENT).append("jars = [\"@").append(rule.mavenGeneratedName()).append("//file\"],\n");
+        builder.append(RULE_INDENT).append(")\n");
+
+        builder.append(RULE_INDENT).append("kt_jvm_library").append("(\n");
         builder.append(RULE_ARGUMENTS_INDENT).append("name = \"").append(rule.mavenGeneratedName()).append("\",\n");
-
-        final Set<String> deps = new HashSet<>(convertRulesToStrings(rule.getDeps()));
-        deps.add(String.format(Locale.US, "@%s//file", rule.mavenGeneratedName()));
-
-        addStringListArgument(builder, "jars", deps);
+        final Set<String> depsWithImportedJar = new HashSet<>(convertRulesToStrings(rule.getDeps()));
+        depsWithImportedJar.add(":" + rule.mavenGeneratedName() + "_kotlin_jar");
+        addStringListArgument(builder, "deps", depsWithImportedJar);
         addListArgument(builder, "runtime_deps", rule.getRuntimeDeps());
-
+        addListArgument(builder, "exports", rule.getExportDeps());
         builder.append(RULE_INDENT).append(")\n");
 
         addAlias(builder, rule);
