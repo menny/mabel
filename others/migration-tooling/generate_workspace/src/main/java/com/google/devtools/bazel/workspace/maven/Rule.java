@@ -31,7 +31,7 @@ import org.eclipse.aether.util.artifact.JavaScopes;
  * A struct representing the fields of maven_jar to be written to the WORKSPACE file.
  */
 //TODO(petros): Kill this after refactoring resolvers.
-public final class Rule implements Comparable<Rule> {
+public class Rule implements Comparable<Rule> {
 
     private static final String DEFAULT_MAVEN_REPOSITORY = "https://repo1.maven.org/maven2/";
 

@@ -1,5 +1,7 @@
 package net.evendanan.bazel.mvn;
 
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.ImmutableList;
 import com.google.devtools.bazel.workspace.maven.Rule;
 import java.util.Arrays;
 import java.util.Collection;
@@ -16,7 +18,11 @@ public class RuleFormatters {
         private final Collection<RuleFormatter> ruleFormatters;
 
         public CompositeFormatter(RuleFormatter... ruleFormatters) {
-            this.ruleFormatters = Arrays.asList(ruleFormatters);
+            this(Arrays.asList(ruleFormatters));
+        }
+
+        public CompositeFormatter(Collection<RuleFormatter> ruleFormatters) {
+            this.ruleFormatters = ImmutableList.copyOf(ruleFormatters);
         }
 
         @Override
@@ -28,8 +34,9 @@ public class RuleFormatters {
         }
     }
 
-    public static final RuleFormatter JAVA_IMPORT = rule -> {
-        StringBuilder builder = new StringBuilder(241);
+    @VisibleForTesting
+    static final RuleFormatter JAVA_IMPORT = rule -> {
+        StringBuilder builder = new StringBuilder();
         builder.append(RULE_INDENT).append("native.java_import").append("(\n");
         builder.append(RULE_ARGUMENTS_INDENT).append("name = \"").append(rule.mavenGeneratedName()).append("\",\n");
         builder.append(RULE_ARGUMENTS_INDENT).append("jars = [\"@").append(rule.safeRuleFriendlyName()).append("//file\"],\n");
@@ -44,24 +51,49 @@ public class RuleFormatters {
         return builder.toString();
     };
 
-    public static final RuleFormatter JAVA_PLUGIN = rule -> {
-        StringBuilder builder = new StringBuilder(241);
-        builder.append(RULE_INDENT).append("native.java_plugin").append("(\n");
-        builder.append(RULE_ARGUMENTS_INDENT).append("name = \"").append(rule.mavenGeneratedName()).append("\",\n");
-        builder.append(RULE_ARGUMENTS_INDENT).append("jars = [\"@").append(rule.safeRuleFriendlyName()).append("//file\"],\n");
-        addListArgument(builder, "deps", rule.getDeps());
-        addListArgument(builder, "exports", rule.getExportDeps());
-        addListArgument(builder, "runtime_deps", rule.getRuntimeDeps());
+    static class JavaPluginFormatter implements RuleFormatter {
 
-        builder.append(RULE_INDENT).append(")\n");
+        private final String processorClass;
 
-        addAlias(builder, rule);
+        JavaPluginFormatter(final String processorClass) {
+            this.processorClass = processorClass;
+        }
 
-        return builder.toString();
-    };
+        @Override
+        public String formatRule(final Rule rule) {
+            final Set<Rule> deps = new HashSet<>();
+            deps.addAll(rule.getDeps());
+            deps.addAll(rule.getRuntimeDeps());
+            deps.addAll(rule.getExportDeps());
 
-    public static final RuleFormatter AAR_IMPORT = rule -> {
-        StringBuilder builder = new StringBuilder(229);
+            StringBuilder builder = new StringBuilder();
+            builder.append(RULE_INDENT).append("native.java_plugin").append("(\n");
+            builder.append(RULE_ARGUMENTS_INDENT).append("name = \"").append(rule.mavenGeneratedName()).append("\",\n");
+            builder.append(RULE_ARGUMENTS_INDENT).append("processor_class = \"").append(processorClass).append("\",\n");
+            builder.append(RULE_ARGUMENTS_INDENT).append("generates_api = 0").append(",\n");
+            addListArgument(builder, "deps", deps);
+            builder.append(RULE_ARGUMENTS_INDENT).append(")\n");
+
+            addAlias(builder, rule);
+
+            //same rule, but with generate_api
+            final String postFix = "_generate_api";
+            builder.append(RULE_INDENT).append("native.java_plugin").append("(\n");
+            builder.append(RULE_ARGUMENTS_INDENT).append("name = \"").append(rule.mavenGeneratedName()).append(postFix).append("\",\n");
+            builder.append(RULE_ARGUMENTS_INDENT).append("processor_class = \"").append(processorClass).append("\",\n");
+            builder.append(RULE_ARGUMENTS_INDENT).append("generates_api = 1").append(",\n");
+            addListArgument(builder, "deps", deps);
+            builder.append(RULE_ARGUMENTS_INDENT).append(")\n");
+
+            addAlias(builder, rule, postFix);
+
+            return builder.toString();
+        }
+    }
+
+    @VisibleForTesting
+    static final RuleFormatter AAR_IMPORT = rule -> {
+        StringBuilder builder = new StringBuilder();
         builder.append(RULE_INDENT).append("native.aar_import").append("(\n");
         builder.append(RULE_ARGUMENTS_INDENT).append("name = \"").append(rule.mavenGeneratedName()).append("\",\n");
         builder.append(RULE_ARGUMENTS_INDENT).append("aar = \"@").append(rule.safeRuleFriendlyName()).append("//file\",\n");
@@ -80,7 +112,7 @@ public class RuleFormatters {
     };
 
     public static final RuleFormatter HTTP_FILE = rule -> {
-        StringBuilder builder = new StringBuilder(63);
+        StringBuilder builder = new StringBuilder(0);
         for (String parent : rule.getParents()) {
             builder.append(RULE_INDENT).append("# ").append(parent).append('\n');
         }
@@ -112,8 +144,12 @@ public class RuleFormatters {
     }
 
     private static void addAlias(StringBuilder builder, Rule rule) {
+        addAlias(builder, rule, "");
+    }
+
+    private static void addAlias(StringBuilder builder, Rule rule, String postFix) {
         builder.append(RULE_INDENT).append("native.alias(\n");
-        builder.append(RULE_ARGUMENTS_INDENT).append("name = \"").append(rule.safeRuleFriendlyName()).append("\",\n");
+        builder.append(RULE_ARGUMENTS_INDENT).append("name = \"").append(rule.safeRuleFriendlyName()).append(postFix).append("\",\n");
         builder.append(RULE_ARGUMENTS_INDENT).append("actual = \"").append(rule.mavenGeneratedName()).append("\",\n");
         builder.append(RULE_ARGUMENTS_INDENT).append("visibility = [\"//visibility:public\"],\n");
         builder.append(RULE_INDENT).append(")\n\n");

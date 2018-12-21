@@ -112,10 +112,40 @@ java_test(name = "timing_timer",
 java_test(name = "classifiers",
   deps=[
       ":classifier_lib",
+      ":resolver_lib",
       "//others/migration-tooling:migration_tools___junit__junit",
        "//others/migration-tooling:migration_tools___org_mockito__mockito_core"
        ],
   srcs=["src/main/javatest/net/evendanan/bazel/mvn/RuleClassifiersTest.java"],
+  resources = [
+      "src/main/javatest/net/evendanan/bazel/mvn/resourses/dataenum-processor-1.0.2.jar",
+      "src/main/javatest/net/evendanan/bazel/mvn/resourses/dataenum-1.0.2.jar"
+   ],
+  resource_strip_prefix = "others/migration-tooling/generate_workspace/src/main/javatest/net/evendanan/bazel/mvn/resourses/",
   size="small",
   test_class = "net.evendanan.bazel.mvn.RuleClassifiersTest",
+)
+
+java_test(name = "composite_formater",
+  deps=[
+      ":classifier_lib",
+      ":resolver_lib",
+      "//others/migration-tooling:migration_tools___junit__junit",
+       "//others/migration-tooling:migration_tools___org_mockito__mockito_core"
+       ],
+  srcs=["src/main/javatest/net/evendanan/bazel/mvn/CompositeFormatterTest.java"],
+  size="small",
+  test_class = "net.evendanan.bazel.mvn.CompositeFormatterTest",
+)
+
+java_test(name = "real_formatters",
+  deps=[
+      ":classifier_lib",
+      ":resolver_lib",
+      "//others/migration-tooling:migration_tools___junit__junit",
+       "//others/migration-tooling:migration_tools___org_mockito__mockito_core"
+       ],
+  srcs=["src/main/javatest/net/evendanan/bazel/mvn/FormattersTests.java"],
+  size="small",
+  test_class = "net.evendanan.bazel.mvn.FormattersTests",
 )
