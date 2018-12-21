@@ -15,8 +15,8 @@ This WORKSPACE will provide `deps_workspace_generator_rule` rule which allows yo
 * Generates required Java rule (with transitive dependencies).
 * Automatically detects which rule-type to create for a given dependency:
   * `aar_import` for Android artifacts.
-  * `java_plugin` for annotation-processors.
-  * `kt_jvm_import` for Kotlin modules.
+  * `java_plugin` + `java_library` for annotation-processors. More about this [here](#annotation-processors).
+  * `kt_jvm_import` + `kt_jvm_library` for Kotlin modules. More about this [here](#kotlin).
   * `java_import` for anything else.
 * Allow to specify custom Maven repo URLs.
 * Produces a _lock_ file that describes the dependency graph. This file should be checked into your repo.
@@ -30,8 +30,8 @@ The resolving of the Maven dependency graph is done using a modified version of 
 Note: You might need to also import `http_archive` rules into your workspace: `load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file", "http_archive")`
 
 Add this repository to your WORKSPACE (set `bazel_mvn_deps_version` to the latest [commit](https://github.com/menny/bazel-mvn-deps/commits/master)):
-```
-bazel_mvn_deps_version = "08bd8e7a9f328a03154aabe90d9b9d8010c2515e"
+```python
+bazel_mvn_deps_version = "92a032f75d25769197d7709a4dcf0d345548a7da"
 http_archive(
     name = "bazel_mvn_deps_rule",
     urls = ["https://github.com/menny/bazel-mvn-deps/archive/%s.zip" % bazel_mvn_deps_version],
@@ -45,11 +45,11 @@ generate_bazel_mvn_deps_workspace_rules()
 
 ### target definition
 In your module's `BUILD.bazel` file (let's say `resolver/BUILD.bazel`) load the dependencies rule:
-```
+```python
 load("@bazel_mvn_deps_rule//rules/maven_deps:maven_deps_workspace_generator.bzl", "deps_workspace_generator_rule")
 ```
 And define a target for resolving dependencies:
-```
+```python
 deps_workspace_generator_rule(name = 'main_deps',
     maven_deps = [
         "com.google.guava:guava:20.0",
@@ -66,11 +66,11 @@ In this example above we defined the target `//resolver:main_deps` with 4 maven 
 * `com.google.guava:guava:20.0`
 * `org.apache.commons:commons-lang3:jar:3.8.1`
 * `com.google.code.findbugs:jsr305:3.0.2`
-* `com.google.auto.value:auto-value:1.6.3` - which is an annotation-processor. More on that later in the document.
+* `com.google.auto.value:auto-value:1.6.3` - which is an annotation-processor.
 
 ### Resolving the dependency graph
 To generate the transitive rules for the required `maven_deps`, you'll run the target:
-```
+```bash
 bazel run //resolver:main_deps
 ```
 
@@ -78,7 +78,7 @@ This will retrieve all the transitive dependencies and resolve conflicts. We wil
 
 ### Using the generated Maven dependencies
 In modules you which to use those dependencies, first load the generated transitive rules in your module's `BUILD.bazel` file:
-```
+```python
 load("//resolver:dependencies.bzl", "generate_migration_tools_transitive_dependency_rules")
 generate_migration_tools_transitive_dependency_rules()
 ```
@@ -99,3 +99,32 @@ In the example above we included `com.google.auto.value:auto-value:1.6.3`, which
 
 Please, read the [Bazel docs](https://docs.bazel.build/versions/master/be/java.html#java_plugin.generates_api) about which variant you want.<br/>
 Also, since we are wrapping the `java_plugin` rules in a `java_library` rules, you should add them to the `deps` list of your rule, and not to the `plugins` list.
+
+#### Kotlin
+
+For [Kotlin](https://github.com/bazelbuild/rules_kotlin), we create a `kt_jvm_import` for each artifact, and then wrap it (along with its deps) in a `kt_jvm_library`. Your rule
+depends on the `kt_jvm_library`.<br/>
+
+If your dependencies contain Kotlin rules, you'll need to pass the kt rule-impl to the transitive rules generation macro (in the example above, it is `generate_migration_tools_transitive_dependency_rules`):
+```python
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_import", "kt_jvm_library")
+
+load("//resolver:dependencies.bzl", "generate_migration_tools_transitive_dependency_rules")
+generate_migration_tools_transitive_dependency_rules(kt_jvm_import = kt_jvm_import, kt_jvm_library = kt_jvm_library)
+```
+<br/>
+There is a problem with this, at the moment: `kt_jvm_library` in _master_ does not allow no-source-libraries. So, until the [fix](https://github.com/bazelbuild/rules_kotlin/pull/170) is merged, you can use my branch of the rules:
+```python
+rules_kotlin_version = "no-src-support"
+http_archive(
+    name = "io_bazel_rules_kotlin",
+    urls = ["https://github.com/menny/rules_kotlin/archive/%s.zip" % rules_kotlin_version],
+    type = "zip",
+    strip_prefix = "rules_kotlin-%s" % rules_kotlin_version
+)
+
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kotlin_repositories", "kt_register_toolchains")
+kotlin_repositories()
+kt_register_toolchains()
+```
+
