@@ -1,6 +1,6 @@
 # The following dependencies were calculated from:
 #
-# generate_workspace --repository=https://maven.google.com/ --repository=https://jcenter.bintray.com/ --repository=https://repo1.maven.org/maven2/ --artifact=com.google.guava:guava:20.0 --artifact=com.beust:jcommander:1.72 --artifact=org.eclipse.aether:aether-api:1.1.0 --artifact=org.eclipse.aether:aether-spi:1.1.0 --artifact=org.eclipse.aether:aether-impl:1.1.0 --artifact=org.eclipse.aether:aether-util:1.1.0 --artifact=org.eclipse.aether:aether-transport-http:1.1.0 --artifact=org.eclipse.aether:aether-transport-classpath:1.1.0 --artifact=org.eclipse.aether:aether-transport-wagon:1.1.0 --artifact=org.eclipse.aether:aether-transport-file:1.1.0 --artifact=org.eclipse.aether:aether-connector-basic:1.1.0 --artifact=org.apache.maven:maven-aether-provider:3.2.3 --artifact=org.apache.maven:maven-model:3.2.3 --artifact=org.apache.maven:maven-model-builder:3.2.3 --artifact=org.apache.maven:maven-repository-metadata:3.2.3 --artifact=org.apache.maven:maven-artifact:3.5.0 --artifact=org.codehaus.plexus:plexus-interpolation:1.24 --artifact=org.codehaus.plexus:plexus-utils:3.0.24 --artifact=org.apache.httpcomponents:httpclient:4.5.3 --artifact=org.apache.commons:commons-lang3:jar:3.8.1 --artifact=com.google.code.findbugs:jsr305:3.0.2 --artifact=junit:junit:4.12 --artifact=org.mockito:mockito-core:2.23.4 --rule_prefix=migration_tools --macro_prefix=migration_tools
+# generate_workspace --repository=https://maven.google.com/ --repository=https://jcenter.bintray.com/ --repository=https://repo1.maven.org/maven2/ --artifact=com.google.guava:guava:20.0 --artifact=com.beust:jcommander:1.72 --artifact=org.eclipse.aether:aether-api:1.1.0 --artifact=org.eclipse.aether:aether-spi:1.1.0 --artifact=org.eclipse.aether:aether-impl:1.1.0 --artifact=org.eclipse.aether:aether-util:1.1.0 --artifact=org.eclipse.aether:aether-transport-http:1.1.0 --artifact=org.eclipse.aether:aether-transport-classpath:1.1.0 --artifact=org.eclipse.aether:aether-transport-wagon:1.1.0 --artifact=org.eclipse.aether:aether-transport-file:1.1.0 --artifact=org.eclipse.aether:aether-connector-basic:1.1.0 --artifact=org.apache.maven:maven-aether-provider:3.2.3 --artifact=org.apache.maven:maven-model:3.2.3 --artifact=org.apache.maven:maven-model-builder:3.2.3 --artifact=org.apache.maven:maven-repository-metadata:3.2.3 --artifact=org.apache.maven:maven-artifact:3.5.0 --artifact=org.codehaus.plexus:plexus-interpolation:1.24 --artifact=org.codehaus.plexus:plexus-utils:3.0.24 --artifact=org.apache.httpcomponents:httpclient:4.5.3 --artifact=org.apache.commons:commons-lang3:jar:3.8.1 --artifact=com.google.code.findbugs:jsr305:3.0.2 --artifact=junit:junit:4.12 --artifact=org.mockito:mockito-core:2.23.4 --artifact=com.google.auto.value:auto-value:1.6.3 --rule_prefix=migration_tools --macro_prefix=migration_tools
 
 
 # Loading a drop-in replacement for native.http_file
@@ -123,11 +123,25 @@ def generate_migration_tools_workspace_rules():
         downloaded_file_path = "commons-lang3-3.8.1.jar",
         )
 
+    # com.google.auto.value:auto-value:jar:1.6.3
+    http_file(
+        name = "migration_tools___net_ltgt_gradle_incap__incap_processor",
+        urls = ["https://jcenter.bintray.com/net/ltgt/gradle/incap/incap-processor/0.2/incap-processor-0.2.jar"],
+        downloaded_file_path = "incap-processor-0.2.jar",
+        )
+
     # log4j:log4j:bundle:1.2.17
     http_file(
         name = "migration_tools___org_apache_openejb__javaee_api",
         urls = ["https://jcenter.bintray.com/org/apache/openejb/javaee-api/5.0-2/javaee-api-5.0-2.jar"],
         downloaded_file_path = "javaee-api-5.0-2.jar",
+        )
+
+    # com.google.auto.value:auto-value:jar:1.6.3
+    http_file(
+        name = "migration_tools___com_google_auto_service__auto_service",
+        urls = ["https://jcenter.bintray.com/com/google/auto/service/auto-service/1.0-rc4/auto-service-1.0-rc4.jar"],
+        downloaded_file_path = "auto-service-1.0-rc4.jar",
         )
 
     http_file(
@@ -171,6 +185,19 @@ def generate_migration_tools_workspace_rules():
         downloaded_file_path = "jcl-over-slf4j-1.6.2.jar",
         )
 
+    # net.ltgt.gradle.incap:incap-processor:jar:0.2
+    http_file(
+        name = "migration_tools___net_ltgt_gradle_incap__incap",
+        urls = ["https://jcenter.bintray.com/net/ltgt/gradle/incap/incap/0.2/incap-0.2.jar"],
+        downloaded_file_path = "incap-0.2.jar",
+        )
+
+    http_file(
+        name = "migration_tools___com_google_auto_value__auto_value",
+        urls = ["https://jcenter.bintray.com/com/google/auto/value/auto-value/1.6.3/auto-value-1.6.3.jar"],
+        downloaded_file_path = "auto-value-1.6.3.jar",
+        )
+
     # org.mockito:mockito-core:jar:2.23.4
     http_file(
         name = "migration_tools___net_bytebuddy__byte_buddy",
@@ -198,6 +225,8 @@ def generate_migration_tools_workspace_rules():
         downloaded_file_path = "jsr305-3.0.2.jar",
         )
 
+    # com.google.auto:auto-common:jar:0.8 wanted version 19.0
+    # com.google.auto.service:auto-service:jar:1.0-rc4 wanted version 23.5-jre
     http_file(
         name = "migration_tools___com_google_guava__guava",
         urls = ["https://jcenter.bintray.com/com/google/guava/guava/20.0/guava-20.0.jar"],
@@ -271,6 +300,13 @@ def generate_migration_tools_workspace_rules():
         downloaded_file_path = "junit-4.12.jar",
         )
 
+    # com.google.auto.service:auto-service:jar:1.0-rc4
+    http_file(
+        name = "migration_tools___com_google_auto__auto_common",
+        urls = ["https://jcenter.bintray.com/com/google/auto/auto-common/0.8/auto-common-0.8.jar"],
+        downloaded_file_path = "auto-common-0.8.jar",
+        )
+
     # org.apache.httpcomponents:httpclient:jar:4.5.3
     http_file(
         name = "migration_tools___commons_codec__commons_codec",
@@ -324,16 +360,16 @@ def generate_migration_tools_transitive_dependency_rules():
         name = "migration_tools___org_eclipse_aether__aether-transport-wagon__1_1_0",
         jars = ["@migration_tools___org_eclipse_aether__aether_transport_wagon//file"],
         deps = [
-            ":migration_tools___org_eclipse_aether__aether_util",
             ":migration_tools___org_apache_maven_wagon__wagon_provider_api",
-            ":migration_tools___org_eclipse_aether__aether_spi",
             ":migration_tools___org_eclipse_aether__aether_api",
+            ":migration_tools___org_eclipse_aether__aether_spi",
+            ":migration_tools___org_eclipse_aether__aether_util",
         ],
         exports = [
-            ":migration_tools___org_eclipse_aether__aether_util",
             ":migration_tools___org_apache_maven_wagon__wagon_provider_api",
-            ":migration_tools___org_eclipse_aether__aether_spi",
             ":migration_tools___org_eclipse_aether__aether_api",
+            ":migration_tools___org_eclipse_aether__aether_spi",
+            ":migration_tools___org_eclipse_aether__aether_util",
         ],
     )
     native.alias(
@@ -366,13 +402,13 @@ def generate_migration_tools_transitive_dependency_rules():
         name = "migration_tools___org_mockito__mockito-core__2_23_4",
         jars = ["@migration_tools___org_mockito__mockito_core//file"],
         deps = [
-            ":migration_tools___net_bytebuddy__byte_buddy_agent",
             ":migration_tools___net_bytebuddy__byte_buddy",
+            ":migration_tools___net_bytebuddy__byte_buddy_agent",
             ":migration_tools___org_objenesis__objenesis",
         ],
         exports = [
-            ":migration_tools___net_bytebuddy__byte_buddy_agent",
             ":migration_tools___net_bytebuddy__byte_buddy",
+            ":migration_tools___net_bytebuddy__byte_buddy_agent",
             ":migration_tools___org_objenesis__objenesis",
         ],
     )
@@ -424,16 +460,16 @@ def generate_migration_tools_transitive_dependency_rules():
         name = "migration_tools___org_apache_maven__maven-model-builder__3_2_3",
         jars = ["@migration_tools___org_apache_maven__maven_model_builder//file"],
         deps = [
-            ":migration_tools___org_codehaus_plexus__plexus_component_annotations",
-            ":migration_tools___org_codehaus_plexus__plexus_utils",
-            ":migration_tools___org_codehaus_plexus__plexus_interpolation",
             ":migration_tools___org_apache_maven__maven_model",
+            ":migration_tools___org_codehaus_plexus__plexus_component_annotations",
+            ":migration_tools___org_codehaus_plexus__plexus_interpolation",
+            ":migration_tools___org_codehaus_plexus__plexus_utils",
         ],
         exports = [
-            ":migration_tools___org_codehaus_plexus__plexus_component_annotations",
-            ":migration_tools___org_codehaus_plexus__plexus_utils",
-            ":migration_tools___org_codehaus_plexus__plexus_interpolation",
             ":migration_tools___org_apache_maven__maven_model",
+            ":migration_tools___org_codehaus_plexus__plexus_component_annotations",
+            ":migration_tools___org_codehaus_plexus__plexus_interpolation",
+            ":migration_tools___org_codehaus_plexus__plexus_utils",
         ],
     )
     native.alias(
@@ -448,18 +484,18 @@ def generate_migration_tools_transitive_dependency_rules():
         name = "migration_tools___org_eclipse_aether__aether-transport-http__1_1_0",
         jars = ["@migration_tools___org_eclipse_aether__aether_transport_http//file"],
         deps = [
+            ":migration_tools___org_apache_httpcomponents__httpclient",
+            ":migration_tools___org_eclipse_aether__aether_api",
+            ":migration_tools___org_eclipse_aether__aether_spi",
             ":migration_tools___org_eclipse_aether__aether_util",
             ":migration_tools___org_slf4j__jcl_over_slf4j",
-            ":migration_tools___org_apache_httpcomponents__httpclient",
-            ":migration_tools___org_eclipse_aether__aether_spi",
-            ":migration_tools___org_eclipse_aether__aether_api",
         ],
         exports = [
+            ":migration_tools___org_apache_httpcomponents__httpclient",
+            ":migration_tools___org_eclipse_aether__aether_api",
+            ":migration_tools___org_eclipse_aether__aether_spi",
             ":migration_tools___org_eclipse_aether__aether_util",
             ":migration_tools___org_slf4j__jcl_over_slf4j",
-            ":migration_tools___org_apache_httpcomponents__httpclient",
-            ":migration_tools___org_eclipse_aether__aether_spi",
-            ":migration_tools___org_eclipse_aether__aether_api",
         ],
     )
     native.alias(
@@ -492,26 +528,26 @@ def generate_migration_tools_transitive_dependency_rules():
         name = "migration_tools___org_apache_maven__maven-aether-provider__3_2_3",
         jars = ["@migration_tools___org_apache_maven__maven_aether_provider//file"],
         deps = [
+            ":migration_tools___org_apache_maven__maven_model",
             ":migration_tools___org_apache_maven__maven_model_builder",
             ":migration_tools___org_apache_maven__maven_repository_metadata",
-            ":migration_tools___org_eclipse_aether__aether_impl",
             ":migration_tools___org_codehaus_plexus__plexus_component_annotations",
-            ":migration_tools___org_eclipse_aether__aether_util",
             ":migration_tools___org_codehaus_plexus__plexus_utils",
-            ":migration_tools___org_eclipse_aether__aether_spi",
             ":migration_tools___org_eclipse_aether__aether_api",
-            ":migration_tools___org_apache_maven__maven_model",
+            ":migration_tools___org_eclipse_aether__aether_impl",
+            ":migration_tools___org_eclipse_aether__aether_spi",
+            ":migration_tools___org_eclipse_aether__aether_util",
         ],
         exports = [
+            ":migration_tools___org_apache_maven__maven_model",
             ":migration_tools___org_apache_maven__maven_model_builder",
             ":migration_tools___org_apache_maven__maven_repository_metadata",
-            ":migration_tools___org_eclipse_aether__aether_impl",
             ":migration_tools___org_codehaus_plexus__plexus_component_annotations",
-            ":migration_tools___org_eclipse_aether__aether_util",
             ":migration_tools___org_codehaus_plexus__plexus_utils",
-            ":migration_tools___org_eclipse_aether__aether_spi",
             ":migration_tools___org_eclipse_aether__aether_api",
-            ":migration_tools___org_apache_maven__maven_model",
+            ":migration_tools___org_eclipse_aether__aether_impl",
+            ":migration_tools___org_eclipse_aether__aether_spi",
+            ":migration_tools___org_eclipse_aether__aether_util",
         ],
     )
     native.alias(
@@ -590,6 +626,56 @@ def generate_migration_tools_transitive_dependency_rules():
 
 
 
+    native.java_plugin(
+        name = "migration_tools___net_ltgt_gradle_incap__incap-processor__0_2_0",
+        processor_class = "net.ltgt.gradle.incap.processor.IncrementalAnnotationProcessorProcessor",
+        generates_api = 0,
+        deps = [
+            ":migration_tools___net_ltgt_gradle_incap__incap",
+        ],
+        )
+    native.java_plugin(
+        name = "migration_tools___net_ltgt_gradle_incap__incap-processor__0_2_generate_api_0",
+        processor_class = "net.ltgt.gradle.incap.processor.IncrementalAnnotationProcessorProcessor",
+        generates_api = 1,
+        deps = [
+            ":migration_tools___net_ltgt_gradle_incap__incap",
+        ],
+        )
+    native.java_plugin(
+        name = "migration_tools___net_ltgt_gradle_incap__incap-processor__0_2",
+        generates_api = 0,
+        deps = [
+            ":migration_tools___net_ltgt_gradle_incap__incap",
+        ],
+        plugins = [
+            "migration_tools___net_ltgt_gradle_incap__incap-processor__0_2_0",
+        ],
+        )
+    native.java_plugin(
+        name = "migration_tools___net_ltgt_gradle_incap__incap-processor__0_2_generate_api",
+        generates_api = 1,
+        deps = [
+            ":migration_tools___net_ltgt_gradle_incap__incap",
+        ],
+        plugins = [
+            "migration_tools___net_ltgt_gradle_incap__incap-processor__0_2_generate_api_0",
+        ],
+        )
+    native.alias(
+        name = "migration_tools___net_ltgt_gradle_incap__incap_processor",
+        actual = "migration_tools___net_ltgt_gradle_incap__incap-processor__0_2",
+        visibility = ["//visibility:public"],
+    )
+
+    native.alias(
+        name = "migration_tools___net_ltgt_gradle_incap__incap_processor_generate_api",
+        actual = "migration_tools___net_ltgt_gradle_incap__incap-processor__0_2",
+        visibility = ["//visibility:public"],
+    )
+
+
+
     native.java_import(
         name = "migration_tools___org_apache_openejb__javaee-api__5_0-2",
         jars = ["@migration_tools___org_apache_openejb__javaee_api//file"],
@@ -597,6 +683,60 @@ def generate_migration_tools_transitive_dependency_rules():
     native.alias(
         name = "migration_tools___org_apache_openejb__javaee_api",
         actual = "migration_tools___org_apache_openejb__javaee-api__5_0-2",
+        visibility = ["//visibility:public"],
+    )
+
+
+
+    native.java_plugin(
+        name = "migration_tools___com_google_auto_service__auto-service__1_0-rc4_0",
+        processor_class = "com.google.auto.service.processor.AutoServiceProcessor",
+        generates_api = 0,
+        deps = [
+            ":migration_tools___com_google_auto__auto_common",
+            ":migration_tools___com_google_guava__guava",
+        ],
+        )
+    native.java_plugin(
+        name = "migration_tools___com_google_auto_service__auto-service__1_0-rc4_generate_api_0",
+        processor_class = "com.google.auto.service.processor.AutoServiceProcessor",
+        generates_api = 1,
+        deps = [
+            ":migration_tools___com_google_auto__auto_common",
+            ":migration_tools___com_google_guava__guava",
+        ],
+        )
+    native.java_plugin(
+        name = "migration_tools___com_google_auto_service__auto-service__1_0-rc4",
+        generates_api = 0,
+        deps = [
+            ":migration_tools___com_google_auto__auto_common",
+            ":migration_tools___com_google_guava__guava",
+        ],
+        plugins = [
+            "migration_tools___com_google_auto_service__auto-service__1_0-rc4_0",
+        ],
+        )
+    native.java_plugin(
+        name = "migration_tools___com_google_auto_service__auto-service__1_0-rc4_generate_api",
+        generates_api = 1,
+        deps = [
+            ":migration_tools___com_google_auto__auto_common",
+            ":migration_tools___com_google_guava__guava",
+        ],
+        plugins = [
+            "migration_tools___com_google_auto_service__auto-service__1_0-rc4_generate_api_0",
+        ],
+        )
+    native.alias(
+        name = "migration_tools___com_google_auto_service__auto_service",
+        actual = "migration_tools___com_google_auto_service__auto-service__1_0-rc4",
+        visibility = ["//visibility:public"],
+    )
+
+    native.alias(
+        name = "migration_tools___com_google_auto_service__auto_service_generate_api",
+        actual = "migration_tools___com_google_auto_service__auto-service__1_0-rc4",
         visibility = ["//visibility:public"],
     )
 
@@ -657,14 +797,14 @@ def generate_migration_tools_transitive_dependency_rules():
         name = "migration_tools___org_eclipse_aether__aether-connector-basic__1_1_0",
         jars = ["@migration_tools___org_eclipse_aether__aether_connector_basic//file"],
         deps = [
-            ":migration_tools___org_eclipse_aether__aether_util",
-            ":migration_tools___org_eclipse_aether__aether_spi",
             ":migration_tools___org_eclipse_aether__aether_api",
+            ":migration_tools___org_eclipse_aether__aether_spi",
+            ":migration_tools___org_eclipse_aether__aether_util",
         ],
         exports = [
-            ":migration_tools___org_eclipse_aether__aether_util",
-            ":migration_tools___org_eclipse_aether__aether_spi",
             ":migration_tools___org_eclipse_aether__aether_api",
+            ":migration_tools___org_eclipse_aether__aether_spi",
+            ":migration_tools___org_eclipse_aether__aether_util",
         ],
     )
     native.alias(
@@ -694,6 +834,152 @@ def generate_migration_tools_transitive_dependency_rules():
 
 
     native.java_import(
+        name = "migration_tools___net_ltgt_gradle_incap__incap__0_2",
+        jars = ["@migration_tools___net_ltgt_gradle_incap__incap//file"],
+    )
+    native.alias(
+        name = "migration_tools___net_ltgt_gradle_incap__incap",
+        actual = "migration_tools___net_ltgt_gradle_incap__incap__0_2",
+        visibility = ["//visibility:public"],
+    )
+
+
+
+    native.java_plugin(
+        name = "migration_tools___com_google_auto_value__auto-value__1_6_3_0",
+        processor_class = "com.google.auto.value.extension.memoized.processor.MemoizedValidator",
+        generates_api = 0,
+        deps = [
+            ":migration_tools___com_google_auto_service__auto_service",
+            ":migration_tools___net_ltgt_gradle_incap__incap_processor",
+        ],
+        )
+    native.java_plugin(
+        name = "migration_tools___com_google_auto_value__auto-value__1_6_3_generate_api_0",
+        processor_class = "com.google.auto.value.extension.memoized.processor.MemoizedValidator",
+        generates_api = 1,
+        deps = [
+            ":migration_tools___com_google_auto_service__auto_service",
+            ":migration_tools___net_ltgt_gradle_incap__incap_processor",
+        ],
+        )
+    native.java_plugin(
+        name = "migration_tools___com_google_auto_value__auto-value__1_6_3_1",
+        processor_class = "com.google.auto.value.processor.AutoAnnotationProcessor",
+        generates_api = 0,
+        deps = [
+            ":migration_tools___com_google_auto_service__auto_service",
+            ":migration_tools___net_ltgt_gradle_incap__incap_processor",
+        ],
+        )
+    native.java_plugin(
+        name = "migration_tools___com_google_auto_value__auto-value__1_6_3_generate_api_1",
+        processor_class = "com.google.auto.value.processor.AutoAnnotationProcessor",
+        generates_api = 1,
+        deps = [
+            ":migration_tools___com_google_auto_service__auto_service",
+            ":migration_tools___net_ltgt_gradle_incap__incap_processor",
+        ],
+        )
+    native.java_plugin(
+        name = "migration_tools___com_google_auto_value__auto-value__1_6_3_2",
+        processor_class = "com.google.auto.value.processor.AutoOneOfProcessor",
+        generates_api = 0,
+        deps = [
+            ":migration_tools___com_google_auto_service__auto_service",
+            ":migration_tools___net_ltgt_gradle_incap__incap_processor",
+        ],
+        )
+    native.java_plugin(
+        name = "migration_tools___com_google_auto_value__auto-value__1_6_3_generate_api_2",
+        processor_class = "com.google.auto.value.processor.AutoOneOfProcessor",
+        generates_api = 1,
+        deps = [
+            ":migration_tools___com_google_auto_service__auto_service",
+            ":migration_tools___net_ltgt_gradle_incap__incap_processor",
+        ],
+        )
+    native.java_plugin(
+        name = "migration_tools___com_google_auto_value__auto-value__1_6_3_3",
+        processor_class = "com.google.auto.value.processor.AutoValueBuilderProcessor",
+        generates_api = 0,
+        deps = [
+            ":migration_tools___com_google_auto_service__auto_service",
+            ":migration_tools___net_ltgt_gradle_incap__incap_processor",
+        ],
+        )
+    native.java_plugin(
+        name = "migration_tools___com_google_auto_value__auto-value__1_6_3_generate_api_3",
+        processor_class = "com.google.auto.value.processor.AutoValueBuilderProcessor",
+        generates_api = 1,
+        deps = [
+            ":migration_tools___com_google_auto_service__auto_service",
+            ":migration_tools___net_ltgt_gradle_incap__incap_processor",
+        ],
+        )
+    native.java_plugin(
+        name = "migration_tools___com_google_auto_value__auto-value__1_6_3_4",
+        processor_class = "com.google.auto.value.processor.AutoValueProcessor",
+        generates_api = 0,
+        deps = [
+            ":migration_tools___com_google_auto_service__auto_service",
+            ":migration_tools___net_ltgt_gradle_incap__incap_processor",
+        ],
+        )
+    native.java_plugin(
+        name = "migration_tools___com_google_auto_value__auto-value__1_6_3_generate_api_4",
+        processor_class = "com.google.auto.value.processor.AutoValueProcessor",
+        generates_api = 1,
+        deps = [
+            ":migration_tools___com_google_auto_service__auto_service",
+            ":migration_tools___net_ltgt_gradle_incap__incap_processor",
+        ],
+        )
+    native.java_plugin(
+        name = "migration_tools___com_google_auto_value__auto-value__1_6_3",
+        generates_api = 0,
+        deps = [
+            ":migration_tools___com_google_auto_service__auto_service",
+            ":migration_tools___net_ltgt_gradle_incap__incap_processor",
+        ],
+        plugins = [
+            "migration_tools___com_google_auto_value__auto-value__1_6_3_0",
+            "migration_tools___com_google_auto_value__auto-value__1_6_3_1",
+            "migration_tools___com_google_auto_value__auto-value__1_6_3_2",
+            "migration_tools___com_google_auto_value__auto-value__1_6_3_3",
+            "migration_tools___com_google_auto_value__auto-value__1_6_3_4",
+        ],
+        )
+    native.java_plugin(
+        name = "migration_tools___com_google_auto_value__auto-value__1_6_3_generate_api",
+        generates_api = 1,
+        deps = [
+            ":migration_tools___com_google_auto_service__auto_service",
+            ":migration_tools___net_ltgt_gradle_incap__incap_processor",
+        ],
+        plugins = [
+            "migration_tools___com_google_auto_value__auto-value__1_6_3_generate_api_0",
+            "migration_tools___com_google_auto_value__auto-value__1_6_3_generate_api_1",
+            "migration_tools___com_google_auto_value__auto-value__1_6_3_generate_api_2",
+            "migration_tools___com_google_auto_value__auto-value__1_6_3_generate_api_3",
+            "migration_tools___com_google_auto_value__auto-value__1_6_3_generate_api_4",
+        ],
+        )
+    native.alias(
+        name = "migration_tools___com_google_auto_value__auto_value",
+        actual = "migration_tools___com_google_auto_value__auto-value__1_6_3",
+        visibility = ["//visibility:public"],
+    )
+
+    native.alias(
+        name = "migration_tools___com_google_auto_value__auto_value_generate_api",
+        actual = "migration_tools___com_google_auto_value__auto-value__1_6_3",
+        visibility = ["//visibility:public"],
+    )
+
+
+
+    native.java_import(
         name = "migration_tools___net_bytebuddy__byte-buddy__1_9_3",
         jars = ["@migration_tools___net_bytebuddy__byte_buddy//file"],
         deps = [
@@ -712,14 +998,14 @@ def generate_migration_tools_transitive_dependency_rules():
         name = "migration_tools___org_eclipse_aether__aether-impl__1_1_0",
         jars = ["@migration_tools___org_eclipse_aether__aether_impl//file"],
         deps = [
-            ":migration_tools___org_eclipse_aether__aether_util",
-            ":migration_tools___org_eclipse_aether__aether_spi",
             ":migration_tools___org_eclipse_aether__aether_api",
+            ":migration_tools___org_eclipse_aether__aether_spi",
+            ":migration_tools___org_eclipse_aether__aether_util",
         ],
         exports = [
-            ":migration_tools___org_eclipse_aether__aether_util",
-            ":migration_tools___org_eclipse_aether__aether_spi",
             ":migration_tools___org_eclipse_aether__aether_api",
+            ":migration_tools___org_eclipse_aether__aether_spi",
+            ":migration_tools___org_eclipse_aether__aether_util",
         ],
     )
     native.alias(
@@ -824,8 +1110,8 @@ def generate_migration_tools_transitive_dependency_rules():
         name = "migration_tools___net_bytebuddy__byte-buddy-agent__1_9_3",
         jars = ["@migration_tools___net_bytebuddy__byte_buddy_agent//file"],
         deps = [
-            ":migration_tools___com_kohlschutter_junixsocket__junixsocket_native_common",
             ":migration_tools___com_google_code_findbugs__findbugs_annotations",
+            ":migration_tools___com_kohlschutter_junixsocket__junixsocket_native_common",
         ],
     )
     native.alias(
@@ -852,14 +1138,14 @@ def generate_migration_tools_transitive_dependency_rules():
         name = "migration_tools___org_eclipse_aether__aether-transport-classpath__1_1_0",
         jars = ["@migration_tools___org_eclipse_aether__aether_transport_classpath//file"],
         deps = [
-            ":migration_tools___org_eclipse_aether__aether_util",
-            ":migration_tools___org_eclipse_aether__aether_spi",
             ":migration_tools___org_eclipse_aether__aether_api",
+            ":migration_tools___org_eclipse_aether__aether_spi",
+            ":migration_tools___org_eclipse_aether__aether_util",
         ],
         exports = [
-            ":migration_tools___org_eclipse_aether__aether_util",
-            ":migration_tools___org_eclipse_aether__aether_spi",
             ":migration_tools___org_eclipse_aether__aether_api",
+            ":migration_tools___org_eclipse_aether__aether_spi",
+            ":migration_tools___org_eclipse_aether__aether_util",
         ],
     )
     native.alias(
@@ -874,14 +1160,14 @@ def generate_migration_tools_transitive_dependency_rules():
         name = "migration_tools___org_eclipse_aether__aether-transport-file__1_1_0",
         jars = ["@migration_tools___org_eclipse_aether__aether_transport_file//file"],
         deps = [
-            ":migration_tools___org_eclipse_aether__aether_util",
-            ":migration_tools___org_eclipse_aether__aether_spi",
             ":migration_tools___org_eclipse_aether__aether_api",
+            ":migration_tools___org_eclipse_aether__aether_spi",
+            ":migration_tools___org_eclipse_aether__aether_util",
         ],
         exports = [
-            ":migration_tools___org_eclipse_aether__aether_util",
-            ":migration_tools___org_eclipse_aether__aether_spi",
             ":migration_tools___org_eclipse_aether__aether_api",
+            ":migration_tools___org_eclipse_aether__aether_spi",
+            ":migration_tools___org_eclipse_aether__aether_util",
         ],
     )
     native.alias(
@@ -911,6 +1197,24 @@ def generate_migration_tools_transitive_dependency_rules():
 
 
     native.java_import(
+        name = "migration_tools___com_google_auto__auto-common__0_8",
+        jars = ["@migration_tools___com_google_auto__auto_common//file"],
+        deps = [
+            ":migration_tools___com_google_guava__guava",
+        ],
+        exports = [
+            ":migration_tools___com_google_guava__guava",
+        ],
+    )
+    native.alias(
+        name = "migration_tools___com_google_auto__auto_common",
+        actual = "migration_tools___com_google_auto__auto-common__0_8",
+        visibility = ["//visibility:public"],
+    )
+
+
+
+    native.java_import(
         name = "migration_tools___commons-codec__commons-codec__1_9",
         jars = ["@migration_tools___commons_codec__commons_codec//file"],
     )
@@ -927,13 +1231,13 @@ def generate_migration_tools_transitive_dependency_rules():
         jars = ["@migration_tools___com_kohlschutter_junixsocket__junixsocket_native_common//file"],
         deps = [
             ":migration_tools___com_kohlschutter_junixsocket__junixsocket_common",
-            ":migration_tools___org_scijava__native_lib_loader",
             ":migration_tools___log4j__log4j",
+            ":migration_tools___org_scijava__native_lib_loader",
         ],
         exports = [
             ":migration_tools___com_kohlschutter_junixsocket__junixsocket_common",
-            ":migration_tools___org_scijava__native_lib_loader",
             ":migration_tools___log4j__log4j",
+            ":migration_tools___org_scijava__native_lib_loader",
         ],
     )
     native.alias(
@@ -966,14 +1270,14 @@ def generate_migration_tools_transitive_dependency_rules():
         name = "migration_tools___org_apache_httpcomponents__httpclient__4_5_3",
         jars = ["@migration_tools___org_apache_httpcomponents__httpclient//file"],
         deps = [
-            ":migration_tools___org_apache_httpcomponents__httpcore",
             ":migration_tools___commons_codec__commons_codec",
             ":migration_tools___commons_logging__commons_logging",
+            ":migration_tools___org_apache_httpcomponents__httpcore",
         ],
         exports = [
-            ":migration_tools___org_apache_httpcomponents__httpcore",
             ":migration_tools___commons_codec__commons_codec",
             ":migration_tools___commons_logging__commons_logging",
+            ":migration_tools___org_apache_httpcomponents__httpcore",
         ],
     )
     native.alias(

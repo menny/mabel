@@ -8,6 +8,19 @@ There are several attempts to solve this problem (such as [sync-deps](https://gi
 <br/>
 This WORKSPACE will provide `deps_workspace_generator_rule` rule which allows you to create a set of rules which can be used as dependencies based on a given list of Maven dependencies. The rule will output the dependencies-graph to a file (similar to Yarn's lock-file).
 
+## Features
+
+* Transitively resolves all dependencies from a given list of Maven dependencies.
+* Generates repository-rules for all remote artifacts.
+* Generates required Java rule (with transitive dependencies).
+* Automatically detects which rule-type to create for a given dependency:
+  * `aar_import` for Android artifacts.
+  * `java_plugin` for annotation-processors.
+  * `kt_jvm_import` for Kotlin modules.
+  * `java_import` for anything else.
+* Allow to specify custom Maven repo URLs.
+* Produces a _lock_ file that describes the dependency graph. This file should be checked into your repo.
+  
 ## Prior-work
 The resolving of the Maven dependency graph is done using a modified version of [migration-tooling](https://github.com/bazelbuild/migration-tooling).
 
