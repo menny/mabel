@@ -33,7 +33,7 @@ Note: You might need to also import `http_archive` rules into your workspace: `l
 
 Add this repository to your WORKSPACE (set `bazel_mvn_deps_version` to the latest [commit](https://github.com/menny/bazel-mvn-deps/commits/master)):
 ```python
-bazel_mvn_deps_version = "92a032f75d25769197d7709a4dcf0d345548a7da"
+bazel_mvn_deps_version = "c46771ae8fb6986d5b8c5f15078ba52d8f8a9006"
 http_archive(
     name = "bazel_mvn_deps_rule",
     urls = ["https://github.com/menny/bazel-mvn-deps/archive/%s.zip" % bazel_mvn_deps_version],
