@@ -23,11 +23,11 @@ public class RuleFormatters {
 
         private final Collection<RuleFormatter> ruleFormatters;
 
-        public CompositeFormatter(RuleFormatter... ruleFormatters) {
+        CompositeFormatter(RuleFormatter... ruleFormatters) {
             this(Arrays.asList(ruleFormatters));
         }
 
-        public CompositeFormatter(Collection<RuleFormatter> ruleFormatters) {
+        CompositeFormatter(Collection<RuleFormatter> ruleFormatters) {
             this.ruleFormatters = ImmutableList.copyOf(ruleFormatters);
         }
 
@@ -71,10 +71,11 @@ public class RuleFormatters {
 
         builder.append(RULE_INDENT).append("kt_jvm_library").append("(\n");
         builder.append(RULE_ARGUMENTS_INDENT).append("name = \"").append(rule.mavenGeneratedName()).append("\",\n");
+
         final Set<String> depsWithImportedJar = new HashSet<>(convertRulesToStrings(rule.getDeps()));
         depsWithImportedJar.add(":" + rule.mavenGeneratedName() + "_kotlin_jar");
-        addStringListArgument(builder, "deps", depsWithImportedJar);
-        addListArgument(builder, "runtime_deps", rule.getRuntimeDeps());
+        depsWithImportedJar.addAll(convertRulesToStrings(rule.getRuntimeDeps()));
+        addStringListArgument(builder, "runtime_deps", depsWithImportedJar);
         addListArgument(builder, "exports", rule.getExportDeps());
         builder.append(RULE_INDENT).append(")\n");
 
