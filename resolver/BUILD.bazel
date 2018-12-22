@@ -187,3 +187,10 @@ java_test(name = "real_formatters",
   size="small",
   test_class = "net.evendanan.bazel.mvn.FormattersTests",
 )
+
+java_test(name = "target_test",
+  deps=[":classifier_lib",],
+  srcs=["src/main/javatest/net/evendanan/bazel/mvn/TargetTest.java"],
+  size="small",
+  test_class = "net.evendanan.bazel.mvn.TargetTest",
+)
