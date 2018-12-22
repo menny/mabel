@@ -133,7 +133,7 @@ public class Target {
 
             final List<String> stringList = value.stream()
                 .sorted()
-                .map(str -> String.format(Locale.US, "'%s', ", str))
+                .map(str -> String.format(Locale.US, "'%s',", str))
                 .collect(Collectors.toList());
             stringList.add(0, "[");
             stringList.add("]");

@@ -85,9 +85,9 @@ public class TargetTest {
                                                     + "          list_empty_attr = [],\n"
                                                     + "          list_single_attr = ['only_one'],\n"
                                                     + "          list_multiple_attr = [\n"
-                                                    + "              'one', \n"
-                                                    + "              'three', \n"
-                                                    + "              'two', \n"
+                                                    + "              'one',\n"
+                                                    + "              'three',\n"
+                                                    + "              'two',\n"
                                                     + "          ],\n"
                                                     + "      )\n";
 }

@@ -76,10 +76,12 @@ public class RuleFormatters {
         depsWithImportedJar.add(":" + rule.mavenGeneratedName() + "_kotlin_jar");
         depsWithImportedJar.addAll(convertRulesToStrings(rule.getRuntimeDeps()));
 
+        final Set<String> exportsWithImportedJar = new HashSet<>(convertRulesToStrings(rule.getExportDeps()));
+        exportsWithImportedJar.add(":" + rule.mavenGeneratedName() + "_kotlin_jar");
+
         new Target("kt_jvm_library", rule.mavenGeneratedName())
-            .addList("jars", Collections.singleton(String.format(Locale.US, "@%s//file", rule.mavenGeneratedName())))
             .addList("runtime_deps", depsWithImportedJar)
-            .addList("exports", convertRulesToStrings(rule.getExportDeps()))
+            .addList("exports", exportsWithImportedJar)
             .outputTarget(RULE_INDENT + RULE_INDENT, builder);
 
         builder.append('\n');
