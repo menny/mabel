@@ -103,7 +103,8 @@ public class BzlWriter {
         outputStream.println();
 
         outputStream.println("# Transitive rules macro to be run in the BUILD.bazel file.");
-        outputStream.println("# If you use kt rules, you MUST provide the correct rule implementation when call this macro.");
+        outputStream.println("# If you use kt_* rules, you MUST provide the correct rule implementation when call this macro, if you decide");
+        outputStream.println("# not to provide those implementations we'll try to use java_* rules.");
         outputStream.print("def generate_");
         outputStream.print(macrosPrefix);
         outputStream.println("_transitive_dependency_rules(kt_jvm_import=None, kt_jvm_library=None):");

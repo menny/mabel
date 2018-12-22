@@ -43,7 +43,7 @@ public class RuleFormatters {
         StringBuilder builder = new StringBuilder();
         addJavaImportRule(RULE_INDENT, rule, "", builder);
         builder.append('\n');
-        addAlias(builder, rule);
+        addAlias(RULE_INDENT, builder, rule);
 
         return builder.toString();
     };
@@ -60,10 +60,15 @@ public class RuleFormatters {
     @VisibleForTesting
     static final RuleFormatter KOTLIN_IMPORT = rule -> {
         StringBuilder builder = new StringBuilder();
-        //TODO: providing two set of rules, when Kotlin is provided (use kt* rules), and when not provided (use java_*)
+        //In case the developer did not provide a kt_* impl, we'll try to use java_*, should work.
+        builder.append(RULE_INDENT).append("if kt_jvm_import == None:\n");
+        addJavaImportRule(RULE_INDENT + RULE_INDENT, rule, "", builder);
+
+        builder.append(RULE_INDENT).append("else:\n");
+        //In case the developer provide a kt_* impl we'll use them.
         new Target("kt_jvm_import", rule.mavenGeneratedName() + "_kotlin_jar")
             .addList("jars", Collections.singleton(String.format(Locale.US, "@%s//file", rule.mavenGeneratedName())))
-            .outputTarget(RULE_INDENT, builder);
+            .outputTarget(RULE_INDENT + RULE_INDENT, builder);
 
         builder.append('\n');
 
@@ -75,10 +80,10 @@ public class RuleFormatters {
             .addList("jars", Collections.singleton(String.format(Locale.US, "@%s//file", rule.mavenGeneratedName())))
             .addList("runtime_deps", depsWithImportedJar)
             .addList("exports", convertRulesToStrings(rule.getExportDeps()))
-            .outputTarget(RULE_INDENT, builder);
+            .outputTarget(RULE_INDENT + RULE_INDENT, builder);
 
         builder.append('\n');
-        addAlias(builder, rule);
+        addAlias(RULE_INDENT, builder, rule);
 
         return builder.toString();
     };
@@ -139,8 +144,8 @@ public class RuleFormatters {
                 .outputTarget(RULE_INDENT, builder);
 
             builder.append('\n');
-            addAlias(builder, rule);
-            addAlias(builder, rule, API_POST_FIX);
+            addAlias(RULE_INDENT, builder, rule);
+            addAlias(RULE_INDENT, builder, rule, API_POST_FIX);
 
             return builder.toString();
         }
@@ -160,7 +165,7 @@ public class RuleFormatters {
             .outputTarget(RULE_INDENT, builder);
 
         builder.append('\n');
-        addAlias(builder, rule);
+        addAlias(RULE_INDENT, builder, rule);
 
         return builder.toString();
     };
@@ -195,14 +200,14 @@ public class RuleFormatters {
             .collect(Collectors.toList());
     }
 
-    private static void addAlias(StringBuilder builder, Rule rule) {
-        addAlias(builder, rule, "");
+    private static void addAlias(String indent, StringBuilder builder, Rule rule) {
+        addAlias(indent, builder, rule, "");
     }
 
-    private static void addAlias(StringBuilder builder, Rule rule, String postFix) {
+    private static void addAlias(String indent, StringBuilder builder, Rule rule, String postFix) {
         new Target("native.alias", rule.safeRuleFriendlyName() + postFix)
             .addString("actual", rule.mavenGeneratedName() + postFix)
             .setPublicVisibility()
-            .outputTarget(RULE_INDENT, builder);
+            .outputTarget(indent, builder);
     }
 }
