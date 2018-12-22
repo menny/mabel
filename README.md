@@ -33,7 +33,7 @@ Note: You might need to also import `http_archive` rules into your workspace: `l
 
 Add this repository to your WORKSPACE (set `bazel_mvn_deps_version` to the latest [commit](https://github.com/menny/bazel-mvn-deps/commits/master)):
 ```python
-bazel_mvn_deps_version = "c46771ae8fb6986d5b8c5f15078ba52d8f8a9006"
+bazel_mvn_deps_version = "e5d8e5973ef3275b5d1977cefda350b5078a0880"
 http_archive(
     name = "bazel_mvn_deps_rule",
     urls = ["https://github.com/menny/bazel-mvn-deps/archive/%s.zip" % bazel_mvn_deps_version],
@@ -117,7 +117,10 @@ generate_migration_tools_transitive_dependency_rules(kt_jvm_import = kt_jvm_impo
 ```
 <br/>
 
-There is a problem with this, at the moment: `kt_jvm_library` in _master_ does not allow no-source-libraries. So, until the [fix](https://github.com/bazelbuild/rules_kotlin/pull/170) is merged, you can use my branch of the rules:
+_Note_: If you decide _not_ to provide `kt_*` implementations, we will try to use `java_import` instead. It should be okay.
+<br/>
+<br/>
+Anoter _note_: There is a problem with this, at the moment: `kt_jvm_library` in _master_ does not allow no-source-libraries. So, until the [fix](https://github.com/bazelbuild/rules_kotlin/pull/170) is merged, you can use my branch of the rules:
 
 ```python
 rules_kotlin_version = "no-src-support"
