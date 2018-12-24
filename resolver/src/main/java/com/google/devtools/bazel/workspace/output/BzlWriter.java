@@ -15,7 +15,6 @@
 package com.google.devtools.bazel.workspace.output;
 
 import static net.evendanan.bazel.mvn.RuleFormatters.HTTP_FILE;
-import static net.evendanan.bazel.mvn.RuleFormatters.RULE_INDENT;
 
 import com.google.devtools.bazel.workspace.maven.Rule;
 import java.io.FileNotFoundException;
@@ -91,11 +90,11 @@ public class BzlWriter {
         outputStream.print(macrosPrefix);
         outputStream.println("_workspace_rules():");
         if (noRules) {
-            outputStream.print(RULE_INDENT);
+            outputStream.print("    ");
             outputStream.println("pass");
         } else {
             for (Rule rule : rules) {
-                outputStream.println(HTTP_FILE.formatRule(rule));
+                outputStream.println(HTTP_FILE.formatRule("    ", rule));
                 outputStream.println();
             }
         }
@@ -109,7 +108,7 @@ public class BzlWriter {
         outputStream.print(macrosPrefix);
         outputStream.println("_transitive_dependency_rules(kt_jvm_import=None, kt_jvm_library=None):");
         if (noRules) {
-            outputStream.print(RULE_INDENT);
+            outputStream.print("    ");
             outputStream.println("pass");
         } else {
             final TaskTiming timer = new TaskTiming();
@@ -129,7 +128,7 @@ public class BzlWriter {
                     String.format(Locale.US, "** Writing rule %d out of %d (%.2f%%%s): %s...",
                         data.doneTasks, data.totalTasks, 100 * data.ratioOfDone, estimatedTimeLeft,
                         rule.mavenGeneratedName()));
-                outputStream.println(formatterMapper.apply(rule).formatRule(rule));
+                outputStream.println(formatterMapper.apply(rule).formatRule("    ", rule));
                 outputStream.println();
             });
         }

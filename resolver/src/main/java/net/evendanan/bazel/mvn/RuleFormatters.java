@@ -15,7 +15,14 @@ import java.util.stream.IntStream;
 
 public class RuleFormatters {
 
-    public static final String RULE_INDENT = "    ";
+    private static final String RULE_INDENT_BASE = "    ";
+
+    static StringBuilder addIndent(int times, StringBuilder builder) {
+        while (times-- > 0) {
+            builder.append(RULE_INDENT_BASE);
+        }
+        return builder;
+    }
 
     public static class CompositeFormatter implements RuleFormatter {
 
@@ -30,26 +37,36 @@ public class RuleFormatters {
         }
 
         @Override
-        public String formatRule(final Rule rule) {
+        public String formatRule(String baseIndent, Rule rule) {
             StringBuilder builder = new StringBuilder();
-            ruleFormatters.forEach(formatter -> builder.append(formatter.formatRule(rule)));
+            ruleFormatters.forEach(formatter -> builder.append(formatter.formatRule(baseIndent, rule)));
 
             return builder.toString();
         }
     }
 
     @VisibleForTesting
-    static final RuleFormatter JAVA_IMPORT = rule -> {
+    static final RuleFormatter JAVA_IMPORT = (baseIndent, rule) -> {
         StringBuilder builder = new StringBuilder();
-        addJavaImportRule(RULE_INDENT, rule, "", builder);
+        addJavaImportRule(false, baseIndent, rule, "", builder);
         builder.append('\n');
-        addAlias(RULE_INDENT, builder, rule);
+        addAlias(false, baseIndent, builder, rule);
 
         return builder.toString();
     };
 
-    private static void addJavaImportRule(String indent, Rule rule, String postFix, final StringBuilder builder) {
-        new Target("native.java_import", rule.mavenGeneratedName() + postFix)
+    @VisibleForTesting
+    static final RuleFormatter NATIVE_JAVA_IMPORT = (baseIndent, rule) -> {
+        StringBuilder builder = new StringBuilder();
+        addJavaImportRule(true, baseIndent, rule, "", builder);
+        builder.append('\n');
+        addAlias(true, baseIndent, builder, rule);
+
+        return builder.toString();
+    };
+
+    private static void addJavaImportRule(boolean asNative, String indent, Rule rule, String postFix, final StringBuilder builder) {
+        new Target(asNative ? "native.java_import" : "java_import", rule.mavenGeneratedName() + postFix)
             .addList("jars", Collections.singletonList(String.format(Locale.US, "@%s//file", rule.mavenGeneratedName())))
             .addList("deps", convertRulesToStrings(rule.getDeps()))
             .addList("exports", convertRulesToStrings(rule.getExportDeps()))
@@ -58,44 +75,59 @@ public class RuleFormatters {
     }
 
     @VisibleForTesting
-    static final RuleFormatter KOTLIN_IMPORT = rule -> {
-        StringBuilder builder = new StringBuilder();
-        //In case the developer did not provide a kt_* impl, we'll try to use java_*, should work.
-        builder.append(RULE_INDENT).append("if kt_jvm_import == None:\n");
-        addJavaImportRule(RULE_INDENT + RULE_INDENT, rule, "", builder);
+    static class KotlinImport implements RuleFormatter {
 
-        builder.append(RULE_INDENT).append("else:\n");
-        //In case the developer provide a kt_* impl we'll use them.
-        new Target("kt_jvm_import", rule.mavenGeneratedName() + "_kotlin_jar")
-            .addList("jars", Collections.singleton(String.format(Locale.US, "@%s//file", rule.mavenGeneratedName())))
-            .outputTarget(RULE_INDENT + RULE_INDENT, builder);
+        private final boolean asNative;
 
-        builder.append('\n');
+        KotlinImport(final boolean asNative) {this.asNative = asNative;}
 
-        final Set<String> depsWithImportedJar = new HashSet<>(convertRulesToStrings(rule.getDeps()));
-        depsWithImportedJar.add(":" + rule.mavenGeneratedName() + "_kotlin_jar");
-        depsWithImportedJar.addAll(convertRulesToStrings(rule.getRuntimeDeps()));
+        @Override
+        public String formatRule(final String baseIndent, final Rule rule) {
+            StringBuilder builder = new StringBuilder();
+            //In case the developer did not provide a kt_* impl, we'll try to use java_*, should work.
+            builder.append(baseIndent).append("if kt_jvm_import == None:\n");
+            addJavaImportRule(asNative, baseIndent + RULE_INDENT_BASE, rule, "", builder);
 
-        final Set<String> exportsWithImportedJar = new HashSet<>(convertRulesToStrings(rule.getExportDeps()));
-        exportsWithImportedJar.add(":" + rule.mavenGeneratedName() + "_kotlin_jar");
+            builder.append(baseIndent).append("else:\n");
+            //In case the developer provide a kt_* impl we'll use them.
+            new Target("kt_jvm_import", rule.mavenGeneratedName() + "_kotlin_jar")
+                .addList("jars", Collections.singleton(String.format(Locale.US, "@%s//file", rule.mavenGeneratedName())))
+                .outputTarget(baseIndent + RULE_INDENT_BASE, builder);
 
-        new Target("kt_jvm_library", rule.mavenGeneratedName())
-            .addList("runtime_deps", depsWithImportedJar)
-            .addList("exports", exportsWithImportedJar)
-            .outputTarget(RULE_INDENT + RULE_INDENT, builder);
+            builder.append('\n');
 
-        builder.append('\n');
-        addAlias(RULE_INDENT, builder, rule);
+            final Set<String> depsWithImportedJar = new HashSet<>(convertRulesToStrings(rule.getDeps()));
+            depsWithImportedJar.add(":" + rule.mavenGeneratedName() + "_kotlin_jar");
+            depsWithImportedJar.addAll(convertRulesToStrings(rule.getRuntimeDeps()));
 
-        return builder.toString();
-    };
+            final Set<String> exportsWithImportedJar = new HashSet<>(convertRulesToStrings(rule.getExportDeps()));
+            exportsWithImportedJar.add(":" + rule.mavenGeneratedName() + "_kotlin_jar");
+
+            new Target("kt_jvm_library", rule.mavenGeneratedName())
+                .addList("runtime_deps", depsWithImportedJar)
+                .addList("exports", exportsWithImportedJar)
+                .outputTarget(baseIndent + RULE_INDENT_BASE, builder);
+
+            builder.append('\n');
+            addAlias(asNative, baseIndent, builder, rule);
+
+            return builder.toString();
+        }
+    }
+
+    @VisibleForTesting
+    static final RuleFormatter KOTLIN_IMPORT = new KotlinImport(false);
+    @VisibleForTesting
+    static final RuleFormatter NATIVE_KOTLIN_IMPORT = new KotlinImport(true);
 
     static class JavaPluginFormatter implements RuleFormatter {
 
         private static final String API_POST_FIX = "_generate_api";
         private final List<String> processorClasses;
+        private final boolean asNative;
 
-        JavaPluginFormatter(final Collection<String> processorClasses) {
+        JavaPluginFormatter(final boolean asNative, final Collection<String> processorClasses) {
+            this.asNative = asNative;
             this.processorClasses = ImmutableList.copyOf(processorClasses);
         }
 
@@ -104,83 +136,100 @@ public class RuleFormatters {
             return processorClasses;
         }
 
+        @VisibleForTesting
+        boolean getIsNative() {
+            return asNative;
+        }
+
         @Override
-        public String formatRule(final Rule rule) {
+        public String formatRule(String indent, Rule rule) {
             StringBuilder builder = new StringBuilder();
 
             Collection<String> deps = convertRulesToStrings(rule.getDeps());
             deps.add(":" + rule.mavenGeneratedName() + "_java_plugin_lib");
-            addJavaImportRule(RULE_INDENT, rule, "_java_plugin_lib", builder);
+            addJavaImportRule(asNative, indent, rule, "_java_plugin_lib", builder);
 
             for (int processorClassIndex = 0; processorClassIndex < processorClasses.size(); processorClassIndex++) {
                 final String processorClass = processorClasses.get(processorClassIndex);
 
-                new Target("native.java_plugin", rule.mavenGeneratedName() + "_" + processorClassIndex)
+                new Target(asNative ? "native.java_plugin" : "java_plugin", rule.mavenGeneratedName() + "_" + processorClassIndex)
                     .addString("processor_class", processorClass)
                     .addInt("generates_api", 0)
                     .addList("deps", deps)
-                    .outputTarget(RULE_INDENT, builder);
+                    .outputTarget(indent, builder);
 
-                new Target("native.java_plugin", rule.mavenGeneratedName() + API_POST_FIX + "_" + processorClassIndex)
+                new Target(asNative ? "native.java_plugin" : "java_plugin", rule.mavenGeneratedName() + API_POST_FIX + "_" + processorClassIndex)
                     .addString("processor_class", processorClass)
                     .addInt("generates_api", 1)
                     .addList("deps", deps)
-                    .outputTarget(RULE_INDENT, builder);
+                    .outputTarget(indent, builder);
             }
 
             //composite libraries
-            new Target("native.java_library", rule.mavenGeneratedName())
+            new Target(asNative ? "native.java_library" : "java_library", rule.mavenGeneratedName())
                 //since there are no sources in this library, we put all deps as runtime_deps
                 .addList("runtime_deps", deps)
                 .addList("exported_plugins", IntStream.range(0, processorClasses.size())
                     .mapToObj(index -> ":" + rule.mavenGeneratedName() + "_" + index)
                     .collect(Collectors.toList()))
-                .outputTarget(RULE_INDENT, builder);
+                .outputTarget(indent, builder);
 
-            new Target("native.java_library", rule.mavenGeneratedName() + API_POST_FIX)
+            new Target(asNative ? "native.java_library" : "java_library", rule.mavenGeneratedName() + API_POST_FIX)
                 //since there are no sources in this library, we put all deps as runtime_deps
                 .addList("runtime_deps", deps)
                 .addList("exported_plugins", IntStream.range(0, processorClasses.size())
                     .mapToObj(index -> ":" + rule.mavenGeneratedName() + API_POST_FIX + "_" + index)
                     .collect(Collectors.toList()))
-                .outputTarget(RULE_INDENT, builder);
+                .outputTarget(indent, builder);
 
             builder.append('\n');
-            addAlias(RULE_INDENT, builder, rule);
-            addAlias(RULE_INDENT, builder, rule, API_POST_FIX);
+            addAlias(asNative, indent, builder, rule);
+            addAlias(asNative, indent, builder, rule, API_POST_FIX);
+
+            return builder.toString();
+        }
+    }
+
+    static class AarImport implements RuleFormatter {
+
+        private final boolean asNative;
+
+        AarImport(final boolean asNative) {this.asNative = asNative;}
+
+        @Override
+        public String formatRule(final String baseIndent, final Rule rule) {
+            StringBuilder builder = new StringBuilder();
+
+            final Set<Rule> deps = new HashSet<>(rule.getDeps());
+            deps.addAll(rule.getRuntimeDeps());
+
+            new Target(asNative ? "native.aar_import" : "aar_import", rule.mavenGeneratedName())
+                .addString("aar", String.format(Locale.US, "@%s//file", rule.mavenGeneratedName()))
+                .addList("deps", convertRulesToStrings(deps))
+                .addList("exports", convertRulesToStrings(rule.getExportDeps()))
+                .outputTarget(baseIndent, builder);
+
+            builder.append('\n');
+            addAlias(asNative, baseIndent, builder, rule);
 
             return builder.toString();
         }
     }
 
     @VisibleForTesting
-    static final RuleFormatter AAR_IMPORT = rule -> {
-        StringBuilder builder = new StringBuilder();
+    static final RuleFormatter AAR_IMPORT = new AarImport(false);
+    @VisibleForTesting
+    static final RuleFormatter NATIVE_AAR_IMPORT = new AarImport(true);
 
-        final Set<Rule> deps = new HashSet<>(rule.getDeps());
-        deps.addAll(rule.getRuntimeDeps());
-
-        new Target("native.aar_import", rule.mavenGeneratedName())
-            .addString("aar", String.format(Locale.US, "@%s//file", rule.mavenGeneratedName()))
-            .addList("deps", convertRulesToStrings(deps))
-            .addList("exports", convertRulesToStrings(rule.getExportDeps()))
-            .outputTarget(RULE_INDENT, builder);
-
-        builder.append('\n');
-        addAlias(RULE_INDENT, builder, rule);
-
-        return builder.toString();
-    };
-
-    public static final RuleFormatter HTTP_FILE = rule -> {
+    public static final RuleFormatter HTTP_FILE = (baseIndent, rule) -> {
         StringBuilder builder = new StringBuilder(0);
         for (String parent : rule.getParents()) {
-            builder.append(RULE_INDENT).append("# ").append(parent).append('\n');
+            builder.append(baseIndent).append("# ").append(parent).append('\n');
         }
         new Target("http_file", rule.mavenGeneratedName())
             .addList("urls", Collections.singleton(rule.getUrl()))
             .addString("downloaded_file_path", getFilenameFromUrl(rule.getUrl()))
-            .outputTarget(RULE_INDENT, builder);
+            .outputTarget(baseIndent, builder);
 
         return builder.toString();
     };
@@ -202,12 +251,12 @@ public class RuleFormatters {
             .collect(Collectors.toList());
     }
 
-    private static void addAlias(String indent, StringBuilder builder, Rule rule) {
-        addAlias(indent, builder, rule, "");
+    private static void addAlias(boolean asNative, String indent, StringBuilder builder, Rule rule) {
+        addAlias(asNative, indent, builder, rule, "");
     }
 
-    private static void addAlias(String indent, StringBuilder builder, Rule rule, String postFix) {
-        new Target("native.alias", rule.safeRuleFriendlyName() + postFix)
+    private static void addAlias(boolean asNative, String indent, StringBuilder builder, Rule rule, String postFix) {
+        new Target(asNative ? "native.alias" : "alias", rule.safeRuleFriendlyName() + postFix)
             .addString("actual", rule.mavenGeneratedName() + postFix)
             .setPublicVisibility()
             .outputTarget(indent, builder);

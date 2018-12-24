@@ -114,7 +114,9 @@ public class GenerateWorkspace {
     }
 
     private void writeResults() {
-        resultWriter.write(resolver.getRules(), RuleClassifiers::ruleClassifier, "generate_workspace.bzl");
+        resultWriter.write(resolver.getRules(),
+            RuleClassifiers.NATIVE_RULE_MAPPER,
+            "generate_workspace.bzl");
     }
 
 }

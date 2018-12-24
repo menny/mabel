@@ -7,47 +7,83 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class RuleClassifiers {
 
-    public static RuleFormatter ruleClassifier(final Rule rule) {
-        return Stream.of(
-            RuleClassifiers.AAR_IMPORT,
-            RuleClassifiers.JAR_INSPECTOR
-        )
+    private static RuleFormatter ruleClassifier(Collection<RuleClassifier> classifiers, RuleFormatter defaultFormatter, final Rule rule) {
+        return classifiers.stream()
             .map(classifier -> classifier.classifyRule(rule))
             .filter(Optional::isPresent)
             .map(Optional::get)
             .findFirst()
-            .orElse(RuleFormatters.JAVA_IMPORT);
+            .orElse(defaultFormatter);
+    }
+
+    public static final Function<Rule, RuleFormatter> NATIVE_RULE_MAPPER = new Function<Rule, RuleFormatter>() {
+        @Override
+        public RuleFormatter apply(final Rule rule) {
+            return ruleClassifier(Arrays.asList(NATIVE_AAR_IMPORT, NATIVE_JAR_INSPECTOR), RuleFormatters.NATIVE_JAVA_IMPORT, rule);
+        }
+    };
+
+    public static final Function<Rule, RuleFormatter> NONE_NATIVE_RULE_MAPPER = new Function<Rule, RuleFormatter>() {
+        @Override
+        public RuleFormatter apply(final Rule rule) {
+            return ruleClassifier(Arrays.asList(AAR_IMPORT, JAR_INSPECTOR), RuleFormatters.JAVA_IMPORT, rule);
+        }
+    };
+
+    private static class AarClassifier implements RuleClassifier {
+
+        private final boolean asNative;
+
+        private AarClassifier(final boolean asNative) {this.asNative = asNative;}
+
+        @Override
+        public Optional<RuleFormatter> classifyRule(final Rule rule) {
+            if ("aar".equals(rule.packaging())) {
+                return Optional.of(asNative ? RuleFormatters.NATIVE_AAR_IMPORT : RuleFormatters.AAR_IMPORT);
+            } else {
+                return Optional.empty();
+            }
+        }
     }
 
     @VisibleForTesting
-    static final RuleClassifier AAR_IMPORT = rule -> {
-        if ("aar".equals(rule.packaging())) {
-            return Optional.of(RuleFormatters.AAR_IMPORT);
-        } else {
-            return Optional.empty();
-        }
-    };
-
-    private static final RuleClassifier JAR_INSPECTOR = rule -> {
-        try (InputStream networkInputStream = new URL(rule.getUrl()).openStream()) {
-            return performRemoteJarInspection(networkInputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return Optional.empty();
-        }
-    };
+    static final RuleClassifier AAR_IMPORT = new AarClassifier(false);
 
     @VisibleForTesting
-    static Optional<RuleFormatter> performRemoteJarInspection(final InputStream networkInputStream) throws IOException {
+    static final RuleClassifier NATIVE_AAR_IMPORT = new AarClassifier(true);
+
+    private static class JarInspector implements RuleClassifier {
+
+        private final boolean asNative;
+
+        private JarInspector(final boolean asNative) {this.asNative = asNative;}
+
+        @Override
+        public Optional<RuleFormatter> classifyRule(final Rule rule) {
+            try (InputStream networkInputStream = new URL(rule.getUrl()).openStream()) {
+                return performRemoteJarInspection(asNative, networkInputStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return Optional.empty();
+            }
+        }
+    }
+
+    private static final RuleClassifier JAR_INSPECTOR = new JarInspector(false);
+    private static final RuleClassifier NATIVE_JAR_INSPECTOR = new JarInspector(true);
+
+    @VisibleForTesting
+    static Optional<RuleFormatter> performRemoteJarInspection(boolean asNative, InputStream networkInputStream) throws IOException {
         try (JarInputStream zipInputStream = new JarInputStream(networkInputStream, false)) {
             JarEntry jarEntry = zipInputStream.getNextJarEntry();
             while (jarEntry != null) {
@@ -60,9 +96,9 @@ public class RuleClassifiers {
                         contentBuilder.append(new String(buffer, 0, read, Charsets.UTF_8));
                     }
 
-                    return parseServicesProcessorFileContent(contentBuilder.toString());
+                    return parseServicesProcessorFileContent(asNative, contentBuilder.toString());
                 } else if (jarEntryName.startsWith("META-INF/") && jarEntryName.endsWith(".kotlin_module")) {
-                    return Optional.of(RuleFormatters.KOTLIN_IMPORT);
+                    return Optional.of(asNative ? RuleFormatters.NATIVE_KOTLIN_IMPORT : RuleFormatters.KOTLIN_IMPORT);
                 }
                 zipInputStream.closeEntry();
                 jarEntry = zipInputStream.getNextJarEntry();
@@ -72,7 +108,7 @@ public class RuleClassifiers {
         return Optional.empty();
     }
 
-    private static Optional<RuleFormatter> parseServicesProcessorFileContent(final String processorContent) {
+    private static Optional<RuleFormatter> parseServicesProcessorFileContent(boolean asNative, String processorContent) {
         if (processorContent != null && processorContent.length() > 0) {
             final List<String> processors = Arrays.stream(processorContent.split("\n", -1))
                 .filter(s -> s != null && s.length() > 0)
@@ -81,7 +117,7 @@ public class RuleClassifiers {
                 .collect(Collectors.toList());
 
             if (processors.size() > 0) {
-                return Optional.of(new RuleFormatters.JavaPluginFormatter(processors));
+                return Optional.of(new RuleFormatters.JavaPluginFormatter(asNative, processors));
             }
         }
         return Optional.empty();

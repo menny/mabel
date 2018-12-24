@@ -194,3 +194,14 @@ java_test(name = "target_test",
   size="small",
   test_class = "net.evendanan.bazel.mvn.TargetTest",
 )
+
+java_test(name = "real_writers",
+  deps=[
+      ":classifier_lib",
+      "//resolver:bazel_mvn_deps___junit__junit",
+       "//resolver:bazel_mvn_deps___org_mockito__mockito_core"
+       ],
+  srcs=["src/main/javatest/net/evendanan/bazel/mvn/WritersTests.java"],
+  size="small",
+  test_class = "net.evendanan.bazel.mvn.WritersTests",
+)

@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 
 public class Target {
 
+    private static final String EXTRA_INDENT = "    ";
+
     private final String type;
     private final String name;
     private final Map<String, AttributeValue> attributes = new LinkedHashMap<>();
@@ -45,9 +47,9 @@ public class Target {
 
         attributes.forEach((key, value) -> {
             builder.append('\n');
-            builder.append(indent).append(RuleFormatters.RULE_INDENT).append(key).append(" = ");
+            builder.append(indent).append(EXTRA_INDENT).append(key).append(" = ");
 
-            addAttribute(indent + RuleFormatters.RULE_INDENT, builder, value.outputValue());
+            addAttribute(indent + EXTRA_INDENT, builder, value.outputValue());
             builder.append(',');
         });
 
@@ -60,7 +62,7 @@ public class Target {
             if (lineIndex > 0) {
                 builder.append('\n').append(indent);
                 if (lineIndex != (values.size() - 1)) {
-                    builder.append(RuleFormatters.RULE_INDENT);
+                    builder.append(EXTRA_INDENT);
                 }
             }
             builder.append(value);
