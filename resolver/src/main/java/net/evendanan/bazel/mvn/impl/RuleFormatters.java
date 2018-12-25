@@ -1,4 +1,4 @@
-package net.evendanan.bazel.mvn;
+package net.evendanan.bazel.mvn.impl;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
@@ -12,6 +12,8 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import net.evendanan.bazel.mvn.api.RuleFormatter;
+import net.evendanan.bazel.mvn.api.Target;
 
 public class RuleFormatters {
 
@@ -45,7 +47,6 @@ public class RuleFormatters {
         }
     }
 
-    @VisibleForTesting
     static final RuleFormatter JAVA_IMPORT = (baseIndent, rule) -> {
         StringBuilder builder = new StringBuilder();
         addJavaImportRule(false, baseIndent, rule, "", builder);
@@ -55,7 +56,6 @@ public class RuleFormatters {
         return builder.toString();
     };
 
-    @VisibleForTesting
     static final RuleFormatter NATIVE_JAVA_IMPORT = (baseIndent, rule) -> {
         StringBuilder builder = new StringBuilder();
         addJavaImportRule(true, baseIndent, rule, "", builder);
@@ -74,8 +74,7 @@ public class RuleFormatters {
             .outputTarget(indent, builder);
     }
 
-    @VisibleForTesting
-    static class KotlinImport implements RuleFormatter {
+    public static class KotlinImport implements RuleFormatter {
 
         private final boolean asNative;
 
@@ -115,12 +114,10 @@ public class RuleFormatters {
         }
     }
 
-    @VisibleForTesting
     static final RuleFormatter KOTLIN_IMPORT = new KotlinImport(false);
-    @VisibleForTesting
     static final RuleFormatter NATIVE_KOTLIN_IMPORT = new KotlinImport(true);
 
-    static class JavaPluginFormatter implements RuleFormatter {
+    public static class JavaPluginFormatter implements RuleFormatter {
 
         private static final String API_POST_FIX = "_generate_api";
         private final List<String> processorClasses;
@@ -221,7 +218,7 @@ public class RuleFormatters {
     @VisibleForTesting
     static final RuleFormatter NATIVE_AAR_IMPORT = new AarImport(true);
 
-    public static final RuleFormatter HTTP_FILE = (baseIndent, rule) -> {
+    static final RuleFormatter HTTP_FILE = (baseIndent, rule) -> {
         StringBuilder builder = new StringBuilder(0);
         for (String parent : rule.getParents()) {
             builder.append(baseIndent).append("# ").append(parent).append('\n');

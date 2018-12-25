@@ -42,7 +42,7 @@ import org.eclipse.aether.util.artifact.JavaScopes;
 /**
  * Resolves Maven dependencies.
  */
-public class Resolver {
+public class GraphResolver {
 
     private static final Logger logger = Logger.getLogger(
         MethodHandles.lookup().lookupClass().getName());
@@ -81,7 +81,7 @@ public class Resolver {
 
     private final List<String> blacklist;
 
-    private Resolver(
+    private GraphResolver(
         DefaultModelResolver modelResolver, VersionResolver versionResolver, List<String> blacklist, String prefix) {
         this.versionResolver = versionResolver;
         this.deps = Maps.newHashMap();
@@ -91,7 +91,7 @@ public class Resolver {
         this.prefix = prefix;
     }
 
-    public Resolver(DefaultModelResolver resolver, List<String> blacklist, String prefix) {
+    public GraphResolver(DefaultModelResolver resolver, List<String> blacklist, String prefix) {
         this(resolver, defaultResolver(), blacklist, prefix);
     }
 

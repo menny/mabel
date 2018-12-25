@@ -1,4 +1,4 @@
-package net.evendanan.bazel.mvn;
+package net.evendanan.bazel.mvn.impl;
 
 import static net.evendanan.bazel.mvn.TestUtils.createMockRule;
 
@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import net.evendanan.bazel.mvn.api.RuleFormatter;
+import net.evendanan.bazel.mvn.impl.RuleWriters;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

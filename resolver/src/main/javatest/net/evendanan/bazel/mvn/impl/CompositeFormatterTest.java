@@ -1,6 +1,8 @@
-package net.evendanan.bazel.mvn;
+package net.evendanan.bazel.mvn.impl;
 
 import com.google.devtools.bazel.workspace.maven.Rule;
+import net.evendanan.bazel.mvn.api.RuleFormatter;
+import net.evendanan.bazel.mvn.impl.RuleFormatters;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;

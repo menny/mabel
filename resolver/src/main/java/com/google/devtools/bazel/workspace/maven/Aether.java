@@ -63,7 +63,7 @@ public class Aether {
         return result.getVersions().stream().map(Version::toString).collect(toList());
     }
 
-    /** TODO(petros): this is a hack until I replace the existing Resolver. */
+    /** TODO(petros): this is a hack until I replace the existing GraphResolver. */
     static Aether defaultOption() {
         return new Aether.Builder().build();
     }

@@ -1,4 +1,4 @@
-package net.evendanan.bazel.mvn;
+package net.evendanan.bazel.mvn.impl;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Charsets;
@@ -14,6 +14,8 @@ import java.util.function.Function;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 import java.util.stream.Collectors;
+import net.evendanan.bazel.mvn.api.RuleClassifier;
+import net.evendanan.bazel.mvn.api.RuleFormatter;
 
 public class RuleClassifiers {
 
@@ -56,10 +58,8 @@ public class RuleClassifiers {
         }
     }
 
-    @VisibleForTesting
     static final RuleClassifier AAR_IMPORT = new AarClassifier(false);
 
-    @VisibleForTesting
     static final RuleClassifier NATIVE_AAR_IMPORT = new AarClassifier(true);
 
     private static class JarInspector implements RuleClassifier {

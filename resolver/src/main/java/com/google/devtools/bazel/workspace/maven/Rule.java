@@ -110,7 +110,7 @@ public class Rule implements Comparable<Rule> {
     }
 
     public void setPackaging(String packaging) {
-        if (Resolver.isEmpty(packaging) || "bundle".equals(packaging)) {
+        if (GraphResolver.isEmpty(packaging) || "bundle".equals(packaging)) {
             return;
         }
 

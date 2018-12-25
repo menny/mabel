@@ -46,7 +46,7 @@ import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.repository.RemoteRepository;
 
 /**
- * Resolver to find the repository a given Maven artifact should be fetched
+ * GraphResolver to find the repository a given Maven artifact should be fetched
  * from.
  */
 public class DefaultModelResolver implements ModelResolver {

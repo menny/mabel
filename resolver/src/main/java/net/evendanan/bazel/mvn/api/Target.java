@@ -1,4 +1,4 @@
-package net.evendanan.bazel.mvn;
+package net.evendanan.bazel.mvn.api;
 
 import com.google.common.collect.ImmutableList;
 import java.util.Collection;

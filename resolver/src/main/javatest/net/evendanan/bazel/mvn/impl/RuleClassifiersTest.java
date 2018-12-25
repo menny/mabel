@@ -1,10 +1,11 @@
-package net.evendanan.bazel.mvn;
+package net.evendanan.bazel.mvn.impl;
 
-import static net.evendanan.bazel.mvn.RuleClassifiers.performRemoteJarInspection;
+import static net.evendanan.bazel.mvn.impl.RuleClassifiers.performRemoteJarInspection;
 
 import com.google.devtools.bazel.workspace.maven.Rule;
 import java.util.List;
 import java.util.Optional;
+import net.evendanan.bazel.mvn.api.RuleFormatter;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;

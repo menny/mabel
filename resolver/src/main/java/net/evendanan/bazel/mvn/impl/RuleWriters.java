@@ -1,6 +1,6 @@
-package net.evendanan.bazel.mvn;
+package net.evendanan.bazel.mvn.impl;
 
-import static net.evendanan.bazel.mvn.RuleFormatters.HTTP_FILE;
+import static net.evendanan.bazel.mvn.impl.RuleFormatters.HTTP_FILE;
 
 import com.google.common.base.Charsets;
 import com.google.devtools.bazel.workspace.maven.Rule;
@@ -13,6 +13,8 @@ import java.util.Collection;
 import java.util.Locale;
 import java.util.function.Function;
 import java.util.logging.Logger;
+import net.evendanan.bazel.mvn.api.RuleFormatter;
+import net.evendanan.bazel.mvn.api.RuleWriter;
 import net.evendanan.timing.TaskTiming;
 import net.evendanan.timing.TimingData;
 

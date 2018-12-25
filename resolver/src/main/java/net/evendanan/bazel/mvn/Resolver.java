@@ -1,55 +1,42 @@
-// Copyright 2015 The Bazel Authors. All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//    http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
-package com.google.devtools.bazel.workspace;
+package net.evendanan.bazel.mvn;
 
 import com.beust.jcommander.JCommander;
+import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
+import com.beust.jcommander.Parameters;
+import com.beust.jcommander.converters.IParameterSplitter;
 import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
 import com.google.devtools.bazel.workspace.maven.DefaultModelResolver;
-import com.google.devtools.bazel.workspace.maven.Resolver;
+import com.google.devtools.bazel.workspace.maven.GraphResolver;
 import com.google.devtools.bazel.workspace.maven.Rule;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Logger;
-import net.evendanan.bazel.mvn.RuleClassifiers;
-import net.evendanan.bazel.mvn.RuleWriter;
-import net.evendanan.bazel.mvn.RuleWriters;
+import net.evendanan.bazel.mvn.api.RuleWriter;
+import net.evendanan.bazel.mvn.impl.RuleClassifiers;
+import net.evendanan.bazel.mvn.impl.RuleWriters;
 import net.evendanan.timing.TaskTiming;
 import net.evendanan.timing.TimingData;
 import org.apache.maven.model.Repository;
 
-/**
- * Generates a WORKSPACE file for Bazel from other types of dependency trackers.
- */
-public class GenerateWorkspace {
+public class Resolver {
 
-    private final static Logger logger = Logger.getLogger("GenerateWorkspace");
+    private final static Logger logger = Logger.getLogger("GraphResolver");
 
-    private final Resolver resolver;
+    private final GraphResolver resolver;
     private final RuleWriter repositoryRulesWriter;
     private final RuleWriter targetRulesWriter;
     private final File outputFile = new File("generate_workspace.bzl");
 
     public static void main(String[] args) throws Exception {
-        GenerateWorkspaceOptions options = new GenerateWorkspaceOptions();
+        Options options = new Options();
         JCommander optionParser = JCommander.newBuilder().addObject(options).build();
         try {
             optionParser.parse(args);
@@ -67,13 +54,13 @@ public class GenerateWorkspace {
             return;
         }
 
-        GenerateWorkspace workspaceFileGenerator = new GenerateWorkspace(args, options.blacklist, options.repositories, options.rules_prefix, options.macro_prefix);
-        workspaceFileGenerator.generateFromArtifacts(options.artifacts);
-        workspaceFileGenerator.writeResults(args);
+        Resolver driver = new Resolver(args, options.blacklist, options.repositories, options.rules_prefix, options.macro_prefix);
+        driver.generateFromArtifacts(options.artifacts);
+        driver.writeResults(args);
     }
 
-    private GenerateWorkspace(String[] args, List<String> blacklist, List<String> repositories, String rulePrefix, String macroPrefix) {
-        this.resolver = new Resolver(new DefaultModelResolver(buildRepositories(repositories)), blacklist, rulePrefix + "___");
+    private Resolver(String[] args, List<String> blacklist, List<String> repositories, String rulePrefix, String macroPrefix) {
+        this.resolver = new GraphResolver(new DefaultModelResolver(buildRepositories(repositories)), blacklist, rulePrefix + "___");
         this.repositoryRulesWriter = new RuleWriters.HttpRepoRulesMacroWriter(
             outputFile,
             String.format(Locale.US, "generate_%s_workspace_rules", macroPrefix));
@@ -138,4 +125,50 @@ public class GenerateWorkspace {
         targetRulesWriter.write(resolver.getRules());
     }
 
+    @Parameters(separators = "=")
+    public static class Options {
+
+        @Parameter(
+            names = { "--artifact", "-a" },
+            splitter = NoSplitter.class,
+            description = "Maven artifact coordinates (e.g. groupId:artifactId:version)."
+        ) List<String> artifacts = new ArrayList<>();
+
+        @Parameter(
+            names = { "--blacklist", "-b" },
+            splitter = NoSplitter.class,
+            description = "Blacklisted Maven artifact coordinates (e.g. groupId:artifactId:version)."
+        ) List<String> blacklist = new ArrayList<>();
+
+        @Parameter(
+            names = { "--repository" },
+            splitter = NoSplitter.class,
+            description = "Maven repository url."
+        ) List<String> repositories = new ArrayList<>();
+
+        @Parameter(
+            names = { "--rule_prefix" },
+            description = "Prefix text to add to all rules."
+        ) String rules_prefix = "";
+
+        @Parameter(
+            names = { "--macro_prefix" },
+            description = "Prefix text to add to all macros."
+        ) String macro_prefix = "";
+    }
+
+    /**
+     * Jcommander defaults to splitting each parameter by comma. For example,
+     * --a=group:artifact:[x1,x2] is parsed as two items 'group:artifact:[x1' and 'x2]',
+     * instead of the intended 'group:artifact:[x1,x2]'
+     *
+     * For more information: http://jcommander.org/#_splitting
+     */
+    public static class NoSplitter implements IParameterSplitter {
+
+        @Override
+        public List<String> split(String value) {
+            return Collections.singletonList(value);
+        }
+    }
 }

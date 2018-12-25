@@ -1,7 +1,8 @@
-package net.evendanan.bazel.mvn;
+package net.evendanan.bazel.mvn.impl;
 
 import java.util.Arrays;
 import java.util.Collections;
+import net.evendanan.bazel.mvn.api.Target;
 import org.junit.Assert;
 import org.junit.Test;
 
