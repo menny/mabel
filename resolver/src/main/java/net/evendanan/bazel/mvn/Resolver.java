@@ -131,7 +131,8 @@ public class Resolver {
         @Parameter(
             names = { "--artifact", "-a" },
             splitter = NoSplitter.class,
-            description = "Maven artifact coordinates (e.g. groupId:artifactId:version)."
+            description = "Maven artifact coordinates (e.g. groupId:artifactId:version).",
+            required = true
         ) List<String> artifacts = new ArrayList<>();
 
         @Parameter(
@@ -143,18 +144,27 @@ public class Resolver {
         @Parameter(
             names = { "--repository" },
             splitter = NoSplitter.class,
-            description = "Maven repository url."
+            description = "Maven repository url.",
+            required = true
         ) List<String> repositories = new ArrayList<>();
 
         @Parameter(
             names = { "--rule_prefix" },
-            description = "Prefix text to add to all rules."
+            description = "Prefix text to add to all rules.",
+            required = true
         ) String rules_prefix = "";
 
         @Parameter(
             names = { "--macro_prefix" },
-            description = "Prefix text to add to all macros."
+            description = "Prefix text to add to all macros.",
+            required = true
         ) String macro_prefix = "";
+
+        @Parameter(
+            names = { "--output_macro_file_path" },
+            description = "Path to output macros bzl file",
+            required = true
+        ) String output_macro_file = "";
     }
 
     /**

@@ -1,8 +1,7 @@
 
 script_template = """
 OUTPUT_FILENAME=${{BUILD_WORKING_DIRECTORY}}/{output_deps_file_path}
-java -jar {resolver} {repositories_list} {artifacts_list} {exclude_artifacts_list} --rule_prefix={rule_prefix} --macro_prefix={macro_prefix}
-cp ${{PWD}}/generate_workspace.bzl ${{OUTPUT_FILENAME}}
+java -jar {resolver} {repositories_list} {artifacts_list} {exclude_artifacts_list} --rule_prefix={rule_prefix} --macro_prefix={macro_prefix} --output_macro_file_path=${{OUTPUT_FILENAME}}
 echo "Stored resolved dependencies graph (rules) at ${{OUTPUT_FILENAME}}"
 """
 
