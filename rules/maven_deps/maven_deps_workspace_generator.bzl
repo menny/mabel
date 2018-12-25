@@ -1,7 +1,11 @@
 
 script_template = """
 OUTPUT_FILENAME=${{BUILD_WORKING_DIRECTORY}}/{output_deps_file_path}
-java -jar {resolver} {repositories_list} {artifacts_list} {exclude_artifacts_list} --rule_prefix={rule_prefix} --macro_prefix={macro_prefix} --output_macro_file_path=${{OUTPUT_FILENAME}}
+java -jar {resolver} {repositories_list} {artifacts_list} {exclude_artifacts_list} \
+    --rule_prefix={rule_prefix} \
+    --macro_prefix={macro_prefix} \
+    --output_macro_file_path=${{OUTPUT_FILENAME}} \
+    --output_target_build_files_base_path={output_target_build_files_base_path}
 echo "Stored resolved dependencies graph (rules) at ${{OUTPUT_FILENAME}}"
 """
 
@@ -17,7 +21,8 @@ def _impl(ctx):
         exclude_artifacts_list = " ".join(['--blacklist={}'.format(exclude_artifact_list) for exclude_artifact_list in ctx.attr.maven_exclude_deps]),
         output_deps_file_path = output_filename,
         rule_prefix = ctx.attr.rule_prefix,
-        macro_prefix = ctx.attr.macro_prefix
+        macro_prefix = ctx.attr.macro_prefix,
+        output_target_build_files_base_path = ctx.attr.output_target_build_files_base_path,
         )
 
     ctx.actions.write(script, script_content, is_executable=True)
@@ -43,6 +48,7 @@ deps_workspace_generator_rule = rule(implementation=_impl,
         "rule_prefix": attr.string(mandatory=True, doc = "prefix to be added to all the generated rules, can be used in cases where you need several separated dependency graphs (say, for app X and app Z, or for annotation-processor phase."),
         "macro_prefix": attr.string(mandatory=True, doc = "prefix to be added to the names of macros that generates the repository-rules and target"),
         "output_deps_file_path": attr.string(default = '', doc = 'If not specified, will create a bzl file in the rule\'s folder with the name `[macro_prefix]_dependencies.bzl`'),
+        "output_target_build_files_base_path": attr.string(default = '', doc = 'If specified, will create a local folder structure similar to the artifacts Maven URL, and `alias` target in a BUILD.bazel file.'),
         "_resolver": attr.label(executable=True, allow_files=True, single_file=True, cfg="host", default=Label("//resolver:resolver_deploy.jar"))
     },
     outputs={"out": "%{name}-generate-deps.sh"})

@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -32,7 +33,7 @@ public class Resolver {
 
     private final GraphResolver resolver;
     private final RuleWriter repositoryRulesWriter;
-    private final RuleWriter targetRulesWriter;
+    private final List<RuleWriter> targetRulesWriters;
     private final File outputFile = new File("generate_workspace.bzl");
 
     public static void main(String[] args) throws Exception {
@@ -64,10 +65,11 @@ public class Resolver {
         this.repositoryRulesWriter = new RuleWriters.HttpRepoRulesMacroWriter(
             outputFile,
             String.format(Locale.US, "generate_%s_workspace_rules", macroPrefix));
-        this.targetRulesWriter = new RuleWriters.TransitiveRulesMacroWriter(
-            outputFile,
-            String.format(Locale.US, "generate_%s_transitive_dependency_rules", macroPrefix),
-            RuleClassifiers.NATIVE_RULE_MAPPER);
+        this.targetRulesWriters = Arrays.asList(
+            new RuleWriters.TransitiveRulesMacroWriter(
+                outputFile,
+                String.format(Locale.US, "generate_%s_transitive_dependency_rules", macroPrefix),
+                RuleClassifiers.NATIVE_RULE_MAPPER));
     }
 
     private static List<Repository> buildRepositories(List<String> repositories) {
@@ -122,7 +124,9 @@ public class Resolver {
             fileWriter.append(System.lineSeparator());
         }
         repositoryRulesWriter.write(resolver.getRules());
-        targetRulesWriter.write(resolver.getRules());
+        for (RuleWriter writer : targetRulesWriters) {
+            writer.write(resolver.getRules());
+        }
     }
 
     @Parameters(separators = "=")
@@ -165,6 +169,12 @@ public class Resolver {
             description = "Path to output macros bzl file",
             required = true
         ) String output_macro_file = "";
+
+        @Parameter(
+            names = { "--output_target_build_files_base_path" },
+            description = "Base path to output alias targets BUILD.bazel files"
+        ) String output_target_build_files_base_path = "";
+
     }
 
     /**
