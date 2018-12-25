@@ -1,0 +1,22 @@
+kind: pipeline
+name: default
+
+platform:
+  os: linux
+  arch: amd64
+clone:
+  depth: 1
+
+steps:
+- name: build
+  image: menny/android_bazel:1.10.0
+  environment:
+    TERM: dumb
+  commands:
+  - bazel build //...
+
+- name: test
+  image: menny/android_bazel:1.10.0
+  commands:
+  - cp .circleci/ci.bazelrc ci.bazelrc
+  - bazel test //...

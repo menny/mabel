@@ -1,4 +1,4 @@
-# Bazel mvn deps
+# Bazel mvn deps [![Build Status](https://cloud.drone.io/api/badges/menny/bazel-mvn-deps/status.svg)](https://cloud.drone.io/menny/bazel-mvn-deps)
 
 A simple, extensible, Maven dependency graph generator for Bazel.
 
