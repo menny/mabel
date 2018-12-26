@@ -39,14 +39,14 @@ http_archive(
     strip_prefix = "bazel-mvn-deps-%s" % bazel_mvn_deps_version
 )
 
-load("//resolver/main_deps:dependencies.bzl", generate_bazel_mvn_deps_workspace_rules = "generate_workspace_rules")
+load("@bazel_mvn_deps_rule//resolver/main_deps:dependencies.bzl", generate_bazel_mvn_deps_workspace_rules = "generate_workspace_rules")
 generate_bazel_mvn_deps_workspace_rules()
 ```
 
 ### target definition
 In your module's `BUILD.bazel` file (let's say `resolver/BUILD.bazel`) load the dependencies rule:
 ```python
-load("//rules/maven_deps:maven_deps_workspace_generator.bzl", "deps_workspace_generator_rule")
+load("@bazel_mvn_deps_rule//rules/maven_deps:maven_deps_workspace_generator.bzl", "deps_workspace_generator_rule")
 ```
 And define a target for resolving dependencies:
 ```python
@@ -98,7 +98,8 @@ resolver/
 ```
 
 These prefixes allows you to generate several graphs for different cases (for example, compile vs annotation-processor stages). This file will need to be checked into your repository, same as [Yarn's lock file](https://yarnpkg.com/lang/en/docs/yarn-lock/).<br/>
-
+_NOTE:_ If you do not wish the rule to generate the sub-folders, you can add `generate_deps_sub_folder = False` to your `deps_workspace_generator_rule` target definition.
+ 
 ### Using the generated Maven dependencies
 In modules you which to use those dependencies, first load the generated transitive rules in your module's `BUILD.bazel` file:
 ```python
