@@ -31,7 +31,7 @@ The resolving of the Maven dependency graph is done using a modified version of 
 ### WORKSPACE file
 Add this repository to your WORKSPACE (set `bazel_mvn_deps_version` to the latest [commit](https://github.com/menny/bazel-mvn-deps/commits/master)):
 ```python
-bazel_mvn_deps_version = "89a7f4997583e87e9822fdfdc02adee0435d3e92"
+bazel_mvn_deps_version = "43693ad82a8f0dac3cb49399bb459c215035b038"
 http_archive(
     name = "bazel_mvn_deps_rule",
     urls = ["https://github.com/menny/bazel-mvn-deps/archive/%s.zip" % bazel_mvn_deps_version],
