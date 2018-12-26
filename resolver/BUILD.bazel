@@ -31,9 +31,7 @@ deps_workspace_generator_rule(name = 'main_deps',
 
         "junit:junit:4.12",
         "org.mockito:mockito-core:2.23.4",
-    ],
-    rule_prefix = 'bazel_mvn_deps',
-    macro_prefix = 'bazel_mvn_deps')
+    ])
     
 
 java_library(

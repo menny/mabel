@@ -6,7 +6,6 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Charsets;
 import com.google.devtools.bazel.workspace.maven.Rule;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -124,11 +123,6 @@ public class RuleWriters {
         @Override
         public void write(final Collection<Rule> rules) throws IOException {
             System.out.println("Will write " + rules.size() + " hard aliases files to base folder " + baseFolder + "...");
-            //first, deleting everything that's already there.
-            if (baseFolder.isDirectory()) {
-                deleteRecursive(baseFolder);
-            }
-
             for (final Rule rule : rules) {
                 final File buildFileFolder = new File(baseFolder, getFilePathFromMavenName(rule.groupId(), rule.artifactId()));
                 if (!buildFileFolder.exists() && !buildFileFolder.mkdirs()) {
@@ -144,33 +138,6 @@ public class RuleWriters {
                 }
             }
         }
-    }
-
-    /**
-     * By default File#delete fails for non-empty directories, it works like "rm".
-     * We need something a little more brutual - this does the equivalent of "rm -r"
-     *
-     * @param path Root File Path
-     *
-     * @return true iff the file and all sub files/directories have been removed
-     *
-     * @throws FileNotFoundException if the path to remove does not exist
-     * @implNote taken from https://stackoverflow.com/a/4026761/1324235
-     */
-    private static boolean deleteRecursive(File path) throws FileNotFoundException {
-        if (!path.exists()) {
-            throw new FileNotFoundException(path.getAbsolutePath());
-        }
-        boolean ret = true;
-        if (path.isDirectory()) {
-            final File[] files = path.listFiles();
-            if (files != null) {
-                for (File f : files) {
-                    ret = ret && deleteRecursive(f);
-                }
-            }
-        }
-        return ret && path.delete();
     }
 
     @VisibleForTesting

@@ -6,7 +6,6 @@ import com.google.common.base.Charsets;
 import com.google.devtools.bazel.workspace.maven.Rule;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Collections;
@@ -70,48 +69,6 @@ public class WritersTests {
 
         Assert.assertEquals(ALIAS_DEP_1, readFileContents(new File(baseFolder, "net/evendanan/dep1/artifact/BUILD.bazel")));
         Assert.assertEquals(ALIAS_DEP_2, readFileContents(new File(baseFolder, "net/evendanan/dep2/artifact/BUILD.bazel")));
-    }
-
-    private static File createEmptyBuildFile(File baseFolder, String path) throws IOException {
-        File targetFolder = new File(baseFolder, path);
-        if (!targetFolder.exists() && !targetFolder.mkdirs()) {
-            throw new IOException("Failed to create a folder for test: " + targetFolder.getAbsolutePath());
-        }
-
-        final File buildFile = new File(targetFolder, "BUILD.bazel");
-        if (!buildFile.createNewFile()) {
-            throw new IOException("Failed to create a build file for test: " + targetFolder.getAbsolutePath());
-        }
-
-        return buildFile;
-    }
-
-    @Test
-    public void testTransitiveRulesAliasWriterDeletesAllSubFoldersBefore() throws Exception {
-        File baseFolder = Files.createTempDirectory("testTransitiveRulesAliasWriter").toFile().getAbsoluteFile();
-
-        final List<File> previousFiles = Arrays.asList(
-            createEmptyBuildFile(baseFolder, "dir1"),
-            createEmptyBuildFile(baseFolder, "dir2"),
-            createEmptyBuildFile(baseFolder, "dir2/dir3/dir4"),
-            createEmptyBuildFile(baseFolder, "dir2/dir3/dir5"),
-            createEmptyBuildFile(baseFolder, "dir2/dir6"),
-            createEmptyBuildFile(baseFolder, "dir7/dir7/dir8/dir9/dir10"),
-            createEmptyBuildFile(baseFolder, "dir7/dir7/dir11"));
-
-        previousFiles.forEach(buildFile -> Assert.assertTrue("Failed to create previous file at " + buildFile, buildFile.isFile()));
-        Assert.assertTrue(createEmptyBuildFile(baseFolder, "net/evendanan/dep1/artifact/").isFile());
-
-        RuleWriters.TransitiveRulesAliasWriter writer = new RuleWriters.TransitiveRulesAliasWriter(baseFolder, "path/to/bzl");
-        writer.write(rules);
-
-        //previous files were deleted
-        previousFiles.forEach(buildFile -> Assert.assertFalse("Failed to delete previous file at " + buildFile, buildFile.isFile()));
-        Assert.assertTrue(new File(baseFolder, "net/evendanan/dep1/artifact/BUILD.bazel").isFile());
-
-        Assert.assertEquals(ALIAS_DEP_1, readFileContents(new File(baseFolder, "net/evendanan/dep1/artifact/BUILD.bazel")));
-        Assert.assertEquals(ALIAS_DEP_2, readFileContents(new File(baseFolder, "net/evendanan/dep2/artifact/BUILD.bazel")));
-
     }
 
     @Test

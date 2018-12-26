@@ -58,7 +58,6 @@ public class GraphResolver {
 
     private static final Set<String> NON_INHERITED_SCOPES =
         Sets.newHashSet(JavaScopes.PROVIDED);
-    private final String prefix;
 
     private static String unversionedCoordinate(Dependency dependency) {
         return dependency.getGroupId() + ":" + dependency.getArtifactId();
@@ -82,17 +81,16 @@ public class GraphResolver {
     private final List<String> blacklist;
 
     private GraphResolver(
-        DefaultModelResolver modelResolver, VersionResolver versionResolver, List<String> blacklist, String prefix) {
+        DefaultModelResolver modelResolver, VersionResolver versionResolver, List<String> blacklist) {
         this.versionResolver = versionResolver;
         this.deps = Maps.newHashMap();
         this.restriction = Maps.newHashMap();
         this.modelResolver = modelResolver;
         this.blacklist = blacklist;
-        this.prefix = prefix;
     }
 
-    public GraphResolver(DefaultModelResolver resolver, List<String> blacklist, String prefix) {
-        this(resolver, defaultResolver(), blacklist, prefix);
+    public GraphResolver(DefaultModelResolver resolver, List<String> blacklist) {
+        this(resolver, defaultResolver(), blacklist);
     }
 
     /**
@@ -131,7 +129,7 @@ public class GraphResolver {
             return Optional.empty();
         }
 
-        Rule rule = new Rule(artifact, prefix);
+        Rule rule = new Rule(artifact, "");
 
         deps.put(rule.friendlyName(), rule);
 
@@ -194,7 +192,7 @@ public class GraphResolver {
         }
 
         try {
-            Rule artifactRule = new Rule(ArtifactBuilder.fromMavenDependency(dependency, versionResolver), prefix);
+            Rule artifactRule = new Rule(ArtifactBuilder.fromMavenDependency(dependency, versionResolver), "");
             artifactRule.setScope(scope);
 
             HashSet<String> localDepExclusions = Sets.newHashSet(exclusions);
@@ -286,7 +284,7 @@ public class GraphResolver {
         }
     }
 
-    public static boolean isEmpty(CharSequence text) {
+    static boolean isEmpty(CharSequence text) {
         return text == null || text.length() == 0;
     }
 }
