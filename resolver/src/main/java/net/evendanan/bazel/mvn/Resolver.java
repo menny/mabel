@@ -64,7 +64,7 @@ public class Resolver {
 
     private Resolver(final Options options) {
         macrosFile = new File(options.output_macro_file);
-        this.resolver = new GraphResolver(new DefaultModelResolver(buildRepositories(options.repositories)), options.blacklist);
+        this.resolver = new GraphResolver(new DefaultModelResolver(buildRepositories(options.repositories)), options.blacklist, options.rule_prefix);
         this.repositoryRulesWriter = new RuleWriters.HttpRepoRulesMacroWriter(
             macrosFile,
             "generate_workspace_rules");
@@ -222,6 +222,10 @@ public class Resolver {
             description = "Package path for for transitive rules."
         ) String package_path = "";
 
+        @Parameter(
+            names = { "--rule_prefix" },
+            description = "Prefix to add to all rules."
+        ) String rule_prefix = "";
     }
 
     /**

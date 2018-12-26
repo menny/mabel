@@ -77,20 +77,22 @@ public class GraphResolver {
     private final Map<String, String> restriction;
 
     private final VersionResolver versionResolver;
+    private final String rulePrefix;
 
     private final List<String> blacklist;
 
     private GraphResolver(
-        DefaultModelResolver modelResolver, VersionResolver versionResolver, List<String> blacklist) {
+        DefaultModelResolver modelResolver, VersionResolver versionResolver, List<String> blacklist, String rulePrefix) {
         this.versionResolver = versionResolver;
+        this.rulePrefix = rulePrefix;
         this.deps = Maps.newHashMap();
         this.restriction = Maps.newHashMap();
         this.modelResolver = modelResolver;
         this.blacklist = blacklist;
     }
 
-    public GraphResolver(DefaultModelResolver resolver, List<String> blacklist) {
-        this(resolver, defaultResolver(), blacklist);
+    public GraphResolver(DefaultModelResolver resolver, List<String> blacklist, String rulePrefix) {
+        this(resolver, defaultResolver(), blacklist, rulePrefix);
     }
 
     /**
@@ -129,7 +131,7 @@ public class GraphResolver {
             return Optional.empty();
         }
 
-        Rule rule = new Rule(artifact, "");
+        Rule rule = new Rule(artifact, rulePrefix);
 
         deps.put(rule.friendlyName(), rule);
 
@@ -192,7 +194,7 @@ public class GraphResolver {
         }
 
         try {
-            Rule artifactRule = new Rule(ArtifactBuilder.fromMavenDependency(dependency, versionResolver), "");
+            Rule artifactRule = new Rule(ArtifactBuilder.fromMavenDependency(dependency, versionResolver), rulePrefix);
             artifactRule.setScope(scope);
 
             HashSet<String> localDepExclusions = Sets.newHashSet(exclusions);

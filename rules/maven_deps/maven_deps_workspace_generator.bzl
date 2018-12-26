@@ -8,7 +8,9 @@ echo "package_path: {package_path}"
 java -jar {resolver} {repositories_list} {artifacts_list} {exclude_artifacts_list} \
     --output_macro_file_path=${{OUTPUT_FILENAME}} \
     --output_target_build_files_base_path=${{BUILD_WORKING_DIRECTORY}}/{output_target_build_files_base_path} \
-    --package_path={package_path}
+    --package_path={package_path} \
+    --rule_prefix={rule_prefix}
+
 echo "Stored resolved dependencies graph (rules) at ${{OUTPUT_FILENAME}}"
 """
 
@@ -25,6 +27,7 @@ def _impl(ctx):
         output_deps_file_path = output_filename,
         output_target_build_files_base_path = output_target_build_files_base_path,
         package_path = package_path,
+        rule_prefix = "{}___".format(ctx.label.name),
         )
 
     ctx.actions.write(script, script_content, is_executable=True)
