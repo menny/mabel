@@ -29,8 +29,6 @@ The resolving of the Maven dependency graph is done using a modified version of 
 ## Example
 
 ### WORKSPACE file
-Note: You might need to also import `http_archive` rules into your workspace: `load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file", "http_archive")`
-
 Add this repository to your WORKSPACE (set `bazel_mvn_deps_version` to the latest [commit](https://github.com/menny/bazel-mvn-deps/commits/master)):
 ```python
 bazel_mvn_deps_version = "89a7f4997583e87e9822fdfdc02adee0435d3e92"
@@ -41,14 +39,14 @@ http_archive(
     strip_prefix = "bazel-mvn-deps-%s" % bazel_mvn_deps_version
 )
 
-load("@bazel_mvn_deps_rule//resolver:bazel_mvn_deps_dependencies.bzl", "generate_bazel_mvn_deps_workspace_rules")
+load("//resolver/main_deps:dependencies.bzl", generate_bazel_mvn_deps_workspace_rules = "generate_workspace_rules")
 generate_bazel_mvn_deps_workspace_rules()
 ```
 
 ### target definition
 In your module's `BUILD.bazel` file (let's say `resolver/BUILD.bazel`) load the dependencies rule:
 ```python
-load("@bazel_mvn_deps_rule//rules/maven_deps:maven_deps_workspace_generator.bzl", "deps_workspace_generator_rule")
+load("//rules/maven_deps:maven_deps_workspace_generator.bzl", "deps_workspace_generator_rule")
 ```
 And define a target for resolving dependencies:
 ```python
@@ -58,15 +56,12 @@ deps_workspace_generator_rule(name = 'main_deps',
         "org.apache.commons:commons-lang3:jar:3.8.1",
         "com.google.code.findbugs:jsr305:3.0.2",
         "com.google.auto.value:auto-value:1.6.3"
-    ],
-    output_deps_file_path = 'resolver/dependencies.bzl',
-    rule_prefix = 'mvn_main',
-    macro_prefix = 'migration_tools')
+    ])
 ```
 In this example above we defined the target `//resolver:main_deps` with 4 maven dependencies:
 
 * `com.google.guava:guava:20.0`
-* `org.apache.commons:commons-lang3:jar:3.8.1`
+* `org.apache.commons:commons-lang3:jar:3.8.1` - here we are specifically asking for `jar` classifier. In most cases we don't need to do that.
 * `com.google.code.findbugs:jsr305:3.0.2`
 * `com.google.auto.value:auto-value:1.6.3` - which is an annotation-processor.
 
@@ -76,19 +71,50 @@ To generate the transitive rules for the required `maven_deps`, you'll run the t
 bazel run //resolver:main_deps
 ```
 
-This will retrieve all the transitive dependencies and resolve conflicts. We will store the resolved dependencies graph (Bazel rules) in the file `others/migration-tooling/dependencies.bzl`. The generated rules will have a prefix `mvn_main` and the generated macros will have the prefix `migration_tools`. These prefixes allows you to generate several graphs for different cases (for example, compile vs annotation-processor stages). This file will need to be checked into your repository, same as [Yarn's lock file](https://yarnpkg.com/lang/en/docs/yarn-lock/).<br/>
+This will retrieve all the transitive dependencies and resolve conflicts. We will store the resolved dependencies graph (Bazel rules) in the file `resolver/main_deps/dependencies.bzl`, and will create a folder-structure matching all the deps:
+```
+resolver/
+    main_deps/
+        BUILD.bazel
+        dependencies.bzl
+        com\
+            google\
+                guava\
+                    guave\
+                        BUILD.bazel (with alias guava -> //resolver:main_deps___com_google_guava__guave)
+                code\
+                    findbugs\
+                        jsr305\
+                            BUILD.bazel (with alias jsr305 -> //resolver:main_deps___com_google_code_findbugs__jsr305)
+                auto\
+                    value\
+                        auto-value\
+                            BUILD.bazel (with alias auto-value -> //resolver:main_deps___com_google_auto_value__auto_value)
+        org\
+            apache\
+                commons\
+                    commons-lang3\
+                        BUILD.bazel (with alias commons-lang3 -> //resolver:main_deps___org_apache_commons__commons_lang3)
+```
+
+These prefixes allows you to generate several graphs for different cases (for example, compile vs annotation-processor stages). This file will need to be checked into your repository, same as [Yarn's lock file](https://yarnpkg.com/lang/en/docs/yarn-lock/).<br/>
 
 ### Using the generated Maven dependencies
 In modules you which to use those dependencies, first load the generated transitive rules in your module's `BUILD.bazel` file:
 ```python
-load("//resolver:dependencies.bzl", "generate_migration_tools_transitive_dependency_rules")
-generate_migration_tools_transitive_dependency_rules()
+load("//resolver/main_deps:dependencies.bzl", main_generate_transitive_dependency_targets = "generate_transitive_dependency_targets")
+main_generate_transitive_dependency_targets()
 ```
 
 This will make the rules available in any target defined in that `BUILD.bazel` file as `//resolver:mvn_main___XXX`:
-* `com.google.guava:guava:20.0` as `//resolver:mvn_main___com_google_guava__guava`
-* `org.apache.commons:commons-lang3:jar:3.8.1` as `//resolver:mvn_main___org_apache_commons__commons_lang3`
-* `com.google.code.findbugs:jsr305:3.0.2` as `//resolver:mvn_main___com_google_code_findbugs__jsr305`
+* `com.google.guava:guava:20.0` as `//resolver:main_deps___com_google_guava__guava`
+* `org.apache.commons:commons-lang3:jar:3.8.1` as `//resolver:main_deps___org_apache_commons__commons_lang3`
+* `com.google.code.findbugs:jsr305:3.0.2` as `//resolver:main_deps___com_google_code_findbugs__jsr305`
+
+Or, you can use the sub-folder structure (IDEs find this easier to auto-complete):
+* `com.google.guava:guava:20.0` as `//resolver/main_deps/com/google/guava/guava`
+* `org.apache.commons:commons-lang3:jar:3.8.1` as `//resolver/main_deps/org/apache/commons/commons_lang3`
+* `com.google.code.findbugs:jsr305:3.0.2` as `//resolver/main_deps/com/google/code/findbugs/jsr305`
 
 #### Annotation-Processors
 
@@ -96,8 +122,8 @@ For dependencies that are detected as annotation-processors we are creating a [`
 [`processor_class`](https://docs.bazel.build/versions/master/be/java.html#java_plugin.processor_class), and then wrap all of these rules in a `java_library` rule that
 [exports](https://docs.bazel.build/versions/master/be/java.html#java_library.exported_plugins) the plugins.<br/>
 In the example above we included `com.google.auto.value:auto-value:1.6.3`, which is a Java annotation-processor, we create the following rules:
-* `//resolver:mvn_main___com_google_auto_value__auto_value` - which does not generate API.
-* `//resolver:mvn_main___com_google_auto_value__auto_value_generate_api` - which _does_ [generate API](https://docs.bazel.build/versions/master/be/java.html#java_plugin.generates_api).
+* `//resolver:main_deps___com_google_auto_value__auto_value` - which does not generate API.
+* `//resolver:main_deps___com_google_auto_value__auto_value_generate_api` - which _does_ [generate API](https://docs.bazel.build/versions/master/be/java.html#java_plugin.generates_api).
 
 Please, read the [Bazel docs](https://docs.bazel.build/versions/master/be/java.html#java_plugin.generates_api) about which variant you want.<br/>
 Also, since we are wrapping the `java_plugin` rules in a `java_library` rules, you should add them to the `deps` list of your rule, and not to the `plugins` list.
@@ -112,15 +138,15 @@ If your dependencies contain Kotlin rules, you'll need to pass the kt rule-impl 
 ```python
 load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_import", "kt_jvm_library")
 
-load("//resolver:dependencies.bzl", "generate_migration_tools_transitive_dependency_rules")
-generate_migration_tools_transitive_dependency_rules(kt_jvm_import = kt_jvm_import, kt_jvm_library = kt_jvm_library)
+load("//resolver/main_deps:dependencies.bzl", main_generate_transitive_dependency_targets = "generate_transitive_dependency_targets")
+main_generate_transitive_dependency_targets(kt_jvm_import = kt_jvm_import, kt_jvm_library = kt_jvm_library)
 ```
 <br/>
 
 _Note_: If you decide _not_ to provide `kt_*` implementations, we will try to use `java_import` instead. It should be okay.
 <br/>
 <br/>
-Anoter _note_: There is a problem with this, at the moment: `kt_jvm_library` in _master_ does not allow no-source-libraries. So, until the [fix](https://github.com/bazelbuild/rules_kotlin/pull/170) is merged, you can use my branch of the rules:
+Another _note_: There is a problem with this, at the moment: `kt_jvm_library` in _master_ does not allow no-source-libraries. So, until the [fix](https://github.com/bazelbuild/rules_kotlin/pull/170) is merged, you can use my branch of the rules:
 
 ```python
 rules_kotlin_version = "no-src-support"
