@@ -1,7 +1,7 @@
 # Taken from https://raw.githubusercontent.com/bazelbuild/migration-tooling/
 # Includes many changes
-load(":bazel_mvn_deps_dependencies.bzl", "generate_bazel_mvn_deps_transitive_dependency_rules")
-generate_bazel_mvn_deps_transitive_dependency_rules()
+load("//resolver/main_deps:dependencies.bzl", "generate_transitive_dependency_targets")
+generate_transitive_dependency_targets()
 
 load("//rules/maven_deps:maven_deps_workspace_generator.bzl", "deps_workspace_generator_rule")
 
@@ -38,32 +38,32 @@ java_library(
     name = "graph_resolver_lib",
     srcs = glob(["src/main/java/com/google/devtools/bazel/workspace/maven/*.java"]),
     runtime_deps = [
-        "//resolver/bazel_mvn_deps/org/codehaus/plexus/plexus-interpolation",
-        "//resolver/bazel_mvn_deps/org/codehaus/plexus/plexus-utils",
+        "//resolver/main_deps/org/codehaus/plexus/plexus-interpolation",
+        "//resolver/main_deps/org/codehaus/plexus/plexus-utils",
     ],
     deps = [
-        "//resolver/bazel_mvn_deps/com/google/guava/guava",
-        "//resolver/bazel_mvn_deps/com/google/code/findbugs/jsr305",
-        "//resolver/bazel_mvn_deps/org/apache/commons/commons-lang3",
+        "//resolver/main_deps/com/google/guava/guava",
+        "//resolver/main_deps/com/google/code/findbugs/jsr305",
+        "//resolver/main_deps/org/apache/commons/commons-lang3",
 
-        '//resolver/bazel_mvn_deps/org/apache/maven/maven-aether-provider',
-        '//resolver/bazel_mvn_deps/org/apache/maven/maven-model',
-        '//resolver/bazel_mvn_deps/org/apache/maven/maven-model-builder',
-        '//resolver/bazel_mvn_deps/org/apache/maven/maven-repository-metadata',
-        '//resolver/bazel_mvn_deps/org/apache/maven/maven-artifact',
+        '//resolver/main_deps/org/apache/maven/maven-aether-provider',
+        '//resolver/main_deps/org/apache/maven/maven-model',
+        '//resolver/main_deps/org/apache/maven/maven-model-builder',
+        '//resolver/main_deps/org/apache/maven/maven-repository-metadata',
+        '//resolver/main_deps/org/apache/maven/maven-artifact',
 
-        '//resolver/bazel_mvn_deps/org/apache/httpcomponents/httpclient',
-        '//resolver/bazel_mvn_deps/org/apache/httpcomponents/httpcore',
+        '//resolver/main_deps/org/apache/httpcomponents/httpclient',
+        '//resolver/main_deps/org/apache/httpcomponents/httpcore',
 
-        '//resolver/bazel_mvn_deps/org/eclipse/aether/aether-api',
-        '//resolver/bazel_mvn_deps/org/eclipse/aether/aether-spi',
-        '//resolver/bazel_mvn_deps/org/eclipse/aether/aether-connector-basic',
-        '//resolver/bazel_mvn_deps/org/eclipse/aether/aether-transport-http',
-        '//resolver/bazel_mvn_deps/org/eclipse/aether/aether-transport-classpath',
-        '//resolver/bazel_mvn_deps/org/eclipse/aether/aether-transport-wagon',
-        '//resolver/bazel_mvn_deps/org/eclipse/aether/aether-transport-file',
-        '//resolver/bazel_mvn_deps/org/eclipse/aether/aether-impl',
-        '//resolver/bazel_mvn_deps/org/eclipse/aether/aether-util',
+        '//resolver/main_deps/org/eclipse/aether/aether-api',
+        '//resolver/main_deps/org/eclipse/aether/aether-spi',
+        '//resolver/main_deps/org/eclipse/aether/aether-connector-basic',
+        '//resolver/main_deps/org/eclipse/aether/aether-transport-http',
+        '//resolver/main_deps/org/eclipse/aether/aether-transport-classpath',
+        '//resolver/main_deps/org/eclipse/aether/aether-transport-wagon',
+        '//resolver/main_deps/org/eclipse/aether/aether-transport-file',
+        '//resolver/main_deps/org/eclipse/aether/aether-impl',
+        '//resolver/main_deps/org/eclipse/aether/aether-util',
         ],
 )
 
@@ -72,9 +72,9 @@ java_library(
     srcs = glob(["src/main/java/net/evendanan/timing/*.java"]),
     runtime_deps = [],
     deps = [
-        "//resolver/bazel_mvn_deps/com/google/guava/guava",
-        "//resolver/bazel_mvn_deps/com/google/code/findbugs/jsr305",
-        "//resolver/bazel_mvn_deps/org/apache/commons/commons-lang3",
+        "//resolver/main_deps/com/google/guava/guava",
+        "//resolver/main_deps/com/google/code/findbugs/jsr305",
+        "//resolver/main_deps/org/apache/commons/commons-lang3",
         ],
 )
 
@@ -85,9 +85,9 @@ java_library(
     deps = [
         ':graph_resolver_lib',
 
-        "//resolver/bazel_mvn_deps/com/google/guava/guava",
-        "//resolver/bazel_mvn_deps/com/google/code/findbugs/jsr305",
-        "//resolver/bazel_mvn_deps/org/apache/commons/commons-lang3",
+        "//resolver/main_deps/com/google/guava/guava",
+        "//resolver/main_deps/com/google/code/findbugs/jsr305",
+        "//resolver/main_deps/org/apache/commons/commons-lang3",
         ],
 )
 
@@ -100,9 +100,9 @@ java_library(
         ':api_lib',
         ":timing_lib",
 
-        "//resolver/bazel_mvn_deps/com/google/guava/guava",
-        "//resolver/bazel_mvn_deps/com/google/code/findbugs/jsr305",
-        "//resolver/bazel_mvn_deps/org/apache/commons/commons-lang3",
+        "//resolver/main_deps/com/google/guava/guava",
+        "//resolver/main_deps/com/google/code/findbugs/jsr305",
+        "//resolver/main_deps/org/apache/commons/commons-lang3",
         ],
 )
 
@@ -117,13 +117,13 @@ java_binary(
         ":impl_lib",
         ":timing_lib",
 
-        "//resolver/bazel_mvn_deps/com/google/guava/guava",
-        "//resolver/bazel_mvn_deps/com/google/code/findbugs/jsr305",
-        "//resolver/bazel_mvn_deps/org/apache/commons/commons-lang3",
+        "//resolver/main_deps/com/google/guava/guava",
+        "//resolver/main_deps/com/google/code/findbugs/jsr305",
+        "//resolver/main_deps/org/apache/commons/commons-lang3",
 
-        "//resolver:bazel_mvn_deps___com_beust__jcommander",
+        "//resolver/main_deps/com/beust/jcommander",
 
-        '//resolver/bazel_mvn_deps/org/apache/maven/maven-model',
+        '//resolver/main_deps/org/apache/maven/maven-model',
         ],
 )
 
@@ -133,15 +133,15 @@ java_library(name = "test_utils",
                  ":api_lib",
                  ':graph_resolver_lib',
 
-                 "//resolver/bazel_mvn_deps/com/google/guava/guava",
-                 "//resolver/bazel_mvn_deps/com/google/code/findbugs/jsr305",
-                 "//resolver/bazel_mvn_deps/org/apache/commons/commons-lang3",
+                 "//resolver/main_deps/com/google/guava/guava",
+                 "//resolver/main_deps/com/google/code/findbugs/jsr305",
+                 "//resolver/main_deps/org/apache/commons/commons-lang3",
 
-                 '//resolver/bazel_mvn_deps/org/mockito/mockito-core',
+                 '//resolver/main_deps/org/mockito/mockito-core',
                  ]
              )
 java_test(name = "timing_data",
-  deps=[":timing_lib", "//resolver/bazel_mvn_deps/junit/junit"],
+  deps=[":timing_lib", "//resolver/main_deps/junit/junit"],
   srcs=["src/main/javatest/net/evendanan/timing/TimingDataTest.java"],
   size="small",
   test_class = "net.evendanan.timing.TimingDataTest",
@@ -150,7 +150,7 @@ java_test(name = "timing_data",
 java_test(name = "timing_timer",
   deps=[
       ":timing_lib",
-      "//resolver/bazel_mvn_deps/junit/junit"
+      "//resolver/main_deps/junit/junit"
       ],
   srcs=[
       "src/main/javatest/net/evendanan/timing/TaskTimingTest.java",
@@ -165,8 +165,8 @@ java_test(name = "classifiers_test",
       ":impl_lib",
       ":api_lib",
       ':graph_resolver_lib',
-      "//resolver/bazel_mvn_deps/junit/junit",
-      '//resolver/bazel_mvn_deps/org/mockito/mockito-core',
+      "//resolver/main_deps/junit/junit",
+      '//resolver/main_deps/org/mockito/mockito-core',
        ],
   srcs=["src/main/javatest/net/evendanan/bazel/mvn/impl/RuleClassifiersTest.java"],
   resources = [
@@ -184,8 +184,8 @@ java_test(name = "composite_formater_test",
       ":impl_lib",
       ":api_lib",
       ':graph_resolver_lib',
-      "//resolver/bazel_mvn_deps/junit/junit",
-       '//resolver/bazel_mvn_deps/org/mockito/mockito-core'
+      "//resolver/main_deps/junit/junit",
+       '//resolver/main_deps/org/mockito/mockito-core'
        ],
   srcs=["src/main/javatest/net/evendanan/bazel/mvn/impl/CompositeFormatterTest.java"],
   size="small",
@@ -198,8 +198,8 @@ java_test(name = "formatters_test",
       ":api_lib",
       ':graph_resolver_lib',
       ":test_utils",
-      "//resolver/bazel_mvn_deps/junit/junit",
-       '//resolver/bazel_mvn_deps/org/mockito/mockito-core'
+      "//resolver/main_deps/junit/junit",
+       '//resolver/main_deps/org/mockito/mockito-core'
        ],
   srcs=["src/main/javatest/net/evendanan/bazel/mvn/impl/FormattersTests.java"],
   size="small",
@@ -219,9 +219,9 @@ java_test(name = "real_writers_test",
        ":impl_lib",
        ":api_lib",
        ':graph_resolver_lib',
-       "//resolver/bazel_mvn_deps/junit/junit",
-       '//resolver/bazel_mvn_deps/org/mockito/mockito-core',
-       '//resolver/bazel_mvn_deps/com/google/guava/guava',
+       "//resolver/main_deps/junit/junit",
+       '//resolver/main_deps/org/mockito/mockito-core',
+       '//resolver/main_deps/com/google/guava/guava',
   ],
   srcs=["src/main/javatest/net/evendanan/bazel/mvn/impl/WritersTests.java"],
   size="small",
