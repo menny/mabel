@@ -1,22 +1,25 @@
 
 script_template = """
-OUTPUT_FILENAME=${{BUILD_WORKING_DIRECTORY}}/{output_deps_file_path}
-echo "BUILD_WORKING_DIRECTORY: ${{BUILD_WORKING_DIRECTORY}}"
-echo "output_deps_file_path: {output_deps_file_path}"
-echo "output_target_build_files_base_path: {output_target_build_files_base_path}"
-echo "package_path: {package_path}"
+echo "BUILD_WORKING_DIRECTORY: '${{BUILD_WORKING_DIRECTORY}}'"
+echo "output_filename: '{output_filename}'"
+echo "output_target_build_files_base_path: '{output_target_build_files_base_path}'"
+echo "package_path: '{package_path}'"
+echo "rule_prefix: '{rule_prefix}'"
+echo "create_deps_sub_folders: '{create_deps_sub_folders}'"
+
 java -jar {resolver} {repositories_list} {artifacts_list} {exclude_artifacts_list} \
-    --output_macro_file_path=${{OUTPUT_FILENAME}} \
+    --output_macro_file_path={output_filename} \
     --output_target_build_files_base_path=${{BUILD_WORKING_DIRECTORY}}/{output_target_build_files_base_path} \
     --package_path={package_path} \
-    --rule_prefix={rule_prefix}
+    --rule_prefix={rule_prefix} \
+    --create_deps_sub_folders={create_deps_sub_folders}
 
-echo "Stored resolved dependencies graph (rules) at ${{OUTPUT_FILENAME}}"
+echo "Stored resolved dependencies graph (rules) at ${{BUILD_WORKING_DIRECTORY}}/{output_target_build_files_base_path}{output_filename}"
 """
 
 def _impl(ctx):
-    output_filename = '{}/{}/dependencies.bzl'.format(ctx.label.package, ctx.label.name)
-    output_target_build_files_base_path = '{}/{}/'.format(ctx.label.package, ctx.label.name) if ctx.attr.generate_deps_sub_folder else ""
+    output_filename = 'dependencies.bzl'
+    output_target_build_files_base_path = '{}/{}/'.format(ctx.label.package, ctx.label.name)
     package_path = ctx.label.package
     script = ctx.actions.declare_file('%s-generate-deps.sh' % ctx.label.name)
     script_content = script_template.format(
@@ -24,10 +27,11 @@ def _impl(ctx):
         repositories_list = " ".join(['--repository={}'.format(repository) for repository in ctx.attr.repositories]),
         artifacts_list = " ".join(['--artifact={}'.format(artifact) for artifact in ctx.attr.maven_deps]),
         exclude_artifacts_list = " ".join(['--blacklist={}'.format(exclude_artifact_list) for exclude_artifact_list in ctx.attr.maven_exclude_deps]),
-        output_deps_file_path = output_filename,
+        output_filename = output_filename,
         output_target_build_files_base_path = output_target_build_files_base_path,
         package_path = package_path,
         rule_prefix = "{}___".format(ctx.label.name),
+        create_deps_sub_folders = '{}'.format(ctx.attr.generate_deps_sub_folder).lower()
         )
 
     ctx.actions.write(script, script_content, is_executable=True)
