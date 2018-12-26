@@ -56,6 +56,23 @@ public class Target {
         builder.append('\n').append(indent).append(')').append('\n');
     }
 
+    public String outputString(String indent) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(indent).append(type).append("(name = '").append(name).append("',");
+
+        attributes.forEach((key, value) -> {
+            builder.append('\n');
+            builder.append(indent).append(EXTRA_INDENT).append(key).append(" = ");
+
+            addAttribute(indent + EXTRA_INDENT, builder, value.outputValue());
+            builder.append(',');
+        });
+
+        builder.append('\n').append(indent).append(')').append('\n');
+
+        return builder.toString();
+    }
+
     private void addAttribute(final String indent, final StringBuilder builder, final Collection<String> values) {
         int lineIndex = 0;
         for (final String value : values) {

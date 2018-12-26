@@ -7,6 +7,7 @@ import com.beust.jcommander.Parameters;
 import com.beust.jcommander.converters.IParameterSplitter;
 import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import com.google.devtools.bazel.workspace.maven.DefaultModelResolver;
 import com.google.devtools.bazel.workspace.maven.GraphResolver;
 import com.google.devtools.bazel.workspace.maven.Rule;
@@ -14,8 +15,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.net.URI;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -55,21 +56,30 @@ public class Resolver {
             return;
         }
 
-        Resolver driver = new Resolver(args, options.blacklist, options.repositories, options.rules_prefix, options.macro_prefix);
+        Resolver driver = new Resolver(options);
         driver.generateFromArtifacts(options.artifacts);
         driver.writeResults(args);
     }
 
-    private Resolver(String[] args, List<String> blacklist, List<String> repositories, String rulePrefix, String macroPrefix) {
-        this.resolver = new GraphResolver(new DefaultModelResolver(buildRepositories(repositories)), blacklist, rulePrefix + "___");
+    private Resolver(final Options options) {
+        this.resolver = new GraphResolver(new DefaultModelResolver(buildRepositories(options.repositories)), options.blacklist, options.rules_prefix + "___");
         this.repositoryRulesWriter = new RuleWriters.HttpRepoRulesMacroWriter(
             outputFile,
-            String.format(Locale.US, "generate_%s_workspace_rules", macroPrefix));
-        this.targetRulesWriters = Arrays.asList(
-            new RuleWriters.TransitiveRulesMacroWriter(
-                outputFile,
-                String.format(Locale.US, "generate_%s_transitive_dependency_rules", macroPrefix),
-                RuleClassifiers.NATIVE_RULE_MAPPER));
+            String.format(Locale.US, "generate_%s_workspace_rules", options.macro_prefix));
+        ArrayList<RuleWriter> writers = new ArrayList<>(2);
+        writers.add(new RuleWriters.TransitiveRulesMacroWriter(
+            outputFile,
+            String.format(Locale.US, "generate_%s_transitive_dependency_rules", options.macro_prefix),
+            RuleClassifiers.NATIVE_RULE_MAPPER));
+        if (!options.output_target_build_files_base_path.isEmpty()) {
+            if (options.package_path.isEmpty()) {
+                throw new IllegalArgumentException("--package_path can not be empty, if --output_target_build_files_base_path was set.");
+            }
+            writers.add(new RuleWriters.TransitiveRulesAliasWriter(
+                new File(options.output_target_build_files_base_path),
+                options.package_path));
+        }
+        this.targetRulesWriters = ImmutableList.copyOf(writers);
     }
 
     private static List<Repository> buildRepositories(List<String> repositories) {
@@ -174,6 +184,12 @@ public class Resolver {
             names = { "--output_target_build_files_base_path" },
             description = "Base path to output alias targets BUILD.bazel files"
         ) String output_target_build_files_base_path = "";
+
+        @Parameter(
+            names = { "--package_path" },
+            description = "Package path for for transitive rules."
+        ) String package_path = "";
+
 
     }
 
