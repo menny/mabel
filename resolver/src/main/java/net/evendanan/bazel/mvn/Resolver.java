@@ -182,11 +182,6 @@ public class Resolver {
         final Collection<Rule> resolvedRules = resolver.getRules();
         logger.info(String.format("Processing %s resolved rules...", resolvedRules.size()));
 
-        repositoryRulesMacroWriter.write(resolvedRules.stream()
-                .map(TargetsBuilders.HTTP_FILE::buildTargets)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList()));
-
         timer.start(resolvedRules.size());
         List<Target> targets = resolvedRules.stream()
                 .peek(rule -> {
@@ -206,7 +201,11 @@ public class Resolver {
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
 
-        logger.info("Writing repository rules...");
+        repositoryRulesMacroWriter.write(resolvedRules.stream()
+                .map(TargetsBuilders.HTTP_FILE::buildTargets)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList()));
+
         targetsMacroWriter.write(targets);
 
         if (hardAliasesWriter!=null) {

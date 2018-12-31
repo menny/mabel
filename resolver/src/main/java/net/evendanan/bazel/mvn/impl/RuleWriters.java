@@ -85,7 +85,7 @@ public class RuleWriters {
                 if (targets.isEmpty()) {
                     fileWriter.append(INDENT).append("pass");
                 } else {
-                    logger.info(String.format("Writing %d Bazel rules...", targets.size()));
+                    logger.info(String.format("Writing %d Bazel targets...", targets.size()));
 
                     for (Target target : targets) {
                         fileWriter.append(target.outputString(INDENT)).append(NEW_LINE);
