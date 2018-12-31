@@ -81,6 +81,27 @@ public class RuleWriters {
                 fileWriter.append("# not to provide those implementations we'll try to use java_* rules.").append(NEW_LINE);
                 fileWriter.append(NEW_LINE);
 
+                fileWriter.append("# This is a help macro to handle Kotlin rules.").append(NEW_LINE);
+                fileWriter.append("def kotlin_jar_support").append("(name, deps, exports, runtime_deps, jar_target, kt_jvm_import=None, kt_jvm_library=None):").append(NEW_LINE);
+                fileWriter.append(INDENT).append("#In case the developer did not provide a kt_* impl, we'll try to use java_*, should work").append(NEW_LINE);
+                fileWriter.append(INDENT).append("if kt_jvm_import == None:").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append("native.java_import(name = name,").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append(INDENT).append("jars = [jar_target],").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append(INDENT).append("deps = deps,").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append(INDENT).append("exports = exports,").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append(INDENT).append("runtime_deps = runtime_deps,").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append(")").append(NEW_LINE);
+                fileWriter.append(INDENT).append("else:").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append("kt_jvm_import(name = '{}_kotlin_jar' % name,").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append(INDENT).append("jars = [jar_target],").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append(")").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append("kt_jvm_library(name = name,").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append(INDENT).append("deps = deps + [':{}_kotlin_jar' % name],").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append(INDENT).append("exports = exports + [':{}_kotlin_jar' % name],").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append(INDENT).append("runtime_deps = runtime_deps,").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append(")").append(NEW_LINE);
+                fileWriter.append(NEW_LINE);
+
                 fileWriter.append("def ").append(macroName).append("(kt_jvm_import=None, kt_jvm_library=None):").append(NEW_LINE);
                 if (targets.isEmpty()) {
                     fileWriter.append(INDENT).append("pass");

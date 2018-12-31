@@ -211,6 +211,26 @@ def generate_workspace_rules():
 # If you use kt_* rules, you MUST provide the correct rule implementation when call this macro, if you decide
 # not to provide those implementations we'll try to use java_* rules.
 
+# This is a help macro to handle Kotlin rules.
+def kotlin_jar_support(name, deps, exports, runtime_deps, jar_target, kt_jvm_import=None, kt_jvm_library=None):
+    #In case the developer did not provide a kt_* impl, we'll try to use java_*, should work
+    if kt_jvm_import == None:
+        native.java_import(name = name,
+            jars = [jar_target],
+            deps = deps,
+            exports = exports,
+            runtime_deps = runtime_deps,
+        )
+    else:
+        kt_jvm_import(name = '{}_kotlin_jar' % name,
+            jars = [jar_target],
+        )
+        kt_jvm_library(name = name,
+            deps = deps + [':{}_kotlin_jar' % name],
+            exports = exports + [':{}_kotlin_jar' % name],
+            runtime_deps = runtime_deps,
+        )
+
 def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=None):
     native.java_import(name = 'main_deps___org_apache_httpcomponents__httpcore__4_4_6',
         jars = ['@main_deps___org_apache_httpcomponents__httpcore__4_4_6//file'],

@@ -107,51 +107,15 @@ public class TargetsBuilders {
         public List<Target> buildTargets(final Rule rule) {
             List<Target> targets = new ArrayList<>();
 
-            targets.add(new Target(rule.mavenCoordinates(), "kt_jvm_import", rule.mavenGeneratedName() + "_kotlin_jar")
-                    .addList("jars", Collections.singleton(String.format(Locale.US, "@%s//file", rule.mavenGeneratedName()))));
-
-            final Set<String> depsWithImportedJar = new HashSet<>(convertRulesToStrings(rule.getDeps()));
-            depsWithImportedJar.add(":" + rule.mavenGeneratedName() + "_kotlin_jar");
-            depsWithImportedJar.addAll(convertRulesToStrings(rule.getRuntimeDeps()));
-
-            final Set<String> exportsWithImportedJar = new HashSet<>(convertRulesToStrings(rule.getExportDeps()));
-            exportsWithImportedJar.add(":" + rule.mavenGeneratedName() + "_kotlin_jar");
-
-            targets.add(new Target(rule.mavenCoordinates(), "kt_jvm_library", rule.mavenGeneratedName())
-                    .addList("runtime_deps", depsWithImportedJar)
-                    .addList("exports", exportsWithImportedJar));
+            targets.add(new Target(rule.mavenCoordinates(), "kotlin_jar_support", rule.mavenGeneratedName())
+                    .addList("deps", convertRulesToStrings(rule.getDeps()))
+                    .addList("exports", convertRulesToStrings(rule.getExportDeps()))
+                    .addList("runtime_deps", convertRulesToStrings(rule.getRuntimeDeps()))
+                    .addString("jar", String.format(Locale.US, "@%s//file", rule.mavenGeneratedName())));
 
             targets.add(addAlias(asNative, rule));
 
             return targets;
-//            //In case the developer did not provide a kt_* impl, we'll try to use java_*, should work.
-//            builder.append(baseIndent).append("if kt_jvm_import == None:\n");
-//            addJavaImportRule(asNative, baseIndent + RULE_INDENT_BASE, rule, "", builder);
-//
-//            builder.append(baseIndent).append("else:\n");
-//            //In case the developer provide a kt_* impl we'll use them.
-//            new Target("kt_jvm_import", rule.mavenGeneratedName() + "_kotlin_jar")
-//                    .addList("jars", Collections.singleton(String.format(Locale.US, "@%s//file", rule.mavenGeneratedName())))
-//                    .outputTarget(baseIndent + RULE_INDENT_BASE, builder);
-//
-//            builder.append('\n');
-//
-//            final Set<String> depsWithImportedJar = new HashSet<>(convertRulesToStrings(rule.getDeps()));
-//            depsWithImportedJar.add(":" + rule.mavenGeneratedName() + "_kotlin_jar");
-//            depsWithImportedJar.addAll(convertRulesToStrings(rule.getRuntimeDeps()));
-//
-//            final Set<String> exportsWithImportedJar = new HashSet<>(convertRulesToStrings(rule.getExportDeps()));
-//            exportsWithImportedJar.add(":" + rule.mavenGeneratedName() + "_kotlin_jar");
-//
-//            new Target("kt_jvm_library", rule.mavenGeneratedName())
-//                    .addList("runtime_deps", depsWithImportedJar)
-//                    .addList("exports", exportsWithImportedJar)
-//                    .outputTarget(baseIndent + RULE_INDENT_BASE, builder);
-//
-//            builder.append('\n');
-//            addAlias(asNative, baseIndent, builder, rule);
-//
-//            return builder.toString();
         }
     }
 

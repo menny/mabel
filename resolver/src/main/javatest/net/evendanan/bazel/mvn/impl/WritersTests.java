@@ -35,6 +35,26 @@ public class WritersTests {
             "# If you use kt_* rules, you MUST provide the correct rule implementation when call this macro, if you decide\n" +
             "# not to provide those implementations we'll try to use java_* rules.\n" +
             "\n" +
+            "# This is a help macro to handle Kotlin rules.\n" +
+            "def kotlin_jar_support(name, deps, exports, runtime_deps, jar_target, kt_jvm_import=None, kt_jvm_library=None):\n" +
+            "    #In case the developer did not provide a kt_* impl, we'll try to use java_*, should work\n" +
+            "    if kt_jvm_import == None:\n" +
+            "        native.java_import(name = name,\n" +
+            "            jars = [jar_target],\n" +
+            "            deps = deps,\n" +
+            "            exports = exports,\n" +
+            "            runtime_deps = runtime_deps,\n" +
+            "        )\n" +
+            "    else:\n" +
+            "        kt_jvm_import(name = '{}_kotlin_jar' % name,\n" +
+            "            jars = [jar_target],\n" +
+            "        )\n" +
+            "        kt_jvm_library(name = name,\n" +
+            "            deps = deps + [':{}_kotlin_jar' % name],\n" +
+            "            exports = exports + [':{}_kotlin_jar' % name],\n" +
+            "            runtime_deps = runtime_deps,\n" +
+            "        )\n" +
+            "\n" +
             "def macro_name(kt_jvm_import=None, kt_jvm_library=None):\n" +
             "    rule(name = 'name_name_1',\n" +
             "    )\n" +
