@@ -1,7 +1,5 @@
 package net.evendanan.bazel.mvn.impl;
 
-import static net.evendanan.bazel.mvn.impl.RuleClassifiers.performRemoteJarInspection;
-
 import com.google.devtools.bazel.workspace.maven.Rule;
 import java.util.List;
 import java.util.Optional;
@@ -9,6 +7,8 @@ import net.evendanan.bazel.mvn.api.TargetsBuilder;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import static net.evendanan.bazel.mvn.impl.RuleClassifiers.performRemoteJarInspection;
 
 public class RuleClassifiersTest {
 
@@ -56,9 +56,12 @@ public class RuleClassifiersTest {
     @Test
     public void testJarInspector_kotlin() throws Exception {
         final ClassLoader classLoader = RuleClassifiersTest.class.getClassLoader();
-        Assert.assertSame(TargetsBuilders.KOTLIN_IMPORT,
-            performRemoteJarInspection(false, classLoader.getResourceAsStream("mockk-1.0.jar")).orElse(null));
-        Assert.assertSame(TargetsBuilders.NATIVE_KOTLIN_IMPORT,
-            performRemoteJarInspection(true, classLoader.getResourceAsStream("mockk-1.0.jar")).orElse(null));
+        //I'm not sure that we need something special for Kotlin
+        //Assert.assertSame(TargetsBuilders.KOTLIN_IMPORT,
+        Assert.assertSame(TargetsBuilders.JAVA_IMPORT,
+                performRemoteJarInspection(false, classLoader.getResourceAsStream("mockk-1.0.jar")).orElse(null));
+        //Assert.assertSame(TargetsBuilders.NATIVE_KOTLIN_IMPORT,
+        Assert.assertSame(TargetsBuilders.NATIVE_JAVA_IMPORT,
+                performRemoteJarInspection(true, classLoader.getResourceAsStream("mockk-1.0.jar")).orElse(null));
     }
 }

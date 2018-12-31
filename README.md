@@ -131,6 +131,8 @@ Also, since we are wrapping the `java_plugin` rules in a `java_library` rules, y
 
 #### Kotlin
 
+**UPDATE:** Until I understand how to correctly use `kt_jvm_import`, Kotlin will regarded as regular `java_import`.
+
 For [Kotlin](https://github.com/bazelbuild/rules_kotlin), we create a `kt_jvm_import` for each artifact, and then wrap it (along with its deps) in a `kt_jvm_library`. Your rule
 depends on the `kt_jvm_library`.<br/>
 
