@@ -1,8 +1,10 @@
 package net.evendanan.bazel.mvn.impl;
 
 import com.google.devtools.bazel.workspace.maven.Rule;
-import net.evendanan.bazel.mvn.api.RuleFormatter;
-import net.evendanan.bazel.mvn.impl.RuleFormatters;
+import java.util.Collections;
+import java.util.List;
+import net.evendanan.bazel.mvn.api.Target;
+import net.evendanan.bazel.mvn.api.TargetsBuilder;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -11,22 +13,24 @@ public class CompositeFormatterTest {
 
     @Test
     public void testCompositeFormatter() {
-        final RuleFormatter formatter1 = Mockito.mock(RuleFormatter.class);
-        Mockito.doReturn("first_format\n").when(formatter1).formatRule(Mockito.anyString(), Mockito.any());
-        final RuleFormatter formatter2 = Mockito.mock(RuleFormatter.class);
-        Mockito.doReturn("second_format\n").when(formatter2).formatRule(Mockito.anyString(), Mockito.any());
+        final TargetsBuilder formatter1 = Mockito.mock(TargetsBuilder.class);
+        Mockito.doReturn(Collections.singletonList(new Target("a:b:3", "rule1", "name1"))).when(formatter1).buildTargets(Mockito.any());
+        final TargetsBuilder formatter2 = Mockito.mock(TargetsBuilder.class);
+        Mockito.doReturn(Collections.singletonList(new Target("a:b:4", "rule2", "name2"))).when(formatter2).buildTargets(Mockito.any());
 
-        final RuleFormatters.CompositeFormatter compositeFormatter = new RuleFormatters.CompositeFormatter(formatter1, formatter2);
+        final TargetsBuilders.CompositeBuilder compositeBuilder = new TargetsBuilders.CompositeBuilder(formatter1, formatter2);
 
         Rule rule = Mockito.mock(Rule.class);
-        String indent = "   ";
-        final String combinedFormat = compositeFormatter.formatRule(indent, rule);
 
-        Mockito.verify(formatter1).formatRule(Mockito.same(indent), Mockito.same(rule));
+        final List<Target> targets = compositeBuilder.buildTargets(rule);
+
+        Mockito.verify(formatter1).buildTargets(Mockito.same(rule));
         Mockito.verifyNoMoreInteractions(formatter1);
-        Mockito.verify(formatter2).formatRule(Mockito.same(indent), Mockito.same(rule));
+        Mockito.verify(formatter2).buildTargets(Mockito.same(rule));
         Mockito.verifyNoMoreInteractions(formatter2);
 
-        Assert.assertEquals("first_format\nsecond_format\n", combinedFormat);
+
+        Assert.assertEquals("rule1", targets.get(0).getRuleName());
+        Assert.assertEquals("rule2", targets.get(1).getRuleName());
     }
 }

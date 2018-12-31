@@ -11,15 +11,32 @@ import java.util.stream.Collectors;
 
 public class Target {
 
+    private static final String VISIBILITY_ATTR = "visibility";
+    private static final ListValue PUBLIC_VISIBILITY = new ListValue(Collections.singleton("//visibility:public"));
+
     private static final String EXTRA_INDENT = "    ";
 
-    private final String type;
-    private final String name;
+    private final String mavenCoordinates;
+    private final String ruleName;
+    private final String targetName;
     private final Map<String, AttributeValue> attributes = new LinkedHashMap<>();
 
-    public Target(final String type, final String name) {
-        this.type = type;
-        this.name = name;
+    public Target(final String maven, final String rule, final String targetName) {
+        this.mavenCoordinates = maven;
+        this.ruleName = rule;
+        this.targetName = targetName;
+    }
+
+    public String getMavenCoordinates() {
+        return mavenCoordinates;
+    }
+
+    public String getRuleName() {
+        return ruleName;
+    }
+
+    public String getTargetName() {
+        return targetName;
     }
 
     public Target addBoolean(String name, boolean value) {
@@ -43,33 +60,23 @@ public class Target {
     }
 
     public void outputTarget(String indent, StringBuilder builder) {
-        builder.append(indent).append(type).append("(name = '").append(name).append("',");
+        builder.append(indent).append(ruleName).append("(name = '").append(targetName).append("',");
 
         attributes.forEach((key, value) -> {
-            builder.append('\n');
+            builder.append(System.lineSeparator());
             builder.append(indent).append(EXTRA_INDENT).append(key).append(" = ");
-
             addAttribute(indent + EXTRA_INDENT, builder, value.outputValue());
             builder.append(',');
         });
 
-        builder.append('\n').append(indent).append(')').append('\n');
+        builder.append(System.lineSeparator())
+                .append(indent).append(')')
+                .append(System.lineSeparator());
     }
 
     public String outputString(String indent) {
         StringBuilder builder = new StringBuilder();
-        builder.append(indent).append(type).append("(name = '").append(name).append("',");
-
-        attributes.forEach((key, value) -> {
-            builder.append('\n');
-            builder.append(indent).append(EXTRA_INDENT).append(key).append(" = ");
-
-            addAttribute(indent + EXTRA_INDENT, builder, value.outputValue());
-            builder.append(',');
-        });
-
-        builder.append('\n').append(indent).append(')').append('\n');
-
+        outputTarget(indent, builder);
         return builder.toString();
     }
 
@@ -77,8 +84,8 @@ public class Target {
         int lineIndex = 0;
         for (final String value : values) {
             if (lineIndex > 0) {
-                builder.append('\n').append(indent);
-                if (lineIndex != (values.size() - 1)) {
+                builder.append(System.lineSeparator()).append(indent);
+                if (lineIndex!=(values.size() - 1)) {
                     builder.append(EXTRA_INDENT);
                 }
             }
@@ -89,7 +96,12 @@ public class Target {
     }
 
     public Target setPublicVisibility() {
-        return addList("visibility", Collections.singleton("//visibility:public"));
+        attributes.put(VISIBILITY_ATTR, PUBLIC_VISIBILITY);
+        return this;
+    }
+
+    public boolean isPublic() {
+        return attributes.getOrDefault(VISIBILITY_ATTR, new ListValue(Collections.emptyList()))==PUBLIC_VISIBILITY;
     }
 
     private interface AttributeValue {
@@ -101,11 +113,13 @@ public class Target {
 
         private final boolean value;
 
-        private BooleanValue(final boolean value) {this.value = value;}
+        private BooleanValue(final boolean value) {
+            this.value = value;
+        }
 
         @Override
         public Collection<String> outputValue() {
-            return Collections.singletonList(value ? "True" : "False");
+            return Collections.singletonList(value ? "True":"False");
         }
     }
 
@@ -113,7 +127,9 @@ public class Target {
 
         private final int value;
 
-        private IntValue(final int value) {this.value = value;}
+        private IntValue(final int value) {
+            this.value = value;
+        }
 
         @Override
         public Collection<String> outputValue() {
@@ -125,7 +141,9 @@ public class Target {
 
         private final String value;
 
-        private StringValue(final String value) {this.value = value;}
+        private StringValue(final String value) {
+            this.value = value;
+        }
 
         @Override
         public Collection<String> outputValue() {
@@ -146,14 +164,14 @@ public class Target {
             if (value.isEmpty()) {
                 return Collections.singletonList("[]");
             }
-            if (value.size() == 1) {
+            if (value.size()==1) {
                 return Collections.singletonList(String.format(Locale.US, "['%s']", value.iterator().next()));
             }
 
             final List<String> stringList = value.stream()
-                .sorted()
-                .map(str -> String.format(Locale.US, "'%s',", str))
-                .collect(Collectors.toList());
+                    .sorted()
+                    .map(str -> String.format(Locale.US, "'%s',", str))
+                    .collect(Collectors.toList());
             stringList.add(0, "[");
             stringList.add("]");
             return stringList;

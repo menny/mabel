@@ -25,18 +25,24 @@ public class TaskTiming {
         return timeString;
     }
 
-    public void start() {
+    public TimingData start(final int totalTasksCount) {
         startTime = getCurrentTime();
         completedTasks = 0;
-        totalTasks = 1;
+        totalTasks = totalTasksCount;
+        return generateTimingData();
     }
 
-    public void setTotalTasks(final int totalTasksCount) {
+    public TimingData updateTotalTasks(final int totalTasksCount) {
         totalTasks = totalTasksCount;
+        return generateTimingData();
     }
 
     public TimingData taskDone() {
         completedTasks++;
+        return generateTimingData();
+    }
+
+    private TimingData generateTimingData() {
         final long totalTime = getCurrentTime();
         final long duration = totalTime - startTime;
         final float ratioOfDone = completedTasks / (float) totalTasks;

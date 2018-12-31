@@ -14,9 +14,6 @@
 
 package com.google.devtools.bazel.workspace.maven;
 
-import static java.util.stream.Collectors.toSet;
-import static java.util.stream.Stream.concat;
-
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -26,6 +23,9 @@ import java.util.Objects;
 import java.util.Set;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.util.artifact.JavaScopes;
+
+import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Stream.concat;
 
 /**
  * A struct representing the fields of maven_jar to be written to the WORKSPACE file.
@@ -40,11 +40,11 @@ public class Rule implements Comparable<Rule> {
     private final Artifact artifact;
     private final Set<String> parents;
     private final Map<String, Set<Rule>> dependencies;
+    private final String rulePrefix;
     private String version;
     private String repository;
     private String packaging;
     private String scope;
-    private final String rulePrefix;
 
     Rule(Artifact artifact, String prefix) {
         this.artifact = artifact;
@@ -56,14 +56,30 @@ public class Rule implements Comparable<Rule> {
         this.packaging = DEFAULT_PACKAGING;
     }
 
+    static String generateFriendlyName(String groupId, String artifactId) {
+        return normalizedWorkspaceName(groupId) + "__" + normalizedWorkspaceName(artifactId);
+    }
+
+    static String generateFullName(String groupId, String artifactId, String version) {
+        return normalizedWorkspaceName(groupId) + "__" + normalizedWorkspaceName(artifactId) + "__" + normalizedWorkspaceName(version);
+    }
+
+    private static String normalizedWorkspaceName(final String name) {
+        return name.replaceAll("[.-]", "_");
+    }
+
+    private static String normalizeMavenName(final String name) {
+        return name.replace('.', '_');
+    }
+
     public void addParent(String parent) {
         parents.add(parent);
     }
 
     public Set<Rule> getDeps() {
         return concat(getDependencies(JavaScopes.COMPILE).stream(),
-            getDependencies(JavaScopes.PROVIDED).stream())
-            .collect(toSet());
+                getDependencies(JavaScopes.PROVIDED).stream())
+                .collect(toSet());
     }
 
     public Set<Rule> getExportDeps() {
@@ -135,14 +151,6 @@ public class Rule implements Comparable<Rule> {
         return normalizedWorkspaceName(groupId()) + "__" + normalizedWorkspaceName(artifactId());
     }
 
-    static String generateFriendlyName(String groupId, String artifactId) {
-        return normalizedWorkspaceName(groupId) + "__" + normalizedWorkspaceName(artifactId);
-    }
-
-    static String generateFullName(String groupId, String artifactId, String version) {
-        return normalizedWorkspaceName(groupId) + "__" + normalizedWorkspaceName(artifactId) + "__" + normalizedWorkspaceName(version);
-    }
-
     /**
      * A unique name for this artifact which includes Maven meta-data.
      * This can later be decoded back into a maven annotation.
@@ -150,6 +158,10 @@ public class Rule implements Comparable<Rule> {
      */
     public String mavenGeneratedName() {
         return rulePrefix + normalizeMavenName(groupId()) + "__" + normalizeMavenName(artifactId()) + "__" + normalizeMavenName(version());
+    }
+
+    public String mavenCoordinates() {
+        return groupId() + ":" + artifactId() + ":" + version();
     }
 
     /**
@@ -161,22 +173,13 @@ public class Rule implements Comparable<Rule> {
         return rulePrefix + normalizedWorkspaceName(groupId()) + "__" + normalizedWorkspaceName(artifactId());
     }
 
-
-    private static String normalizedWorkspaceName(final String name) {
-        return name.replaceAll("[.-]", "_");
-    }
-
-    private static String normalizeMavenName(final String name) {
-        return name.replace('.', '_');
-    }
-
     public Artifact getArtifact() {
         return artifact;
     }
 
     private String getUri() {
         return groupId().replaceAll("\\.", "/") + "/" + artifactId() + "/" + version() + "/"
-               + artifactId() + "-" + version() + (artifact.getClassifier().isEmpty() ? "" : "-" + artifact.getClassifier()) + "." + packaging();
+                + artifactId() + "-" + version() + (artifact.getClassifier().isEmpty() ? "":"-" + artifact.getClassifier()) + "." + packaging();
     }
 
     public String getUrl() {
@@ -186,17 +189,17 @@ public class Rule implements Comparable<Rule> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
+        if (this==o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (o==null || getClass()!=o.getClass()) {
             return false;
         }
 
         Rule rule = (Rule) o;
 
         return Objects.equals(groupId(), rule.groupId())
-               && Objects.equals(artifactId(), rule.artifactId());
+                && Objects.equals(artifactId(), rule.artifactId());
     }
 
     @Override
@@ -217,11 +220,11 @@ public class Rule implements Comparable<Rule> {
         return artifact.getClassifier();
     }
 
-    public void setRepository(final String url) {
-        repository = url;
-    }
-
     public String getRepository() {
         return repository;
+    }
+
+    public void setRepository(final String url) {
+        repository = url;
     }
 }
