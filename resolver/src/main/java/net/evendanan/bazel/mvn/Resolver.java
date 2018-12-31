@@ -7,7 +7,6 @@ import com.beust.jcommander.Parameters;
 import com.beust.jcommander.converters.IParameterSplitter;
 import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
 import com.google.devtools.bazel.workspace.maven.DefaultModelResolver;
 import com.google.devtools.bazel.workspace.maven.GraphResolver;
 import com.google.devtools.bazel.workspace.maven.Rule;
@@ -18,13 +17,17 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import net.evendanan.bazel.mvn.api.RuleWriter;
+import net.evendanan.bazel.mvn.api.Target;
 import net.evendanan.bazel.mvn.impl.RuleClassifiers;
 import net.evendanan.bazel.mvn.impl.RuleWriters;
+import net.evendanan.bazel.mvn.impl.TargetsBuilders;
 import net.evendanan.timing.TaskTiming;
 import net.evendanan.timing.TimingData;
 import org.apache.maven.model.Repository;
@@ -34,9 +37,31 @@ public class Resolver {
     private final static Logger logger = Logger.getLogger("GraphResolver");
 
     private final GraphResolver resolver;
-    private final RuleWriter repositoryRulesWriter;
-    private final List<RuleWriter> targetRulesWriters;
+    private final RuleWriter repositoryRulesMacroWriter;
+    private final RuleWriter targetsMacroWriter;
+    private final RuleWriter hardAliasesWriter;
     private final File macrosFile;
+
+    private Resolver(final Options options) {
+        final File parent = new File(options.output_target_build_files_base_path);
+        this.macrosFile = new File(parent, options.output_macro_file);
+        this.resolver = new GraphResolver(new DefaultModelResolver(buildRepositories(options.repositories)), options.blacklist, options.rule_prefix);
+        this.repositoryRulesMacroWriter = new RuleWriters.HttpRepoRulesMacroWriter(
+                macrosFile,
+                "generate_workspace_rules");
+        targetsMacroWriter = new RuleWriters.TransitiveRulesMacroWriter(
+                macrosFile,
+                "generate_transitive_dependency_targets");
+
+        if (options.create_deps_sub_folders) {
+            if (options.package_path.isEmpty()) {
+                throw new IllegalArgumentException("--package_path can not be empty, if --output_target_build_files_base_path was set.");
+            }
+            hardAliasesWriter = new RuleWriters.TransitiveRulesAliasWriter(parent, options.package_path);
+        } else {
+            hardAliasesWriter = null;
+        }
+    }
 
     public static void main(String[] args) throws Exception {
         Options options = new Options();
@@ -62,28 +87,6 @@ public class Resolver {
         driver.writeResults(args);
     }
 
-    private Resolver(final Options options) {
-        final File parent = new File(options.output_target_build_files_base_path);
-        macrosFile = new File(parent, options.output_macro_file);
-        this.resolver = new GraphResolver(new DefaultModelResolver(buildRepositories(options.repositories)), options.blacklist, options.rule_prefix);
-        this.repositoryRulesWriter = new RuleWriters.HttpRepoRulesMacroWriter(
-            macrosFile,
-            "generate_workspace_rules");
-        ArrayList<RuleWriter> writers = new ArrayList<>(2);
-        writers.add(new RuleWriters.TransitiveRulesMacroWriter(
-            macrosFile,
-            "generate_transitive_dependency_targets",
-            RuleClassifiers.NATIVE_RULE_MAPPER));
-        System.out.println("options.output_target_build_files_base_path is '" + options.output_target_build_files_base_path + "'");
-        if (options.create_deps_sub_folders) {
-            if (options.package_path.isEmpty()) {
-                throw new IllegalArgumentException("--package_path can not be empty, if --output_target_build_files_base_path was set.");
-            }
-            writers.add(new RuleWriters.TransitiveRulesAliasWriter(parent, options.package_path));
-        }
-        this.targetRulesWriters = ImmutableList.copyOf(writers);
-    }
-
     private static List<Repository> buildRepositories(List<String> repositories) {
         ArrayList<Repository> repositoryList = new ArrayList<>(repositories.size());
         for (String repositoryUrlString : repositories) {
@@ -97,6 +100,33 @@ public class Resolver {
         }
 
         return repositoryList;
+    }
+
+    /**
+     * By default File#delete fails for non-empty directories, it works like "rm".
+     * We need something a little more brutual - this does the equivalent of "rm -r"
+     *
+     * @param path Root File Path
+     *
+     * @return true iff the file and all sub files/directories have been removed
+     *
+     * @throws FileNotFoundException if the path to remove does not exist
+     * @implNote taken from https://stackoverflow.com/a/4026761/1324235
+     */
+    private static boolean deleteRecursive(File path) throws FileNotFoundException {
+        if (!path.exists()) {
+            throw new FileNotFoundException(path.getAbsolutePath());
+        }
+        boolean ret = true;
+        if (path.isDirectory()) {
+            final File[] files = path.listFiles();
+            if (files!=null) {
+                for (File f : files) {
+                    ret = ret && deleteRecursive(f);
+                }
+            }
+        }
+        return ret && path.delete();
     }
 
     private void generateFromArtifacts(List<String> artifacts) {
@@ -120,9 +150,9 @@ public class Resolver {
                 estimatedTimeLeft = "";
             }
             System.out.println(
-                String.format(Locale.US, "** Processing rule %d out of %d (%.2f%%%s): %s...",
-                    timingData.doneTasks, timingData.totalTasks, 100 * timingData.ratioOfDone, estimatedTimeLeft,
-                    rule.mavenGeneratedName()));
+                    String.format(Locale.US, "** Resolving dependency graph for artifact %d out of %d (%.2f%%%s): %s...",
+                            timingData.doneTasks, timingData.totalTasks, 100 * timingData.ratioOfDone, estimatedTimeLeft,
+                            rule.mavenGeneratedName()));
             resolver.resolveRuleArtifacts(rule);
         }
     }
@@ -148,87 +178,93 @@ public class Resolver {
             fileWriter.append(System.lineSeparator());
             fileWriter.append(System.lineSeparator());
         }
-        repositoryRulesWriter.write(resolver.getRules());
-        for (RuleWriter writer : targetRulesWriters) {
-            writer.write(resolver.getRules());
-        }
-    }
 
-    /**
-     * By default File#delete fails for non-empty directories, it works like "rm".
-     * We need something a little more brutual - this does the equivalent of "rm -r"
-     *
-     * @param path Root File Path
-     *
-     * @return true iff the file and all sub files/directories have been removed
-     *
-     * @throws FileNotFoundException if the path to remove does not exist
-     * @implNote taken from https://stackoverflow.com/a/4026761/1324235
-     */
-    private static boolean deleteRecursive(File path) throws FileNotFoundException {
-        if (!path.exists()) {
-            throw new FileNotFoundException(path.getAbsolutePath());
+        final TaskTiming timer = new TaskTiming();
+        final Collection<Rule> resolvedRules = resolver.getRules();
+        timer.setTotalTasks(resolvedRules.size());
+        logger.info(String.format("Processing %s resolved rules...", resolvedRules.size()));
+
+        repositoryRulesMacroWriter.write(resolvedRules.stream()
+                .map(TargetsBuilders.HTTP_FILE::buildTargets)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList()));
+
+        timer.start();
+        List<Target> targets = resolvedRules.stream()
+                .peek(rule -> {
+                    final TimingData timingData = timer.taskDone();
+                    final String estimatedTimeLeft;
+                    if (timingData.doneTasks >= 3) {
+                        estimatedTimeLeft = String.format(Locale.US, ", %s left", TaskTiming.humanReadableTime(timingData.estimatedTimeLeft));
+                    } else {
+                        estimatedTimeLeft = "";
+                    }
+                    System.out.println(
+                            String.format(Locale.US, "** Converting to Bazel targets, %d out of %d (%.2f%%%s): %s...",
+                                    timingData.doneTasks, timingData.totalTasks, 100 * timingData.ratioOfDone, estimatedTimeLeft,
+                                    rule.mavenGeneratedName()));
+                })
+                .map(rule -> RuleClassifiers.NATIVE_RULE_MAPPER.apply(rule).buildTargets(rule))
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+
+        logger.info("Writing repository rules...");
+        targetsMacroWriter.write(targets);
+
+        if (hardAliasesWriter!=null) {
+            logger.info("Writing aliases targets...");
+            hardAliasesWriter.write(targets);
         }
-        boolean ret = true;
-        if (path.isDirectory()) {
-            final File[] files = path.listFiles();
-            if (files != null) {
-                for (File f : files) {
-                    ret = ret && deleteRecursive(f);
-                }
-            }
-        }
-        return ret && path.delete();
     }
 
     @Parameters(separators = "=")
     public static class Options {
 
         @Parameter(
-            names = { "--artifact", "-a" },
-            splitter = NoSplitter.class,
-            description = "Maven artifact coordinates (e.g. groupId:artifactId:version).",
-            required = true
+                names = {"--artifact", "-a"},
+                splitter = NoSplitter.class,
+                description = "Maven artifact coordinates (e.g. groupId:artifactId:version).",
+                required = true
         ) List<String> artifacts = new ArrayList<>();
 
         @Parameter(
-            names = { "--blacklist", "-b" },
-            splitter = NoSplitter.class,
-            description = "Blacklisted Maven artifact coordinates (e.g. groupId:artifactId:version)."
+                names = {"--blacklist", "-b"},
+                splitter = NoSplitter.class,
+                description = "Blacklisted Maven artifact coordinates (e.g. groupId:artifactId:version)."
         ) List<String> blacklist = new ArrayList<>();
 
         @Parameter(
-            names = { "--repository" },
-            splitter = NoSplitter.class,
-            description = "Maven repository url.",
-            required = true
+                names = {"--repository"},
+                splitter = NoSplitter.class,
+                description = "Maven repository url.",
+                required = true
         ) List<String> repositories = new ArrayList<>();
 
         @Parameter(
-            names = { "--output_macro_file_path" },
-            description = "Path to output macros bzl file",
-            required = true
+                names = {"--output_macro_file_path"},
+                description = "Path to output macros bzl file",
+                required = true
         ) String output_macro_file = "";
 
         @Parameter(
-            names = { "--output_target_build_files_base_path" },
-            description = "Base path to output alias targets BUILD.bazel files"
+                names = {"--output_target_build_files_base_path"},
+                description = "Base path to output alias targets BUILD.bazel files"
         ) String output_target_build_files_base_path = "";
 
         @Parameter(
-            names = { "--package_path" },
-            description = "Package path for for transitive rules."
+                names = {"--package_path"},
+                description = "Package path for for transitive rules."
         ) String package_path = "";
 
         @Parameter(
-            names = { "--rule_prefix" },
-            description = "Prefix to add to all rules."
+                names = {"--rule_prefix"},
+                description = "Prefix to add to all rules."
         ) String rule_prefix = "";
 
         @Parameter(
-            names = { "--create_deps_sub_folders" },
-            description = "Generate sub-folders matching dependencies tree.",
-            arity = 1
+                names = {"--create_deps_sub_folders"},
+                description = "Generate sub-folders matching dependencies tree.",
+                arity = 1
         ) boolean create_deps_sub_folders = true;
     }
 

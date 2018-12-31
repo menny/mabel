@@ -16,13 +16,19 @@ public class Target {
 
     private static final String EXTRA_INDENT = "    ";
 
+    private final String mavenCoordinates;
     private final String ruleName;
     private final String targetName;
     private final Map<String, AttributeValue> attributes = new LinkedHashMap<>();
 
-    public Target(final String rule, final String targetName) {
+    public Target(final String maven, final String rule, final String targetName) {
+        this.mavenCoordinates = maven;
         this.ruleName = rule;
         this.targetName = targetName;
+    }
+
+    public String getMavenCoordinates() {
+        return mavenCoordinates;
     }
 
     public String getRuleName() {
