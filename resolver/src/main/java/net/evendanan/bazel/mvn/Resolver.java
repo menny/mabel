@@ -138,8 +138,7 @@ public class Resolver {
             resolver.createRule(artifact).ifPresent(rules::add);
         }
 
-        timer.start();
-        timer.setTotalTasks(artifacts.size());
+        timer.start(artifacts.size());
         for (int ruleIndex = 0; ruleIndex < rules.size(); ruleIndex++) {
             final Rule rule = rules.get(ruleIndex);
             final TimingData timingData = timer.taskDone();
@@ -181,7 +180,6 @@ public class Resolver {
 
         final TaskTiming timer = new TaskTiming();
         final Collection<Rule> resolvedRules = resolver.getRules();
-        timer.setTotalTasks(resolvedRules.size());
         logger.info(String.format("Processing %s resolved rules...", resolvedRules.size()));
 
         repositoryRulesMacroWriter.write(resolvedRules.stream()
@@ -189,7 +187,7 @@ public class Resolver {
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList()));
 
-        timer.start();
+        timer.start(resolvedRules.size());
         List<Target> targets = resolvedRules.stream()
                 .peek(rule -> {
                     final TimingData timingData = timer.taskDone();
