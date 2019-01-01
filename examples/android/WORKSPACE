@@ -1,4 +1,4 @@
-workspace(name="bazel_mvn_deps_examples_plain_java")
+workspace(name="bazel_mvn_deps_examples_android")
 
 android_sdk_repository(
     name = "androidsdk",

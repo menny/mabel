@@ -1,4 +1,4 @@
-workspace(name="bazel_mvn_deps_examples_plain_java")
+workspace(name="bazel_mvn_deps_examples_java_plugin")
 
 # Of course, this `local_repository` should be `http_archive` in your project (read the README.md file at the root)
 local_repository(
