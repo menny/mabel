@@ -42,12 +42,12 @@ def kotlin_jar_support(name, deps, exports, runtime_deps, jar, kt_jvm_import=Non
             runtime_deps = runtime_deps,
         )
     else:
-        kt_jvm_import(name = '{}_kotlin_jar' % name,
+        kt_jvm_import(name = '{}_kotlin_jar'.format(name),
             jars = [jar],
         )
         kt_jvm_library(name = name,
-            deps = deps + [':{}_kotlin_jar' % name],
-            exports = exports + [':{}_kotlin_jar' % name],
+            deps = deps + [':{}_kotlin_jar'.format(name)],
+            exports = exports + [':{}_kotlin_jar'.format(name)],
             runtime_deps = runtime_deps,
         )
 

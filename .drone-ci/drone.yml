@@ -28,4 +28,5 @@ steps:
     - (cd examples/plain_java/ ; bazel build //...)
     - (cd examples/java_plugin/ ; bazel build //...)
     - (cd examples/android/ ; bazel build //...)
+    - (cd examples/kotlin/ ; bazel build //...)
 

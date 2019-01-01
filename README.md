@@ -18,7 +18,7 @@ This WORKSPACE will provide `deps_workspace_generator_rule` rule which allows yo
 * Automatically detects which rule-type to create for a given dependency:
   * `aar_import` for Android artifacts.
   * `java_plugin` + `java_library` for annotation-processors. More about this [here](#annotation-processors).
-  * `kt_jvm_import` + `kt_jvm_library` for Kotlin modules. More about this [here](#kotlin).
+  * `kt_jvm_import` + `kt_jvm_library` or `java_import` for Kotlin modules. More about this [here](#kotlin).
   * `java_import` for anything else.
 * Allow to specify custom Maven repo URLs.
 * Produces a _lock_ file that describes the dependency graph. This file should be checked into your repo.
@@ -42,6 +42,11 @@ http_archive(
 load("@bazel_mvn_deps_rule//resolver/main_deps:dependencies.bzl", generate_bazel_mvn_deps_workspace_rules = "generate_workspace_rules")
 generate_bazel_mvn_deps_workspace_rules()
 ```
+
+### Real Examples
+
+You can find a few examples under the `examples/` folder. These examples are built as part of the CI process, so they represent a working use-case.<br/>
+*NOTE* - There is an ongoing [issue](https://github.com/menny/bazel-mvn-deps/issues/5) with `kt_jvm_import`. But, Kotlin still works with `java_import`.
 
 ### target definition
 In your module's `BUILD.bazel` file (let's say `resolver/BUILD.bazel`) load the dependencies rule:
@@ -131,8 +136,6 @@ Also, since we are wrapping the `java_plugin` rules in a `java_library` rules, y
 
 #### Kotlin
 
-**UPDATE:** Until I understand how to correctly use `kt_jvm_import`, Kotlin will regarded as regular `java_import`.
-
 For [Kotlin](https://github.com/bazelbuild/rules_kotlin), we create a `kt_jvm_import` for each artifact, and then wrap it (along with its deps) in a `kt_jvm_library`. Your rule
 depends on the `kt_jvm_library`.<br/>
 
@@ -148,8 +151,9 @@ main_generate_transitive_dependency_targets(kt_jvm_import = kt_jvm_import, kt_jv
 
 _Note_: If you decide _not_ to provide `kt_*` implementations, we will try to use `java_import` instead. It should be okay.
 <br/>
+**NOTE:** Although the mechanism above exists, I couldn't make it work. Either, you know how to fix this, or just use the regular `java_import` (by not supplying `kt_jvm_*`).
 <br/>
-Another _note_: There is a problem with this, at the moment: `kt_jvm_library` in _master_ does not allow no-source-libraries. So, until the [fix](https://github.com/bazelbuild/rules_kotlin/pull/170) is merged, you can use my branch of the rules:
+Another **NOTE**: There is a problem with this, at the moment: `kt_jvm_library` in _master_ does not allow no-source-libraries. So, until the [fix](https://github.com/bazelbuild/rules_kotlin/pull/170) is merged, you can use my branch of the rules:
 
 ```python
 rules_kotlin_version = "no-src-support"

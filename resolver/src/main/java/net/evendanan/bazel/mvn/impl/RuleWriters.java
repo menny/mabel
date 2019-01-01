@@ -93,12 +93,12 @@ public class RuleWriters {
                 fileWriter.append(INDENT).append(INDENT).append(INDENT).append("runtime_deps = runtime_deps,").append(NEW_LINE);
                 fileWriter.append(INDENT).append(INDENT).append(")").append(NEW_LINE);
                 fileWriter.append(INDENT).append("else:").append(NEW_LINE);
-                fileWriter.append(INDENT).append(INDENT).append("kt_jvm_import(name = '{}_kotlin_jar' % name,").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append("kt_jvm_import(name = '{}_kotlin_jar'.format(name),").append(NEW_LINE);
                 fileWriter.append(INDENT).append(INDENT).append(INDENT).append("jars = [jar],").append(NEW_LINE);
                 fileWriter.append(INDENT).append(INDENT).append(")").append(NEW_LINE);
                 fileWriter.append(INDENT).append(INDENT).append("kt_jvm_library(name = name,").append(NEW_LINE);
-                fileWriter.append(INDENT).append(INDENT).append(INDENT).append("deps = deps + [':{}_kotlin_jar' % name],").append(NEW_LINE);
-                fileWriter.append(INDENT).append(INDENT).append(INDENT).append("exports = exports + [':{}_kotlin_jar' % name],").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append(INDENT).append("deps = deps + [':{}_kotlin_jar'.format(name)],").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append(INDENT).append("exports = exports + [':{}_kotlin_jar'.format(name)],").append(NEW_LINE);
                 fileWriter.append(INDENT).append(INDENT).append(INDENT).append("runtime_deps = runtime_deps,").append(NEW_LINE);
                 fileWriter.append(INDENT).append(INDENT).append(")").append(NEW_LINE);
                 fileWriter.append(NEW_LINE);
