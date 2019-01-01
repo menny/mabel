@@ -17,6 +17,7 @@ public class TestUtils {
         Mockito.doReturn("mvn__" + normalized).when(rule).mavenGeneratedName();
         Mockito.doReturn("safe_mvn__" + depsPart[0].replace('.', '_') + "__" + depsPart[1]).when(rule).safeRuleFriendlyName();
         Mockito.doReturn(url).when(rule).getUrl();
+        Mockito.doReturn(url.substring(url.length() - 3)).when(rule).packaging();
         Mockito.doReturn(depsPart[0]).when(rule).groupId();
         Mockito.doReturn(depsPart[1]).when(rule).artifactId();
 

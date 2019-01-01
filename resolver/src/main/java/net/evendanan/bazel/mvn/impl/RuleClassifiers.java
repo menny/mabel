@@ -21,20 +21,14 @@ public class RuleClassifiers {
 
     static final RuleClassifier AAR_IMPORT = new AarClassifier(false);
     static final RuleClassifier NATIVE_AAR_IMPORT = new AarClassifier(true);
+    static final RuleClassifier POM_IMPORT = new PomClassifier(false);
+    static final RuleClassifier NATIVE_POM_IMPORT = new PomClassifier(true);
     private static final RuleClassifier JAR_INSPECTOR = new JarInspector(false);
-    public static final Function<Rule, TargetsBuilder> NONE_NATIVE_RULE_MAPPER = new Function<Rule, TargetsBuilder>() {
-        @Override
-        public TargetsBuilder apply(final Rule rule) {
-            return ruleClassifier(Arrays.asList(AAR_IMPORT, JAR_INSPECTOR), TargetsBuilders.JAVA_IMPORT, rule);
-        }
-    };
+    public static final Function<Rule, TargetsBuilder> NONE_NATIVE_RULE_MAPPER =
+            rule -> ruleClassifier(Arrays.asList(POM_IMPORT, AAR_IMPORT, JAR_INSPECTOR), TargetsBuilders.JAVA_IMPORT, rule);
     private static final RuleClassifier NATIVE_JAR_INSPECTOR = new JarInspector(true);
-    public static final Function<Rule, TargetsBuilder> NATIVE_RULE_MAPPER = new Function<Rule, TargetsBuilder>() {
-        @Override
-        public TargetsBuilder apply(final Rule rule) {
-            return ruleClassifier(Arrays.asList(NATIVE_AAR_IMPORT, NATIVE_JAR_INSPECTOR), TargetsBuilders.NATIVE_JAVA_IMPORT, rule);
-        }
-    };
+    public static final Function<Rule, TargetsBuilder> NATIVE_RULE_MAPPER =
+            rule -> ruleClassifier(Arrays.asList(NATIVE_POM_IMPORT, NATIVE_AAR_IMPORT, NATIVE_JAR_INSPECTOR), TargetsBuilders.NATIVE_JAVA_IMPORT, rule);
 
     private static TargetsBuilder ruleClassifier(Collection<RuleClassifier> classifiers, TargetsBuilder defaultFormatter, final Rule rule) {
         return classifiers.stream()
@@ -89,21 +83,39 @@ public class RuleClassifiers {
         return Optional.empty();
     }
 
-    private static class AarClassifier implements RuleClassifier {
+    private static class PackagingClassifier implements RuleClassifier {
 
         private final boolean asNative;
+        private final String packaging;
+        private final TargetsBuilder nativeBuilder;
+        private final TargetsBuilder nonNativeBuilder;
 
-        private AarClassifier(final boolean asNative) {
+        private PackagingClassifier(final boolean asNative, final String packaging, TargetsBuilder nativeBuilder, TargetsBuilder nonNativeBuilder) {
             this.asNative = asNative;
+            this.packaging = packaging;
+            this.nativeBuilder = nativeBuilder;
+            this.nonNativeBuilder = nonNativeBuilder;
         }
 
         @Override
         public Optional<TargetsBuilder> classifyRule(final Rule rule) {
-            if ("aar".equals(rule.packaging())) {
-                return Optional.of(asNative ? TargetsBuilders.NATIVE_AAR_IMPORT:TargetsBuilders.AAR_IMPORT);
+            if (packaging.equals(rule.packaging())) {
+                return Optional.of(asNative ? nativeBuilder:nonNativeBuilder);
             } else {
                 return Optional.empty();
             }
+        }
+    }
+
+    private static class AarClassifier extends PackagingClassifier {
+        private AarClassifier(final boolean asNative) {
+            super(asNative, "aar", TargetsBuilders.NATIVE_AAR_IMPORT, TargetsBuilders.AAR_IMPORT);
+        }
+    }
+
+    private static class PomClassifier extends PackagingClassifier {
+        private PomClassifier(final boolean asNative) {
+            super(asNative, "pom", TargetsBuilders.NATIVE_JAVA_IMPORT, TargetsBuilders.JAVA_IMPORT);
         }
     }
 

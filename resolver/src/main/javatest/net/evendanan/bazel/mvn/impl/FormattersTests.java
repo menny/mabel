@@ -36,6 +36,27 @@ public class FormattersTests {
             "     visibility = ['//visibility:public'],\n" +
             " )\n" +
             "\n";
+    private static final String POM_ONLY_NATIVE_IMPORT_TEXT = " native.java_import(name = 'mvn__parent__lib',\n" +
+            "     jars = [],\n" +
+            "     deps = [\n" +
+            "         ':safe_mvn__dep1',\n" +
+            "         ':safe_mvn__dep2',\n" +
+            "     ],\n" +
+            "     exports = [\n" +
+            "         ':safe_mvn__export1',\n" +
+            "         ':safe_mvn__export2',\n" +
+            "     ],\n" +
+            "     runtime_deps = [\n" +
+            "         ':safe_mvn__runtime1',\n" +
+            "         ':safe_mvn__runtime2',\n" +
+            "     ],\n" +
+            " )\n" +
+            "\n" +
+            " native.alias(name = 'safe_mvn__parent__lib',\n" +
+            "     actual = ':mvn__parent__lib',\n" +
+            "     visibility = ['//visibility:public'],\n" +
+            " )\n" +
+            "\n";
     private static final String NATIVE_JAVA_IMPORT_TEXT = "    native.java_import(name = 'mvn__java__lib',\n" +
             "        jars = ['@mvn__java__lib//file'],\n" +
             "        deps = [\n" +
@@ -329,6 +350,28 @@ public class FormattersTests {
     }
 
     @Test
+    public void testPomOnlyArtifact() {
+        final String ruleText = targetsToString(" ", TargetsBuilders.NATIVE_JAVA_IMPORT.buildTargets(
+                createMockRule("parent:lib",
+                        "some_url.pom",
+                        Arrays.asList("dep1", "dep2"),
+                        Arrays.asList("export1", "export2"),
+                        Arrays.asList("runtime1", "runtime2"))));
+
+        Assert.assertEquals(POM_ONLY_NATIVE_IMPORT_TEXT, ruleText);
+    }
+
+    @Test
+    public void testPomOnlyArtifactHttp() {
+        Assert.assertTrue(TargetsBuilders.HTTP_FILE.buildTargets(
+                createMockRule("parent:lib",
+                        "some_url.pom",
+                        Arrays.asList("dep1", "dep2"),
+                        Arrays.asList("export1", "export2"),
+                        Arrays.asList("runtime1", "runtime2"))).isEmpty());
+    }
+
+    @Test
     public void testAarFormatter() {
         final String ruleText = targetsToString(" ", TargetsBuilders.AAR_IMPORT.buildTargets(
                 createMockRule("aar:lib",
@@ -422,7 +465,6 @@ public class FormattersTests {
                         Arrays.asList("export1", "export2"),
                         Arrays.asList("runtime1", "runtime2"))));
 
-        System.out.println(ruleText);
         Assert.assertEquals(KOTLIN_IMPORT_TEXT, ruleText);
     }
 
@@ -435,7 +477,6 @@ public class FormattersTests {
                         Arrays.asList("export1", "export2"),
                         Arrays.asList("runtime1", "runtime2"))));
 
-        System.out.println(ruleText);
         Assert.assertEquals(NATIVE_KOTLIN_IMPORT_TEXT, ruleText);
     }
 }

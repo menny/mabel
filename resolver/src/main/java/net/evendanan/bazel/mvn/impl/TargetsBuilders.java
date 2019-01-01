@@ -18,9 +18,12 @@ import net.evendanan.bazel.mvn.api.TargetsBuilder;
 
 public class TargetsBuilders {
 
-    public static final TargetsBuilder HTTP_FILE = rule -> Collections.singletonList(new Target(rule.mavenCoordinates(), "http_file", rule.mavenGeneratedName())
-            .addList("urls", Collections.singleton(rule.getUrl()))
-            .addString("downloaded_file_path", getFilenameFromUrl(rule.getUrl())));
+    public static final TargetsBuilder HTTP_FILE = rule -> {
+        if ("pom".equalsIgnoreCase(rule.packaging())) return Collections.emptyList();
+        return Collections.singletonList(new Target(rule.mavenCoordinates(), "http_file", rule.mavenGeneratedName())
+                .addList("urls", Collections.singleton(rule.getUrl()))
+                .addString("downloaded_file_path", getFilenameFromUrl(rule.getUrl())));
+    };
     static final TargetsBuilder JAVA_IMPORT = rule -> {
         List<Target> targets = new ArrayList<>();
         targets.add(addJavaImportRule(false, rule, ""));
@@ -44,7 +47,9 @@ public class TargetsBuilders {
 
     private static Target addJavaImportRule(boolean asNative, Rule rule, String postFix) {
         return new Target(rule.mavenCoordinates(), asNative ? "native.java_import":"java_import", rule.mavenGeneratedName() + postFix)
-                .addList("jars", Collections.singletonList(String.format(Locale.US, "@%s//file", rule.mavenGeneratedName())))
+                .addList("jars", "pom".equalsIgnoreCase(rule.packaging()) ?
+                        Collections.emptyList()
+                        :Collections.singletonList(String.format(Locale.US, "@%s//file", rule.mavenGeneratedName())))
                 .addList("deps", convertRulesToStrings(rule.getDeps()))
                 .addList("exports", convertRulesToStrings(rule.getExportDeps()))
                 .addList("runtime_deps", convertRulesToStrings(rule.getRuntimeDeps()));

@@ -22,6 +22,15 @@ public class RuleClassifiersTest {
         Mockito.doReturn("jar").when(aar).packaging();
         Assert.assertSame(Optional.empty(), RuleClassifiers.AAR_IMPORT.classifyRule(aar));
         Assert.assertSame(Optional.empty(), RuleClassifiers.NATIVE_AAR_IMPORT.classifyRule(aar));
+        Assert.assertSame(Optional.empty(), RuleClassifiers.NATIVE_POM_IMPORT.classifyRule(aar));
+    }
+
+    @Test
+    public void testPomClassifier() {
+        final Rule pom = Mockito.mock(Rule.class);
+        Mockito.doReturn("pom").when(pom).packaging();
+        Assert.assertSame(Optional.empty(), RuleClassifiers.NATIVE_AAR_IMPORT.classifyRule(pom));
+        Assert.assertSame(TargetsBuilders.NATIVE_JAVA_IMPORT, RuleClassifiers.NATIVE_POM_IMPORT.classifyRule(pom).orElse(null));
     }
 
     @Test
