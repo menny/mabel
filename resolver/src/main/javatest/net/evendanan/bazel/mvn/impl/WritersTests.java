@@ -46,12 +46,12 @@ public class WritersTests {
             "            runtime_deps = runtime_deps,\n" +
             "        )\n" +
             "    else:\n" +
-            "        kt_jvm_import(name = '{}_kotlin_jar' % name,\n" +
+            "        kt_jvm_import(name = '{}_kotlin_jar'.format(name),\n" +
             "            jars = [jar],\n" +
             "        )\n" +
             "        kt_jvm_library(name = name,\n" +
-            "            deps = deps + [':{}_kotlin_jar' % name],\n" +
-            "            exports = exports + [':{}_kotlin_jar' % name],\n" +
+            "            deps = deps + [':{}_kotlin_jar'.format(name)],\n" +
+            "            exports = exports + [':{}_kotlin_jar'.format(name)],\n" +
             "            runtime_deps = runtime_deps,\n" +
             "        )\n" +
             "\n" +

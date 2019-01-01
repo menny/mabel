@@ -167,22 +167,22 @@ def generate_workspace_rules():
 # not to provide those implementations we'll try to use java_* rules.
 
 # This is a help macro to handle Kotlin rules.
-def kotlin_jar_support(name, deps, exports, runtime_deps, jar_target, kt_jvm_import=None, kt_jvm_library=None):
+def kotlin_jar_support(name, deps, exports, runtime_deps, jar, kt_jvm_import=None, kt_jvm_library=None):
     #In case the developer did not provide a kt_* impl, we'll try to use java_*, should work
     if kt_jvm_import == None:
         native.java_import(name = name,
-            jars = [jar_target],
+            jars = [jar],
             deps = deps,
             exports = exports,
             runtime_deps = runtime_deps,
         )
     else:
-        kt_jvm_import(name = '{}_kotlin_jar' % name,
-            jars = [jar_target],
+        kt_jvm_import(name = '{}_kotlin_jar'.format(name),
+            jars = [jar],
         )
         kt_jvm_library(name = name,
-            deps = deps + [':{}_kotlin_jar' % name],
-            exports = exports + [':{}_kotlin_jar' % name],
+            deps = deps + [':{}_kotlin_jar'.format(name)],
+            exports = exports + [':{}_kotlin_jar'.format(name)],
             runtime_deps = runtime_deps,
         )
 

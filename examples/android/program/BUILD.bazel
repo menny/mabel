@@ -27,9 +27,9 @@ android_binary(
     custom_package = "net.evendanan.bazel.mvn.example",
     resource_files = glob(["res/**/*"]),
     deps = [
-        "//clients/android:main_deps___androidx_appcompat__appcompat",
-        "//clients/android:main_deps___androidx_annotation__annotation",
-        "//clients/android:main_deps___androidx_fragment__fragment",
+        "//program/main_deps/androidx/appcompat/appcompat",
+        "//program/main_deps/androidx/annotation/annotation",
+        "//program/main_deps/androidx/fragment/fragment",
     ],
     manifest_values = {
         "versionCode" : "1",

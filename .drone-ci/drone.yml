@@ -30,3 +30,13 @@ steps:
     - (cd examples/android/ ; bazel build //...)
     - (cd examples/kotlin/ ; bazel build //...)
 
+- name: regenerate-examples
+  image: menny/android_bazel:1.10.0
+  environment:
+    TERM: dumb
+  commands:
+    - (cd examples/plain_java/ ; bazel run //program:main_deps ; bazel build //...)
+    - (cd examples/java_plugin/ ; bazel run //program:main_deps ; bazel build //...)
+    - (cd examples/android/ ; bazel run //program:main_deps ; bazel build //...)
+    - (cd examples/kotlin/ ; bazel run //program:main_deps ; bazel build //...)
+
