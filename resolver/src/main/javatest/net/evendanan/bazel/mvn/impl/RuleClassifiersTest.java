@@ -1,7 +1,5 @@
 package net.evendanan.bazel.mvn.impl;
 
-import static net.evendanan.bazel.mvn.impl.RuleClassifiers.performRemoteJarInspection;
-
 import com.google.devtools.bazel.workspace.maven.Rule;
 import java.util.List;
 import java.util.Optional;
@@ -9,6 +7,8 @@ import net.evendanan.bazel.mvn.api.TargetsBuilder;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import static net.evendanan.bazel.mvn.impl.RuleClassifiers.performRemoteJarInspection;
 
 public class RuleClassifiersTest {
 
@@ -22,6 +22,15 @@ public class RuleClassifiersTest {
         Mockito.doReturn("jar").when(aar).packaging();
         Assert.assertSame(Optional.empty(), RuleClassifiers.AAR_IMPORT.classifyRule(aar));
         Assert.assertSame(Optional.empty(), RuleClassifiers.NATIVE_AAR_IMPORT.classifyRule(aar));
+        Assert.assertSame(Optional.empty(), RuleClassifiers.NATIVE_POM_IMPORT.classifyRule(aar));
+    }
+
+    @Test
+    public void testPomClassifier() {
+        final Rule pom = Mockito.mock(Rule.class);
+        Mockito.doReturn("pom").when(pom).packaging();
+        Assert.assertSame(Optional.empty(), RuleClassifiers.NATIVE_AAR_IMPORT.classifyRule(pom));
+        Assert.assertSame(TargetsBuilders.NATIVE_JAVA_IMPORT, RuleClassifiers.NATIVE_POM_IMPORT.classifyRule(pom).orElse(null));
     }
 
     @Test
@@ -57,8 +66,8 @@ public class RuleClassifiersTest {
     public void testJarInspector_kotlin() throws Exception {
         final ClassLoader classLoader = RuleClassifiersTest.class.getClassLoader();
         Assert.assertSame(TargetsBuilders.KOTLIN_IMPORT,
-            performRemoteJarInspection(false, classLoader.getResourceAsStream("mockk-1.0.jar")).orElse(null));
+                performRemoteJarInspection(false, classLoader.getResourceAsStream("mockk-1.0.jar")).orElse(null));
         Assert.assertSame(TargetsBuilders.NATIVE_KOTLIN_IMPORT,
-            performRemoteJarInspection(true, classLoader.getResourceAsStream("mockk-1.0.jar")).orElse(null));
+                performRemoteJarInspection(true, classLoader.getResourceAsStream("mockk-1.0.jar")).orElse(null));
     }
 }

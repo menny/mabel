@@ -1,0 +1,28 @@
+workspace(name="bazel_mvn_deps_examples_kotlin")
+### http_archive
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file", "http_archive")
+
+# Of course, this `local_repository` should be `http_archive` in your project (read the README.md file at the root)
+local_repository(
+    name = "bazel_mvn_deps_rule",
+    path = "../../",
+)
+
+load("@bazel_mvn_deps_rule//resolver/main_deps:dependencies.bzl", generate_bazel_mvn_deps_workspace_rules = "generate_workspace_rules")
+generate_bazel_mvn_deps_workspace_rules()
+
+load("//program/main_deps:dependencies.bzl", generate_example_workspace_rules = "generate_workspace_rules")
+generate_example_workspace_rules()
+
+### Kotlin rules
+rules_kotlin_version = "no-src-support"
+http_archive(
+    name = "io_bazel_rules_kotlin",
+    urls = ["https://github.com/menny/rules_kotlin/archive/%s.zip" % rules_kotlin_version],
+    type = "zip",
+    strip_prefix = "rules_kotlin-%s" % rules_kotlin_version
+)
+
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kotlin_repositories", "kt_register_toolchains")
+kotlin_repositories()
+kt_register_toolchains()

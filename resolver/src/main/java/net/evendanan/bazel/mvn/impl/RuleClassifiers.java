@@ -19,74 +19,31 @@ import net.evendanan.bazel.mvn.api.TargetsBuilder;
 
 public class RuleClassifiers {
 
+    static final RuleClassifier AAR_IMPORT = new AarClassifier(false);
+    static final RuleClassifier NATIVE_AAR_IMPORT = new AarClassifier(true);
+    static final RuleClassifier POM_IMPORT = new PomClassifier(false);
+    static final RuleClassifier NATIVE_POM_IMPORT = new PomClassifier(true);
+    private static final RuleClassifier JAR_INSPECTOR = new JarInspector(false);
+    public static final Function<Rule, TargetsBuilder> NONE_NATIVE_RULE_MAPPER =
+            rule -> ruleClassifier(Arrays.asList(POM_IMPORT, AAR_IMPORT, JAR_INSPECTOR), TargetsBuilders.JAVA_IMPORT, rule);
+    private static final RuleClassifier NATIVE_JAR_INSPECTOR = new JarInspector(true);
+    public static final Function<Rule, TargetsBuilder> NATIVE_RULE_MAPPER =
+            rule -> ruleClassifier(Arrays.asList(NATIVE_POM_IMPORT, NATIVE_AAR_IMPORT, NATIVE_JAR_INSPECTOR), TargetsBuilders.NATIVE_JAVA_IMPORT, rule);
+
     private static TargetsBuilder ruleClassifier(Collection<RuleClassifier> classifiers, TargetsBuilder defaultFormatter, final Rule rule) {
         return classifiers.stream()
-            .map(classifier -> classifier.classifyRule(rule))
-            .filter(Optional::isPresent)
-            .map(Optional::get)
-            .findFirst()
-            .orElse(defaultFormatter);
+                .map(classifier -> classifier.classifyRule(rule))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .findFirst()
+                .orElse(defaultFormatter);
     }
-
-    public static final Function<Rule, TargetsBuilder> NATIVE_RULE_MAPPER = new Function<Rule, TargetsBuilder>() {
-        @Override
-        public TargetsBuilder apply(final Rule rule) {
-            return ruleClassifier(Arrays.asList(NATIVE_AAR_IMPORT, NATIVE_JAR_INSPECTOR), TargetsBuilders.NATIVE_JAVA_IMPORT, rule);
-        }
-    };
-
-    public static final Function<Rule, TargetsBuilder> NONE_NATIVE_RULE_MAPPER = new Function<Rule, TargetsBuilder>() {
-        @Override
-        public TargetsBuilder apply(final Rule rule) {
-            return ruleClassifier(Arrays.asList(AAR_IMPORT, JAR_INSPECTOR), TargetsBuilders.JAVA_IMPORT, rule);
-        }
-    };
-
-    private static class AarClassifier implements RuleClassifier {
-
-        private final boolean asNative;
-
-        private AarClassifier(final boolean asNative) {this.asNative = asNative;}
-
-        @Override
-        public Optional<TargetsBuilder> classifyRule(final Rule rule) {
-            if ("aar".equals(rule.packaging())) {
-                return Optional.of(asNative ? TargetsBuilders.NATIVE_AAR_IMPORT : TargetsBuilders.AAR_IMPORT);
-            } else {
-                return Optional.empty();
-            }
-        }
-    }
-
-    static final RuleClassifier AAR_IMPORT = new AarClassifier(false);
-
-    static final RuleClassifier NATIVE_AAR_IMPORT = new AarClassifier(true);
-
-    private static class JarInspector implements RuleClassifier {
-
-        private final boolean asNative;
-
-        private JarInspector(final boolean asNative) {this.asNative = asNative;}
-
-        @Override
-        public Optional<TargetsBuilder> classifyRule(final Rule rule) {
-            try (InputStream networkInputStream = new URL(rule.getUrl()).openStream()) {
-                return performRemoteJarInspection(asNative, networkInputStream);
-            } catch (IOException e) {
-                e.printStackTrace();
-                return Optional.empty();
-            }
-        }
-    }
-
-    private static final RuleClassifier JAR_INSPECTOR = new JarInspector(false);
-    private static final RuleClassifier NATIVE_JAR_INSPECTOR = new JarInspector(true);
 
     @VisibleForTesting
     static Optional<TargetsBuilder> performRemoteJarInspection(boolean asNative, InputStream networkInputStream) throws IOException {
         try (JarInputStream zipInputStream = new JarInputStream(networkInputStream, false)) {
             JarEntry jarEntry = zipInputStream.getNextJarEntry();
-            while (jarEntry != null) {
+            while (jarEntry!=null) {
                 final String jarEntryName = jarEntry.getName();
                 if (jarEntryName.equalsIgnoreCase("META-INF/services/javax.annotation.processing.Processor")) {
                     StringBuilder contentBuilder = new StringBuilder();
@@ -109,17 +66,72 @@ public class RuleClassifiers {
     }
 
     private static Optional<TargetsBuilder> parseServicesProcessorFileContent(boolean asNative, String processorContent) {
-        if (processorContent != null && processorContent.length() > 0) {
+        if (processorContent!=null && processorContent.length() > 0) {
             final List<String> processors = Arrays.stream(processorContent.split("\n", -1))
-                .filter(s -> s != null && s.length() > 0)
-                .map(String::trim)
-                .filter(s -> !s.isEmpty())
-                .collect(Collectors.toList());
+                    .filter(s -> s!=null && s.length() > 0)
+                    .map(String::trim)
+                    .filter(s -> !s.isEmpty())
+                    .collect(Collectors.toList());
 
             if (processors.size() > 0) {
                 return Optional.of(new TargetsBuilders.JavaPluginFormatter(asNative, processors));
             }
         }
         return Optional.empty();
+    }
+
+    private static class PackagingClassifier implements RuleClassifier {
+
+        private final boolean asNative;
+        private final String packaging;
+        private final TargetsBuilder nativeBuilder;
+        private final TargetsBuilder nonNativeBuilder;
+
+        private PackagingClassifier(final boolean asNative, final String packaging, TargetsBuilder nativeBuilder, TargetsBuilder nonNativeBuilder) {
+            this.asNative = asNative;
+            this.packaging = packaging;
+            this.nativeBuilder = nativeBuilder;
+            this.nonNativeBuilder = nonNativeBuilder;
+        }
+
+        @Override
+        public Optional<TargetsBuilder> classifyRule(final Rule rule) {
+            if (packaging.equals(rule.packaging())) {
+                return Optional.of(asNative ? nativeBuilder:nonNativeBuilder);
+            } else {
+                return Optional.empty();
+            }
+        }
+    }
+
+    private static class AarClassifier extends PackagingClassifier {
+        private AarClassifier(final boolean asNative) {
+            super(asNative, "aar", TargetsBuilders.NATIVE_AAR_IMPORT, TargetsBuilders.AAR_IMPORT);
+        }
+    }
+
+    private static class PomClassifier extends PackagingClassifier {
+        private PomClassifier(final boolean asNative) {
+            super(asNative, "pom", TargetsBuilders.NATIVE_JAVA_IMPORT, TargetsBuilders.JAVA_IMPORT);
+        }
+    }
+
+    private static class JarInspector implements RuleClassifier {
+
+        private final boolean asNative;
+
+        private JarInspector(final boolean asNative) {
+            this.asNative = asNative;
+        }
+
+        @Override
+        public Optional<TargetsBuilder> classifyRule(final Rule rule) {
+            try (InputStream networkInputStream = new URL(rule.getUrl()).openStream()) {
+                return performRemoteJarInspection(asNative, networkInputStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return Optional.empty();
+            }
+        }
     }
 }

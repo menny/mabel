@@ -35,6 +35,26 @@ public class WritersTests {
             "# If you use kt_* rules, you MUST provide the correct rule implementation when call this macro, if you decide\n" +
             "# not to provide those implementations we'll try to use java_* rules.\n" +
             "\n" +
+            "# This is a help macro to handle Kotlin rules.\n" +
+            "def kotlin_jar_support(name, deps, exports, runtime_deps, jar, kt_jvm_import=None, kt_jvm_library=None):\n" +
+            "    #In case the developer did not provide a kt_* impl, we'll try to use java_*, should work\n" +
+            "    if kt_jvm_import == None:\n" +
+            "        native.java_import(name = name,\n" +
+            "            jars = [jar],\n" +
+            "            deps = deps,\n" +
+            "            exports = exports,\n" +
+            "            runtime_deps = runtime_deps,\n" +
+            "        )\n" +
+            "    else:\n" +
+            "        kt_jvm_import(name = '{}_kotlin_jar'.format(name),\n" +
+            "            jars = [jar],\n" +
+            "        )\n" +
+            "        kt_jvm_library(name = name,\n" +
+            "            deps = deps + [':{}_kotlin_jar'.format(name)],\n" +
+            "            exports = exports + [':{}_kotlin_jar'.format(name)],\n" +
+            "            runtime_deps = runtime_deps,\n" +
+            "        )\n" +
+            "\n" +
             "def macro_name(kt_jvm_import=None, kt_jvm_library=None):\n" +
             "    rule(name = 'name_name_1',\n" +
             "    )\n" +
@@ -137,7 +157,6 @@ public class WritersTests {
                 new Target("net.evendanan.dep1:artifact:1.2.3", "rule", "name_name_1").setPublicVisibility(),
                 new Target("net.evendanan.dep1:artifact:2.0", "rule", "name_name_2").setPublicVisibility()));
 
-        System.out.println(readFileContents(new File(baseFolder, "net/evendanan/dep1/artifact/BUILD.bazel")));
         Assert.assertEquals(ALIAS_DEP_IGNORES_VERSIONS, readFileContents(new File(baseFolder, "net/evendanan/dep1/artifact/BUILD.bazel")));
     }
 
@@ -168,7 +187,6 @@ public class WritersTests {
                 new Target("net.evendanan.dep2:artifact:2.0", "rule", "name_name_2").setPublicVisibility(),
                 new Target("net.evendanan.dep2:artifact:2.0", "rule", "name_name_2_somethingelse").setPublicVisibility()));
 
-        System.out.println(readFileContents(new File(baseFolder, "net/evendanan/dep2/artifact/BUILD.bazel")));
         Assert.assertEquals(ALIAS_DEP_2_MULTIPLE, readFileContents(new File(baseFolder, "net/evendanan/dep2/artifact/BUILD.bazel")));
     }
 
