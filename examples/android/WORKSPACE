@@ -1,0 +1,19 @@
+workspace(name="bazel_mvn_deps_examples_plain_java")
+
+android_sdk_repository(
+    name = "androidsdk",
+    api_level = 28,
+    build_tools_version = "28.0.3")
+
+
+# Of course, this `local_repository` should be `http_archive` in your project (read the README.md file at the root)
+local_repository(
+    name = "bazel_mvn_deps_rule",
+    path = "../../",
+)
+
+load("@bazel_mvn_deps_rule//resolver/main_deps:dependencies.bzl", generate_bazel_mvn_deps_workspace_rules = "generate_workspace_rules")
+generate_bazel_mvn_deps_workspace_rules()
+
+load("//program/main_deps:dependencies.bzl", generate_example_workspace_rules = "generate_workspace_rules")
+generate_example_workspace_rules()

@@ -16,8 +16,9 @@ hs_err_pid*
 .DS_Store
 
 #bazel
-/bazel-bazel-mvn-deps
-/bazel-genfiles
-/bazel-out
-/bazel-testlogs
-/bazel-bin
+bazel-bazel-mvn-deps
+bazel-plain_java
+bazel-genfiles
+bazel-out
+bazel-testlogs
+bazel-bin
