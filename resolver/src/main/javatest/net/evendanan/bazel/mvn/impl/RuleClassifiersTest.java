@@ -65,12 +65,9 @@ public class RuleClassifiersTest {
     @Test
     public void testJarInspector_kotlin() throws Exception {
         final ClassLoader classLoader = RuleClassifiersTest.class.getClassLoader();
-        //I'm not sure that we need something special for Kotlin
-        //Assert.assertSame(TargetsBuilders.KOTLIN_IMPORT,
-        Assert.assertSame(TargetsBuilders.JAVA_IMPORT,
+        Assert.assertSame(TargetsBuilders.KOTLIN_IMPORT,
                 performRemoteJarInspection(false, classLoader.getResourceAsStream("mockk-1.0.jar")).orElse(null));
-        //Assert.assertSame(TargetsBuilders.NATIVE_KOTLIN_IMPORT,
-        Assert.assertSame(TargetsBuilders.NATIVE_JAVA_IMPORT,
+        Assert.assertSame(TargetsBuilders.NATIVE_KOTLIN_IMPORT,
                 performRemoteJarInspection(true, classLoader.getResourceAsStream("mockk-1.0.jar")).orElse(null));
     }
 }

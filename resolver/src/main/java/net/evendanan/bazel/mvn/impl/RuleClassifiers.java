@@ -55,10 +55,7 @@ public class RuleClassifiers {
 
                     return parseServicesProcessorFileContent(asNative, contentBuilder.toString());
                 } else if (jarEntryName.startsWith("META-INF/") && jarEntryName.endsWith(".kotlin_module")) {
-                    //I don't really understand how to import Kotlin JARs, but it seems that
-                    //regular java_import works fine. So, I'll go with that for now.
-                    //return Optional.of(asNative ? TargetsBuilders.NATIVE_KOTLIN_IMPORT : TargetsBuilders.KOTLIN_IMPORT);
-                    return Optional.of(asNative ? TargetsBuilders.NATIVE_JAVA_IMPORT:TargetsBuilders.JAVA_IMPORT);
+                    return Optional.of(asNative ? TargetsBuilders.NATIVE_KOTLIN_IMPORT : TargetsBuilders.KOTLIN_IMPORT);
                 }
                 zipInputStream.closeEntry();
                 jarEntry = zipInputStream.getNextJarEntry();

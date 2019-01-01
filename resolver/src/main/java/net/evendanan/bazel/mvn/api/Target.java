@@ -54,6 +54,11 @@ public class Target {
         return this;
     }
 
+    public Target addVariable(String name, String varName) {
+        attributes.put(name, new VarValue(varName));
+        return this;
+    }
+
     public Target addList(String name, Collection<String> value) {
         attributes.put(name, new ListValue(value));
         return this;
@@ -148,6 +153,20 @@ public class Target {
         @Override
         public Collection<String> outputValue() {
             return Collections.singletonList(String.format(Locale.US, "'%s'", value));
+        }
+    }
+
+    private static class VarValue implements AttributeValue {
+
+        private final String varName;
+
+        private VarValue(final String varName) {
+            this.varName = varName;
+        }
+
+        @Override
+        public Collection<String> outputValue() {
+            return Collections.singletonList(varName);
         }
     }
 

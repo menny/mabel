@@ -65,6 +65,7 @@ public class RuleWriters {
 
     public static class TransitiveRulesMacroWriter implements RuleWriter {
 
+        private static final String KOTLIN_LIB_MACRO_NAME = "kotlin_jar_support";
         private final File outputFile;
         private final String macroName;
 
@@ -82,18 +83,18 @@ public class RuleWriters {
                 fileWriter.append(NEW_LINE);
 
                 fileWriter.append("# This is a help macro to handle Kotlin rules.").append(NEW_LINE);
-                fileWriter.append("def kotlin_jar_support").append("(name, deps, exports, runtime_deps, jar_target, kt_jvm_import=None, kt_jvm_library=None):").append(NEW_LINE);
+                fileWriter.append("def ").append(KOTLIN_LIB_MACRO_NAME).append("(name, deps, exports, runtime_deps, jar, kt_jvm_import=None, kt_jvm_library=None):").append(NEW_LINE);
                 fileWriter.append(INDENT).append("#In case the developer did not provide a kt_* impl, we'll try to use java_*, should work").append(NEW_LINE);
                 fileWriter.append(INDENT).append("if kt_jvm_import == None:").append(NEW_LINE);
                 fileWriter.append(INDENT).append(INDENT).append("native.java_import(name = name,").append(NEW_LINE);
-                fileWriter.append(INDENT).append(INDENT).append(INDENT).append("jars = [jar_target],").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append(INDENT).append("jars = [jar],").append(NEW_LINE);
                 fileWriter.append(INDENT).append(INDENT).append(INDENT).append("deps = deps,").append(NEW_LINE);
                 fileWriter.append(INDENT).append(INDENT).append(INDENT).append("exports = exports,").append(NEW_LINE);
                 fileWriter.append(INDENT).append(INDENT).append(INDENT).append("runtime_deps = runtime_deps,").append(NEW_LINE);
                 fileWriter.append(INDENT).append(INDENT).append(")").append(NEW_LINE);
                 fileWriter.append(INDENT).append("else:").append(NEW_LINE);
                 fileWriter.append(INDENT).append(INDENT).append("kt_jvm_import(name = '{}_kotlin_jar' % name,").append(NEW_LINE);
-                fileWriter.append(INDENT).append(INDENT).append(INDENT).append("jars = [jar_target],").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append(INDENT).append("jars = [jar],").append(NEW_LINE);
                 fileWriter.append(INDENT).append(INDENT).append(")").append(NEW_LINE);
                 fileWriter.append(INDENT).append(INDENT).append("kt_jvm_library(name = name,").append(NEW_LINE);
                 fileWriter.append(INDENT).append(INDENT).append(INDENT).append("deps = deps + [':{}_kotlin_jar' % name],").append(NEW_LINE);
@@ -109,6 +110,10 @@ public class RuleWriters {
                     logger.info(String.format("Writing %d Bazel targets...", targets.size()));
 
                     for (Target target : targets) {
+                        if (target.getRuleName().equals(KOTLIN_LIB_MACRO_NAME)) {
+                            target.addVariable("kt_jvm_import", "kt_jvm_import")
+                                    .addVariable("kt_jvm_library", "kt_jvm_library");
+                        }
                         fileWriter.append(target.outputString(INDENT)).append(NEW_LINE);
                     }
                 }
