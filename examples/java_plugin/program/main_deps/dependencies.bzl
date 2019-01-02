@@ -69,6 +69,7 @@ def kotlin_jar_support(name, deps, exports, runtime_deps, jar, kt_jvm_import=Non
 def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=None):
     native.java_import(name = 'main_deps___net_ltgt_gradle_incap__incap_processor__0_2_java_plugin_lib',
         jars = ['@main_deps___net_ltgt_gradle_incap__incap_processor__0_2//file'],
+        licenses = [],
         deps = [],
         exports = [],
         runtime_deps = [':main_deps___net_ltgt_gradle_incap__incap'],
@@ -108,6 +109,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___com_google_auto_value__auto_value_annotations__1_6_3',
         jars = ['@main_deps___com_google_auto_value__auto_value_annotations__1_6_3//file'],
+        licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -120,6 +122,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___com_google_auto__auto_common__0_8',
         jars = ['@main_deps___com_google_auto__auto_common__0_8//file'],
+        licenses = [],
         deps = [':main_deps___com_google_guava__guava'],
         exports = [':main_deps___com_google_guava__guava'],
         runtime_deps = [],
@@ -132,6 +135,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___com_google_auto_service__auto_service__1_0_rc4_java_plugin_lib',
         jars = ['@main_deps___com_google_auto_service__auto_service__1_0_rc4//file'],
+        licenses = [],
         deps = [
             ':main_deps___com_google_auto__auto_common',
             ':main_deps___com_google_guava__guava',
@@ -193,6 +197,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___com_google_guava__guava__19_0',
         jars = ['@main_deps___com_google_guava__guava__19_0//file'],
+        licenses = [],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -205,6 +210,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___net_ltgt_gradle_incap__incap__0_2',
         jars = ['@main_deps___net_ltgt_gradle_incap__incap__0_2//file'],
+        licenses = [],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -217,6 +223,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib',
         jars = ['@main_deps___com_google_auto_value__auto_value__1_6_3//file'],
+        licenses = ['notice'],
         deps = [
             ':main_deps___com_google_auto_service__auto_service',
             ':main_deps___net_ltgt_gradle_incap__incap_processor',

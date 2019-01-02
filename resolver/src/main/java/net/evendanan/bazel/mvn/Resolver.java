@@ -182,9 +182,12 @@ public class Resolver {
 
         private final String prefix;
 
-        public DependencyWithPrefix(final String groupId, final String artifactId, final String version, final String packaging, final Collection<Dependency> dependencies, final Collection<Dependency> exports, final Collection<Dependency> runtimeDependencies, final URI url,
+        public DependencyWithPrefix(final String groupId, final String artifactId, final String version, final String packaging,
+                                    final Collection<Dependency> dependencies, final Collection<Dependency> exports, final Collection<Dependency> runtimeDependencies,
+                                    final URI url, final URI sourcesUrl, final URI javadocUrl,
+                                    final Collection<License> licenses,
                                     String prefix) {
-            super(groupId, artifactId, version, packaging, dependencies, exports, runtimeDependencies, url);
+            super(groupId, artifactId, version, packaging, dependencies, exports, runtimeDependencies, url, sourcesUrl, javadocUrl, licenses);
             this.prefix = prefix;
         }
 
@@ -195,7 +198,7 @@ public class Resolver {
                     dependency.dependencies().stream().map(prefixer).collect(Collectors.toList()),
                     dependency.exports().stream().map(prefixer).collect(Collectors.toList()),
                     dependency.runtimeDependencies().stream().map(prefixer).collect(Collectors.toList()),
-                    dependency.url(),
+                    dependency.url(), dependency.sourcesUrl(), dependency.javadocUrl(), dependency.licenses(),
                     prefix);
         }
 

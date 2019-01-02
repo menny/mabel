@@ -68,6 +68,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___com_google_code_gson__gson__2_8_0',
         jars = ['@main_deps___com_google_code_gson__gson__2_8_0//file'],
+        licenses = [],
         deps = [],
         exports = [],
         runtime_deps = [],

@@ -234,6 +234,7 @@ def kotlin_jar_support(name, deps, exports, runtime_deps, jar, kt_jvm_import=Non
 def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=None):
     native.java_import(name = 'main_deps___org_apache_httpcomponents__httpcore__4_4_6',
         jars = ['@main_deps___org_apache_httpcomponents__httpcore__4_4_6//file'],
+        licenses = [],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -246,6 +247,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_eclipse_aether__aether_transport_wagon__1_1_0',
         jars = ['@main_deps___org_eclipse_aether__aether_transport_wagon__1_1_0//file'],
+        licenses = ['notice'],
         deps = [
             ':main_deps___org_apache_maven_wagon__wagon_provider_api',
             ':main_deps___org_eclipse_aether__aether_api',
@@ -268,6 +270,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_eclipse_aether__aether_util__1_1_0',
         jars = ['@main_deps___org_eclipse_aether__aether_util__1_1_0//file'],
+        licenses = ['notice'],
         deps = [':main_deps___org_eclipse_aether__aether_api'],
         exports = [':main_deps___org_eclipse_aether__aether_api'],
         runtime_deps = [],
@@ -280,6 +283,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_mockito__mockito_core__2_23_4',
         jars = ['@main_deps___org_mockito__mockito_core__2_23_4//file'],
+        licenses = ['notice'],
         deps = [
             ':main_deps___net_bytebuddy__byte_buddy',
             ':main_deps___net_bytebuddy__byte_buddy_agent',
@@ -300,6 +304,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___com_kohlschutter_junixsocket__junixsocket_common__2_0_4',
         jars = ['@main_deps___com_kohlschutter_junixsocket__junixsocket_common__2_0_4//file'],
+        licenses = [],
         deps = [':main_deps___log4j__log4j'],
         exports = [':main_deps___log4j__log4j'],
         runtime_deps = [],
@@ -312,6 +317,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_apache_maven__maven_model__3_2_3',
         jars = ['@main_deps___org_apache_maven__maven_model__3_2_3//file'],
+        licenses = ['notice'],
         deps = [':main_deps___org_codehaus_plexus__plexus_utils'],
         exports = [':main_deps___org_codehaus_plexus__plexus_utils'],
         runtime_deps = [],
@@ -324,6 +330,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_apache_maven__maven_model_builder__3_2_3',
         jars = ['@main_deps___org_apache_maven__maven_model_builder__3_2_3//file'],
+        licenses = ['notice'],
         deps = [
             ':main_deps___org_apache_maven__maven_model',
             ':main_deps___org_codehaus_plexus__plexus_component_annotations',
@@ -346,6 +353,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_eclipse_aether__aether_transport_http__1_1_0',
         jars = ['@main_deps___org_eclipse_aether__aether_transport_http__1_1_0//file'],
+        licenses = ['notice'],
         deps = [
             ':main_deps___org_apache_httpcomponents__httpclient',
             ':main_deps___org_eclipse_aether__aether_api',
@@ -370,6 +378,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_apache_maven__maven_repository_metadata__3_2_3',
         jars = ['@main_deps___org_apache_maven__maven_repository_metadata__3_2_3//file'],
+        licenses = ['notice'],
         deps = [':main_deps___org_codehaus_plexus__plexus_utils'],
         exports = [':main_deps___org_codehaus_plexus__plexus_utils'],
         runtime_deps = [],
@@ -382,6 +391,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_apache_maven__maven_aether_provider__3_2_3',
         jars = ['@main_deps___org_apache_maven__maven_aether_provider__3_2_3//file'],
+        licenses = ['notice'],
         deps = [
             ':main_deps___org_apache_maven__maven_model',
             ':main_deps___org_apache_maven__maven_model_builder',
@@ -414,6 +424,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_scijava__native_lib_loader__2_0_2',
         jars = ['@main_deps___org_scijava__native_lib_loader__2_0_2//file'],
+        licenses = [],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -426,6 +437,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_eclipse_aether__aether_api__1_1_0',
         jars = ['@main_deps___org_eclipse_aether__aether_api__1_1_0//file'],
+        licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -438,6 +450,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_hamcrest__hamcrest_core__1_3',
         jars = ['@main_deps___org_hamcrest__hamcrest_core__1_3//file'],
+        licenses = [],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -450,6 +463,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_apache_maven__maven_artifact__3_5_0',
         jars = ['@main_deps___org_apache_maven__maven_artifact__3_5_0//file'],
+        licenses = ['notice'],
         deps = [
             ':main_deps___org_apache_commons__commons_lang3',
             ':main_deps___org_codehaus_plexus__plexus_utils',
@@ -468,6 +482,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_apache_commons__commons_lang3__3_8_1',
         jars = ['@main_deps___org_apache_commons__commons_lang3__3_8_1//file'],
+        licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -480,6 +495,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_apache_openejb__javaee_api__5_0_2',
         jars = ['@main_deps___org_apache_openejb__javaee_api__5_0_2//file'],
+        licenses = [],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -492,6 +508,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___com_beust__jcommander__1_72',
         jars = ['@main_deps___com_beust__jcommander__1_72//file'],
+        licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -504,6 +521,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___commons_logging__commons_logging__1_2',
         jars = ['@main_deps___commons_logging__commons_logging__1_2//file'],
+        licenses = [],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -516,6 +534,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_codehaus_plexus__plexus_interpolation__1_24',
         jars = ['@main_deps___org_codehaus_plexus__plexus_interpolation__1_24//file'],
+        licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -528,6 +547,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___log4j__log4j__1_2_17',
         jars = ['@main_deps___log4j__log4j__1_2_17//file'],
+        licenses = [],
         deps = [':main_deps___org_apache_openejb__javaee_api'],
         exports = [],
         runtime_deps = [],
@@ -540,6 +560,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_eclipse_aether__aether_connector_basic__1_1_0',
         jars = ['@main_deps___org_eclipse_aether__aether_connector_basic__1_1_0//file'],
+        licenses = ['notice'],
         deps = [
             ':main_deps___org_eclipse_aether__aether_api',
             ':main_deps___org_eclipse_aether__aether_spi',
@@ -560,6 +581,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_slf4j__jcl_over_slf4j__1_6_2',
         jars = ['@main_deps___org_slf4j__jcl_over_slf4j__1_6_2//file'],
+        licenses = [],
         deps = [':main_deps___org_slf4j__slf4j_api'],
         exports = [':main_deps___org_slf4j__slf4j_api'],
         runtime_deps = [],
@@ -572,6 +594,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___net_bytebuddy__byte_buddy__1_9_3',
         jars = ['@main_deps___net_bytebuddy__byte_buddy__1_9_3//file'],
+        licenses = [],
         deps = [':main_deps___com_google_code_findbugs__findbugs_annotations'],
         exports = [],
         runtime_deps = [],
@@ -584,6 +607,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_eclipse_aether__aether_impl__1_1_0',
         jars = ['@main_deps___org_eclipse_aether__aether_impl__1_1_0//file'],
+        licenses = ['notice'],
         deps = [
             ':main_deps___org_eclipse_aether__aether_api',
             ':main_deps___org_eclipse_aether__aether_spi',
@@ -604,6 +628,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_objenesis__objenesis__2_6',
         jars = ['@main_deps___org_objenesis__objenesis__2_6//file'],
+        licenses = [],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -616,6 +641,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___com_google_code_findbugs__jsr305__3_0_2',
         jars = ['@main_deps___com_google_code_findbugs__jsr305__3_0_2//file'],
+        licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -628,6 +654,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___com_google_guava__guava__20_0',
         jars = ['@main_deps___com_google_guava__guava__20_0//file'],
+        licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -640,6 +667,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_codehaus_plexus__plexus_utils__3_0_24',
         jars = ['@main_deps___org_codehaus_plexus__plexus_utils__3_0_24//file'],
+        licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -652,6 +680,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_slf4j__slf4j_api__1_6_2',
         jars = ['@main_deps___org_slf4j__slf4j_api__1_6_2//file'],
+        licenses = [],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -664,6 +693,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_apache_maven_wagon__wagon_provider_api__1_0',
         jars = ['@main_deps___org_apache_maven_wagon__wagon_provider_api__1_0//file'],
+        licenses = [],
         deps = [':main_deps___org_codehaus_plexus__plexus_utils'],
         exports = [':main_deps___org_codehaus_plexus__plexus_utils'],
         runtime_deps = [],
@@ -676,6 +706,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___com_google_code_findbugs__findbugs_annotations__3_0_1',
         jars = ['@main_deps___com_google_code_findbugs__findbugs_annotations__3_0_1//file'],
+        licenses = [],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -688,6 +719,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___net_bytebuddy__byte_buddy_agent__1_9_3',
         jars = ['@main_deps___net_bytebuddy__byte_buddy_agent__1_9_3//file'],
+        licenses = [],
         deps = [
             ':main_deps___com_google_code_findbugs__findbugs_annotations',
             ':main_deps___com_kohlschutter_junixsocket__junixsocket_native_common',
@@ -703,6 +735,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_codehaus_plexus__plexus_component_annotations__1_5_5',
         jars = ['@main_deps___org_codehaus_plexus__plexus_component_annotations__1_5_5//file'],
+        licenses = [],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -715,6 +748,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_eclipse_aether__aether_transport_classpath__1_1_0',
         jars = ['@main_deps___org_eclipse_aether__aether_transport_classpath__1_1_0//file'],
+        licenses = ['notice'],
         deps = [
             ':main_deps___org_eclipse_aether__aether_api',
             ':main_deps___org_eclipse_aether__aether_spi',
@@ -735,6 +769,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_eclipse_aether__aether_transport_file__1_1_0',
         jars = ['@main_deps___org_eclipse_aether__aether_transport_file__1_1_0//file'],
+        licenses = ['notice'],
         deps = [
             ':main_deps___org_eclipse_aether__aether_api',
             ':main_deps___org_eclipse_aether__aether_spi',
@@ -755,6 +790,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___junit__junit__4_12',
         jars = ['@main_deps___junit__junit__4_12//file'],
+        licenses = ['notice'],
         deps = [':main_deps___org_hamcrest__hamcrest_core'],
         exports = [':main_deps___org_hamcrest__hamcrest_core'],
         runtime_deps = [],
@@ -767,6 +803,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___commons_codec__commons_codec__1_9',
         jars = ['@main_deps___commons_codec__commons_codec__1_9//file'],
+        licenses = [],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -779,6 +816,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___com_kohlschutter_junixsocket__junixsocket_native_common__2_0_4',
         jars = ['@main_deps___com_kohlschutter_junixsocket__junixsocket_native_common__2_0_4//file'],
+        licenses = [],
         deps = [
             ':main_deps___com_kohlschutter_junixsocket__junixsocket_common',
             ':main_deps___log4j__log4j',
@@ -799,6 +837,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_eclipse_aether__aether_spi__1_1_0',
         jars = ['@main_deps___org_eclipse_aether__aether_spi__1_1_0//file'],
+        licenses = ['notice'],
         deps = [':main_deps___org_eclipse_aether__aether_api'],
         exports = [':main_deps___org_eclipse_aether__aether_api'],
         runtime_deps = [],
@@ -811,6 +850,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_apache_httpcomponents__httpclient__4_5_3',
         jars = ['@main_deps___org_apache_httpcomponents__httpclient__4_5_3//file'],
+        licenses = ['notice'],
         deps = [
             ':main_deps___commons_codec__commons_codec',
             ':main_deps___commons_logging__commons_logging',

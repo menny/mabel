@@ -3,6 +3,7 @@ package net.evendanan.bazel.mvn;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import net.evendanan.bazel.mvn.api.Dependency;
 import org.mockito.Mockito;
@@ -16,7 +17,10 @@ public class TestUtils {
         return new Dependency(depsPart[0], depsPart[1], depsPart.length > 2 ? depsPart[2]:"",
                 url.substring(url.length() - 3),
                 generateDeps(depsLabels), generateDeps(exportsLabels), generateDeps(runtimeLabels),
-                URI.create(url));
+                URI.create(url),
+                URI.create(""),
+                URI.create(""),
+                Collections.emptyList());
     }
 
 

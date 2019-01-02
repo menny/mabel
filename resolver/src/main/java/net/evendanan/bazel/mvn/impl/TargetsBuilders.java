@@ -50,6 +50,7 @@ public class TargetsBuilders {
                 .addList("jars", "pom".equalsIgnoreCase(dependency.packaging()) ?
                         Collections.emptyList()
                         :Collections.singletonList(String.format(Locale.US, "@%s//file", dependency.repositoryRuleName())))
+                .addList("licenses", dependency.licenses().stream().map(Dependency.License::toString).collect(Collectors.toList()))
                 .addList("deps", convertRulesToStrings(dependency.dependencies()))
                 .addList("exports", convertRulesToStrings(dependency.exports()))
                 .addList("runtime_deps", convertRulesToStrings(dependency.runtimeDependencies()));

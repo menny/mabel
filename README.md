@@ -21,6 +21,7 @@ This WORKSPACE will provide `deps_workspace_generator_rule` rule which allows yo
   * `kt_jvm_import` + `kt_jvm_library` or `java_import` for Kotlin modules. More about this [here](#kotlin).
   * `java_import` for anything else.
 * Allow to specify custom Maven repo URLs.
+* Adds `licenses` data to `java_import` rules, if license is declared in the artifact's POM file.
 * Produces a _lock_ file that describes the dependency graph. This file should be checked into your repo.
   
 ## Prior-work
