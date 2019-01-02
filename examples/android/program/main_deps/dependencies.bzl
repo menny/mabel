@@ -21,7 +21,7 @@ def generate_workspace_rules():
         downloaded_file_path = 'slidingpanelayout-1.0.0.aar',
     )
 
-    http_file(name = 'main_deps___androidx_lifecycle__lifecycle-livedata__2_0_0',
+    http_file(name = 'main_deps___androidx_lifecycle__lifecycle_livedata__2_0_0',
         urls = ['https://maven.google.com/androidx/lifecycle/lifecycle-livedata/2.0.0/lifecycle-livedata-2.0.0.aar'],
         downloaded_file_path = 'lifecycle-livedata-2.0.0.aar',
     )
@@ -36,7 +36,7 @@ def generate_workspace_rules():
         downloaded_file_path = 'coordinatorlayout-1.0.0.aar',
     )
 
-    http_file(name = 'main_deps___androidx_arch_core__core-runtime__2_0_0',
+    http_file(name = 'main_deps___androidx_arch_core__core_runtime__2_0_0',
         urls = ['https://maven.google.com/androidx/arch/core/core-runtime/2.0.0/core-runtime-2.0.0.aar'],
         downloaded_file_path = 'core-runtime-2.0.0.aar',
     )
@@ -51,12 +51,12 @@ def generate_workspace_rules():
         downloaded_file_path = 'vectordrawable-1.0.1.aar',
     )
 
-    http_file(name = 'main_deps___androidx_lifecycle__lifecycle-common__2_0_0',
+    http_file(name = 'main_deps___androidx_lifecycle__lifecycle_common__2_0_0',
         urls = ['https://maven.google.com/androidx/lifecycle/lifecycle-common/2.0.0/lifecycle-common-2.0.0.jar'],
         downloaded_file_path = 'lifecycle-common-2.0.0.jar',
     )
 
-    http_file(name = 'main_deps___androidx_versionedparcelable__versionedparcelable__1_1_0-alpha01',
+    http_file(name = 'main_deps___androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01',
         urls = ['https://maven.google.com/androidx/versionedparcelable/versionedparcelable/1.1.0-alpha01/versionedparcelable-1.1.0-alpha01.aar'],
         downloaded_file_path = 'versionedparcelable-1.1.0-alpha01.aar',
     )
@@ -66,7 +66,7 @@ def generate_workspace_rules():
         downloaded_file_path = 'interpolator-1.0.0.aar',
     )
 
-    http_file(name = 'main_deps___androidx_core__core__1_1_0-alpha01',
+    http_file(name = 'main_deps___androidx_core__core__1_1_0_alpha01',
         urls = ['https://maven.google.com/androidx/core/core/1.1.0-alpha01/core-1.1.0-alpha01.aar'],
         downloaded_file_path = 'core-1.1.0-alpha01.aar',
     )
@@ -76,7 +76,7 @@ def generate_workspace_rules():
         downloaded_file_path = 'documentfile-1.0.0.aar',
     )
 
-    http_file(name = 'main_deps___androidx_fragment__fragment__1_1_0-alpha02',
+    http_file(name = 'main_deps___androidx_fragment__fragment__1_1_0_alpha02',
         urls = ['https://maven.google.com/androidx/fragment/fragment/1.1.0-alpha02/fragment-1.1.0-alpha02.aar'],
         downloaded_file_path = 'fragment-1.1.0-alpha02.aar',
     )
@@ -101,7 +101,7 @@ def generate_workspace_rules():
         downloaded_file_path = 'drawerlayout-1.0.0.aar',
     )
 
-    http_file(name = 'main_deps___androidx_lifecycle__lifecycle-livedata-core__2_0_0',
+    http_file(name = 'main_deps___androidx_lifecycle__lifecycle_livedata_core__2_0_0',
         urls = ['https://maven.google.com/androidx/lifecycle/lifecycle-livedata-core/2.0.0/lifecycle-livedata-core-2.0.0.aar'],
         downloaded_file_path = 'lifecycle-livedata-core-2.0.0.aar',
     )
@@ -116,7 +116,7 @@ def generate_workspace_rules():
         downloaded_file_path = 'swiperefreshlayout-1.0.0.aar',
     )
 
-    http_file(name = 'main_deps___androidx_lifecycle__lifecycle-viewmodel__2_0_0',
+    http_file(name = 'main_deps___androidx_lifecycle__lifecycle_viewmodel__2_0_0',
         urls = ['https://maven.google.com/androidx/lifecycle/lifecycle-viewmodel/2.0.0/lifecycle-viewmodel-2.0.0.aar'],
         downloaded_file_path = 'lifecycle-viewmodel-2.0.0.aar',
     )
@@ -126,27 +126,27 @@ def generate_workspace_rules():
         downloaded_file_path = 'customview-1.0.0.aar',
     )
 
-    http_file(name = 'main_deps___androidx_vectordrawable__vectordrawable-animated__1_0_0',
+    http_file(name = 'main_deps___androidx_vectordrawable__vectordrawable_animated__1_0_0',
         urls = ['https://maven.google.com/androidx/vectordrawable/vectordrawable-animated/1.0.0/vectordrawable-animated-1.0.0.aar'],
         downloaded_file_path = 'vectordrawable-animated-1.0.0.aar',
     )
 
-    http_file(name = 'main_deps___androidx_legacy__legacy-support-core-ui__1_0_0',
+    http_file(name = 'main_deps___androidx_legacy__legacy_support_core_ui__1_0_0',
         urls = ['https://maven.google.com/androidx/legacy/legacy-support-core-ui/1.0.0/legacy-support-core-ui-1.0.0.aar'],
         downloaded_file_path = 'legacy-support-core-ui-1.0.0.aar',
     )
 
-    http_file(name = 'main_deps___androidx_lifecycle__lifecycle-runtime__2_0_0',
+    http_file(name = 'main_deps___androidx_lifecycle__lifecycle_runtime__2_0_0',
         urls = ['https://maven.google.com/androidx/lifecycle/lifecycle-runtime/2.0.0/lifecycle-runtime-2.0.0.aar'],
         downloaded_file_path = 'lifecycle-runtime-2.0.0.aar',
     )
 
-    http_file(name = 'main_deps___androidx_arch_core__core-common__2_0_0',
+    http_file(name = 'main_deps___androidx_arch_core__core_common__2_0_0',
         urls = ['https://maven.google.com/androidx/arch/core/core-common/2.0.0/core-common-2.0.0.jar'],
         downloaded_file_path = 'core-common-2.0.0.jar',
     )
 
-    http_file(name = 'main_deps___androidx_legacy__legacy-support-core-utils__1_0_0',
+    http_file(name = 'main_deps___androidx_legacy__legacy_support_core_utils__1_0_0',
         urls = ['https://maven.google.com/androidx/legacy/legacy-support-core-utils/1.0.0/legacy-support-core-utils-1.0.0.aar'],
         downloaded_file_path = 'legacy-support-core-utils-1.0.0.aar',
     )
@@ -156,7 +156,7 @@ def generate_workspace_rules():
         downloaded_file_path = 'annotation-1.0.0.jar',
     )
 
-    http_file(name = 'main_deps___androidx_activity__activity__1_0_0-alpha02',
+    http_file(name = 'main_deps___androidx_activity__activity__1_0_0_alpha02',
         urls = ['https://maven.google.com/androidx/activity/activity/1.0.0-alpha02/activity-1.0.0-alpha02.aar'],
         downloaded_file_path = 'activity-1.0.0-alpha02.aar',
     )
@@ -228,8 +228,8 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         visibility = ['//visibility:public'],
     )
 
-    native.aar_import(name = 'main_deps___androidx_lifecycle__lifecycle-livedata__2_0_0',
-        aar = '@main_deps___androidx_lifecycle__lifecycle-livedata__2_0_0//file',
+    native.aar_import(name = 'main_deps___androidx_lifecycle__lifecycle_livedata__2_0_0',
+        aar = '@main_deps___androidx_lifecycle__lifecycle_livedata__2_0_0//file',
         deps = [
             ':main_deps___androidx_arch_core__core_common',
             ':main_deps___androidx_arch_core__core_runtime',
@@ -243,7 +243,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     native.alias(name = 'main_deps___androidx_lifecycle__lifecycle_livedata',
-        actual = ':main_deps___androidx_lifecycle__lifecycle-livedata__2_0_0',
+        actual = ':main_deps___androidx_lifecycle__lifecycle_livedata__2_0_0',
         visibility = ['//visibility:public'],
     )
 
@@ -285,8 +285,8 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         visibility = ['//visibility:public'],
     )
 
-    native.aar_import(name = 'main_deps___androidx_arch_core__core-runtime__2_0_0',
-        aar = '@main_deps___androidx_arch_core__core-runtime__2_0_0//file',
+    native.aar_import(name = 'main_deps___androidx_arch_core__core_runtime__2_0_0',
+        aar = '@main_deps___androidx_arch_core__core_runtime__2_0_0//file',
         deps = [
             ':main_deps___androidx_annotation__annotation',
             ':main_deps___androidx_arch_core__core_common',
@@ -298,7 +298,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     native.alias(name = 'main_deps___androidx_arch_core__core_runtime',
-        actual = ':main_deps___androidx_arch_core__core-runtime__2_0_0',
+        actual = ':main_deps___androidx_arch_core__core_runtime__2_0_0',
         visibility = ['//visibility:public'],
     )
 
@@ -331,20 +331,20 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         visibility = ['//visibility:public'],
     )
 
-    native.java_import(name = 'main_deps___androidx_lifecycle__lifecycle-common__2_0_0',
-        jars = ['@main_deps___androidx_lifecycle__lifecycle-common__2_0_0//file'],
+    native.java_import(name = 'main_deps___androidx_lifecycle__lifecycle_common__2_0_0',
+        jars = ['@main_deps___androidx_lifecycle__lifecycle_common__2_0_0//file'],
         deps = [':main_deps___androidx_annotation__annotation'],
         exports = [':main_deps___androidx_annotation__annotation'],
         runtime_deps = [],
     )
 
     native.alias(name = 'main_deps___androidx_lifecycle__lifecycle_common',
-        actual = ':main_deps___androidx_lifecycle__lifecycle-common__2_0_0',
+        actual = ':main_deps___androidx_lifecycle__lifecycle_common__2_0_0',
         visibility = ['//visibility:public'],
     )
 
-    native.aar_import(name = 'main_deps___androidx_versionedparcelable__versionedparcelable__1_1_0-alpha01',
-        aar = '@main_deps___androidx_versionedparcelable__versionedparcelable__1_1_0-alpha01//file',
+    native.aar_import(name = 'main_deps___androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01',
+        aar = '@main_deps___androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01//file',
         deps = [
             ':main_deps___androidx_annotation__annotation',
             ':main_deps___androidx_collection__collection',
@@ -356,7 +356,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     native.alias(name = 'main_deps___androidx_versionedparcelable__versionedparcelable',
-        actual = ':main_deps___androidx_versionedparcelable__versionedparcelable__1_1_0-alpha01',
+        actual = ':main_deps___androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01',
         visibility = ['//visibility:public'],
     )
 
@@ -371,8 +371,8 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         visibility = ['//visibility:public'],
     )
 
-    native.aar_import(name = 'main_deps___androidx_core__core__1_1_0-alpha01',
-        aar = '@main_deps___androidx_core__core__1_1_0-alpha01//file',
+    native.aar_import(name = 'main_deps___androidx_core__core__1_1_0_alpha01',
+        aar = '@main_deps___androidx_core__core__1_1_0_alpha01//file',
         deps = [
             ':main_deps___androidx_annotation__annotation',
             ':main_deps___androidx_collection__collection',
@@ -388,7 +388,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     native.alias(name = 'main_deps___androidx_core__core',
-        actual = ':main_deps___androidx_core__core__1_1_0-alpha01',
+        actual = ':main_deps___androidx_core__core__1_1_0_alpha01',
         visibility = ['//visibility:public'],
     )
 
@@ -403,8 +403,8 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         visibility = ['//visibility:public'],
     )
 
-    native.aar_import(name = 'main_deps___androidx_fragment__fragment__1_1_0-alpha02',
-        aar = '@main_deps___androidx_fragment__fragment__1_1_0-alpha02//file',
+    native.aar_import(name = 'main_deps___androidx_fragment__fragment__1_1_0_alpha02',
+        aar = '@main_deps___androidx_fragment__fragment__1_1_0_alpha02//file',
         deps = [
             ':main_deps___androidx_activity__activity',
             ':main_deps___androidx_annotation__annotation',
@@ -424,7 +424,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     native.alias(name = 'main_deps___androidx_fragment__fragment',
-        actual = ':main_deps___androidx_fragment__fragment__1_1_0-alpha02',
+        actual = ':main_deps___androidx_fragment__fragment__1_1_0_alpha02',
         visibility = ['//visibility:public'],
     )
 
@@ -514,8 +514,8 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         visibility = ['//visibility:public'],
     )
 
-    native.aar_import(name = 'main_deps___androidx_lifecycle__lifecycle-livedata-core__2_0_0',
-        aar = '@main_deps___androidx_lifecycle__lifecycle-livedata-core__2_0_0//file',
+    native.aar_import(name = 'main_deps___androidx_lifecycle__lifecycle_livedata_core__2_0_0',
+        aar = '@main_deps___androidx_lifecycle__lifecycle_livedata_core__2_0_0//file',
         deps = [
             ':main_deps___androidx_arch_core__core_common',
             ':main_deps___androidx_arch_core__core_runtime',
@@ -529,7 +529,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     native.alias(name = 'main_deps___androidx_lifecycle__lifecycle_livedata_core',
-        actual = ':main_deps___androidx_lifecycle__lifecycle-livedata-core__2_0_0',
+        actual = ':main_deps___androidx_lifecycle__lifecycle_livedata_core__2_0_0',
         visibility = ['//visibility:public'],
     )
 
@@ -563,14 +563,14 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         visibility = ['//visibility:public'],
     )
 
-    native.aar_import(name = 'main_deps___androidx_lifecycle__lifecycle-viewmodel__2_0_0',
-        aar = '@main_deps___androidx_lifecycle__lifecycle-viewmodel__2_0_0//file',
+    native.aar_import(name = 'main_deps___androidx_lifecycle__lifecycle_viewmodel__2_0_0',
+        aar = '@main_deps___androidx_lifecycle__lifecycle_viewmodel__2_0_0//file',
         deps = [':main_deps___androidx_annotation__annotation'],
         exports = [':main_deps___androidx_annotation__annotation'],
     )
 
     native.alias(name = 'main_deps___androidx_lifecycle__lifecycle_viewmodel',
-        actual = ':main_deps___androidx_lifecycle__lifecycle-viewmodel__2_0_0',
+        actual = ':main_deps___androidx_lifecycle__lifecycle_viewmodel__2_0_0',
         visibility = ['//visibility:public'],
     )
 
@@ -591,8 +591,8 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         visibility = ['//visibility:public'],
     )
 
-    native.aar_import(name = 'main_deps___androidx_vectordrawable__vectordrawable-animated__1_0_0',
-        aar = '@main_deps___androidx_vectordrawable__vectordrawable-animated__1_0_0//file',
+    native.aar_import(name = 'main_deps___androidx_vectordrawable__vectordrawable_animated__1_0_0',
+        aar = '@main_deps___androidx_vectordrawable__vectordrawable_animated__1_0_0//file',
         deps = [
             ':main_deps___androidx_legacy__legacy_support_core_ui',
             ':main_deps___androidx_vectordrawable__vectordrawable',
@@ -604,12 +604,12 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     native.alias(name = 'main_deps___androidx_vectordrawable__vectordrawable_animated',
-        actual = ':main_deps___androidx_vectordrawable__vectordrawable-animated__1_0_0',
+        actual = ':main_deps___androidx_vectordrawable__vectordrawable_animated__1_0_0',
         visibility = ['//visibility:public'],
     )
 
-    native.aar_import(name = 'main_deps___androidx_legacy__legacy-support-core-ui__1_0_0',
-        aar = '@main_deps___androidx_legacy__legacy-support-core-ui__1_0_0//file',
+    native.aar_import(name = 'main_deps___androidx_legacy__legacy_support_core_ui__1_0_0',
+        aar = '@main_deps___androidx_legacy__legacy_support_core_ui__1_0_0//file',
         deps = [
             ':main_deps___androidx_annotation__annotation',
             ':main_deps___androidx_asynclayoutinflater__asynclayoutinflater',
@@ -641,12 +641,12 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     native.alias(name = 'main_deps___androidx_legacy__legacy_support_core_ui',
-        actual = ':main_deps___androidx_legacy__legacy-support-core-ui__1_0_0',
+        actual = ':main_deps___androidx_legacy__legacy_support_core_ui__1_0_0',
         visibility = ['//visibility:public'],
     )
 
-    native.aar_import(name = 'main_deps___androidx_lifecycle__lifecycle-runtime__2_0_0',
-        aar = '@main_deps___androidx_lifecycle__lifecycle-runtime__2_0_0//file',
+    native.aar_import(name = 'main_deps___androidx_lifecycle__lifecycle_runtime__2_0_0',
+        aar = '@main_deps___androidx_lifecycle__lifecycle_runtime__2_0_0//file',
         deps = [
             ':main_deps___androidx_annotation__annotation',
             ':main_deps___androidx_arch_core__core_common',
@@ -660,24 +660,24 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     native.alias(name = 'main_deps___androidx_lifecycle__lifecycle_runtime',
-        actual = ':main_deps___androidx_lifecycle__lifecycle-runtime__2_0_0',
+        actual = ':main_deps___androidx_lifecycle__lifecycle_runtime__2_0_0',
         visibility = ['//visibility:public'],
     )
 
-    native.java_import(name = 'main_deps___androidx_arch_core__core-common__2_0_0',
-        jars = ['@main_deps___androidx_arch_core__core-common__2_0_0//file'],
+    native.java_import(name = 'main_deps___androidx_arch_core__core_common__2_0_0',
+        jars = ['@main_deps___androidx_arch_core__core_common__2_0_0//file'],
         deps = [':main_deps___androidx_annotation__annotation'],
         exports = [':main_deps___androidx_annotation__annotation'],
         runtime_deps = [],
     )
 
     native.alias(name = 'main_deps___androidx_arch_core__core_common',
-        actual = ':main_deps___androidx_arch_core__core-common__2_0_0',
+        actual = ':main_deps___androidx_arch_core__core_common__2_0_0',
         visibility = ['//visibility:public'],
     )
 
-    native.aar_import(name = 'main_deps___androidx_legacy__legacy-support-core-utils__1_0_0',
-        aar = '@main_deps___androidx_legacy__legacy-support-core-utils__1_0_0//file',
+    native.aar_import(name = 'main_deps___androidx_legacy__legacy_support_core_utils__1_0_0',
+        aar = '@main_deps___androidx_legacy__legacy_support_core_utils__1_0_0//file',
         deps = [
             ':main_deps___androidx_annotation__annotation',
             ':main_deps___androidx_core__core',
@@ -697,7 +697,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     native.alias(name = 'main_deps___androidx_legacy__legacy_support_core_utils',
-        actual = ':main_deps___androidx_legacy__legacy-support-core-utils__1_0_0',
+        actual = ':main_deps___androidx_legacy__legacy_support_core_utils__1_0_0',
         visibility = ['//visibility:public'],
     )
 
@@ -713,8 +713,8 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         visibility = ['//visibility:public'],
     )
 
-    native.aar_import(name = 'main_deps___androidx_activity__activity__1_0_0-alpha02',
-        aar = '@main_deps___androidx_activity__activity__1_0_0-alpha02//file',
+    native.aar_import(name = 'main_deps___androidx_activity__activity__1_0_0_alpha02',
+        aar = '@main_deps___androidx_activity__activity__1_0_0_alpha02//file',
         deps = [
             ':main_deps___androidx_annotation__annotation',
             ':main_deps___androidx_core__core',
@@ -730,7 +730,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     native.alias(name = 'main_deps___androidx_activity__activity',
-        actual = ':main_deps___androidx_activity__activity__1_0_0-alpha02',
+        actual = ':main_deps___androidx_activity__activity__1_0_0_alpha02',
         visibility = ['//visibility:public'],
     )
 
