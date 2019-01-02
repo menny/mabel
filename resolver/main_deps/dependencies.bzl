@@ -247,7 +247,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_eclipse_aether__aether_transport_wagon__1_1_0',
         jars = ['@main_deps___org_eclipse_aether__aether_transport_wagon__1_1_0//file'],
-        licenses = ['notice'],
+        licenses = ['reciprocal'],
         deps = [
             ':main_deps___org_apache_maven_wagon__wagon_provider_api',
             ':main_deps___org_eclipse_aether__aether_api',
@@ -270,7 +270,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_eclipse_aether__aether_util__1_1_0',
         jars = ['@main_deps___org_eclipse_aether__aether_util__1_1_0//file'],
-        licenses = ['notice'],
+        licenses = ['reciprocal'],
         deps = [':main_deps___org_eclipse_aether__aether_api'],
         exports = [':main_deps___org_eclipse_aether__aether_api'],
         runtime_deps = [],
@@ -353,7 +353,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_eclipse_aether__aether_transport_http__1_1_0',
         jars = ['@main_deps___org_eclipse_aether__aether_transport_http__1_1_0//file'],
-        licenses = ['notice'],
+        licenses = ['reciprocal'],
         deps = [
             ':main_deps___org_apache_httpcomponents__httpclient',
             ':main_deps___org_eclipse_aether__aether_api',
@@ -437,7 +437,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_eclipse_aether__aether_api__1_1_0',
         jars = ['@main_deps___org_eclipse_aether__aether_api__1_1_0//file'],
-        licenses = ['notice'],
+        licenses = ['reciprocal'],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -560,7 +560,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_eclipse_aether__aether_connector_basic__1_1_0',
         jars = ['@main_deps___org_eclipse_aether__aether_connector_basic__1_1_0//file'],
-        licenses = ['notice'],
+        licenses = ['reciprocal'],
         deps = [
             ':main_deps___org_eclipse_aether__aether_api',
             ':main_deps___org_eclipse_aether__aether_spi',
@@ -607,7 +607,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_eclipse_aether__aether_impl__1_1_0',
         jars = ['@main_deps___org_eclipse_aether__aether_impl__1_1_0//file'],
-        licenses = ['notice'],
+        licenses = ['reciprocal'],
         deps = [
             ':main_deps___org_eclipse_aether__aether_api',
             ':main_deps___org_eclipse_aether__aether_spi',
@@ -748,7 +748,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_eclipse_aether__aether_transport_classpath__1_1_0',
         jars = ['@main_deps___org_eclipse_aether__aether_transport_classpath__1_1_0//file'],
-        licenses = ['notice'],
+        licenses = ['reciprocal'],
         deps = [
             ':main_deps___org_eclipse_aether__aether_api',
             ':main_deps___org_eclipse_aether__aether_spi',
@@ -769,7 +769,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_eclipse_aether__aether_transport_file__1_1_0',
         jars = ['@main_deps___org_eclipse_aether__aether_transport_file__1_1_0//file'],
-        licenses = ['notice'],
+        licenses = ['reciprocal'],
         deps = [
             ':main_deps___org_eclipse_aether__aether_api',
             ':main_deps___org_eclipse_aether__aether_spi',
@@ -790,7 +790,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___junit__junit__4_12',
         jars = ['@main_deps___junit__junit__4_12//file'],
-        licenses = ['notice'],
+        licenses = ['reciprocal'],
         deps = [':main_deps___org_hamcrest__hamcrest_core'],
         exports = [':main_deps___org_hamcrest__hamcrest_core'],
         runtime_deps = [],
@@ -837,7 +837,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___org_eclipse_aether__aether_spi__1_1_0',
         jars = ['@main_deps___org_eclipse_aether__aether_spi__1_1_0//file'],
-        licenses = ['notice'],
+        licenses = ['reciprocal'],
         deps = [':main_deps___org_eclipse_aether__aether_api'],
         exports = [':main_deps___org_eclipse_aether__aether_api'],
         runtime_deps = [],

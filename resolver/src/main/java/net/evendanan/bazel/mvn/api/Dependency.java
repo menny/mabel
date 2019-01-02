@@ -160,9 +160,10 @@ public class Dependency {
                 case "The Apache Software License, Version 2.0":
                 case "The MIT License":
                 case "MIT":
+                    return notice;
                 case "Eclipse Public License 1.0":
                 case "Eclipse Public License, Version 1.0":
-                    return notice;
+                    return reciprocal;
                 default:
                     System.out.println(String.format(Locale.US, "License with name '%s' is unrecognizable", licenseName));
                     return null;
