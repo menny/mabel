@@ -40,15 +40,13 @@ public class Rule implements Comparable<Rule> {
     private final Artifact artifact;
     private final Set<String> parents;
     private final Map<String, Set<Rule>> dependencies;
-    private final String rulePrefix;
     private String version;
     private String repository;
     private String packaging;
     private String scope;
 
-    Rule(Artifact artifact, String prefix) {
+    Rule(Artifact artifact) {
         this.artifact = artifact;
-        this.rulePrefix = prefix;
         this.version = artifact.getVersion();
         this.parents = Sets.newHashSet();
         this.dependencies = Maps.newHashMap();
@@ -126,7 +124,7 @@ public class Rule implements Comparable<Rule> {
     }
 
     public void setPackaging(String packaging) {
-        if (GraphResolver.isEmpty(packaging) || "bundle".equals(packaging)) {
+        if (MigrationToolingMavenResolver.isEmpty(packaging) || "bundle".equals(packaging)) {
             return;
         }
 
@@ -157,7 +155,7 @@ public class Rule implements Comparable<Rule> {
      * Should be used as the name of a lib, never an external workspace
      */
     public String mavenGeneratedName() {
-        return rulePrefix + normalizeMavenName(groupId()) + "__" + normalizeMavenName(artifactId()) + "__" + normalizeMavenName(version());
+        return normalizeMavenName(groupId()) + "__" + normalizeMavenName(artifactId()) + "__" + normalizeMavenName(version());
     }
 
     public String mavenCoordinates() {
@@ -170,7 +168,7 @@ public class Rule implements Comparable<Rule> {
      * Should be used as the name of a lib, never an external workspace
      */
     public String safeRuleFriendlyName() {
-        return rulePrefix + normalizedWorkspaceName(groupId()) + "__" + normalizedWorkspaceName(artifactId());
+        return normalizedWorkspaceName(groupId()) + "__" + normalizedWorkspaceName(artifactId());
     }
 
     public Artifact getArtifact() {

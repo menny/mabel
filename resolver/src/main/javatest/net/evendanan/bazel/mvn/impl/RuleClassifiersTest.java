@@ -1,8 +1,8 @@
 package net.evendanan.bazel.mvn.impl;
 
-import com.google.devtools.bazel.workspace.maven.Rule;
 import java.util.List;
 import java.util.Optional;
+import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.TargetsBuilder;
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,7 +14,7 @@ public class RuleClassifiersTest {
 
     @Test
     public void testAarClassifier() {
-        final Rule aar = Mockito.mock(Rule.class);
+        final Dependency aar = Mockito.mock(Dependency.class);
         Mockito.doReturn("aar").when(aar).packaging();
         Assert.assertSame(TargetsBuilders.AAR_IMPORT, RuleClassifiers.AAR_IMPORT.classifyRule(aar).orElse(null));
         Assert.assertSame(TargetsBuilders.NATIVE_AAR_IMPORT, RuleClassifiers.NATIVE_AAR_IMPORT.classifyRule(aar).orElse(null));
@@ -27,7 +27,7 @@ public class RuleClassifiersTest {
 
     @Test
     public void testPomClassifier() {
-        final Rule pom = Mockito.mock(Rule.class);
+        final Dependency pom = Mockito.mock(Dependency.class);
         Mockito.doReturn("pom").when(pom).packaging();
         Assert.assertSame(Optional.empty(), RuleClassifiers.NATIVE_AAR_IMPORT.classifyRule(pom));
         Assert.assertSame(TargetsBuilders.NATIVE_JAVA_IMPORT, RuleClassifiers.NATIVE_POM_IMPORT.classifyRule(pom).orElse(null));

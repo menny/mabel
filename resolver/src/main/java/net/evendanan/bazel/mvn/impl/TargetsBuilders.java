@@ -2,7 +2,6 @@ package net.evendanan.bazel.mvn.impl;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
-import com.google.devtools.bazel.workspace.maven.Rule;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -13,28 +12,29 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.Target;
 import net.evendanan.bazel.mvn.api.TargetsBuilder;
 
 public class TargetsBuilders {
 
-    public static final TargetsBuilder HTTP_FILE = rule -> {
-        if ("pom".equalsIgnoreCase(rule.packaging())) return Collections.emptyList();
-        return Collections.singletonList(new Target(rule.mavenCoordinates(), "http_file", rule.mavenGeneratedName())
-                .addList("urls", Collections.singleton(rule.getUrl()))
-                .addString("downloaded_file_path", getFilenameFromUrl(rule.getUrl())));
+    public static final TargetsBuilder HTTP_FILE = dependency -> {
+        if ("pom".equalsIgnoreCase(dependency.packaging())) return Collections.emptyList();
+        return Collections.singletonList(new Target(dependency.mavenCoordinates(), "http_file", dependency.repositoryRuleName())
+                .addList("urls", Collections.singleton(dependency.url().toASCIIString()))
+                .addString("downloaded_file_path", getFilenameFromUrl(dependency.url().getPath())));
     };
-    static final TargetsBuilder JAVA_IMPORT = rule -> {
+    static final TargetsBuilder JAVA_IMPORT = dependency -> {
         List<Target> targets = new ArrayList<>();
-        targets.add(addJavaImportRule(false, rule, ""));
-        targets.add(addAlias(false, rule));
+        targets.add(addJavaImportRule(false, dependency, ""));
+        targets.add(addAlias(false, dependency));
 
         return targets;
     };
-    static final TargetsBuilder NATIVE_JAVA_IMPORT = rule -> {
+    static final TargetsBuilder NATIVE_JAVA_IMPORT = dependency -> {
         List<Target> targets = new ArrayList<>();
-        targets.add(addJavaImportRule(true, rule, ""));
-        targets.add(addAlias(true, rule));
+        targets.add(addJavaImportRule(true, dependency, ""));
+        targets.add(addAlias(true, dependency));
 
         return targets;
     };
@@ -45,14 +45,14 @@ public class TargetsBuilders {
     @VisibleForTesting
     static final TargetsBuilder NATIVE_AAR_IMPORT = new AarImport(true);
 
-    private static Target addJavaImportRule(boolean asNative, Rule rule, String postFix) {
-        return new Target(rule.mavenCoordinates(), asNative ? "native.java_import":"java_import", rule.mavenGeneratedName() + postFix)
-                .addList("jars", "pom".equalsIgnoreCase(rule.packaging()) ?
+    private static Target addJavaImportRule(boolean asNative, Dependency dependency, String postFix) {
+        return new Target(dependency.mavenCoordinates(), asNative ? "native.java_import":"java_import", dependency.repositoryRuleName() + postFix)
+                .addList("jars", "pom".equalsIgnoreCase(dependency.packaging()) ?
                         Collections.emptyList()
-                        :Collections.singletonList(String.format(Locale.US, "@%s//file", rule.mavenGeneratedName())))
-                .addList("deps", convertRulesToStrings(rule.getDeps()))
-                .addList("exports", convertRulesToStrings(rule.getExportDeps()))
-                .addList("runtime_deps", convertRulesToStrings(rule.getRuntimeDeps()));
+                        :Collections.singletonList(String.format(Locale.US, "@%s//file", dependency.repositoryRuleName())))
+                .addList("deps", convertRulesToStrings(dependency.dependencies()))
+                .addList("exports", convertRulesToStrings(dependency.exports()))
+                .addList("runtime_deps", convertRulesToStrings(dependency.runtimeDependencies()));
     }
 
     private static String getFilenameFromUrl(String url) {
@@ -64,21 +64,21 @@ public class TargetsBuilders {
         return url.substring(lastPathSeparator + 1);
     }
 
-    private static Collection<String> convertRulesToStrings(final Collection<Rule> labels) {
-        return labels.stream()
+    private static Collection<String> convertRulesToStrings(final Collection<Dependency> dependencies) {
+        return dependencies.stream()
                 //using the friendly name (without version), so the mapping will be done via the alias mechanism.
-                .map(Rule::safeRuleFriendlyName)
-                .map(ruleName -> String.format(Locale.US, ":%s", ruleName))
+                .map(Dependency::targetName)
+                .map(name -> String.format(Locale.US, ":%s", name))
                 .collect(Collectors.toList());
     }
 
-    private static Target addAlias(boolean asNative, Rule rule) {
-        return addAlias(asNative, rule, "");
+    private static Target addAlias(boolean asNative, Dependency dependency) {
+        return addAlias(asNative, dependency, "");
     }
 
-    private static Target addAlias(boolean asNative, Rule rule, String postFix) {
-        return new Target(rule.mavenCoordinates(), asNative ? "native.alias":"alias", rule.safeRuleFriendlyName() + postFix)
-                .addString("actual", String.format(Locale.US, ":%s%s", rule.mavenGeneratedName(), postFix))
+    private static Target addAlias(boolean asNative, Dependency dependency, String postFix) {
+        return new Target(dependency.mavenCoordinates(), asNative ? "native.alias":"alias", dependency.targetName() + postFix)
+                .addString("actual", String.format(Locale.US, ":%s%s", dependency.repositoryRuleName(), postFix))
                 .setPublicVisibility();
     }
 
@@ -95,8 +95,8 @@ public class TargetsBuilders {
         }
 
         @Override
-        public List<Target> buildTargets(Rule rule) {
-            return targetsBuilders.stream().flatMap(builder -> builder.buildTargets(rule).stream()).collect(Collectors.toList());
+        public List<Target> buildTargets(Dependency dependency) {
+            return targetsBuilders.stream().flatMap(builder -> builder.buildTargets(dependency).stream()).collect(Collectors.toList());
         }
     }
 
@@ -109,16 +109,16 @@ public class TargetsBuilders {
         }
 
         @Override
-        public List<Target> buildTargets(final Rule rule) {
+        public List<Target> buildTargets(final Dependency dependency) {
             List<Target> targets = new ArrayList<>();
 
-            targets.add(new Target(rule.mavenCoordinates(), "kotlin_jar_support", rule.mavenGeneratedName())
-                    .addList("deps", convertRulesToStrings(rule.getDeps()))
-                    .addList("exports", convertRulesToStrings(rule.getExportDeps()))
-                    .addList("runtime_deps", convertRulesToStrings(rule.getRuntimeDeps()))
-                    .addString("jar", String.format(Locale.US, "@%s//file", rule.mavenGeneratedName())));
+            targets.add(new Target(dependency.mavenCoordinates(), "kotlin_jar_support", dependency.repositoryRuleName())
+                    .addList("deps", convertRulesToStrings(dependency.dependencies()))
+                    .addList("exports", convertRulesToStrings(dependency.exports()))
+                    .addList("runtime_deps", convertRulesToStrings(dependency.runtimeDependencies()))
+                    .addString("jar", String.format(Locale.US, "@%s//file", dependency.repositoryRuleName())));
 
-            targets.add(addAlias(asNative, rule));
+            targets.add(addAlias(asNative, dependency));
 
             return targets;
         }
@@ -146,44 +146,44 @@ public class TargetsBuilders {
         }
 
         @Override
-        public List<Target> buildTargets(Rule rule) {
+        public List<Target> buildTargets(Dependency dependency) {
             List<Target> targets = new ArrayList<>();
 
-            Collection<String> deps = convertRulesToStrings(rule.getDeps());
-            deps.add(":" + rule.mavenGeneratedName() + "_java_plugin_lib");
-            targets.add(addJavaImportRule(asNative, rule, "_java_plugin_lib"));
+            Collection<String> deps = convertRulesToStrings(dependency.dependencies());
+            deps.add(":" + dependency.repositoryRuleName() + "_java_plugin_lib");
+            targets.add(addJavaImportRule(asNative, dependency, "_java_plugin_lib"));
 
             for (int processorClassIndex = 0; processorClassIndex < processorClasses.size(); processorClassIndex++) {
                 final String processorClass = processorClasses.get(processorClassIndex);
 
-                targets.add(new Target(rule.mavenCoordinates(), asNative ? "native.java_plugin":"java_plugin", rule.mavenGeneratedName() + "_" + processorClassIndex)
+                targets.add(new Target(dependency.mavenCoordinates(), asNative ? "native.java_plugin":"java_plugin", dependency.repositoryRuleName() + "_" + processorClassIndex)
                         .addString("processor_class", processorClass)
                         .addInt("generates_api", 0)
                         .addList("deps", deps));
 
-                targets.add(new Target(rule.mavenCoordinates(), asNative ? "native.java_plugin":"java_plugin", rule.mavenGeneratedName() + API_POST_FIX + "_" + processorClassIndex)
+                targets.add(new Target(dependency.mavenCoordinates(), asNative ? "native.java_plugin":"java_plugin", dependency.repositoryRuleName() + API_POST_FIX + "_" + processorClassIndex)
                         .addString("processor_class", processorClass)
                         .addInt("generates_api", 1)
                         .addList("deps", deps));
             }
 
             //composite libraries
-            targets.add(new Target(rule.mavenCoordinates(), asNative ? "native.java_library":"java_library", rule.mavenGeneratedName())
+            targets.add(new Target(dependency.mavenCoordinates(), asNative ? "native.java_library":"java_library", dependency.repositoryRuleName())
                     //since there are no sources in this library, we put all deps as runtime_deps
                     .addList("runtime_deps", deps)
                     .addList("exported_plugins", IntStream.range(0, processorClasses.size())
-                            .mapToObj(index -> ":" + rule.mavenGeneratedName() + "_" + index)
+                            .mapToObj(index -> ":" + dependency.repositoryRuleName() + "_" + index)
                             .collect(Collectors.toList())));
 
-            targets.add(new Target(rule.mavenCoordinates(), asNative ? "native.java_library":"java_library", rule.mavenGeneratedName() + API_POST_FIX)
+            targets.add(new Target(dependency.mavenCoordinates(), asNative ? "native.java_library":"java_library", dependency.repositoryRuleName() + API_POST_FIX)
                     //since there are no sources in this library, we put all deps as runtime_deps
                     .addList("runtime_deps", deps)
                     .addList("exported_plugins", IntStream.range(0, processorClasses.size())
-                            .mapToObj(index -> ":" + rule.mavenGeneratedName() + API_POST_FIX + "_" + index)
+                            .mapToObj(index -> ":" + dependency.repositoryRuleName() + API_POST_FIX + "_" + index)
                             .collect(Collectors.toList())));
 
-            targets.add(addAlias(asNative, rule));
-            targets.add(addAlias(asNative, rule, API_POST_FIX));
+            targets.add(addAlias(asNative, dependency));
+            targets.add(addAlias(asNative, dependency, API_POST_FIX));
 
             return targets;
         }
@@ -198,17 +198,17 @@ public class TargetsBuilders {
         }
 
         @Override
-        public List<Target> buildTargets(final Rule rule) {
+        public List<Target> buildTargets(final Dependency dependency) {
             List<Target> targets = new ArrayList<>();
-            final Set<Rule> deps = new HashSet<>(rule.getDeps());
-            deps.addAll(rule.getRuntimeDeps());
+            final Set<Dependency> deps = new HashSet<>(dependency.dependencies());
+            deps.addAll(dependency.runtimeDependencies());
 
-            targets.add(new Target(rule.mavenCoordinates(), asNative ? "native.aar_import":"aar_import", rule.mavenGeneratedName())
-                    .addString("aar", String.format(Locale.US, "@%s//file", rule.mavenGeneratedName()))
+            targets.add(new Target(dependency.mavenCoordinates(), asNative ? "native.aar_import":"aar_import", dependency.repositoryRuleName())
+                    .addString("aar", String.format(Locale.US, "@%s//file", dependency.repositoryRuleName()))
                     .addList("deps", convertRulesToStrings(deps))
-                    .addList("exports", convertRulesToStrings(rule.getExportDeps())));
+                    .addList("exports", convertRulesToStrings(dependency.exports())));
 
-            targets.add(addAlias(asNative, rule));
+            targets.add(addAlias(asNative, dependency));
 
             return targets;
         }

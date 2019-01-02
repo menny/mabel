@@ -6,7 +6,7 @@ load('@bazel_tools//tools/build_defs/repo:http.bzl', 'http_file')
 
 # Repository rules macro to be run in the WORKSPACE file.
 def generate_workspace_rules():
-    http_file(name = 'main_deps___org_jetbrains_kotlin__kotlin-stdlib__1_0_6',
+    http_file(name = 'main_deps___org_jetbrains_kotlin__kotlin_stdlib__1_0_6',
         urls = ['https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.0.6/kotlin-stdlib-1.0.6.jar'],
         downloaded_file_path = 'kotlin-stdlib-1.0.6.jar',
     )
@@ -16,7 +16,7 @@ def generate_workspace_rules():
         downloaded_file_path = 'gson-2.8.0.jar',
     )
 
-    http_file(name = 'main_deps___org_jetbrains_kotlin__kotlin-runtime__1_0_6',
+    http_file(name = 'main_deps___org_jetbrains_kotlin__kotlin_runtime__1_0_6',
         urls = ['https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-runtime/1.0.6/kotlin-runtime-1.0.6.jar'],
         downloaded_file_path = 'kotlin-runtime-1.0.6.jar',
     )
@@ -52,17 +52,17 @@ def kotlin_jar_support(name, deps, exports, runtime_deps, jar, kt_jvm_import=Non
         )
 
 def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=None):
-    kotlin_jar_support(name = 'main_deps___org_jetbrains_kotlin__kotlin-stdlib__1_0_6',
+    kotlin_jar_support(name = 'main_deps___org_jetbrains_kotlin__kotlin_stdlib__1_0_6',
         deps = [':main_deps___org_jetbrains_kotlin__kotlin_runtime'],
         exports = [':main_deps___org_jetbrains_kotlin__kotlin_runtime'],
         runtime_deps = [],
-        jar = '@main_deps___org_jetbrains_kotlin__kotlin-stdlib__1_0_6//file',
+        jar = '@main_deps___org_jetbrains_kotlin__kotlin_stdlib__1_0_6//file',
         kt_jvm_import = kt_jvm_import,
         kt_jvm_library = kt_jvm_library,
     )
 
     native.alias(name = 'main_deps___org_jetbrains_kotlin__kotlin_stdlib',
-        actual = ':main_deps___org_jetbrains_kotlin__kotlin-stdlib__1_0_6',
+        actual = ':main_deps___org_jetbrains_kotlin__kotlin_stdlib__1_0_6',
         visibility = ['//visibility:public'],
     )
 
@@ -78,17 +78,17 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         visibility = ['//visibility:public'],
     )
 
-    kotlin_jar_support(name = 'main_deps___org_jetbrains_kotlin__kotlin-runtime__1_0_6',
+    kotlin_jar_support(name = 'main_deps___org_jetbrains_kotlin__kotlin_runtime__1_0_6',
         deps = [],
         exports = [],
         runtime_deps = [],
-        jar = '@main_deps___org_jetbrains_kotlin__kotlin-runtime__1_0_6//file',
+        jar = '@main_deps___org_jetbrains_kotlin__kotlin_runtime__1_0_6//file',
         kt_jvm_import = kt_jvm_import,
         kt_jvm_library = kt_jvm_library,
     )
 
     native.alias(name = 'main_deps___org_jetbrains_kotlin__kotlin_runtime',
-        actual = ':main_deps___org_jetbrains_kotlin__kotlin-runtime__1_0_6',
+        actual = ':main_deps___org_jetbrains_kotlin__kotlin_runtime__1_0_6',
         visibility = ['//visibility:public'],
     )
 
