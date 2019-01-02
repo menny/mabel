@@ -1,10 +1,12 @@
 package net.evendanan.bazel.mvn.api;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import java.net.URI;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
+import javax.annotation.Nullable;
 
 public class Dependency {
 
@@ -143,7 +145,27 @@ public class Dependency {
         /**
          * Public domain, free for any use.
          */
-        unencumbered
+        unencumbered;
 
-    }
+        /**
+         * Mapping between a license and its type.
+         * Data taken from https://en.wikipedia.org/wiki/Comparison_of_free_and_open-source_software_licenses
+         */
+        @Nullable
+        public static License fromLicenseName(final String licenseName) {
+            if (Strings.isNullOrEmpty(licenseName)) return null;
+            switch (licenseName) {
+                case "Apache 2.0":
+                case "Apache License, Version 2.0":
+                case "The Apache Software License, Version 2.0":
+                case "The MIT License":
+                case "MIT":
+                case "Eclipse Public License 1.0":
+                case "Eclipse Public License, Version 1.0":
+                    return notice;
+                default:
+                    System.out.println(String.format(Locale.US, "License with name '%s' is unrecognizable", licenseName));
+                    return null;
+            }
+        }}
 }

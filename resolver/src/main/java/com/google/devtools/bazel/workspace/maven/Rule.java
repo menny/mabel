@@ -17,10 +17,13 @@ package com.google.devtools.bazel.workspace.maven;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import org.apache.maven.model.License;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.util.artifact.JavaScopes;
 
@@ -44,6 +47,7 @@ public class Rule implements Comparable<Rule> {
     private String repository;
     private String packaging;
     private String scope;
+    private List<License> licenses = Collections.emptyList();
 
     Rule(Artifact artifact) {
         this.artifact = artifact;
@@ -224,5 +228,13 @@ public class Rule implements Comparable<Rule> {
 
     public void setRepository(final String url) {
         repository = url;
+    }
+
+    public Collection<License> getLicenses() {
+        return this.licenses;
+    }
+
+    void setLicenses(final List<License> licenses) {
+        this.licenses = licenses;
     }
 }

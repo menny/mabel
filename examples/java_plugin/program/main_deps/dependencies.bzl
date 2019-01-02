@@ -109,7 +109,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___com_google_auto_value__auto_value_annotations__1_6_3',
         jars = ['@main_deps___com_google_auto_value__auto_value_annotations__1_6_3//file'],
-        licenses = [],
+        licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -223,7 +223,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib',
         jars = ['@main_deps___com_google_auto_value__auto_value__1_6_3//file'],
-        licenses = [],
+        licenses = ['notice'],
         deps = [
             ':main_deps___com_google_auto_service__auto_service',
             ':main_deps___net_ltgt_gradle_incap__incap_processor',

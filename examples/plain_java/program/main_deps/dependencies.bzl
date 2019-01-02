@@ -39,7 +39,7 @@ def kotlin_jar_support(name, deps, exports, runtime_deps, jar, kt_jvm_import=Non
 def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=None):
     native.java_import(name = 'main_deps___com_google_guava__guava__20_0',
         jars = ['@main_deps___com_google_guava__guava__20_0//file'],
-        licenses = [],
+        licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],

@@ -68,4 +68,18 @@ public class DependencyTest {
         Assert.assertEquals("net_group__some_lib__1_2", dependency.repositoryRuleName());
         Assert.assertEquals("net_group__some_lib", dependency.targetName());
     }
+
+    @Test
+    public void testLicenseParsing() {
+        Assert.assertNull(Dependency.License.fromLicenseName(""));
+        Assert.assertNull(Dependency.License.fromLicenseName(null));
+
+        Assert.assertEquals(Dependency.License.notice, Dependency.License.fromLicenseName("Apache 2.0"));
+        Assert.assertEquals(Dependency.License.notice, Dependency.License.fromLicenseName("Apache License, Version 2.0"));
+        Assert.assertEquals(Dependency.License.notice, Dependency.License.fromLicenseName("The Apache Software License, Version 2.0"));
+        Assert.assertEquals(Dependency.License.notice, Dependency.License.fromLicenseName("The MIT License"));
+        Assert.assertEquals(Dependency.License.notice, Dependency.License.fromLicenseName("MIT"));
+        Assert.assertEquals(Dependency.License.notice, Dependency.License.fromLicenseName("Eclipse Public License 1.0"));
+        Assert.assertEquals(Dependency.License.notice, Dependency.License.fromLicenseName("Eclipse Public License, Version 1.0"));
+    }
 }

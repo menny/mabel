@@ -706,7 +706,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___androidx_annotation__annotation__1_0_0',
         jars = ['@main_deps___androidx_annotation__annotation__1_0_0//file'],
-        licenses = [],
+        licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],

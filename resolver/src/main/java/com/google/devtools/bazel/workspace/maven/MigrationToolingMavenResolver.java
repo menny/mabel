@@ -115,6 +115,7 @@ public class MigrationToolingMavenResolver {
         Model model = modelResolver.getEffectiveModel(modelSource.getModelSource());
         if (model != null) {
             rule.setPackaging(model.getPackaging());
+            rule.setLicenses(model.getLicenses());
             rule.setRepository(modelSource.getRepository().getUrl());
             traverseDeps(model, Sets.newHashSet(), Sets.newHashSet(), rule);
         }

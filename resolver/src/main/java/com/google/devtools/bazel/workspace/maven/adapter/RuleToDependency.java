@@ -2,9 +2,10 @@ package com.google.devtools.bazel.workspace.maven.adapter;
 
 import com.google.devtools.bazel.workspace.maven.Rule;
 import java.net.URI;
-import java.util.Collections;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import net.evendanan.bazel.mvn.api.Dependency;
+import org.apache.maven.model.License;
 
 public class RuleToDependency {
 
@@ -16,6 +17,10 @@ public class RuleToDependency {
                 URI.create(rule.getUrl()),
                 URI.create(""),
                 URI.create(""),
-                Collections.emptyList());
+                rule.getLicenses().stream()
+                        .map(License::getName)
+                        .map(net.evendanan.bazel.mvn.api.Dependency.License::fromLicenseName)
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toList()));
     }
 }
