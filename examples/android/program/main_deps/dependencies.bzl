@@ -304,6 +304,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___androidx_collection__collection__1_0_0',
         jars = ['@main_deps___androidx_collection__collection__1_0_0//file'],
+        licenses = [],
         deps = [':main_deps___androidx_annotation__annotation'],
         exports = [':main_deps___androidx_annotation__annotation'],
         runtime_deps = [],
@@ -333,6 +334,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___androidx_lifecycle__lifecycle_common__2_0_0',
         jars = ['@main_deps___androidx_lifecycle__lifecycle_common__2_0_0//file'],
+        licenses = [],
         deps = [':main_deps___androidx_annotation__annotation'],
         exports = [':main_deps___androidx_annotation__annotation'],
         runtime_deps = [],
@@ -666,6 +668,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___androidx_arch_core__core_common__2_0_0',
         jars = ['@main_deps___androidx_arch_core__core_common__2_0_0//file'],
+        licenses = [],
         deps = [':main_deps___androidx_annotation__annotation'],
         exports = [':main_deps___androidx_annotation__annotation'],
         runtime_deps = [],
@@ -703,6 +706,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     native.java_import(name = 'main_deps___androidx_annotation__annotation__1_0_0',
         jars = ['@main_deps___androidx_annotation__annotation__1_0_0//file'],
+        licenses = [],
         deps = [],
         exports = [],
         runtime_deps = [],
