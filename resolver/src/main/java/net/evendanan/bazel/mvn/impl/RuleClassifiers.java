@@ -2,10 +2,8 @@ package net.evendanan.bazel.mvn.impl;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Charsets;
-import com.google.devtools.bazel.workspace.maven.Rule;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -14,6 +12,7 @@ import java.util.function.Function;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 import java.util.stream.Collectors;
+import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.RuleClassifier;
 import net.evendanan.bazel.mvn.api.TargetsBuilder;
 
@@ -24,15 +23,15 @@ public class RuleClassifiers {
     static final RuleClassifier POM_IMPORT = new PomClassifier(false);
     static final RuleClassifier NATIVE_POM_IMPORT = new PomClassifier(true);
     private static final RuleClassifier JAR_INSPECTOR = new JarInspector(false);
-    public static final Function<Rule, TargetsBuilder> NONE_NATIVE_RULE_MAPPER =
-            rule -> ruleClassifier(Arrays.asList(POM_IMPORT, AAR_IMPORT, JAR_INSPECTOR), TargetsBuilders.JAVA_IMPORT, rule);
+    public static final Function<Dependency, TargetsBuilder> NONE_NATIVE_RULE_MAPPER =
+            dependency -> ruleClassifier(Arrays.asList(POM_IMPORT, AAR_IMPORT, JAR_INSPECTOR), TargetsBuilders.JAVA_IMPORT, dependency);
     private static final RuleClassifier NATIVE_JAR_INSPECTOR = new JarInspector(true);
-    public static final Function<Rule, TargetsBuilder> NATIVE_RULE_MAPPER =
-            rule -> ruleClassifier(Arrays.asList(NATIVE_POM_IMPORT, NATIVE_AAR_IMPORT, NATIVE_JAR_INSPECTOR), TargetsBuilders.NATIVE_JAVA_IMPORT, rule);
+    public static final Function<Dependency, TargetsBuilder> NATIVE_RULE_MAPPER =
+            dependency -> ruleClassifier(Arrays.asList(NATIVE_POM_IMPORT, NATIVE_AAR_IMPORT, NATIVE_JAR_INSPECTOR), TargetsBuilders.NATIVE_JAVA_IMPORT, dependency);
 
-    private static TargetsBuilder ruleClassifier(Collection<RuleClassifier> classifiers, TargetsBuilder defaultFormatter, final Rule rule) {
+    private static TargetsBuilder ruleClassifier(Collection<RuleClassifier> classifiers, TargetsBuilder defaultFormatter, final Dependency dependency) {
         return classifiers.stream()
-                .map(classifier -> classifier.classifyRule(rule))
+                .map(classifier -> classifier.classifyRule(dependency))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .findFirst()
@@ -55,7 +54,7 @@ public class RuleClassifiers {
 
                     return parseServicesProcessorFileContent(asNative, contentBuilder.toString());
                 } else if (jarEntryName.startsWith("META-INF/") && jarEntryName.endsWith(".kotlin_module")) {
-                    return Optional.of(asNative ? TargetsBuilders.NATIVE_KOTLIN_IMPORT : TargetsBuilders.KOTLIN_IMPORT);
+                    return Optional.of(asNative ? TargetsBuilders.NATIVE_KOTLIN_IMPORT:TargetsBuilders.KOTLIN_IMPORT);
                 }
                 zipInputStream.closeEntry();
                 jarEntry = zipInputStream.getNextJarEntry();
@@ -95,8 +94,8 @@ public class RuleClassifiers {
         }
 
         @Override
-        public Optional<TargetsBuilder> classifyRule(final Rule rule) {
-            if (packaging.equals(rule.packaging())) {
+        public Optional<TargetsBuilder> classifyRule(final Dependency dependency) {
+            if (packaging.equals(dependency.packaging())) {
                 return Optional.of(asNative ? nativeBuilder:nonNativeBuilder);
             } else {
                 return Optional.empty();
@@ -125,8 +124,8 @@ public class RuleClassifiers {
         }
 
         @Override
-        public Optional<TargetsBuilder> classifyRule(final Rule rule) {
-            try (InputStream networkInputStream = new URL(rule.getUrl()).openStream()) {
+        public Optional<TargetsBuilder> classifyRule(final Dependency dependency) {
+            try (InputStream networkInputStream = dependency.url().toURL().openStream()) {
                 return performRemoteJarInspection(asNative, networkInputStream);
             } catch (IOException e) {
                 e.printStackTrace();

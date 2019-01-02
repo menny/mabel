@@ -42,7 +42,7 @@ import org.eclipse.aether.util.artifact.JavaScopes;
 /**
  * Resolves Maven dependencies.
  */
-public class GraphResolver {
+public class MigrationToolingMavenResolver {
 
     private static final Logger logger = Logger.getLogger(
         MethodHandles.lookup().lookupClass().getName());
@@ -77,22 +77,20 @@ public class GraphResolver {
     private final Map<String, String> restriction;
 
     private final VersionResolver versionResolver;
-    private final String rulePrefix;
 
-    private final List<String> blacklist;
+    private final Collection<String> blacklist;
 
-    private GraphResolver(
-        DefaultModelResolver modelResolver, VersionResolver versionResolver, List<String> blacklist, String rulePrefix) {
+    private MigrationToolingMavenResolver(
+        DefaultModelResolver modelResolver, VersionResolver versionResolver, Collection<String> blacklist) {
         this.versionResolver = versionResolver;
-        this.rulePrefix = rulePrefix;
         this.deps = Maps.newHashMap();
         this.restriction = Maps.newHashMap();
         this.modelResolver = modelResolver;
         this.blacklist = blacklist;
     }
 
-    public GraphResolver(DefaultModelResolver resolver, List<String> blacklist, String rulePrefix) {
-        this(resolver, defaultResolver(), blacklist, rulePrefix);
+    public MigrationToolingMavenResolver(DefaultModelResolver resolver, Collection<String> blacklist) {
+        this(resolver, defaultResolver(), blacklist);
     }
 
     /**
@@ -131,7 +129,7 @@ public class GraphResolver {
             return Optional.empty();
         }
 
-        Rule rule = new Rule(artifact, rulePrefix);
+        Rule rule = new Rule(artifact);
 
         deps.put(rule.friendlyName(), rule);
 
@@ -194,7 +192,7 @@ public class GraphResolver {
         }
 
         try {
-            Rule artifactRule = new Rule(ArtifactBuilder.fromMavenDependency(dependency, versionResolver), rulePrefix);
+            Rule artifactRule = new Rule(ArtifactBuilder.fromMavenDependency(dependency, versionResolver));
             artifactRule.setScope(scope);
 
             HashSet<String> localDepExclusions = Sets.newHashSet(exclusions);

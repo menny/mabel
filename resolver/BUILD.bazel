@@ -43,6 +43,8 @@ java_library(
         "//resolver/main_deps/org/codehaus/plexus/plexus-utils",
     ],
     deps = [
+        ":api_lib",
+
         "//resolver/main_deps/com/google/guava/guava",
         "//resolver/main_deps/com/google/code/findbugs/jsr305",
         "//resolver/main_deps/org/apache/commons/commons-lang3",
@@ -69,6 +71,19 @@ java_library(
 )
 
 java_library(
+    name = "migration_tooling_graph_resolver",
+    srcs = glob(["src/main/java/com/google/devtools/bazel/workspace/maven/adapter/*.java"]),
+    deps = [
+        ":api_lib",
+        ":graph_resolver_lib",
+        ":timing_lib",
+
+        "//resolver/main_deps/com/google/guava/guava",
+        '//resolver/main_deps/org/apache/maven/maven-model',
+    ]
+)
+
+java_library(
     name = "timing_lib",
     srcs = glob(["src/main/java/net/evendanan/timing/*.java"]),
     runtime_deps = [],
@@ -84,8 +99,6 @@ java_library(
     srcs = glob(["src/main/java/net/evendanan/bazel/mvn/api/*.java"]),
     runtime_deps = [],
     deps = [
-        ':graph_resolver_lib',
-
         "//resolver/main_deps/com/google/guava/guava",
         "//resolver/main_deps/com/google/code/findbugs/jsr305",
         "//resolver/main_deps/org/apache/commons/commons-lang3",
@@ -97,7 +110,6 @@ java_library(
     srcs = glob(["src/main/java/net/evendanan/bazel/mvn/impl/*.java"]),
     runtime_deps = [],
     deps = [
-        ':graph_resolver_lib',
         ':api_lib',
         ":timing_lib",
 
@@ -113,7 +125,7 @@ java_binary(
     visibility = ["//visibility:public"],
     srcs = glob(["src/main/java/net/evendanan/bazel/mvn/Resolver.java"]),
     deps = [
-        ':graph_resolver_lib',
+        ':migration_tooling_graph_resolver',
         ":api_lib",
         ":impl_lib",
         ":timing_lib",
@@ -132,7 +144,6 @@ java_library(name = "test_utils",
              srcs = ["src/main/javatest/net/evendanan/bazel/mvn/TestUtils.java"],
              deps = [
                  ":api_lib",
-                 ':graph_resolver_lib',
 
                  "//resolver/main_deps/com/google/guava/guava",
                  "//resolver/main_deps/com/google/code/findbugs/jsr305",
@@ -165,7 +176,7 @@ java_test(name = "classifiers_test",
   deps=[
       ":impl_lib",
       ":api_lib",
-      ':graph_resolver_lib',
+
       "//resolver/main_deps/junit/junit",
       '//resolver/main_deps/org/mockito/mockito-core',
        ],
@@ -184,7 +195,7 @@ java_test(name = "composite_formater_test",
   deps=[
       ":impl_lib",
       ":api_lib",
-      ':graph_resolver_lib',
+
       "//resolver/main_deps/junit/junit",
        '//resolver/main_deps/org/mockito/mockito-core'
        ],
@@ -197,10 +208,10 @@ java_test(name = "formatters_test",
   deps=[
       ":impl_lib",
       ":api_lib",
-      ':graph_resolver_lib',
       ":test_utils",
+
       "//resolver/main_deps/junit/junit",
-       '//resolver/main_deps/org/mockito/mockito-core'
+      '//resolver/main_deps/org/mockito/mockito-core'
        ],
   srcs=["src/main/javatest/net/evendanan/bazel/mvn/impl/FormattersTests.java"],
   size="small",
@@ -214,12 +225,19 @@ java_test(name = "target_test",
   test_class = "net.evendanan.bazel.mvn.impl.TargetTest",
 )
 
+java_test(name = "dependency_test",
+  deps=["//resolver/main_deps/junit/junit", ":api_lib"],
+  srcs=["src/main/javatest/net/evendanan/bazel/mvn/impl/DependencyTest.java"],
+  size="small",
+  test_class = "net.evendanan.bazel.mvn.impl.DependencyTest",
+)
+
 java_test(name = "real_writers_test",
   deps=[
        ":test_utils",
        ":impl_lib",
        ":api_lib",
-       ':graph_resolver_lib',
+
        "//resolver/main_deps/junit/junit",
        '//resolver/main_deps/org/mockito/mockito-core',
        '//resolver/main_deps/com/google/guava/guava',

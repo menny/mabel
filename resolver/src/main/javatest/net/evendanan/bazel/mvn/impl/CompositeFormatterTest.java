@@ -1,8 +1,8 @@
 package net.evendanan.bazel.mvn.impl;
 
-import com.google.devtools.bazel.workspace.maven.Rule;
 import java.util.Collections;
 import java.util.List;
+import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.Target;
 import net.evendanan.bazel.mvn.api.TargetsBuilder;
 import org.junit.Assert;
@@ -20,13 +20,13 @@ public class CompositeFormatterTest {
 
         final TargetsBuilders.CompositeBuilder compositeBuilder = new TargetsBuilders.CompositeBuilder(formatter1, formatter2);
 
-        Rule rule = Mockito.mock(Rule.class);
+        Dependency dependency = Mockito.mock(Dependency.class);
 
-        final List<Target> targets = compositeBuilder.buildTargets(rule);
+        final List<Target> targets = compositeBuilder.buildTargets(dependency);
 
-        Mockito.verify(formatter1).buildTargets(Mockito.same(rule));
+        Mockito.verify(formatter1).buildTargets(Mockito.same(dependency));
         Mockito.verifyNoMoreInteractions(formatter1);
-        Mockito.verify(formatter2).buildTargets(Mockito.same(rule));
+        Mockito.verify(formatter2).buildTargets(Mockito.same(dependency));
         Mockito.verifyNoMoreInteractions(formatter2);
 
 
