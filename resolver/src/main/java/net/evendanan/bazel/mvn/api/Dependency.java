@@ -19,7 +19,15 @@ public class Dependency {
 
     private final URI url;
 
-    public Dependency(final String groupId, final String artifactId, final String version, final String packaging, final Collection<Dependency> dependencies, final Collection<Dependency> exports, final Collection<Dependency> runtimeDependencies, final URI url) {
+    private final URI sourcesUrl;
+    private final URI javadocUrl;
+    private final Collection<License> licenses;
+
+    public Dependency(final String groupId, final String artifactId, final String version, final String packaging, final Collection<Dependency> dependencies, final Collection<Dependency> exports, final Collection<Dependency> runtimeDependencies,
+                      final URI url,
+                      final URI sourcesUrl,
+                      final URI javadocUrl,
+                      final Collection<License> licenses) {
         this.groupId = groupId;
         this.artifactId = artifactId;
         this.version = version;
@@ -28,6 +36,9 @@ public class Dependency {
         this.exports = ImmutableList.copyOf(exports);
         this.runtimeDependencies = ImmutableList.copyOf(runtimeDependencies);
         this.url = url;
+        this.sourcesUrl = sourcesUrl;
+        this.javadocUrl = javadocUrl;
+        this.licenses = ImmutableList.copyOf(licenses);
     }
 
     private static String normalize(String name) {
@@ -78,6 +89,18 @@ public class Dependency {
         return url;
     }
 
+    public URI sourcesUrl() {
+        return sourcesUrl;
+    }
+
+    public URI javadocUrl() {
+        return javadocUrl;
+    }
+
+    public Collection<License> licenses() {
+        return licenses;
+    }
+
     @Override
     public boolean equals(final Object obj) {
         if (obj instanceof Dependency) {
@@ -91,5 +114,36 @@ public class Dependency {
     @Override
     public int hashCode() {
         return mavenCoordinates().hashCode();
+    }
+
+    /**
+     * Types of licenses. Taken from https://docs.bazel.build/versions/master/be/functions.html#licenses
+     */
+    public enum License {
+        /**
+         * Requires mandatory source distribution.
+         */
+        restricted,
+
+        /**
+         * Allows usage of software freely in unmodified form. Any modifications must be made freely available.
+         */
+        reciprocal,
+
+        /**
+         * Original or modified third-party software may be shipped without danger nor encumbering other sources. All of the licenses in this category do, however, have an "original Copyright notice" or "advertising clause", wherein any external distributions must include the notice or clause specified in the license.
+         */
+        notice,
+
+        /**
+         * Code that is under a license but does not require a notice.
+         */
+        permissive,
+
+        /**
+         * Public domain, free for any use.
+         */
+        unencumbered
+
     }
 }
