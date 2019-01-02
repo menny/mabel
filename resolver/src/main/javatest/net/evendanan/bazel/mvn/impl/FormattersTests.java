@@ -1,7 +1,9 @@
 package net.evendanan.bazel.mvn.impl;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.Target;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,6 +19,7 @@ public class FormattersTests {
             "\n";
     private static final String JAVA_IMPORT_TEXT = " java_import(name = 'java__lib__',\n" +
             "     jars = ['@java__lib__//file'],\n" +
+            "     licenses = [],\n" +
             "     deps = [\n" +
             "         ':safe_mvn__dep1',\n" +
             "         ':safe_mvn__dep2',\n" +
@@ -38,6 +41,7 @@ public class FormattersTests {
             "\n";
     private static final String POM_ONLY_NATIVE_IMPORT_TEXT = " native.java_import(name = 'parent__lib__',\n" +
             "     jars = [],\n" +
+            "     licenses = [],\n" +
             "     deps = [\n" +
             "         ':safe_mvn__dep1',\n" +
             "         ':safe_mvn__dep2',\n" +
@@ -59,6 +63,29 @@ public class FormattersTests {
             "\n";
     private static final String NATIVE_JAVA_IMPORT_TEXT = "    native.java_import(name = 'java__lib__',\n" +
             "        jars = ['@java__lib__//file'],\n" +
+            "        licenses = [],\n" +
+            "        deps = [\n" +
+            "            ':safe_mvn__dep1',\n" +
+            "            ':safe_mvn__dep2',\n" +
+            "        ],\n" +
+            "        exports = [\n" +
+            "            ':safe_mvn__export1',\n" +
+            "            ':safe_mvn__export2',\n" +
+            "        ],\n" +
+            "        runtime_deps = [\n" +
+            "            ':safe_mvn__runtime1',\n" +
+            "            ':safe_mvn__runtime2',\n" +
+            "        ],\n" +
+            "    )\n" +
+            "\n" +
+            "    native.alias(name = 'java__lib',\n" +
+            "        actual = ':java__lib__',\n" +
+            "        visibility = ['//visibility:public'],\n" +
+            "    )\n" +
+            "\n";
+    private static final String NATIVE_JAVA_IMPORT_WITH_LICENSE_TEXT = "    native.java_import(name = 'java__lib__',\n" +
+            "        jars = ['@java__lib__//file'],\n" +
+            "        licenses = ['notice'],\n" +
             "        deps = [\n" +
             "            ':safe_mvn__dep1',\n" +
             "            ':safe_mvn__dep2',\n" +
@@ -118,6 +145,7 @@ public class FormattersTests {
             "\n";
     private static final String JAVA_PLUGIN_TEXT = " java_import(name = 'aar__lib___java_plugin_lib',\n" +
             "     jars = ['@aar__lib__//file'],\n" +
+            "     licenses = [],\n" +
             "     deps = [\n" +
             "         ':safe_mvn__dep1',\n" +
             "         ':safe_mvn__dep2',\n" +
@@ -208,6 +236,7 @@ public class FormattersTests {
             "\n";
     private static final String NATIVE_JAVA_PLUGIN_TEXT = "    native.java_import(name = 'aar__lib___java_plugin_lib',\n" +
             "        jars = ['@aar__lib__//file'],\n" +
+            "        licenses = [],\n" +
             "        deps = [\n" +
             "            ':safe_mvn__dep1',\n" +
             "            ':safe_mvn__dep2',\n" +
@@ -441,6 +470,25 @@ public class FormattersTests {
                         Arrays.asList("runtime1", "runtime2"))));
 
         Assert.assertEquals(NATIVE_JAVA_IMPORT_TEXT, ruleText);
+    }
+
+    @Test
+    public void testNativeJavaImportWithLicenses() {
+        Dependency dependency = createDependency("java:lib",
+                "https://some_url",
+                Arrays.asList("dep1", "dep2"),
+                Arrays.asList("export1", "export2"),
+                Arrays.asList("runtime1", "runtime2"));
+
+        dependency = new Dependency(dependency.groupId(), dependency.artifactId(), dependency.version(), dependency.packaging(),
+                dependency.dependencies(), dependency.exports(), dependency.runtimeDependencies(),
+                dependency.url(), dependency.sourcesUrl(), dependency.javadocUrl(),
+                Collections.singleton(Dependency.License.notice));
+
+        final String ruleText = targetsToString("    ", TargetsBuilders.NATIVE_JAVA_IMPORT.buildTargets(
+                dependency));
+
+        Assert.assertEquals(NATIVE_JAVA_IMPORT_WITH_LICENSE_TEXT, ruleText);
     }
 
     @Test
