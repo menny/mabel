@@ -104,6 +104,11 @@ public class Dependency {
     }
 
     @Override
+    public String toString() {
+        return mavenCoordinates();
+    }
+
+    @Override
     public boolean equals(final Object obj) {
         if (obj instanceof Dependency) {
             Dependency other = (Dependency) obj;
