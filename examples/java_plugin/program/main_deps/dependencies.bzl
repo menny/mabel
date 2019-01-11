@@ -30,10 +30,10 @@ def generate_workspace_rules():
         downloaded_file_path = 'auto-common-0.8.jar',
     )
 
-    # from com.google.guava:guava:19.0
-    http_file(name = 'main_deps___com_google_guava__guava__19_0',
-        urls = ['https://repo1.maven.org/maven2/com/google/guava/guava/19.0/guava-19.0.jar'],
-        downloaded_file_path = 'guava-19.0.jar',
+    # from com.google.guava:guava:23.5-jre
+    http_file(name = 'main_deps___com_google_guava__guava__23_5_jre',
+        urls = ['https://repo1.maven.org/maven2/com/google/guava/guava/23.5-jre/guava-23.5-jre.jar'],
+        downloaded_file_path = 'guava-23.5-jre.jar',
     )
 
     # from net.ltgt.gradle.incap:incap-processor:0.2
@@ -339,15 +339,15 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         runtime_deps = [],
     )
 
-    # from com.google.guava:guava:19.0
+    # from com.google.guava:guava:23.5-jre
     native.alias(name = 'main_deps___com_google_guava__guava',
-        actual = ':main_deps___com_google_guava__guava__19_0',
+        actual = ':main_deps___com_google_guava__guava__23_5_jre',
         visibility = ['//visibility:public'],
     )
 
-    # from com.google.guava:guava:19.0
-    native.java_import(name = 'main_deps___com_google_guava__guava__19_0',
-        jars = ['@main_deps___com_google_guava__guava__19_0//file'],
+    # from com.google.guava:guava:23.5-jre
+    native.java_import(name = 'main_deps___com_google_guava__guava__23_5_jre',
+        jars = ['@main_deps___com_google_guava__guava__23_5_jre//file'],
         licenses = [],
         deps = [],
         exports = [],
