@@ -20,7 +20,7 @@ This WORKSPACE will provide `deps_workspace_generator_rule` rule which allows yo
   * `java_plugin` + `java_library` for annotation-processors. More about this [here](#annotation-processors).
   * `kt_jvm_import` + `kt_jvm_library` or `java_import` for Kotlin modules. More about this [here](#kotlin).
   * `java_import` for anything else.
-* Allow to specify custom Maven repo URLs.
+* Allow specifying custom Maven repo URLs.
 * Adds `licenses` data to `java_import` rules, if license is declared in the artifact's POM file.
 * Produces a _lock_ file that describes the dependency graph. This file should be checked into your repo.
   
@@ -30,9 +30,9 @@ The resolving of the Maven dependency graph is done using a modified version of 
 ## Example
 
 ### WORKSPACE file
-Add this repository to your WORKSPACE (set `bazel_mvn_deps_version` to the latest [commit](https://github.com/menny/bazel-mvn-deps/commits/master)):
+Add this repository to your WORKSPACE (set `bazel_mvn_deps_version` to the latest [release](https://github.com/menny/bazel-mvn-deps/releases) or, if you are adventurous, [commit](https://github.com/menny/bazel-mvn-deps/commits/master)):
 ```python
-bazel_mvn_deps_version = "6bf835b890ddb0600d5a7d1a85e794302bc2de16"
+bazel_mvn_deps_version = "0.0.1"
 http_archive(
     name = "bazel_mvn_deps_rule",
     urls = ["https://github.com/menny/bazel-mvn-deps/archive/%s.zip" % bazel_mvn_deps_version],
