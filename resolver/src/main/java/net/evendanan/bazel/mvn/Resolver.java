@@ -144,10 +144,6 @@ public class Resolver {
 
                 })
                 .map(mavenCoordinate -> resolver.resolve(mavenCoordinate, options.repositories, options.blacklist))
-                .peek(deps -> {
-                    if (deps.size() != 1) throw new IllegalStateException("Got " + deps.size() + " deps instead of 1");
-                })
-                .flatMap(Collection::stream)
                 .collect(Collectors.toList());
 
         logger.info(String.format("Merging %s dependencies...", dependencies.size()));
