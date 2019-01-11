@@ -7,7 +7,7 @@ load("//rules/maven_deps:maven_deps_workspace_generator.bzl", "deps_workspace_ge
 
 deps_workspace_generator_rule(name = 'main_deps',
     maven_deps = [
-        "com.google.guava:guava:27.0.1",
+        "com.google.guava:guava:27.0.1-jre",
         "org.apache.commons:commons-lang3:jar:3.8.1",
         "com.google.code.findbugs:jsr305:3.0.2",
 
@@ -132,8 +132,6 @@ java_library(name = "merger",
                  "//resolver/main_deps/com/google/guava/guava",
                  "//resolver/main_deps/com/google/code/findbugs/jsr305",
                  "//resolver/main_deps/org/apache/commons/commons-lang3",
-                 "//resolver/main_deps/org/jgrapht/jgrapht-core",
-                 "//resolver/main_deps/org/jgrapht/jgrapht-io",
              ],
              srcs = glob(["src/main/java/net/evendanan/bazel/mvn/merger/*.java"])
 )
@@ -228,7 +226,6 @@ java_test(name = "merger_tests",
   deps=[
       ":merger",
       ":api_lib",
-      "//resolver/main_deps/org/jgrapht/jgrapht-core",
 
       "//resolver/main_deps/junit/junit",
       "//resolver/main_deps/org/mockito/mockito-core"
@@ -245,7 +242,6 @@ java_test(name = "graph_util_tests",
   deps=[
       ":merger",
       ":api_lib",
-      "//resolver/main_deps/org/jgrapht/jgrapht-core",
 
       "//resolver/main_deps/junit/junit",
       "//resolver/main_deps/org/mockito/mockito-core"
