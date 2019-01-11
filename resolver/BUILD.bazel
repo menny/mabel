@@ -76,7 +76,6 @@ java_library(
     deps = [
         ":api_lib",
         ":graph_resolver_lib",
-        ":timing_lib",
 
         "//resolver/main_deps/com/google/guava/guava",
         '//resolver/main_deps/org/apache/maven/maven-model',
@@ -118,6 +117,16 @@ java_library(
         "//resolver/main_deps/org/apache/commons/commons-lang3",
         ],
 )
+java_library(name = "merger",
+             deps = [
+                 ":api_lib",
+
+                 "//resolver/main_deps/com/google/guava/guava",
+                 "//resolver/main_deps/com/google/code/findbugs/jsr305",
+                 "//resolver/main_deps/org/apache/commons/commons-lang3",
+             ],
+             srcs = glob(["src/main/java/net/evendanan/bazel/mvn/merger/*.java"])
+)
 
 java_binary(
     name = "resolver",
@@ -129,6 +138,7 @@ java_binary(
         ":api_lib",
         ":impl_lib",
         ":timing_lib",
+        ":merger",
 
         "//resolver/main_deps/com/google/guava/guava",
         "//resolver/main_deps/com/google/code/findbugs/jsr305",
@@ -202,6 +212,35 @@ java_test(name = "composite_formater_test",
   srcs=["src/main/javatest/net/evendanan/bazel/mvn/impl/CompositeFormatterTest.java"],
   size="small",
   test_class = "net.evendanan.bazel.mvn.impl.CompositeFormatterTest",
+)
+
+java_test(name = "merger_tests",
+  deps=[
+      ":merger",
+      ":api_lib",
+
+      "//resolver/main_deps/junit/junit",
+      "//resolver/main_deps/org/mockito/mockito-core"
+       ],
+  srcs= [
+      "src/main/javatest/net/evendanan/bazel/mvn/merger/GraphUtilsTest.java",
+      "src/main/javatest/net/evendanan/bazel/mvn/merger/DefaultMergerTest.java"
+      ],
+  size="small",
+  test_class = "net.evendanan.bazel.mvn.merger.DefaultMergerTest",
+)
+
+java_test(name = "graph_util_tests",
+  deps=[
+      ":merger",
+      ":api_lib",
+
+      "//resolver/main_deps/junit/junit",
+      "//resolver/main_deps/org/mockito/mockito-core"
+       ],
+  srcs= ["src/main/javatest/net/evendanan/bazel/mvn/merger/GraphUtilsTest.java"],
+  size="small",
+  test_class = "net.evendanan.bazel.mvn.merger.GraphUtilsTest",
 )
 
 java_test(name = "formatters_test",

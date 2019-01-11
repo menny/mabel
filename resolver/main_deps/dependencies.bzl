@@ -132,12 +132,6 @@ def generate_workspace_rules():
         downloaded_file_path = 'maven-repository-metadata-3.2.3.jar',
     )
 
-    # from org.apache.openejb:javaee-api:5.0-2
-    http_file(name = 'main_deps___org_apache_openejb__javaee_api__5_0_2',
-        urls = ['https://repo1.maven.org/maven2/org/apache/openejb/javaee-api/5.0-2/javaee-api-5.0-2.jar'],
-        downloaded_file_path = 'javaee-api-5.0-2.jar',
-    )
-
     # from org.codehaus.plexus:plexus-component-annotations:1.5.5
     http_file(name = 'main_deps___org_codehaus_plexus__plexus_component_annotations__1_5_5',
         urls = ['https://repo1.maven.org/maven2/org/codehaus/plexus/plexus-component-annotations/1.5.5/plexus-component-annotations-1.5.5.jar'],
@@ -425,7 +419,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     native.java_import(name = 'main_deps___log4j__log4j__1_2_17',
         jars = ['@main_deps___log4j__log4j__1_2_17//file'],
         licenses = [],
-        deps = [':main_deps___org_apache_openejb__javaee_api'],
+        deps = [],
         exports = [],
         runtime_deps = [],
     )
@@ -639,21 +633,6 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         licenses = ['notice'],
         deps = [':main_deps___org_codehaus_plexus__plexus_utils'],
         exports = [':main_deps___org_codehaus_plexus__plexus_utils'],
-        runtime_deps = [],
-    )
-
-    # from org.apache.openejb:javaee-api:5.0-2
-    native.alias(name = 'main_deps___org_apache_openejb__javaee_api',
-        actual = ':main_deps___org_apache_openejb__javaee_api__5_0_2',
-        visibility = ['//visibility:public'],
-    )
-
-    # from org.apache.openejb:javaee-api:5.0-2
-    native.java_import(name = 'main_deps___org_apache_openejb__javaee_api__5_0_2',
-        jars = ['@main_deps___org_apache_openejb__javaee_api__5_0_2//file'],
-        licenses = [],
-        deps = [],
-        exports = [],
         runtime_deps = [],
     )
 

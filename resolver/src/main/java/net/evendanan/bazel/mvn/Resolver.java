@@ -22,12 +22,15 @@ import java.util.function.Function;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import net.evendanan.bazel.mvn.api.Dependency;
+import net.evendanan.bazel.mvn.api.GraphMerger;
 import net.evendanan.bazel.mvn.api.GraphResolver;
 import net.evendanan.bazel.mvn.api.RuleWriter;
 import net.evendanan.bazel.mvn.api.Target;
 import net.evendanan.bazel.mvn.impl.RuleClassifiers;
 import net.evendanan.bazel.mvn.impl.RuleWriters;
 import net.evendanan.bazel.mvn.impl.TargetsBuilders;
+import net.evendanan.bazel.mvn.merger.DefaultMerger;
+import net.evendanan.bazel.mvn.merger.DependencyTreeFlatter;
 import net.evendanan.timing.TaskTiming;
 import net.evendanan.timing.TimingData;
 
@@ -36,6 +39,7 @@ public class Resolver {
     private final static Logger logger = Logger.getLogger("Resolver");
 
     private final GraphResolver resolver;
+    private final GraphMerger merger;
     private final RuleWriter repositoryRulesMacroWriter;
     private final RuleWriter targetsMacroWriter;
     private final RuleWriter hardAliasesWriter;
@@ -46,6 +50,7 @@ public class Resolver {
         this.macrosFile = new File(parent, options.output_macro_file);
         //this.resolver = new GraphResolver(new DefaultModelResolver((options.repositories)), options.blacklist, options.rule_prefix);
         this.resolver = new MigrationToolingGraphResolver();
+        this.merger = new DefaultMerger();
         this.repositoryRulesMacroWriter = new RuleWriters.HttpRepoRulesMacroWriter(
                 macrosFile,
                 "generate_workspace_rules");
@@ -118,10 +123,35 @@ public class Resolver {
     }
 
     private Collection<Dependency> generateFromArtifacts(Options options) {
-        return resolver.resolve(options.repositories, options.artifacts, options.blacklist);
+        logger.info(String.format("Processing %s root artifacts...", options.artifacts.size()));
+
+        final TaskTiming timer = new TaskTiming();
+
+        timer.start(options.artifacts.size());
+        final List<Dependency> dependencies = options.artifacts.stream()
+                .peek(maven -> {
+                    final TimingData timingData = timer.taskDone();
+                    final String estimatedTimeLeft;
+                    if (timingData.doneTasks >= 3) {
+                        estimatedTimeLeft = String.format(Locale.US, ", %s left", TaskTiming.humanReadableTime(timingData.estimatedTimeLeft));
+                    } else {
+                        estimatedTimeLeft = "";
+                    }
+                    System.out.println(
+                            String.format(Locale.US, "** Resolving dependency graph for artifact %d out of %d (%.2f%%%s): %s...",
+                                    timingData.doneTasks, timingData.totalTasks, 100 * timingData.ratioOfDone, estimatedTimeLeft,
+                                    maven));
+
+                })
+                .map(mavenCoordinate -> resolver.resolve(mavenCoordinate, options.repositories, options.blacklist))
+                .collect(Collectors.toList());
+
+        logger.info(String.format("Merging %s dependencies...", dependencies.size()));
+        return merger.mergeGraphs(dependencies, options.blacklist);
     }
 
     private void writeResults(Collection<Dependency> resolvedDependencies, final String[] args) throws Exception {
+        resolvedDependencies = DependencyTreeFlatter.flatten(resolvedDependencies);
         //first, deleting everything that's already there.
         final File depsFolder = macrosFile.getParentFile();
         if (depsFolder.isDirectory()) {

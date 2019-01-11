@@ -20,6 +20,12 @@ steps:
   commands:
   - bazel test //...
 
+- name: verify_rules_generation
+  image: menny/android_bazel:1.10.0
+  commands:
+    - bazel run //resolver:main_deps
+    - bazel run //resolver:main_deps
+
 - name: build-examples
   image: menny/android_bazel:1.10.0
   environment:
