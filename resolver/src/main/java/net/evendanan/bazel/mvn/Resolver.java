@@ -30,6 +30,7 @@ import net.evendanan.bazel.mvn.impl.RuleClassifiers;
 import net.evendanan.bazel.mvn.impl.RuleWriters;
 import net.evendanan.bazel.mvn.impl.TargetsBuilders;
 import net.evendanan.bazel.mvn.merger.DefaultMerger;
+import net.evendanan.bazel.mvn.merger.DependencyTreeFlatter;
 import net.evendanan.timing.TaskTiming;
 import net.evendanan.timing.TimingData;
 
@@ -143,6 +144,9 @@ public class Resolver {
 
                 })
                 .map(mavenCoordinate -> resolver.resolve(mavenCoordinate, options.repositories, options.blacklist))
+                .peek(deps -> {
+                    if (deps.size() != 1) throw new IllegalStateException("Got " + deps.size() + " deps instead of 1");
+                })
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
 
@@ -151,6 +155,7 @@ public class Resolver {
     }
 
     private void writeResults(Collection<Dependency> resolvedDependencies, final String[] args) throws Exception {
+        resolvedDependencies = DependencyTreeFlatter.flatten(resolvedDependencies);
         //first, deleting everything that's already there.
         final File depsFolder = macrosFile.getParentFile();
         if (depsFolder.isDirectory()) {

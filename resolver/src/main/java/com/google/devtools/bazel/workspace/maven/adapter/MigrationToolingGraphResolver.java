@@ -7,9 +7,9 @@ import com.google.devtools.bazel.workspace.maven.Rule;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.GraphResolver;
 import org.apache.maven.model.Repository;
@@ -42,6 +42,6 @@ public class MigrationToolingGraphResolver implements GraphResolver {
         final Rule rule = resolver.createRule(mavenCoordinate).orElseThrow(() -> new IllegalArgumentException("Illegal Maven coordinates " + mavenCoordinate));
         resolver.resolveRuleArtifacts(rule);
 
-        return resolver.getRules().stream().map(RuleToDependency::from).collect(Collectors.toList());
+        return Collections.singletonList(RuleToDependency.from(rule));
     }
 }

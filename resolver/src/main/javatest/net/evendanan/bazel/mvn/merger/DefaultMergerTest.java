@@ -1,5 +1,6 @@
 package net.evendanan.bazel.mvn.merger;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -163,7 +164,7 @@ public class DefaultMergerTest {
 
     @Test
     public void testReturnsDeDupDuplicateDeps() {
-        List<Dependency> dependencies = (List<Dependency>)GraphUtils.deepCopyDeps(GraphUtilsTest.NO_REPEATS_GRAPH);
+        List<Dependency> dependencies = (List<Dependency>) GraphUtils.deepCopyDeps(GraphUtilsTest.NO_REPEATS_GRAPH);
 
         //duplicating one root
         dependencies.add(dependencies.get(1));
@@ -174,5 +175,43 @@ public class DefaultMergerTest {
         String expected = GraphUtils.printGraph(GraphUtilsTest.NO_REPEATS_GRAPH);
 
         Assert.assertEquals(expected, GraphUtils.printGraph(deDuped));
+    }
+
+    @Test
+    public void testFlattenTreeWithNoRepeats() {
+        final ArrayList<Dependency> flatten = new ArrayList<>(DependencyTreeFlatter.flatten(GraphUtilsTest.NO_REPEATS_GRAPH));
+        Assert.assertEquals(7, flatten.size());
+        Assert.assertEquals("net.evendanan:dep1:0.1", flatten.get(0).mavenCoordinates());
+        Assert.assertEquals("net.evendanan:inner1:0.1", flatten.get(1).mavenCoordinates());
+        Assert.assertEquals("net.evendanan:inner-inner1:0.1", flatten.get(2).mavenCoordinates());
+        Assert.assertEquals("net.evendanan:inner-inner2:0.1", flatten.get(3).mavenCoordinates());
+        Assert.assertEquals("net.evendanan:dep2:0.1", flatten.get(4).mavenCoordinates());
+        Assert.assertEquals("net.evendanan:dep3:0.2", flatten.get(5).mavenCoordinates());
+        Assert.assertEquals("net.evendanan:inner2:0.1", flatten.get(6).mavenCoordinates());
+
+    }
+
+    @Test
+    public void testFlattenWithRepeats() {
+        final ArrayList<Dependency> dependencies = new ArrayList<>(GraphUtils.deepCopyDeps(GraphUtilsTest.REPEATS_DEP6_AT_ROOT_GRAPH));
+        dependencies.add(dependencies.get(1));
+
+        final ArrayList<Dependency> flatten = new ArrayList<>(DependencyTreeFlatter.flatten(dependencies));
+
+        final int expectedSize = 10;
+        Assert.assertEquals(expectedSize, flatten.size());
+        int flatDepIndex = 0;
+        Assert.assertEquals("net.evendanan:dep1:0.1", flatten.get(flatDepIndex++).mavenCoordinates());
+        Assert.assertEquals("net.evendanan:inner1:0.1", flatten.get(flatDepIndex++).mavenCoordinates());
+        Assert.assertEquals("net.evendanan:inner-inner1:0.1", flatten.get(flatDepIndex++).mavenCoordinates());
+        Assert.assertEquals("net.evendanan:dep6:0.0.1", flatten.get(flatDepIndex++).mavenCoordinates());
+        Assert.assertEquals("net.evendanan:dep2:0.1", flatten.get(flatDepIndex++).mavenCoordinates());
+        Assert.assertEquals("net.evendanan:dep1:0.2", flatten.get(flatDepIndex++).mavenCoordinates());
+        Assert.assertEquals("net.evendanan:inner2:0.1", flatten.get(flatDepIndex++).mavenCoordinates());
+        Assert.assertEquals("net.evendanan:dep6:0.1", flatten.get(flatDepIndex++).mavenCoordinates());
+        Assert.assertEquals("net.evendanan:a1:0.2", flatten.get(flatDepIndex++).mavenCoordinates());
+        Assert.assertEquals("net.evendanan:inner-inner1:0.4", flatten.get(flatDepIndex++).mavenCoordinates());
+
+        Assert.assertEquals(expectedSize, flatDepIndex);
     }
 }
