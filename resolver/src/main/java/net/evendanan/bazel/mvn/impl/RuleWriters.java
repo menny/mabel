@@ -41,8 +41,9 @@ public class RuleWriters {
         }
 
         @Override
-        public void write(final Collection<Target> targets) throws IOException {
+        public void write(Collection<Target> targets) throws IOException {
             logger.info(String.format("Writing %d Bazel repository rules...", targets.size()));
+            targets = SortTargetsByName.sort(targets);
 
             try (final OutputStreamWriter fileWriter = new OutputStreamWriter(new FileOutputStream(outputFile, true), Charsets.UTF_8)) {
                 fileWriter.append("# Loading a drop-in replacement for native.http_file").append(NEW_LINE);
@@ -55,6 +56,7 @@ public class RuleWriters {
                     fileWriter.append(INDENT).append("pass");
                 } else {
                     for (Target target : targets) {
+                        fileWriter.append(INDENT).append("# from ").append(target.getMavenCoordinates()).append(NEW_LINE);
                         fileWriter.append(target.outputString(INDENT)).append(NEW_LINE);
                     }
                 }
@@ -75,7 +77,9 @@ public class RuleWriters {
         }
 
         @Override
-        public void write(final Collection<Target> targets) throws IOException {
+        public void write(Collection<Target> targets) throws IOException {
+            targets = SortTargetsByName.sort(targets);
+
             try (final OutputStreamWriter fileWriter = new OutputStreamWriter(new FileOutputStream(outputFile, true), Charsets.UTF_8)) {
                 fileWriter.append("# Transitive rules macro to be run in the BUILD.bazel file.").append(NEW_LINE);
                 fileWriter.append("# If you use kt_* rules, you MUST provide the correct rule implementation when call this macro, if you decide").append(NEW_LINE);
@@ -110,6 +114,8 @@ public class RuleWriters {
                     logger.info(String.format("Writing %d Bazel targets...", targets.size()));
 
                     for (Target target : targets) {
+                        fileWriter.append(INDENT).append("# from ").append(target.getMavenCoordinates()).append(NEW_LINE);
+
                         if (target.getRuleName().equals(KOTLIN_LIB_MACRO_NAME)) {
                             target.addVariable("kt_jvm_import", "kt_jvm_import")
                                     .addVariable("kt_jvm_library", "kt_jvm_library");

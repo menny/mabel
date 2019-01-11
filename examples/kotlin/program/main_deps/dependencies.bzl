@@ -6,24 +6,28 @@ load('@bazel_tools//tools/build_defs/repo:http.bzl', 'http_file')
 
 # Repository rules macro to be run in the WORKSPACE file.
 def generate_workspace_rules():
-    http_file(name = 'main_deps___org_jetbrains_kotlin__kotlin_stdlib__1_0_6',
-        urls = ['https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.0.6/kotlin-stdlib-1.0.6.jar'],
-        downloaded_file_path = 'kotlin-stdlib-1.0.6.jar',
+    # from com.github.salomonbrys.kotson:kotson:2.5.0
+    http_file(name = 'main_deps___com_github_salomonbrys_kotson__kotson__2_5_0',
+        urls = ['https://repo1.maven.org/maven2/com/github/salomonbrys/kotson/kotson/2.5.0/kotson-2.5.0.jar'],
+        downloaded_file_path = 'kotson-2.5.0.jar',
     )
 
+    # from com.google.code.gson:gson:2.8.0
     http_file(name = 'main_deps___com_google_code_gson__gson__2_8_0',
         urls = ['https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.0/gson-2.8.0.jar'],
         downloaded_file_path = 'gson-2.8.0.jar',
     )
 
+    # from org.jetbrains.kotlin:kotlin-runtime:1.0.6
     http_file(name = 'main_deps___org_jetbrains_kotlin__kotlin_runtime__1_0_6',
         urls = ['https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-runtime/1.0.6/kotlin-runtime-1.0.6.jar'],
         downloaded_file_path = 'kotlin-runtime-1.0.6.jar',
     )
 
-    http_file(name = 'main_deps___com_github_salomonbrys_kotson__kotson__2_5_0',
-        urls = ['https://repo1.maven.org/maven2/com/github/salomonbrys/kotson/kotson/2.5.0/kotson-2.5.0.jar'],
-        downloaded_file_path = 'kotson-2.5.0.jar',
+    # from org.jetbrains.kotlin:kotlin-stdlib:1.0.6
+    http_file(name = 'main_deps___org_jetbrains_kotlin__kotlin_stdlib__1_0_6',
+        urls = ['https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.0.6/kotlin-stdlib-1.0.6.jar'],
+        downloaded_file_path = 'kotlin-stdlib-1.0.6.jar',
     )
 
 
@@ -52,47 +56,13 @@ def kotlin_jar_support(name, deps, exports, runtime_deps, jar, kt_jvm_import=Non
         )
 
 def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=None):
-    kotlin_jar_support(name = 'main_deps___org_jetbrains_kotlin__kotlin_stdlib__1_0_6',
-        deps = [':main_deps___org_jetbrains_kotlin__kotlin_runtime'],
-        exports = [':main_deps___org_jetbrains_kotlin__kotlin_runtime'],
-        runtime_deps = [],
-        jar = '@main_deps___org_jetbrains_kotlin__kotlin_stdlib__1_0_6//file',
-        kt_jvm_import = kt_jvm_import,
-        kt_jvm_library = kt_jvm_library,
-    )
-
-    native.alias(name = 'main_deps___org_jetbrains_kotlin__kotlin_stdlib',
-        actual = ':main_deps___org_jetbrains_kotlin__kotlin_stdlib__1_0_6',
+    # from com.github.salomonbrys.kotson:kotson:2.5.0
+    native.alias(name = 'main_deps___com_github_salomonbrys_kotson__kotson',
+        actual = ':main_deps___com_github_salomonbrys_kotson__kotson__2_5_0',
         visibility = ['//visibility:public'],
     )
 
-    native.java_import(name = 'main_deps___com_google_code_gson__gson__2_8_0',
-        jars = ['@main_deps___com_google_code_gson__gson__2_8_0//file'],
-        licenses = [],
-        deps = [],
-        exports = [],
-        runtime_deps = [],
-    )
-
-    native.alias(name = 'main_deps___com_google_code_gson__gson',
-        actual = ':main_deps___com_google_code_gson__gson__2_8_0',
-        visibility = ['//visibility:public'],
-    )
-
-    kotlin_jar_support(name = 'main_deps___org_jetbrains_kotlin__kotlin_runtime__1_0_6',
-        deps = [],
-        exports = [],
-        runtime_deps = [],
-        jar = '@main_deps___org_jetbrains_kotlin__kotlin_runtime__1_0_6//file',
-        kt_jvm_import = kt_jvm_import,
-        kt_jvm_library = kt_jvm_library,
-    )
-
-    native.alias(name = 'main_deps___org_jetbrains_kotlin__kotlin_runtime',
-        actual = ':main_deps___org_jetbrains_kotlin__kotlin_runtime__1_0_6',
-        visibility = ['//visibility:public'],
-    )
-
+    # from com.github.salomonbrys.kotson:kotson:2.5.0
     kotlin_jar_support(name = 'main_deps___com_github_salomonbrys_kotson__kotson__2_5_0',
         deps = [
             ':main_deps___com_google_code_gson__gson',
@@ -108,9 +78,51 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         kt_jvm_library = kt_jvm_library,
     )
 
-    native.alias(name = 'main_deps___com_github_salomonbrys_kotson__kotson',
-        actual = ':main_deps___com_github_salomonbrys_kotson__kotson__2_5_0',
+    # from com.google.code.gson:gson:2.8.0
+    native.alias(name = 'main_deps___com_google_code_gson__gson',
+        actual = ':main_deps___com_google_code_gson__gson__2_8_0',
         visibility = ['//visibility:public'],
+    )
+
+    # from com.google.code.gson:gson:2.8.0
+    native.java_import(name = 'main_deps___com_google_code_gson__gson__2_8_0',
+        jars = ['@main_deps___com_google_code_gson__gson__2_8_0//file'],
+        licenses = [],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from org.jetbrains.kotlin:kotlin-runtime:1.0.6
+    native.alias(name = 'main_deps___org_jetbrains_kotlin__kotlin_runtime',
+        actual = ':main_deps___org_jetbrains_kotlin__kotlin_runtime__1_0_6',
+        visibility = ['//visibility:public'],
+    )
+
+    # from org.jetbrains.kotlin:kotlin-runtime:1.0.6
+    kotlin_jar_support(name = 'main_deps___org_jetbrains_kotlin__kotlin_runtime__1_0_6',
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+        jar = '@main_deps___org_jetbrains_kotlin__kotlin_runtime__1_0_6//file',
+        kt_jvm_import = kt_jvm_import,
+        kt_jvm_library = kt_jvm_library,
+    )
+
+    # from org.jetbrains.kotlin:kotlin-stdlib:1.0.6
+    native.alias(name = 'main_deps___org_jetbrains_kotlin__kotlin_stdlib',
+        actual = ':main_deps___org_jetbrains_kotlin__kotlin_stdlib__1_0_6',
+        visibility = ['//visibility:public'],
+    )
+
+    # from org.jetbrains.kotlin:kotlin-stdlib:1.0.6
+    kotlin_jar_support(name = 'main_deps___org_jetbrains_kotlin__kotlin_stdlib__1_0_6',
+        deps = [':main_deps___org_jetbrains_kotlin__kotlin_runtime'],
+        exports = [':main_deps___org_jetbrains_kotlin__kotlin_runtime'],
+        runtime_deps = [],
+        jar = '@main_deps___org_jetbrains_kotlin__kotlin_stdlib__1_0_6//file',
+        kt_jvm_import = kt_jvm_import,
+        kt_jvm_library = kt_jvm_library,
     )
 
 

@@ -6,6 +6,7 @@ load('@bazel_tools//tools/build_defs/repo:http.bzl', 'http_file')
 
 # Repository rules macro to be run in the WORKSPACE file.
 def generate_workspace_rules():
+    # from com.google.guava:guava:20.0
     http_file(name = 'main_deps___com_google_guava__guava__20_0',
         urls = ['https://repo1.maven.org/maven2/com/google/guava/guava/20.0/guava-20.0.jar'],
         downloaded_file_path = 'guava-20.0.jar',
@@ -37,17 +38,19 @@ def kotlin_jar_support(name, deps, exports, runtime_deps, jar, kt_jvm_import=Non
         )
 
 def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=None):
+    # from com.google.guava:guava:20.0
+    native.alias(name = 'main_deps___com_google_guava__guava',
+        actual = ':main_deps___com_google_guava__guava__20_0',
+        visibility = ['//visibility:public'],
+    )
+
+    # from com.google.guava:guava:20.0
     native.java_import(name = 'main_deps___com_google_guava__guava__20_0',
         jars = ['@main_deps___com_google_guava__guava__20_0//file'],
         licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],
-    )
-
-    native.alias(name = 'main_deps___com_google_guava__guava',
-        actual = ':main_deps___com_google_guava__guava__20_0',
-        visibility = ['//visibility:public'],
     )
 
 

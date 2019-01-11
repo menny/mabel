@@ -19,11 +19,13 @@ public class WritersTests {
             "\n" +
             "# Repository rules macro to be run in the WORKSPACE file.\n" +
             "def macro_name():\n" +
+            "    # from net.evendanan.dep1:artifact:1.2.3\n" +
             "    http_file(name = 'net_evendanan_dep1__artifact__1_2_3',\n" +
             "        urls = ['https://example.com/net/evendanan/dep.jar'],\n" +
             "        downloaded_file_path = 'dep.jar',\n" +
             "    )\n" +
             "\n" +
+            "    # from net.evendanan.dep2:artifact:2.0\n" +
             "    http_file(name = 'net_evendanan_dep2__artifact__2_0',\n" +
             "        urls = ['https://example.com/com/example/dep2.jar'],\n" +
             "        downloaded_file_path = 'dep2.jar',\n" +
@@ -56,9 +58,11 @@ public class WritersTests {
             "        )\n" +
             "\n" +
             "def macro_name(kt_jvm_import=None, kt_jvm_library=None):\n" +
+            "    # from net.evendanan.dep1:artifact:1.2.3\n" +
             "    rule(name = 'name_name_1',\n" +
             "    )\n" +
             "\n" +
+            "    # from net.evendanan.dep2:artifact:2.0\n" +
             "    rule(name = 'name_name_2',\n" +
             "    )\n" +
             "\n" +
@@ -222,6 +226,7 @@ public class WritersTests {
                 new Target("net.evendanan.dep2:artifact:2.0", "rule", "name_name_2")));
 
         String contents = readFileContents(outputFile);
+
 
         Assert.assertEquals(TRANSITIVE_TARGETS_MACRO_OUTPUT, contents);
     }
