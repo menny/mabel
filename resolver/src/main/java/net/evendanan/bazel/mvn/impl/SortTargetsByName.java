@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import net.evendanan.bazel.mvn.api.Target;
 
-public class SortTargetsByName {
+class SortTargetsByName {
 
     private static final Comparator<? super Target> TARGET_COMPARATOR = (Comparator<Target>) (o1, o2) -> {
         final int mavenDiff = o1.getMavenCoordinates().compareTo(o2.getMavenCoordinates());

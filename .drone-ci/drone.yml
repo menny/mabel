@@ -13,12 +13,12 @@ steps:
   environment:
     TERM: dumb
   commands:
-  - bazel build //...
+  - bazel build $(bazel query 'attr(visibility, "//visibility:public", //...)')
 
 - name: test
   image: menny/android_bazel:1.10.0
   commands:
-  - bazel test //...
+  - bazel test --build_tests_only //...
 
 - name: verify_rules_generation
   image: menny/android_bazel:1.10.0
@@ -41,8 +41,8 @@ steps:
   environment:
     TERM: dumb
   commands:
-    - (cd examples/plain_java/ ; bazel run //program:main_deps ; bazel build //...)
-    - (cd examples/java_plugin/ ; bazel run //program:main_deps ; bazel build //...)
-    - (cd examples/android/ ; bazel run //program:main_deps ; bazel build //...)
-    - (cd examples/kotlin/ ; bazel run //program:main_deps ; bazel build //...)
+    - (cd examples/plain_java/ ; rm -rf program/main_deps ; bazel run //program:main_deps ; bazel build //...)
+    - (cd examples/java_plugin/ ; rm -rf program/main_deps ; bazel run //program:main_deps ; bazel build //...)
+    - (cd examples/android/ ; rm -rf program/main_deps ; bazel run //program:main_deps ; bazel build //...)
+    - (cd examples/kotlin/ ; rm -rf program/main_deps ; bazel run //program:main_deps ; bazel build //...)
 
