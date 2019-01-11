@@ -146,7 +146,6 @@ java_binary(
         ":api_lib",
         ":impl_lib",
         ":timing_lib",
-        ":merger",
 
         "//resolver/main_deps/com/google/guava/guava",
         "//resolver/main_deps/com/google/code/findbugs/jsr305",
@@ -157,6 +156,26 @@ java_binary(
         '//resolver/main_deps/org/apache/maven/maven-model',
         ],
 )
+
+java_binary(
+    name = "merger",
+    main_class = "net.evendanan.bazel.mvn.Merger",
+    visibility = ["//visibility:public"],
+    srcs = glob(["src/main/java/net/evendanan/bazel/mvn/Merger.java"]),
+    deps = [
+        ":api_lib",
+        ":timing_lib",
+        ":merger",
+
+        "//resolver/main_deps/com/google/guava/guava",
+        "//resolver/main_deps/com/google/code/findbugs/jsr305",
+        "//resolver/main_deps/org/apache/commons/commons-lang3",
+
+        "//resolver/main_deps/com/beust/jcommander",
+        ],
+)
+
+#### Tests below
 
 java_library(name = "test_utils",
              srcs = ["src/main/javatest/net/evendanan/bazel/mvn/TestUtils.java"],
