@@ -7,8 +7,17 @@ load("//rules/maven_deps:maven_deps_workspace_generator.bzl", "deps_workspace_ge
 
 deps_workspace_generator_rule(name = 'main_deps',
     maven_deps = [
-        "com.google.guava:guava:20.0",
+        "com.google.guava:guava:27.0.1",
+        "org.apache.commons:commons-lang3:jar:3.8.1",
+        "com.google.code.findbugs:jsr305:3.0.2",
+
+        #for creating and reading json
+        "com.google.code.gson:gson:2.8.5",
+
+        #command-line arguments parsing
         "com.beust:jcommander:1.72",
+
+        #POM management
         "org.eclipse.aether:aether-api:1.1.0",
         "org.eclipse.aether:aether-spi:1.1.0",
         "org.eclipse.aether:aether-impl:1.1.0",
@@ -26,12 +35,8 @@ deps_workspace_generator_rule(name = 'main_deps',
         "org.codehaus.plexus:plexus-interpolation:1.24",
         "org.codehaus.plexus:plexus-utils:3.0.24",
         "org.apache.httpcomponents:httpclient:4.5.3",
-        "org.apache.commons:commons-lang3:jar:3.8.1",
-        "com.google.code.findbugs:jsr305:3.0.2",
 
-        "org.jgrapht:jgrapht-core:1.3.0",
-        "org.jgrapht:jgrapht-io:1.3.0",
-
+        #testing
         "junit:junit:4.12",
         "org.mockito:mockito-core:2.23.4",
     ],
