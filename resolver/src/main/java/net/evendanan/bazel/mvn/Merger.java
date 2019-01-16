@@ -29,6 +29,7 @@ import net.evendanan.bazel.mvn.impl.RuleClassifiers;
 import net.evendanan.bazel.mvn.impl.RuleWriters;
 import net.evendanan.bazel.mvn.impl.TargetsBuilders;
 import net.evendanan.bazel.mvn.merger.DefaultMerger;
+import net.evendanan.bazel.mvn.merger.DependencyTreeFlatter;
 import net.evendanan.bazel.mvn.serialization.Serialization;
 import net.evendanan.timing.TaskTiming;
 import net.evendanan.timing.TimingData;
@@ -138,6 +139,7 @@ public class Merger {
     }
 
     private void writeResults(Collection<Dependency> resolvedDependencies, final String[] args) throws Exception {
+        resolvedDependencies = DependencyTreeFlatter.flatten(resolvedDependencies);
         //first, deleting everything that's already there.
         final File depsFolder = macrosFile.getParentFile();
         if (depsFolder.isDirectory()) {
