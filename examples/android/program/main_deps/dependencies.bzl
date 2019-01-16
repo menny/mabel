@@ -156,6 +156,18 @@ def generate_workspace_rules():
         downloaded_file_path = 'viewpager-1.0.0.aar',
     )
 
+    # from com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406
+    http_file(name = 'main_deps___com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406',
+        urls = ['https://jitpack.io/com/github/menny/Chauffeur/lib/90e703256785b7baf9cd37370b62b1d7d3830406/lib-90e703256785b7baf9cd37370b62b1d7d3830406.aar'],
+        downloaded_file_path = 'lib-90e703256785b7baf9cd37370b62b1d7d3830406.aar',
+    )
+
+    # from com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406
+    http_file(name = 'main_deps___com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406',
+        urls = ['https://jitpack.io/com/github/menny/Chauffeur/permissions/90e703256785b7baf9cd37370b62b1d7d3830406/permissions-90e703256785b7baf9cd37370b62b1d7d3830406.aar'],
+        downloaded_file_path = 'permissions-90e703256785b7baf9cd37370b62b1d7d3830406.aar',
+    )
+
 
 # Transitive rules macro to be run in the BUILD.bazel file.
 # If you use kt_* rules, you MUST provide the correct rule implementation when call this macro, if you decide
@@ -643,6 +655,41 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
             ':main_deps___androidx_core__core',
             ':main_deps___androidx_customview__customview',
         ],
+    )
+
+    # from com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406
+    native.alias(name = 'main_deps___com_github_menny_Chauffeur__lib',
+        actual = ':main_deps___com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406',
+        visibility = ['//visibility:public'],
+    )
+
+    # from com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406
+    native.aar_import(name = 'main_deps___com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406',
+        aar = '@main_deps___com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406//file',
+        deps = [
+            ':main_deps___androidx_annotation__annotation',
+            ':main_deps___androidx_appcompat__appcompat',
+            ':main_deps___androidx_fragment__fragment',
+        ],
+        exports = [],
+    )
+
+    # from com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406
+    native.alias(name = 'main_deps___com_github_menny_Chauffeur__permissions',
+        actual = ':main_deps___com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406',
+        visibility = ['//visibility:public'],
+    )
+
+    # from com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406
+    native.aar_import(name = 'main_deps___com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406',
+        aar = '@main_deps___com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406//file',
+        deps = [
+            ':main_deps___androidx_annotation__annotation',
+            ':main_deps___androidx_appcompat__appcompat',
+            ':main_deps___androidx_fragment__fragment',
+            ':main_deps___com_github_menny_Chauffeur__lib',
+        ],
+        exports = [':main_deps___com_github_menny_Chauffeur__lib'],
     )
 
 
