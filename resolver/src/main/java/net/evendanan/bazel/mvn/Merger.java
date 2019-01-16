@@ -20,7 +20,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Function;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.GraphMerger;
@@ -35,8 +34,6 @@ import net.evendanan.timing.TaskTiming;
 import net.evendanan.timing.TimingData;
 
 public class Merger {
-
-    private final static Logger logger = Logger.getLogger("Merger");
 
     private final GraphMerger merger;
     private final RuleWriter repositoryRulesMacroWriter;
@@ -116,7 +113,7 @@ public class Merger {
     }
 
     private Collection<Dependency> generateFromInputs(Options options) {
-        logger.info(String.format("Reading %s root artifacts...", options.artifacts.size()));
+        System.out.println(String.format("Reading %s root artifacts...", options.artifacts.size()));
 
         final char[] buffer = new char[4096];
         final StringBuilder builder = new StringBuilder();
@@ -136,9 +133,7 @@ public class Merger {
                 })
                 .collect(Collectors.toList());
 
-        logger.info(String.format("Processing %s dependencies...", dependencies.size()));
-
-        logger.info(String.format("Merging %s dependencies...", dependencies.size()));
+        System.out.println(String.format("Merging %s dependencies...", dependencies.size()));
         return merger.mergeGraphs(dependencies);
     }
 
@@ -165,7 +160,7 @@ public class Merger {
         }
 
         final TaskTiming timer = new TaskTiming();
-        logger.info(String.format("Processing %s resolved rules...", resolvedDependencies.size()));
+        System.out.println(String.format("Processing %s resolved rules...", resolvedDependencies.size()));
 
         timer.start(resolvedDependencies.size());
         List<Target> targets = resolvedDependencies.stream()
@@ -194,7 +189,7 @@ public class Merger {
         targetsMacroWriter.write(targets);
 
         if (hardAliasesWriter!=null) {
-            logger.info("Writing aliases targets...");
+            System.out.println("Writing aliases targets...");
             hardAliasesWriter.write(targets);
         }
     }

@@ -6,20 +6,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.lang.invoke.MethodHandles;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import net.evendanan.bazel.mvn.api.RuleWriter;
 import net.evendanan.bazel.mvn.api.Target;
 
 public class RuleWriters {
-
-    private final static Logger logger = Logger.getLogger(
-            MethodHandles.lookup().lookupClass().getName());
 
     private static final String INDENT = "    ";
     private static final String NEW_LINE = System.lineSeparator();
@@ -42,7 +37,7 @@ public class RuleWriters {
 
         @Override
         public void write(Collection<Target> targets) throws IOException {
-            logger.info(String.format("Writing %d Bazel repository rules...", targets.size()));
+            System.out.println(String.format("Writing %d Bazel repository rules...", targets.size()));
             targets = SortTargetsByName.sort(targets);
 
             try (final OutputStreamWriter fileWriter = new OutputStreamWriter(new FileOutputStream(outputFile, true), Charsets.UTF_8)) {
@@ -111,7 +106,7 @@ public class RuleWriters {
                 if (targets.isEmpty()) {
                     fileWriter.append(INDENT).append("pass");
                 } else {
-                    logger.info(String.format("Writing %d Bazel targets...", targets.size()));
+                    System.out.println(String.format("Writing %d Bazel targets...", targets.size()));
 
                     for (Target target : targets) {
                         fileWriter.append(INDENT).append("# from ").append(target.getMavenCoordinates()).append(NEW_LINE);
