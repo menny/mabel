@@ -38,10 +38,12 @@ public class Resolver {
             return;
         }
         if (Strings.isNullOrEmpty(options.artifact)) {
+            System.err.println("Maven coordinate was not provided");
             optionParser.usage();
             return;
         }
         if (options.repositories.isEmpty()) {
+            System.err.println("Repositories URLs were not provided!");
             optionParser.usage();
             return;
         }
@@ -59,12 +61,6 @@ public class Resolver {
 
         String serialized = serialization.serialize(resolvedDependency);
 
-        System.out.print("For artifact ");
-        System.out.println(options.artifact);
-        System.out.println("*******");
-        System.out.println(serialized);
-        System.out.println("*******");
-
         final File outputFile = new File(options.output_file);
         final File parentFolder = outputFile.getParentFile();
         if (!parentFolder.isDirectory() && !parentFolder.mkdirs()) {
@@ -74,8 +70,6 @@ public class Resolver {
         try (final OutputStreamWriter fileWriter = new OutputStreamWriter(new FileOutputStream(outputFile, false), Charsets.UTF_8)) {
             fileWriter.append(serialized);
         }
-
-        System.out.println("output file " + outputFile.getAbsolutePath() + " length is " + outputFile.length());
     }
 
     @Parameters(separators = "=")
