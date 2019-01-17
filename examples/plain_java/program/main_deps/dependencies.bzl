@@ -12,6 +12,12 @@ def generate_workspace_rules():
         downloaded_file_path = 'guava-20.0.jar',
     )
 
+    # from com.google.guava:guava:20.0
+    http_file(name = 'main_deps___com_google_guava__guava__20_0__sources',
+        urls = ['https://repo1.maven.org/maven2/com/google/guava/guava/20.0/guava-20.0-sources.jar'],
+        downloaded_file_path = 'guava-20.0-sources.jar',
+    )
+
 
 # Transitive rules macro to be run in the BUILD.bazel file.
 # If you use kt_* rules, you MUST provide the correct rule implementation when call this macro, if you decide
@@ -51,6 +57,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         deps = [],
         exports = [],
         runtime_deps = [],
+        srcjar = '@main_deps___com_google_guava__guava__20_0__sources//file',
     )
 
 

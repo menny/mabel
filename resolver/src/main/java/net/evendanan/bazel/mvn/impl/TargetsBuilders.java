@@ -20,9 +20,19 @@ public class TargetsBuilders {
 
     public static final TargetsBuilder HTTP_FILE = dependency -> {
         if ("pom".equalsIgnoreCase(dependency.packaging())) return Collections.emptyList();
-        return Collections.singletonList(new Target(dependency.mavenCoordinates(), "http_file", dependency.repositoryRuleName())
+
+        final Target jarTarget = new Target(dependency.mavenCoordinates(), "http_file", dependency.repositoryRuleName())
                 .addList("urls", Collections.singleton(dependency.url().toASCIIString()))
-                .addString("downloaded_file_path", getFilenameFromUrl(dependency.url().getPath())));
+                .addString("downloaded_file_path", getFilenameFromUrl(dependency.url().getPath()));
+        if (dependency.sourcesUrl().toASCIIString().isEmpty()) {
+            return Collections.singletonList(jarTarget);
+        } else {
+            final Target sourceTarget = new Target(dependency.mavenCoordinates(), "http_file", dependency.repositoryRuleName() + "__sources")
+                    .addList("urls", Collections.singleton(dependency.sourcesUrl().toASCIIString()))
+                    .addString("downloaded_file_path", getFilenameFromUrl(dependency.sourcesUrl().getPath()));
+
+            return Arrays.asList(jarTarget, sourceTarget);
+        }
     };
     static final TargetsBuilder JAVA_IMPORT = dependency -> {
         List<Target> targets = new ArrayList<>();
@@ -46,7 +56,7 @@ public class TargetsBuilders {
     static final TargetsBuilder NATIVE_AAR_IMPORT = new AarImport(true);
 
     private static Target addJavaImportRule(boolean asNative, Dependency dependency, String postFix) {
-        return new Target(dependency.mavenCoordinates(), asNative ? "native.java_import":"java_import", dependency.repositoryRuleName() + postFix)
+        final Target target = new Target(dependency.mavenCoordinates(), asNative ? "native.java_import":"java_import", dependency.repositoryRuleName() + postFix)
                 .addList("jars", "pom".equalsIgnoreCase(dependency.packaging()) ?
                         Collections.emptyList()
                         :Collections.singletonList(String.format(Locale.US, "@%s//file", dependency.repositoryRuleName())))
@@ -54,6 +64,10 @@ public class TargetsBuilders {
                 .addList("deps", convertRulesToStrings(dependency.dependencies()))
                 .addList("exports", convertRulesToStrings(dependency.exports()))
                 .addList("runtime_deps", convertRulesToStrings(dependency.runtimeDependencies()));
+        if (!dependency.sourcesUrl().toASCIIString().isEmpty()) {
+            target.addString("srcjar", String.format(Locale.US, "@%s__sources//file", dependency.repositoryRuleName()));
+        }
+        return target;
     }
 
     private static String getFilenameFromUrl(String url) {

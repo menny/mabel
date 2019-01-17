@@ -3,9 +3,12 @@ package net.evendanan.bazel.mvn.impl;
 import com.google.common.base.Charsets;
 import java.io.File;
 import java.io.FileInputStream;
+import java.net.URI;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.Target;
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,6 +16,25 @@ import org.junit.Test;
 import static net.evendanan.bazel.mvn.TestUtils.createDependency;
 
 public class WritersTests {
+
+    private static final String REPO_RULES_MACRO_OUTPUT_WITH_SOURCES = "# Loading a drop-in replacement for native.http_file\n" +
+            "load('@bazel_tools//tools/build_defs/repo:http.bzl', 'http_file')\n" +
+            "\n" +
+            "# Repository rules macro to be run in the WORKSPACE file.\n" +
+            "def macro_name():\n" +
+            "    # from net.evendanan:dep1:1.2.3\n" +
+            "    http_file(name = 'net_evendanan__dep1__1_2_3',\n" +
+            "        urls = ['https://maven.central.org/repo/net/evendanan/dep1/dep1-1.2.3.jar'],\n" +
+            "        downloaded_file_path = 'dep1-1.2.3.jar',\n" +
+            "    )\n" +
+            "\n" +
+            "    # from net.evendanan:dep1:1.2.3\n" +
+            "    http_file(name = 'net_evendanan__dep1__1_2_3__sources',\n" +
+            "        urls = ['https://maven.central.org/repo/net/evendanan/dep1/dep1-1.2.3-sources.jar'],\n" +
+            "        downloaded_file_path = 'dep1-1.2.3-sources.jar',\n" +
+            "    )\n" +
+            "\n" +
+            "\n";
 
     private static final String REPO_RULES_MACRO_OUTPUT = "# Loading a drop-in replacement for native.http_file\n" +
             "load('@bazel_tools//tools/build_defs/repo:http.bzl', 'http_file')\n" +
@@ -140,6 +162,27 @@ public class WritersTests {
         String contents = readFileContents(outputFile);
 
         Assert.assertEquals(REPO_RULES_MACRO_OUTPUT, contents);
+    }
+
+    @Test
+    public void testRepositoryRulesMacroWriterWithSources() throws Exception {
+        final List<Target> targets = TargetsBuilders.HTTP_FILE.buildTargets(new Dependency("net.evendanan", "dep1", "1.2.3",
+                "jar",
+                Collections.emptyList(), Collections.emptyList(), Collections.emptyList(),
+                URI.create("https://maven.central.org/repo/net/evendanan/dep1/dep1-1.2.3.jar"),
+                URI.create("https://maven.central.org/repo/net/evendanan/dep1/dep1-1.2.3-sources.jar"),
+                URI.create(""),
+                Collections.emptyList()));
+
+        Assert.assertEquals(2, targets.size());
+
+        File outputFile = File.createTempFile("testRepositoryRulesMacroWriter", ".bzl");
+        RuleWriters.HttpRepoRulesMacroWriter writer = new RuleWriters.HttpRepoRulesMacroWriter(outputFile, "macro_name");
+        writer.write(targets);
+
+        String contents = readFileContents(outputFile);
+
+        Assert.assertEquals(REPO_RULES_MACRO_OUTPUT_WITH_SOURCES, contents);
     }
 
     @Test

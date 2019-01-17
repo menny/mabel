@@ -10,17 +10,20 @@ import org.mockito.Mockito;
 
 public class TestUtils {
 
-
-    public static Dependency createDependency(String mavenDep, String url, List<String> depsLabels, List<String> exportsLabels, List<String> runtimeLabels) {
+    public static Dependency createDependency(String mavenDep, String url, String sourcesUrl, List<String> depsLabels, List<String> exportsLabels, List<String> runtimeLabels) {
         final String[] depsPart = mavenDep.split(":", -1);
 
         return new Dependency(depsPart[0], depsPart[1], depsPart.length > 2 ? depsPart[2]:"",
                 url.substring(url.length() - 3),
                 generateDeps(depsLabels), generateDeps(exportsLabels), generateDeps(runtimeLabels),
                 URI.create(url),
-                URI.create(""),
+                URI.create(sourcesUrl),
                 URI.create(""),
                 Collections.emptyList());
+    }
+
+    public static Dependency createDependency(String mavenDep, String url, List<String> depsLabels, List<String> exportsLabels, List<String> runtimeLabels) {
+        return createDependency(mavenDep, url, "", depsLabels, exportsLabels, runtimeLabels);
     }
 
 
