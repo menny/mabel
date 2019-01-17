@@ -30,12 +30,12 @@ This WORKSPACE will provide `deps_workspace_generator_rule` rule and `artifact` 
 ### WORKSPACE file
 Add this repository to your WORKSPACE (set `bazel_mvn_deps_version` to the latest [release](https://github.com/menny/mabel/releases) or, if you are adventurous, [commit](https://github.com/menny/mabel/commits/master)):
 ```python
-bazel_mvn_deps_version = "0.1.1"
+mabel_version = "0.2.0"
 http_archive(
     name = "mabel",
-    urls = ["https://github.com/menny/mabel/archive/%s.zip" % bazel_mvn_deps_version],
+    urls = ["https://github.com/menny/mabel/archive/%s.zip" % mabel_version],
     type = "zip",
-    strip_prefix = "mabel-%s" % bazel_mvn_deps_version
+    strip_prefix = "mabel-%s" % mabel_version
 )
 
 load("@mabel//resolver/main_deps:dependencies.bzl", generate_bazel_mvn_deps_workspace_rules = "generate_workspace_rules")
