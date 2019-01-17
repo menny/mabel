@@ -164,6 +164,7 @@ public class Dependency {
                 case "Apache License, Version 2.0":
                 case "The Apache Software License, Version 2.0":
                 case "The MIT License":
+                case "MIT License":
                 case "MIT":
                     return notice;
                 case "Eclipse Public License 1.0":
