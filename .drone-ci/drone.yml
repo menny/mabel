@@ -9,14 +9,14 @@ clone:
 
 steps:
 - name: build
-  image: menny/android_bazel:1.10.0
+  image: menny/android_bazel:1.10.1
   environment:
     TERM: dumb
   commands:
   - bazel build $(bazel query 'attr(visibility, "//visibility:public", //...)')
 
 - name: test
-  image: menny/android_bazel:1.10.0
+  image: menny/android_bazel:1.10.1
   commands:
   - bazel test --build_tests_only //...
 
@@ -27,7 +27,7 @@ steps:
     - bazel run //resolver:main_deps
 
 - name: build-examples
-  image: menny/android_bazel:1.10.0
+  image: menny/android_bazel:1.10.1
   environment:
     TERM: dumb
   commands:
@@ -37,7 +37,7 @@ steps:
     - (cd examples/kotlin/ ; bazel build //...)
 
 - name: regenerate-examples
-  image: menny/android_bazel:1.10.0
+  image: menny/android_bazel:1.10.1
   environment:
     TERM: dumb
   commands:
