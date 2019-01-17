@@ -36,6 +36,9 @@ deps_workspace_generator_rule(name = 'main_deps',
         artifact("org.codehaus.plexus:plexus-utils:3.0.24"),
         artifact("org.apache.httpcomponents:httpclient:4.5.3"),
 
+        #logging - nop
+        artifact("org.slf4j:slf4j-nop:1.7.25"),
+
         #testing
         artifact("junit:junit:4.12"),
         artifact("org.mockito:mockito-core:2.23.4"),
@@ -159,6 +162,7 @@ java_binary(
 
         '//resolver/main_deps/org/apache/maven/maven-model',
         ],
+    runtime_deps = ['//resolver/main_deps/org/slf4j/slf4j-nop']
 )
 
 java_binary(
@@ -180,6 +184,7 @@ java_binary(
 
         "//resolver/main_deps/com/beust/jcommander",
         ],
+    runtime_deps = ['//resolver/main_deps/org/slf4j/slf4j-nop']
 )
 
 #### Tests below

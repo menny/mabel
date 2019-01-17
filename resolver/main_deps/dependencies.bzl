@@ -540,16 +540,28 @@ def generate_workspace_rules():
         downloaded_file_path = 'jcl-over-slf4j-1.6.2-sources.jar',
     )
 
-    # from org.slf4j:slf4j-api:1.6.2
-    http_file(name = 'main_deps___org_slf4j__slf4j_api__1_6_2',
-        urls = ['https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.6.2/slf4j-api-1.6.2.jar'],
-        downloaded_file_path = 'slf4j-api-1.6.2.jar',
+    # from org.slf4j:slf4j-api:1.7.25
+    http_file(name = 'main_deps___org_slf4j__slf4j_api__1_7_25',
+        urls = ['https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar'],
+        downloaded_file_path = 'slf4j-api-1.7.25.jar',
     )
 
-    # from org.slf4j:slf4j-api:1.6.2
-    http_file(name = 'main_deps___org_slf4j__slf4j_api__1_6_2__sources',
-        urls = ['https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.6.2/slf4j-api-1.6.2-sources.jar'],
-        downloaded_file_path = 'slf4j-api-1.6.2-sources.jar',
+    # from org.slf4j:slf4j-api:1.7.25
+    http_file(name = 'main_deps___org_slf4j__slf4j_api__1_7_25__sources',
+        urls = ['https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25-sources.jar'],
+        downloaded_file_path = 'slf4j-api-1.7.25-sources.jar',
+    )
+
+    # from org.slf4j:slf4j-nop:1.7.25
+    http_file(name = 'main_deps___org_slf4j__slf4j_nop__1_7_25',
+        urls = ['https://repo1.maven.org/maven2/org/slf4j/slf4j-nop/1.7.25/slf4j-nop-1.7.25.jar'],
+        downloaded_file_path = 'slf4j-nop-1.7.25.jar',
+    )
+
+    # from org.slf4j:slf4j-nop:1.7.25
+    http_file(name = 'main_deps___org_slf4j__slf4j_nop__1_7_25__sources',
+        urls = ['https://repo1.maven.org/maven2/org/slf4j/slf4j-nop/1.7.25/slf4j-nop-1.7.25-sources.jar'],
+        downloaded_file_path = 'slf4j-nop-1.7.25-sources.jar',
     )
 
 
@@ -1430,20 +1442,36 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         srcjar = '@main_deps___org_slf4j__jcl_over_slf4j__1_6_2__sources//file',
     )
 
-    # from org.slf4j:slf4j-api:1.6.2
+    # from org.slf4j:slf4j-api:1.7.25
     native.alias(name = 'main_deps___org_slf4j__slf4j_api',
-        actual = ':main_deps___org_slf4j__slf4j_api__1_6_2',
+        actual = ':main_deps___org_slf4j__slf4j_api__1_7_25',
         visibility = ['//visibility:public'],
     )
 
-    # from org.slf4j:slf4j-api:1.6.2
-    native.java_import(name = 'main_deps___org_slf4j__slf4j_api__1_6_2',
-        jars = ['@main_deps___org_slf4j__slf4j_api__1_6_2//file'],
+    # from org.slf4j:slf4j-api:1.7.25
+    native.java_import(name = 'main_deps___org_slf4j__slf4j_api__1_7_25',
+        jars = ['@main_deps___org_slf4j__slf4j_api__1_7_25//file'],
         licenses = [],
         deps = [],
         exports = [],
         runtime_deps = [],
-        srcjar = '@main_deps___org_slf4j__slf4j_api__1_6_2__sources//file',
+        srcjar = '@main_deps___org_slf4j__slf4j_api__1_7_25__sources//file',
+    )
+
+    # from org.slf4j:slf4j-nop:1.7.25
+    native.alias(name = 'main_deps___org_slf4j__slf4j_nop',
+        actual = ':main_deps___org_slf4j__slf4j_nop__1_7_25',
+        visibility = ['//visibility:public'],
+    )
+
+    # from org.slf4j:slf4j-nop:1.7.25
+    native.java_import(name = 'main_deps___org_slf4j__slf4j_nop__1_7_25',
+        jars = ['@main_deps___org_slf4j__slf4j_nop__1_7_25//file'],
+        licenses = [],
+        deps = [':main_deps___org_slf4j__slf4j_api'],
+        exports = [':main_deps___org_slf4j__slf4j_api'],
+        runtime_deps = [],
+        srcjar = '@main_deps___org_slf4j__slf4j_nop__1_7_25__sources//file',
     )
 
 
