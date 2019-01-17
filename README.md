@@ -1,4 +1,4 @@
-# Bazel mvn deps [![Build Status](https://cloud.drone.io/api/badges/menny/bazel-mvn-deps/status.svg)](https://cloud.drone.io/menny/bazel-mvn-deps)
+# Mabel [![Build Status](https://cloud.drone.io/api/badges/menny/mabel/status.svg)](https://cloud.drone.io/menny/mabel)
 
 A simple, extensible, Maven dependency graph generator for Bazel.
 
@@ -28,14 +28,14 @@ This WORKSPACE will provide `deps_workspace_generator_rule` rule and `artifact` 
 ## Example
 
 ### WORKSPACE file
-Add this repository to your WORKSPACE (set `bazel_mvn_deps_version` to the latest [release](https://github.com/menny/bazel-mvn-deps/releases) or, if you are adventurous, [commit](https://github.com/menny/bazel-mvn-deps/commits/master)):
+Add this repository to your WORKSPACE (set `bazel_mvn_deps_version` to the latest [release](https://github.com/menny/mabel/releases) or, if you are adventurous, [commit](https://github.com/menny/mabel/commits/master)):
 ```python
 bazel_mvn_deps_version = "0.1.1"
 http_archive(
     name = "bazel_mvn_deps_rule",
-    urls = ["https://github.com/menny/bazel-mvn-deps/archive/%s.zip" % bazel_mvn_deps_version],
+    urls = ["https://github.com/menny/mabel/archive/%s.zip" % bazel_mvn_deps_version],
     type = "zip",
-    strip_prefix = "bazel-mvn-deps-%s" % bazel_mvn_deps_version
+    strip_prefix = "mabel-%s" % bazel_mvn_deps_version
 )
 
 load("@bazel_mvn_deps_rule//resolver/main_deps:dependencies.bzl", generate_bazel_mvn_deps_workspace_rules = "generate_workspace_rules")
@@ -45,7 +45,7 @@ generate_bazel_mvn_deps_workspace_rules()
 ### Real Examples
 
 You can find a few examples under the `examples/` folder in this repo. These examples are built as part of the CI process, so they represent a working use-case.<br/>
-*NOTE* - There is an ongoing [issue](https://github.com/menny/bazel-mvn-deps/issues/5) with `kt_jvm_import`. But, Kotlin still works with `java_import`.
+*NOTE* - There is an ongoing [issue](https://github.com/menny/mabel/issues/5) with `kt_jvm_import`. But, Kotlin still works with `java_import`.
 
 ### target definition
 In your module's `BUILD.bazel` file (let's say `resolver/BUILD.bazel`) load the dependencies rule and `artifact` macro:
