@@ -14,19 +14,13 @@
 
 package com.google.devtools.bazel.workspace.maven;
 
-import static com.google.devtools.bazel.workspace.maven.ArtifactBuilder.InvalidArtifactCoordinateException;
-import static com.google.devtools.bazel.workspace.maven.VersionResolver.defaultResolver;
-
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import java.lang.invoke.MethodHandles;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.logging.Logger;
 import javax.annotation.Nullable;
 import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 import org.apache.maven.artifact.versioning.InvalidVersionSpecificationException;
@@ -39,13 +33,14 @@ import org.apache.maven.model.resolution.UnresolvableModelException;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.util.artifact.JavaScopes;
 
+import static com.google.devtools.bazel.workspace.maven.ArtifactBuilder.InvalidArtifactCoordinateException;
+import static com.google.devtools.bazel.workspace.maven.VersionResolver.defaultResolver;
+
 /**
  * Resolves Maven dependencies.
  */
 public class MigrationToolingMavenResolver {
 
-    private static final Logger logger = Logger.getLogger(
-        MethodHandles.lookup().lookupClass().getName());
     private static final String TOP_LEVEL_ARTIFACT = "pom.xml";
 
     /**
@@ -54,10 +49,27 @@ public class MigrationToolingMavenResolver {
      * more details on how maven handles this.
      */
     private static final Set<String> INHERITED_SCOPES =
-        Sets.newHashSet(JavaScopes.COMPILE, JavaScopes.RUNTIME);
+            Sets.newHashSet(JavaScopes.COMPILE, JavaScopes.RUNTIME);
 
     private static final Set<String> NON_INHERITED_SCOPES =
-        Sets.newHashSet(JavaScopes.PROVIDED);
+            Sets.newHashSet(JavaScopes.PROVIDED);
+    private final DefaultModelResolver modelResolver;
+    private final Map<String, Rule> deps;
+    private final Map<String, String> restriction;
+    private final VersionResolver versionResolver;
+    private final Collection<String> blacklist;
+    private MigrationToolingMavenResolver(
+            DefaultModelResolver modelResolver, VersionResolver versionResolver, Collection<String> blacklist) {
+        this.versionResolver = versionResolver;
+        this.deps = Maps.newHashMap();
+        this.restriction = Maps.newHashMap();
+        this.modelResolver = modelResolver;
+        this.blacklist = blacklist;
+    }
+
+    public MigrationToolingMavenResolver(DefaultModelResolver resolver, Collection<String> blacklist) {
+        this(resolver, defaultResolver(), blacklist);
+    }
 
     private static String unversionedCoordinate(Dependency dependency) {
         return dependency.getGroupId() + ":" + dependency.getArtifactId();
@@ -71,26 +83,8 @@ public class MigrationToolingMavenResolver {
         return exclusion.getGroupId() + ":" + exclusion.getArtifactId();
     }
 
-    private final DefaultModelResolver modelResolver;
-
-    private final Map<String, Rule> deps;
-    private final Map<String, String> restriction;
-
-    private final VersionResolver versionResolver;
-
-    private final Collection<String> blacklist;
-
-    private MigrationToolingMavenResolver(
-        DefaultModelResolver modelResolver, VersionResolver versionResolver, Collection<String> blacklist) {
-        this.versionResolver = versionResolver;
-        this.deps = Maps.newHashMap();
-        this.restriction = Maps.newHashMap();
-        this.modelResolver = modelResolver;
-        this.blacklist = blacklist;
-    }
-
-    public MigrationToolingMavenResolver(DefaultModelResolver resolver, Collection<String> blacklist) {
-        this(resolver, defaultResolver(), blacklist);
+    static boolean isEmpty(CharSequence text) {
+        return text==null || text.length()==0;
     }
 
     /**
@@ -108,12 +102,11 @@ public class MigrationToolingMavenResolver {
         try {
             modelSource = modelResolver.resolveModel(rule.getArtifact());
         } catch (UnresolvableModelException e) {
-            logger.warning(e.getMessage());
-            return;
+            throw new RuntimeException(e);
         }
 
         Model model = modelResolver.getEffectiveModel(modelSource.getModelSource());
-        if (model != null) {
+        if (model!=null) {
             rule.setPackaging(model.getPackaging());
             rule.setLicenses(model.getLicenses());
             rule.setRepository(modelSource.getRepository().getUrl());
@@ -126,7 +119,7 @@ public class MigrationToolingMavenResolver {
         try {
             artifact = ArtifactBuilder.fromCoords(artifactCoord);
         } catch (InvalidArtifactCoordinateException e) {
-            logger.warning(e.getMessage());
+            System.out.println(e.getMessage());
             return Optional.empty();
         }
 
@@ -146,13 +139,13 @@ public class MigrationToolingMavenResolver {
             modelResolver.addRepository(repo);
         }
 
-        if (model.getDependencyManagement() != null) {
+        if (model.getDependencyManagement()!=null) {
             // Dependencies described in the DependencyManagement section of the pom override all others,
             // so resolve them first.
             for (Dependency dependency : model.getDependencyManagement().getDependencies()) {
                 restriction.put(
-                    Rule.generateFriendlyName(dependency.getGroupId(), dependency.getArtifactId()),
-                    dependency.getVersion());
+                        Rule.generateFriendlyName(dependency.getGroupId(), dependency.getArtifactId()),
+                        dependency.getVersion());
             }
         }
         for (Dependency dependency : model.getDependencies()) {
@@ -161,13 +154,13 @@ public class MigrationToolingMavenResolver {
     }
 
     private void addDependency(
-        Dependency dependency,
-        Model model,
-        Set<String> topLevelScopes,
-        Set<String> exclusions,
-        @Nullable Rule parent) {
-        String scope = isEmpty(dependency.getScope()) ? JavaScopes.COMPILE : dependency.getScope();
-        if (parent == null) {
+            Dependency dependency,
+            Model model,
+            Set<String> topLevelScopes,
+            Set<String> exclusions,
+            @Nullable Rule parent) {
+        String scope = isEmpty(dependency.getScope()) ? JavaScopes.COMPILE:dependency.getScope();
+        if (parent==null) {
             // Top-level scopes get pulled in based on the user-provided scopes.
             if (!topLevelScopes.contains(scope)) {
                 return;
@@ -198,34 +191,34 @@ public class MigrationToolingMavenResolver {
 
             HashSet<String> localDepExclusions = Sets.newHashSet(exclusions);
             dependency.getExclusions().forEach(
-                exclusion -> localDepExclusions.add(unversionedCoordinate(exclusion)));
+                    exclusion -> localDepExclusions.add(unversionedCoordinate(exclusion)));
 
             boolean isNewDependency = addArtifact(artifactRule, model.toString());
             if (isNewDependency) {
                 DefaultModelResolver.RepoModelSource depModelSource = modelResolver.resolveModel(
-                    dependency.getGroupId(), dependency.getArtifactId(), dependency.getClassifier() == null ? "" : dependency.getClassifier(), dependency.getVersion());
-                if (depModelSource != null) {
+                        dependency.getGroupId(), dependency.getArtifactId(), dependency.getClassifier()==null ? "":dependency.getClassifier(), dependency.getVersion());
+                if (depModelSource!=null) {
                     //artifactRule.setRepository(depModelSource.getLocation());
                     Model depModel = modelResolver.getEffectiveModel(depModelSource.getModelSource());
-                    if (depModel != null) {
+                    if (depModel!=null) {
                         artifactRule.setPackaging(depModel.getPackaging());
                         artifactRule.setRepository(depModelSource.getRepository().getUrl());
                         traverseDeps(depModel, topLevelScopes, localDepExclusions, artifactRule);
                     }
                 } else {
-                    logger.warning("Could not get a model for " + dependency);
+                    System.out.println("Could not get a model for " + dependency);
                 }
             }
 
-            if (parent == null) {
+            if (parent==null) {
                 addArtifact(artifactRule, TOP_LEVEL_ARTIFACT);
             } else {
                 parent.addDependency(artifactRule.scope(), artifactRule);
             }
         } catch (UnresolvableModelException | InvalidArtifactCoordinateException e) {
-            logger.warning("Could not resolve dependency " + dependency.getGroupId()
-                           + ":" + dependency.getArtifactId() + ":" + dependency.getVersion() + ": "
-                           + e.getMessage() + ": " + e.getClass().getName());
+            System.out.println("Could not resolve dependency " + dependency.getGroupId()
+                    + ":" + dependency.getArtifactId() + ":" + dependency.getVersion() + ": "
+                    + e.getMessage() + ": " + e.getClass().getName());
         }
     }
 
@@ -269,8 +262,7 @@ public class MigrationToolingMavenResolver {
         try {
             versionRange = VersionRange.createFromVersionSpec(versionRestriction);
         } catch (InvalidVersionSpecificationException e) {
-            logger.warning(
-                "Error parsing version " + versionRestriction + ": " + e.getLocalizedMessage());
+            System.out.println("Error parsing version " + versionRestriction + ": " + e.getLocalizedMessage());
             // So that this isn't logged over and over.
             restriction.remove(artifactName);
             return;
@@ -278,14 +270,10 @@ public class MigrationToolingMavenResolver {
         if (!versionRange.containsVersion(new DefaultArtifactVersion(dependency.version()))) {
             try {
                 dependency.setVersion(
-                    versionResolver.resolveVersion(dependency.groupId(), dependency.artifactId(), dependency.classifier(), versionRestriction));
+                        versionResolver.resolveVersion(dependency.groupId(), dependency.artifactId(), dependency.classifier(), versionRestriction));
             } catch (InvalidArtifactCoordinateException e) {
-                logger.warning("Error setting version: " + e.getLocalizedMessage());
+                System.out.println("Error setting version: " + e.getLocalizedMessage());
             }
         }
-    }
-
-    static boolean isEmpty(CharSequence text) {
-        return text == null || text.length() == 0;
     }
 }

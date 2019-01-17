@@ -4,6 +4,5 @@ import java.util.Collection;
 
 public interface GraphMerger {
     Collection<Dependency> mergeGraphs(
-            Collection<Dependency> dependencies,
-            Collection<String> excludes);
+            Collection<Dependency> dependencies);
 }

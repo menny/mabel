@@ -64,7 +64,7 @@ public class DefaultMergerTest {
 
         PinBreadthFirstVersionsMerger merger = new PinBreadthFirstVersionsMerger();
 
-        Collection<Dependency> mergedDependencies = merger.mergeGraphs(GraphUtilsTest.NO_REPEATS_GRAPH, Collections.emptyList());
+        Collection<Dependency> mergedDependencies = merger.mergeGraphs(GraphUtilsTest.NO_REPEATS_GRAPH);
 
         Assert.assertEquals(expected, GraphUtils.printGraph(mergedDependencies));
     }
@@ -85,7 +85,7 @@ public class DefaultMergerTest {
 
         PinBreadthFirstVersionsMerger merger = new PinBreadthFirstVersionsMerger();
 
-        Collection<Dependency> mergedDependencies = merger.mergeGraphs(GraphUtilsTest.REPEATS_DEP1_AT_ROOT_GRAPH, Collections.emptyList());
+        Collection<Dependency> mergedDependencies = merger.mergeGraphs(GraphUtilsTest.REPEATS_DEP1_AT_ROOT_GRAPH);
 
         final String actual = GraphUtils.printGraph(mergedDependencies);
         Assert.assertEquals(expected, actual);
@@ -115,7 +115,7 @@ public class DefaultMergerTest {
 
         PinBreadthFirstVersionsMerger merger = new PinBreadthFirstVersionsMerger();
 
-        Collection<Dependency> mergedDependencies = merger.mergeGraphs(GraphUtilsTest.REPEATS_INNER1_GRAPH, Collections.emptyList());
+        Collection<Dependency> mergedDependencies = merger.mergeGraphs(GraphUtilsTest.REPEATS_INNER1_GRAPH);
 
         final String actual = GraphUtils.printGraph(mergedDependencies);
 
@@ -145,7 +145,7 @@ public class DefaultMergerTest {
 
         PinBreadthFirstVersionsMerger merger = new PinBreadthFirstVersionsMerger();
 
-        Collection<Dependency> mergedDependencies = merger.mergeGraphs(GraphUtilsTest.REPEATS_DEP6_AT_ROOT_GRAPH, Collections.emptyList());
+        Collection<Dependency> mergedDependencies = merger.mergeGraphs(GraphUtilsTest.REPEATS_DEP6_AT_ROOT_GRAPH);
 
         final String actual = GraphUtils.printGraph(mergedDependencies);
         Assert.assertEquals(expected, actual);
@@ -157,7 +157,7 @@ public class DefaultMergerTest {
 
         DuplicatesDepsRemovingMerger merger = new DuplicatesDepsRemovingMerger();
 
-        Collection<Dependency> dependencies = merger.mergeGraphs(GraphUtilsTest.NO_REPEATS_GRAPH, Collections.emptyList());
+        Collection<Dependency> dependencies = merger.mergeGraphs(GraphUtilsTest.NO_REPEATS_GRAPH);
 
         Assert.assertEquals(expected, GraphUtils.printGraph(dependencies));
     }
@@ -171,7 +171,7 @@ public class DefaultMergerTest {
 
         DuplicatesDepsRemovingMerger merger = new DuplicatesDepsRemovingMerger();
 
-        Collection<Dependency> deDuped = merger.mergeGraphs(dependencies, Collections.emptyList());
+        Collection<Dependency> deDuped = merger.mergeGraphs(dependencies);
         String expected = GraphUtils.printGraph(GraphUtilsTest.NO_REPEATS_GRAPH);
 
         Assert.assertEquals(expected, GraphUtils.printGraph(deDuped));

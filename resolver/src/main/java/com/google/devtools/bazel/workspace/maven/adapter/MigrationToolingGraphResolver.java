@@ -7,16 +7,12 @@ import com.google.devtools.bazel.workspace.maven.Rule;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.logging.Logger;
 import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.GraphResolver;
 import org.apache.maven.model.Repository;
 
 public class MigrationToolingGraphResolver implements GraphResolver {
-    private final static Logger logger = Logger.getLogger("Resolver");
-
     private static List<Repository> buildRepositories(Collection<String> repositories) {
         ArrayList<Repository> repositoryList = new ArrayList<>(repositories.size());
         for (String repositoryUrlString : repositories) {

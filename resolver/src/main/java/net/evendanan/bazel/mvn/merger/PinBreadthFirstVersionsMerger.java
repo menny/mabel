@@ -27,7 +27,7 @@ public class PinBreadthFirstVersionsMerger implements GraphMerger {
     }
 
     @Override
-    public Collection<Dependency> mergeGraphs(final Collection<Dependency> dependencies, final Collection<String> excludes) {
+    public Collection<Dependency> mergeGraphs(final Collection<Dependency> dependencies) {
         Map<String, Dependency> pinnedVersions = new HashMap<>();
 
         GraphUtils.BfsTraveller(dependencies, (dependency, level) -> pinnedVersions.putIfAbsent(dependencyKey(dependency), dependency));

@@ -22,7 +22,7 @@ public class DuplicatesDepsRemovingMerger implements GraphMerger {
     }
 
     @Override
-    public Collection<Dependency> mergeGraphs(final Collection<Dependency> dependencies, final Collection<String> excludes) {
+    public Collection<Dependency> mergeGraphs(final Collection<Dependency> dependencies) {
         return replaceWithPinned(dependencies);
     }
 }

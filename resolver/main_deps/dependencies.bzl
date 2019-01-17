@@ -24,10 +24,40 @@ def generate_workspace_rules():
         downloaded_file_path = 'jsr305-3.0.2.jar',
     )
 
-    # from com.google.guava:guava:20.0
-    http_file(name = 'main_deps___com_google_guava__guava__20_0',
-        urls = ['https://repo1.maven.org/maven2/com/google/guava/guava/20.0/guava-20.0.jar'],
-        downloaded_file_path = 'guava-20.0.jar',
+    # from com.google.code.gson:gson:2.8.5
+    http_file(name = 'main_deps___com_google_code_gson__gson__2_8_5',
+        urls = ['https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.5/gson-2.8.5.jar'],
+        downloaded_file_path = 'gson-2.8.5.jar',
+    )
+
+    # from com.google.errorprone:error_prone_annotations:2.2.0
+    http_file(name = 'main_deps___com_google_errorprone__error_prone_annotations__2_2_0',
+        urls = ['https://repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.2.0/error_prone_annotations-2.2.0.jar'],
+        downloaded_file_path = 'error_prone_annotations-2.2.0.jar',
+    )
+
+    # from com.google.guava:failureaccess:1.0.1
+    http_file(name = 'main_deps___com_google_guava__failureaccess__1_0_1',
+        urls = ['https://repo1.maven.org/maven2/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar'],
+        downloaded_file_path = 'failureaccess-1.0.1.jar',
+    )
+
+    # from com.google.guava:guava:27.0.1-jre
+    http_file(name = 'main_deps___com_google_guava__guava__27_0_1_jre',
+        urls = ['https://repo1.maven.org/maven2/com/google/guava/guava/27.0.1-jre/guava-27.0.1-jre.jar'],
+        downloaded_file_path = 'guava-27.0.1-jre.jar',
+    )
+
+    # from com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
+    http_file(name = 'main_deps___com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava',
+        urls = ['https://repo1.maven.org/maven2/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar'],
+        downloaded_file_path = 'listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar',
+    )
+
+    # from com.google.j2objc:j2objc-annotations:1.1
+    http_file(name = 'main_deps___com_google_j2objc__j2objc_annotations__1_1',
+        urls = ['https://repo1.maven.org/maven2/com/google/j2objc/j2objc-annotations/1.1/j2objc-annotations-1.1.jar'],
+        downloaded_file_path = 'j2objc-annotations-1.1.jar',
     )
 
     # from com.kohlschutter.junixsocket:junixsocket-common:2.0.4
@@ -130,6 +160,18 @@ def generate_workspace_rules():
     http_file(name = 'main_deps___org_apache_maven__maven_repository_metadata__3_2_3',
         urls = ['https://repo1.maven.org/maven2/org/apache/maven/maven-repository-metadata/3.2.3/maven-repository-metadata-3.2.3.jar'],
         downloaded_file_path = 'maven-repository-metadata-3.2.3.jar',
+    )
+
+    # from org.checkerframework:checker-qual:2.5.2
+    http_file(name = 'main_deps___org_checkerframework__checker_qual__2_5_2',
+        urls = ['https://repo1.maven.org/maven2/org/checkerframework/checker-qual/2.5.2/checker-qual-2.5.2.jar'],
+        downloaded_file_path = 'checker-qual-2.5.2.jar',
+    )
+
+    # from org.codehaus.mojo:animal-sniffer-annotations:1.17
+    http_file(name = 'main_deps___org_codehaus_mojo__animal_sniffer_annotations__1_17',
+        urls = ['https://repo1.maven.org/maven2/org/codehaus/mojo/animal-sniffer-annotations/1.17/animal-sniffer-annotations-1.17.jar'],
+        downloaded_file_path = 'animal-sniffer-annotations-1.17.jar',
     )
 
     # from org.codehaus.plexus:plexus-component-annotations:1.5.5
@@ -311,16 +353,107 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         runtime_deps = [],
     )
 
-    # from com.google.guava:guava:20.0
-    native.alias(name = 'main_deps___com_google_guava__guava',
-        actual = ':main_deps___com_google_guava__guava__20_0',
+    # from com.google.code.gson:gson:2.8.5
+    native.alias(name = 'main_deps___com_google_code_gson__gson',
+        actual = ':main_deps___com_google_code_gson__gson__2_8_5',
         visibility = ['//visibility:public'],
     )
 
-    # from com.google.guava:guava:20.0
-    native.java_import(name = 'main_deps___com_google_guava__guava__20_0',
-        jars = ['@main_deps___com_google_guava__guava__20_0//file'],
+    # from com.google.code.gson:gson:2.8.5
+    native.java_import(name = 'main_deps___com_google_code_gson__gson__2_8_5',
+        jars = ['@main_deps___com_google_code_gson__gson__2_8_5//file'],
         licenses = ['notice'],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from com.google.errorprone:error_prone_annotations:2.2.0
+    native.alias(name = 'main_deps___com_google_errorprone__error_prone_annotations',
+        actual = ':main_deps___com_google_errorprone__error_prone_annotations__2_2_0',
+        visibility = ['//visibility:public'],
+    )
+
+    # from com.google.errorprone:error_prone_annotations:2.2.0
+    native.java_import(name = 'main_deps___com_google_errorprone__error_prone_annotations__2_2_0',
+        jars = ['@main_deps___com_google_errorprone__error_prone_annotations__2_2_0//file'],
+        licenses = [],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from com.google.guava:failureaccess:1.0.1
+    native.alias(name = 'main_deps___com_google_guava__failureaccess',
+        actual = ':main_deps___com_google_guava__failureaccess__1_0_1',
+        visibility = ['//visibility:public'],
+    )
+
+    # from com.google.guava:failureaccess:1.0.1
+    native.java_import(name = 'main_deps___com_google_guava__failureaccess__1_0_1',
+        jars = ['@main_deps___com_google_guava__failureaccess__1_0_1//file'],
+        licenses = [],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from com.google.guava:guava:27.0.1-jre
+    native.alias(name = 'main_deps___com_google_guava__guava',
+        actual = ':main_deps___com_google_guava__guava__27_0_1_jre',
+        visibility = ['//visibility:public'],
+    )
+
+    # from com.google.guava:guava:27.0.1-jre
+    native.java_import(name = 'main_deps___com_google_guava__guava__27_0_1_jre',
+        jars = ['@main_deps___com_google_guava__guava__27_0_1_jre//file'],
+        licenses = ['notice'],
+        deps = [
+            ':main_deps___com_google_code_findbugs__jsr305',
+            ':main_deps___com_google_errorprone__error_prone_annotations',
+            ':main_deps___com_google_guava__failureaccess',
+            ':main_deps___com_google_guava__listenablefuture',
+            ':main_deps___com_google_j2objc__j2objc_annotations',
+            ':main_deps___org_checkerframework__checker_qual',
+            ':main_deps___org_codehaus_mojo__animal_sniffer_annotations',
+        ],
+        exports = [
+            ':main_deps___com_google_code_findbugs__jsr305',
+            ':main_deps___com_google_errorprone__error_prone_annotations',
+            ':main_deps___com_google_guava__failureaccess',
+            ':main_deps___com_google_guava__listenablefuture',
+            ':main_deps___com_google_j2objc__j2objc_annotations',
+            ':main_deps___org_checkerframework__checker_qual',
+            ':main_deps___org_codehaus_mojo__animal_sniffer_annotations',
+        ],
+        runtime_deps = [],
+    )
+
+    # from com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
+    native.alias(name = 'main_deps___com_google_guava__listenablefuture',
+        actual = ':main_deps___com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava',
+        visibility = ['//visibility:public'],
+    )
+
+    # from com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
+    native.java_import(name = 'main_deps___com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava',
+        jars = ['@main_deps___com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava//file'],
+        licenses = [],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from com.google.j2objc:j2objc-annotations:1.1
+    native.alias(name = 'main_deps___com_google_j2objc__j2objc_annotations',
+        actual = ':main_deps___com_google_j2objc__j2objc_annotations__1_1',
+        visibility = ['//visibility:public'],
+    )
+
+    # from com.google.j2objc:j2objc-annotations:1.1
+    native.java_import(name = 'main_deps___com_google_j2objc__j2objc_annotations__1_1',
+        jars = ['@main_deps___com_google_j2objc__j2objc_annotations__1_1//file'],
+        licenses = [],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -633,6 +766,36 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         licenses = ['notice'],
         deps = [':main_deps___org_codehaus_plexus__plexus_utils'],
         exports = [':main_deps___org_codehaus_plexus__plexus_utils'],
+        runtime_deps = [],
+    )
+
+    # from org.checkerframework:checker-qual:2.5.2
+    native.alias(name = 'main_deps___org_checkerframework__checker_qual',
+        actual = ':main_deps___org_checkerframework__checker_qual__2_5_2',
+        visibility = ['//visibility:public'],
+    )
+
+    # from org.checkerframework:checker-qual:2.5.2
+    native.java_import(name = 'main_deps___org_checkerframework__checker_qual__2_5_2',
+        jars = ['@main_deps___org_checkerframework__checker_qual__2_5_2//file'],
+        licenses = [],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from org.codehaus.mojo:animal-sniffer-annotations:1.17
+    native.alias(name = 'main_deps___org_codehaus_mojo__animal_sniffer_annotations',
+        actual = ':main_deps___org_codehaus_mojo__animal_sniffer_annotations__1_17',
+        visibility = ['//visibility:public'],
+    )
+
+    # from org.codehaus.mojo:animal-sniffer-annotations:1.17
+    native.java_import(name = 'main_deps___org_codehaus_mojo__animal_sniffer_annotations__1_17',
+        jars = ['@main_deps___org_codehaus_mojo__animal_sniffer_annotations__1_17//file'],
+        licenses = [],
+        deps = [],
+        exports = [],
         runtime_deps = [],
     )
 

@@ -3,10 +3,10 @@ load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_binary", "kt_jvm_libra
 load("//program/main_deps:dependencies.bzl", "generate_transitive_dependency_targets")
 generate_transitive_dependency_targets()
 
-load("@bazel_mvn_deps_rule//rules/maven_deps:maven_deps_workspace_generator.bzl", "deps_workspace_generator_rule")
+load("@bazel_mvn_deps_rule//rules/maven_deps:maven_deps_workspace_generator.bzl", "deps_workspace_generator_rule", "artifact")
 
 deps_workspace_generator_rule(name = 'main_deps',
-    maven_deps = ["com.github.salomonbrys.kotson:kotson:2.5.0"]
+    maven_deps = [artifact("com.github.salomonbrys.kotson:kotson:2.5.0")]
     )
 
 

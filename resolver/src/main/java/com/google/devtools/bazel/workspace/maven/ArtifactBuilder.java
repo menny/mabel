@@ -14,9 +14,7 @@
 
 package com.google.devtools.bazel.workspace.maven;
 
-import java.lang.invoke.MethodHandles;
 import java.util.Locale;
-import java.util.logging.Logger;
 import org.apache.maven.model.Dependency;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.artifact.DefaultArtifact;
@@ -24,9 +22,6 @@ import org.eclipse.aether.artifact.DefaultArtifact;
 
 /* Builds Aether/Maven artifacts */
 public class ArtifactBuilder {
-
-    private final static Logger logger = Logger.getLogger(
-        MethodHandles.lookup().lookupClass().getName());
 
     /** Builds a Maven artifact from a set of Maven coordinates */
     public static Artifact fromCoords(String artifactCoords) throws InvalidArtifactCoordinateException {
@@ -50,12 +45,8 @@ public class ArtifactBuilder {
         throws InvalidArtifactCoordinateException {
         final String classifier = dep.getClassifier() == null ? "" : dep.getClassifier();
         final String version = versionResolver.resolveVersion(dep.getGroupId(), dep.getArtifactId(), classifier, dep.getVersion());
-        final Artifact artifact = fromCoords(dep.getGroupId(), dep.getArtifactId(), classifier, version);
-        if (dep.getArtifactId().contains("json-lib")) {
-            logger.warning(String.format(Locale.US, "dep is " + dep + " with classifier " + dep.getClassifier()));
-            logger.warning(String.format(Locale.US, "artifact is " + artifact + " with classifier " + artifact.getClassifier()));
-        }
-        return artifact;
+
+        return fromCoords(dep.getGroupId(), dep.getArtifactId(), classifier, version);
     }
 
     /** Exception thrown if an artifact coordinate cannot be parsed */

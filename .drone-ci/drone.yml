@@ -13,12 +13,12 @@ steps:
   environment:
     TERM: dumb
   commands:
-  - bazel build //...
+  - bazel build $(bazel query 'attr(visibility, "//visibility:public", //...)')
 
 - name: test
   image: menny/android_bazel:1.10.0
   commands:
-  - bazel test //...
+  - bazel test --build_tests_only //...
 
 - name: verify_rules_generation
   image: menny/android_bazel:1.10.0

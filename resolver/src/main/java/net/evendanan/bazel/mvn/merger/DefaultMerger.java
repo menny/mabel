@@ -7,14 +7,12 @@ import net.evendanan.bazel.mvn.api.GraphMerger;
 public class DefaultMerger implements GraphMerger {
 
     @Override
-    public Collection<Dependency> mergeGraphs(Collection<Dependency> dependencies, final Collection<String> excludes) {
+    public Collection<Dependency> mergeGraphs(Collection<Dependency> dependencies) {
         // strategy
-        //0. filter-out all dependencies in the exclude list
-        dependencies = ExcludesFilter.filterDependencies(dependencies, excludes);
         //1. pinning breadth-first versions and resolve versions on all graphs
-        final Collection<Dependency> mergedDependencies = new PinBreadthFirstVersionsMerger().mergeGraphs(dependencies, excludes);
+        final Collection<Dependency> mergedDependencies = new PinBreadthFirstVersionsMerger().mergeGraphs(dependencies);
         //2. de-duping
-        final Collection<Dependency> deDuped = new DuplicatesDepsRemovingMerger().mergeGraphs(mergedDependencies, excludes);
+        final Collection<Dependency> deDuped = new DuplicatesDepsRemovingMerger().mergeGraphs(mergedDependencies);
 
         return VerifyNoConflictingVersions.checkNoConflictingVersions(deDuped);
     }
