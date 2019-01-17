@@ -32,13 +32,13 @@ Add this repository to your WORKSPACE (set `bazel_mvn_deps_version` to the lates
 ```python
 bazel_mvn_deps_version = "0.1.1"
 http_archive(
-    name = "bazel_mvn_deps_rule",
+    name = "mabel",
     urls = ["https://github.com/menny/mabel/archive/%s.zip" % bazel_mvn_deps_version],
     type = "zip",
     strip_prefix = "mabel-%s" % bazel_mvn_deps_version
 )
 
-load("@bazel_mvn_deps_rule//resolver/main_deps:dependencies.bzl", generate_bazel_mvn_deps_workspace_rules = "generate_workspace_rules")
+load("@mabel//resolver/main_deps:dependencies.bzl", generate_bazel_mvn_deps_workspace_rules = "generate_workspace_rules")
 generate_bazel_mvn_deps_workspace_rules()
 ```
 
@@ -50,7 +50,7 @@ You can find a few examples under the `examples/` folder in this repo. These exa
 ### target definition
 In your module's `BUILD.bazel` file (let's say `resolver/BUILD.bazel`) load the dependencies rule and `artifact` macro:
 ```python
-load("@bazel_mvn_deps_rule//rules/maven_deps:maven_deps_workspace_generator.bzl", "deps_workspace_generator_rule", "artifact")
+load("@mabel//rules/maven_deps:maven_deps_workspace_generator.bzl", "deps_workspace_generator_rule", "artifact")
 ```
 And define a target for resolving dependencies:
 ```python
