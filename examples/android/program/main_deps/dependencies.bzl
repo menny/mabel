@@ -18,6 +18,12 @@ def generate_workspace_rules():
         downloaded_file_path = 'annotation-1.0.0.jar',
     )
 
+    # from androidx.annotation:annotation:1.0.0
+    http_file(name = 'main_deps___androidx_annotation__annotation__1_0_0__sources',
+        urls = ['https://maven.google.com/androidx/annotation/annotation/1.0.0/annotation-1.0.0-sources.jar'],
+        downloaded_file_path = 'annotation-1.0.0-sources.jar',
+    )
+
     # from androidx.appcompat:appcompat:1.0.2
     http_file(name = 'main_deps___androidx_appcompat__appcompat__1_0_2',
         urls = ['https://maven.google.com/androidx/appcompat/appcompat/1.0.2/appcompat-1.0.2.aar'],
@@ -30,6 +36,12 @@ def generate_workspace_rules():
         downloaded_file_path = 'core-common-2.0.0.jar',
     )
 
+    # from androidx.arch.core:core-common:2.0.0
+    http_file(name = 'main_deps___androidx_arch_core__core_common__2_0_0__sources',
+        urls = ['https://maven.google.com/androidx/arch/core/core-common/2.0.0/core-common-2.0.0-sources.jar'],
+        downloaded_file_path = 'core-common-2.0.0-sources.jar',
+    )
+
     # from androidx.arch.core:core-runtime:2.0.0
     http_file(name = 'main_deps___androidx_arch_core__core_runtime__2_0_0',
         urls = ['https://maven.google.com/androidx/arch/core/core-runtime/2.0.0/core-runtime-2.0.0.aar'],
@@ -40,6 +52,12 @@ def generate_workspace_rules():
     http_file(name = 'main_deps___androidx_collection__collection__1_0_0',
         urls = ['https://maven.google.com/androidx/collection/collection/1.0.0/collection-1.0.0.jar'],
         downloaded_file_path = 'collection-1.0.0.jar',
+    )
+
+    # from androidx.collection:collection:1.0.0
+    http_file(name = 'main_deps___androidx_collection__collection__1_0_0__sources',
+        urls = ['https://maven.google.com/androidx/collection/collection/1.0.0/collection-1.0.0-sources.jar'],
+        downloaded_file_path = 'collection-1.0.0-sources.jar',
     )
 
     # from androidx.core:core:1.1.0-alpha01
@@ -88,6 +106,12 @@ def generate_workspace_rules():
     http_file(name = 'main_deps___androidx_lifecycle__lifecycle_common__2_0_0',
         urls = ['https://maven.google.com/androidx/lifecycle/lifecycle-common/2.0.0/lifecycle-common-2.0.0.jar'],
         downloaded_file_path = 'lifecycle-common-2.0.0.jar',
+    )
+
+    # from androidx.lifecycle:lifecycle-common:2.0.0
+    http_file(name = 'main_deps___androidx_lifecycle__lifecycle_common__2_0_0__sources',
+        urls = ['https://maven.google.com/androidx/lifecycle/lifecycle-common/2.0.0/lifecycle-common-2.0.0-sources.jar'],
+        downloaded_file_path = 'lifecycle-common-2.0.0-sources.jar',
     )
 
     # from androidx.lifecycle:lifecycle-livedata-core:2.0.0
@@ -230,6 +254,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         deps = [],
         exports = [],
         runtime_deps = [],
+        srcjar = '@main_deps___androidx_annotation__annotation__1_0_0__sources//file',
     )
 
     # from androidx.appcompat:appcompat:1.0.2
@@ -276,6 +301,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         deps = [],
         exports = [],
         runtime_deps = [],
+        srcjar = '@main_deps___androidx_arch_core__core_common__2_0_0__sources//file',
     )
 
     # from androidx.arch.core:core-runtime:2.0.0
@@ -310,6 +336,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         deps = [],
         exports = [],
         runtime_deps = [],
+        srcjar = '@main_deps___androidx_collection__collection__1_0_0__sources//file',
     )
 
     # from androidx.core:core:1.1.0-alpha01
@@ -460,6 +487,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         deps = [':main_deps___androidx_annotation__annotation'],
         exports = [':main_deps___androidx_annotation__annotation'],
         runtime_deps = [],
+        srcjar = '@main_deps___androidx_lifecycle__lifecycle_common__2_0_0__sources//file',
     )
 
     # from androidx.lifecycle:lifecycle-livedata-core:2.0.0

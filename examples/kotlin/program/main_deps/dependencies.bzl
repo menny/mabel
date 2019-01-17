@@ -12,10 +12,22 @@ def generate_workspace_rules():
         downloaded_file_path = 'kotson-2.5.0.jar',
     )
 
+    # from com.github.salomonbrys.kotson:kotson:2.5.0
+    http_file(name = 'main_deps___com_github_salomonbrys_kotson__kotson__2_5_0__sources',
+        urls = ['https://repo1.maven.org/maven2/com/github/salomonbrys/kotson/kotson/2.5.0/kotson-2.5.0-sources.jar'],
+        downloaded_file_path = 'kotson-2.5.0-sources.jar',
+    )
+
     # from com.google.code.gson:gson:2.8.0
     http_file(name = 'main_deps___com_google_code_gson__gson__2_8_0',
         urls = ['https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.0/gson-2.8.0.jar'],
         downloaded_file_path = 'gson-2.8.0.jar',
+    )
+
+    # from com.google.code.gson:gson:2.8.0
+    http_file(name = 'main_deps___com_google_code_gson__gson__2_8_0__sources',
+        urls = ['https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.0/gson-2.8.0-sources.jar'],
+        downloaded_file_path = 'gson-2.8.0-sources.jar',
     )
 
     # from org.jetbrains.kotlin:kotlin-runtime:1.0.6
@@ -24,10 +36,22 @@ def generate_workspace_rules():
         downloaded_file_path = 'kotlin-runtime-1.0.6.jar',
     )
 
+    # from org.jetbrains.kotlin:kotlin-runtime:1.0.6
+    http_file(name = 'main_deps___org_jetbrains_kotlin__kotlin_runtime__1_0_6__sources',
+        urls = ['https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-runtime/1.0.6/kotlin-runtime-1.0.6-sources.jar'],
+        downloaded_file_path = 'kotlin-runtime-1.0.6-sources.jar',
+    )
+
     # from org.jetbrains.kotlin:kotlin-stdlib:1.0.6
     http_file(name = 'main_deps___org_jetbrains_kotlin__kotlin_stdlib__1_0_6',
         urls = ['https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.0.6/kotlin-stdlib-1.0.6.jar'],
         downloaded_file_path = 'kotlin-stdlib-1.0.6.jar',
+    )
+
+    # from org.jetbrains.kotlin:kotlin-stdlib:1.0.6
+    http_file(name = 'main_deps___org_jetbrains_kotlin__kotlin_stdlib__1_0_6__sources',
+        urls = ['https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.0.6/kotlin-stdlib-1.0.6-sources.jar'],
+        downloaded_file_path = 'kotlin-stdlib-1.0.6-sources.jar',
     )
 
 
@@ -91,6 +115,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         deps = [],
         exports = [],
         runtime_deps = [],
+        srcjar = '@main_deps___com_google_code_gson__gson__2_8_0__sources//file',
     )
 
     # from org.jetbrains.kotlin:kotlin-runtime:1.0.6
