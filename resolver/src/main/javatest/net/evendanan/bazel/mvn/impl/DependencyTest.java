@@ -80,7 +80,11 @@ public class DependencyTest {
         Assert.assertEquals(Dependency.License.notice, Dependency.License.fromLicenseName("The MIT License"));
         Assert.assertEquals(Dependency.License.notice, Dependency.License.fromLicenseName("MIT License"));
         Assert.assertEquals(Dependency.License.notice, Dependency.License.fromLicenseName("MIT"));
+        Assert.assertEquals(Dependency.License.notice, Dependency.License.fromLicenseName("New BSD License"));
+
         Assert.assertEquals(Dependency.License.reciprocal, Dependency.License.fromLicenseName("Eclipse Public License 1.0"));
         Assert.assertEquals(Dependency.License.reciprocal, Dependency.License.fromLicenseName("Eclipse Public License, Version 1.0"));
+
+        Assert.assertEquals(Dependency.License.unencumbered, Dependency.License.fromLicenseName("CC0 1.0 Universal License"));
     }
 }
