@@ -37,7 +37,6 @@ import org.apache.maven.model.building.UrlModelSource;
 import org.apache.maven.model.profile.DefaultProfileSelector;
 import org.apache.maven.model.resolution.ModelResolver;
 import org.apache.maven.model.resolution.UnresolvableModelException;
-import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.repository.RemoteRepository;
 
 import static java.util.stream.Collectors.toList;
@@ -55,12 +54,8 @@ public class DefaultModelResolver implements ModelResolver {
     private final VersionResolver versionResolver;
 
     public DefaultModelResolver(Collection<Repository> repositories) {
-        this(
-                repositories,
-                Maps.newHashMap(),
-                new DefaultModelBuilderFactory().newInstance()
-                        .setProfileSelector(new DefaultProfileSelector())
-        );
+        this(repositories, Maps.newHashMap(),
+                new DefaultModelBuilderFactory().newInstance().setProfileSelector(new DefaultProfileSelector()));
     }
 
     private DefaultModelResolver(Collection<Repository> repositories, Map<String, RepoModelSource> ruleNameToModelSource,
@@ -75,8 +70,37 @@ public class DefaultModelResolver implements ModelResolver {
         this.versionResolver = new VersionResolver(aether);
     }
 
-    public RepoModelSource resolveModel(Artifact artifact) throws UnresolvableModelException {
-        return resolveModel(artifact.getGroupId(), artifact.getArtifactId(), artifact.getClassifier(), artifact.getVersion());
+    static boolean remoteFileExists(URL url) {
+        try {
+            URLConnection urlConnection = url.openConnection();
+            if (!(urlConnection instanceof HttpURLConnection)) {
+                return false;
+            }
+
+            HttpURLConnection connection = (HttpURLConnection) urlConnection;
+            connection.setRequestMethod("HEAD");
+            connection.setInstanceFollowRedirects(true);
+            connection.connect();
+
+            int code = connection.getResponseCode();
+            return code==200;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    static URL getUrlForArtifact(String url, final String groupId, final String artifactId, final String classifier, final String version, final String packaging) {
+        if (!url.endsWith("/")) {
+            url += "/";
+        }
+
+        try {
+            return new URL(url
+                    + groupId.replaceAll("\\.", "/") + "/" + artifactId + "/" + version + "/" + artifactId
+                    + "-" + version + "." + packaging);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -91,9 +115,9 @@ public class DefaultModelResolver implements ModelResolver {
         if (ruleNameToModelSource.containsKey(ruleName)) {
             return ruleNameToModelSource.get(ruleName);
         }
+
         for (Repository repository : repositories) {
-            UrlModelSource modelSource = getModelSource(
-                    repository.getUrl(), groupId, artifactId, classifier, version);
+            UrlModelSource modelSource = getModelSource(repository.getUrl(), groupId, artifactId, classifier, version);
             if (modelSource!=null) {
                 final RepoModelSource repoModelSource = new RepoModelSource(modelSource, repository);
                 ruleNameToModelSource.put(Rule.generateFullName(groupId, artifactId, version), repoModelSource);
@@ -110,50 +134,17 @@ public class DefaultModelResolver implements ModelResolver {
 
     // TODO(kchodorow): make this work with local repositories.
     private UrlModelSource getModelSource(
-            String url, String groupId, String artifactId, String classifier, String version)
-            throws UnresolvableModelException {
+            String url, String groupId, String artifactId, String classifier, String version) {
         try {
             version = versionResolver.resolveVersion(groupId, artifactId, classifier, version);
         } catch (ArtifactBuilder.InvalidArtifactCoordinateException e) {
             throw new RuntimeException(String.format("Unable to resolve version %s:%s:%s! %s", groupId, artifactId, version, e.getMessage()), e);
         }
-        try {
-            if (!url.endsWith("/")) {
-                url += "/";
-            }
-            URL urlUrl = new URL(url
-                    + groupId.replaceAll("\\.", "/") + "/" + artifactId + "/" + version + "/" + artifactId
-                    + "-" + version + ".pom");
-            if (pomFileExists(urlUrl)) {
-                return new UrlModelSource(urlUrl);
-            }
-        } catch (MalformedURLException e) {
-            throw new UnresolvableModelException("Bad URL " + url + ": " + e.getMessage(), groupId,
-                    artifactId, version, e);
+        URL pomUrl = getUrlForArtifact(url, groupId, artifactId, classifier, version, "pom");
+        if (remoteFileExists(pomUrl)) {
+            return new UrlModelSource(pomUrl);
         }
         return null;
-    }
-
-    private boolean pomFileExists(URL url) {
-        try {
-            URLConnection urlConnection = url.openConnection();
-            if (!(urlConnection instanceof HttpURLConnection)) {
-                return false;
-            }
-
-            HttpURLConnection connection = (HttpURLConnection) urlConnection;
-            connection.setRequestMethod("HEAD");
-            connection.setInstanceFollowRedirects(true);
-            connection.connect();
-
-            int code = connection.getResponseCode();
-            if (code==200) {
-                return true;
-            }
-        } catch (IOException e) {
-            // Something went wrong, fall through.
-        }
-        return false;
     }
 
     // For compatibility with older versions of ModelResolver which don't have this method,
@@ -162,15 +153,19 @@ public class DefaultModelResolver implements ModelResolver {
         return resolveModel(parent.getGroupId(), parent.getArtifactId(), "", parent.getVersion()).modelSource;
     }
 
-    // For compatibility with older versions of ModelResolver which don't have this method,
-    // don't add @Override.
+    @Override
     public void addRepository(Repository repository) {
-        repositories.add(repository);
+        addRepository(repository, true);
     }
+
 
     @Override
     public void addRepository(Repository repository, boolean replace) {
-        addRepository(repository);
+        if (replace) {
+            repositories.remove(repository);
+        }
+
+        repositories.add(repository);
     }
 
     @Override
