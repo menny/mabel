@@ -663,7 +663,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.errorprone:error_prone_annotations:2.2.0
     native.java_import(name = 'main_deps___com_google_errorprone__error_prone_annotations__2_2_0',
         jars = ['@main_deps___com_google_errorprone__error_prone_annotations__2_2_0//file'],
-        licenses = [],
+        licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -679,7 +679,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.guava:failureaccess:1.0.1
     native.java_import(name = 'main_deps___com_google_guava__failureaccess__1_0_1',
         jars = ['@main_deps___com_google_guava__failureaccess__1_0_1//file'],
-        licenses = [],
+        licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -727,7 +727,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
     native.java_import(name = 'main_deps___com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava',
         jars = ['@main_deps___com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava//file'],
-        licenses = [],
+        licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -742,7 +742,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.j2objc:j2objc-annotations:1.1
     native.java_import(name = 'main_deps___com_google_j2objc__j2objc_annotations__1_1',
         jars = ['@main_deps___com_google_j2objc__j2objc_annotations__1_1//file'],
-        licenses = [],
+        licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -758,7 +758,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.kohlschutter.junixsocket:junixsocket-common:2.0.4
     native.java_import(name = 'main_deps___com_kohlschutter_junixsocket__junixsocket_common__2_0_4',
         jars = ['@main_deps___com_kohlschutter_junixsocket__junixsocket_common__2_0_4//file'],
-        licenses = [],
+        licenses = ['notice'],
         deps = [':main_deps___log4j__log4j'],
         exports = [':main_deps___log4j__log4j'],
         runtime_deps = [],
@@ -774,7 +774,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.kohlschutter.junixsocket:junixsocket-native-common:2.0.4
     native.java_import(name = 'main_deps___com_kohlschutter_junixsocket__junixsocket_native_common__2_0_4',
         jars = ['@main_deps___com_kohlschutter_junixsocket__junixsocket_native_common__2_0_4//file'],
-        licenses = [],
+        licenses = ['notice'],
         deps = [
             ':main_deps___com_kohlschutter_junixsocket__junixsocket_common',
             ':main_deps___log4j__log4j',
@@ -798,7 +798,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from commons-codec:commons-codec:1.9
     native.java_import(name = 'main_deps___commons_codec__commons_codec__1_9',
         jars = ['@main_deps___commons_codec__commons_codec__1_9//file'],
-        licenses = [],
+        licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -814,7 +814,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from commons-logging:commons-logging:1.2
     native.java_import(name = 'main_deps___commons_logging__commons_logging__1_2',
         jars = ['@main_deps___commons_logging__commons_logging__1_2//file'],
-        licenses = [],
+        licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -862,7 +862,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from net.bytebuddy:byte-buddy-agent:1.9.3
     native.java_import(name = 'main_deps___net_bytebuddy__byte_buddy_agent__1_9_3',
         jars = ['@main_deps___net_bytebuddy__byte_buddy_agent__1_9_3//file'],
-        licenses = [],
+        licenses = ['notice'],
         deps = [
             ':main_deps___com_google_code_findbugs__findbugs_annotations',
             ':main_deps___com_kohlschutter_junixsocket__junixsocket_native_common',
@@ -881,7 +881,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from net.bytebuddy:byte-buddy:1.9.3
     native.java_import(name = 'main_deps___net_bytebuddy__byte_buddy__1_9_3',
         jars = ['@main_deps___net_bytebuddy__byte_buddy__1_9_3//file'],
-        licenses = [],
+        licenses = ['notice'],
         deps = [':main_deps___com_google_code_findbugs__findbugs_annotations'],
         exports = [],
         runtime_deps = [],
@@ -937,7 +937,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.apache.httpcomponents:httpcore:4.4.6
     native.java_import(name = 'main_deps___org_apache_httpcomponents__httpcore__4_4_6',
         jars = ['@main_deps___org_apache_httpcomponents__httpcore__4_4_6//file'],
-        licenses = [],
+        licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -953,7 +953,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.apache.maven.wagon:wagon-provider-api:1.0
     native.java_import(name = 'main_deps___org_apache_maven_wagon__wagon_provider_api__1_0',
         jars = ['@main_deps___org_apache_maven_wagon__wagon_provider_api__1_0//file'],
-        licenses = [],
+        licenses = ['notice'],
         deps = [':main_deps___org_codehaus_plexus__plexus_utils'],
         exports = [':main_deps___org_codehaus_plexus__plexus_utils'],
         runtime_deps = [],
@@ -1085,7 +1085,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.checkerframework:checker-qual:2.5.2
     native.java_import(name = 'main_deps___org_checkerframework__checker_qual__2_5_2',
         jars = ['@main_deps___org_checkerframework__checker_qual__2_5_2//file'],
-        licenses = [],
+        licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -1435,7 +1435,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.slf4j:jcl-over-slf4j:1.6.2
     native.java_import(name = 'main_deps___org_slf4j__jcl_over_slf4j__1_6_2',
         jars = ['@main_deps___org_slf4j__jcl_over_slf4j__1_6_2//file'],
-        licenses = [],
+        licenses = ['notice'],
         deps = [':main_deps___org_slf4j__slf4j_api'],
         exports = [':main_deps___org_slf4j__slf4j_api'],
         runtime_deps = [],
@@ -1451,7 +1451,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.slf4j:slf4j-api:1.7.25
     native.java_import(name = 'main_deps___org_slf4j__slf4j_api__1_7_25',
         jars = ['@main_deps___org_slf4j__slf4j_api__1_7_25//file'],
-        licenses = [],
+        licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -1467,7 +1467,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.slf4j:slf4j-nop:1.7.25
     native.java_import(name = 'main_deps___org_slf4j__slf4j_nop__1_7_25',
         jars = ['@main_deps___org_slf4j__slf4j_nop__1_7_25//file'],
-        licenses = [],
+        licenses = ['notice'],
         deps = [':main_deps___org_slf4j__slf4j_api'],
         exports = [':main_deps___org_slf4j__slf4j_api'],
         runtime_deps = [],
