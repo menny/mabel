@@ -23,8 +23,8 @@ public class Resolver {
 
     private final GraphResolver resolver;
 
-    private Resolver() {
-        this.resolver = new MigrationToolingGraphResolver();
+    private Resolver(boolean debugLogs) {
+        this.resolver = new MigrationToolingGraphResolver(debugLogs);
     }
 
     public static void main(String[] args) throws Exception {
@@ -48,7 +48,7 @@ public class Resolver {
             return;
         }
 
-        Resolver driver = new Resolver();
+        Resolver driver = new Resolver(options.debug_logs);
         driver.writeResults(options, driver.generateFromArtifacts(options));
     }
 
@@ -100,6 +100,12 @@ public class Resolver {
                 description = "Path to output graph json file",
                 required = true
         ) String output_file = "";
+
+        @Parameter(
+                names = {"--debug_logs"},
+                description = "Will print out debug logs.",
+                arity = 1
+        ) boolean debug_logs = false;
     }
 
     /**

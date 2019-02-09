@@ -1,5 +1,6 @@
 package net.evendanan.bazel.mvn.serialization;
 
+import java.io.StringReader;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,7 +57,7 @@ public class SerializationTest {
 
         final String serialized = serialization.serialize(DEP);
 
-        final Dependency deserialized = serialization.deserialize(serialized);
+        final Dependency deserialized = serialization.deserialize(new StringReader(serialized));
 
         assertEqualDeps(DEP, deserialized);
     }

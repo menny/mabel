@@ -17,17 +17,13 @@ package com.google.devtools.bazel.workspace.maven;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
-import javax.annotation.Nullable;
-import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
-import org.apache.maven.artifact.versioning.InvalidVersionSpecificationException;
-import org.apache.maven.artifact.versioning.VersionRange;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Exclusion;
 import org.apache.maven.model.Model;
@@ -37,14 +33,11 @@ import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.util.artifact.JavaScopes;
 
 import static com.google.devtools.bazel.workspace.maven.ArtifactBuilder.InvalidArtifactCoordinateException;
-import static com.google.devtools.bazel.workspace.maven.VersionResolver.defaultResolver;
 
 /**
  * Resolves Maven dependencies.
  */
 public class MigrationToolingMavenResolver {
-
-    private static final String TOP_LEVEL_ARTIFACT = "pom.xml";
 
     /**
      * The set of scopes whose artifacts are pulled into the transitive dependency tree.
@@ -58,13 +51,13 @@ public class MigrationToolingMavenResolver {
             Sets.newHashSet(JavaScopes.PROVIDED);
     private final boolean debugLogs;
     private final DefaultModelResolver modelResolver;
-    private final Map<String, Rule> deps;
+    private final Map<DepKey, Rule> deps;
     private final Map<String, String> restriction;
     private final Collection<Repository> repositories;
     private final VersionResolver versionResolver;
     private final Collection<String> blacklist;
 
-    private MigrationToolingMavenResolver(Collection<Repository> repositories, DefaultModelResolver modelResolver, VersionResolver versionResolver, Collection<String> blacklist, boolean debugLogs) {
+    public MigrationToolingMavenResolver(Collection<Repository> repositories, DefaultModelResolver modelResolver, VersionResolver versionResolver, Collection<String> blacklist, boolean debugLogs) {
         this.repositories = repositories;
         this.versionResolver = versionResolver;
         this.deps = Maps.newHashMap();
@@ -72,10 +65,6 @@ public class MigrationToolingMavenResolver {
         this.modelResolver = modelResolver;
         this.blacklist = blacklist;
         this.debugLogs = debugLogs;
-    }
-
-    public MigrationToolingMavenResolver(Collection<Repository> repositories, DefaultModelResolver resolver, Collection<String> blacklist, boolean debugLogs) {
-        this(repositories, resolver, defaultResolver(), blacklist, debugLogs);
     }
 
     private static String unversionedCoordinate(Dependency dependency) {
@@ -94,23 +83,28 @@ public class MigrationToolingMavenResolver {
         return text==null || text.length()==0;
     }
 
-    /**
-     * Returns all maven_jars.
-     */
-    public Collection<Rule> getRules() {
-        return deps.values();
+    private static Rule createRuleForCoordinates(final String mavenCoordinate) {
+        try {
+            Artifact artifact = ArtifactBuilder.fromCoords(mavenCoordinate);
+            return new Rule(artifact);
+        } catch (ArtifactBuilder.InvalidArtifactCoordinateException e) {
+            throw new IllegalArgumentException("Illegal Maven coordinates " + mavenCoordinate, e);
+        }
     }
 
     /**
      * Resolves an artifact as a root of a dependency graph.
      */
-    public void resolveRuleArtifacts(Rule rule) {
+    public Rule resolveRuleArtifacts(String mavenCoordinates) {
+        final Rule rule = createRuleForCoordinates(mavenCoordinates);
         traverseRuleAndFill(rule, Sets.newHashSet(), Sets.newHashSet());
+        return rule;
     }
 
     private void traverseRuleAndFill(final Rule rule, Set<String> scopes, Set<String> exclusions) {
+        deps.put(DepKey.from(rule), rule);
         if (debugLogs) {
-            System.out.println(String.format(Locale.ROOT, "Traversing " + rule.mavenGeneratedName()));
+            System.out.println("Traversing " + rule.mavenGeneratedName() + ". Currently, have " + deps.size() + " resolved deps.");
         }
         DefaultModelResolver.RepoModelSource depModelSource;
         try {
@@ -118,7 +112,6 @@ public class MigrationToolingMavenResolver {
                     rule.groupId(), rule.artifactId(), rule.classifier()==null ? "":rule.classifier(), rule.version());
         } catch (UnresolvableModelException e) {
             depModelSource = null;
-            System.out.println("Could not get a model for " + rule + " due to " + e.getMessage());
         }
 
         if (depModelSource!=null) {
@@ -130,36 +123,22 @@ public class MigrationToolingMavenResolver {
                 traverseDeps(depModel, scopes, exclusions, rule);
             }
         } else {
-            for (Repository repo : repositories) {
-                final URL jarUrl = DefaultModelResolver.getUrlForArtifact(repo.getUrl(),
-                        rule.groupId(), rule.artifactId(), rule.classifier(), rule.version(), "jar");
-                if (DefaultModelResolver.remoteFileExists(jarUrl)) {
-                    System.out.println("Could not get a model for " + rule + ". Using direct artifact " + jarUrl);
-                    rule.setPackaging("jar");
-                    rule.setLicenses(Collections.emptyList());
-                    rule.setRepository(repo.getUrl());
-                    return;
+            for (final Repository repository : repositories) {
+                for (final String packaging : Arrays.asList("jar", "aar")) {
+                    final URL urlForArtifact = DefaultModelResolver.getUrlForArtifact(repository.getUrl(),
+                            rule.groupId(), rule.artifactId(), rule.classifier(), rule.version(), packaging);
+                    if (DefaultModelResolver.remoteFileExists(urlForArtifact)) {
+                        if (debugLogs) System.out.println("Could not get a model for " + rule.mavenGeneratedName() + ". Using direct artifact " + urlForArtifact);
+                        rule.setPackaging(packaging);
+                        rule.setLicenses(Collections.emptyList());
+                        rule.setRepository(repository.getUrl());
+                        return;
+                    }
                 }
             }
 
-
+            System.out.println("Could not get a model for " + rule.mavenGeneratedName() + ", and was unable to locate the artifact at any valid repository!");
         }
-    }
-
-    public Optional<Rule> createRule(String artifactCoord) {
-        Artifact artifact;
-        try {
-            artifact = ArtifactBuilder.fromCoords(artifactCoord);
-        } catch (InvalidArtifactCoordinateException e) {
-            System.out.println(e.getMessage());
-            return Optional.empty();
-        }
-
-        Rule rule = new Rule(artifact);
-
-        deps.put(rule.friendlyName(), rule);
-
-        return Optional.of(rule);
     }
 
     /**
@@ -189,20 +168,13 @@ public class MigrationToolingMavenResolver {
             Model model,
             Set<String> topLevelScopes,
             Set<String> exclusions,
-            @Nullable Rule parent) {
+            Rule parent) {
         String scope = isEmpty(dependency.getScope()) ? JavaScopes.COMPILE:dependency.getScope();
-        if (parent==null) {
-            // Top-level scopes get pulled in based on the user-provided scopes.
-            if (!topLevelScopes.contains(scope)) {
-                return;
-            }
-        } else {
-            // TODO (bazel-devel): Relabel the scope of transitive dependencies so that they match how
-            // maven relabels them as described here:
-            // https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html
-            if (!INHERITED_SCOPES.contains(scope) && !NON_INHERITED_SCOPES.contains(scope)) {
-                return;
-            }
+        // TODO (bazel-devel): Relabel the scope of transitive dependencies so that they match how
+        // maven relabels them as described here:
+        // https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html
+        if (!INHERITED_SCOPES.contains(scope) && !NON_INHERITED_SCOPES.contains(scope)) {
+            return;
         }
 
         if (dependency.isOptional()) {
@@ -216,7 +188,7 @@ public class MigrationToolingMavenResolver {
             return;
         }
 
-        final Rule artifactRule;
+        Rule artifactRule;
         try {
             artifactRule = new Rule(ArtifactBuilder.fromMavenDependency(dependency, versionResolver, model));
         } catch (InvalidArtifactCoordinateException e) {
@@ -228,71 +200,55 @@ public class MigrationToolingMavenResolver {
         dependency.getExclusions().forEach(
                 exclusion -> localDepExclusions.add(unversionedCoordinate(exclusion)));
 
-        boolean isNewDependency = addArtifact(artifactRule, model.toString());
-        if (isNewDependency) {
+        final DepKey depKey = DepKey.from(artifactRule);
+        if (deps.containsKey(depKey)) {
+            //already traverse this one
+            artifactRule = deps.get(depKey);
+        } else {
             traverseRuleAndFill(artifactRule, topLevelScopes, localDepExclusions);
         }
 
-        if (parent==null) {
-            addArtifact(artifactRule, TOP_LEVEL_ARTIFACT);
-        } else {
-            parent.addDependency(artifactRule.scope(), artifactRule);
-        }
+        //for comments
+        artifactRule.addParent(parent.mavenCoordinates());
 
+        //for graph
+        parent.addDependency(artifactRule.scope(), artifactRule);
     }
 
-    /**
-     * Adds the artifact to the map of deps, if it is not already there. Returns if the artifact
-     * was newly added. If the artifact was in the list at a different version, adds an comment
-     * about the desired version.
-     */
-    private boolean addArtifact(Rule dependency, String parent) {
-        String artifactName = dependency.friendlyName();
-        if (deps.containsKey(artifactName)) {
-            Rule existingDependency = deps.get(artifactName);
-            // Check that the versions are the same.
-            if (!existingDependency.version().equals(dependency.version())) {
-                existingDependency.addParent(parent + " wanted version " + dependency.version());
+    private static class DepKey {
+        private final Rule rule;
+        private final String key;
+
+        private DepKey(final Rule rule) {
+            this.rule = rule;
+            key = rule.mavenCoordinates();
+        }
+
+        private static DepKey from(final Rule artifactRule) {
+            return new DepKey(artifactRule);
+        }
+
+        String key() {
+            return key;
+        }
+
+        @Override
+        public int hashCode() {
+            return key().hashCode();
+        }
+
+        @Override
+        public boolean equals(final Object obj) {
+            if (obj instanceof DepKey) {
+                return ((DepKey) obj).key().equals(key());
             } else {
-                existingDependency.addParent(parent + " got requested version");
+                return false;
             }
-
-            dependency.setPackaging(existingDependency.packaging());
-            dependency.setRepository(existingDependency.getRepository());
-            return false;
         }
 
-        updateVersion(artifactName, dependency);
-        deps.put(artifactName, dependency);
-        dependency.addParent(parent);
-
-        return true;
-    }
-
-    /**
-     * TODO: this should be removed once this uses Maven's own version resolution.
-     */
-    private void updateVersion(String artifactName, Rule dependency) {
-        VersionRange versionRange;
-        if (!restriction.containsKey(artifactName)) {
-            return;
-        }
-        String versionRestriction = restriction.get(artifactName);
-        try {
-            versionRange = VersionRange.createFromVersionSpec(versionRestriction);
-        } catch (InvalidVersionSpecificationException e) {
-            System.out.println("Error parsing version " + versionRestriction + ": " + e.getLocalizedMessage());
-            // So that this isn't logged over and over.
-            restriction.remove(artifactName);
-            return;
-        }
-        if (!versionRange.containsVersion(new DefaultArtifactVersion(dependency.version()))) {
-            try {
-                dependency.setVersion(
-                        versionResolver.resolveVersion(dependency.groupId(), dependency.artifactId(), dependency.classifier(), versionRestriction));
-            } catch (InvalidArtifactCoordinateException e) {
-                System.out.println("Error setting version: " + e.getLocalizedMessage());
-            }
+        @Override
+        public String toString() {
+            return "DepKey " + key() + " for " + rule.mavenGeneratedName();
         }
     }
 }

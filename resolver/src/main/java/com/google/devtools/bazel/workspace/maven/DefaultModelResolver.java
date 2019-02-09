@@ -53,13 +53,14 @@ public class DefaultModelResolver implements ModelResolver {
     private final DefaultModelBuilder modelBuilder;
     private final VersionResolver versionResolver;
 
-    public DefaultModelResolver(Collection<Repository> repositories) {
+    public DefaultModelResolver(Collection<Repository> repositories, VersionResolver versionResolver) {
         this(repositories, Maps.newHashMap(),
-                new DefaultModelBuilderFactory().newInstance().setProfileSelector(new DefaultProfileSelector()));
+                new DefaultModelBuilderFactory().newInstance().setProfileSelector(new DefaultProfileSelector()),
+                versionResolver);
     }
 
     private DefaultModelResolver(Collection<Repository> repositories, Map<String, RepoModelSource> ruleNameToModelSource,
-                                 DefaultModelBuilder modelBuilder) {
+                                 DefaultModelBuilder modelBuilder, VersionResolver versionResolver) {
         this.repositories = repositories;
         this.ruleNameToModelSource = ruleNameToModelSource;
         this.modelBuilder = modelBuilder;
@@ -67,7 +68,7 @@ public class DefaultModelResolver implements ModelResolver {
                 .remoteRepos(repositories.stream().map(repo -> new RemoteRepository.Builder(repo.getId(), null, repo.getUrl()).build())
                         .collect(toList()))
                 .build();
-        this.versionResolver = new VersionResolver(aether);
+        this.versionResolver = versionResolver;
     }
 
     static boolean remoteFileExists(URL url) {
@@ -170,7 +171,7 @@ public class DefaultModelResolver implements ModelResolver {
 
     @Override
     public ModelResolver newCopy() {
-        return new DefaultModelResolver(repositories, ruleNameToModelSource, modelBuilder);
+        return new DefaultModelResolver(repositories, ruleNameToModelSource, modelBuilder, versionResolver);
     }
 
     public Model getEffectiveModel(ModelSource modelSource) {

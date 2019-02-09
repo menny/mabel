@@ -6,7 +6,11 @@ def _impl_resolver(ctx):
 
     arguments = ['--repository={}'.format(repository) for repository in ctx.attr.repositories] + \
         ['--blacklist={}'.format(exclude_artifact_list) for exclude_artifact_list in ctx.attr.maven_exclude_deps] + \
-        ['--artifact=%s' % ctx.attr.coordinate, '--output_file=%s' % json.path]
+        [
+            '--artifact={}'.format(ctx.attr.coordinate),
+            '--output_file={}'.format(json.path),
+            '--debug_logs={}'.format(ctx.attr.debug_logs).lower()
+        ]
 
     ctx.actions.run(
         outputs=[json],
@@ -24,33 +28,31 @@ maven_dependency_graph_resolving_rule = rule(implementation=_impl_resolver,
        "coordinate": attr.string(mandatory=True, doc = "Maven coordinate in the form of `group-id:artifact-id:version`."),
        "maven_exclude_deps": attr.string_list(allow_empty=True, default = [], doc = "List of Maven dependencies which should not be resolved. You can omit the `version` or both `artifact-id:version`."),
        "repositories": attr.string_list(allow_empty=False, default = DEFAULT_MAVEN_SERVERS, doc = "List of URLs that point to Maven servers. Defaut is Maven-Central."),
+       "debug_logs": attr.bool(default=False, doc='If set to True, will print out debug logs while resolving dependencies. Default is False.', mandatory=False),
        "_resolver": attr.label(executable=True, allow_files=True, cfg="host", default=Label("//resolver:resolver_bin"))
     },
     outputs={"out": "%{name}-transitive-graph.json"})
 
-def artifact(coordinate, maven_exclude_deps=[], repositories=DEFAULT_MAVEN_SERVERS):
-    rule_name = "maven_dependency_graph_resolving_rule_%s" % coordinate.replace(':', '__').replace('-', '_').replace('.', '_')
-    maven_dependency_graph_resolving_rule(name = rule_name,
-                                    coordinate = coordinate,
-                                    maven_exclude_deps = maven_exclude_deps,
-                                    repositories = repositories,
-                                    visibility = ["//visibility:private"])
+def artifact(coordinate, maven_exclude_deps=[], repositories=DEFAULT_MAVEN_SERVERS, debug_logs=False):
+    rule_name = "maven_dependency_graph_resolving_rule_{}".format(coordinate.replace(':', '__').replace('-', '_').replace('.', '_'))
+    # different deps_workspace_generator_rule targets may use the same artifact
+    if native.existing_rule(rule_name) == None:
+        maven_dependency_graph_resolving_rule(name = rule_name,
+                                        coordinate = coordinate,
+                                        maven_exclude_deps = maven_exclude_deps,
+                                        repositories = repositories,
+                                        debug_logs = debug_logs,
+                                        visibility = ["//visibility:private"])
     return ":%s" % rule_name
 
 script_merger_template = """
-echo "BUILD_WORKING_DIRECTORY: '${{BUILD_WORKING_DIRECTORY}}'"
-echo "output_filename: '{output_filename}'"
-echo "output_target_build_files_base_path: '{output_target_build_files_base_path}'"
-echo "package_path: '{package_path}'"
-echo "rule_prefix: '{rule_prefix}'"
-echo "create_deps_sub_folders: '{create_deps_sub_folders}'"
-
 java -jar {merger} {graph_files_list} \
     --output_macro_file_path={output_filename} \
     --output_target_build_files_base_path=${{BUILD_WORKING_DIRECTORY}}/{output_target_build_files_base_path} \
     --fetch_srcjar={fetch_srcjar} \
     --package_path={package_path} \
     --rule_prefix={rule_prefix} \
+    --debug_logs={debug_logs} \
     --create_deps_sub_folders={create_deps_sub_folders}
 
 echo "Stored resolved dependencies graph (rules) at ${{BUILD_WORKING_DIRECTORY}}/{output_target_build_files_base_path}{output_filename}"
@@ -70,6 +72,7 @@ def _impl_merger(ctx):
         output_target_build_files_base_path = output_target_build_files_base_path,
         package_path = package_path,
         fetch_srcjar = '{}'.format(ctx.attr.fetch_srcjar).lower(),
+        debug_logs = '{}'.format(ctx.attr.debug_logs).lower(),
         rule_prefix = "{}___".format(ctx.label.name),
         create_deps_sub_folders = '{}'.format(ctx.attr.generate_deps_sub_folder).lower()
         )
@@ -97,6 +100,7 @@ deps_workspace_generator_rule = rule(implementation=_impl_merger,
              doc = "List of `maven_dependency_graph_rule` targets."),
          "fetch_srcjar": attr.bool(default=True, doc='Will also try to locate srcjar for the dependency.', mandatory=False),
          "generate_deps_sub_folder": attr.bool(default=True, doc='If set to True (the default), will create sub-folders with BUILD.bazel file for each dependency.', mandatory=False),
+         "debug_logs": attr.bool(default=False, doc='If set to True, will print out debug logs while resolving dependencies. Default is False.', mandatory=False),
          "_merger": attr.label(executable=True, allow_files=True, single_file=True, cfg="host", default=Label("//resolver:merger_bin_deploy.jar"))
      },
      outputs={"out": "%{name}-generate-deps.sh"})

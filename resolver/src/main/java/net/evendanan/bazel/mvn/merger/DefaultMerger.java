@@ -10,10 +10,13 @@ public class DefaultMerger implements GraphMerger {
     public Collection<Dependency> mergeGraphs(Collection<Dependency> dependencies) {
         // strategy
         //1. pinning breadth-first versions and resolve versions on all graphs
+        System.out.println("Resolving conflicting versions...");
         final Collection<Dependency> mergedDependencies = new PinBreadthFirstVersionsMerger().mergeGraphs(dependencies);
         //2. de-duping
-        final Collection<Dependency> deDuped = new DuplicatesDepsRemovingMerger().mergeGraphs(mergedDependencies);
+        System.out.println("Removing duplicate dependencies...");
+        final Collection<Dependency> deDuped = new FilterDuplicateDependenciesEntries().mergeGraphs(mergedDependencies);
 
+        System.out.println("Verifying there are no conflicting versions...");
         return VerifyNoConflictingVersions.checkNoConflictingVersions(deDuped);
     }
 

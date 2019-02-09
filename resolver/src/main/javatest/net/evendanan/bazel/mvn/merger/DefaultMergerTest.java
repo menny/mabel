@@ -155,7 +155,7 @@ public class DefaultMergerTest {
     public void testReturnsUnchangedIfNoDuplicateDeps() {
         String expected = GraphUtils.printGraph(GraphUtilsTest.NO_REPEATS_GRAPH);
 
-        DuplicatesDepsRemovingMerger merger = new DuplicatesDepsRemovingMerger();
+        FilterDuplicateDependenciesEntries merger = new FilterDuplicateDependenciesEntries();
 
         Collection<Dependency> dependencies = merger.mergeGraphs(GraphUtilsTest.NO_REPEATS_GRAPH);
 
@@ -169,7 +169,7 @@ public class DefaultMergerTest {
         //duplicating one root
         dependencies.add(dependencies.get(1));
 
-        DuplicatesDepsRemovingMerger merger = new DuplicatesDepsRemovingMerger();
+        FilterDuplicateDependenciesEntries merger = new FilterDuplicateDependenciesEntries();
 
         Collection<Dependency> deDuped = merger.mergeGraphs(dependencies);
         String expected = GraphUtils.printGraph(GraphUtilsTest.NO_REPEATS_GRAPH);

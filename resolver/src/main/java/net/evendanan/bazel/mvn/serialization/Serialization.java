@@ -2,6 +2,7 @@ package net.evendanan.bazel.mvn.serialization;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.io.Reader;
 import net.evendanan.bazel.mvn.api.Dependency;
 
 public class Serialization {
@@ -18,8 +19,8 @@ public class Serialization {
 
     }
 
-    public Dependency deserialize(String jsonString) {
-        return mGson.fromJson(jsonString, Dependency.class);
+    public Dependency deserialize(Reader jsonInput) {
+        return mGson.fromJson(jsonInput, Dependency.class);
     }
 
     public String serialize(Dependency dependency) {

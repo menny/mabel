@@ -49,7 +49,7 @@ public class Rule implements Comparable<Rule> {
     private String scope;
     private List<License> licenses = Collections.emptyList();
 
-    Rule(Artifact artifact) {
+    public Rule(Artifact artifact) {
         this.artifact = artifact;
         this.version = artifact.getVersion();
         this.parents = Sets.newHashSet();
@@ -72,6 +72,10 @@ public class Rule implements Comparable<Rule> {
 
     private static String normalizeMavenName(final String name) {
         return name.replace('.', '_');
+    }
+
+    public static String calculateMavenCoordinates(final String groupId, final String artifactId, final String version) {
+        return groupId + ":" + artifactId + ":" + version;
     }
 
     public void addParent(String parent) {
@@ -144,16 +148,6 @@ public class Rule implements Comparable<Rule> {
     }
 
     /**
-     * A unique name for this artifact to use in maven_jar's name attribute.
-     * This is used as the identifier of the artifact (mostly as alias).
-     * We do not include the version here since we may have only one variant
-     * of an artifact in the dependency graph.
-     */
-    public String friendlyName() {
-        return normalizedWorkspaceName(groupId()) + "__" + normalizedWorkspaceName(artifactId());
-    }
-
-    /**
      * A unique name for this artifact which includes Maven meta-data.
      * This can later be decoded back into a maven annotation.
      * Should be used as the name of a lib, never an external workspace
@@ -163,16 +157,7 @@ public class Rule implements Comparable<Rule> {
     }
 
     public String mavenCoordinates() {
-        return groupId() + ":" + artifactId() + ":" + version();
-    }
-
-    /**
-     * A unique name for this artifact which includes Maven meta-data.
-     * This can later be decoded back into a maven annotation.
-     * Should be used as the name of a lib, never an external workspace
-     */
-    public String safeRuleFriendlyName() {
-        return normalizedWorkspaceName(groupId()) + "__" + normalizedWorkspaceName(artifactId());
+        return calculateMavenCoordinates(groupId(), artifactId(), version());
     }
 
     public Artifact getArtifact() {
