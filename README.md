@@ -24,6 +24,8 @@ This WORKSPACE will provide `deps_workspace_generator_rule` rule and `artifact` 
 * Support custom Maven repo URLs and locking dependency for a Maven repository.
 * Adds `licenses` data to `java_import` rules, if license is declared in the artifact's POM file.
 * Adds `srcjar` if sources available in the Maven repository.
+* Handle POM profiles and placeholders.
+* Also, handles dependencies that do no have POM files.
 * Produces a _lock_ file that describes the dependency graph. This file should be checked into your repo.
 
 ## Example
@@ -31,7 +33,7 @@ This WORKSPACE will provide `deps_workspace_generator_rule` rule and `artifact` 
 ### WORKSPACE file
 Add this repository to your WORKSPACE (set `bazel_mvn_deps_version` to the latest [release](https://github.com/menny/mabel/releases) or, if you are adventurous, [commit](https://github.com/menny/mabel/commits/master)):
 ```python
-mabel_version = "0.3.0"
+mabel_version = "0.3.1"
 http_archive(
     name = "mabel",
     urls = ["https://github.com/menny/mabel/archive/%s.zip" % mabel_version],
