@@ -31,7 +31,7 @@ This WORKSPACE will provide `deps_workspace_generator_rule` rule and `artifact` 
 ### WORKSPACE file
 Add this repository to your WORKSPACE (set `bazel_mvn_deps_version` to the latest [release](https://github.com/menny/mabel/releases) or, if you are adventurous, [commit](https://github.com/menny/mabel/commits/master)):
 ```python
-mabel_version = "0.2.0"
+mabel_version = "0.3.0"
 http_archive(
     name = "mabel",
     urls = ["https://github.com/menny/mabel/archive/%s.zip" % mabel_version],
@@ -130,7 +130,8 @@ This rule will merge the dependencies into one, version-conflict-resolved, depen
 Attributes:
 
 * `maven_deps`: List of `artifact` targets representing a Maven coordinate.
-* `generate_deps_sub_folder`: `True` or `False`. Will create sub-folders with `BUILD.bazel` file for each dependency.'
+* `generate_deps_sub_folder`: Default `True`. Will create sub-folders with `BUILD.bazel` file for each dependency.'
+* `fetch_srcjar`: Default `True`. Will also try to fetch sources jar for each dependency.'
 
 ### `maven_dependency_graph_resolving_rule` or `artifact`
 
