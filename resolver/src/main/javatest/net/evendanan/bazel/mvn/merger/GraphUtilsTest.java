@@ -27,6 +27,23 @@ public class GraphUtilsTest {
                     Collections.singletonList(new Dependency("net.evendanan", "inner2", "0.1", "jar",
                             Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), URI.create(""), URI.create(""), URI.create(""), Collections.emptyList())), URI.create(""), URI.create(""), URI.create(""), Collections.emptyList()));
 
+    static final Collection<Dependency> SRC_JAR_GRAPH = Arrays.asList(
+            new Dependency("net.evendanan", "dep1", "0.1", "jar",
+                    Collections.singletonList(new Dependency("net.evendanan", "inner1", "0.1", "jar",
+                            Collections.emptyList(),
+                            Arrays.asList(new Dependency("net.evendanan", "inner-inner1", "0.1", "jar",
+                                            Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), URI.create(""), URI.create(""), URI.create(""), Collections.emptyList()),
+                                    new Dependency("net.evendanan", "inner-inner2", "0.1", "jar",
+                                            Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), URI.create(""), URI.create(""), URI.create(""), Collections.emptyList())),
+                            Collections.emptyList(), URI.create(""), URI.create("http://example.com/src.jar"), URI.create(""), Collections.emptyList())),
+                    Collections.emptyList(), Collections.emptyList(), URI.create(""), URI.create(""), URI.create(""), Collections.emptyList()),
+            new Dependency("net.evendanan", "dep2", "0.1", "jar",
+                    Collections.singletonList(new Dependency("net.evendanan", "dep3", "0.2", "jar",
+                            Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), URI.create(""), URI.create(""), URI.create(""), Collections.emptyList())),
+                    Collections.emptyList(),
+                    Collections.singletonList(new Dependency("net.evendanan", "inner2", "0.1", "jar",
+                            Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), URI.create("http://example.com/artifact.jar"), URI.create("http://example.com/src.jar"), URI.create("http://example.com/doc.jar"), Collections.emptyList())), URI.create(""), URI.create(""), URI.create(""), Collections.emptyList()));
+
     static final Collection<Dependency> REPEATS_DEP1_AT_ROOT_GRAPH = Arrays.asList(
             new Dependency("net.evendanan", "dep1", "0.1", "jar",
                     Collections.singletonList(new Dependency("net.evendanan", "inner1", "0.1", "jar",
@@ -66,7 +83,6 @@ public class GraphUtilsTest {
                     Collections.emptyList(),
                     Collections.singletonList(new Dependency("net.evendanan", "inner-inner1", "0.4", "jar",
                             Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), URI.create(""), URI.create(""), URI.create(""), Collections.emptyList())), URI.create(""), URI.create(""), URI.create(""), Collections.emptyList()));
-
 
     static final Collection<Dependency> REPEATS_INNER1_GRAPH = Arrays.asList(
             new Dependency("net.evendanan", "dep1", "0.1", "jar",

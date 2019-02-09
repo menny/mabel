@@ -43,6 +43,7 @@ deps_workspace_generator_rule(name = 'main_deps',
         artifact("junit:junit:4.12"),
         artifact("org.mockito:mockito-core:2.23.4"),
     ],
+    fetch_srcjar = False
 )
     
 

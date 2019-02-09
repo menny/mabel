@@ -28,6 +28,7 @@ import net.evendanan.bazel.mvn.api.Target;
 import net.evendanan.bazel.mvn.impl.RuleClassifiers;
 import net.evendanan.bazel.mvn.impl.RuleWriters;
 import net.evendanan.bazel.mvn.impl.TargetsBuilders;
+import net.evendanan.bazel.mvn.merger.ClearSrcJarAttribute;
 import net.evendanan.bazel.mvn.merger.DefaultMerger;
 import net.evendanan.bazel.mvn.merger.DependencyTreeFlatter;
 import net.evendanan.bazel.mvn.serialization.Serialization;
@@ -81,6 +82,10 @@ public class Merger {
         Merger driver = new Merger(options);
         Collection<Dependency> dependencies = driver.generateFromInputs(options);
 
+        if (!options.fetch_srcjar) {
+            dependencies = ClearSrcJarAttribute.clearSrcJar(dependencies);
+        }
+        
         Function<Dependency, Dependency> prefixer = dependency -> DependencyWithPrefix.wrap(options.rule_prefix, dependency);
 
         driver.writeResults(dependencies.stream().map(prefixer).collect(Collectors.toList()), args);
@@ -267,6 +272,12 @@ public class Merger {
                 description = "Generate sub-folders matching dependencies tree.",
                 arity = 1
         ) boolean create_deps_sub_folders = true;
+
+        @Parameter(
+                names = {"--fetch_srcjar"},
+                description = "Will also try to locate srcjar for the dependency.",
+                arity = 1
+        ) boolean fetch_srcjar = true;
     }
 
     /**

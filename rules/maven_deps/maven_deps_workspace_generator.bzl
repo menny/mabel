@@ -48,6 +48,7 @@ echo "create_deps_sub_folders: '{create_deps_sub_folders}'"
 java -jar {merger} {graph_files_list} \
     --output_macro_file_path={output_filename} \
     --output_target_build_files_base_path=${{BUILD_WORKING_DIRECTORY}}/{output_target_build_files_base_path} \
+    --fetch_srcjar={fetch_srcjar} \
     --package_path={package_path} \
     --rule_prefix={rule_prefix} \
     --create_deps_sub_folders={create_deps_sub_folders}
@@ -68,6 +69,7 @@ def _impl_merger(ctx):
         output_filename = output_filename,
         output_target_build_files_base_path = output_target_build_files_base_path,
         package_path = package_path,
+        fetch_srcjar = '{}'.format(ctx.attr.fetch_srcjar).lower(),
         rule_prefix = "{}___".format(ctx.label.name),
         create_deps_sub_folders = '{}'.format(ctx.attr.generate_deps_sub_folder).lower()
         )
@@ -93,6 +95,7 @@ deps_workspace_generator_rule = rule(implementation=_impl_merger,
              allow_empty=False,
              providers=[TransitiveDataInfo],
              doc = "List of `maven_dependency_graph_rule` targets."),
+         "fetch_srcjar": attr.bool(default=True, doc='Will also try to locate srcjar for the dependency.', mandatory=False),
          "generate_deps_sub_folder": attr.bool(default=True, doc='If set to True (the default), will create sub-folders with BUILD.bazel file for each dependency.', mandatory=False),
          "_merger": attr.label(executable=True, allow_files=True, single_file=True, cfg="host", default=Label("//resolver:merger_bin_deploy.jar"))
      },
