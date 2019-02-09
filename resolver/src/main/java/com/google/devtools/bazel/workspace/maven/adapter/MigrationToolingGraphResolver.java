@@ -32,7 +32,7 @@ public class MigrationToolingGraphResolver implements GraphResolver {
     public Dependency resolve(String mavenCoordinate, final Collection<String> repositoriesUrls, final Collection<String> excludes) {
         final List<Repository> repositories = buildRepositories(repositoriesUrls);
         MigrationToolingMavenResolver resolver = new MigrationToolingMavenResolver(
-                repositories, new DefaultModelResolver(repositories), excludes);
+                repositories, new DefaultModelResolver(repositories), excludes, false);
 
 
         final Rule rule = resolver.createRule(mavenCoordinate).orElseThrow(() -> new IllegalArgumentException("Illegal Maven coordinates " + mavenCoordinate));

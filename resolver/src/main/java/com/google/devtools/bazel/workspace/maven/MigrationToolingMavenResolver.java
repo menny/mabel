@@ -56,6 +56,7 @@ public class MigrationToolingMavenResolver {
 
     private static final Set<String> NON_INHERITED_SCOPES =
             Sets.newHashSet(JavaScopes.PROVIDED);
+    private final boolean debugLogs;
     private final DefaultModelResolver modelResolver;
     private final Map<String, Rule> deps;
     private final Map<String, String> restriction;
@@ -63,17 +64,18 @@ public class MigrationToolingMavenResolver {
     private final VersionResolver versionResolver;
     private final Collection<String> blacklist;
 
-    private MigrationToolingMavenResolver(Collection<Repository> repositories, DefaultModelResolver modelResolver, VersionResolver versionResolver, Collection<String> blacklist) {
+    private MigrationToolingMavenResolver(Collection<Repository> repositories, DefaultModelResolver modelResolver, VersionResolver versionResolver, Collection<String> blacklist, boolean debugLogs) {
         this.repositories = repositories;
         this.versionResolver = versionResolver;
         this.deps = Maps.newHashMap();
         this.restriction = Maps.newHashMap();
         this.modelResolver = modelResolver;
         this.blacklist = blacklist;
+        this.debugLogs = debugLogs;
     }
 
-    public MigrationToolingMavenResolver(Collection<Repository> repositories, DefaultModelResolver resolver, Collection<String> blacklist) {
-        this(repositories, resolver, defaultResolver(), blacklist);
+    public MigrationToolingMavenResolver(Collection<Repository> repositories, DefaultModelResolver resolver, Collection<String> blacklist, boolean debugLogs) {
+        this(repositories, resolver, defaultResolver(), blacklist, debugLogs);
     }
 
     private static String unversionedCoordinate(Dependency dependency) {
@@ -107,6 +109,9 @@ public class MigrationToolingMavenResolver {
     }
 
     private void traverseRuleAndFill(final Rule rule, Set<String> scopes, Set<String> exclusions) {
+        if (debugLogs) {
+            System.out.println(String.format(Locale.ROOT, "Traversing " + rule.mavenGeneratedName()));
+        }
         DefaultModelResolver.RepoModelSource depModelSource;
         try {
             depModelSource = modelResolver.resolveModel(
@@ -172,6 +177,9 @@ public class MigrationToolingMavenResolver {
             }
         }
         for (Dependency dependency : model.getDependencies()) {
+            if (debugLogs) {
+                System.out.println("Found dependency " + dependency);
+            }
             addDependency(dependency, model, scopes, exclusions, parent);
         }
     }
@@ -210,7 +218,7 @@ public class MigrationToolingMavenResolver {
 
         final Rule artifactRule;
         try {
-            artifactRule = new Rule(ArtifactBuilder.fromMavenDependency(dependency, versionResolver));
+            artifactRule = new Rule(ArtifactBuilder.fromMavenDependency(dependency, versionResolver, model));
         } catch (InvalidArtifactCoordinateException e) {
             throw new RuntimeException(String.format(Locale.ROOT, "Dependency '%s' has invalid format!", dependency), e);
         }

@@ -14,8 +14,12 @@
 
 package com.google.devtools.bazel.workspace.maven;
 
-import java.util.Locale;
+import com.google.common.annotations.VisibleForTesting;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.apache.maven.model.Dependency;
+import org.apache.maven.model.Model;
+import org.apache.maven.model.Profile;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.artifact.DefaultArtifact;
 
@@ -41,12 +45,52 @@ public class ArtifactBuilder {
      * Builds a Maven artifact from a dependency. Note, this is a org.apache.maven.model.Dependency
      * and not the Dependency defined by aether.
      */
-    public static Artifact fromMavenDependency(Dependency dep, VersionResolver versionResolver)
-        throws InvalidArtifactCoordinateException {
-        final String classifier = dep.getClassifier() == null ? "" : dep.getClassifier();
-        final String version = versionResolver.resolveVersion(dep.getGroupId(), dep.getArtifactId(), classifier, dep.getVersion());
+    public static Artifact fromMavenDependency(Dependency dep, VersionResolver versionResolver, Model model)
+            throws InvalidArtifactCoordinateException {
+        final String classifier = dep.getClassifier()==null ? "":dep.getClassifier();
+
+        final String resolvedVersion = ProfilePlaceholderUtil.replacePlaceholders(model, dep.getVersion());
+        final String version = versionResolver.resolveVersion(dep.getGroupId(), dep.getArtifactId(), classifier, resolvedVersion);
 
         return fromCoords(dep.getGroupId(), dep.getArtifactId(), classifier, version);
+    }
+
+    @VisibleForTesting
+    static class ProfilePlaceholderUtil {
+        private static final boolean DEBUG = false;
+
+        private static final Pattern PROPERTY_PLACEHOLDER = Pattern.compile("(\\$\\{([\\w.]+)})");
+
+        static String replacePlaceholders(final Model model, String text) {
+            final Matcher matcher = PROPERTY_PLACEHOLDER.matcher(text);
+            //using while, since there could be multiple placeholders
+            while (matcher.find()) {
+                for (int matchIndex = 1; matchIndex <= matcher.groupCount(); matchIndex += 2) {
+                    final String placeholder = matcher.group(matchIndex);
+                    final String placeholderKey = matcher.group(matchIndex + 1);
+                    if (DEBUG) System.out.println("Match for " + text + ": placeholder " + placeholder);
+                    final String placeholderValue = findPropertyValue(model, placeholderKey);
+                    if (placeholderValue!=null) {
+                        if (DEBUG) System.out.println("POM Property " + placeholderKey + " has value " + placeholderValue);
+                        text = text.replace(placeholder, placeholderValue);
+                    }
+                }
+            }
+
+            return text;
+        }
+
+        private static String findPropertyValue(final Model model, final String placeholderKey) {
+            for (final Profile profile : model.getProfiles()) {
+                for (final String propertyKey : profile.getProperties().stringPropertyNames()) {
+                    if (propertyKey.equals(placeholderKey)) {
+                        return profile.getProperties().getProperty(propertyKey);
+                    }
+                }
+            }
+
+            return null;
+        }
     }
 
     /** Exception thrown if an artifact coordinate cannot be parsed */

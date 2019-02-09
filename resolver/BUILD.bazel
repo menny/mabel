@@ -325,3 +325,18 @@ java_test(name = "real_writers_test",
   size="small",
   test_class = "net.evendanan.bazel.mvn.impl.WritersTests",
 )
+
+java_test(name = "graph_resolver_lib_test",
+  deps=[
+       ":graph_resolver_lib",
+
+       '//resolver/main_deps/org/apache/maven/maven-model',
+
+       "//resolver/main_deps/junit/junit",
+       '//resolver/main_deps/org/mockito/mockito-core',
+       '//resolver/main_deps/com/google/guava/guava',
+  ],
+  srcs=["src/main/javatest/com/google/devtools/bazel/workspace/maven/ArtifactBuilderTest.java"],
+  size="small",
+  test_class = "com.google.devtools.bazel.workspace.maven.ArtifactBuilderTest",
+)
