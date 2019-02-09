@@ -192,6 +192,22 @@ public class DefaultMergerTest {
     }
 
     @Test
+    public void testClearSrcJar() {
+        Assert.assertNotEquals("", ((List<Dependency>) ((List<Dependency>) GraphUtilsTest.SRC_JAR_GRAPH).get(0).dependencies()).get(0).sourcesUrl().toASCIIString());
+        Assert.assertNotEquals("", ((List<Dependency>) ((List<Dependency>) GraphUtilsTest.SRC_JAR_GRAPH).get(1).runtimeDependencies()).get(0).url().toASCIIString());
+        Assert.assertNotEquals("", ((List<Dependency>) ((List<Dependency>) GraphUtilsTest.SRC_JAR_GRAPH).get(1).runtimeDependencies()).get(0).sourcesUrl().toASCIIString());
+        Assert.assertNotEquals("", ((List<Dependency>) ((List<Dependency>) GraphUtilsTest.SRC_JAR_GRAPH).get(1).runtimeDependencies()).get(0).javadocUrl().toASCIIString());
+        final ArrayList<Dependency> cleared = new ArrayList<>(ClearSrcJarAttribute.clearSrcJar(GraphUtilsTest.SRC_JAR_GRAPH));
+        Assert.assertEquals(2, cleared.size());
+        GraphUtils.DfsTraveller(cleared, (dep, level) -> Assert.assertEquals("", dep.sourcesUrl().toASCIIString()));
+
+        Assert.assertEquals("", ((List<Dependency>) cleared.get(0).dependencies()).get(0).sourcesUrl().toASCIIString());
+        Assert.assertNotEquals("", ((List<Dependency>) cleared.get(1).runtimeDependencies()).get(0).url().toASCIIString());
+        Assert.assertEquals("", ((List<Dependency>) cleared.get(1).runtimeDependencies()).get(0).sourcesUrl().toASCIIString());
+        Assert.assertNotEquals("", ((List<Dependency>) cleared.get(1).runtimeDependencies()).get(0).javadocUrl().toASCIIString());
+    }
+
+    @Test
     public void testFlattenWithRepeats() {
         final ArrayList<Dependency> dependencies = new ArrayList<>(GraphUtils.deepCopyDeps(GraphUtilsTest.REPEATS_DEP6_AT_ROOT_GRAPH));
         dependencies.add(dependencies.get(1));

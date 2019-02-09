@@ -12,22 +12,10 @@ def generate_workspace_rules():
         downloaded_file_path = 'auto-service-1.0-rc4.jar',
     )
 
-    # from com.google.auto.service:auto-service:1.0-rc4
-    http_file(name = 'main_deps___com_google_auto_service__auto_service__1_0_rc4__sources',
-        urls = ['https://repo1.maven.org/maven2/com/google/auto/service/auto-service/1.0-rc4/auto-service-1.0-rc4-sources.jar'],
-        downloaded_file_path = 'auto-service-1.0-rc4-sources.jar',
-    )
-
     # from com.google.auto.value:auto-value-annotations:1.6.3
     http_file(name = 'main_deps___com_google_auto_value__auto_value_annotations__1_6_3',
         urls = ['https://repo1.maven.org/maven2/com/google/auto/value/auto-value-annotations/1.6.3/auto-value-annotations-1.6.3.jar'],
         downloaded_file_path = 'auto-value-annotations-1.6.3.jar',
-    )
-
-    # from com.google.auto.value:auto-value-annotations:1.6.3
-    http_file(name = 'main_deps___com_google_auto_value__auto_value_annotations__1_6_3__sources',
-        urls = ['https://repo1.maven.org/maven2/com/google/auto/value/auto-value-annotations/1.6.3/auto-value-annotations-1.6.3-sources.jar'],
-        downloaded_file_path = 'auto-value-annotations-1.6.3-sources.jar',
     )
 
     # from com.google.auto.value:auto-value:1.6.3
@@ -36,22 +24,10 @@ def generate_workspace_rules():
         downloaded_file_path = 'auto-value-1.6.3.jar',
     )
 
-    # from com.google.auto.value:auto-value:1.6.3
-    http_file(name = 'main_deps___com_google_auto_value__auto_value__1_6_3__sources',
-        urls = ['https://repo1.maven.org/maven2/com/google/auto/value/auto-value/1.6.3/auto-value-1.6.3-sources.jar'],
-        downloaded_file_path = 'auto-value-1.6.3-sources.jar',
-    )
-
     # from com.google.auto:auto-common:0.8
     http_file(name = 'main_deps___com_google_auto__auto_common__0_8',
         urls = ['https://repo1.maven.org/maven2/com/google/auto/auto-common/0.8/auto-common-0.8.jar'],
         downloaded_file_path = 'auto-common-0.8.jar',
-    )
-
-    # from com.google.auto:auto-common:0.8
-    http_file(name = 'main_deps___com_google_auto__auto_common__0_8__sources',
-        urls = ['https://repo1.maven.org/maven2/com/google/auto/auto-common/0.8/auto-common-0.8-sources.jar'],
-        downloaded_file_path = 'auto-common-0.8-sources.jar',
     )
 
     # from com.google.guava:guava:23.5-jre
@@ -60,34 +36,16 @@ def generate_workspace_rules():
         downloaded_file_path = 'guava-23.5-jre.jar',
     )
 
-    # from com.google.guava:guava:23.5-jre
-    http_file(name = 'main_deps___com_google_guava__guava__23_5_jre__sources',
-        urls = ['https://repo1.maven.org/maven2/com/google/guava/guava/23.5-jre/guava-23.5-jre-sources.jar'],
-        downloaded_file_path = 'guava-23.5-jre-sources.jar',
-    )
-
     # from net.ltgt.gradle.incap:incap-processor:0.2
     http_file(name = 'main_deps___net_ltgt_gradle_incap__incap_processor__0_2',
         urls = ['https://repo1.maven.org/maven2/net/ltgt/gradle/incap/incap-processor/0.2/incap-processor-0.2.jar'],
         downloaded_file_path = 'incap-processor-0.2.jar',
     )
 
-    # from net.ltgt.gradle.incap:incap-processor:0.2
-    http_file(name = 'main_deps___net_ltgt_gradle_incap__incap_processor__0_2__sources',
-        urls = ['https://repo1.maven.org/maven2/net/ltgt/gradle/incap/incap-processor/0.2/incap-processor-0.2-sources.jar'],
-        downloaded_file_path = 'incap-processor-0.2-sources.jar',
-    )
-
     # from net.ltgt.gradle.incap:incap:0.2
     http_file(name = 'main_deps___net_ltgt_gradle_incap__incap__0_2',
         urls = ['https://repo1.maven.org/maven2/net/ltgt/gradle/incap/incap/0.2/incap-0.2.jar'],
         downloaded_file_path = 'incap-0.2.jar',
-    )
-
-    # from net.ltgt.gradle.incap:incap:0.2
-    http_file(name = 'main_deps___net_ltgt_gradle_incap__incap__0_2__sources',
-        urls = ['https://repo1.maven.org/maven2/net/ltgt/gradle/incap/incap/0.2/incap-0.2-sources.jar'],
-        downloaded_file_path = 'incap-0.2-sources.jar',
     )
 
 
@@ -167,7 +125,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.auto.service:auto-service:1.0-rc4
     native.java_import(name = 'main_deps___com_google_auto_service__auto_service__1_0_rc4_java_plugin_lib',
         jars = ['@main_deps___com_google_auto_service__auto_service__1_0_rc4//file'],
-        licenses = [],
+        licenses = ['notice'],
         deps = [
             ':main_deps___com_google_auto__auto_common',
             ':main_deps___com_google_guava__guava',
@@ -177,7 +135,6 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
             ':main_deps___com_google_guava__guava',
         ],
         runtime_deps = [],
-        srcjar = '@main_deps___com_google_auto_service__auto_service__1_0_rc4__sources//file',
     )
 
     # from com.google.auto.service:auto-service:1.0-rc4
@@ -199,7 +156,6 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         deps = [],
         exports = [],
         runtime_deps = [],
-        srcjar = '@main_deps___com_google_auto_value__auto_value_annotations__1_6_3__sources//file',
     )
 
     # from com.google.auto.value:auto-value:1.6.3
@@ -360,7 +316,6 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         ],
         exports = [],
         runtime_deps = [],
-        srcjar = '@main_deps___com_google_auto_value__auto_value__1_6_3__sources//file',
     )
 
     # from com.google.auto.value:auto-value:1.6.3
@@ -378,11 +333,10 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.auto:auto-common:0.8
     native.java_import(name = 'main_deps___com_google_auto__auto_common__0_8',
         jars = ['@main_deps___com_google_auto__auto_common__0_8//file'],
-        licenses = [],
+        licenses = ['notice'],
         deps = [':main_deps___com_google_guava__guava'],
         exports = [':main_deps___com_google_guava__guava'],
         runtime_deps = [],
-        srcjar = '@main_deps___com_google_auto__auto_common__0_8__sources//file',
     )
 
     # from com.google.guava:guava:23.5-jre
@@ -398,7 +352,6 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         deps = [],
         exports = [],
         runtime_deps = [],
-        srcjar = '@main_deps___com_google_guava__guava__23_5_jre__sources//file',
     )
 
     # from net.ltgt.gradle.incap:incap-processor:0.2
@@ -440,7 +393,6 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         deps = [],
         exports = [],
         runtime_deps = [':main_deps___net_ltgt_gradle_incap__incap'],
-        srcjar = '@main_deps___net_ltgt_gradle_incap__incap_processor__0_2__sources//file',
     )
 
     # from net.ltgt.gradle.incap:incap-processor:0.2
@@ -462,7 +414,6 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         deps = [],
         exports = [],
         runtime_deps = [],
-        srcjar = '@main_deps___net_ltgt_gradle_incap__incap__0_2__sources//file',
     )
 
 
