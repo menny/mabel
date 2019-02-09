@@ -161,15 +161,28 @@ public class Dependency {
             if (Strings.isNullOrEmpty(licenseName)) return null;
             switch (licenseName) {
                 case "Apache 2.0":
+                case "Apache 2":
                 case "Apache License, Version 2.0":
                 case "The Apache Software License, Version 2.0":
                 case "The MIT License":
                 case "MIT License":
                 case "MIT":
+                case "MIT license":
+                case "New BSD License":
                     return notice;
+
+                case "Eclipse Public License - v 1.0":
                 case "Eclipse Public License 1.0":
                 case "Eclipse Public License, Version 1.0":
                     return reciprocal;
+
+                case "GNU Lesser General Public License":
+                case "GNU Lesser Public License":
+                    return reciprocal;
+
+                case "CC0 1.0 Universal License":
+                    return unencumbered;
+
                 default:
                     System.out.println(String.format(Locale.US, "License with name '%s' is unrecognizable", licenseName));
                     return null;
