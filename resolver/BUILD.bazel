@@ -340,3 +340,17 @@ java_test(name = "graph_resolver_lib_test",
   size="small",
   test_class = "com.google.devtools.bazel.workspace.maven.ArtifactBuilderTest",
 )
+
+java_test(name = "sources_locator_test",
+  deps=[
+       ":merger",
+       ':api_lib',
+
+       "//resolver/main_deps/junit/junit",
+       '//resolver/main_deps/org/mockito/mockito-core',
+       '//resolver/main_deps/com/google/guava/guava',
+  ],
+  srcs=["src/main/javatest/net/evendanan/bazel/mvn/merger/SourcesLocatorTest.java"],
+  size="small",
+  test_class = "net.evendanan.bazel.mvn.merger.SourcesLocatorTest",
+)

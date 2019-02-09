@@ -31,6 +31,7 @@ import net.evendanan.bazel.mvn.impl.TargetsBuilders;
 import net.evendanan.bazel.mvn.merger.ClearSrcJarAttribute;
 import net.evendanan.bazel.mvn.merger.DefaultMerger;
 import net.evendanan.bazel.mvn.merger.DependencyTreeFlatter;
+import net.evendanan.bazel.mvn.merger.SourcesJarLocator;
 import net.evendanan.bazel.mvn.serialization.Serialization;
 import net.evendanan.timing.TaskTiming;
 import net.evendanan.timing.TimingData;
@@ -82,10 +83,14 @@ public class Merger {
         Merger driver = new Merger(options);
         Collection<Dependency> dependencies = driver.generateFromInputs(options);
 
-        if (!options.fetch_srcjar) {
+        if (options.fetch_srcjar) {
+            System.out.print("Locating sources JARs for resolved dependencies...");
+            dependencies = new SourcesJarLocator().fillSourcesAttribute(dependencies);
+            System.out.println("✓");
+        } else {
             dependencies = ClearSrcJarAttribute.clearSrcJar(dependencies);
         }
-        
+
         Function<Dependency, Dependency> prefixer = dependency -> DependencyWithPrefix.wrap(options.rule_prefix, dependency);
 
         driver.writeResults(dependencies.stream().map(prefixer).collect(Collectors.toList()), args);
