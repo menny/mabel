@@ -30,10 +30,28 @@ def generate_workspace_rules():
         downloaded_file_path = 'auto-common-0.8.jar',
     )
 
+    # from com.google.code.findbugs:jsr305:1.3.9
+    http_file(name = 'main_deps___com_google_code_findbugs__jsr305__1_3_9',
+        urls = ['https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar'],
+        downloaded_file_path = 'jsr305-1.3.9.jar',
+    )
+
+    # from com.google.errorprone:error_prone_annotations:2.0.18
+    http_file(name = 'main_deps___com_google_errorprone__error_prone_annotations__2_0_18',
+        urls = ['https://repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.0.18/error_prone_annotations-2.0.18.jar'],
+        downloaded_file_path = 'error_prone_annotations-2.0.18.jar',
+    )
+
     # from com.google.guava:guava:23.5-jre
     http_file(name = 'main_deps___com_google_guava__guava__23_5_jre',
         urls = ['https://repo1.maven.org/maven2/com/google/guava/guava/23.5-jre/guava-23.5-jre.jar'],
         downloaded_file_path = 'guava-23.5-jre.jar',
+    )
+
+    # from com.google.j2objc:j2objc-annotations:1.1
+    http_file(name = 'main_deps___com_google_j2objc__j2objc_annotations__1_1',
+        urls = ['https://repo1.maven.org/maven2/com/google/j2objc/j2objc-annotations/1.1/j2objc-annotations-1.1.jar'],
+        downloaded_file_path = 'j2objc-annotations-1.1.jar',
     )
 
     # from net.ltgt.gradle.incap:incap-processor:0.2
@@ -46,6 +64,18 @@ def generate_workspace_rules():
     http_file(name = 'main_deps___net_ltgt_gradle_incap__incap__0_2',
         urls = ['https://repo1.maven.org/maven2/net/ltgt/gradle/incap/incap/0.2/incap-0.2.jar'],
         downloaded_file_path = 'incap-0.2.jar',
+    )
+
+    # from org.checkerframework:checker-qual:2.0.0
+    http_file(name = 'main_deps___org_checkerframework__checker_qual__2_0_0',
+        urls = ['https://repo1.maven.org/maven2/org/checkerframework/checker-qual/2.0.0/checker-qual-2.0.0.jar'],
+        downloaded_file_path = 'checker-qual-2.0.0.jar',
+    )
+
+    # from org.codehaus.mojo:animal-sniffer-annotations:1.14
+    http_file(name = 'main_deps___org_codehaus_mojo__animal_sniffer_annotations__1_14',
+        urls = ['https://repo1.maven.org/maven2/org/codehaus/mojo/animal-sniffer-annotations/1.14/animal-sniffer-annotations-1.14.jar'],
+        downloaded_file_path = 'animal-sniffer-annotations-1.14.jar',
     )
 
 
@@ -339,6 +369,36 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         runtime_deps = [],
     )
 
+    # from com.google.code.findbugs:jsr305:1.3.9
+    native.alias(name = 'main_deps___com_google_code_findbugs__jsr305',
+        actual = ':main_deps___com_google_code_findbugs__jsr305__1_3_9',
+        visibility = ['//visibility:public'],
+    )
+
+    # from com.google.code.findbugs:jsr305:1.3.9
+    native.java_import(name = 'main_deps___com_google_code_findbugs__jsr305__1_3_9',
+        jars = ['@main_deps___com_google_code_findbugs__jsr305__1_3_9//file'],
+        licenses = ['notice'],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from com.google.errorprone:error_prone_annotations:2.0.18
+    native.alias(name = 'main_deps___com_google_errorprone__error_prone_annotations',
+        actual = ':main_deps___com_google_errorprone__error_prone_annotations__2_0_18',
+        visibility = ['//visibility:public'],
+    )
+
+    # from com.google.errorprone:error_prone_annotations:2.0.18
+    native.java_import(name = 'main_deps___com_google_errorprone__error_prone_annotations__2_0_18',
+        jars = ['@main_deps___com_google_errorprone__error_prone_annotations__2_0_18//file'],
+        licenses = ['notice'],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
     # from com.google.guava:guava:23.5-jre
     native.alias(name = 'main_deps___com_google_guava__guava',
         actual = ':main_deps___com_google_guava__guava__23_5_jre',
@@ -348,7 +408,34 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.guava:guava:23.5-jre
     native.java_import(name = 'main_deps___com_google_guava__guava__23_5_jre',
         jars = ['@main_deps___com_google_guava__guava__23_5_jre//file'],
-        licenses = [],
+        licenses = ['notice'],
+        deps = [
+            ':main_deps___com_google_code_findbugs__jsr305',
+            ':main_deps___com_google_errorprone__error_prone_annotations',
+            ':main_deps___com_google_j2objc__j2objc_annotations',
+            ':main_deps___org_checkerframework__checker_qual',
+            ':main_deps___org_codehaus_mojo__animal_sniffer_annotations',
+        ],
+        exports = [
+            ':main_deps___com_google_code_findbugs__jsr305',
+            ':main_deps___com_google_errorprone__error_prone_annotations',
+            ':main_deps___com_google_j2objc__j2objc_annotations',
+            ':main_deps___org_checkerframework__checker_qual',
+            ':main_deps___org_codehaus_mojo__animal_sniffer_annotations',
+        ],
+        runtime_deps = [],
+    )
+
+    # from com.google.j2objc:j2objc-annotations:1.1
+    native.alias(name = 'main_deps___com_google_j2objc__j2objc_annotations',
+        actual = ':main_deps___com_google_j2objc__j2objc_annotations__1_1',
+        visibility = ['//visibility:public'],
+    )
+
+    # from com.google.j2objc:j2objc-annotations:1.1
+    native.java_import(name = 'main_deps___com_google_j2objc__j2objc_annotations__1_1',
+        jars = ['@main_deps___com_google_j2objc__j2objc_annotations__1_1//file'],
+        licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -411,6 +498,36 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     native.java_import(name = 'main_deps___net_ltgt_gradle_incap__incap__0_2',
         jars = ['@main_deps___net_ltgt_gradle_incap__incap__0_2//file'],
         licenses = [],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from org.checkerframework:checker-qual:2.0.0
+    native.alias(name = 'main_deps___org_checkerframework__checker_qual',
+        actual = ':main_deps___org_checkerframework__checker_qual__2_0_0',
+        visibility = ['//visibility:public'],
+    )
+
+    # from org.checkerframework:checker-qual:2.0.0
+    native.java_import(name = 'main_deps___org_checkerframework__checker_qual__2_0_0',
+        jars = ['@main_deps___org_checkerframework__checker_qual__2_0_0//file'],
+        licenses = ['notice'],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from org.codehaus.mojo:animal-sniffer-annotations:1.14
+    native.alias(name = 'main_deps___org_codehaus_mojo__animal_sniffer_annotations',
+        actual = ':main_deps___org_codehaus_mojo__animal_sniffer_annotations__1_14',
+        visibility = ['//visibility:public'],
+    )
+
+    # from org.codehaus.mojo:animal-sniffer-annotations:1.14
+    native.java_import(name = 'main_deps___org_codehaus_mojo__animal_sniffer_annotations__1_14',
+        jars = ['@main_deps___org_codehaus_mojo__animal_sniffer_annotations__1_14//file'],
+        licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],

@@ -66,6 +66,18 @@ def generate_workspace_rules():
         downloaded_file_path = 'core-runtime-2.0.0-sources.jar',
     )
 
+    # from androidx.asynclayoutinflater:asynclayoutinflater:1.0.0
+    http_file(name = 'main_deps___androidx_asynclayoutinflater__asynclayoutinflater__1_0_0',
+        urls = ['https://maven.google.com/androidx/asynclayoutinflater/asynclayoutinflater/1.0.0/asynclayoutinflater-1.0.0.aar'],
+        downloaded_file_path = 'asynclayoutinflater-1.0.0.aar',
+    )
+
+    # from androidx.asynclayoutinflater:asynclayoutinflater:1.0.0
+    http_file(name = 'main_deps___androidx_asynclayoutinflater__asynclayoutinflater__1_0_0__sources',
+        urls = ['https://maven.google.com/androidx/asynclayoutinflater/asynclayoutinflater/1.0.0/asynclayoutinflater-1.0.0-sources.jar'],
+        downloaded_file_path = 'asynclayoutinflater-1.0.0-sources.jar',
+    )
+
     # from androidx.collection:collection:1.0.0
     http_file(name = 'main_deps___androidx_collection__collection__1_0_0',
         urls = ['https://maven.google.com/androidx/collection/collection/1.0.0/collection-1.0.0.jar'],
@@ -76,6 +88,18 @@ def generate_workspace_rules():
     http_file(name = 'main_deps___androidx_collection__collection__1_0_0__sources',
         urls = ['https://maven.google.com/androidx/collection/collection/1.0.0/collection-1.0.0-sources.jar'],
         downloaded_file_path = 'collection-1.0.0-sources.jar',
+    )
+
+    # from androidx.coordinatorlayout:coordinatorlayout:1.0.0
+    http_file(name = 'main_deps___androidx_coordinatorlayout__coordinatorlayout__1_0_0',
+        urls = ['https://maven.google.com/androidx/coordinatorlayout/coordinatorlayout/1.0.0/coordinatorlayout-1.0.0.aar'],
+        downloaded_file_path = 'coordinatorlayout-1.0.0.aar',
+    )
+
+    # from androidx.coordinatorlayout:coordinatorlayout:1.0.0
+    http_file(name = 'main_deps___androidx_coordinatorlayout__coordinatorlayout__1_0_0__sources',
+        urls = ['https://maven.google.com/androidx/coordinatorlayout/coordinatorlayout/1.0.0/coordinatorlayout-1.0.0-sources.jar'],
+        downloaded_file_path = 'coordinatorlayout-1.0.0-sources.jar',
     )
 
     # from androidx.core:core:1.1.0-alpha01
@@ -126,6 +150,18 @@ def generate_workspace_rules():
         downloaded_file_path = 'documentfile-1.0.0-sources.jar',
     )
 
+    # from androidx.drawerlayout:drawerlayout:1.0.0
+    http_file(name = 'main_deps___androidx_drawerlayout__drawerlayout__1_0_0',
+        urls = ['https://maven.google.com/androidx/drawerlayout/drawerlayout/1.0.0/drawerlayout-1.0.0.aar'],
+        downloaded_file_path = 'drawerlayout-1.0.0.aar',
+    )
+
+    # from androidx.drawerlayout:drawerlayout:1.0.0
+    http_file(name = 'main_deps___androidx_drawerlayout__drawerlayout__1_0_0__sources',
+        urls = ['https://maven.google.com/androidx/drawerlayout/drawerlayout/1.0.0/drawerlayout-1.0.0-sources.jar'],
+        downloaded_file_path = 'drawerlayout-1.0.0-sources.jar',
+    )
+
     # from androidx.fragment:fragment:1.1.0-alpha02
     http_file(name = 'main_deps___androidx_fragment__fragment__1_1_0_alpha02',
         urls = ['https://maven.google.com/androidx/fragment/fragment/1.1.0-alpha02/fragment-1.1.0-alpha02.aar'],
@@ -136,6 +172,18 @@ def generate_workspace_rules():
     http_file(name = 'main_deps___androidx_fragment__fragment__1_1_0_alpha02__sources',
         urls = ['https://maven.google.com/androidx/fragment/fragment/1.1.0-alpha02/fragment-1.1.0-alpha02-sources.jar'],
         downloaded_file_path = 'fragment-1.1.0-alpha02-sources.jar',
+    )
+
+    # from androidx.interpolator:interpolator:1.0.0
+    http_file(name = 'main_deps___androidx_interpolator__interpolator__1_0_0',
+        urls = ['https://maven.google.com/androidx/interpolator/interpolator/1.0.0/interpolator-1.0.0.aar'],
+        downloaded_file_path = 'interpolator-1.0.0.aar',
+    )
+
+    # from androidx.interpolator:interpolator:1.0.0
+    http_file(name = 'main_deps___androidx_interpolator__interpolator__1_0_0__sources',
+        urls = ['https://maven.google.com/androidx/interpolator/interpolator/1.0.0/interpolator-1.0.0-sources.jar'],
+        downloaded_file_path = 'interpolator-1.0.0-sources.jar',
     )
 
     # from androidx.legacy:legacy-support-core-ui:1.0.0
@@ -256,6 +304,30 @@ def generate_workspace_rules():
     http_file(name = 'main_deps___androidx_print__print__1_0_0__sources',
         urls = ['https://maven.google.com/androidx/print/print/1.0.0/print-1.0.0-sources.jar'],
         downloaded_file_path = 'print-1.0.0-sources.jar',
+    )
+
+    # from androidx.slidingpanelayout:slidingpanelayout:1.0.0
+    http_file(name = 'main_deps___androidx_slidingpanelayout__slidingpanelayout__1_0_0',
+        urls = ['https://maven.google.com/androidx/slidingpanelayout/slidingpanelayout/1.0.0/slidingpanelayout-1.0.0.aar'],
+        downloaded_file_path = 'slidingpanelayout-1.0.0.aar',
+    )
+
+    # from androidx.slidingpanelayout:slidingpanelayout:1.0.0
+    http_file(name = 'main_deps___androidx_slidingpanelayout__slidingpanelayout__1_0_0__sources',
+        urls = ['https://maven.google.com/androidx/slidingpanelayout/slidingpanelayout/1.0.0/slidingpanelayout-1.0.0-sources.jar'],
+        downloaded_file_path = 'slidingpanelayout-1.0.0-sources.jar',
+    )
+
+    # from androidx.swiperefreshlayout:swiperefreshlayout:1.0.0
+    http_file(name = 'main_deps___androidx_swiperefreshlayout__swiperefreshlayout__1_0_0',
+        urls = ['https://maven.google.com/androidx/swiperefreshlayout/swiperefreshlayout/1.0.0/swiperefreshlayout-1.0.0.aar'],
+        downloaded_file_path = 'swiperefreshlayout-1.0.0.aar',
+    )
+
+    # from androidx.swiperefreshlayout:swiperefreshlayout:1.0.0
+    http_file(name = 'main_deps___androidx_swiperefreshlayout__swiperefreshlayout__1_0_0__sources',
+        urls = ['https://maven.google.com/androidx/swiperefreshlayout/swiperefreshlayout/1.0.0/swiperefreshlayout-1.0.0-sources.jar'],
+        downloaded_file_path = 'swiperefreshlayout-1.0.0-sources.jar',
     )
 
     # from androidx.vectordrawable:vectordrawable-animated:1.0.0
@@ -435,9 +507,9 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from androidx.arch.core:core-common:2.0.0
     native.java_import(name = 'main_deps___androidx_arch_core__core_common__2_0_0',
         jars = ['@main_deps___androidx_arch_core__core_common__2_0_0//file'],
-        licenses = [],
-        deps = [],
-        exports = [],
+        licenses = ['notice'],
+        deps = [':main_deps___androidx_annotation__annotation'],
+        exports = [':main_deps___androidx_annotation__annotation'],
         runtime_deps = [],
         srcjar = '@main_deps___androidx_arch_core__core_common__2_0_0__sources//file',
     )
@@ -461,6 +533,25 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         ],
     )
 
+    # from androidx.asynclayoutinflater:asynclayoutinflater:1.0.0
+    native.alias(name = 'main_deps___androidx_asynclayoutinflater__asynclayoutinflater',
+        actual = ':main_deps___androidx_asynclayoutinflater__asynclayoutinflater__1_0_0',
+        visibility = ['//visibility:public'],
+    )
+
+    # from androidx.asynclayoutinflater:asynclayoutinflater:1.0.0
+    native.aar_import(name = 'main_deps___androidx_asynclayoutinflater__asynclayoutinflater__1_0_0',
+        aar = '@main_deps___androidx_asynclayoutinflater__asynclayoutinflater__1_0_0//file',
+        deps = [
+            ':main_deps___androidx_annotation__annotation',
+            ':main_deps___androidx_core__core',
+        ],
+        exports = [
+            ':main_deps___androidx_annotation__annotation',
+            ':main_deps___androidx_core__core',
+        ],
+    )
+
     # from androidx.collection:collection:1.0.0
     native.alias(name = 'main_deps___androidx_collection__collection',
         actual = ':main_deps___androidx_collection__collection__1_0_0',
@@ -470,11 +561,32 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from androidx.collection:collection:1.0.0
     native.java_import(name = 'main_deps___androidx_collection__collection__1_0_0',
         jars = ['@main_deps___androidx_collection__collection__1_0_0//file'],
-        licenses = [],
-        deps = [],
-        exports = [],
+        licenses = ['notice'],
+        deps = [':main_deps___androidx_annotation__annotation'],
+        exports = [':main_deps___androidx_annotation__annotation'],
         runtime_deps = [],
         srcjar = '@main_deps___androidx_collection__collection__1_0_0__sources//file',
+    )
+
+    # from androidx.coordinatorlayout:coordinatorlayout:1.0.0
+    native.alias(name = 'main_deps___androidx_coordinatorlayout__coordinatorlayout',
+        actual = ':main_deps___androidx_coordinatorlayout__coordinatorlayout__1_0_0',
+        visibility = ['//visibility:public'],
+    )
+
+    # from androidx.coordinatorlayout:coordinatorlayout:1.0.0
+    native.aar_import(name = 'main_deps___androidx_coordinatorlayout__coordinatorlayout__1_0_0',
+        aar = '@main_deps___androidx_coordinatorlayout__coordinatorlayout__1_0_0//file',
+        deps = [
+            ':main_deps___androidx_annotation__annotation',
+            ':main_deps___androidx_core__core',
+            ':main_deps___androidx_customview__customview',
+        ],
+        exports = [
+            ':main_deps___androidx_annotation__annotation',
+            ':main_deps___androidx_core__core',
+            ':main_deps___androidx_customview__customview',
+        ],
     )
 
     # from androidx.core:core:1.1.0-alpha01
@@ -545,6 +657,27 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         exports = [':main_deps___androidx_annotation__annotation'],
     )
 
+    # from androidx.drawerlayout:drawerlayout:1.0.0
+    native.alias(name = 'main_deps___androidx_drawerlayout__drawerlayout',
+        actual = ':main_deps___androidx_drawerlayout__drawerlayout__1_0_0',
+        visibility = ['//visibility:public'],
+    )
+
+    # from androidx.drawerlayout:drawerlayout:1.0.0
+    native.aar_import(name = 'main_deps___androidx_drawerlayout__drawerlayout__1_0_0',
+        aar = '@main_deps___androidx_drawerlayout__drawerlayout__1_0_0//file',
+        deps = [
+            ':main_deps___androidx_annotation__annotation',
+            ':main_deps___androidx_core__core',
+            ':main_deps___androidx_customview__customview',
+        ],
+        exports = [
+            ':main_deps___androidx_annotation__annotation',
+            ':main_deps___androidx_core__core',
+            ':main_deps___androidx_customview__customview',
+        ],
+    )
+
     # from androidx.fragment:fragment:1.1.0-alpha02
     native.alias(name = 'main_deps___androidx_fragment__fragment',
         actual = ':main_deps___androidx_fragment__fragment__1_1_0_alpha02',
@@ -572,6 +705,19 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         ],
     )
 
+    # from androidx.interpolator:interpolator:1.0.0
+    native.alias(name = 'main_deps___androidx_interpolator__interpolator',
+        actual = ':main_deps___androidx_interpolator__interpolator__1_0_0',
+        visibility = ['//visibility:public'],
+    )
+
+    # from androidx.interpolator:interpolator:1.0.0
+    native.aar_import(name = 'main_deps___androidx_interpolator__interpolator__1_0_0',
+        aar = '@main_deps___androidx_interpolator__interpolator__1_0_0//file',
+        deps = [':main_deps___androidx_annotation__annotation'],
+        exports = [':main_deps___androidx_annotation__annotation'],
+    )
+
     # from androidx.legacy:legacy-support-core-ui:1.0.0
     native.alias(name = 'main_deps___androidx_legacy__legacy_support_core_ui',
         actual = ':main_deps___androidx_legacy__legacy_support_core_ui__1_0_0',
@@ -581,8 +727,34 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from androidx.legacy:legacy-support-core-ui:1.0.0
     native.aar_import(name = 'main_deps___androidx_legacy__legacy_support_core_ui__1_0_0',
         aar = '@main_deps___androidx_legacy__legacy_support_core_ui__1_0_0//file',
-        deps = [],
-        exports = [],
+        deps = [
+            ':main_deps___androidx_annotation__annotation',
+            ':main_deps___androidx_asynclayoutinflater__asynclayoutinflater',
+            ':main_deps___androidx_coordinatorlayout__coordinatorlayout',
+            ':main_deps___androidx_core__core',
+            ':main_deps___androidx_cursoradapter__cursoradapter',
+            ':main_deps___androidx_customview__customview',
+            ':main_deps___androidx_drawerlayout__drawerlayout',
+            ':main_deps___androidx_interpolator__interpolator',
+            ':main_deps___androidx_legacy__legacy_support_core_utils',
+            ':main_deps___androidx_slidingpanelayout__slidingpanelayout',
+            ':main_deps___androidx_swiperefreshlayout__swiperefreshlayout',
+            ':main_deps___androidx_viewpager__viewpager',
+        ],
+        exports = [
+            ':main_deps___androidx_annotation__annotation',
+            ':main_deps___androidx_asynclayoutinflater__asynclayoutinflater',
+            ':main_deps___androidx_coordinatorlayout__coordinatorlayout',
+            ':main_deps___androidx_core__core',
+            ':main_deps___androidx_cursoradapter__cursoradapter',
+            ':main_deps___androidx_customview__customview',
+            ':main_deps___androidx_drawerlayout__drawerlayout',
+            ':main_deps___androidx_interpolator__interpolator',
+            ':main_deps___androidx_legacy__legacy_support_core_utils',
+            ':main_deps___androidx_slidingpanelayout__slidingpanelayout',
+            ':main_deps___androidx_swiperefreshlayout__swiperefreshlayout',
+            ':main_deps___androidx_viewpager__viewpager',
+        ],
     )
 
     # from androidx.legacy:legacy-support-core-utils:1.0.0
@@ -679,8 +851,16 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from androidx.lifecycle:lifecycle-runtime:2.0.0
     native.aar_import(name = 'main_deps___androidx_lifecycle__lifecycle_runtime__2_0_0',
         aar = '@main_deps___androidx_lifecycle__lifecycle_runtime__2_0_0//file',
-        deps = [],
-        exports = [],
+        deps = [
+            ':main_deps___androidx_annotation__annotation',
+            ':main_deps___androidx_arch_core__core_common',
+            ':main_deps___androidx_lifecycle__lifecycle_common',
+        ],
+        exports = [
+            ':main_deps___androidx_annotation__annotation',
+            ':main_deps___androidx_arch_core__core_common',
+            ':main_deps___androidx_lifecycle__lifecycle_common',
+        ],
     )
 
     # from androidx.lifecycle:lifecycle-viewmodel:2.0.0
@@ -692,8 +872,8 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from androidx.lifecycle:lifecycle-viewmodel:2.0.0
     native.aar_import(name = 'main_deps___androidx_lifecycle__lifecycle_viewmodel__2_0_0',
         aar = '@main_deps___androidx_lifecycle__lifecycle_viewmodel__2_0_0//file',
-        deps = [],
-        exports = [],
+        deps = [':main_deps___androidx_annotation__annotation'],
+        exports = [':main_deps___androidx_annotation__annotation'],
     )
 
     # from androidx.loader:loader:1.0.0
@@ -743,6 +923,48 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         aar = '@main_deps___androidx_print__print__1_0_0//file',
         deps = [':main_deps___androidx_annotation__annotation'],
         exports = [':main_deps___androidx_annotation__annotation'],
+    )
+
+    # from androidx.slidingpanelayout:slidingpanelayout:1.0.0
+    native.alias(name = 'main_deps___androidx_slidingpanelayout__slidingpanelayout',
+        actual = ':main_deps___androidx_slidingpanelayout__slidingpanelayout__1_0_0',
+        visibility = ['//visibility:public'],
+    )
+
+    # from androidx.slidingpanelayout:slidingpanelayout:1.0.0
+    native.aar_import(name = 'main_deps___androidx_slidingpanelayout__slidingpanelayout__1_0_0',
+        aar = '@main_deps___androidx_slidingpanelayout__slidingpanelayout__1_0_0//file',
+        deps = [
+            ':main_deps___androidx_annotation__annotation',
+            ':main_deps___androidx_core__core',
+            ':main_deps___androidx_customview__customview',
+        ],
+        exports = [
+            ':main_deps___androidx_annotation__annotation',
+            ':main_deps___androidx_core__core',
+            ':main_deps___androidx_customview__customview',
+        ],
+    )
+
+    # from androidx.swiperefreshlayout:swiperefreshlayout:1.0.0
+    native.alias(name = 'main_deps___androidx_swiperefreshlayout__swiperefreshlayout',
+        actual = ':main_deps___androidx_swiperefreshlayout__swiperefreshlayout__1_0_0',
+        visibility = ['//visibility:public'],
+    )
+
+    # from androidx.swiperefreshlayout:swiperefreshlayout:1.0.0
+    native.aar_import(name = 'main_deps___androidx_swiperefreshlayout__swiperefreshlayout__1_0_0',
+        aar = '@main_deps___androidx_swiperefreshlayout__swiperefreshlayout__1_0_0//file',
+        deps = [
+            ':main_deps___androidx_annotation__annotation',
+            ':main_deps___androidx_core__core',
+            ':main_deps___androidx_interpolator__interpolator',
+        ],
+        exports = [
+            ':main_deps___androidx_annotation__annotation',
+            ':main_deps___androidx_core__core',
+            ':main_deps___androidx_interpolator__interpolator',
+        ],
     )
 
     # from androidx.vectordrawable:vectordrawable-animated:1.0.0
@@ -837,7 +1059,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
             ':main_deps___androidx_appcompat__appcompat',
             ':main_deps___androidx_fragment__fragment',
         ],
-        exports = [],
+        exports = [':main_deps___androidx_annotation__annotation'],
     )
 
     # from com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406
@@ -855,7 +1077,10 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
             ':main_deps___androidx_fragment__fragment',
             ':main_deps___com_github_menny_Chauffeur__lib',
         ],
-        exports = [':main_deps___com_github_menny_Chauffeur__lib'],
+        exports = [
+            ':main_deps___androidx_annotation__annotation',
+            ':main_deps___com_github_menny_Chauffeur__lib',
+        ],
     )
 
 

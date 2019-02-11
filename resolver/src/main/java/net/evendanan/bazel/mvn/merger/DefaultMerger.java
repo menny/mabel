@@ -14,10 +14,7 @@ public class DefaultMerger implements GraphMerger {
         final Collection<Dependency> mergedDependencies = new PinBreadthFirstVersionsMerger().mergeGraphs(dependencies);
         //2. de-duping
         System.out.println("Removing duplicate dependencies...");
-        final Collection<Dependency> deDuped = new FilterDuplicateDependenciesEntries().mergeGraphs(mergedDependencies);
-
-        System.out.println("Verifying there are no conflicting versions...");
-        return VerifyNoConflictingVersions.checkNoConflictingVersions(deDuped);
+        return new FilterDuplicateDependenciesEntries().mergeGraphs(mergedDependencies);
     }
 
 }
