@@ -137,6 +137,7 @@ public class MigrationToolingMavenResolver {
                 }
             }
 
+            rule.setRepository("");
             System.out.println("Could not get a model for " + rule.mavenGeneratedName() + ", and was unable to locate the artifact at any valid repository!");
         }
     }

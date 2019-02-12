@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
+import javax.annotation.Nonnull;
 import net.evendanan.bazel.mvn.api.Dependency;
 
 public class SourcesJarLocator {
@@ -28,14 +29,14 @@ public class SourcesJarLocator {
         mConnectionOpenner = opener;
     }
 
-    public Collection<Dependency> fillSourcesAttribute(Collection<Dependency> dependencies) {
+    private static Collection<Dependency> fillSourcesAttribute(Collection<Dependency> dependencies, DependencyMemoizator memoizator) {
         return dependencies.stream()
-                .map(dependency -> new Dependency(dependency.groupId(), dependency.artifactId(), dependency.version(), dependency.packaging(),
-                        fillSourcesAttribute(dependency.dependencies()),
-                        fillSourcesAttribute(dependency.exports()),
-                        fillSourcesAttribute(dependency.runtimeDependencies()),
-                        dependency.url(), uriWithClassifier(dependency.url()), dependency.javadocUrl(), dependency.licenses()))
+                .map(memoizator::map)
                 .collect(Collectors.toList());
+    }
+
+    public Collection<Dependency> fillSourcesAttribute(Collection<Dependency> dependencies) {
+        return fillSourcesAttribute(dependencies, new DependencyMemoizator());
     }
 
     private URI uriWithClassifier(final URI uri) {
@@ -72,5 +73,23 @@ public class SourcesJarLocator {
 
     interface ConnectionOpener {
         HttpURLConnection openUrlConnection(URL url) throws IOException;
+    }
+
+    private class DependencyMemoizator extends GraphMemoizator {
+
+        @Nonnull
+        @Override
+        protected Dependency calculate(@Nonnull final Dependency original) {
+            return new Dependency(original.groupId(), original.artifactId(), original.version(), original.packaging(),
+                    fillSourcesAttribute(original.dependencies(), this),
+                    fillSourcesAttribute(original.exports(), this),
+                    fillSourcesAttribute(original.runtimeDependencies(), this),
+                    original.url(), uriWithClassifier(original.url()), original.javadocUrl(), original.licenses());
+        }
+
+        @Override
+        protected String getKeyForDependency(final Dependency dependency) {
+            return dependency.mavenCoordinates();
+        }
     }
 }
