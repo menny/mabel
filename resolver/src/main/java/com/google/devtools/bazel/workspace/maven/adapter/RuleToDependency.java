@@ -14,7 +14,7 @@ public class RuleToDependency {
                 rule.getDeps().stream().map(RuleToDependency::from).collect(Collectors.toList()),
                 rule.getExportDeps().stream().map(RuleToDependency::from).collect(Collectors.toList()),
                 rule.getRuntimeDeps().stream().map(RuleToDependency::from).collect(Collectors.toList()),
-                URI.create(rule.getUrl()),
+                rule.isValid() ? URI.create(rule.getUrl()) : URI.create(""),
                 URI.create(""),
                 URI.create(""),
                 rule.getLicenses().stream()

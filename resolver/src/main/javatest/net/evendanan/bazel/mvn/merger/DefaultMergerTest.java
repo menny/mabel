@@ -152,6 +152,25 @@ public class DefaultMergerTest {
         Assert.assertEquals(expected, actual);
     }
 
+
+
+    @Test
+    public void testIgnoreEmptyRepository() {
+        final String expected = "  net.evendanan:dep1:0.1\n" +
+                "    net.evendanan:inner1:0.1\n" +
+                "      net.evendanan:inner-inner1:0.1\n" +
+                "      net.evendanan:inner-inner2:0.1.1\n" +
+                "  net.evendanan:dep2:0.1\n" +
+                "    net.evendanan:dep3:0.2\n" +
+                "      net.evendanan:inner-inner1:0.1\n" +
+                "      net.evendanan:inner-inner2:0.1.1\n" +
+                "    net.evendanan:inner2:0.1\n";
+
+        Collection<Dependency> mergedDependencies = new PinBreadthFirstVersionsMerger().mergeGraphs(GraphUtilsTest.GRAPH_WITH_EMPTY_REPO_AND_DIFFERENT_VERSIONS);
+
+        Assert.assertEquals(expected, GraphUtils.printGraph(mergedDependencies));
+    }
+
     @Test
     public void testReturnsUnchangedIfNoDuplicateDeps() {
         String expected = GraphUtils.printGraph(GraphUtilsTest.NO_REPEATS_GRAPH);

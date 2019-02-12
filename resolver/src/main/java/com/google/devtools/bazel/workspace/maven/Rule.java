@@ -215,6 +215,10 @@ public class Rule implements Comparable<Rule> {
         repository = url;
     }
 
+    public boolean isValid() {
+        return !repository.isEmpty();
+    }
+
     public Collection<License> getLicenses() {
         return this.licenses;
     }

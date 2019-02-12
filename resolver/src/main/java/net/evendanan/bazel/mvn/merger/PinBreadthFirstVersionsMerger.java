@@ -24,7 +24,12 @@ public class PinBreadthFirstVersionsMerger implements GraphMerger {
     public Collection<Dependency> mergeGraphs(final Collection<Dependency> dependencies) {
         Map<String, Dependency> pinnedVersions = new HashMap<>();
 
-        GraphUtils.BfsTraveller(dependencies, (dependency, level) -> pinnedVersions.putIfAbsent(dependencyKey(dependency), dependency));
+        GraphUtils.BfsTraveller(dependencies, (dependency, level) -> pinnedVersions.compute(dependencyKey(dependency),
+                (key, previousDep) -> {
+                    if (previousDep==null || previousDep.url().toASCIIString().equals("")) return dependency;
+                    else return previousDep;
+                }
+        ));
 
         return replaceWithPinned(dependencies, new MemoizeDependency(pinnedVersions));
     }

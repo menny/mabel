@@ -150,7 +150,11 @@ public class Merger {
 
     private void writeResults(Collection<Dependency> resolvedDependencies, final String[] args) throws Exception {
         System.out.print("Flattening dependency tree for writing...");
-        resolvedDependencies = DependencyTreeFlatter.flatten(resolvedDependencies);
+        resolvedDependencies = DependencyTreeFlatter.flatten(resolvedDependencies)
+                .stream()
+                .filter(dependency -> !dependency.url().toASCIIString().equals(""))
+                .collect(Collectors.toList());
+
         System.out.println();
         //first, deleting everything that's already there.
         final File depsFolder = macrosFile.getParentFile();
@@ -182,12 +186,12 @@ public class Merger {
                     final TimingData timingData = timer.taskDone();
                     final String estimatedTimeLeft;
                     if (timingData.doneTasks >= 3) {
-                        estimatedTimeLeft = String.format(Locale.US, ", %s left", TaskTiming.humanReadableTime(timingData.estimatedTimeLeft));
+                        estimatedTimeLeft = String.format(Locale.ROOT, ", %s left", TaskTiming.humanReadableTime(timingData.estimatedTimeLeft));
                     } else {
                         estimatedTimeLeft = "";
                     }
                     System.out.println(
-                            String.format(Locale.US, "** Converting to Bazel targets, %d out of %d (%.2f%%%s): %s...",
+                            String.format(Locale.ROOT, "** Converting to Bazel targets, %d out of %d (%.2f%%%s): %s...",
                                     timingData.doneTasks, timingData.totalTasks, 100 * timingData.ratioOfDone, estimatedTimeLeft,
                                     dependency.repositoryRuleName()));
                 })
