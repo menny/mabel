@@ -78,22 +78,4 @@ public class GraphUtils {
                 .collect(Collectors.toList());
     }
 
-//    static Graph<Dependency, DefaultEdge> createGraph(final Collection<Dependency> dependencies) {
-//        Graph<Dependency, DefaultEdge> graph = new DefaultUndirectedGraph<>(DefaultEdge.class);
-//
-//        connectDependencies(graph, null, dependencies);
-//
-//        return graph;
-//    }
-//
-//    private static void connectDependencies(Graph<Dependency, DefaultEdge> graph, Dependency parent, Collection<Dependency> children) {
-//        children.stream()
-//                .peek(graph::addVertex)
-//                .peek(dependency -> {
-//                    if (parent!=null) graph.addEdge(parent, dependency);
-//                })
-//                .peek(dependency -> connectDependencies(graph, dependency, dependency.dependencies()))
-//                .peek(dependency -> connectDependencies(graph, dependency, dependency.exports()))
-//                .forEach(dependency -> connectDependencies(graph, dependency, dependency.runtimeDependencies()));
-//    }
 }

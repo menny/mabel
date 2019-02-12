@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import net.evendanan.bazel.mvn.api.Dependency;
 import org.junit.Assert;
 import org.junit.Before;
@@ -157,7 +158,7 @@ public class DefaultMergerTest {
 
         FilterDuplicateDependenciesEntries merger = new FilterDuplicateDependenciesEntries();
 
-        Collection<Dependency> dependencies = merger.mergeGraphs(GraphUtilsTest.NO_REPEATS_GRAPH);
+        Collection<Dependency> dependencies = merger.filterDuplicateDependencies(GraphUtilsTest.NO_REPEATS_GRAPH);
 
         Assert.assertEquals(expected, GraphUtils.printGraph(dependencies));
     }
@@ -171,10 +172,29 @@ public class DefaultMergerTest {
 
         FilterDuplicateDependenciesEntries merger = new FilterDuplicateDependenciesEntries();
 
-        Collection<Dependency> deDuped = merger.mergeGraphs(dependencies);
+        Collection<Dependency> deDuped = merger.filterDuplicateDependencies(dependencies);
         String expected = GraphUtils.printGraph(GraphUtilsTest.NO_REPEATS_GRAPH);
 
         Assert.assertEquals(expected, GraphUtils.printGraph(deDuped));
+    }
+
+    @Test
+    public void testNamePrefix() {
+        AtomicInteger nodesCount = new AtomicInteger();
+
+        GraphUtils.DfsTraveller(GraphUtilsTest.NO_REPEATS_GRAPH, ((dependency, integer) -> nodesCount.incrementAndGet()));
+        Assert.assertTrue(nodesCount.get() > 0);
+
+        final String prefix = "prefix___";
+        final Collection<Dependency> dependencies = DependencyNamePrefixer.wrap(GraphUtilsTest.NO_REPEATS_GRAPH, prefix);
+
+        GraphUtils.DfsTraveller(dependencies, ((dependency, integer) -> nodesCount.decrementAndGet()));
+        Assert.assertEquals(0, nodesCount.get());
+
+        GraphUtils.DfsTraveller(dependencies, ((dependency, integer) -> {
+            Assert.assertTrue(dependency.repositoryRuleName().startsWith(prefix));
+            Assert.assertTrue(dependency.targetName().startsWith(prefix));
+        }));
     }
 
     @Test

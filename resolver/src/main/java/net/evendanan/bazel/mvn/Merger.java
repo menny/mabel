@@ -13,13 +13,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.GraphMerger;
@@ -30,6 +28,7 @@ import net.evendanan.bazel.mvn.impl.RuleWriters;
 import net.evendanan.bazel.mvn.impl.TargetsBuilders;
 import net.evendanan.bazel.mvn.merger.ClearSrcJarAttribute;
 import net.evendanan.bazel.mvn.merger.DefaultMerger;
+import net.evendanan.bazel.mvn.merger.DependencyNamePrefixer;
 import net.evendanan.bazel.mvn.merger.DependencyTreeFlatter;
 import net.evendanan.bazel.mvn.merger.SourcesJarLocator;
 import net.evendanan.bazel.mvn.serialization.Serialization;
@@ -88,17 +87,21 @@ public class Merger {
             dependencies = new SourcesJarLocator().fillSourcesAttribute(dependencies);
             System.out.println("✓");
         } else {
+            System.out.print("Clearing srcjar...");
             dependencies = ClearSrcJarAttribute.clearSrcJar(dependencies);
+            System.out.println();
         }
 
-        Function<Dependency, Dependency> prefixer = dependency -> DependencyWithPrefix.wrap(options.rule_prefix, dependency);
+        if (!options.rule_prefix.isEmpty()) {
+            dependencies = DependencyNamePrefixer.wrap(dependencies, options.rule_prefix);
+        }
 
-        driver.writeResults(dependencies.stream().map(prefixer).collect(Collectors.toList()), args);
+        driver.writeResults(dependencies, args);
     }
 
     /**
      * By default File#delete fails for non-empty directories, it works like "rm".
-     * We need something a little more brutual - this does the equivalent of "rm -r"
+     * We need something a little more brutal - this does the equivalent of "rm -r"
      *
      * @param path Root File Path
      *
@@ -139,12 +142,16 @@ public class Merger {
                 .collect(Collectors.toList());
         System.out.println();
 
-        System.out.println(String.format("Merging %s dependencies...", dependencies.size()));
-        return merger.mergeGraphs(dependencies);
+        System.out.print(String.format("Merging %s dependencies...", dependencies.size()));
+        final Collection<Dependency> merged = merger.mergeGraphs(dependencies);
+        System.out.println();
+        return merged;
     }
 
     private void writeResults(Collection<Dependency> resolvedDependencies, final String[] args) throws Exception {
+        System.out.print("Flattening dependency tree for writing...");
         resolvedDependencies = DependencyTreeFlatter.flatten(resolvedDependencies);
+        System.out.println();
         //first, deleting everything that's already there.
         final File depsFolder = macrosFile.getParentFile();
         if (depsFolder.isDirectory()) {
@@ -188,51 +195,21 @@ public class Merger {
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
 
+        System.out.print(String.format("Writing %d Bazel repository rules...", targets.size()));
         repositoryRulesMacroWriter.write(resolvedDependencies.stream()
                 .map(TargetsBuilders.HTTP_FILE::buildTargets)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList()));
+        System.out.println("✓");
 
+        System.out.print(String.format("Writing %d Bazel dependency targets...", targets.size()));
         targetsMacroWriter.write(targets);
+        System.out.println("✓");
 
         if (hardAliasesWriter!=null) {
-            System.out.println("Writing aliases targets...");
+            System.out.print("Writing aliases targets...");
             hardAliasesWriter.write(targets);
-        }
-    }
-
-    private static class DependencyWithPrefix extends Dependency {
-
-        private final String prefix;
-
-        public DependencyWithPrefix(final String groupId, final String artifactId, final String version, final String packaging,
-                                    final Collection<Dependency> dependencies, final Collection<Dependency> exports, final Collection<Dependency> runtimeDependencies,
-                                    final URI url, final URI sourcesUrl, final URI javadocUrl,
-                                    final Collection<License> licenses,
-                                    String prefix) {
-            super(groupId, artifactId, version, packaging, dependencies, exports, runtimeDependencies, url, sourcesUrl, javadocUrl, licenses);
-            this.prefix = prefix;
-        }
-
-        static DependencyWithPrefix wrap(String prefix, Dependency dependency) {
-            Function<Dependency, Dependency> prefixer = subDep -> DependencyWithPrefix.wrap(prefix, subDep);
-
-            return new DependencyWithPrefix(dependency.groupId(), dependency.artifactId(), dependency.version(), dependency.packaging(),
-                    dependency.dependencies().stream().map(prefixer).collect(Collectors.toList()),
-                    dependency.exports().stream().map(prefixer).collect(Collectors.toList()),
-                    dependency.runtimeDependencies().stream().map(prefixer).collect(Collectors.toList()),
-                    dependency.url(), dependency.sourcesUrl(), dependency.javadocUrl(), dependency.licenses(),
-                    prefix);
-        }
-
-        @Override
-        public String repositoryRuleName() {
-            return prefix + super.repositoryRuleName();
-        }
-
-        @Override
-        public String targetName() {
-            return prefix + super.targetName();
+            System.out.println("✓");
         }
     }
 

@@ -37,7 +37,6 @@ public class RuleWriters {
 
         @Override
         public void write(Collection<Target> targets) throws IOException {
-            System.out.println(String.format("Writing %d Bazel repository rules...", targets.size()));
             targets = SortTargetsByName.sort(targets);
 
             try (final OutputStreamWriter fileWriter = new OutputStreamWriter(new FileOutputStream(outputFile, true), Charsets.UTF_8)) {
@@ -106,8 +105,6 @@ public class RuleWriters {
                 if (targets.isEmpty()) {
                     fileWriter.append(INDENT).append("pass");
                 } else {
-                    System.out.println(String.format("Writing %d Bazel targets...", targets.size()));
-
                     for (Target target : targets) {
                         fileWriter.append(INDENT).append("# from ").append(target.getMavenCoordinates()).append(NEW_LINE);
 
