@@ -1,14 +1,8 @@
 # Mabel
 [![Latest release](https://img.shields.io/github/release/menny/mabel.svg)](https://github.com/menny/mabel/releases) [![Build Status](https://cloud.drone.io/api/badges/menny/mabel/status.svg)](https://cloud.drone.io/menny/mabel) [![codecov](https://codecov.io/gh/menny/mabel/branch/master/graph/badge.svg)](https://codecov.io/gh/menny/mabel)
 
-A simple, extensible, Maven dependency graph generator for Bazel.
+Yet another Maven dependency graph generator for Bazel.
 
-Unlike other build systems, Bazel does not provide a dependency management service as part of the build and
-does not provide a way to specify a Maven dependency (which will be resolved transitively) and be available during compilation.
-<br/>
-There are several attempts to solve this problem (such as [sync-deps](https://github.com/spotify/bazel-tools/tree/master/sync-deps), [gmaven](https://github.com/bazelbuild/gmaven_rules), [migration-tooling](https://github.com/bazelbuild/migration-tooling), [maven-rules](https://github.com/jin/rules_maven) and [bazel-deps](https://github.com/johnynek/bazel-deps)), but some do not support Kotlin or Android, some do not support customized Maven repositories, etc.
-<br/>
-<br/>
 This WORKSPACE will provide `deps_workspace_generator_rule` rule and `artifact` macro which will automatically generate a set of targets that can be used as dependencies based on a given list of Maven coordinates. The rule will output the dependencies-graph to a file (similar to Yarn's lock-file).
 
 ## Features
@@ -24,16 +18,25 @@ This WORKSPACE will provide `deps_workspace_generator_rule` rule and `artifact` 
 * Support custom Maven repo URLs and locking dependency for a Maven repository.
 * Adds `licenses` data to `java_import` rules, if license is declared in the artifact's POM file.
 * Adds `srcjar` if sources available in the Maven repository.
-* Handle POM profiles and placeholders.
-* Also, handles dependencies that do no have POM files.
+* Handle POM options:
+  * Profiles and placeholders.
+  * Version-specification.
+  * Dependencies that do not have POM.
 * Produces a _lock_ file that describes the dependency graph. This file should be checked into your repo.
+
+## Why
+
+Unlike other build systems, Bazel does not provide a dependency management service as part of the build and
+does not provide a way to specify a Maven dependency (which will be resolved transitively) and be available during compilation.
+<br/>
+There are several attempts to solve this problem (such as [sync-deps](https://github.com/spotify/bazel-tools/tree/master/sync-deps), [gmaven](https://github.com/bazelbuild/gmaven_rules), [migration-tooling](https://github.com/bazelbuild/migration-tooling), [maven-rules](https://github.com/jin/rules_maven) and [bazel-deps](https://github.com/johnynek/bazel-deps)), but some do not support Kotlin or Android, some do not support customized Maven repositories, etc.
 
 ## Example
 
 ### WORKSPACE file
 Add this repository to your WORKSPACE (set `bazel_mvn_deps_version` to the latest [release](https://github.com/menny/mabel/releases) or, if you are adventurous, [commit](https://github.com/menny/mabel/commits/master)):
 ```python
-mabel_version = "0.3.2"
+mabel_version = "0.3.3"
 http_archive(
     name = "mabel",
     urls = ["https://github.com/menny/mabel/archive/%s.zip" % mabel_version],
@@ -163,6 +166,8 @@ Please, read the [Bazel docs](https://docs.bazel.build/versions/master/be/java.h
 Also, since we are wrapping the `java_plugin` rules in a `java_library` rules, you should add them to the `deps` list of your rule, and not to the `plugins` list.
 
 ### Kotlin
+
+__NOTE__ : I recommend not to provide kt rule-impl to the macro, and just use regular `java_import`. See [relavent issue](https://github.com/menny/mabel/issues/5).
 
 For [Kotlin](https://github.com/bazelbuild/rules_kotlin), we create a `kt_jvm_import` for each artifact, and then wrap it (along with its deps) in a `kt_jvm_library`. Your rule
 depends on the `kt_jvm_library`.<br/>
