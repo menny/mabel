@@ -162,6 +162,12 @@ def generate_workspace_rules():
         downloaded_file_path = 'maven-repository-metadata-3.2.3.jar',
     )
 
+    # from org.apache.openejb:javaee-api:5.0-2
+    http_file(name = 'main_deps___org_apache_openejb__javaee_api__5_0_2',
+        urls = ['https://repo1.maven.org/maven2/org/apache/openejb/javaee-api/5.0-2/javaee-api-5.0-2.jar'],
+        downloaded_file_path = 'javaee-api-5.0-2.jar',
+    )
+
     # from org.checkerframework:checker-qual:2.5.2
     http_file(name = 'main_deps___org_checkerframework__checker_qual__2_5_2',
         urls = ['https://repo1.maven.org/maven2/org/checkerframework/checker-qual/2.5.2/checker-qual-2.5.2.jar'],
@@ -338,7 +344,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.code.findbugs:findbugs-annotations:3.0.1
     native.java_import(name = 'main_deps___com_google_code_findbugs__findbugs_annotations__3_0_1',
         jars = ['@main_deps___com_google_code_findbugs__findbugs_annotations__3_0_1//file'],
-        licenses = [],
+        licenses = ['reciprocal'],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -557,8 +563,8 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from log4j:log4j:1.2.17
     native.java_import(name = 'main_deps___log4j__log4j__1_2_17',
         jars = ['@main_deps___log4j__log4j__1_2_17//file'],
-        licenses = [],
-        deps = [],
+        licenses = ['notice'],
+        deps = [':main_deps___org_apache_openejb__javaee_api'],
         exports = [],
         runtime_deps = [],
     )
@@ -775,6 +781,21 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         runtime_deps = [],
     )
 
+    # from org.apache.openejb:javaee-api:5.0-2
+    native.alias(name = 'main_deps___org_apache_openejb__javaee_api',
+        actual = ':main_deps___org_apache_openejb__javaee_api__5_0_2',
+        visibility = ['//visibility:public'],
+    )
+
+    # from org.apache.openejb:javaee-api:5.0-2
+    native.java_import(name = 'main_deps___org_apache_openejb__javaee_api__5_0_2',
+        jars = ['@main_deps___org_apache_openejb__javaee_api__5_0_2//file'],
+        licenses = ['notice'],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
     # from org.checkerframework:checker-qual:2.5.2
     native.alias(name = 'main_deps___org_checkerframework__checker_qual',
         actual = ':main_deps___org_checkerframework__checker_qual__2_5_2',
@@ -814,7 +835,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.codehaus.plexus:plexus-component-annotations:1.5.5
     native.java_import(name = 'main_deps___org_codehaus_plexus__plexus_component_annotations__1_5_5',
         jars = ['@main_deps___org_codehaus_plexus__plexus_component_annotations__1_5_5//file'],
-        licenses = [],
+        licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],

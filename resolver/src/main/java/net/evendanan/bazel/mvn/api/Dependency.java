@@ -184,7 +184,7 @@ public class Dependency {
                     return unencumbered;
 
                 default:
-                    System.out.println(String.format(Locale.US, "License with name '%s' is unrecognizable", licenseName));
+                    //System.out.println(String.format(Locale.US, "License with name '%s' is unrecognized.", licenseName));
                     return null;
             }
         }}

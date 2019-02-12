@@ -32,7 +32,7 @@ public class ArtifactBuilder {
         try {
             return new DefaultArtifact(artifactCoords);
         } catch (IllegalArgumentException e) {
-            throw new InvalidArtifactCoordinateException(e.getMessage());
+            throw new InvalidArtifactCoordinateException(e.getMessage(), e);
         }
     }
 
@@ -49,8 +49,8 @@ public class ArtifactBuilder {
             throws InvalidArtifactCoordinateException {
         final String classifier = dep.getClassifier()==null ? "":dep.getClassifier();
 
-        final String resolvedVersion = ProfilePlaceholderUtil.replacePlaceholders(model, dep.getVersion());
-        final String version = versionResolver.resolveVersion(dep.getGroupId(), dep.getArtifactId(), classifier, resolvedVersion);
+        final String versionWithModelProperties = ProfilePlaceholderUtil.replacePlaceholders(model, dep.getVersion());
+        final String version = versionResolver.resolveVersion(dep.getGroupId(), dep.getArtifactId(), classifier, versionWithModelProperties);
 
         return fromCoords(dep.getGroupId(), dep.getArtifactId(), classifier, version);
     }
@@ -96,8 +96,8 @@ public class ArtifactBuilder {
     /** Exception thrown if an artifact coordinate cannot be parsed */
     public static class InvalidArtifactCoordinateException extends Exception {
 
-        InvalidArtifactCoordinateException(String message) {
-            super(message);
+        InvalidArtifactCoordinateException(String message, Throwable e) {
+            super(message, e);
         }
     }
 }

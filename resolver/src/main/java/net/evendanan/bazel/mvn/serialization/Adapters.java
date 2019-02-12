@@ -13,6 +13,9 @@ import java.lang.reflect.Type;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import net.evendanan.bazel.mvn.api.Dependency;
 
 class Adapters {
@@ -36,16 +39,32 @@ class Adapters {
     }
 
     static class DependencyDeserializer implements JsonDeserializer<Dependency> {
+        private final Map<String, Dependency> cache = new HashMap<>();
         @Override
         public Dependency deserialize(final JsonElement jsonElement, final Type type, final JsonDeserializationContext context) throws JsonParseException {
 
             JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-            return new Dependency(
-                    jsonObject.get("groupId").getAsString(), jsonObject.get("artifactId").getAsString(), jsonObject.get("version").getAsString(), jsonObject.get("packaging").getAsString(),
-                    asList(context, jsonObject.getAsJsonArray("dependencies"), Dependency.class), asList(context, jsonObject.getAsJsonArray("exports"), Dependency.class), asList(context, jsonObject.getAsJsonArray("runtimeDependencies"), Dependency.class),
-                    URI.create(jsonObject.get("url").getAsString()), URI.create(jsonObject.get("sourcesUrl").getAsString()), URI.create(jsonObject.get("javadocUrl").getAsString()),
-                    asList(context, jsonObject.getAsJsonArray("licenses"), Dependency.License.class));
+            final String groupId = jsonObject.get("groupId").getAsString();
+            final String artifactId = jsonObject.get("artifactId").getAsString();
+            final String version = jsonObject.get("version").getAsString();
+
+            final String maven = mavenKey(groupId, artifactId, version);
+            if (cache.containsKey(maven)) {
+                return cache.get(maven);
+            } else {
+                final Dependency dependency = new Dependency(
+                        groupId, artifactId, version, jsonObject.get("packaging").getAsString(),
+                        asList(context, jsonObject.getAsJsonArray("dependencies"), Dependency.class), asList(context, jsonObject.getAsJsonArray("exports"), Dependency.class), asList(context, jsonObject.getAsJsonArray("runtimeDependencies"), Dependency.class),
+                        URI.create(jsonObject.get("url").getAsString()), URI.create(jsonObject.get("sourcesUrl").getAsString()), URI.create(jsonObject.get("javadocUrl").getAsString()),
+                        asList(context, jsonObject.getAsJsonArray("licenses"), Dependency.License.class));
+                cache.put(maven, dependency);
+                return dependency;
+            }
+        }
+
+        private String mavenKey(final String groupId, final String artifactId, final String version) {
+            return String.format(Locale.ROOT, "%s:%s:%s", groupId, artifactId, version);
         }
     }
 

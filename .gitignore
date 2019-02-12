@@ -18,6 +18,7 @@ hs_err_pid*
 #bazel
 bazel-bazel-mvn-deps
 bazel-mabel
+bazel-android
 bazel-plain_java
 bazel-genfiles
 bazel-out

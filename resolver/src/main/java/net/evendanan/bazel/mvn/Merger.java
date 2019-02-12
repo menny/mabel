@@ -124,25 +124,20 @@ public class Merger {
     }
 
     private Collection<Dependency> generateFromInputs(Options options) {
-        System.out.println(String.format("Reading %s root artifacts...", options.artifacts.size()));
+        System.out.print(String.format("Reading %s root artifacts...", options.artifacts.size()));
 
-        final char[] buffer = new char[4096];
-        final StringBuilder builder = new StringBuilder();
         final Serialization serialization = new Serialization();
         final List<Dependency> dependencies = options.artifacts.stream()
                 .map(inputFile -> {
-                    builder.setLength(0);
+                    System.out.print('.');
                     try (final InputStreamReader fileReader = new InputStreamReader(new FileInputStream(inputFile), Charsets.UTF_8)) {
-                        int read;
-                        while (0 <= (read = fileReader.read(buffer, 0, buffer.length))) {
-                            builder.append(buffer, 0, read);
-                        }
-                        return serialization.deserialize(builder.toString());
+                        return serialization.deserialize(fileReader);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                 })
                 .collect(Collectors.toList());
+        System.out.println();
 
         System.out.println(String.format("Merging %s dependencies...", dependencies.size()));
         return merger.mergeGraphs(dependencies);
@@ -283,6 +278,12 @@ public class Merger {
                 description = "Will also try to locate srcjar for the dependency.",
                 arity = 1
         ) boolean fetch_srcjar = true;
+
+        @Parameter(
+                names = {"--debug_logs"},
+                description = "Will print out debug logs.",
+                arity = 1
+        ) boolean debug_logs = false;
     }
 
     /**

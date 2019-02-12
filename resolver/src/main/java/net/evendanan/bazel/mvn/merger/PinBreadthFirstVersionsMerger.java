@@ -13,15 +13,22 @@ public class PinBreadthFirstVersionsMerger implements GraphMerger {
         return String.format(Locale.US, "%s:%s", dependency.groupId(), dependency.artifactId());
     }
 
-    private static Collection<Dependency> replaceWithPinned(Collection<Dependency> dependencies, Map<String, Dependency> pinnedVersions) {
+    private static Collection<Dependency> replaceWithPinned(Collection<Dependency> dependencies, Map<String, Dependency> cache, Map<String, Dependency> pinnedVersions) {
         return dependencies.stream()
                 .map(dependency -> {
-                    Dependency pinned = pinnedVersions.get(dependencyKey(dependency));
-                    return new Dependency(pinned.groupId(), pinned.artifactId(), pinned.version(), pinned.packaging(),
-                            replaceWithPinned(pinned.dependencies(), pinnedVersions),
-                            replaceWithPinned(pinned.exports(), pinnedVersions),
-                            replaceWithPinned(pinned.runtimeDependencies(), pinnedVersions),
-                            pinned.url(), pinned.sourcesUrl(), pinned.javadocUrl(), pinned.licenses());
+                    final String key = dependencyKey(dependency);
+                    if (cache.containsKey(key)) {
+                        return cache.get(key);
+                    } else {
+                        Dependency pinned = pinnedVersions.get(key);
+                        final Dependency fixedDependency = new Dependency(pinned.groupId(), pinned.artifactId(), pinned.version(), pinned.packaging(),
+                                replaceWithPinned(pinned.dependencies(), cache, pinnedVersions),
+                                replaceWithPinned(pinned.exports(), cache, pinnedVersions),
+                                replaceWithPinned(pinned.runtimeDependencies(), cache, pinnedVersions),
+                                pinned.url(), pinned.sourcesUrl(), pinned.javadocUrl(), pinned.licenses());
+                        cache.put(key, fixedDependency);
+                        return fixedDependency;
+                    }
                 })
                 .collect(Collectors.toList());
     }
@@ -32,6 +39,6 @@ public class PinBreadthFirstVersionsMerger implements GraphMerger {
 
         GraphUtils.BfsTraveller(dependencies, (dependency, level) -> pinnedVersions.putIfAbsent(dependencyKey(dependency), dependency));
 
-        return replaceWithPinned(dependencies, pinnedVersions);
+        return replaceWithPinned(dependencies, new HashMap<>(), pinnedVersions);
     }
 }
