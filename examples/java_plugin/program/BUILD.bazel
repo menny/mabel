@@ -9,7 +9,8 @@ deps_workspace_generator_rule(name = 'main_deps',
         artifact("com.google.auto.value:auto-value:1.6.3"),
         artifact("com.google.auto.value:auto-value-annotations:1.6.3"),
     ],
-    fetch_srcjar = False
+    fetch_srcjar = False,
+    output_graph_to_file = True,
     )
 
 java_binary(name = "java_plugin",
