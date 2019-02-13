@@ -111,7 +111,14 @@ These prefixes allows you to generate several graphs for different cases (for ex
 _NOTE:_ If you do not wish the rule to generate the sub-folders, you can add `generate_deps_sub_folder = False` to your `artifact` target definition.
  
 ### Using the generated Maven dependencies
-In modules you which to use those dependencies, first load the generated transitive rules in your module's `BUILD.bazel` file:
+First, you'll need to register all the repository rules for the remote maven artifacts. In your `WORKSPACE` file, add:
+
+```python
+load("//resolver/main_deps:dependencies.bzl", main_mavel_deps_rules = "generate_workspace_rules")
+main_mavel_deps_rules()
+```
+
+And, in the same module you declared `deps_workspace_generator_rule` (in our example `//resolver`) add to the `BUILD.bazel` file:
 ```python
 load("//resolver/main_deps:dependencies.bzl", main_generate_transitive_dependency_targets = "generate_transitive_dependency_targets")
 main_generate_transitive_dependency_targets()
