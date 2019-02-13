@@ -27,7 +27,7 @@ public class GraphUtils {
         return builder.toString();
     }
 
-    static void DfsTraveller(Collection<Dependency> dependencies, BiConsumer<Dependency, Integer> visitor) {
+    public static void DfsTraveller(Collection<Dependency> dependencies, BiConsumer<Dependency, Integer> visitor) {
         DfsTraveller(dependencies, 1, visitor);
     }
 

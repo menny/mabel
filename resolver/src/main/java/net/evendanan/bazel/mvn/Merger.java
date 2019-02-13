@@ -35,6 +35,8 @@ import net.evendanan.bazel.mvn.serialization.Serialization;
 import net.evendanan.timing.TaskTiming;
 import net.evendanan.timing.TimingData;
 
+import static net.evendanan.bazel.mvn.merger.GraphUtils.DfsTraveller;
+
 public class Merger {
 
     private final GraphMerger merger;
@@ -89,7 +91,7 @@ public class Merger {
         } else {
             System.out.print("Clearing srcjar...");
             dependencies = ClearSrcJarAttribute.clearSrcJar(dependencies);
-            System.out.println();
+            System.out.println("✓");
         }
 
         if (!options.rule_prefix.isEmpty()) {
@@ -97,6 +99,38 @@ public class Merger {
         }
 
         driver.writeResults(dependencies, args);
+
+        if (!options.output_pretty_dep_graph_filename.isEmpty()) {
+            File prettyOutput = new File(options.output_target_build_files_base_path, options.output_pretty_dep_graph_filename);
+            if (!prettyOutput.getParentFile().isDirectory() && !prettyOutput.getParentFile().mkdirs()) {
+                throw new IOException("Failed to create folder for pretty dependency graph " + prettyOutput.getAbsolutePath());
+            }
+
+            try (final OutputStreamWriter fileWriter = new OutputStreamWriter(new FileOutputStream(prettyOutput, false), Charsets.UTF_8)) {
+                DfsTraveller(dependencies,
+                        (dependency, level) -> {
+                            try {
+                                if (level==1) {
+                                    fileWriter.append(System.lineSeparator());
+                                    fileWriter.append(" * ");
+                                } else {
+                                    fileWriter.append("   ");
+                                    for (int i = 1; i < level; i++) {
+                                        fileWriter.append("   ");
+                                    }
+                                }
+
+                                fileWriter.append(dependency.mavenCoordinates())
+                                        .append(" (").append(dependency.repositoryRuleName()).append(")")
+                                        .append(System.lineSeparator());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+
+                System.out.println(String.format(Locale.ROOT, "Stored textual dependencies graph at %s", prettyOutput.getAbsolutePath()));
+            }
+        }
     }
 
     /**
@@ -265,6 +299,11 @@ public class Merger {
                 description = "Will print out debug logs.",
                 arity = 1
         ) boolean debug_logs = false;
+
+        @Parameter(
+                names = {"--output_pretty_dep_graph_filename"},
+                description = "If set, will output the dependency graph to this file."
+        ) String output_pretty_dep_graph_filename = "";
     }
 
     /**
