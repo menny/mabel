@@ -44,7 +44,7 @@ public class Dependency {
     }
 
     private static String normalize(String name) {
-        return name.replaceAll("[.-]", "_");
+        return name.replaceAll("[+.-]", "_");
     }
 
     public String groupId() {
@@ -64,15 +64,15 @@ public class Dependency {
     }
 
     public String mavenCoordinates() {
-        return String.format(Locale.US, "%s:%s:%s", groupId, artifactId, version);
+        return String.format(Locale.ROOT, "%s:%s:%s", groupId, artifactId, version);
     }
 
     public String repositoryRuleName() {
-        return String.format(Locale.US, "%s__%s__%s", normalize(groupId), normalize(artifactId), normalize(version));
+        return String.format(Locale.ROOT, "%s__%s__%s", normalize(groupId), normalize(artifactId), normalize(version));
     }
 
     public String targetName() {
-        return String.format(Locale.US, "%s__%s", normalize(groupId), normalize(artifactId));
+        return String.format(Locale.ROOT, "%s__%s", normalize(groupId), normalize(artifactId));
     }
 
     public Collection<Dependency> dependencies() {
@@ -184,7 +184,7 @@ public class Dependency {
                     return unencumbered;
 
                 default:
-                    //System.out.println(String.format(Locale.US, "License with name '%s' is unrecognized.", licenseName));
+                    //System.out.println(String.format(Locale.ROOT, "License with name '%s' is unrecognized.", licenseName));
                     return null;
             }
         }}

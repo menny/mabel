@@ -70,6 +70,23 @@ public class DependencyTest {
     }
 
     @Test
+    public void testNameEscaping() {
+        assertNames(create("net.evendanan", "lib1", "1.2.0"),
+                "net.evendanan:lib1:1.2.0", "net_evendanan__lib1", "net_evendanan__lib1__1_2_0");
+        assertNames(create("net.even-danan", "lib-1", "1.2.0-SNAPSHOT"),
+                "net.even-danan:lib-1:1.2.0-SNAPSHOT", "net_even_danan__lib_1", "net_even_danan__lib_1__1_2_0_SNAPSHOT");
+        assertNames(create("com.google.errorprone", "javac", "9+181.r4173.1"),
+                "com.google.errorprone:javac:9+181.r4173.1", "com_google_errorprone__javac", "com_google_errorprone__javac__9_181_r4173_1");
+
+    }
+
+    private void assertNames(Dependency dependency, String mavenName, String targetName, String repositoryRuleName) {
+        Assert.assertEquals(mavenName, dependency.mavenCoordinates());
+        Assert.assertEquals(targetName, dependency.targetName());
+        Assert.assertEquals(repositoryRuleName, dependency.repositoryRuleName());
+    }
+
+    @Test
     public void testLicenseParsing() {
         Assert.assertNull(Dependency.License.fromLicenseName(""));
         Assert.assertNull(Dependency.License.fromLicenseName(null));
