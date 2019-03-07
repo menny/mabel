@@ -12,12 +12,6 @@ def generate_workspace_rules():
         downloaded_file_path = 'jcommander-1.72.jar',
     )
 
-    # from com.google.code.findbugs:findbugs-annotations:3.0.1
-    http_file(name = 'main_deps___com_google_code_findbugs__findbugs_annotations__3_0_1',
-        urls = ['https://repo1.maven.org/maven2/com/google/code/findbugs/findbugs-annotations/3.0.1/findbugs-annotations-3.0.1.jar'],
-        downloaded_file_path = 'findbugs-annotations-3.0.1.jar',
-    )
-
     # from com.google.code.findbugs:jsr305:3.0.2
     http_file(name = 'main_deps___com_google_code_findbugs__jsr305__3_0_2',
         urls = ['https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar'],
@@ -60,18 +54,6 @@ def generate_workspace_rules():
         downloaded_file_path = 'j2objc-annotations-1.1.jar',
     )
 
-    # from com.kohlschutter.junixsocket:junixsocket-common:2.0.4
-    http_file(name = 'main_deps___com_kohlschutter_junixsocket__junixsocket_common__2_0_4',
-        urls = ['https://repo1.maven.org/maven2/com/kohlschutter/junixsocket/junixsocket-common/2.0.4/junixsocket-common-2.0.4.jar'],
-        downloaded_file_path = 'junixsocket-common-2.0.4.jar',
-    )
-
-    # from com.kohlschutter.junixsocket:junixsocket-native-common:2.0.4
-    http_file(name = 'main_deps___com_kohlschutter_junixsocket__junixsocket_native_common__2_0_4',
-        urls = ['https://repo1.maven.org/maven2/com/kohlschutter/junixsocket/junixsocket-native-common/2.0.4/junixsocket-native-common-2.0.4.jar'],
-        downloaded_file_path = 'junixsocket-native-common-2.0.4.jar',
-    )
-
     # from commons-codec:commons-codec:1.9
     http_file(name = 'main_deps___commons_codec__commons_codec__1_9',
         urls = ['https://repo1.maven.org/maven2/commons-codec/commons-codec/1.9/commons-codec-1.9.jar'],
@@ -88,12 +70,6 @@ def generate_workspace_rules():
     http_file(name = 'main_deps___junit__junit__4_12',
         urls = ['https://repo1.maven.org/maven2/junit/junit/4.12/junit-4.12.jar'],
         downloaded_file_path = 'junit-4.12.jar',
-    )
-
-    # from log4j:log4j:1.2.17
-    http_file(name = 'main_deps___log4j__log4j__1_2_17',
-        urls = ['https://repo1.maven.org/maven2/log4j/log4j/1.2.17/log4j-1.2.17.jar'],
-        downloaded_file_path = 'log4j-1.2.17.jar',
     )
 
     # from net.bytebuddy:byte-buddy-agent:1.9.3
@@ -160,12 +136,6 @@ def generate_workspace_rules():
     http_file(name = 'main_deps___org_apache_maven__maven_repository_metadata__3_2_3',
         urls = ['https://repo1.maven.org/maven2/org/apache/maven/maven-repository-metadata/3.2.3/maven-repository-metadata-3.2.3.jar'],
         downloaded_file_path = 'maven-repository-metadata-3.2.3.jar',
-    )
-
-    # from org.apache.openejb:javaee-api:5.0-2
-    http_file(name = 'main_deps___org_apache_openejb__javaee_api__5_0_2',
-        urls = ['https://repo1.maven.org/maven2/org/apache/openejb/javaee-api/5.0-2/javaee-api-5.0-2.jar'],
-        downloaded_file_path = 'javaee-api-5.0-2.jar',
     )
 
     # from org.checkerframework:checker-qual:2.5.2
@@ -270,12 +240,6 @@ def generate_workspace_rules():
         downloaded_file_path = 'objenesis-2.6.jar',
     )
 
-    # from org.scijava:native-lib-loader:2.0.2
-    http_file(name = 'main_deps___org_scijava__native_lib_loader__2_0_2',
-        urls = ['https://repo1.maven.org/maven2/org/scijava/native-lib-loader/2.0.2/native-lib-loader-2.0.2.jar'],
-        downloaded_file_path = 'native-lib-loader-2.0.2.jar',
-    )
-
     # from org.slf4j:jcl-over-slf4j:1.6.2
     http_file(name = 'main_deps___org_slf4j__jcl_over_slf4j__1_6_2',
         urls = ['https://repo1.maven.org/maven2/org/slf4j/jcl-over-slf4j/1.6.2/jcl-over-slf4j-1.6.2.jar'],
@@ -330,21 +294,6 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     native.java_import(name = 'main_deps___com_beust__jcommander__1_72',
         jars = ['@main_deps___com_beust__jcommander__1_72//file'],
         licenses = ['notice'],
-        deps = [],
-        exports = [],
-        runtime_deps = [],
-    )
-
-    # from com.google.code.findbugs:findbugs-annotations:3.0.1
-    native.alias(name = 'main_deps___com_google_code_findbugs__findbugs_annotations',
-        actual = ':main_deps___com_google_code_findbugs__findbugs_annotations__3_0_1',
-        visibility = ['//visibility:public'],
-    )
-
-    # from com.google.code.findbugs:findbugs-annotations:3.0.1
-    native.java_import(name = 'main_deps___com_google_code_findbugs__findbugs_annotations__3_0_1',
-        jars = ['@main_deps___com_google_code_findbugs__findbugs_annotations__3_0_1//file'],
-        licenses = ['reciprocal'],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -471,44 +420,6 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         runtime_deps = [],
     )
 
-    # from com.kohlschutter.junixsocket:junixsocket-common:2.0.4
-    native.alias(name = 'main_deps___com_kohlschutter_junixsocket__junixsocket_common',
-        actual = ':main_deps___com_kohlschutter_junixsocket__junixsocket_common__2_0_4',
-        visibility = ['//visibility:public'],
-    )
-
-    # from com.kohlschutter.junixsocket:junixsocket-common:2.0.4
-    native.java_import(name = 'main_deps___com_kohlschutter_junixsocket__junixsocket_common__2_0_4',
-        jars = ['@main_deps___com_kohlschutter_junixsocket__junixsocket_common__2_0_4//file'],
-        licenses = ['notice'],
-        deps = [':main_deps___log4j__log4j'],
-        exports = [':main_deps___log4j__log4j'],
-        runtime_deps = [],
-    )
-
-    # from com.kohlschutter.junixsocket:junixsocket-native-common:2.0.4
-    native.alias(name = 'main_deps___com_kohlschutter_junixsocket__junixsocket_native_common',
-        actual = ':main_deps___com_kohlschutter_junixsocket__junixsocket_native_common__2_0_4',
-        visibility = ['//visibility:public'],
-    )
-
-    # from com.kohlschutter.junixsocket:junixsocket-native-common:2.0.4
-    native.java_import(name = 'main_deps___com_kohlschutter_junixsocket__junixsocket_native_common__2_0_4',
-        jars = ['@main_deps___com_kohlschutter_junixsocket__junixsocket_native_common__2_0_4//file'],
-        licenses = ['notice'],
-        deps = [
-            ':main_deps___com_kohlschutter_junixsocket__junixsocket_common',
-            ':main_deps___log4j__log4j',
-            ':main_deps___org_scijava__native_lib_loader',
-        ],
-        exports = [
-            ':main_deps___com_kohlschutter_junixsocket__junixsocket_common',
-            ':main_deps___log4j__log4j',
-            ':main_deps___org_scijava__native_lib_loader',
-        ],
-        runtime_deps = [],
-    )
-
     # from commons-codec:commons-codec:1.9
     native.alias(name = 'main_deps___commons_codec__commons_codec',
         actual = ':main_deps___commons_codec__commons_codec__1_9',
@@ -554,21 +465,6 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         runtime_deps = [],
     )
 
-    # from log4j:log4j:1.2.17
-    native.alias(name = 'main_deps___log4j__log4j',
-        actual = ':main_deps___log4j__log4j__1_2_17',
-        visibility = ['//visibility:public'],
-    )
-
-    # from log4j:log4j:1.2.17
-    native.java_import(name = 'main_deps___log4j__log4j__1_2_17',
-        jars = ['@main_deps___log4j__log4j__1_2_17//file'],
-        licenses = ['notice'],
-        deps = [':main_deps___org_apache_openejb__javaee_api'],
-        exports = [],
-        runtime_deps = [],
-    )
-
     # from net.bytebuddy:byte-buddy-agent:1.9.3
     native.alias(name = 'main_deps___net_bytebuddy__byte_buddy_agent',
         actual = ':main_deps___net_bytebuddy__byte_buddy_agent__1_9_3',
@@ -579,10 +475,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     native.java_import(name = 'main_deps___net_bytebuddy__byte_buddy_agent__1_9_3',
         jars = ['@main_deps___net_bytebuddy__byte_buddy_agent__1_9_3//file'],
         licenses = ['notice'],
-        deps = [
-            ':main_deps___com_google_code_findbugs__findbugs_annotations',
-            ':main_deps___com_kohlschutter_junixsocket__junixsocket_native_common',
-        ],
+        deps = [],
         exports = [],
         runtime_deps = [],
     )
@@ -597,7 +490,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     native.java_import(name = 'main_deps___net_bytebuddy__byte_buddy__1_9_3',
         jars = ['@main_deps___net_bytebuddy__byte_buddy__1_9_3//file'],
         licenses = ['notice'],
-        deps = [':main_deps___com_google_code_findbugs__findbugs_annotations'],
+        deps = [],
         exports = [],
         runtime_deps = [],
     )
@@ -778,21 +671,6 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         licenses = ['notice'],
         deps = [':main_deps___org_codehaus_plexus__plexus_utils'],
         exports = [':main_deps___org_codehaus_plexus__plexus_utils'],
-        runtime_deps = [],
-    )
-
-    # from org.apache.openejb:javaee-api:5.0-2
-    native.alias(name = 'main_deps___org_apache_openejb__javaee_api',
-        actual = ':main_deps___org_apache_openejb__javaee_api__5_0_2',
-        visibility = ['//visibility:public'],
-    )
-
-    # from org.apache.openejb:javaee-api:5.0-2
-    native.java_import(name = 'main_deps___org_apache_openejb__javaee_api__5_0_2',
-        jars = ['@main_deps___org_apache_openejb__javaee_api__5_0_2//file'],
-        licenses = ['notice'],
-        deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -1108,21 +986,6 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     native.java_import(name = 'main_deps___org_objenesis__objenesis__2_6',
         jars = ['@main_deps___org_objenesis__objenesis__2_6//file'],
         licenses = ['notice'],
-        deps = [],
-        exports = [],
-        runtime_deps = [],
-    )
-
-    # from org.scijava:native-lib-loader:2.0.2
-    native.alias(name = 'main_deps___org_scijava__native_lib_loader',
-        actual = ':main_deps___org_scijava__native_lib_loader__2_0_2',
-        visibility = ['//visibility:public'],
-    )
-
-    # from org.scijava:native-lib-loader:2.0.2
-    native.java_import(name = 'main_deps___org_scijava__native_lib_loader__2_0_2',
-        jars = ['@main_deps___org_scijava__native_lib_loader__2_0_2//file'],
-        licenses = ['unencumbered'],
         deps = [],
         exports = [],
         runtime_deps = [],
