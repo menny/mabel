@@ -36,7 +36,7 @@ There are several attempts to solve this problem (such as [sync-deps](https://gi
 ### WORKSPACE file
 Add this repository to your WORKSPACE (set `bazel_mvn_deps_version` to the latest [release](https://github.com/menny/mabel/releases) or, if you are adventurous, [commit](https://github.com/menny/mabel/commits/master)):
 ```python
-mabel_version = "0.3.3"
+mabel_version = "0.3.5"
 http_archive(
     name = "mabel",
     urls = ["https://github.com/menny/mabel/archive/%s.zip" % mabel_version],
@@ -47,11 +47,6 @@ http_archive(
 load("@mabel//resolver/main_deps:dependencies.bzl", generate_bazel_mvn_deps_workspace_rules = "generate_workspace_rules")
 generate_bazel_mvn_deps_workspace_rules()
 ```
-
-### Real Examples
-
-You can find a few examples under the `examples/` folder in this repo. These examples are built as part of the CI process, so they represent a working use-case.<br/>
-*NOTE* - There is an ongoing [issue](https://github.com/menny/mabel/issues/5) with `kt_jvm_import`. But, Kotlin still works with `java_import`.
 
 ### target definition
 In your module's `BUILD.bazel` file (let's say `resolver/BUILD.bazel`) load the dependencies rule and `artifact` macro:
@@ -114,8 +109,8 @@ _NOTE:_ If you do not wish the rule to generate the sub-folders, you can add `ge
 First, you'll need to register all the repository rules for the remote maven artifacts. In your `WORKSPACE` file, add:
 
 ```python
-load("//resolver/main_deps:dependencies.bzl", main_mavel_deps_rules = "generate_workspace_rules")
-main_mavel_deps_rules()
+load("//resolver/main_deps:dependencies.bzl", main_mabel_deps_rules = "generate_workspace_rules")
+main_mabel_deps_rules()
 ```
 
 And, in the same module you declared `deps_workspace_generator_rule` (in our example `//resolver`) add to the `BUILD.bazel` file:
@@ -154,6 +149,11 @@ Attributes:
 * `coordinate`: Maven coordinate in the form of `group-id:artifact-id:version`.
 * `maven_exclude_deps`: List of Maven dependencies which should not be resolved. You can omit the `version` or both `artifact-id:version`.
 * `repositories`: List of URLs that point to Maven servers. The default list includes Maven-Central.
+
+### Real Examples
+
+You can find a few examples under the `examples/` folder in this repo. These examples are built as part of the CI process, so they represent a working use-case.<br/>
+*NOTE* - There is an ongoing [issue](https://github.com/menny/mabel/issues/5) with `kt_jvm_import`. But, Kotlin still works with `java_import`.
 
 ## Detected rules
 
