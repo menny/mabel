@@ -6,12 +6,6 @@ load('@bazel_tools//tools/build_defs/repo:http.bzl', 'http_file')
 
 # Repository rules macro to be run in the WORKSPACE file.
 def generate_workspace_rules():
-    # from com.google.auto.service:auto-service:1.0-rc4
-    http_file(name = 'main_deps___com_google_auto_service__auto_service__1_0_rc4',
-        urls = ['https://repo1.maven.org/maven2/com/google/auto/service/auto-service/1.0-rc4/auto-service-1.0-rc4.jar'],
-        downloaded_file_path = 'auto-service-1.0-rc4.jar',
-    )
-
     # from com.google.auto.value:auto-value-annotations:1.6.3
     http_file(name = 'main_deps___com_google_auto_value__auto_value_annotations__1_6_3',
         urls = ['https://repo1.maven.org/maven2/com/google/auto/value/auto-value-annotations/1.6.3/auto-value-annotations-1.6.3.jar'],
@@ -22,60 +16,6 @@ def generate_workspace_rules():
     http_file(name = 'main_deps___com_google_auto_value__auto_value__1_6_3',
         urls = ['https://repo1.maven.org/maven2/com/google/auto/value/auto-value/1.6.3/auto-value-1.6.3.jar'],
         downloaded_file_path = 'auto-value-1.6.3.jar',
-    )
-
-    # from com.google.auto:auto-common:0.8
-    http_file(name = 'main_deps___com_google_auto__auto_common__0_8',
-        urls = ['https://repo1.maven.org/maven2/com/google/auto/auto-common/0.8/auto-common-0.8.jar'],
-        downloaded_file_path = 'auto-common-0.8.jar',
-    )
-
-    # from com.google.code.findbugs:jsr305:1.3.9
-    http_file(name = 'main_deps___com_google_code_findbugs__jsr305__1_3_9',
-        urls = ['https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar'],
-        downloaded_file_path = 'jsr305-1.3.9.jar',
-    )
-
-    # from com.google.errorprone:error_prone_annotations:2.0.18
-    http_file(name = 'main_deps___com_google_errorprone__error_prone_annotations__2_0_18',
-        urls = ['https://repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.0.18/error_prone_annotations-2.0.18.jar'],
-        downloaded_file_path = 'error_prone_annotations-2.0.18.jar',
-    )
-
-    # from com.google.guava:guava:23.5-jre
-    http_file(name = 'main_deps___com_google_guava__guava__23_5_jre',
-        urls = ['https://repo1.maven.org/maven2/com/google/guava/guava/23.5-jre/guava-23.5-jre.jar'],
-        downloaded_file_path = 'guava-23.5-jre.jar',
-    )
-
-    # from com.google.j2objc:j2objc-annotations:1.1
-    http_file(name = 'main_deps___com_google_j2objc__j2objc_annotations__1_1',
-        urls = ['https://repo1.maven.org/maven2/com/google/j2objc/j2objc-annotations/1.1/j2objc-annotations-1.1.jar'],
-        downloaded_file_path = 'j2objc-annotations-1.1.jar',
-    )
-
-    # from net.ltgt.gradle.incap:incap-processor:0.2
-    http_file(name = 'main_deps___net_ltgt_gradle_incap__incap_processor__0_2',
-        urls = ['https://repo1.maven.org/maven2/net/ltgt/gradle/incap/incap-processor/0.2/incap-processor-0.2.jar'],
-        downloaded_file_path = 'incap-processor-0.2.jar',
-    )
-
-    # from net.ltgt.gradle.incap:incap:0.2
-    http_file(name = 'main_deps___net_ltgt_gradle_incap__incap__0_2',
-        urls = ['https://repo1.maven.org/maven2/net/ltgt/gradle/incap/incap/0.2/incap-0.2.jar'],
-        downloaded_file_path = 'incap-0.2.jar',
-    )
-
-    # from org.checkerframework:checker-qual:2.0.0
-    http_file(name = 'main_deps___org_checkerframework__checker_qual__2_0_0',
-        urls = ['https://repo1.maven.org/maven2/org/checkerframework/checker-qual/2.0.0/checker-qual-2.0.0.jar'],
-        downloaded_file_path = 'checker-qual-2.0.0.jar',
-    )
-
-    # from org.codehaus.mojo:animal-sniffer-annotations:1.14
-    http_file(name = 'main_deps___org_codehaus_mojo__animal_sniffer_annotations__1_14',
-        urls = ['https://repo1.maven.org/maven2/org/codehaus/mojo/animal-sniffer-annotations/1.14/animal-sniffer-annotations-1.14.jar'],
-        downloaded_file_path = 'animal-sniffer-annotations-1.14.jar',
     )
 
 
@@ -104,75 +44,6 @@ def kotlin_jar_support(name, deps, exports, runtime_deps, jar, kt_jvm_import=Non
         )
 
 def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=None):
-    # from com.google.auto.service:auto-service:1.0-rc4
-    native.alias(name = 'main_deps___com_google_auto_service__auto_service',
-        actual = ':main_deps___com_google_auto_service__auto_service__1_0_rc4',
-        visibility = ['//visibility:public'],
-    )
-
-    # from com.google.auto.service:auto-service:1.0-rc4
-    native.java_library(name = 'main_deps___com_google_auto_service__auto_service__1_0_rc4',
-        runtime_deps = [
-            ':main_deps___com_google_auto__auto_common',
-            ':main_deps___com_google_auto_service__auto_service__1_0_rc4_java_plugin_lib',
-            ':main_deps___com_google_guava__guava',
-        ],
-        exported_plugins = [':main_deps___com_google_auto_service__auto_service__1_0_rc4_0'],
-    )
-
-    # from com.google.auto.service:auto-service:1.0-rc4
-    native.java_plugin(name = 'main_deps___com_google_auto_service__auto_service__1_0_rc4_0',
-        processor_class = 'com.google.auto.service.processor.AutoServiceProcessor',
-        generates_api = 0,
-        deps = [
-            ':main_deps___com_google_auto__auto_common',
-            ':main_deps___com_google_auto_service__auto_service__1_0_rc4_java_plugin_lib',
-            ':main_deps___com_google_guava__guava',
-        ],
-    )
-
-    # from com.google.auto.service:auto-service:1.0-rc4
-    native.java_library(name = 'main_deps___com_google_auto_service__auto_service__1_0_rc4_generate_api',
-        runtime_deps = [
-            ':main_deps___com_google_auto__auto_common',
-            ':main_deps___com_google_auto_service__auto_service__1_0_rc4_java_plugin_lib',
-            ':main_deps___com_google_guava__guava',
-        ],
-        exported_plugins = [':main_deps___com_google_auto_service__auto_service__1_0_rc4_generate_api_0'],
-    )
-
-    # from com.google.auto.service:auto-service:1.0-rc4
-    native.java_plugin(name = 'main_deps___com_google_auto_service__auto_service__1_0_rc4_generate_api_0',
-        processor_class = 'com.google.auto.service.processor.AutoServiceProcessor',
-        generates_api = 1,
-        deps = [
-            ':main_deps___com_google_auto__auto_common',
-            ':main_deps___com_google_auto_service__auto_service__1_0_rc4_java_plugin_lib',
-            ':main_deps___com_google_guava__guava',
-        ],
-    )
-
-    # from com.google.auto.service:auto-service:1.0-rc4
-    native.java_import(name = 'main_deps___com_google_auto_service__auto_service__1_0_rc4_java_plugin_lib',
-        jars = ['@main_deps___com_google_auto_service__auto_service__1_0_rc4//file'],
-        licenses = ['notice'],
-        deps = [
-            ':main_deps___com_google_auto__auto_common',
-            ':main_deps___com_google_guava__guava',
-        ],
-        exports = [
-            ':main_deps___com_google_auto__auto_common',
-            ':main_deps___com_google_guava__guava',
-        ],
-        runtime_deps = [],
-    )
-
-    # from com.google.auto.service:auto-service:1.0-rc4
-    native.alias(name = 'main_deps___com_google_auto_service__auto_service_generate_api',
-        actual = ':main_deps___com_google_auto_service__auto_service__1_0_rc4_generate_api',
-        visibility = ['//visibility:public'],
-    )
-
     # from com.google.auto.value:auto-value-annotations:1.6.3
     native.alias(name = 'main_deps___com_google_auto_value__auto_value_annotations',
         actual = ':main_deps___com_google_auto_value__auto_value_annotations__1_6_3',
@@ -196,11 +67,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
 
     # from com.google.auto.value:auto-value:1.6.3
     native.java_library(name = 'main_deps___com_google_auto_value__auto_value__1_6_3',
-        runtime_deps = [
-            ':main_deps___com_google_auto_service__auto_service',
-            ':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib',
-            ':main_deps___net_ltgt_gradle_incap__incap_processor',
-        ],
+        runtime_deps = [':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
         exported_plugins = [
             ':main_deps___com_google_auto_value__auto_value__1_6_3_0',
             ':main_deps___com_google_auto_value__auto_value__1_6_3_1',
@@ -214,64 +81,40 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     native.java_plugin(name = 'main_deps___com_google_auto_value__auto_value__1_6_3_0',
         processor_class = 'com.google.auto.value.extension.memoized.processor.MemoizedValidator',
         generates_api = 0,
-        deps = [
-            ':main_deps___com_google_auto_service__auto_service',
-            ':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib',
-            ':main_deps___net_ltgt_gradle_incap__incap_processor',
-        ],
+        deps = [':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
     )
 
     # from com.google.auto.value:auto-value:1.6.3
     native.java_plugin(name = 'main_deps___com_google_auto_value__auto_value__1_6_3_1',
         processor_class = 'com.google.auto.value.processor.AutoAnnotationProcessor',
         generates_api = 0,
-        deps = [
-            ':main_deps___com_google_auto_service__auto_service',
-            ':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib',
-            ':main_deps___net_ltgt_gradle_incap__incap_processor',
-        ],
+        deps = [':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
     )
 
     # from com.google.auto.value:auto-value:1.6.3
     native.java_plugin(name = 'main_deps___com_google_auto_value__auto_value__1_6_3_2',
         processor_class = 'com.google.auto.value.processor.AutoOneOfProcessor',
         generates_api = 0,
-        deps = [
-            ':main_deps___com_google_auto_service__auto_service',
-            ':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib',
-            ':main_deps___net_ltgt_gradle_incap__incap_processor',
-        ],
+        deps = [':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
     )
 
     # from com.google.auto.value:auto-value:1.6.3
     native.java_plugin(name = 'main_deps___com_google_auto_value__auto_value__1_6_3_3',
         processor_class = 'com.google.auto.value.processor.AutoValueBuilderProcessor',
         generates_api = 0,
-        deps = [
-            ':main_deps___com_google_auto_service__auto_service',
-            ':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib',
-            ':main_deps___net_ltgt_gradle_incap__incap_processor',
-        ],
+        deps = [':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
     )
 
     # from com.google.auto.value:auto-value:1.6.3
     native.java_plugin(name = 'main_deps___com_google_auto_value__auto_value__1_6_3_4',
         processor_class = 'com.google.auto.value.processor.AutoValueProcessor',
         generates_api = 0,
-        deps = [
-            ':main_deps___com_google_auto_service__auto_service',
-            ':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib',
-            ':main_deps___net_ltgt_gradle_incap__incap_processor',
-        ],
+        deps = [':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
     )
 
     # from com.google.auto.value:auto-value:1.6.3
     native.java_library(name = 'main_deps___com_google_auto_value__auto_value__1_6_3_generate_api',
-        runtime_deps = [
-            ':main_deps___com_google_auto_service__auto_service',
-            ':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib',
-            ':main_deps___net_ltgt_gradle_incap__incap_processor',
-        ],
+        runtime_deps = [':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
         exported_plugins = [
             ':main_deps___com_google_auto_value__auto_value__1_6_3_generate_api_0',
             ':main_deps___com_google_auto_value__auto_value__1_6_3_generate_api_1',
@@ -285,65 +128,42 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     native.java_plugin(name = 'main_deps___com_google_auto_value__auto_value__1_6_3_generate_api_0',
         processor_class = 'com.google.auto.value.extension.memoized.processor.MemoizedValidator',
         generates_api = 1,
-        deps = [
-            ':main_deps___com_google_auto_service__auto_service',
-            ':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib',
-            ':main_deps___net_ltgt_gradle_incap__incap_processor',
-        ],
+        deps = [':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
     )
 
     # from com.google.auto.value:auto-value:1.6.3
     native.java_plugin(name = 'main_deps___com_google_auto_value__auto_value__1_6_3_generate_api_1',
         processor_class = 'com.google.auto.value.processor.AutoAnnotationProcessor',
         generates_api = 1,
-        deps = [
-            ':main_deps___com_google_auto_service__auto_service',
-            ':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib',
-            ':main_deps___net_ltgt_gradle_incap__incap_processor',
-        ],
+        deps = [':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
     )
 
     # from com.google.auto.value:auto-value:1.6.3
     native.java_plugin(name = 'main_deps___com_google_auto_value__auto_value__1_6_3_generate_api_2',
         processor_class = 'com.google.auto.value.processor.AutoOneOfProcessor',
         generates_api = 1,
-        deps = [
-            ':main_deps___com_google_auto_service__auto_service',
-            ':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib',
-            ':main_deps___net_ltgt_gradle_incap__incap_processor',
-        ],
+        deps = [':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
     )
 
     # from com.google.auto.value:auto-value:1.6.3
     native.java_plugin(name = 'main_deps___com_google_auto_value__auto_value__1_6_3_generate_api_3',
         processor_class = 'com.google.auto.value.processor.AutoValueBuilderProcessor',
         generates_api = 1,
-        deps = [
-            ':main_deps___com_google_auto_service__auto_service',
-            ':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib',
-            ':main_deps___net_ltgt_gradle_incap__incap_processor',
-        ],
+        deps = [':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
     )
 
     # from com.google.auto.value:auto-value:1.6.3
     native.java_plugin(name = 'main_deps___com_google_auto_value__auto_value__1_6_3_generate_api_4',
         processor_class = 'com.google.auto.value.processor.AutoValueProcessor',
         generates_api = 1,
-        deps = [
-            ':main_deps___com_google_auto_service__auto_service',
-            ':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib',
-            ':main_deps___net_ltgt_gradle_incap__incap_processor',
-        ],
+        deps = [':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
     )
 
     # from com.google.auto.value:auto-value:1.6.3
     native.java_import(name = 'main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib',
         jars = ['@main_deps___com_google_auto_value__auto_value__1_6_3//file'],
         licenses = ['notice'],
-        deps = [
-            ':main_deps___com_google_auto_service__auto_service',
-            ':main_deps___net_ltgt_gradle_incap__incap_processor',
-        ],
+        deps = [],
         exports = [],
         runtime_deps = [],
     )
@@ -352,185 +172,6 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     native.alias(name = 'main_deps___com_google_auto_value__auto_value_generate_api',
         actual = ':main_deps___com_google_auto_value__auto_value__1_6_3_generate_api',
         visibility = ['//visibility:public'],
-    )
-
-    # from com.google.auto:auto-common:0.8
-    native.alias(name = 'main_deps___com_google_auto__auto_common',
-        actual = ':main_deps___com_google_auto__auto_common__0_8',
-        visibility = ['//visibility:public'],
-    )
-
-    # from com.google.auto:auto-common:0.8
-    native.java_import(name = 'main_deps___com_google_auto__auto_common__0_8',
-        jars = ['@main_deps___com_google_auto__auto_common__0_8//file'],
-        licenses = ['notice'],
-        deps = [':main_deps___com_google_guava__guava'],
-        exports = [':main_deps___com_google_guava__guava'],
-        runtime_deps = [],
-    )
-
-    # from com.google.code.findbugs:jsr305:1.3.9
-    native.alias(name = 'main_deps___com_google_code_findbugs__jsr305',
-        actual = ':main_deps___com_google_code_findbugs__jsr305__1_3_9',
-        visibility = ['//visibility:public'],
-    )
-
-    # from com.google.code.findbugs:jsr305:1.3.9
-    native.java_import(name = 'main_deps___com_google_code_findbugs__jsr305__1_3_9',
-        jars = ['@main_deps___com_google_code_findbugs__jsr305__1_3_9//file'],
-        licenses = ['notice'],
-        deps = [],
-        exports = [],
-        runtime_deps = [],
-    )
-
-    # from com.google.errorprone:error_prone_annotations:2.0.18
-    native.alias(name = 'main_deps___com_google_errorprone__error_prone_annotations',
-        actual = ':main_deps___com_google_errorprone__error_prone_annotations__2_0_18',
-        visibility = ['//visibility:public'],
-    )
-
-    # from com.google.errorprone:error_prone_annotations:2.0.18
-    native.java_import(name = 'main_deps___com_google_errorprone__error_prone_annotations__2_0_18',
-        jars = ['@main_deps___com_google_errorprone__error_prone_annotations__2_0_18//file'],
-        licenses = ['notice'],
-        deps = [],
-        exports = [],
-        runtime_deps = [],
-    )
-
-    # from com.google.guava:guava:23.5-jre
-    native.alias(name = 'main_deps___com_google_guava__guava',
-        actual = ':main_deps___com_google_guava__guava__23_5_jre',
-        visibility = ['//visibility:public'],
-    )
-
-    # from com.google.guava:guava:23.5-jre
-    native.java_import(name = 'main_deps___com_google_guava__guava__23_5_jre',
-        jars = ['@main_deps___com_google_guava__guava__23_5_jre//file'],
-        licenses = ['notice'],
-        deps = [
-            ':main_deps___com_google_code_findbugs__jsr305',
-            ':main_deps___com_google_errorprone__error_prone_annotations',
-            ':main_deps___com_google_j2objc__j2objc_annotations',
-            ':main_deps___org_checkerframework__checker_qual',
-            ':main_deps___org_codehaus_mojo__animal_sniffer_annotations',
-        ],
-        exports = [
-            ':main_deps___com_google_code_findbugs__jsr305',
-            ':main_deps___com_google_errorprone__error_prone_annotations',
-            ':main_deps___com_google_j2objc__j2objc_annotations',
-            ':main_deps___org_checkerframework__checker_qual',
-            ':main_deps___org_codehaus_mojo__animal_sniffer_annotations',
-        ],
-        runtime_deps = [],
-    )
-
-    # from com.google.j2objc:j2objc-annotations:1.1
-    native.alias(name = 'main_deps___com_google_j2objc__j2objc_annotations',
-        actual = ':main_deps___com_google_j2objc__j2objc_annotations__1_1',
-        visibility = ['//visibility:public'],
-    )
-
-    # from com.google.j2objc:j2objc-annotations:1.1
-    native.java_import(name = 'main_deps___com_google_j2objc__j2objc_annotations__1_1',
-        jars = ['@main_deps___com_google_j2objc__j2objc_annotations__1_1//file'],
-        licenses = ['notice'],
-        deps = [],
-        exports = [],
-        runtime_deps = [],
-    )
-
-    # from net.ltgt.gradle.incap:incap-processor:0.2
-    native.alias(name = 'main_deps___net_ltgt_gradle_incap__incap_processor',
-        actual = ':main_deps___net_ltgt_gradle_incap__incap_processor__0_2',
-        visibility = ['//visibility:public'],
-    )
-
-    # from net.ltgt.gradle.incap:incap-processor:0.2
-    native.java_library(name = 'main_deps___net_ltgt_gradle_incap__incap_processor__0_2',
-        runtime_deps = [':main_deps___net_ltgt_gradle_incap__incap_processor__0_2_java_plugin_lib'],
-        exported_plugins = [':main_deps___net_ltgt_gradle_incap__incap_processor__0_2_0'],
-    )
-
-    # from net.ltgt.gradle.incap:incap-processor:0.2
-    native.java_plugin(name = 'main_deps___net_ltgt_gradle_incap__incap_processor__0_2_0',
-        processor_class = 'net.ltgt.gradle.incap.processor.IncrementalAnnotationProcessorProcessor',
-        generates_api = 0,
-        deps = [':main_deps___net_ltgt_gradle_incap__incap_processor__0_2_java_plugin_lib'],
-    )
-
-    # from net.ltgt.gradle.incap:incap-processor:0.2
-    native.java_library(name = 'main_deps___net_ltgt_gradle_incap__incap_processor__0_2_generate_api',
-        runtime_deps = [':main_deps___net_ltgt_gradle_incap__incap_processor__0_2_java_plugin_lib'],
-        exported_plugins = [':main_deps___net_ltgt_gradle_incap__incap_processor__0_2_generate_api_0'],
-    )
-
-    # from net.ltgt.gradle.incap:incap-processor:0.2
-    native.java_plugin(name = 'main_deps___net_ltgt_gradle_incap__incap_processor__0_2_generate_api_0',
-        processor_class = 'net.ltgt.gradle.incap.processor.IncrementalAnnotationProcessorProcessor',
-        generates_api = 1,
-        deps = [':main_deps___net_ltgt_gradle_incap__incap_processor__0_2_java_plugin_lib'],
-    )
-
-    # from net.ltgt.gradle.incap:incap-processor:0.2
-    native.java_import(name = 'main_deps___net_ltgt_gradle_incap__incap_processor__0_2_java_plugin_lib',
-        jars = ['@main_deps___net_ltgt_gradle_incap__incap_processor__0_2//file'],
-        licenses = [],
-        deps = [],
-        exports = [],
-        runtime_deps = [':main_deps___net_ltgt_gradle_incap__incap'],
-    )
-
-    # from net.ltgt.gradle.incap:incap-processor:0.2
-    native.alias(name = 'main_deps___net_ltgt_gradle_incap__incap_processor_generate_api',
-        actual = ':main_deps___net_ltgt_gradle_incap__incap_processor__0_2_generate_api',
-        visibility = ['//visibility:public'],
-    )
-
-    # from net.ltgt.gradle.incap:incap:0.2
-    native.alias(name = 'main_deps___net_ltgt_gradle_incap__incap',
-        actual = ':main_deps___net_ltgt_gradle_incap__incap__0_2',
-        visibility = ['//visibility:public'],
-    )
-
-    # from net.ltgt.gradle.incap:incap:0.2
-    native.java_import(name = 'main_deps___net_ltgt_gradle_incap__incap__0_2',
-        jars = ['@main_deps___net_ltgt_gradle_incap__incap__0_2//file'],
-        licenses = [],
-        deps = [],
-        exports = [],
-        runtime_deps = [],
-    )
-
-    # from org.checkerframework:checker-qual:2.0.0
-    native.alias(name = 'main_deps___org_checkerframework__checker_qual',
-        actual = ':main_deps___org_checkerframework__checker_qual__2_0_0',
-        visibility = ['//visibility:public'],
-    )
-
-    # from org.checkerframework:checker-qual:2.0.0
-    native.java_import(name = 'main_deps___org_checkerframework__checker_qual__2_0_0',
-        jars = ['@main_deps___org_checkerframework__checker_qual__2_0_0//file'],
-        licenses = ['notice'],
-        deps = [],
-        exports = [],
-        runtime_deps = [],
-    )
-
-    # from org.codehaus.mojo:animal-sniffer-annotations:1.14
-    native.alias(name = 'main_deps___org_codehaus_mojo__animal_sniffer_annotations',
-        actual = ':main_deps___org_codehaus_mojo__animal_sniffer_annotations__1_14',
-        visibility = ['//visibility:public'],
-    )
-
-    # from org.codehaus.mojo:animal-sniffer-annotations:1.14
-    native.java_import(name = 'main_deps___org_codehaus_mojo__animal_sniffer_annotations__1_14',
-        jars = ['@main_deps___org_codehaus_mojo__animal_sniffer_annotations__1_14//file'],
-        licenses = ['notice'],
-        deps = [],
-        exports = [],
-        runtime_deps = [],
     )
 
 

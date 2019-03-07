@@ -38,8 +38,13 @@ class Adapters {
         return array;
     }
 
+    private static String mavenKey(final String groupId, final String artifactId, final String version) {
+        return String.format(Locale.ROOT, "%s:%s:%s", groupId, artifactId, version);
+    }
+
     static class DependencyDeserializer implements JsonDeserializer<Dependency> {
         private final Map<String, Dependency> cache = new HashMap<>();
+
         @Override
         public Dependency deserialize(final JsonElement jsonElement, final Type type, final JsonDeserializationContext context) throws JsonParseException {
 
@@ -62,34 +67,39 @@ class Adapters {
                 return dependency;
             }
         }
-
-        private String mavenKey(final String groupId, final String artifactId, final String version) {
-            return String.format(Locale.ROOT, "%s:%s:%s", groupId, artifactId, version);
-        }
     }
 
     static class DependencySerializer implements JsonSerializer<Dependency> {
+        private final Map<String, JsonObject> cache = new HashMap<>();
 
         @Override
         public JsonElement serialize(final Dependency dependency, final Type type, final JsonSerializationContext context) {
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("groupId", dependency.groupId());
-            jsonObject.addProperty("artifactId", dependency.artifactId());
-            jsonObject.addProperty("version", dependency.version());
-            jsonObject.addProperty("packaging", dependency.packaging());
+            final String maven = mavenKey(dependency.groupId(), dependency.artifactId(), dependency.version());
 
-            jsonObject.add("dependencies", fromList(context, dependency.dependencies(), Dependency.class));
-            jsonObject.add("exports", fromList(context, dependency.exports(), Dependency.class));
-            jsonObject.add("runtimeDependencies", fromList(context, dependency.runtimeDependencies(), Dependency.class));
+            if (cache.containsKey(maven)) {
+                return cache.get(maven);
+            } else {
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("groupId", dependency.groupId());
+                jsonObject.addProperty("artifactId", dependency.artifactId());
+                jsonObject.addProperty("version", dependency.version());
+                jsonObject.addProperty("packaging", dependency.packaging());
 
-            jsonObject.addProperty("url", dependency.url().toASCIIString());
-            jsonObject.addProperty("sourcesUrl", dependency.sourcesUrl().toASCIIString());
-            jsonObject.addProperty("javadocUrl", dependency.javadocUrl().toASCIIString());
-            jsonObject.addProperty("javadocUrl", dependency.javadocUrl().toASCIIString());
+                jsonObject.add("dependencies", fromList(context, dependency.dependencies(), Dependency.class));
+                jsonObject.add("exports", fromList(context, dependency.exports(), Dependency.class));
+                jsonObject.add("runtimeDependencies", fromList(context, dependency.runtimeDependencies(), Dependency.class));
 
-            jsonObject.add("licenses", fromList(context, dependency.licenses(), Dependency.License.class));
+                jsonObject.addProperty("url", dependency.url().toASCIIString());
+                jsonObject.addProperty("sourcesUrl", dependency.sourcesUrl().toASCIIString());
+                jsonObject.addProperty("javadocUrl", dependency.javadocUrl().toASCIIString());
+                jsonObject.addProperty("javadocUrl", dependency.javadocUrl().toASCIIString());
 
-            return jsonObject;
+                jsonObject.add("licenses", fromList(context, dependency.licenses(), Dependency.License.class));
+
+                cache.put(maven, jsonObject);
+
+                return jsonObject;
+            }
         }
     }
 

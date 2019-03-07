@@ -15,8 +15,6 @@
 package com.google.devtools.bazel.workspace.maven;
 
 
-import static java.util.stream.Collectors.toList;
-
 import com.google.common.collect.Lists;
 import java.util.List;
 import org.apache.maven.repository.internal.MavenRepositorySystemUtils;
@@ -38,6 +36,8 @@ import org.eclipse.aether.transport.http.HttpTransporterFactory;
 import org.eclipse.aether.util.graph.manager.ClassicDependencyManager;
 import org.eclipse.aether.version.Version;
 
+import static java.util.stream.Collectors.toList;
+
 /**
  * Facade around aether. This class is used to make various requests to the aether subsystem.
  */
@@ -56,20 +56,16 @@ public class Aether {
         this.remoteRepositories = remoteRepositories;
     }
 
-    /** Given an artifacts requests a version range for it. */
-    List<String> requestVersionRange(Artifact artifact) throws VersionRangeResolutionException {
-        VersionRangeRequest rangeRequest = new VersionRangeRequest(artifact, remoteRepositories, null);
-        VersionRangeResult result = repositorySystem.resolveVersionRange(repositorySystemSession, rangeRequest);
-        return result.getVersions().stream().map(Version::toString).collect(toList());
-    }
-
     /** TODO(petros): this is a hack until I replace the existing MigrationToolingMavenResolver. */
     static Aether defaultOption() {
         return new Aether.Builder().build();
     }
 
-    static Aether.Builder builder() {
-        return new Aether.Builder();
+    /** Given an artifacts requests a version range for it. */
+    List<String> requestVersionRange(Artifact artifact) throws VersionRangeResolutionException {
+        VersionRangeRequest rangeRequest = new VersionRangeRequest(artifact, remoteRepositories, null);
+        VersionRangeResult result = repositorySystem.resolveVersionRange(repositorySystemSession, rangeRequest);
+        return result.getVersions().stream().map(Version::toString).collect(toList());
     }
 
     /** Builder class for convenience and flexibility. */
