@@ -37,7 +37,6 @@ import org.apache.maven.model.building.UrlModelSource;
 import org.apache.maven.model.profile.DefaultProfileSelector;
 import org.apache.maven.model.resolution.ModelResolver;
 import org.apache.maven.model.resolution.UnresolvableModelException;
-import org.eclipse.aether.repository.RemoteRepository;
 
 import static java.util.stream.Collectors.toList;
 import static org.apache.maven.model.building.ModelBuildingRequest.VALIDATION_LEVEL_MINIMAL;
@@ -64,10 +63,6 @@ public class DefaultModelResolver implements ModelResolver {
         this.repositories = repositories;
         this.ruleNameToModelSource = ruleNameToModelSource;
         this.modelBuilder = modelBuilder;
-        final Aether aether = Aether.builder()
-                .remoteRepos(repositories.stream().map(repo -> new RemoteRepository.Builder(repo.getId(), null, repo.getUrl()).build())
-                        .collect(toList()))
-                .build();
         this.versionResolver = versionResolver;
     }
 

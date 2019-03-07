@@ -27,9 +27,6 @@ import org.apache.maven.model.License;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.util.artifact.JavaScopes;
 
-import static java.util.stream.Collectors.toSet;
-import static java.util.stream.Stream.concat;
-
 /**
  * A struct representing the fields of maven_jar to be written to the WORKSPACE file.
  */
@@ -83,9 +80,7 @@ public class Rule implements Comparable<Rule> {
     }
 
     public Set<Rule> getDeps() {
-        return concat(getDependencies(JavaScopes.COMPILE).stream(),
-                getDependencies(JavaScopes.PROVIDED).stream())
-                .collect(toSet());
+        return getDependencies(JavaScopes.COMPILE);
     }
 
     public Set<Rule> getExportDeps() {
