@@ -2,7 +2,7 @@
 # for artifact com.google.code.findbugs:jsr305
 
 alias(name = 'jsr305',
-    actual = '//resolver:main_deps___com_google_code_findbugs__jsr305',
+    actual = '//resolver:com_google_code_findbugs__jsr305',
     visibility = ['//visibility:public'],
 )
 

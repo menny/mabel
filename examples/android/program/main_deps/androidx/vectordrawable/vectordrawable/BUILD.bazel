@@ -2,7 +2,7 @@
 # for artifact androidx.vectordrawable:vectordrawable
 
 alias(name = 'vectordrawable',
-    actual = '//program:main_deps___androidx_vectordrawable__vectordrawable',
+    actual = '//program:androidx_vectordrawable__vectordrawable',
     visibility = ['//visibility:public'],
 )
 

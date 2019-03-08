@@ -7,397 +7,397 @@ load('@bazel_tools//tools/build_defs/repo:http.bzl', 'http_file')
 # Repository rules macro to be run in the WORKSPACE file.
 def generate_workspace_rules():
     # from androidx.activity:activity:1.0.0-alpha02
-    http_file(name = 'main_deps___androidx_activity__activity__1_0_0_alpha02',
+    http_file(name = 'androidx_activity__activity__1_0_0_alpha02',
         urls = ['https://maven.google.com/androidx/activity/activity/1.0.0-alpha02/activity-1.0.0-alpha02.aar'],
         downloaded_file_path = 'activity-1.0.0-alpha02.aar',
     )
 
     # from androidx.activity:activity:1.0.0-alpha02
-    http_file(name = 'main_deps___androidx_activity__activity__1_0_0_alpha02__sources',
+    http_file(name = 'androidx_activity__activity__1_0_0_alpha02__sources',
         urls = ['https://maven.google.com/androidx/activity/activity/1.0.0-alpha02/activity-1.0.0-alpha02-sources.jar'],
         downloaded_file_path = 'activity-1.0.0-alpha02-sources.jar',
     )
 
     # from androidx.annotation:annotation:1.0.0
-    http_file(name = 'main_deps___androidx_annotation__annotation__1_0_0',
+    http_file(name = 'androidx_annotation__annotation__1_0_0',
         urls = ['https://maven.google.com/androidx/annotation/annotation/1.0.0/annotation-1.0.0.jar'],
         downloaded_file_path = 'annotation-1.0.0.jar',
     )
 
     # from androidx.annotation:annotation:1.0.0
-    http_file(name = 'main_deps___androidx_annotation__annotation__1_0_0__sources',
+    http_file(name = 'androidx_annotation__annotation__1_0_0__sources',
         urls = ['https://maven.google.com/androidx/annotation/annotation/1.0.0/annotation-1.0.0-sources.jar'],
         downloaded_file_path = 'annotation-1.0.0-sources.jar',
     )
 
     # from androidx.appcompat:appcompat:1.0.2
-    http_file(name = 'main_deps___androidx_appcompat__appcompat__1_0_2',
+    http_file(name = 'androidx_appcompat__appcompat__1_0_2',
         urls = ['https://maven.google.com/androidx/appcompat/appcompat/1.0.2/appcompat-1.0.2.aar'],
         downloaded_file_path = 'appcompat-1.0.2.aar',
     )
 
     # from androidx.appcompat:appcompat:1.0.2
-    http_file(name = 'main_deps___androidx_appcompat__appcompat__1_0_2__sources',
+    http_file(name = 'androidx_appcompat__appcompat__1_0_2__sources',
         urls = ['https://maven.google.com/androidx/appcompat/appcompat/1.0.2/appcompat-1.0.2-sources.jar'],
         downloaded_file_path = 'appcompat-1.0.2-sources.jar',
     )
 
     # from androidx.arch.core:core-common:2.0.0
-    http_file(name = 'main_deps___androidx_arch_core__core_common__2_0_0',
+    http_file(name = 'androidx_arch_core__core_common__2_0_0',
         urls = ['https://maven.google.com/androidx/arch/core/core-common/2.0.0/core-common-2.0.0.jar'],
         downloaded_file_path = 'core-common-2.0.0.jar',
     )
 
     # from androidx.arch.core:core-common:2.0.0
-    http_file(name = 'main_deps___androidx_arch_core__core_common__2_0_0__sources',
+    http_file(name = 'androidx_arch_core__core_common__2_0_0__sources',
         urls = ['https://maven.google.com/androidx/arch/core/core-common/2.0.0/core-common-2.0.0-sources.jar'],
         downloaded_file_path = 'core-common-2.0.0-sources.jar',
     )
 
     # from androidx.arch.core:core-runtime:2.0.0
-    http_file(name = 'main_deps___androidx_arch_core__core_runtime__2_0_0',
+    http_file(name = 'androidx_arch_core__core_runtime__2_0_0',
         urls = ['https://maven.google.com/androidx/arch/core/core-runtime/2.0.0/core-runtime-2.0.0.aar'],
         downloaded_file_path = 'core-runtime-2.0.0.aar',
     )
 
     # from androidx.arch.core:core-runtime:2.0.0
-    http_file(name = 'main_deps___androidx_arch_core__core_runtime__2_0_0__sources',
+    http_file(name = 'androidx_arch_core__core_runtime__2_0_0__sources',
         urls = ['https://maven.google.com/androidx/arch/core/core-runtime/2.0.0/core-runtime-2.0.0-sources.jar'],
         downloaded_file_path = 'core-runtime-2.0.0-sources.jar',
     )
 
     # from androidx.asynclayoutinflater:asynclayoutinflater:1.0.0
-    http_file(name = 'main_deps___androidx_asynclayoutinflater__asynclayoutinflater__1_0_0',
+    http_file(name = 'androidx_asynclayoutinflater__asynclayoutinflater__1_0_0',
         urls = ['https://maven.google.com/androidx/asynclayoutinflater/asynclayoutinflater/1.0.0/asynclayoutinflater-1.0.0.aar'],
         downloaded_file_path = 'asynclayoutinflater-1.0.0.aar',
     )
 
     # from androidx.asynclayoutinflater:asynclayoutinflater:1.0.0
-    http_file(name = 'main_deps___androidx_asynclayoutinflater__asynclayoutinflater__1_0_0__sources',
+    http_file(name = 'androidx_asynclayoutinflater__asynclayoutinflater__1_0_0__sources',
         urls = ['https://maven.google.com/androidx/asynclayoutinflater/asynclayoutinflater/1.0.0/asynclayoutinflater-1.0.0-sources.jar'],
         downloaded_file_path = 'asynclayoutinflater-1.0.0-sources.jar',
     )
 
     # from androidx.collection:collection:1.0.0
-    http_file(name = 'main_deps___androidx_collection__collection__1_0_0',
+    http_file(name = 'androidx_collection__collection__1_0_0',
         urls = ['https://maven.google.com/androidx/collection/collection/1.0.0/collection-1.0.0.jar'],
         downloaded_file_path = 'collection-1.0.0.jar',
     )
 
     # from androidx.collection:collection:1.0.0
-    http_file(name = 'main_deps___androidx_collection__collection__1_0_0__sources',
+    http_file(name = 'androidx_collection__collection__1_0_0__sources',
         urls = ['https://maven.google.com/androidx/collection/collection/1.0.0/collection-1.0.0-sources.jar'],
         downloaded_file_path = 'collection-1.0.0-sources.jar',
     )
 
     # from androidx.coordinatorlayout:coordinatorlayout:1.0.0
-    http_file(name = 'main_deps___androidx_coordinatorlayout__coordinatorlayout__1_0_0',
+    http_file(name = 'androidx_coordinatorlayout__coordinatorlayout__1_0_0',
         urls = ['https://maven.google.com/androidx/coordinatorlayout/coordinatorlayout/1.0.0/coordinatorlayout-1.0.0.aar'],
         downloaded_file_path = 'coordinatorlayout-1.0.0.aar',
     )
 
     # from androidx.coordinatorlayout:coordinatorlayout:1.0.0
-    http_file(name = 'main_deps___androidx_coordinatorlayout__coordinatorlayout__1_0_0__sources',
+    http_file(name = 'androidx_coordinatorlayout__coordinatorlayout__1_0_0__sources',
         urls = ['https://maven.google.com/androidx/coordinatorlayout/coordinatorlayout/1.0.0/coordinatorlayout-1.0.0-sources.jar'],
         downloaded_file_path = 'coordinatorlayout-1.0.0-sources.jar',
     )
 
     # from androidx.core:core:1.1.0-alpha01
-    http_file(name = 'main_deps___androidx_core__core__1_1_0_alpha01',
+    http_file(name = 'androidx_core__core__1_1_0_alpha01',
         urls = ['https://maven.google.com/androidx/core/core/1.1.0-alpha01/core-1.1.0-alpha01.aar'],
         downloaded_file_path = 'core-1.1.0-alpha01.aar',
     )
 
     # from androidx.core:core:1.1.0-alpha01
-    http_file(name = 'main_deps___androidx_core__core__1_1_0_alpha01__sources',
+    http_file(name = 'androidx_core__core__1_1_0_alpha01__sources',
         urls = ['https://maven.google.com/androidx/core/core/1.1.0-alpha01/core-1.1.0-alpha01-sources.jar'],
         downloaded_file_path = 'core-1.1.0-alpha01-sources.jar',
     )
 
     # from androidx.cursoradapter:cursoradapter:1.0.0
-    http_file(name = 'main_deps___androidx_cursoradapter__cursoradapter__1_0_0',
+    http_file(name = 'androidx_cursoradapter__cursoradapter__1_0_0',
         urls = ['https://maven.google.com/androidx/cursoradapter/cursoradapter/1.0.0/cursoradapter-1.0.0.aar'],
         downloaded_file_path = 'cursoradapter-1.0.0.aar',
     )
 
     # from androidx.cursoradapter:cursoradapter:1.0.0
-    http_file(name = 'main_deps___androidx_cursoradapter__cursoradapter__1_0_0__sources',
+    http_file(name = 'androidx_cursoradapter__cursoradapter__1_0_0__sources',
         urls = ['https://maven.google.com/androidx/cursoradapter/cursoradapter/1.0.0/cursoradapter-1.0.0-sources.jar'],
         downloaded_file_path = 'cursoradapter-1.0.0-sources.jar',
     )
 
     # from androidx.customview:customview:1.0.0
-    http_file(name = 'main_deps___androidx_customview__customview__1_0_0',
+    http_file(name = 'androidx_customview__customview__1_0_0',
         urls = ['https://maven.google.com/androidx/customview/customview/1.0.0/customview-1.0.0.aar'],
         downloaded_file_path = 'customview-1.0.0.aar',
     )
 
     # from androidx.customview:customview:1.0.0
-    http_file(name = 'main_deps___androidx_customview__customview__1_0_0__sources',
+    http_file(name = 'androidx_customview__customview__1_0_0__sources',
         urls = ['https://maven.google.com/androidx/customview/customview/1.0.0/customview-1.0.0-sources.jar'],
         downloaded_file_path = 'customview-1.0.0-sources.jar',
     )
 
     # from androidx.documentfile:documentfile:1.0.0
-    http_file(name = 'main_deps___androidx_documentfile__documentfile__1_0_0',
+    http_file(name = 'androidx_documentfile__documentfile__1_0_0',
         urls = ['https://maven.google.com/androidx/documentfile/documentfile/1.0.0/documentfile-1.0.0.aar'],
         downloaded_file_path = 'documentfile-1.0.0.aar',
     )
 
     # from androidx.documentfile:documentfile:1.0.0
-    http_file(name = 'main_deps___androidx_documentfile__documentfile__1_0_0__sources',
+    http_file(name = 'androidx_documentfile__documentfile__1_0_0__sources',
         urls = ['https://maven.google.com/androidx/documentfile/documentfile/1.0.0/documentfile-1.0.0-sources.jar'],
         downloaded_file_path = 'documentfile-1.0.0-sources.jar',
     )
 
     # from androidx.drawerlayout:drawerlayout:1.0.0
-    http_file(name = 'main_deps___androidx_drawerlayout__drawerlayout__1_0_0',
+    http_file(name = 'androidx_drawerlayout__drawerlayout__1_0_0',
         urls = ['https://maven.google.com/androidx/drawerlayout/drawerlayout/1.0.0/drawerlayout-1.0.0.aar'],
         downloaded_file_path = 'drawerlayout-1.0.0.aar',
     )
 
     # from androidx.drawerlayout:drawerlayout:1.0.0
-    http_file(name = 'main_deps___androidx_drawerlayout__drawerlayout__1_0_0__sources',
+    http_file(name = 'androidx_drawerlayout__drawerlayout__1_0_0__sources',
         urls = ['https://maven.google.com/androidx/drawerlayout/drawerlayout/1.0.0/drawerlayout-1.0.0-sources.jar'],
         downloaded_file_path = 'drawerlayout-1.0.0-sources.jar',
     )
 
     # from androidx.fragment:fragment:1.1.0-alpha02
-    http_file(name = 'main_deps___androidx_fragment__fragment__1_1_0_alpha02',
+    http_file(name = 'androidx_fragment__fragment__1_1_0_alpha02',
         urls = ['https://maven.google.com/androidx/fragment/fragment/1.1.0-alpha02/fragment-1.1.0-alpha02.aar'],
         downloaded_file_path = 'fragment-1.1.0-alpha02.aar',
     )
 
     # from androidx.fragment:fragment:1.1.0-alpha02
-    http_file(name = 'main_deps___androidx_fragment__fragment__1_1_0_alpha02__sources',
+    http_file(name = 'androidx_fragment__fragment__1_1_0_alpha02__sources',
         urls = ['https://maven.google.com/androidx/fragment/fragment/1.1.0-alpha02/fragment-1.1.0-alpha02-sources.jar'],
         downloaded_file_path = 'fragment-1.1.0-alpha02-sources.jar',
     )
 
     # from androidx.interpolator:interpolator:1.0.0
-    http_file(name = 'main_deps___androidx_interpolator__interpolator__1_0_0',
+    http_file(name = 'androidx_interpolator__interpolator__1_0_0',
         urls = ['https://maven.google.com/androidx/interpolator/interpolator/1.0.0/interpolator-1.0.0.aar'],
         downloaded_file_path = 'interpolator-1.0.0.aar',
     )
 
     # from androidx.interpolator:interpolator:1.0.0
-    http_file(name = 'main_deps___androidx_interpolator__interpolator__1_0_0__sources',
+    http_file(name = 'androidx_interpolator__interpolator__1_0_0__sources',
         urls = ['https://maven.google.com/androidx/interpolator/interpolator/1.0.0/interpolator-1.0.0-sources.jar'],
         downloaded_file_path = 'interpolator-1.0.0-sources.jar',
     )
 
     # from androidx.legacy:legacy-support-core-ui:1.0.0
-    http_file(name = 'main_deps___androidx_legacy__legacy_support_core_ui__1_0_0',
+    http_file(name = 'androidx_legacy__legacy_support_core_ui__1_0_0',
         urls = ['https://maven.google.com/androidx/legacy/legacy-support-core-ui/1.0.0/legacy-support-core-ui-1.0.0.aar'],
         downloaded_file_path = 'legacy-support-core-ui-1.0.0.aar',
     )
 
     # from androidx.legacy:legacy-support-core-ui:1.0.0
-    http_file(name = 'main_deps___androidx_legacy__legacy_support_core_ui__1_0_0__sources',
+    http_file(name = 'androidx_legacy__legacy_support_core_ui__1_0_0__sources',
         urls = ['https://maven.google.com/androidx/legacy/legacy-support-core-ui/1.0.0/legacy-support-core-ui-1.0.0-sources.jar'],
         downloaded_file_path = 'legacy-support-core-ui-1.0.0-sources.jar',
     )
 
     # from androidx.legacy:legacy-support-core-utils:1.0.0
-    http_file(name = 'main_deps___androidx_legacy__legacy_support_core_utils__1_0_0',
+    http_file(name = 'androidx_legacy__legacy_support_core_utils__1_0_0',
         urls = ['https://maven.google.com/androidx/legacy/legacy-support-core-utils/1.0.0/legacy-support-core-utils-1.0.0.aar'],
         downloaded_file_path = 'legacy-support-core-utils-1.0.0.aar',
     )
 
     # from androidx.legacy:legacy-support-core-utils:1.0.0
-    http_file(name = 'main_deps___androidx_legacy__legacy_support_core_utils__1_0_0__sources',
+    http_file(name = 'androidx_legacy__legacy_support_core_utils__1_0_0__sources',
         urls = ['https://maven.google.com/androidx/legacy/legacy-support-core-utils/1.0.0/legacy-support-core-utils-1.0.0-sources.jar'],
         downloaded_file_path = 'legacy-support-core-utils-1.0.0-sources.jar',
     )
 
     # from androidx.lifecycle:lifecycle-common:2.0.0
-    http_file(name = 'main_deps___androidx_lifecycle__lifecycle_common__2_0_0',
+    http_file(name = 'androidx_lifecycle__lifecycle_common__2_0_0',
         urls = ['https://maven.google.com/androidx/lifecycle/lifecycle-common/2.0.0/lifecycle-common-2.0.0.jar'],
         downloaded_file_path = 'lifecycle-common-2.0.0.jar',
     )
 
     # from androidx.lifecycle:lifecycle-common:2.0.0
-    http_file(name = 'main_deps___androidx_lifecycle__lifecycle_common__2_0_0__sources',
+    http_file(name = 'androidx_lifecycle__lifecycle_common__2_0_0__sources',
         urls = ['https://maven.google.com/androidx/lifecycle/lifecycle-common/2.0.0/lifecycle-common-2.0.0-sources.jar'],
         downloaded_file_path = 'lifecycle-common-2.0.0-sources.jar',
     )
 
     # from androidx.lifecycle:lifecycle-livedata-core:2.0.0
-    http_file(name = 'main_deps___androidx_lifecycle__lifecycle_livedata_core__2_0_0',
+    http_file(name = 'androidx_lifecycle__lifecycle_livedata_core__2_0_0',
         urls = ['https://maven.google.com/androidx/lifecycle/lifecycle-livedata-core/2.0.0/lifecycle-livedata-core-2.0.0.aar'],
         downloaded_file_path = 'lifecycle-livedata-core-2.0.0.aar',
     )
 
     # from androidx.lifecycle:lifecycle-livedata-core:2.0.0
-    http_file(name = 'main_deps___androidx_lifecycle__lifecycle_livedata_core__2_0_0__sources',
+    http_file(name = 'androidx_lifecycle__lifecycle_livedata_core__2_0_0__sources',
         urls = ['https://maven.google.com/androidx/lifecycle/lifecycle-livedata-core/2.0.0/lifecycle-livedata-core-2.0.0-sources.jar'],
         downloaded_file_path = 'lifecycle-livedata-core-2.0.0-sources.jar',
     )
 
     # from androidx.lifecycle:lifecycle-livedata:2.0.0
-    http_file(name = 'main_deps___androidx_lifecycle__lifecycle_livedata__2_0_0',
+    http_file(name = 'androidx_lifecycle__lifecycle_livedata__2_0_0',
         urls = ['https://maven.google.com/androidx/lifecycle/lifecycle-livedata/2.0.0/lifecycle-livedata-2.0.0.aar'],
         downloaded_file_path = 'lifecycle-livedata-2.0.0.aar',
     )
 
     # from androidx.lifecycle:lifecycle-livedata:2.0.0
-    http_file(name = 'main_deps___androidx_lifecycle__lifecycle_livedata__2_0_0__sources',
+    http_file(name = 'androidx_lifecycle__lifecycle_livedata__2_0_0__sources',
         urls = ['https://maven.google.com/androidx/lifecycle/lifecycle-livedata/2.0.0/lifecycle-livedata-2.0.0-sources.jar'],
         downloaded_file_path = 'lifecycle-livedata-2.0.0-sources.jar',
     )
 
     # from androidx.lifecycle:lifecycle-runtime:2.0.0
-    http_file(name = 'main_deps___androidx_lifecycle__lifecycle_runtime__2_0_0',
+    http_file(name = 'androidx_lifecycle__lifecycle_runtime__2_0_0',
         urls = ['https://maven.google.com/androidx/lifecycle/lifecycle-runtime/2.0.0/lifecycle-runtime-2.0.0.aar'],
         downloaded_file_path = 'lifecycle-runtime-2.0.0.aar',
     )
 
     # from androidx.lifecycle:lifecycle-runtime:2.0.0
-    http_file(name = 'main_deps___androidx_lifecycle__lifecycle_runtime__2_0_0__sources',
+    http_file(name = 'androidx_lifecycle__lifecycle_runtime__2_0_0__sources',
         urls = ['https://maven.google.com/androidx/lifecycle/lifecycle-runtime/2.0.0/lifecycle-runtime-2.0.0-sources.jar'],
         downloaded_file_path = 'lifecycle-runtime-2.0.0-sources.jar',
     )
 
     # from androidx.lifecycle:lifecycle-viewmodel:2.0.0
-    http_file(name = 'main_deps___androidx_lifecycle__lifecycle_viewmodel__2_0_0',
+    http_file(name = 'androidx_lifecycle__lifecycle_viewmodel__2_0_0',
         urls = ['https://maven.google.com/androidx/lifecycle/lifecycle-viewmodel/2.0.0/lifecycle-viewmodel-2.0.0.aar'],
         downloaded_file_path = 'lifecycle-viewmodel-2.0.0.aar',
     )
 
     # from androidx.lifecycle:lifecycle-viewmodel:2.0.0
-    http_file(name = 'main_deps___androidx_lifecycle__lifecycle_viewmodel__2_0_0__sources',
+    http_file(name = 'androidx_lifecycle__lifecycle_viewmodel__2_0_0__sources',
         urls = ['https://maven.google.com/androidx/lifecycle/lifecycle-viewmodel/2.0.0/lifecycle-viewmodel-2.0.0-sources.jar'],
         downloaded_file_path = 'lifecycle-viewmodel-2.0.0-sources.jar',
     )
 
     # from androidx.loader:loader:1.0.0
-    http_file(name = 'main_deps___androidx_loader__loader__1_0_0',
+    http_file(name = 'androidx_loader__loader__1_0_0',
         urls = ['https://maven.google.com/androidx/loader/loader/1.0.0/loader-1.0.0.aar'],
         downloaded_file_path = 'loader-1.0.0.aar',
     )
 
     # from androidx.loader:loader:1.0.0
-    http_file(name = 'main_deps___androidx_loader__loader__1_0_0__sources',
+    http_file(name = 'androidx_loader__loader__1_0_0__sources',
         urls = ['https://maven.google.com/androidx/loader/loader/1.0.0/loader-1.0.0-sources.jar'],
         downloaded_file_path = 'loader-1.0.0-sources.jar',
     )
 
     # from androidx.localbroadcastmanager:localbroadcastmanager:1.0.0
-    http_file(name = 'main_deps___androidx_localbroadcastmanager__localbroadcastmanager__1_0_0',
+    http_file(name = 'androidx_localbroadcastmanager__localbroadcastmanager__1_0_0',
         urls = ['https://maven.google.com/androidx/localbroadcastmanager/localbroadcastmanager/1.0.0/localbroadcastmanager-1.0.0.aar'],
         downloaded_file_path = 'localbroadcastmanager-1.0.0.aar',
     )
 
     # from androidx.localbroadcastmanager:localbroadcastmanager:1.0.0
-    http_file(name = 'main_deps___androidx_localbroadcastmanager__localbroadcastmanager__1_0_0__sources',
+    http_file(name = 'androidx_localbroadcastmanager__localbroadcastmanager__1_0_0__sources',
         urls = ['https://maven.google.com/androidx/localbroadcastmanager/localbroadcastmanager/1.0.0/localbroadcastmanager-1.0.0-sources.jar'],
         downloaded_file_path = 'localbroadcastmanager-1.0.0-sources.jar',
     )
 
     # from androidx.print:print:1.0.0
-    http_file(name = 'main_deps___androidx_print__print__1_0_0',
+    http_file(name = 'androidx_print__print__1_0_0',
         urls = ['https://maven.google.com/androidx/print/print/1.0.0/print-1.0.0.aar'],
         downloaded_file_path = 'print-1.0.0.aar',
     )
 
     # from androidx.print:print:1.0.0
-    http_file(name = 'main_deps___androidx_print__print__1_0_0__sources',
+    http_file(name = 'androidx_print__print__1_0_0__sources',
         urls = ['https://maven.google.com/androidx/print/print/1.0.0/print-1.0.0-sources.jar'],
         downloaded_file_path = 'print-1.0.0-sources.jar',
     )
 
     # from androidx.slidingpanelayout:slidingpanelayout:1.0.0
-    http_file(name = 'main_deps___androidx_slidingpanelayout__slidingpanelayout__1_0_0',
+    http_file(name = 'androidx_slidingpanelayout__slidingpanelayout__1_0_0',
         urls = ['https://maven.google.com/androidx/slidingpanelayout/slidingpanelayout/1.0.0/slidingpanelayout-1.0.0.aar'],
         downloaded_file_path = 'slidingpanelayout-1.0.0.aar',
     )
 
     # from androidx.slidingpanelayout:slidingpanelayout:1.0.0
-    http_file(name = 'main_deps___androidx_slidingpanelayout__slidingpanelayout__1_0_0__sources',
+    http_file(name = 'androidx_slidingpanelayout__slidingpanelayout__1_0_0__sources',
         urls = ['https://maven.google.com/androidx/slidingpanelayout/slidingpanelayout/1.0.0/slidingpanelayout-1.0.0-sources.jar'],
         downloaded_file_path = 'slidingpanelayout-1.0.0-sources.jar',
     )
 
     # from androidx.swiperefreshlayout:swiperefreshlayout:1.0.0
-    http_file(name = 'main_deps___androidx_swiperefreshlayout__swiperefreshlayout__1_0_0',
+    http_file(name = 'androidx_swiperefreshlayout__swiperefreshlayout__1_0_0',
         urls = ['https://maven.google.com/androidx/swiperefreshlayout/swiperefreshlayout/1.0.0/swiperefreshlayout-1.0.0.aar'],
         downloaded_file_path = 'swiperefreshlayout-1.0.0.aar',
     )
 
     # from androidx.swiperefreshlayout:swiperefreshlayout:1.0.0
-    http_file(name = 'main_deps___androidx_swiperefreshlayout__swiperefreshlayout__1_0_0__sources',
+    http_file(name = 'androidx_swiperefreshlayout__swiperefreshlayout__1_0_0__sources',
         urls = ['https://maven.google.com/androidx/swiperefreshlayout/swiperefreshlayout/1.0.0/swiperefreshlayout-1.0.0-sources.jar'],
         downloaded_file_path = 'swiperefreshlayout-1.0.0-sources.jar',
     )
 
     # from androidx.vectordrawable:vectordrawable-animated:1.0.0
-    http_file(name = 'main_deps___androidx_vectordrawable__vectordrawable_animated__1_0_0',
+    http_file(name = 'androidx_vectordrawable__vectordrawable_animated__1_0_0',
         urls = ['https://maven.google.com/androidx/vectordrawable/vectordrawable-animated/1.0.0/vectordrawable-animated-1.0.0.aar'],
         downloaded_file_path = 'vectordrawable-animated-1.0.0.aar',
     )
 
     # from androidx.vectordrawable:vectordrawable-animated:1.0.0
-    http_file(name = 'main_deps___androidx_vectordrawable__vectordrawable_animated__1_0_0__sources',
+    http_file(name = 'androidx_vectordrawable__vectordrawable_animated__1_0_0__sources',
         urls = ['https://maven.google.com/androidx/vectordrawable/vectordrawable-animated/1.0.0/vectordrawable-animated-1.0.0-sources.jar'],
         downloaded_file_path = 'vectordrawable-animated-1.0.0-sources.jar',
     )
 
     # from androidx.vectordrawable:vectordrawable:1.0.1
-    http_file(name = 'main_deps___androidx_vectordrawable__vectordrawable__1_0_1',
+    http_file(name = 'androidx_vectordrawable__vectordrawable__1_0_1',
         urls = ['https://maven.google.com/androidx/vectordrawable/vectordrawable/1.0.1/vectordrawable-1.0.1.aar'],
         downloaded_file_path = 'vectordrawable-1.0.1.aar',
     )
 
     # from androidx.vectordrawable:vectordrawable:1.0.1
-    http_file(name = 'main_deps___androidx_vectordrawable__vectordrawable__1_0_1__sources',
+    http_file(name = 'androidx_vectordrawable__vectordrawable__1_0_1__sources',
         urls = ['https://maven.google.com/androidx/vectordrawable/vectordrawable/1.0.1/vectordrawable-1.0.1-sources.jar'],
         downloaded_file_path = 'vectordrawable-1.0.1-sources.jar',
     )
 
     # from androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01
-    http_file(name = 'main_deps___androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01',
+    http_file(name = 'androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01',
         urls = ['https://maven.google.com/androidx/versionedparcelable/versionedparcelable/1.1.0-alpha01/versionedparcelable-1.1.0-alpha01.aar'],
         downloaded_file_path = 'versionedparcelable-1.1.0-alpha01.aar',
     )
 
     # from androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01
-    http_file(name = 'main_deps___androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01__sources',
+    http_file(name = 'androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01__sources',
         urls = ['https://maven.google.com/androidx/versionedparcelable/versionedparcelable/1.1.0-alpha01/versionedparcelable-1.1.0-alpha01-sources.jar'],
         downloaded_file_path = 'versionedparcelable-1.1.0-alpha01-sources.jar',
     )
 
     # from androidx.viewpager:viewpager:1.0.0
-    http_file(name = 'main_deps___androidx_viewpager__viewpager__1_0_0',
+    http_file(name = 'androidx_viewpager__viewpager__1_0_0',
         urls = ['https://maven.google.com/androidx/viewpager/viewpager/1.0.0/viewpager-1.0.0.aar'],
         downloaded_file_path = 'viewpager-1.0.0.aar',
     )
 
     # from androidx.viewpager:viewpager:1.0.0
-    http_file(name = 'main_deps___androidx_viewpager__viewpager__1_0_0__sources',
+    http_file(name = 'androidx_viewpager__viewpager__1_0_0__sources',
         urls = ['https://maven.google.com/androidx/viewpager/viewpager/1.0.0/viewpager-1.0.0-sources.jar'],
         downloaded_file_path = 'viewpager-1.0.0-sources.jar',
     )
 
     # from com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406
-    http_file(name = 'main_deps___com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406',
+    http_file(name = 'com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406',
         urls = ['https://jitpack.io/com/github/menny/Chauffeur/lib/90e703256785b7baf9cd37370b62b1d7d3830406/lib-90e703256785b7baf9cd37370b62b1d7d3830406.aar'],
         downloaded_file_path = 'lib-90e703256785b7baf9cd37370b62b1d7d3830406.aar',
     )
 
     # from com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406
-    http_file(name = 'main_deps___com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406__sources',
+    http_file(name = 'com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406__sources',
         urls = ['https://jitpack.io/com/github/menny/Chauffeur/lib/90e703256785b7baf9cd37370b62b1d7d3830406/lib-90e703256785b7baf9cd37370b62b1d7d3830406-sources.jar'],
         downloaded_file_path = 'lib-90e703256785b7baf9cd37370b62b1d7d3830406-sources.jar',
     )
 
     # from com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406
-    http_file(name = 'main_deps___com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406',
+    http_file(name = 'com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406',
         urls = ['https://jitpack.io/com/github/menny/Chauffeur/permissions/90e703256785b7baf9cd37370b62b1d7d3830406/permissions-90e703256785b7baf9cd37370b62b1d7d3830406.aar'],
         downloaded_file_path = 'permissions-90e703256785b7baf9cd37370b62b1d7d3830406.aar',
     )
 
     # from com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406
-    http_file(name = 'main_deps___com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406__sources',
+    http_file(name = 'com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406__sources',
         urls = ['https://jitpack.io/com/github/menny/Chauffeur/permissions/90e703256785b7baf9cd37370b62b1d7d3830406/permissions-90e703256785b7baf9cd37370b62b1d7d3830406-sources.jar'],
         downloaded_file_path = 'permissions-90e703256785b7baf9cd37370b62b1d7d3830406-sources.jar',
     )
@@ -429,657 +429,657 @@ def kotlin_jar_support(name, deps, exports, runtime_deps, jar, kt_jvm_import=Non
 
 def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=None):
     # from androidx.activity:activity:1.0.0-alpha02
-    native.alias(name = 'main_deps___androidx_activity__activity',
-        actual = ':main_deps___androidx_activity__activity__1_0_0_alpha02',
+    native.alias(name = 'androidx_activity__activity',
+        actual = ':androidx_activity__activity__1_0_0_alpha02',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.activity:activity:1.0.0-alpha02
-    native.aar_import(name = 'main_deps___androidx_activity__activity__1_0_0_alpha02',
-        aar = '@main_deps___androidx_activity__activity__1_0_0_alpha02//file',
+    native.aar_import(name = 'androidx_activity__activity__1_0_0_alpha02',
+        aar = '@androidx_activity__activity__1_0_0_alpha02//file',
         deps = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_core__core',
-            ':main_deps___androidx_lifecycle__lifecycle_runtime',
-            ':main_deps___androidx_lifecycle__lifecycle_viewmodel',
+            ':androidx_annotation__annotation',
+            ':androidx_core__core',
+            ':androidx_lifecycle__lifecycle_runtime',
+            ':androidx_lifecycle__lifecycle_viewmodel',
         ],
         exports = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_core__core',
-            ':main_deps___androidx_lifecycle__lifecycle_runtime',
-            ':main_deps___androidx_lifecycle__lifecycle_viewmodel',
+            ':androidx_annotation__annotation',
+            ':androidx_core__core',
+            ':androidx_lifecycle__lifecycle_runtime',
+            ':androidx_lifecycle__lifecycle_viewmodel',
         ],
     )
 
     # from androidx.annotation:annotation:1.0.0
-    native.alias(name = 'main_deps___androidx_annotation__annotation',
-        actual = ':main_deps___androidx_annotation__annotation__1_0_0',
+    native.alias(name = 'androidx_annotation__annotation',
+        actual = ':androidx_annotation__annotation__1_0_0',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.annotation:annotation:1.0.0
-    native.java_import(name = 'main_deps___androidx_annotation__annotation__1_0_0',
-        jars = ['@main_deps___androidx_annotation__annotation__1_0_0//file'],
+    native.java_import(name = 'androidx_annotation__annotation__1_0_0',
+        jars = ['@androidx_annotation__annotation__1_0_0//file'],
         licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],
-        srcjar = '@main_deps___androidx_annotation__annotation__1_0_0__sources//file',
+        srcjar = '@androidx_annotation__annotation__1_0_0__sources//file',
     )
 
     # from androidx.appcompat:appcompat:1.0.2
-    native.alias(name = 'main_deps___androidx_appcompat__appcompat',
-        actual = ':main_deps___androidx_appcompat__appcompat__1_0_2',
+    native.alias(name = 'androidx_appcompat__appcompat',
+        actual = ':androidx_appcompat__appcompat__1_0_2',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.appcompat:appcompat:1.0.2
-    native.aar_import(name = 'main_deps___androidx_appcompat__appcompat__1_0_2',
-        aar = '@main_deps___androidx_appcompat__appcompat__1_0_2//file',
+    native.aar_import(name = 'androidx_appcompat__appcompat__1_0_2',
+        aar = '@androidx_appcompat__appcompat__1_0_2//file',
         deps = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_collection__collection',
-            ':main_deps___androidx_core__core',
-            ':main_deps___androidx_cursoradapter__cursoradapter',
-            ':main_deps___androidx_fragment__fragment',
-            ':main_deps___androidx_legacy__legacy_support_core_utils',
-            ':main_deps___androidx_vectordrawable__vectordrawable',
-            ':main_deps___androidx_vectordrawable__vectordrawable_animated',
+            ':androidx_annotation__annotation',
+            ':androidx_collection__collection',
+            ':androidx_core__core',
+            ':androidx_cursoradapter__cursoradapter',
+            ':androidx_fragment__fragment',
+            ':androidx_legacy__legacy_support_core_utils',
+            ':androidx_vectordrawable__vectordrawable',
+            ':androidx_vectordrawable__vectordrawable_animated',
         ],
         exports = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_collection__collection',
-            ':main_deps___androidx_core__core',
-            ':main_deps___androidx_cursoradapter__cursoradapter',
-            ':main_deps___androidx_fragment__fragment',
-            ':main_deps___androidx_legacy__legacy_support_core_utils',
-            ':main_deps___androidx_vectordrawable__vectordrawable',
-            ':main_deps___androidx_vectordrawable__vectordrawable_animated',
+            ':androidx_annotation__annotation',
+            ':androidx_collection__collection',
+            ':androidx_core__core',
+            ':androidx_cursoradapter__cursoradapter',
+            ':androidx_fragment__fragment',
+            ':androidx_legacy__legacy_support_core_utils',
+            ':androidx_vectordrawable__vectordrawable',
+            ':androidx_vectordrawable__vectordrawable_animated',
         ],
     )
 
     # from androidx.arch.core:core-common:2.0.0
-    native.alias(name = 'main_deps___androidx_arch_core__core_common',
-        actual = ':main_deps___androidx_arch_core__core_common__2_0_0',
+    native.alias(name = 'androidx_arch_core__core_common',
+        actual = ':androidx_arch_core__core_common__2_0_0',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.arch.core:core-common:2.0.0
-    native.java_import(name = 'main_deps___androidx_arch_core__core_common__2_0_0',
-        jars = ['@main_deps___androidx_arch_core__core_common__2_0_0//file'],
+    native.java_import(name = 'androidx_arch_core__core_common__2_0_0',
+        jars = ['@androidx_arch_core__core_common__2_0_0//file'],
         licenses = ['notice'],
-        deps = [':main_deps___androidx_annotation__annotation'],
-        exports = [':main_deps___androidx_annotation__annotation'],
+        deps = [':androidx_annotation__annotation'],
+        exports = [':androidx_annotation__annotation'],
         runtime_deps = [],
-        srcjar = '@main_deps___androidx_arch_core__core_common__2_0_0__sources//file',
+        srcjar = '@androidx_arch_core__core_common__2_0_0__sources//file',
     )
 
     # from androidx.arch.core:core-runtime:2.0.0
-    native.alias(name = 'main_deps___androidx_arch_core__core_runtime',
-        actual = ':main_deps___androidx_arch_core__core_runtime__2_0_0',
+    native.alias(name = 'androidx_arch_core__core_runtime',
+        actual = ':androidx_arch_core__core_runtime__2_0_0',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.arch.core:core-runtime:2.0.0
-    native.aar_import(name = 'main_deps___androidx_arch_core__core_runtime__2_0_0',
-        aar = '@main_deps___androidx_arch_core__core_runtime__2_0_0//file',
+    native.aar_import(name = 'androidx_arch_core__core_runtime__2_0_0',
+        aar = '@androidx_arch_core__core_runtime__2_0_0//file',
         deps = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_arch_core__core_common',
+            ':androidx_annotation__annotation',
+            ':androidx_arch_core__core_common',
         ],
         exports = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_arch_core__core_common',
+            ':androidx_annotation__annotation',
+            ':androidx_arch_core__core_common',
         ],
     )
 
     # from androidx.asynclayoutinflater:asynclayoutinflater:1.0.0
-    native.alias(name = 'main_deps___androidx_asynclayoutinflater__asynclayoutinflater',
-        actual = ':main_deps___androidx_asynclayoutinflater__asynclayoutinflater__1_0_0',
+    native.alias(name = 'androidx_asynclayoutinflater__asynclayoutinflater',
+        actual = ':androidx_asynclayoutinflater__asynclayoutinflater__1_0_0',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.asynclayoutinflater:asynclayoutinflater:1.0.0
-    native.aar_import(name = 'main_deps___androidx_asynclayoutinflater__asynclayoutinflater__1_0_0',
-        aar = '@main_deps___androidx_asynclayoutinflater__asynclayoutinflater__1_0_0//file',
+    native.aar_import(name = 'androidx_asynclayoutinflater__asynclayoutinflater__1_0_0',
+        aar = '@androidx_asynclayoutinflater__asynclayoutinflater__1_0_0//file',
         deps = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_core__core',
+            ':androidx_annotation__annotation',
+            ':androidx_core__core',
         ],
         exports = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_core__core',
+            ':androidx_annotation__annotation',
+            ':androidx_core__core',
         ],
     )
 
     # from androidx.collection:collection:1.0.0
-    native.alias(name = 'main_deps___androidx_collection__collection',
-        actual = ':main_deps___androidx_collection__collection__1_0_0',
+    native.alias(name = 'androidx_collection__collection',
+        actual = ':androidx_collection__collection__1_0_0',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.collection:collection:1.0.0
-    native.java_import(name = 'main_deps___androidx_collection__collection__1_0_0',
-        jars = ['@main_deps___androidx_collection__collection__1_0_0//file'],
+    native.java_import(name = 'androidx_collection__collection__1_0_0',
+        jars = ['@androidx_collection__collection__1_0_0//file'],
         licenses = ['notice'],
-        deps = [':main_deps___androidx_annotation__annotation'],
-        exports = [':main_deps___androidx_annotation__annotation'],
+        deps = [':androidx_annotation__annotation'],
+        exports = [':androidx_annotation__annotation'],
         runtime_deps = [],
-        srcjar = '@main_deps___androidx_collection__collection__1_0_0__sources//file',
+        srcjar = '@androidx_collection__collection__1_0_0__sources//file',
     )
 
     # from androidx.coordinatorlayout:coordinatorlayout:1.0.0
-    native.alias(name = 'main_deps___androidx_coordinatorlayout__coordinatorlayout',
-        actual = ':main_deps___androidx_coordinatorlayout__coordinatorlayout__1_0_0',
+    native.alias(name = 'androidx_coordinatorlayout__coordinatorlayout',
+        actual = ':androidx_coordinatorlayout__coordinatorlayout__1_0_0',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.coordinatorlayout:coordinatorlayout:1.0.0
-    native.aar_import(name = 'main_deps___androidx_coordinatorlayout__coordinatorlayout__1_0_0',
-        aar = '@main_deps___androidx_coordinatorlayout__coordinatorlayout__1_0_0//file',
+    native.aar_import(name = 'androidx_coordinatorlayout__coordinatorlayout__1_0_0',
+        aar = '@androidx_coordinatorlayout__coordinatorlayout__1_0_0//file',
         deps = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_core__core',
-            ':main_deps___androidx_customview__customview',
+            ':androidx_annotation__annotation',
+            ':androidx_core__core',
+            ':androidx_customview__customview',
         ],
         exports = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_core__core',
-            ':main_deps___androidx_customview__customview',
+            ':androidx_annotation__annotation',
+            ':androidx_core__core',
+            ':androidx_customview__customview',
         ],
     )
 
     # from androidx.core:core:1.1.0-alpha01
-    native.alias(name = 'main_deps___androidx_core__core',
-        actual = ':main_deps___androidx_core__core__1_1_0_alpha01',
+    native.alias(name = 'androidx_core__core',
+        actual = ':androidx_core__core__1_1_0_alpha01',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.core:core:1.1.0-alpha01
-    native.aar_import(name = 'main_deps___androidx_core__core__1_1_0_alpha01',
-        aar = '@main_deps___androidx_core__core__1_1_0_alpha01//file',
+    native.aar_import(name = 'androidx_core__core__1_1_0_alpha01',
+        aar = '@androidx_core__core__1_1_0_alpha01//file',
         deps = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_collection__collection',
-            ':main_deps___androidx_lifecycle__lifecycle_runtime',
-            ':main_deps___androidx_versionedparcelable__versionedparcelable',
+            ':androidx_annotation__annotation',
+            ':androidx_collection__collection',
+            ':androidx_lifecycle__lifecycle_runtime',
+            ':androidx_versionedparcelable__versionedparcelable',
         ],
         exports = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_collection__collection',
-            ':main_deps___androidx_lifecycle__lifecycle_runtime',
-            ':main_deps___androidx_versionedparcelable__versionedparcelable',
+            ':androidx_annotation__annotation',
+            ':androidx_collection__collection',
+            ':androidx_lifecycle__lifecycle_runtime',
+            ':androidx_versionedparcelable__versionedparcelable',
         ],
     )
 
     # from androidx.cursoradapter:cursoradapter:1.0.0
-    native.alias(name = 'main_deps___androidx_cursoradapter__cursoradapter',
-        actual = ':main_deps___androidx_cursoradapter__cursoradapter__1_0_0',
+    native.alias(name = 'androidx_cursoradapter__cursoradapter',
+        actual = ':androidx_cursoradapter__cursoradapter__1_0_0',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.cursoradapter:cursoradapter:1.0.0
-    native.aar_import(name = 'main_deps___androidx_cursoradapter__cursoradapter__1_0_0',
-        aar = '@main_deps___androidx_cursoradapter__cursoradapter__1_0_0//file',
-        deps = [':main_deps___androidx_annotation__annotation'],
-        exports = [':main_deps___androidx_annotation__annotation'],
+    native.aar_import(name = 'androidx_cursoradapter__cursoradapter__1_0_0',
+        aar = '@androidx_cursoradapter__cursoradapter__1_0_0//file',
+        deps = [':androidx_annotation__annotation'],
+        exports = [':androidx_annotation__annotation'],
     )
 
     # from androidx.customview:customview:1.0.0
-    native.alias(name = 'main_deps___androidx_customview__customview',
-        actual = ':main_deps___androidx_customview__customview__1_0_0',
+    native.alias(name = 'androidx_customview__customview',
+        actual = ':androidx_customview__customview__1_0_0',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.customview:customview:1.0.0
-    native.aar_import(name = 'main_deps___androidx_customview__customview__1_0_0',
-        aar = '@main_deps___androidx_customview__customview__1_0_0//file',
+    native.aar_import(name = 'androidx_customview__customview__1_0_0',
+        aar = '@androidx_customview__customview__1_0_0//file',
         deps = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_core__core',
+            ':androidx_annotation__annotation',
+            ':androidx_core__core',
         ],
         exports = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_core__core',
+            ':androidx_annotation__annotation',
+            ':androidx_core__core',
         ],
     )
 
     # from androidx.documentfile:documentfile:1.0.0
-    native.alias(name = 'main_deps___androidx_documentfile__documentfile',
-        actual = ':main_deps___androidx_documentfile__documentfile__1_0_0',
+    native.alias(name = 'androidx_documentfile__documentfile',
+        actual = ':androidx_documentfile__documentfile__1_0_0',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.documentfile:documentfile:1.0.0
-    native.aar_import(name = 'main_deps___androidx_documentfile__documentfile__1_0_0',
-        aar = '@main_deps___androidx_documentfile__documentfile__1_0_0//file',
-        deps = [':main_deps___androidx_annotation__annotation'],
-        exports = [':main_deps___androidx_annotation__annotation'],
+    native.aar_import(name = 'androidx_documentfile__documentfile__1_0_0',
+        aar = '@androidx_documentfile__documentfile__1_0_0//file',
+        deps = [':androidx_annotation__annotation'],
+        exports = [':androidx_annotation__annotation'],
     )
 
     # from androidx.drawerlayout:drawerlayout:1.0.0
-    native.alias(name = 'main_deps___androidx_drawerlayout__drawerlayout',
-        actual = ':main_deps___androidx_drawerlayout__drawerlayout__1_0_0',
+    native.alias(name = 'androidx_drawerlayout__drawerlayout',
+        actual = ':androidx_drawerlayout__drawerlayout__1_0_0',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.drawerlayout:drawerlayout:1.0.0
-    native.aar_import(name = 'main_deps___androidx_drawerlayout__drawerlayout__1_0_0',
-        aar = '@main_deps___androidx_drawerlayout__drawerlayout__1_0_0//file',
+    native.aar_import(name = 'androidx_drawerlayout__drawerlayout__1_0_0',
+        aar = '@androidx_drawerlayout__drawerlayout__1_0_0//file',
         deps = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_core__core',
-            ':main_deps___androidx_customview__customview',
+            ':androidx_annotation__annotation',
+            ':androidx_core__core',
+            ':androidx_customview__customview',
         ],
         exports = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_core__core',
-            ':main_deps___androidx_customview__customview',
+            ':androidx_annotation__annotation',
+            ':androidx_core__core',
+            ':androidx_customview__customview',
         ],
     )
 
     # from androidx.fragment:fragment:1.1.0-alpha02
-    native.alias(name = 'main_deps___androidx_fragment__fragment',
-        actual = ':main_deps___androidx_fragment__fragment__1_1_0_alpha02',
+    native.alias(name = 'androidx_fragment__fragment',
+        actual = ':androidx_fragment__fragment__1_1_0_alpha02',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.fragment:fragment:1.1.0-alpha02
-    native.aar_import(name = 'main_deps___androidx_fragment__fragment__1_1_0_alpha02',
-        aar = '@main_deps___androidx_fragment__fragment__1_1_0_alpha02//file',
+    native.aar_import(name = 'androidx_fragment__fragment__1_1_0_alpha02',
+        aar = '@androidx_fragment__fragment__1_1_0_alpha02//file',
         deps = [
-            ':main_deps___androidx_activity__activity',
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_core__core',
-            ':main_deps___androidx_lifecycle__lifecycle_viewmodel',
-            ':main_deps___androidx_loader__loader',
-            ':main_deps___androidx_viewpager__viewpager',
+            ':androidx_activity__activity',
+            ':androidx_annotation__annotation',
+            ':androidx_core__core',
+            ':androidx_lifecycle__lifecycle_viewmodel',
+            ':androidx_loader__loader',
+            ':androidx_viewpager__viewpager',
         ],
         exports = [
-            ':main_deps___androidx_activity__activity',
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_core__core',
-            ':main_deps___androidx_lifecycle__lifecycle_viewmodel',
-            ':main_deps___androidx_loader__loader',
-            ':main_deps___androidx_viewpager__viewpager',
+            ':androidx_activity__activity',
+            ':androidx_annotation__annotation',
+            ':androidx_core__core',
+            ':androidx_lifecycle__lifecycle_viewmodel',
+            ':androidx_loader__loader',
+            ':androidx_viewpager__viewpager',
         ],
     )
 
     # from androidx.interpolator:interpolator:1.0.0
-    native.alias(name = 'main_deps___androidx_interpolator__interpolator',
-        actual = ':main_deps___androidx_interpolator__interpolator__1_0_0',
+    native.alias(name = 'androidx_interpolator__interpolator',
+        actual = ':androidx_interpolator__interpolator__1_0_0',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.interpolator:interpolator:1.0.0
-    native.aar_import(name = 'main_deps___androidx_interpolator__interpolator__1_0_0',
-        aar = '@main_deps___androidx_interpolator__interpolator__1_0_0//file',
-        deps = [':main_deps___androidx_annotation__annotation'],
-        exports = [':main_deps___androidx_annotation__annotation'],
+    native.aar_import(name = 'androidx_interpolator__interpolator__1_0_0',
+        aar = '@androidx_interpolator__interpolator__1_0_0//file',
+        deps = [':androidx_annotation__annotation'],
+        exports = [':androidx_annotation__annotation'],
     )
 
     # from androidx.legacy:legacy-support-core-ui:1.0.0
-    native.alias(name = 'main_deps___androidx_legacy__legacy_support_core_ui',
-        actual = ':main_deps___androidx_legacy__legacy_support_core_ui__1_0_0',
+    native.alias(name = 'androidx_legacy__legacy_support_core_ui',
+        actual = ':androidx_legacy__legacy_support_core_ui__1_0_0',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.legacy:legacy-support-core-ui:1.0.0
-    native.aar_import(name = 'main_deps___androidx_legacy__legacy_support_core_ui__1_0_0',
-        aar = '@main_deps___androidx_legacy__legacy_support_core_ui__1_0_0//file',
+    native.aar_import(name = 'androidx_legacy__legacy_support_core_ui__1_0_0',
+        aar = '@androidx_legacy__legacy_support_core_ui__1_0_0//file',
         deps = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_asynclayoutinflater__asynclayoutinflater',
-            ':main_deps___androidx_coordinatorlayout__coordinatorlayout',
-            ':main_deps___androidx_core__core',
-            ':main_deps___androidx_cursoradapter__cursoradapter',
-            ':main_deps___androidx_customview__customview',
-            ':main_deps___androidx_drawerlayout__drawerlayout',
-            ':main_deps___androidx_interpolator__interpolator',
-            ':main_deps___androidx_legacy__legacy_support_core_utils',
-            ':main_deps___androidx_slidingpanelayout__slidingpanelayout',
-            ':main_deps___androidx_swiperefreshlayout__swiperefreshlayout',
-            ':main_deps___androidx_viewpager__viewpager',
+            ':androidx_annotation__annotation',
+            ':androidx_asynclayoutinflater__asynclayoutinflater',
+            ':androidx_coordinatorlayout__coordinatorlayout',
+            ':androidx_core__core',
+            ':androidx_cursoradapter__cursoradapter',
+            ':androidx_customview__customview',
+            ':androidx_drawerlayout__drawerlayout',
+            ':androidx_interpolator__interpolator',
+            ':androidx_legacy__legacy_support_core_utils',
+            ':androidx_slidingpanelayout__slidingpanelayout',
+            ':androidx_swiperefreshlayout__swiperefreshlayout',
+            ':androidx_viewpager__viewpager',
         ],
         exports = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_asynclayoutinflater__asynclayoutinflater',
-            ':main_deps___androidx_coordinatorlayout__coordinatorlayout',
-            ':main_deps___androidx_core__core',
-            ':main_deps___androidx_cursoradapter__cursoradapter',
-            ':main_deps___androidx_customview__customview',
-            ':main_deps___androidx_drawerlayout__drawerlayout',
-            ':main_deps___androidx_interpolator__interpolator',
-            ':main_deps___androidx_legacy__legacy_support_core_utils',
-            ':main_deps___androidx_slidingpanelayout__slidingpanelayout',
-            ':main_deps___androidx_swiperefreshlayout__swiperefreshlayout',
-            ':main_deps___androidx_viewpager__viewpager',
+            ':androidx_annotation__annotation',
+            ':androidx_asynclayoutinflater__asynclayoutinflater',
+            ':androidx_coordinatorlayout__coordinatorlayout',
+            ':androidx_core__core',
+            ':androidx_cursoradapter__cursoradapter',
+            ':androidx_customview__customview',
+            ':androidx_drawerlayout__drawerlayout',
+            ':androidx_interpolator__interpolator',
+            ':androidx_legacy__legacy_support_core_utils',
+            ':androidx_slidingpanelayout__slidingpanelayout',
+            ':androidx_swiperefreshlayout__swiperefreshlayout',
+            ':androidx_viewpager__viewpager',
         ],
     )
 
     # from androidx.legacy:legacy-support-core-utils:1.0.0
-    native.alias(name = 'main_deps___androidx_legacy__legacy_support_core_utils',
-        actual = ':main_deps___androidx_legacy__legacy_support_core_utils__1_0_0',
+    native.alias(name = 'androidx_legacy__legacy_support_core_utils',
+        actual = ':androidx_legacy__legacy_support_core_utils__1_0_0',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.legacy:legacy-support-core-utils:1.0.0
-    native.aar_import(name = 'main_deps___androidx_legacy__legacy_support_core_utils__1_0_0',
-        aar = '@main_deps___androidx_legacy__legacy_support_core_utils__1_0_0//file',
+    native.aar_import(name = 'androidx_legacy__legacy_support_core_utils__1_0_0',
+        aar = '@androidx_legacy__legacy_support_core_utils__1_0_0//file',
         deps = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_core__core',
-            ':main_deps___androidx_documentfile__documentfile',
-            ':main_deps___androidx_loader__loader',
-            ':main_deps___androidx_localbroadcastmanager__localbroadcastmanager',
-            ':main_deps___androidx_print__print',
+            ':androidx_annotation__annotation',
+            ':androidx_core__core',
+            ':androidx_documentfile__documentfile',
+            ':androidx_loader__loader',
+            ':androidx_localbroadcastmanager__localbroadcastmanager',
+            ':androidx_print__print',
         ],
         exports = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_core__core',
-            ':main_deps___androidx_documentfile__documentfile',
-            ':main_deps___androidx_loader__loader',
-            ':main_deps___androidx_localbroadcastmanager__localbroadcastmanager',
-            ':main_deps___androidx_print__print',
+            ':androidx_annotation__annotation',
+            ':androidx_core__core',
+            ':androidx_documentfile__documentfile',
+            ':androidx_loader__loader',
+            ':androidx_localbroadcastmanager__localbroadcastmanager',
+            ':androidx_print__print',
         ],
     )
 
     # from androidx.lifecycle:lifecycle-common:2.0.0
-    native.alias(name = 'main_deps___androidx_lifecycle__lifecycle_common',
-        actual = ':main_deps___androidx_lifecycle__lifecycle_common__2_0_0',
+    native.alias(name = 'androidx_lifecycle__lifecycle_common',
+        actual = ':androidx_lifecycle__lifecycle_common__2_0_0',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.lifecycle:lifecycle-common:2.0.0
-    native.java_import(name = 'main_deps___androidx_lifecycle__lifecycle_common__2_0_0',
-        jars = ['@main_deps___androidx_lifecycle__lifecycle_common__2_0_0//file'],
+    native.java_import(name = 'androidx_lifecycle__lifecycle_common__2_0_0',
+        jars = ['@androidx_lifecycle__lifecycle_common__2_0_0//file'],
         licenses = ['notice'],
-        deps = [':main_deps___androidx_annotation__annotation'],
-        exports = [':main_deps___androidx_annotation__annotation'],
+        deps = [':androidx_annotation__annotation'],
+        exports = [':androidx_annotation__annotation'],
         runtime_deps = [],
-        srcjar = '@main_deps___androidx_lifecycle__lifecycle_common__2_0_0__sources//file',
+        srcjar = '@androidx_lifecycle__lifecycle_common__2_0_0__sources//file',
     )
 
     # from androidx.lifecycle:lifecycle-livedata-core:2.0.0
-    native.alias(name = 'main_deps___androidx_lifecycle__lifecycle_livedata_core',
-        actual = ':main_deps___androidx_lifecycle__lifecycle_livedata_core__2_0_0',
+    native.alias(name = 'androidx_lifecycle__lifecycle_livedata_core',
+        actual = ':androidx_lifecycle__lifecycle_livedata_core__2_0_0',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.lifecycle:lifecycle-livedata-core:2.0.0
-    native.aar_import(name = 'main_deps___androidx_lifecycle__lifecycle_livedata_core__2_0_0',
-        aar = '@main_deps___androidx_lifecycle__lifecycle_livedata_core__2_0_0//file',
+    native.aar_import(name = 'androidx_lifecycle__lifecycle_livedata_core__2_0_0',
+        aar = '@androidx_lifecycle__lifecycle_livedata_core__2_0_0//file',
         deps = [
-            ':main_deps___androidx_arch_core__core_common',
-            ':main_deps___androidx_arch_core__core_runtime',
-            ':main_deps___androidx_lifecycle__lifecycle_common',
+            ':androidx_arch_core__core_common',
+            ':androidx_arch_core__core_runtime',
+            ':androidx_lifecycle__lifecycle_common',
         ],
         exports = [
-            ':main_deps___androidx_arch_core__core_common',
-            ':main_deps___androidx_arch_core__core_runtime',
-            ':main_deps___androidx_lifecycle__lifecycle_common',
+            ':androidx_arch_core__core_common',
+            ':androidx_arch_core__core_runtime',
+            ':androidx_lifecycle__lifecycle_common',
         ],
     )
 
     # from androidx.lifecycle:lifecycle-livedata:2.0.0
-    native.alias(name = 'main_deps___androidx_lifecycle__lifecycle_livedata',
-        actual = ':main_deps___androidx_lifecycle__lifecycle_livedata__2_0_0',
+    native.alias(name = 'androidx_lifecycle__lifecycle_livedata',
+        actual = ':androidx_lifecycle__lifecycle_livedata__2_0_0',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.lifecycle:lifecycle-livedata:2.0.0
-    native.aar_import(name = 'main_deps___androidx_lifecycle__lifecycle_livedata__2_0_0',
-        aar = '@main_deps___androidx_lifecycle__lifecycle_livedata__2_0_0//file',
+    native.aar_import(name = 'androidx_lifecycle__lifecycle_livedata__2_0_0',
+        aar = '@androidx_lifecycle__lifecycle_livedata__2_0_0//file',
         deps = [
-            ':main_deps___androidx_arch_core__core_common',
-            ':main_deps___androidx_arch_core__core_runtime',
-            ':main_deps___androidx_lifecycle__lifecycle_livedata_core',
+            ':androidx_arch_core__core_common',
+            ':androidx_arch_core__core_runtime',
+            ':androidx_lifecycle__lifecycle_livedata_core',
         ],
         exports = [
-            ':main_deps___androidx_arch_core__core_common',
-            ':main_deps___androidx_arch_core__core_runtime',
-            ':main_deps___androidx_lifecycle__lifecycle_livedata_core',
+            ':androidx_arch_core__core_common',
+            ':androidx_arch_core__core_runtime',
+            ':androidx_lifecycle__lifecycle_livedata_core',
         ],
     )
 
     # from androidx.lifecycle:lifecycle-runtime:2.0.0
-    native.alias(name = 'main_deps___androidx_lifecycle__lifecycle_runtime',
-        actual = ':main_deps___androidx_lifecycle__lifecycle_runtime__2_0_0',
+    native.alias(name = 'androidx_lifecycle__lifecycle_runtime',
+        actual = ':androidx_lifecycle__lifecycle_runtime__2_0_0',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.lifecycle:lifecycle-runtime:2.0.0
-    native.aar_import(name = 'main_deps___androidx_lifecycle__lifecycle_runtime__2_0_0',
-        aar = '@main_deps___androidx_lifecycle__lifecycle_runtime__2_0_0//file',
+    native.aar_import(name = 'androidx_lifecycle__lifecycle_runtime__2_0_0',
+        aar = '@androidx_lifecycle__lifecycle_runtime__2_0_0//file',
         deps = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_arch_core__core_common',
-            ':main_deps___androidx_lifecycle__lifecycle_common',
+            ':androidx_annotation__annotation',
+            ':androidx_arch_core__core_common',
+            ':androidx_lifecycle__lifecycle_common',
         ],
         exports = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_arch_core__core_common',
-            ':main_deps___androidx_lifecycle__lifecycle_common',
+            ':androidx_annotation__annotation',
+            ':androidx_arch_core__core_common',
+            ':androidx_lifecycle__lifecycle_common',
         ],
     )
 
     # from androidx.lifecycle:lifecycle-viewmodel:2.0.0
-    native.alias(name = 'main_deps___androidx_lifecycle__lifecycle_viewmodel',
-        actual = ':main_deps___androidx_lifecycle__lifecycle_viewmodel__2_0_0',
+    native.alias(name = 'androidx_lifecycle__lifecycle_viewmodel',
+        actual = ':androidx_lifecycle__lifecycle_viewmodel__2_0_0',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.lifecycle:lifecycle-viewmodel:2.0.0
-    native.aar_import(name = 'main_deps___androidx_lifecycle__lifecycle_viewmodel__2_0_0',
-        aar = '@main_deps___androidx_lifecycle__lifecycle_viewmodel__2_0_0//file',
-        deps = [':main_deps___androidx_annotation__annotation'],
-        exports = [':main_deps___androidx_annotation__annotation'],
+    native.aar_import(name = 'androidx_lifecycle__lifecycle_viewmodel__2_0_0',
+        aar = '@androidx_lifecycle__lifecycle_viewmodel__2_0_0//file',
+        deps = [':androidx_annotation__annotation'],
+        exports = [':androidx_annotation__annotation'],
     )
 
     # from androidx.loader:loader:1.0.0
-    native.alias(name = 'main_deps___androidx_loader__loader',
-        actual = ':main_deps___androidx_loader__loader__1_0_0',
+    native.alias(name = 'androidx_loader__loader',
+        actual = ':androidx_loader__loader__1_0_0',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.loader:loader:1.0.0
-    native.aar_import(name = 'main_deps___androidx_loader__loader__1_0_0',
-        aar = '@main_deps___androidx_loader__loader__1_0_0//file',
+    native.aar_import(name = 'androidx_loader__loader__1_0_0',
+        aar = '@androidx_loader__loader__1_0_0//file',
         deps = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_core__core',
-            ':main_deps___androidx_lifecycle__lifecycle_livedata',
-            ':main_deps___androidx_lifecycle__lifecycle_viewmodel',
+            ':androidx_annotation__annotation',
+            ':androidx_core__core',
+            ':androidx_lifecycle__lifecycle_livedata',
+            ':androidx_lifecycle__lifecycle_viewmodel',
         ],
         exports = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_core__core',
-            ':main_deps___androidx_lifecycle__lifecycle_livedata',
-            ':main_deps___androidx_lifecycle__lifecycle_viewmodel',
+            ':androidx_annotation__annotation',
+            ':androidx_core__core',
+            ':androidx_lifecycle__lifecycle_livedata',
+            ':androidx_lifecycle__lifecycle_viewmodel',
         ],
     )
 
     # from androidx.localbroadcastmanager:localbroadcastmanager:1.0.0
-    native.alias(name = 'main_deps___androidx_localbroadcastmanager__localbroadcastmanager',
-        actual = ':main_deps___androidx_localbroadcastmanager__localbroadcastmanager__1_0_0',
+    native.alias(name = 'androidx_localbroadcastmanager__localbroadcastmanager',
+        actual = ':androidx_localbroadcastmanager__localbroadcastmanager__1_0_0',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.localbroadcastmanager:localbroadcastmanager:1.0.0
-    native.aar_import(name = 'main_deps___androidx_localbroadcastmanager__localbroadcastmanager__1_0_0',
-        aar = '@main_deps___androidx_localbroadcastmanager__localbroadcastmanager__1_0_0//file',
-        deps = [':main_deps___androidx_annotation__annotation'],
-        exports = [':main_deps___androidx_annotation__annotation'],
+    native.aar_import(name = 'androidx_localbroadcastmanager__localbroadcastmanager__1_0_0',
+        aar = '@androidx_localbroadcastmanager__localbroadcastmanager__1_0_0//file',
+        deps = [':androidx_annotation__annotation'],
+        exports = [':androidx_annotation__annotation'],
     )
 
     # from androidx.print:print:1.0.0
-    native.alias(name = 'main_deps___androidx_print__print',
-        actual = ':main_deps___androidx_print__print__1_0_0',
+    native.alias(name = 'androidx_print__print',
+        actual = ':androidx_print__print__1_0_0',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.print:print:1.0.0
-    native.aar_import(name = 'main_deps___androidx_print__print__1_0_0',
-        aar = '@main_deps___androidx_print__print__1_0_0//file',
-        deps = [':main_deps___androidx_annotation__annotation'],
-        exports = [':main_deps___androidx_annotation__annotation'],
+    native.aar_import(name = 'androidx_print__print__1_0_0',
+        aar = '@androidx_print__print__1_0_0//file',
+        deps = [':androidx_annotation__annotation'],
+        exports = [':androidx_annotation__annotation'],
     )
 
     # from androidx.slidingpanelayout:slidingpanelayout:1.0.0
-    native.alias(name = 'main_deps___androidx_slidingpanelayout__slidingpanelayout',
-        actual = ':main_deps___androidx_slidingpanelayout__slidingpanelayout__1_0_0',
+    native.alias(name = 'androidx_slidingpanelayout__slidingpanelayout',
+        actual = ':androidx_slidingpanelayout__slidingpanelayout__1_0_0',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.slidingpanelayout:slidingpanelayout:1.0.0
-    native.aar_import(name = 'main_deps___androidx_slidingpanelayout__slidingpanelayout__1_0_0',
-        aar = '@main_deps___androidx_slidingpanelayout__slidingpanelayout__1_0_0//file',
+    native.aar_import(name = 'androidx_slidingpanelayout__slidingpanelayout__1_0_0',
+        aar = '@androidx_slidingpanelayout__slidingpanelayout__1_0_0//file',
         deps = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_core__core',
-            ':main_deps___androidx_customview__customview',
+            ':androidx_annotation__annotation',
+            ':androidx_core__core',
+            ':androidx_customview__customview',
         ],
         exports = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_core__core',
-            ':main_deps___androidx_customview__customview',
+            ':androidx_annotation__annotation',
+            ':androidx_core__core',
+            ':androidx_customview__customview',
         ],
     )
 
     # from androidx.swiperefreshlayout:swiperefreshlayout:1.0.0
-    native.alias(name = 'main_deps___androidx_swiperefreshlayout__swiperefreshlayout',
-        actual = ':main_deps___androidx_swiperefreshlayout__swiperefreshlayout__1_0_0',
+    native.alias(name = 'androidx_swiperefreshlayout__swiperefreshlayout',
+        actual = ':androidx_swiperefreshlayout__swiperefreshlayout__1_0_0',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.swiperefreshlayout:swiperefreshlayout:1.0.0
-    native.aar_import(name = 'main_deps___androidx_swiperefreshlayout__swiperefreshlayout__1_0_0',
-        aar = '@main_deps___androidx_swiperefreshlayout__swiperefreshlayout__1_0_0//file',
+    native.aar_import(name = 'androidx_swiperefreshlayout__swiperefreshlayout__1_0_0',
+        aar = '@androidx_swiperefreshlayout__swiperefreshlayout__1_0_0//file',
         deps = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_core__core',
-            ':main_deps___androidx_interpolator__interpolator',
+            ':androidx_annotation__annotation',
+            ':androidx_core__core',
+            ':androidx_interpolator__interpolator',
         ],
         exports = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_core__core',
-            ':main_deps___androidx_interpolator__interpolator',
+            ':androidx_annotation__annotation',
+            ':androidx_core__core',
+            ':androidx_interpolator__interpolator',
         ],
     )
 
     # from androidx.vectordrawable:vectordrawable-animated:1.0.0
-    native.alias(name = 'main_deps___androidx_vectordrawable__vectordrawable_animated',
-        actual = ':main_deps___androidx_vectordrawable__vectordrawable_animated__1_0_0',
+    native.alias(name = 'androidx_vectordrawable__vectordrawable_animated',
+        actual = ':androidx_vectordrawable__vectordrawable_animated__1_0_0',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.vectordrawable:vectordrawable-animated:1.0.0
-    native.aar_import(name = 'main_deps___androidx_vectordrawable__vectordrawable_animated__1_0_0',
-        aar = '@main_deps___androidx_vectordrawable__vectordrawable_animated__1_0_0//file',
+    native.aar_import(name = 'androidx_vectordrawable__vectordrawable_animated__1_0_0',
+        aar = '@androidx_vectordrawable__vectordrawable_animated__1_0_0//file',
         deps = [
-            ':main_deps___androidx_legacy__legacy_support_core_ui',
-            ':main_deps___androidx_vectordrawable__vectordrawable',
+            ':androidx_legacy__legacy_support_core_ui',
+            ':androidx_vectordrawable__vectordrawable',
         ],
         exports = [
-            ':main_deps___androidx_legacy__legacy_support_core_ui',
-            ':main_deps___androidx_vectordrawable__vectordrawable',
+            ':androidx_legacy__legacy_support_core_ui',
+            ':androidx_vectordrawable__vectordrawable',
         ],
     )
 
     # from androidx.vectordrawable:vectordrawable:1.0.1
-    native.alias(name = 'main_deps___androidx_vectordrawable__vectordrawable',
-        actual = ':main_deps___androidx_vectordrawable__vectordrawable__1_0_1',
+    native.alias(name = 'androidx_vectordrawable__vectordrawable',
+        actual = ':androidx_vectordrawable__vectordrawable__1_0_1',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.vectordrawable:vectordrawable:1.0.1
-    native.aar_import(name = 'main_deps___androidx_vectordrawable__vectordrawable__1_0_1',
-        aar = '@main_deps___androidx_vectordrawable__vectordrawable__1_0_1//file',
+    native.aar_import(name = 'androidx_vectordrawable__vectordrawable__1_0_1',
+        aar = '@androidx_vectordrawable__vectordrawable__1_0_1//file',
         deps = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_core__core',
+            ':androidx_annotation__annotation',
+            ':androidx_core__core',
         ],
         exports = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_core__core',
+            ':androidx_annotation__annotation',
+            ':androidx_core__core',
         ],
     )
 
     # from androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01
-    native.alias(name = 'main_deps___androidx_versionedparcelable__versionedparcelable',
-        actual = ':main_deps___androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01',
+    native.alias(name = 'androidx_versionedparcelable__versionedparcelable',
+        actual = ':androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01
-    native.aar_import(name = 'main_deps___androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01',
-        aar = '@main_deps___androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01//file',
+    native.aar_import(name = 'androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01',
+        aar = '@androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01//file',
         deps = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_collection__collection',
+            ':androidx_annotation__annotation',
+            ':androidx_collection__collection',
         ],
         exports = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_collection__collection',
+            ':androidx_annotation__annotation',
+            ':androidx_collection__collection',
         ],
     )
 
     # from androidx.viewpager:viewpager:1.0.0
-    native.alias(name = 'main_deps___androidx_viewpager__viewpager',
-        actual = ':main_deps___androidx_viewpager__viewpager__1_0_0',
+    native.alias(name = 'androidx_viewpager__viewpager',
+        actual = ':androidx_viewpager__viewpager__1_0_0',
         visibility = ['//visibility:public'],
     )
 
     # from androidx.viewpager:viewpager:1.0.0
-    native.aar_import(name = 'main_deps___androidx_viewpager__viewpager__1_0_0',
-        aar = '@main_deps___androidx_viewpager__viewpager__1_0_0//file',
+    native.aar_import(name = 'androidx_viewpager__viewpager__1_0_0',
+        aar = '@androidx_viewpager__viewpager__1_0_0//file',
         deps = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_core__core',
-            ':main_deps___androidx_customview__customview',
+            ':androidx_annotation__annotation',
+            ':androidx_core__core',
+            ':androidx_customview__customview',
         ],
         exports = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_core__core',
-            ':main_deps___androidx_customview__customview',
+            ':androidx_annotation__annotation',
+            ':androidx_core__core',
+            ':androidx_customview__customview',
         ],
     )
 
     # from com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406
-    native.alias(name = 'main_deps___com_github_menny_Chauffeur__lib',
-        actual = ':main_deps___com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406',
+    native.alias(name = 'com_github_menny_Chauffeur__lib',
+        actual = ':com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406',
         visibility = ['//visibility:public'],
     )
 
     # from com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406
-    native.aar_import(name = 'main_deps___com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406',
-        aar = '@main_deps___com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406//file',
+    native.aar_import(name = 'com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406',
+        aar = '@com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406//file',
         deps = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_appcompat__appcompat',
-            ':main_deps___androidx_fragment__fragment',
+            ':androidx_annotation__annotation',
+            ':androidx_appcompat__appcompat',
+            ':androidx_fragment__fragment',
         ],
-        exports = [':main_deps___androidx_annotation__annotation'],
+        exports = [':androidx_annotation__annotation'],
     )
 
     # from com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406
-    native.alias(name = 'main_deps___com_github_menny_Chauffeur__permissions',
-        actual = ':main_deps___com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406',
+    native.alias(name = 'com_github_menny_Chauffeur__permissions',
+        actual = ':com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406',
         visibility = ['//visibility:public'],
     )
 
     # from com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406
-    native.aar_import(name = 'main_deps___com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406',
-        aar = '@main_deps___com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406//file',
+    native.aar_import(name = 'com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406',
+        aar = '@com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406//file',
         deps = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___androidx_appcompat__appcompat',
-            ':main_deps___androidx_fragment__fragment',
-            ':main_deps___com_github_menny_Chauffeur__lib',
+            ':androidx_annotation__annotation',
+            ':androidx_appcompat__appcompat',
+            ':androidx_fragment__fragment',
+            ':com_github_menny_Chauffeur__lib',
         ],
         exports = [
-            ':main_deps___androidx_annotation__annotation',
-            ':main_deps___com_github_menny_Chauffeur__lib',
+            ':androidx_annotation__annotation',
+            ':com_github_menny_Chauffeur__lib',
         ],
     )
 

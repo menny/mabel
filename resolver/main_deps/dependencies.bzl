@@ -7,253 +7,253 @@ load('@bazel_tools//tools/build_defs/repo:http.bzl', 'http_file')
 # Repository rules macro to be run in the WORKSPACE file.
 def generate_workspace_rules():
     # from com.beust:jcommander:1.72
-    http_file(name = 'main_deps___com_beust__jcommander__1_72',
+    http_file(name = 'com_beust__jcommander__1_72',
         urls = ['https://repo1.maven.org/maven2/com/beust/jcommander/1.72/jcommander-1.72.jar'],
         downloaded_file_path = 'jcommander-1.72.jar',
     )
 
     # from com.google.code.findbugs:jsr305:3.0.2
-    http_file(name = 'main_deps___com_google_code_findbugs__jsr305__3_0_2',
+    http_file(name = 'com_google_code_findbugs__jsr305__3_0_2',
         urls = ['https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar'],
         downloaded_file_path = 'jsr305-3.0.2.jar',
     )
 
     # from com.google.code.gson:gson:2.8.5
-    http_file(name = 'main_deps___com_google_code_gson__gson__2_8_5',
+    http_file(name = 'com_google_code_gson__gson__2_8_5',
         urls = ['https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.5/gson-2.8.5.jar'],
         downloaded_file_path = 'gson-2.8.5.jar',
     )
 
     # from com.google.errorprone:error_prone_annotations:2.2.0
-    http_file(name = 'main_deps___com_google_errorprone__error_prone_annotations__2_2_0',
+    http_file(name = 'com_google_errorprone__error_prone_annotations__2_2_0',
         urls = ['https://repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.2.0/error_prone_annotations-2.2.0.jar'],
         downloaded_file_path = 'error_prone_annotations-2.2.0.jar',
     )
 
     # from com.google.guava:failureaccess:1.0.1
-    http_file(name = 'main_deps___com_google_guava__failureaccess__1_0_1',
+    http_file(name = 'com_google_guava__failureaccess__1_0_1',
         urls = ['https://repo1.maven.org/maven2/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar'],
         downloaded_file_path = 'failureaccess-1.0.1.jar',
     )
 
     # from com.google.guava:guava:27.0.1-jre
-    http_file(name = 'main_deps___com_google_guava__guava__27_0_1_jre',
+    http_file(name = 'com_google_guava__guava__27_0_1_jre',
         urls = ['https://repo1.maven.org/maven2/com/google/guava/guava/27.0.1-jre/guava-27.0.1-jre.jar'],
         downloaded_file_path = 'guava-27.0.1-jre.jar',
     )
 
     # from com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
-    http_file(name = 'main_deps___com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava',
+    http_file(name = 'com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava',
         urls = ['https://repo1.maven.org/maven2/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar'],
         downloaded_file_path = 'listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar',
     )
 
     # from com.google.j2objc:j2objc-annotations:1.1
-    http_file(name = 'main_deps___com_google_j2objc__j2objc_annotations__1_1',
+    http_file(name = 'com_google_j2objc__j2objc_annotations__1_1',
         urls = ['https://repo1.maven.org/maven2/com/google/j2objc/j2objc-annotations/1.1/j2objc-annotations-1.1.jar'],
         downloaded_file_path = 'j2objc-annotations-1.1.jar',
     )
 
     # from commons-codec:commons-codec:1.9
-    http_file(name = 'main_deps___commons_codec__commons_codec__1_9',
+    http_file(name = 'commons_codec__commons_codec__1_9',
         urls = ['https://repo1.maven.org/maven2/commons-codec/commons-codec/1.9/commons-codec-1.9.jar'],
         downloaded_file_path = 'commons-codec-1.9.jar',
     )
 
     # from commons-logging:commons-logging:1.2
-    http_file(name = 'main_deps___commons_logging__commons_logging__1_2',
+    http_file(name = 'commons_logging__commons_logging__1_2',
         urls = ['https://repo1.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2.jar'],
         downloaded_file_path = 'commons-logging-1.2.jar',
     )
 
     # from junit:junit:4.12
-    http_file(name = 'main_deps___junit__junit__4_12',
+    http_file(name = 'junit__junit__4_12',
         urls = ['https://repo1.maven.org/maven2/junit/junit/4.12/junit-4.12.jar'],
         downloaded_file_path = 'junit-4.12.jar',
     )
 
     # from net.bytebuddy:byte-buddy-agent:1.9.3
-    http_file(name = 'main_deps___net_bytebuddy__byte_buddy_agent__1_9_3',
+    http_file(name = 'net_bytebuddy__byte_buddy_agent__1_9_3',
         urls = ['https://repo1.maven.org/maven2/net/bytebuddy/byte-buddy-agent/1.9.3/byte-buddy-agent-1.9.3.jar'],
         downloaded_file_path = 'byte-buddy-agent-1.9.3.jar',
     )
 
     # from net.bytebuddy:byte-buddy:1.9.3
-    http_file(name = 'main_deps___net_bytebuddy__byte_buddy__1_9_3',
+    http_file(name = 'net_bytebuddy__byte_buddy__1_9_3',
         urls = ['https://repo1.maven.org/maven2/net/bytebuddy/byte-buddy/1.9.3/byte-buddy-1.9.3.jar'],
         downloaded_file_path = 'byte-buddy-1.9.3.jar',
     )
 
     # from org.apache.commons:commons-lang3:3.8.1
-    http_file(name = 'main_deps___org_apache_commons__commons_lang3__3_8_1',
+    http_file(name = 'org_apache_commons__commons_lang3__3_8_1',
         urls = ['https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.8.1/commons-lang3-3.8.1.jar'],
         downloaded_file_path = 'commons-lang3-3.8.1.jar',
     )
 
     # from org.apache.httpcomponents:httpclient:4.5.3
-    http_file(name = 'main_deps___org_apache_httpcomponents__httpclient__4_5_3',
+    http_file(name = 'org_apache_httpcomponents__httpclient__4_5_3',
         urls = ['https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.5.3/httpclient-4.5.3.jar'],
         downloaded_file_path = 'httpclient-4.5.3.jar',
     )
 
     # from org.apache.httpcomponents:httpcore:4.4.6
-    http_file(name = 'main_deps___org_apache_httpcomponents__httpcore__4_4_6',
+    http_file(name = 'org_apache_httpcomponents__httpcore__4_4_6',
         urls = ['https://repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/4.4.6/httpcore-4.4.6.jar'],
         downloaded_file_path = 'httpcore-4.4.6.jar',
     )
 
     # from org.apache.maven.wagon:wagon-provider-api:1.0
-    http_file(name = 'main_deps___org_apache_maven_wagon__wagon_provider_api__1_0',
+    http_file(name = 'org_apache_maven_wagon__wagon_provider_api__1_0',
         urls = ['https://repo1.maven.org/maven2/org/apache/maven/wagon/wagon-provider-api/1.0/wagon-provider-api-1.0.jar'],
         downloaded_file_path = 'wagon-provider-api-1.0.jar',
     )
 
     # from org.apache.maven:maven-aether-provider:3.2.3
-    http_file(name = 'main_deps___org_apache_maven__maven_aether_provider__3_2_3',
+    http_file(name = 'org_apache_maven__maven_aether_provider__3_2_3',
         urls = ['https://repo1.maven.org/maven2/org/apache/maven/maven-aether-provider/3.2.3/maven-aether-provider-3.2.3.jar'],
         downloaded_file_path = 'maven-aether-provider-3.2.3.jar',
     )
 
     # from org.apache.maven:maven-artifact:3.5.0
-    http_file(name = 'main_deps___org_apache_maven__maven_artifact__3_5_0',
+    http_file(name = 'org_apache_maven__maven_artifact__3_5_0',
         urls = ['https://repo1.maven.org/maven2/org/apache/maven/maven-artifact/3.5.0/maven-artifact-3.5.0.jar'],
         downloaded_file_path = 'maven-artifact-3.5.0.jar',
     )
 
     # from org.apache.maven:maven-model-builder:3.2.3
-    http_file(name = 'main_deps___org_apache_maven__maven_model_builder__3_2_3',
+    http_file(name = 'org_apache_maven__maven_model_builder__3_2_3',
         urls = ['https://repo1.maven.org/maven2/org/apache/maven/maven-model-builder/3.2.3/maven-model-builder-3.2.3.jar'],
         downloaded_file_path = 'maven-model-builder-3.2.3.jar',
     )
 
     # from org.apache.maven:maven-model:3.2.3
-    http_file(name = 'main_deps___org_apache_maven__maven_model__3_2_3',
+    http_file(name = 'org_apache_maven__maven_model__3_2_3',
         urls = ['https://repo1.maven.org/maven2/org/apache/maven/maven-model/3.2.3/maven-model-3.2.3.jar'],
         downloaded_file_path = 'maven-model-3.2.3.jar',
     )
 
     # from org.apache.maven:maven-repository-metadata:3.2.3
-    http_file(name = 'main_deps___org_apache_maven__maven_repository_metadata__3_2_3',
+    http_file(name = 'org_apache_maven__maven_repository_metadata__3_2_3',
         urls = ['https://repo1.maven.org/maven2/org/apache/maven/maven-repository-metadata/3.2.3/maven-repository-metadata-3.2.3.jar'],
         downloaded_file_path = 'maven-repository-metadata-3.2.3.jar',
     )
 
     # from org.checkerframework:checker-qual:2.5.2
-    http_file(name = 'main_deps___org_checkerframework__checker_qual__2_5_2',
+    http_file(name = 'org_checkerframework__checker_qual__2_5_2',
         urls = ['https://repo1.maven.org/maven2/org/checkerframework/checker-qual/2.5.2/checker-qual-2.5.2.jar'],
         downloaded_file_path = 'checker-qual-2.5.2.jar',
     )
 
     # from org.codehaus.mojo:animal-sniffer-annotations:1.17
-    http_file(name = 'main_deps___org_codehaus_mojo__animal_sniffer_annotations__1_17',
+    http_file(name = 'org_codehaus_mojo__animal_sniffer_annotations__1_17',
         urls = ['https://repo1.maven.org/maven2/org/codehaus/mojo/animal-sniffer-annotations/1.17/animal-sniffer-annotations-1.17.jar'],
         downloaded_file_path = 'animal-sniffer-annotations-1.17.jar',
     )
 
     # from org.codehaus.plexus:plexus-component-annotations:1.5.5
-    http_file(name = 'main_deps___org_codehaus_plexus__plexus_component_annotations__1_5_5',
+    http_file(name = 'org_codehaus_plexus__plexus_component_annotations__1_5_5',
         urls = ['https://repo1.maven.org/maven2/org/codehaus/plexus/plexus-component-annotations/1.5.5/plexus-component-annotations-1.5.5.jar'],
         downloaded_file_path = 'plexus-component-annotations-1.5.5.jar',
     )
 
     # from org.codehaus.plexus:plexus-interpolation:1.24
-    http_file(name = 'main_deps___org_codehaus_plexus__plexus_interpolation__1_24',
+    http_file(name = 'org_codehaus_plexus__plexus_interpolation__1_24',
         urls = ['https://repo1.maven.org/maven2/org/codehaus/plexus/plexus-interpolation/1.24/plexus-interpolation-1.24.jar'],
         downloaded_file_path = 'plexus-interpolation-1.24.jar',
     )
 
     # from org.codehaus.plexus:plexus-utils:3.0.24
-    http_file(name = 'main_deps___org_codehaus_plexus__plexus_utils__3_0_24',
+    http_file(name = 'org_codehaus_plexus__plexus_utils__3_0_24',
         urls = ['https://repo1.maven.org/maven2/org/codehaus/plexus/plexus-utils/3.0.24/plexus-utils-3.0.24.jar'],
         downloaded_file_path = 'plexus-utils-3.0.24.jar',
     )
 
     # from org.eclipse.aether:aether-api:1.1.0
-    http_file(name = 'main_deps___org_eclipse_aether__aether_api__1_1_0',
+    http_file(name = 'org_eclipse_aether__aether_api__1_1_0',
         urls = ['https://repo1.maven.org/maven2/org/eclipse/aether/aether-api/1.1.0/aether-api-1.1.0.jar'],
         downloaded_file_path = 'aether-api-1.1.0.jar',
     )
 
     # from org.eclipse.aether:aether-connector-basic:1.1.0
-    http_file(name = 'main_deps___org_eclipse_aether__aether_connector_basic__1_1_0',
+    http_file(name = 'org_eclipse_aether__aether_connector_basic__1_1_0',
         urls = ['https://repo1.maven.org/maven2/org/eclipse/aether/aether-connector-basic/1.1.0/aether-connector-basic-1.1.0.jar'],
         downloaded_file_path = 'aether-connector-basic-1.1.0.jar',
     )
 
     # from org.eclipse.aether:aether-impl:1.1.0
-    http_file(name = 'main_deps___org_eclipse_aether__aether_impl__1_1_0',
+    http_file(name = 'org_eclipse_aether__aether_impl__1_1_0',
         urls = ['https://repo1.maven.org/maven2/org/eclipse/aether/aether-impl/1.1.0/aether-impl-1.1.0.jar'],
         downloaded_file_path = 'aether-impl-1.1.0.jar',
     )
 
     # from org.eclipse.aether:aether-spi:1.1.0
-    http_file(name = 'main_deps___org_eclipse_aether__aether_spi__1_1_0',
+    http_file(name = 'org_eclipse_aether__aether_spi__1_1_0',
         urls = ['https://repo1.maven.org/maven2/org/eclipse/aether/aether-spi/1.1.0/aether-spi-1.1.0.jar'],
         downloaded_file_path = 'aether-spi-1.1.0.jar',
     )
 
     # from org.eclipse.aether:aether-transport-classpath:1.1.0
-    http_file(name = 'main_deps___org_eclipse_aether__aether_transport_classpath__1_1_0',
+    http_file(name = 'org_eclipse_aether__aether_transport_classpath__1_1_0',
         urls = ['https://repo1.maven.org/maven2/org/eclipse/aether/aether-transport-classpath/1.1.0/aether-transport-classpath-1.1.0.jar'],
         downloaded_file_path = 'aether-transport-classpath-1.1.0.jar',
     )
 
     # from org.eclipse.aether:aether-transport-file:1.1.0
-    http_file(name = 'main_deps___org_eclipse_aether__aether_transport_file__1_1_0',
+    http_file(name = 'org_eclipse_aether__aether_transport_file__1_1_0',
         urls = ['https://repo1.maven.org/maven2/org/eclipse/aether/aether-transport-file/1.1.0/aether-transport-file-1.1.0.jar'],
         downloaded_file_path = 'aether-transport-file-1.1.0.jar',
     )
 
     # from org.eclipse.aether:aether-transport-http:1.1.0
-    http_file(name = 'main_deps___org_eclipse_aether__aether_transport_http__1_1_0',
+    http_file(name = 'org_eclipse_aether__aether_transport_http__1_1_0',
         urls = ['https://repo1.maven.org/maven2/org/eclipse/aether/aether-transport-http/1.1.0/aether-transport-http-1.1.0.jar'],
         downloaded_file_path = 'aether-transport-http-1.1.0.jar',
     )
 
     # from org.eclipse.aether:aether-transport-wagon:1.1.0
-    http_file(name = 'main_deps___org_eclipse_aether__aether_transport_wagon__1_1_0',
+    http_file(name = 'org_eclipse_aether__aether_transport_wagon__1_1_0',
         urls = ['https://repo1.maven.org/maven2/org/eclipse/aether/aether-transport-wagon/1.1.0/aether-transport-wagon-1.1.0.jar'],
         downloaded_file_path = 'aether-transport-wagon-1.1.0.jar',
     )
 
     # from org.eclipse.aether:aether-util:1.1.0
-    http_file(name = 'main_deps___org_eclipse_aether__aether_util__1_1_0',
+    http_file(name = 'org_eclipse_aether__aether_util__1_1_0',
         urls = ['https://repo1.maven.org/maven2/org/eclipse/aether/aether-util/1.1.0/aether-util-1.1.0.jar'],
         downloaded_file_path = 'aether-util-1.1.0.jar',
     )
 
     # from org.hamcrest:hamcrest-core:1.3
-    http_file(name = 'main_deps___org_hamcrest__hamcrest_core__1_3',
+    http_file(name = 'org_hamcrest__hamcrest_core__1_3',
         urls = ['https://repo1.maven.org/maven2/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar'],
         downloaded_file_path = 'hamcrest-core-1.3.jar',
     )
 
     # from org.mockito:mockito-core:2.23.4
-    http_file(name = 'main_deps___org_mockito__mockito_core__2_23_4',
+    http_file(name = 'org_mockito__mockito_core__2_23_4',
         urls = ['https://repo1.maven.org/maven2/org/mockito/mockito-core/2.23.4/mockito-core-2.23.4.jar'],
         downloaded_file_path = 'mockito-core-2.23.4.jar',
     )
 
     # from org.objenesis:objenesis:2.6
-    http_file(name = 'main_deps___org_objenesis__objenesis__2_6',
+    http_file(name = 'org_objenesis__objenesis__2_6',
         urls = ['https://repo1.maven.org/maven2/org/objenesis/objenesis/2.6/objenesis-2.6.jar'],
         downloaded_file_path = 'objenesis-2.6.jar',
     )
 
     # from org.slf4j:jcl-over-slf4j:1.6.2
-    http_file(name = 'main_deps___org_slf4j__jcl_over_slf4j__1_6_2',
+    http_file(name = 'org_slf4j__jcl_over_slf4j__1_6_2',
         urls = ['https://repo1.maven.org/maven2/org/slf4j/jcl-over-slf4j/1.6.2/jcl-over-slf4j-1.6.2.jar'],
         downloaded_file_path = 'jcl-over-slf4j-1.6.2.jar',
     )
 
     # from org.slf4j:slf4j-api:1.7.25
-    http_file(name = 'main_deps___org_slf4j__slf4j_api__1_7_25',
+    http_file(name = 'org_slf4j__slf4j_api__1_7_25',
         urls = ['https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar'],
         downloaded_file_path = 'slf4j-api-1.7.25.jar',
     )
 
     # from org.slf4j:slf4j-nop:1.7.25
-    http_file(name = 'main_deps___org_slf4j__slf4j_nop__1_7_25',
+    http_file(name = 'org_slf4j__slf4j_nop__1_7_25',
         urls = ['https://repo1.maven.org/maven2/org/slf4j/slf4j-nop/1.7.25/slf4j-nop-1.7.25.jar'],
         downloaded_file_path = 'slf4j-nop-1.7.25.jar',
     )
@@ -285,14 +285,14 @@ def kotlin_jar_support(name, deps, exports, runtime_deps, jar, kt_jvm_import=Non
 
 def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=None):
     # from com.beust:jcommander:1.72
-    native.alias(name = 'main_deps___com_beust__jcommander',
-        actual = ':main_deps___com_beust__jcommander__1_72',
+    native.alias(name = 'com_beust__jcommander',
+        actual = ':com_beust__jcommander__1_72',
         visibility = ['//visibility:public'],
     )
 
     # from com.beust:jcommander:1.72
-    native.java_import(name = 'main_deps___com_beust__jcommander__1_72',
-        jars = ['@main_deps___com_beust__jcommander__1_72//file'],
+    native.java_import(name = 'com_beust__jcommander__1_72',
+        jars = ['@com_beust__jcommander__1_72//file'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -300,14 +300,14 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from com.google.code.findbugs:jsr305:3.0.2
-    native.alias(name = 'main_deps___com_google_code_findbugs__jsr305',
-        actual = ':main_deps___com_google_code_findbugs__jsr305__3_0_2',
+    native.alias(name = 'com_google_code_findbugs__jsr305',
+        actual = ':com_google_code_findbugs__jsr305__3_0_2',
         visibility = ['//visibility:public'],
     )
 
     # from com.google.code.findbugs:jsr305:3.0.2
-    native.java_import(name = 'main_deps___com_google_code_findbugs__jsr305__3_0_2',
-        jars = ['@main_deps___com_google_code_findbugs__jsr305__3_0_2//file'],
+    native.java_import(name = 'com_google_code_findbugs__jsr305__3_0_2',
+        jars = ['@com_google_code_findbugs__jsr305__3_0_2//file'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -315,14 +315,14 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from com.google.code.gson:gson:2.8.5
-    native.alias(name = 'main_deps___com_google_code_gson__gson',
-        actual = ':main_deps___com_google_code_gson__gson__2_8_5',
+    native.alias(name = 'com_google_code_gson__gson',
+        actual = ':com_google_code_gson__gson__2_8_5',
         visibility = ['//visibility:public'],
     )
 
     # from com.google.code.gson:gson:2.8.5
-    native.java_import(name = 'main_deps___com_google_code_gson__gson__2_8_5',
-        jars = ['@main_deps___com_google_code_gson__gson__2_8_5//file'],
+    native.java_import(name = 'com_google_code_gson__gson__2_8_5',
+        jars = ['@com_google_code_gson__gson__2_8_5//file'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -330,14 +330,14 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from com.google.errorprone:error_prone_annotations:2.2.0
-    native.alias(name = 'main_deps___com_google_errorprone__error_prone_annotations',
-        actual = ':main_deps___com_google_errorprone__error_prone_annotations__2_2_0',
+    native.alias(name = 'com_google_errorprone__error_prone_annotations',
+        actual = ':com_google_errorprone__error_prone_annotations__2_2_0',
         visibility = ['//visibility:public'],
     )
 
     # from com.google.errorprone:error_prone_annotations:2.2.0
-    native.java_import(name = 'main_deps___com_google_errorprone__error_prone_annotations__2_2_0',
-        jars = ['@main_deps___com_google_errorprone__error_prone_annotations__2_2_0//file'],
+    native.java_import(name = 'com_google_errorprone__error_prone_annotations__2_2_0',
+        jars = ['@com_google_errorprone__error_prone_annotations__2_2_0//file'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -345,14 +345,14 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from com.google.guava:failureaccess:1.0.1
-    native.alias(name = 'main_deps___com_google_guava__failureaccess',
-        actual = ':main_deps___com_google_guava__failureaccess__1_0_1',
+    native.alias(name = 'com_google_guava__failureaccess',
+        actual = ':com_google_guava__failureaccess__1_0_1',
         visibility = ['//visibility:public'],
     )
 
     # from com.google.guava:failureaccess:1.0.1
-    native.java_import(name = 'main_deps___com_google_guava__failureaccess__1_0_1',
-        jars = ['@main_deps___com_google_guava__failureaccess__1_0_1//file'],
+    native.java_import(name = 'com_google_guava__failureaccess__1_0_1',
+        jars = ['@com_google_guava__failureaccess__1_0_1//file'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -360,45 +360,45 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from com.google.guava:guava:27.0.1-jre
-    native.alias(name = 'main_deps___com_google_guava__guava',
-        actual = ':main_deps___com_google_guava__guava__27_0_1_jre',
+    native.alias(name = 'com_google_guava__guava',
+        actual = ':com_google_guava__guava__27_0_1_jre',
         visibility = ['//visibility:public'],
     )
 
     # from com.google.guava:guava:27.0.1-jre
-    native.java_import(name = 'main_deps___com_google_guava__guava__27_0_1_jre',
-        jars = ['@main_deps___com_google_guava__guava__27_0_1_jre//file'],
+    native.java_import(name = 'com_google_guava__guava__27_0_1_jre',
+        jars = ['@com_google_guava__guava__27_0_1_jre//file'],
         licenses = ['notice'],
         deps = [
-            ':main_deps___com_google_code_findbugs__jsr305',
-            ':main_deps___com_google_errorprone__error_prone_annotations',
-            ':main_deps___com_google_guava__failureaccess',
-            ':main_deps___com_google_guava__listenablefuture',
-            ':main_deps___com_google_j2objc__j2objc_annotations',
-            ':main_deps___org_checkerframework__checker_qual',
-            ':main_deps___org_codehaus_mojo__animal_sniffer_annotations',
+            ':com_google_code_findbugs__jsr305',
+            ':com_google_errorprone__error_prone_annotations',
+            ':com_google_guava__failureaccess',
+            ':com_google_guava__listenablefuture',
+            ':com_google_j2objc__j2objc_annotations',
+            ':org_checkerframework__checker_qual',
+            ':org_codehaus_mojo__animal_sniffer_annotations',
         ],
         exports = [
-            ':main_deps___com_google_code_findbugs__jsr305',
-            ':main_deps___com_google_errorprone__error_prone_annotations',
-            ':main_deps___com_google_guava__failureaccess',
-            ':main_deps___com_google_guava__listenablefuture',
-            ':main_deps___com_google_j2objc__j2objc_annotations',
-            ':main_deps___org_checkerframework__checker_qual',
-            ':main_deps___org_codehaus_mojo__animal_sniffer_annotations',
+            ':com_google_code_findbugs__jsr305',
+            ':com_google_errorprone__error_prone_annotations',
+            ':com_google_guava__failureaccess',
+            ':com_google_guava__listenablefuture',
+            ':com_google_j2objc__j2objc_annotations',
+            ':org_checkerframework__checker_qual',
+            ':org_codehaus_mojo__animal_sniffer_annotations',
         ],
         runtime_deps = [],
     )
 
     # from com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
-    native.alias(name = 'main_deps___com_google_guava__listenablefuture',
-        actual = ':main_deps___com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava',
+    native.alias(name = 'com_google_guava__listenablefuture',
+        actual = ':com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava',
         visibility = ['//visibility:public'],
     )
 
     # from com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
-    native.java_import(name = 'main_deps___com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava',
-        jars = ['@main_deps___com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava//file'],
+    native.java_import(name = 'com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava',
+        jars = ['@com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava//file'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -406,14 +406,14 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from com.google.j2objc:j2objc-annotations:1.1
-    native.alias(name = 'main_deps___com_google_j2objc__j2objc_annotations',
-        actual = ':main_deps___com_google_j2objc__j2objc_annotations__1_1',
+    native.alias(name = 'com_google_j2objc__j2objc_annotations',
+        actual = ':com_google_j2objc__j2objc_annotations__1_1',
         visibility = ['//visibility:public'],
     )
 
     # from com.google.j2objc:j2objc-annotations:1.1
-    native.java_import(name = 'main_deps___com_google_j2objc__j2objc_annotations__1_1',
-        jars = ['@main_deps___com_google_j2objc__j2objc_annotations__1_1//file'],
+    native.java_import(name = 'com_google_j2objc__j2objc_annotations__1_1',
+        jars = ['@com_google_j2objc__j2objc_annotations__1_1//file'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -421,14 +421,14 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from commons-codec:commons-codec:1.9
-    native.alias(name = 'main_deps___commons_codec__commons_codec',
-        actual = ':main_deps___commons_codec__commons_codec__1_9',
+    native.alias(name = 'commons_codec__commons_codec',
+        actual = ':commons_codec__commons_codec__1_9',
         visibility = ['//visibility:public'],
     )
 
     # from commons-codec:commons-codec:1.9
-    native.java_import(name = 'main_deps___commons_codec__commons_codec__1_9',
-        jars = ['@main_deps___commons_codec__commons_codec__1_9//file'],
+    native.java_import(name = 'commons_codec__commons_codec__1_9',
+        jars = ['@commons_codec__commons_codec__1_9//file'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -436,14 +436,14 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from commons-logging:commons-logging:1.2
-    native.alias(name = 'main_deps___commons_logging__commons_logging',
-        actual = ':main_deps___commons_logging__commons_logging__1_2',
+    native.alias(name = 'commons_logging__commons_logging',
+        actual = ':commons_logging__commons_logging__1_2',
         visibility = ['//visibility:public'],
     )
 
     # from commons-logging:commons-logging:1.2
-    native.java_import(name = 'main_deps___commons_logging__commons_logging__1_2',
-        jars = ['@main_deps___commons_logging__commons_logging__1_2//file'],
+    native.java_import(name = 'commons_logging__commons_logging__1_2',
+        jars = ['@commons_logging__commons_logging__1_2//file'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -451,29 +451,29 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from junit:junit:4.12
-    native.alias(name = 'main_deps___junit__junit',
-        actual = ':main_deps___junit__junit__4_12',
+    native.alias(name = 'junit__junit',
+        actual = ':junit__junit__4_12',
         visibility = ['//visibility:public'],
     )
 
     # from junit:junit:4.12
-    native.java_import(name = 'main_deps___junit__junit__4_12',
-        jars = ['@main_deps___junit__junit__4_12//file'],
+    native.java_import(name = 'junit__junit__4_12',
+        jars = ['@junit__junit__4_12//file'],
         licenses = ['reciprocal'],
-        deps = [':main_deps___org_hamcrest__hamcrest_core'],
-        exports = [':main_deps___org_hamcrest__hamcrest_core'],
+        deps = [':org_hamcrest__hamcrest_core'],
+        exports = [':org_hamcrest__hamcrest_core'],
         runtime_deps = [],
     )
 
     # from net.bytebuddy:byte-buddy-agent:1.9.3
-    native.alias(name = 'main_deps___net_bytebuddy__byte_buddy_agent',
-        actual = ':main_deps___net_bytebuddy__byte_buddy_agent__1_9_3',
+    native.alias(name = 'net_bytebuddy__byte_buddy_agent',
+        actual = ':net_bytebuddy__byte_buddy_agent__1_9_3',
         visibility = ['//visibility:public'],
     )
 
     # from net.bytebuddy:byte-buddy-agent:1.9.3
-    native.java_import(name = 'main_deps___net_bytebuddy__byte_buddy_agent__1_9_3',
-        jars = ['@main_deps___net_bytebuddy__byte_buddy_agent__1_9_3//file'],
+    native.java_import(name = 'net_bytebuddy__byte_buddy_agent__1_9_3',
+        jars = ['@net_bytebuddy__byte_buddy_agent__1_9_3//file'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -481,14 +481,14 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from net.bytebuddy:byte-buddy:1.9.3
-    native.alias(name = 'main_deps___net_bytebuddy__byte_buddy',
-        actual = ':main_deps___net_bytebuddy__byte_buddy__1_9_3',
+    native.alias(name = 'net_bytebuddy__byte_buddy',
+        actual = ':net_bytebuddy__byte_buddy__1_9_3',
         visibility = ['//visibility:public'],
     )
 
     # from net.bytebuddy:byte-buddy:1.9.3
-    native.java_import(name = 'main_deps___net_bytebuddy__byte_buddy__1_9_3',
-        jars = ['@main_deps___net_bytebuddy__byte_buddy__1_9_3//file'],
+    native.java_import(name = 'net_bytebuddy__byte_buddy__1_9_3',
+        jars = ['@net_bytebuddy__byte_buddy__1_9_3//file'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -496,14 +496,14 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from org.apache.commons:commons-lang3:3.8.1
-    native.alias(name = 'main_deps___org_apache_commons__commons_lang3',
-        actual = ':main_deps___org_apache_commons__commons_lang3__3_8_1',
+    native.alias(name = 'org_apache_commons__commons_lang3',
+        actual = ':org_apache_commons__commons_lang3__3_8_1',
         visibility = ['//visibility:public'],
     )
 
     # from org.apache.commons:commons-lang3:3.8.1
-    native.java_import(name = 'main_deps___org_apache_commons__commons_lang3__3_8_1',
-        jars = ['@main_deps___org_apache_commons__commons_lang3__3_8_1//file'],
+    native.java_import(name = 'org_apache_commons__commons_lang3__3_8_1',
+        jars = ['@org_apache_commons__commons_lang3__3_8_1//file'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -511,37 +511,37 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from org.apache.httpcomponents:httpclient:4.5.3
-    native.alias(name = 'main_deps___org_apache_httpcomponents__httpclient',
-        actual = ':main_deps___org_apache_httpcomponents__httpclient__4_5_3',
+    native.alias(name = 'org_apache_httpcomponents__httpclient',
+        actual = ':org_apache_httpcomponents__httpclient__4_5_3',
         visibility = ['//visibility:public'],
     )
 
     # from org.apache.httpcomponents:httpclient:4.5.3
-    native.java_import(name = 'main_deps___org_apache_httpcomponents__httpclient__4_5_3',
-        jars = ['@main_deps___org_apache_httpcomponents__httpclient__4_5_3//file'],
+    native.java_import(name = 'org_apache_httpcomponents__httpclient__4_5_3',
+        jars = ['@org_apache_httpcomponents__httpclient__4_5_3//file'],
         licenses = ['notice'],
         deps = [
-            ':main_deps___commons_codec__commons_codec',
-            ':main_deps___commons_logging__commons_logging',
-            ':main_deps___org_apache_httpcomponents__httpcore',
+            ':commons_codec__commons_codec',
+            ':commons_logging__commons_logging',
+            ':org_apache_httpcomponents__httpcore',
         ],
         exports = [
-            ':main_deps___commons_codec__commons_codec',
-            ':main_deps___commons_logging__commons_logging',
-            ':main_deps___org_apache_httpcomponents__httpcore',
+            ':commons_codec__commons_codec',
+            ':commons_logging__commons_logging',
+            ':org_apache_httpcomponents__httpcore',
         ],
         runtime_deps = [],
     )
 
     # from org.apache.httpcomponents:httpcore:4.4.6
-    native.alias(name = 'main_deps___org_apache_httpcomponents__httpcore',
-        actual = ':main_deps___org_apache_httpcomponents__httpcore__4_4_6',
+    native.alias(name = 'org_apache_httpcomponents__httpcore',
+        actual = ':org_apache_httpcomponents__httpcore__4_4_6',
         visibility = ['//visibility:public'],
     )
 
     # from org.apache.httpcomponents:httpcore:4.4.6
-    native.java_import(name = 'main_deps___org_apache_httpcomponents__httpcore__4_4_6',
-        jars = ['@main_deps___org_apache_httpcomponents__httpcore__4_4_6//file'],
+    native.java_import(name = 'org_apache_httpcomponents__httpcore__4_4_6',
+        jars = ['@org_apache_httpcomponents__httpcore__4_4_6//file'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -549,140 +549,140 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from org.apache.maven.wagon:wagon-provider-api:1.0
-    native.alias(name = 'main_deps___org_apache_maven_wagon__wagon_provider_api',
-        actual = ':main_deps___org_apache_maven_wagon__wagon_provider_api__1_0',
+    native.alias(name = 'org_apache_maven_wagon__wagon_provider_api',
+        actual = ':org_apache_maven_wagon__wagon_provider_api__1_0',
         visibility = ['//visibility:public'],
     )
 
     # from org.apache.maven.wagon:wagon-provider-api:1.0
-    native.java_import(name = 'main_deps___org_apache_maven_wagon__wagon_provider_api__1_0',
-        jars = ['@main_deps___org_apache_maven_wagon__wagon_provider_api__1_0//file'],
+    native.java_import(name = 'org_apache_maven_wagon__wagon_provider_api__1_0',
+        jars = ['@org_apache_maven_wagon__wagon_provider_api__1_0//file'],
         licenses = ['notice'],
-        deps = [':main_deps___org_codehaus_plexus__plexus_utils'],
-        exports = [':main_deps___org_codehaus_plexus__plexus_utils'],
+        deps = [':org_codehaus_plexus__plexus_utils'],
+        exports = [':org_codehaus_plexus__plexus_utils'],
         runtime_deps = [],
     )
 
     # from org.apache.maven:maven-aether-provider:3.2.3
-    native.alias(name = 'main_deps___org_apache_maven__maven_aether_provider',
-        actual = ':main_deps___org_apache_maven__maven_aether_provider__3_2_3',
+    native.alias(name = 'org_apache_maven__maven_aether_provider',
+        actual = ':org_apache_maven__maven_aether_provider__3_2_3',
         visibility = ['//visibility:public'],
     )
 
     # from org.apache.maven:maven-aether-provider:3.2.3
-    native.java_import(name = 'main_deps___org_apache_maven__maven_aether_provider__3_2_3',
-        jars = ['@main_deps___org_apache_maven__maven_aether_provider__3_2_3//file'],
+    native.java_import(name = 'org_apache_maven__maven_aether_provider__3_2_3',
+        jars = ['@org_apache_maven__maven_aether_provider__3_2_3//file'],
         licenses = ['notice'],
         deps = [
-            ':main_deps___org_apache_maven__maven_model',
-            ':main_deps___org_apache_maven__maven_model_builder',
-            ':main_deps___org_apache_maven__maven_repository_metadata',
-            ':main_deps___org_codehaus_plexus__plexus_component_annotations',
-            ':main_deps___org_codehaus_plexus__plexus_utils',
-            ':main_deps___org_eclipse_aether__aether_api',
-            ':main_deps___org_eclipse_aether__aether_impl',
-            ':main_deps___org_eclipse_aether__aether_spi',
-            ':main_deps___org_eclipse_aether__aether_util',
+            ':org_apache_maven__maven_model',
+            ':org_apache_maven__maven_model_builder',
+            ':org_apache_maven__maven_repository_metadata',
+            ':org_codehaus_plexus__plexus_component_annotations',
+            ':org_codehaus_plexus__plexus_utils',
+            ':org_eclipse_aether__aether_api',
+            ':org_eclipse_aether__aether_impl',
+            ':org_eclipse_aether__aether_spi',
+            ':org_eclipse_aether__aether_util',
         ],
         exports = [
-            ':main_deps___org_apache_maven__maven_model',
-            ':main_deps___org_apache_maven__maven_model_builder',
-            ':main_deps___org_apache_maven__maven_repository_metadata',
-            ':main_deps___org_codehaus_plexus__plexus_component_annotations',
-            ':main_deps___org_codehaus_plexus__plexus_utils',
-            ':main_deps___org_eclipse_aether__aether_api',
-            ':main_deps___org_eclipse_aether__aether_impl',
-            ':main_deps___org_eclipse_aether__aether_spi',
-            ':main_deps___org_eclipse_aether__aether_util',
+            ':org_apache_maven__maven_model',
+            ':org_apache_maven__maven_model_builder',
+            ':org_apache_maven__maven_repository_metadata',
+            ':org_codehaus_plexus__plexus_component_annotations',
+            ':org_codehaus_plexus__plexus_utils',
+            ':org_eclipse_aether__aether_api',
+            ':org_eclipse_aether__aether_impl',
+            ':org_eclipse_aether__aether_spi',
+            ':org_eclipse_aether__aether_util',
         ],
         runtime_deps = [],
     )
 
     # from org.apache.maven:maven-artifact:3.5.0
-    native.alias(name = 'main_deps___org_apache_maven__maven_artifact',
-        actual = ':main_deps___org_apache_maven__maven_artifact__3_5_0',
+    native.alias(name = 'org_apache_maven__maven_artifact',
+        actual = ':org_apache_maven__maven_artifact__3_5_0',
         visibility = ['//visibility:public'],
     )
 
     # from org.apache.maven:maven-artifact:3.5.0
-    native.java_import(name = 'main_deps___org_apache_maven__maven_artifact__3_5_0',
-        jars = ['@main_deps___org_apache_maven__maven_artifact__3_5_0//file'],
+    native.java_import(name = 'org_apache_maven__maven_artifact__3_5_0',
+        jars = ['@org_apache_maven__maven_artifact__3_5_0//file'],
         licenses = ['notice'],
         deps = [
-            ':main_deps___org_apache_commons__commons_lang3',
-            ':main_deps___org_codehaus_plexus__plexus_utils',
+            ':org_apache_commons__commons_lang3',
+            ':org_codehaus_plexus__plexus_utils',
         ],
         exports = [
-            ':main_deps___org_apache_commons__commons_lang3',
-            ':main_deps___org_codehaus_plexus__plexus_utils',
+            ':org_apache_commons__commons_lang3',
+            ':org_codehaus_plexus__plexus_utils',
         ],
         runtime_deps = [],
     )
 
     # from org.apache.maven:maven-model-builder:3.2.3
-    native.alias(name = 'main_deps___org_apache_maven__maven_model_builder',
-        actual = ':main_deps___org_apache_maven__maven_model_builder__3_2_3',
+    native.alias(name = 'org_apache_maven__maven_model_builder',
+        actual = ':org_apache_maven__maven_model_builder__3_2_3',
         visibility = ['//visibility:public'],
     )
 
     # from org.apache.maven:maven-model-builder:3.2.3
-    native.java_import(name = 'main_deps___org_apache_maven__maven_model_builder__3_2_3',
-        jars = ['@main_deps___org_apache_maven__maven_model_builder__3_2_3//file'],
+    native.java_import(name = 'org_apache_maven__maven_model_builder__3_2_3',
+        jars = ['@org_apache_maven__maven_model_builder__3_2_3//file'],
         licenses = ['notice'],
         deps = [
-            ':main_deps___org_apache_maven__maven_model',
-            ':main_deps___org_codehaus_plexus__plexus_component_annotations',
-            ':main_deps___org_codehaus_plexus__plexus_interpolation',
-            ':main_deps___org_codehaus_plexus__plexus_utils',
+            ':org_apache_maven__maven_model',
+            ':org_codehaus_plexus__plexus_component_annotations',
+            ':org_codehaus_plexus__plexus_interpolation',
+            ':org_codehaus_plexus__plexus_utils',
         ],
         exports = [
-            ':main_deps___org_apache_maven__maven_model',
-            ':main_deps___org_codehaus_plexus__plexus_component_annotations',
-            ':main_deps___org_codehaus_plexus__plexus_interpolation',
-            ':main_deps___org_codehaus_plexus__plexus_utils',
+            ':org_apache_maven__maven_model',
+            ':org_codehaus_plexus__plexus_component_annotations',
+            ':org_codehaus_plexus__plexus_interpolation',
+            ':org_codehaus_plexus__plexus_utils',
         ],
         runtime_deps = [],
     )
 
     # from org.apache.maven:maven-model:3.2.3
-    native.alias(name = 'main_deps___org_apache_maven__maven_model',
-        actual = ':main_deps___org_apache_maven__maven_model__3_2_3',
+    native.alias(name = 'org_apache_maven__maven_model',
+        actual = ':org_apache_maven__maven_model__3_2_3',
         visibility = ['//visibility:public'],
     )
 
     # from org.apache.maven:maven-model:3.2.3
-    native.java_import(name = 'main_deps___org_apache_maven__maven_model__3_2_3',
-        jars = ['@main_deps___org_apache_maven__maven_model__3_2_3//file'],
+    native.java_import(name = 'org_apache_maven__maven_model__3_2_3',
+        jars = ['@org_apache_maven__maven_model__3_2_3//file'],
         licenses = ['notice'],
-        deps = [':main_deps___org_codehaus_plexus__plexus_utils'],
-        exports = [':main_deps___org_codehaus_plexus__plexus_utils'],
+        deps = [':org_codehaus_plexus__plexus_utils'],
+        exports = [':org_codehaus_plexus__plexus_utils'],
         runtime_deps = [],
     )
 
     # from org.apache.maven:maven-repository-metadata:3.2.3
-    native.alias(name = 'main_deps___org_apache_maven__maven_repository_metadata',
-        actual = ':main_deps___org_apache_maven__maven_repository_metadata__3_2_3',
+    native.alias(name = 'org_apache_maven__maven_repository_metadata',
+        actual = ':org_apache_maven__maven_repository_metadata__3_2_3',
         visibility = ['//visibility:public'],
     )
 
     # from org.apache.maven:maven-repository-metadata:3.2.3
-    native.java_import(name = 'main_deps___org_apache_maven__maven_repository_metadata__3_2_3',
-        jars = ['@main_deps___org_apache_maven__maven_repository_metadata__3_2_3//file'],
+    native.java_import(name = 'org_apache_maven__maven_repository_metadata__3_2_3',
+        jars = ['@org_apache_maven__maven_repository_metadata__3_2_3//file'],
         licenses = ['notice'],
-        deps = [':main_deps___org_codehaus_plexus__plexus_utils'],
-        exports = [':main_deps___org_codehaus_plexus__plexus_utils'],
+        deps = [':org_codehaus_plexus__plexus_utils'],
+        exports = [':org_codehaus_plexus__plexus_utils'],
         runtime_deps = [],
     )
 
     # from org.checkerframework:checker-qual:2.5.2
-    native.alias(name = 'main_deps___org_checkerframework__checker_qual',
-        actual = ':main_deps___org_checkerframework__checker_qual__2_5_2',
+    native.alias(name = 'org_checkerframework__checker_qual',
+        actual = ':org_checkerframework__checker_qual__2_5_2',
         visibility = ['//visibility:public'],
     )
 
     # from org.checkerframework:checker-qual:2.5.2
-    native.java_import(name = 'main_deps___org_checkerframework__checker_qual__2_5_2',
-        jars = ['@main_deps___org_checkerframework__checker_qual__2_5_2//file'],
+    native.java_import(name = 'org_checkerframework__checker_qual__2_5_2',
+        jars = ['@org_checkerframework__checker_qual__2_5_2//file'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -690,14 +690,14 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from org.codehaus.mojo:animal-sniffer-annotations:1.17
-    native.alias(name = 'main_deps___org_codehaus_mojo__animal_sniffer_annotations',
-        actual = ':main_deps___org_codehaus_mojo__animal_sniffer_annotations__1_17',
+    native.alias(name = 'org_codehaus_mojo__animal_sniffer_annotations',
+        actual = ':org_codehaus_mojo__animal_sniffer_annotations__1_17',
         visibility = ['//visibility:public'],
     )
 
     # from org.codehaus.mojo:animal-sniffer-annotations:1.17
-    native.java_import(name = 'main_deps___org_codehaus_mojo__animal_sniffer_annotations__1_17',
-        jars = ['@main_deps___org_codehaus_mojo__animal_sniffer_annotations__1_17//file'],
+    native.java_import(name = 'org_codehaus_mojo__animal_sniffer_annotations__1_17',
+        jars = ['@org_codehaus_mojo__animal_sniffer_annotations__1_17//file'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -705,14 +705,14 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from org.codehaus.plexus:plexus-component-annotations:1.5.5
-    native.alias(name = 'main_deps___org_codehaus_plexus__plexus_component_annotations',
-        actual = ':main_deps___org_codehaus_plexus__plexus_component_annotations__1_5_5',
+    native.alias(name = 'org_codehaus_plexus__plexus_component_annotations',
+        actual = ':org_codehaus_plexus__plexus_component_annotations__1_5_5',
         visibility = ['//visibility:public'],
     )
 
     # from org.codehaus.plexus:plexus-component-annotations:1.5.5
-    native.java_import(name = 'main_deps___org_codehaus_plexus__plexus_component_annotations__1_5_5',
-        jars = ['@main_deps___org_codehaus_plexus__plexus_component_annotations__1_5_5//file'],
+    native.java_import(name = 'org_codehaus_plexus__plexus_component_annotations__1_5_5',
+        jars = ['@org_codehaus_plexus__plexus_component_annotations__1_5_5//file'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -720,14 +720,14 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from org.codehaus.plexus:plexus-interpolation:1.24
-    native.alias(name = 'main_deps___org_codehaus_plexus__plexus_interpolation',
-        actual = ':main_deps___org_codehaus_plexus__plexus_interpolation__1_24',
+    native.alias(name = 'org_codehaus_plexus__plexus_interpolation',
+        actual = ':org_codehaus_plexus__plexus_interpolation__1_24',
         visibility = ['//visibility:public'],
     )
 
     # from org.codehaus.plexus:plexus-interpolation:1.24
-    native.java_import(name = 'main_deps___org_codehaus_plexus__plexus_interpolation__1_24',
-        jars = ['@main_deps___org_codehaus_plexus__plexus_interpolation__1_24//file'],
+    native.java_import(name = 'org_codehaus_plexus__plexus_interpolation__1_24',
+        jars = ['@org_codehaus_plexus__plexus_interpolation__1_24//file'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -735,14 +735,14 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from org.codehaus.plexus:plexus-utils:3.0.24
-    native.alias(name = 'main_deps___org_codehaus_plexus__plexus_utils',
-        actual = ':main_deps___org_codehaus_plexus__plexus_utils__3_0_24',
+    native.alias(name = 'org_codehaus_plexus__plexus_utils',
+        actual = ':org_codehaus_plexus__plexus_utils__3_0_24',
         visibility = ['//visibility:public'],
     )
 
     # from org.codehaus.plexus:plexus-utils:3.0.24
-    native.java_import(name = 'main_deps___org_codehaus_plexus__plexus_utils__3_0_24',
-        jars = ['@main_deps___org_codehaus_plexus__plexus_utils__3_0_24//file'],
+    native.java_import(name = 'org_codehaus_plexus__plexus_utils__3_0_24',
+        jars = ['@org_codehaus_plexus__plexus_utils__3_0_24//file'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -750,14 +750,14 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from org.eclipse.aether:aether-api:1.1.0
-    native.alias(name = 'main_deps___org_eclipse_aether__aether_api',
-        actual = ':main_deps___org_eclipse_aether__aether_api__1_1_0',
+    native.alias(name = 'org_eclipse_aether__aether_api',
+        actual = ':org_eclipse_aether__aether_api__1_1_0',
         visibility = ['//visibility:public'],
     )
 
     # from org.eclipse.aether:aether-api:1.1.0
-    native.java_import(name = 'main_deps___org_eclipse_aether__aether_api__1_1_0',
-        jars = ['@main_deps___org_eclipse_aether__aether_api__1_1_0//file'],
+    native.java_import(name = 'org_eclipse_aether__aether_api__1_1_0',
+        jars = ['@org_eclipse_aether__aether_api__1_1_0//file'],
         licenses = ['reciprocal'],
         deps = [],
         exports = [],
@@ -765,188 +765,188 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from org.eclipse.aether:aether-connector-basic:1.1.0
-    native.alias(name = 'main_deps___org_eclipse_aether__aether_connector_basic',
-        actual = ':main_deps___org_eclipse_aether__aether_connector_basic__1_1_0',
+    native.alias(name = 'org_eclipse_aether__aether_connector_basic',
+        actual = ':org_eclipse_aether__aether_connector_basic__1_1_0',
         visibility = ['//visibility:public'],
     )
 
     # from org.eclipse.aether:aether-connector-basic:1.1.0
-    native.java_import(name = 'main_deps___org_eclipse_aether__aether_connector_basic__1_1_0',
-        jars = ['@main_deps___org_eclipse_aether__aether_connector_basic__1_1_0//file'],
+    native.java_import(name = 'org_eclipse_aether__aether_connector_basic__1_1_0',
+        jars = ['@org_eclipse_aether__aether_connector_basic__1_1_0//file'],
         licenses = ['reciprocal'],
         deps = [
-            ':main_deps___org_eclipse_aether__aether_api',
-            ':main_deps___org_eclipse_aether__aether_spi',
-            ':main_deps___org_eclipse_aether__aether_util',
+            ':org_eclipse_aether__aether_api',
+            ':org_eclipse_aether__aether_spi',
+            ':org_eclipse_aether__aether_util',
         ],
         exports = [
-            ':main_deps___org_eclipse_aether__aether_api',
-            ':main_deps___org_eclipse_aether__aether_spi',
-            ':main_deps___org_eclipse_aether__aether_util',
+            ':org_eclipse_aether__aether_api',
+            ':org_eclipse_aether__aether_spi',
+            ':org_eclipse_aether__aether_util',
         ],
         runtime_deps = [],
     )
 
     # from org.eclipse.aether:aether-impl:1.1.0
-    native.alias(name = 'main_deps___org_eclipse_aether__aether_impl',
-        actual = ':main_deps___org_eclipse_aether__aether_impl__1_1_0',
+    native.alias(name = 'org_eclipse_aether__aether_impl',
+        actual = ':org_eclipse_aether__aether_impl__1_1_0',
         visibility = ['//visibility:public'],
     )
 
     # from org.eclipse.aether:aether-impl:1.1.0
-    native.java_import(name = 'main_deps___org_eclipse_aether__aether_impl__1_1_0',
-        jars = ['@main_deps___org_eclipse_aether__aether_impl__1_1_0//file'],
+    native.java_import(name = 'org_eclipse_aether__aether_impl__1_1_0',
+        jars = ['@org_eclipse_aether__aether_impl__1_1_0//file'],
         licenses = ['reciprocal'],
         deps = [
-            ':main_deps___org_eclipse_aether__aether_api',
-            ':main_deps___org_eclipse_aether__aether_spi',
-            ':main_deps___org_eclipse_aether__aether_util',
+            ':org_eclipse_aether__aether_api',
+            ':org_eclipse_aether__aether_spi',
+            ':org_eclipse_aether__aether_util',
         ],
         exports = [
-            ':main_deps___org_eclipse_aether__aether_api',
-            ':main_deps___org_eclipse_aether__aether_spi',
-            ':main_deps___org_eclipse_aether__aether_util',
+            ':org_eclipse_aether__aether_api',
+            ':org_eclipse_aether__aether_spi',
+            ':org_eclipse_aether__aether_util',
         ],
         runtime_deps = [],
     )
 
     # from org.eclipse.aether:aether-spi:1.1.0
-    native.alias(name = 'main_deps___org_eclipse_aether__aether_spi',
-        actual = ':main_deps___org_eclipse_aether__aether_spi__1_1_0',
+    native.alias(name = 'org_eclipse_aether__aether_spi',
+        actual = ':org_eclipse_aether__aether_spi__1_1_0',
         visibility = ['//visibility:public'],
     )
 
     # from org.eclipse.aether:aether-spi:1.1.0
-    native.java_import(name = 'main_deps___org_eclipse_aether__aether_spi__1_1_0',
-        jars = ['@main_deps___org_eclipse_aether__aether_spi__1_1_0//file'],
+    native.java_import(name = 'org_eclipse_aether__aether_spi__1_1_0',
+        jars = ['@org_eclipse_aether__aether_spi__1_1_0//file'],
         licenses = ['reciprocal'],
-        deps = [':main_deps___org_eclipse_aether__aether_api'],
-        exports = [':main_deps___org_eclipse_aether__aether_api'],
+        deps = [':org_eclipse_aether__aether_api'],
+        exports = [':org_eclipse_aether__aether_api'],
         runtime_deps = [],
     )
 
     # from org.eclipse.aether:aether-transport-classpath:1.1.0
-    native.alias(name = 'main_deps___org_eclipse_aether__aether_transport_classpath',
-        actual = ':main_deps___org_eclipse_aether__aether_transport_classpath__1_1_0',
+    native.alias(name = 'org_eclipse_aether__aether_transport_classpath',
+        actual = ':org_eclipse_aether__aether_transport_classpath__1_1_0',
         visibility = ['//visibility:public'],
     )
 
     # from org.eclipse.aether:aether-transport-classpath:1.1.0
-    native.java_import(name = 'main_deps___org_eclipse_aether__aether_transport_classpath__1_1_0',
-        jars = ['@main_deps___org_eclipse_aether__aether_transport_classpath__1_1_0//file'],
+    native.java_import(name = 'org_eclipse_aether__aether_transport_classpath__1_1_0',
+        jars = ['@org_eclipse_aether__aether_transport_classpath__1_1_0//file'],
         licenses = ['reciprocal'],
         deps = [
-            ':main_deps___org_eclipse_aether__aether_api',
-            ':main_deps___org_eclipse_aether__aether_spi',
-            ':main_deps___org_eclipse_aether__aether_util',
+            ':org_eclipse_aether__aether_api',
+            ':org_eclipse_aether__aether_spi',
+            ':org_eclipse_aether__aether_util',
         ],
         exports = [
-            ':main_deps___org_eclipse_aether__aether_api',
-            ':main_deps___org_eclipse_aether__aether_spi',
-            ':main_deps___org_eclipse_aether__aether_util',
+            ':org_eclipse_aether__aether_api',
+            ':org_eclipse_aether__aether_spi',
+            ':org_eclipse_aether__aether_util',
         ],
         runtime_deps = [],
     )
 
     # from org.eclipse.aether:aether-transport-file:1.1.0
-    native.alias(name = 'main_deps___org_eclipse_aether__aether_transport_file',
-        actual = ':main_deps___org_eclipse_aether__aether_transport_file__1_1_0',
+    native.alias(name = 'org_eclipse_aether__aether_transport_file',
+        actual = ':org_eclipse_aether__aether_transport_file__1_1_0',
         visibility = ['//visibility:public'],
     )
 
     # from org.eclipse.aether:aether-transport-file:1.1.0
-    native.java_import(name = 'main_deps___org_eclipse_aether__aether_transport_file__1_1_0',
-        jars = ['@main_deps___org_eclipse_aether__aether_transport_file__1_1_0//file'],
+    native.java_import(name = 'org_eclipse_aether__aether_transport_file__1_1_0',
+        jars = ['@org_eclipse_aether__aether_transport_file__1_1_0//file'],
         licenses = ['reciprocal'],
         deps = [
-            ':main_deps___org_eclipse_aether__aether_api',
-            ':main_deps___org_eclipse_aether__aether_spi',
-            ':main_deps___org_eclipse_aether__aether_util',
+            ':org_eclipse_aether__aether_api',
+            ':org_eclipse_aether__aether_spi',
+            ':org_eclipse_aether__aether_util',
         ],
         exports = [
-            ':main_deps___org_eclipse_aether__aether_api',
-            ':main_deps___org_eclipse_aether__aether_spi',
-            ':main_deps___org_eclipse_aether__aether_util',
+            ':org_eclipse_aether__aether_api',
+            ':org_eclipse_aether__aether_spi',
+            ':org_eclipse_aether__aether_util',
         ],
         runtime_deps = [],
     )
 
     # from org.eclipse.aether:aether-transport-http:1.1.0
-    native.alias(name = 'main_deps___org_eclipse_aether__aether_transport_http',
-        actual = ':main_deps___org_eclipse_aether__aether_transport_http__1_1_0',
+    native.alias(name = 'org_eclipse_aether__aether_transport_http',
+        actual = ':org_eclipse_aether__aether_transport_http__1_1_0',
         visibility = ['//visibility:public'],
     )
 
     # from org.eclipse.aether:aether-transport-http:1.1.0
-    native.java_import(name = 'main_deps___org_eclipse_aether__aether_transport_http__1_1_0',
-        jars = ['@main_deps___org_eclipse_aether__aether_transport_http__1_1_0//file'],
+    native.java_import(name = 'org_eclipse_aether__aether_transport_http__1_1_0',
+        jars = ['@org_eclipse_aether__aether_transport_http__1_1_0//file'],
         licenses = ['reciprocal'],
         deps = [
-            ':main_deps___org_apache_httpcomponents__httpclient',
-            ':main_deps___org_eclipse_aether__aether_api',
-            ':main_deps___org_eclipse_aether__aether_spi',
-            ':main_deps___org_eclipse_aether__aether_util',
-            ':main_deps___org_slf4j__jcl_over_slf4j',
+            ':org_apache_httpcomponents__httpclient',
+            ':org_eclipse_aether__aether_api',
+            ':org_eclipse_aether__aether_spi',
+            ':org_eclipse_aether__aether_util',
+            ':org_slf4j__jcl_over_slf4j',
         ],
         exports = [
-            ':main_deps___org_apache_httpcomponents__httpclient',
-            ':main_deps___org_eclipse_aether__aether_api',
-            ':main_deps___org_eclipse_aether__aether_spi',
-            ':main_deps___org_eclipse_aether__aether_util',
-            ':main_deps___org_slf4j__jcl_over_slf4j',
+            ':org_apache_httpcomponents__httpclient',
+            ':org_eclipse_aether__aether_api',
+            ':org_eclipse_aether__aether_spi',
+            ':org_eclipse_aether__aether_util',
+            ':org_slf4j__jcl_over_slf4j',
         ],
         runtime_deps = [],
     )
 
     # from org.eclipse.aether:aether-transport-wagon:1.1.0
-    native.alias(name = 'main_deps___org_eclipse_aether__aether_transport_wagon',
-        actual = ':main_deps___org_eclipse_aether__aether_transport_wagon__1_1_0',
+    native.alias(name = 'org_eclipse_aether__aether_transport_wagon',
+        actual = ':org_eclipse_aether__aether_transport_wagon__1_1_0',
         visibility = ['//visibility:public'],
     )
 
     # from org.eclipse.aether:aether-transport-wagon:1.1.0
-    native.java_import(name = 'main_deps___org_eclipse_aether__aether_transport_wagon__1_1_0',
-        jars = ['@main_deps___org_eclipse_aether__aether_transport_wagon__1_1_0//file'],
+    native.java_import(name = 'org_eclipse_aether__aether_transport_wagon__1_1_0',
+        jars = ['@org_eclipse_aether__aether_transport_wagon__1_1_0//file'],
         licenses = ['reciprocal'],
         deps = [
-            ':main_deps___org_apache_maven_wagon__wagon_provider_api',
-            ':main_deps___org_eclipse_aether__aether_api',
-            ':main_deps___org_eclipse_aether__aether_spi',
-            ':main_deps___org_eclipse_aether__aether_util',
+            ':org_apache_maven_wagon__wagon_provider_api',
+            ':org_eclipse_aether__aether_api',
+            ':org_eclipse_aether__aether_spi',
+            ':org_eclipse_aether__aether_util',
         ],
         exports = [
-            ':main_deps___org_apache_maven_wagon__wagon_provider_api',
-            ':main_deps___org_eclipse_aether__aether_api',
-            ':main_deps___org_eclipse_aether__aether_spi',
-            ':main_deps___org_eclipse_aether__aether_util',
+            ':org_apache_maven_wagon__wagon_provider_api',
+            ':org_eclipse_aether__aether_api',
+            ':org_eclipse_aether__aether_spi',
+            ':org_eclipse_aether__aether_util',
         ],
         runtime_deps = [],
     )
 
     # from org.eclipse.aether:aether-util:1.1.0
-    native.alias(name = 'main_deps___org_eclipse_aether__aether_util',
-        actual = ':main_deps___org_eclipse_aether__aether_util__1_1_0',
+    native.alias(name = 'org_eclipse_aether__aether_util',
+        actual = ':org_eclipse_aether__aether_util__1_1_0',
         visibility = ['//visibility:public'],
     )
 
     # from org.eclipse.aether:aether-util:1.1.0
-    native.java_import(name = 'main_deps___org_eclipse_aether__aether_util__1_1_0',
-        jars = ['@main_deps___org_eclipse_aether__aether_util__1_1_0//file'],
+    native.java_import(name = 'org_eclipse_aether__aether_util__1_1_0',
+        jars = ['@org_eclipse_aether__aether_util__1_1_0//file'],
         licenses = ['reciprocal'],
-        deps = [':main_deps___org_eclipse_aether__aether_api'],
-        exports = [':main_deps___org_eclipse_aether__aether_api'],
+        deps = [':org_eclipse_aether__aether_api'],
+        exports = [':org_eclipse_aether__aether_api'],
         runtime_deps = [],
     )
 
     # from org.hamcrest:hamcrest-core:1.3
-    native.alias(name = 'main_deps___org_hamcrest__hamcrest_core',
-        actual = ':main_deps___org_hamcrest__hamcrest_core__1_3',
+    native.alias(name = 'org_hamcrest__hamcrest_core',
+        actual = ':org_hamcrest__hamcrest_core__1_3',
         visibility = ['//visibility:public'],
     )
 
     # from org.hamcrest:hamcrest-core:1.3
-    native.java_import(name = 'main_deps___org_hamcrest__hamcrest_core__1_3',
-        jars = ['@main_deps___org_hamcrest__hamcrest_core__1_3//file'],
+    native.java_import(name = 'org_hamcrest__hamcrest_core__1_3',
+        jars = ['@org_hamcrest__hamcrest_core__1_3//file'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -954,37 +954,37 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from org.mockito:mockito-core:2.23.4
-    native.alias(name = 'main_deps___org_mockito__mockito_core',
-        actual = ':main_deps___org_mockito__mockito_core__2_23_4',
+    native.alias(name = 'org_mockito__mockito_core',
+        actual = ':org_mockito__mockito_core__2_23_4',
         visibility = ['//visibility:public'],
     )
 
     # from org.mockito:mockito-core:2.23.4
-    native.java_import(name = 'main_deps___org_mockito__mockito_core__2_23_4',
-        jars = ['@main_deps___org_mockito__mockito_core__2_23_4//file'],
+    native.java_import(name = 'org_mockito__mockito_core__2_23_4',
+        jars = ['@org_mockito__mockito_core__2_23_4//file'],
         licenses = ['notice'],
         deps = [
-            ':main_deps___net_bytebuddy__byte_buddy',
-            ':main_deps___net_bytebuddy__byte_buddy_agent',
-            ':main_deps___org_objenesis__objenesis',
+            ':net_bytebuddy__byte_buddy',
+            ':net_bytebuddy__byte_buddy_agent',
+            ':org_objenesis__objenesis',
         ],
         exports = [
-            ':main_deps___net_bytebuddy__byte_buddy',
-            ':main_deps___net_bytebuddy__byte_buddy_agent',
-            ':main_deps___org_objenesis__objenesis',
+            ':net_bytebuddy__byte_buddy',
+            ':net_bytebuddy__byte_buddy_agent',
+            ':org_objenesis__objenesis',
         ],
         runtime_deps = [],
     )
 
     # from org.objenesis:objenesis:2.6
-    native.alias(name = 'main_deps___org_objenesis__objenesis',
-        actual = ':main_deps___org_objenesis__objenesis__2_6',
+    native.alias(name = 'org_objenesis__objenesis',
+        actual = ':org_objenesis__objenesis__2_6',
         visibility = ['//visibility:public'],
     )
 
     # from org.objenesis:objenesis:2.6
-    native.java_import(name = 'main_deps___org_objenesis__objenesis__2_6',
-        jars = ['@main_deps___org_objenesis__objenesis__2_6//file'],
+    native.java_import(name = 'org_objenesis__objenesis__2_6',
+        jars = ['@org_objenesis__objenesis__2_6//file'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -992,29 +992,29 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from org.slf4j:jcl-over-slf4j:1.6.2
-    native.alias(name = 'main_deps___org_slf4j__jcl_over_slf4j',
-        actual = ':main_deps___org_slf4j__jcl_over_slf4j__1_6_2',
+    native.alias(name = 'org_slf4j__jcl_over_slf4j',
+        actual = ':org_slf4j__jcl_over_slf4j__1_6_2',
         visibility = ['//visibility:public'],
     )
 
     # from org.slf4j:jcl-over-slf4j:1.6.2
-    native.java_import(name = 'main_deps___org_slf4j__jcl_over_slf4j__1_6_2',
-        jars = ['@main_deps___org_slf4j__jcl_over_slf4j__1_6_2//file'],
+    native.java_import(name = 'org_slf4j__jcl_over_slf4j__1_6_2',
+        jars = ['@org_slf4j__jcl_over_slf4j__1_6_2//file'],
         licenses = ['notice'],
-        deps = [':main_deps___org_slf4j__slf4j_api'],
-        exports = [':main_deps___org_slf4j__slf4j_api'],
+        deps = [':org_slf4j__slf4j_api'],
+        exports = [':org_slf4j__slf4j_api'],
         runtime_deps = [],
     )
 
     # from org.slf4j:slf4j-api:1.7.25
-    native.alias(name = 'main_deps___org_slf4j__slf4j_api',
-        actual = ':main_deps___org_slf4j__slf4j_api__1_7_25',
+    native.alias(name = 'org_slf4j__slf4j_api',
+        actual = ':org_slf4j__slf4j_api__1_7_25',
         visibility = ['//visibility:public'],
     )
 
     # from org.slf4j:slf4j-api:1.7.25
-    native.java_import(name = 'main_deps___org_slf4j__slf4j_api__1_7_25',
-        jars = ['@main_deps___org_slf4j__slf4j_api__1_7_25//file'],
+    native.java_import(name = 'org_slf4j__slf4j_api__1_7_25',
+        jars = ['@org_slf4j__slf4j_api__1_7_25//file'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -1022,17 +1022,17 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from org.slf4j:slf4j-nop:1.7.25
-    native.alias(name = 'main_deps___org_slf4j__slf4j_nop',
-        actual = ':main_deps___org_slf4j__slf4j_nop__1_7_25',
+    native.alias(name = 'org_slf4j__slf4j_nop',
+        actual = ':org_slf4j__slf4j_nop__1_7_25',
         visibility = ['//visibility:public'],
     )
 
     # from org.slf4j:slf4j-nop:1.7.25
-    native.java_import(name = 'main_deps___org_slf4j__slf4j_nop__1_7_25',
-        jars = ['@main_deps___org_slf4j__slf4j_nop__1_7_25//file'],
+    native.java_import(name = 'org_slf4j__slf4j_nop__1_7_25',
+        jars = ['@org_slf4j__slf4j_nop__1_7_25//file'],
         licenses = ['notice'],
-        deps = [':main_deps___org_slf4j__slf4j_api'],
-        exports = [':main_deps___org_slf4j__slf4j_api'],
+        deps = [':org_slf4j__slf4j_api'],
+        exports = [':org_slf4j__slf4j_api'],
         runtime_deps = [],
     )
 

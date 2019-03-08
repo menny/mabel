@@ -2,7 +2,7 @@
 # for artifact androidx.appcompat:appcompat
 
 alias(name = 'appcompat',
-    actual = '//program:main_deps___androidx_appcompat__appcompat',
+    actual = '//program:androidx_appcompat__appcompat',
     visibility = ['//visibility:public'],
 )
 

@@ -2,7 +2,7 @@
 # for artifact androidx.slidingpanelayout:slidingpanelayout
 
 alias(name = 'slidingpanelayout',
-    actual = '//program:main_deps___androidx_slidingpanelayout__slidingpanelayout',
+    actual = '//program:androidx_slidingpanelayout__slidingpanelayout',
     visibility = ['//visibility:public'],
 )
 

@@ -2,7 +2,7 @@
 # for artifact org.codehaus.plexus:plexus-utils
 
 alias(name = 'plexus-utils',
-    actual = '//resolver:main_deps___org_codehaus_plexus__plexus_utils',
+    actual = '//resolver:org_codehaus_plexus__plexus_utils',
     visibility = ['//visibility:public'],
 )
 

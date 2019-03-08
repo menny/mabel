@@ -2,7 +2,7 @@
 # for artifact org.mockito:mockito-core
 
 alias(name = 'mockito-core',
-    actual = '//resolver:main_deps___org_mockito__mockito_core',
+    actual = '//resolver:org_mockito__mockito_core',
     visibility = ['//visibility:public'],
 )
 

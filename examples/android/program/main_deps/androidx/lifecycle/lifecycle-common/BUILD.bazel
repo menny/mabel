@@ -2,7 +2,7 @@
 # for artifact androidx.lifecycle:lifecycle-common
 
 alias(name = 'lifecycle-common',
-    actual = '//program:main_deps___androidx_lifecycle__lifecycle_common',
+    actual = '//program:androidx_lifecycle__lifecycle_common',
     visibility = ['//visibility:public'],
 )
 

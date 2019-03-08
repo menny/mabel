@@ -2,7 +2,7 @@
 # for artifact org.apache.maven:maven-aether-provider
 
 alias(name = 'maven-aether-provider',
-    actual = '//resolver:main_deps___org_apache_maven__maven_aether_provider',
+    actual = '//resolver:org_apache_maven__maven_aether_provider',
     visibility = ['//visibility:public'],
 )
 

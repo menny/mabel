@@ -2,7 +2,7 @@
 # for artifact androidx.lifecycle:lifecycle-livedata
 
 alias(name = 'lifecycle-livedata',
-    actual = '//program:main_deps___androidx_lifecycle__lifecycle_livedata',
+    actual = '//program:androidx_lifecycle__lifecycle_livedata',
     visibility = ['//visibility:public'],
 )
 

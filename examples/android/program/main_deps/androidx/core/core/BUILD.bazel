@@ -2,7 +2,7 @@
 # for artifact androidx.core:core
 
 alias(name = 'core',
-    actual = '//program:main_deps___androidx_core__core',
+    actual = '//program:androidx_core__core',
     visibility = ['//visibility:public'],
 )
 

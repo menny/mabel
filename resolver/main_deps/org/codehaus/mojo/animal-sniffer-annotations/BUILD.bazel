@@ -2,7 +2,7 @@
 # for artifact org.codehaus.mojo:animal-sniffer-annotations
 
 alias(name = 'animal-sniffer-annotations',
-    actual = '//resolver:main_deps___org_codehaus_mojo__animal_sniffer_annotations',
+    actual = '//resolver:org_codehaus_mojo__animal_sniffer_annotations',
     visibility = ['//visibility:public'],
 )
 

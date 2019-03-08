@@ -7,13 +7,13 @@ load('@bazel_tools//tools/build_defs/repo:http.bzl', 'http_file')
 # Repository rules macro to be run in the WORKSPACE file.
 def generate_workspace_rules():
     # from com.google.auto.value:auto-value-annotations:1.6.3
-    http_file(name = 'main_deps___com_google_auto_value__auto_value_annotations__1_6_3',
+    http_file(name = 'apt___com_google_auto_value__auto_value_annotations__1_6_3',
         urls = ['https://repo1.maven.org/maven2/com/google/auto/value/auto-value-annotations/1.6.3/auto-value-annotations-1.6.3.jar'],
         downloaded_file_path = 'auto-value-annotations-1.6.3.jar',
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    http_file(name = 'main_deps___com_google_auto_value__auto_value__1_6_3',
+    http_file(name = 'apt___com_google_auto_value__auto_value__1_6_3',
         urls = ['https://repo1.maven.org/maven2/com/google/auto/value/auto-value/1.6.3/auto-value-1.6.3.jar'],
         downloaded_file_path = 'auto-value-1.6.3.jar',
     )
@@ -45,14 +45,14 @@ def kotlin_jar_support(name, deps, exports, runtime_deps, jar, kt_jvm_import=Non
 
 def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=None):
     # from com.google.auto.value:auto-value-annotations:1.6.3
-    native.alias(name = 'main_deps___com_google_auto_value__auto_value_annotations',
-        actual = ':main_deps___com_google_auto_value__auto_value_annotations__1_6_3',
+    native.alias(name = 'apt___com_google_auto_value__auto_value_annotations',
+        actual = ':apt___com_google_auto_value__auto_value_annotations__1_6_3',
         visibility = ['//visibility:public'],
     )
 
     # from com.google.auto.value:auto-value-annotations:1.6.3
-    native.java_import(name = 'main_deps___com_google_auto_value__auto_value_annotations__1_6_3',
-        jars = ['@main_deps___com_google_auto_value__auto_value_annotations__1_6_3//file'],
+    native.java_import(name = 'apt___com_google_auto_value__auto_value_annotations__1_6_3',
+        jars = ['@apt___com_google_auto_value__auto_value_annotations__1_6_3//file'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -60,108 +60,108 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    native.alias(name = 'main_deps___com_google_auto_value__auto_value',
-        actual = ':main_deps___com_google_auto_value__auto_value__1_6_3',
+    native.alias(name = 'apt___com_google_auto_value__auto_value',
+        actual = ':apt___com_google_auto_value__auto_value__1_6_3',
         visibility = ['//visibility:public'],
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    native.java_library(name = 'main_deps___com_google_auto_value__auto_value__1_6_3',
-        runtime_deps = [':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
+    native.java_library(name = 'apt___com_google_auto_value__auto_value__1_6_3',
+        runtime_deps = [':apt___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
         exported_plugins = [
-            ':main_deps___com_google_auto_value__auto_value__1_6_3_0',
-            ':main_deps___com_google_auto_value__auto_value__1_6_3_1',
-            ':main_deps___com_google_auto_value__auto_value__1_6_3_2',
-            ':main_deps___com_google_auto_value__auto_value__1_6_3_3',
-            ':main_deps___com_google_auto_value__auto_value__1_6_3_4',
+            ':apt___com_google_auto_value__auto_value__1_6_3_0',
+            ':apt___com_google_auto_value__auto_value__1_6_3_1',
+            ':apt___com_google_auto_value__auto_value__1_6_3_2',
+            ':apt___com_google_auto_value__auto_value__1_6_3_3',
+            ':apt___com_google_auto_value__auto_value__1_6_3_4',
         ],
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    native.java_plugin(name = 'main_deps___com_google_auto_value__auto_value__1_6_3_0',
+    native.java_plugin(name = 'apt___com_google_auto_value__auto_value__1_6_3_0',
         processor_class = 'com.google.auto.value.extension.memoized.processor.MemoizedValidator',
         generates_api = 0,
-        deps = [':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
+        deps = [':apt___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    native.java_plugin(name = 'main_deps___com_google_auto_value__auto_value__1_6_3_1',
+    native.java_plugin(name = 'apt___com_google_auto_value__auto_value__1_6_3_1',
         processor_class = 'com.google.auto.value.processor.AutoAnnotationProcessor',
         generates_api = 0,
-        deps = [':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
+        deps = [':apt___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    native.java_plugin(name = 'main_deps___com_google_auto_value__auto_value__1_6_3_2',
+    native.java_plugin(name = 'apt___com_google_auto_value__auto_value__1_6_3_2',
         processor_class = 'com.google.auto.value.processor.AutoOneOfProcessor',
         generates_api = 0,
-        deps = [':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
+        deps = [':apt___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    native.java_plugin(name = 'main_deps___com_google_auto_value__auto_value__1_6_3_3',
+    native.java_plugin(name = 'apt___com_google_auto_value__auto_value__1_6_3_3',
         processor_class = 'com.google.auto.value.processor.AutoValueBuilderProcessor',
         generates_api = 0,
-        deps = [':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
+        deps = [':apt___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    native.java_plugin(name = 'main_deps___com_google_auto_value__auto_value__1_6_3_4',
+    native.java_plugin(name = 'apt___com_google_auto_value__auto_value__1_6_3_4',
         processor_class = 'com.google.auto.value.processor.AutoValueProcessor',
         generates_api = 0,
-        deps = [':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
+        deps = [':apt___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    native.java_library(name = 'main_deps___com_google_auto_value__auto_value__1_6_3_generate_api',
-        runtime_deps = [':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
+    native.java_library(name = 'apt___com_google_auto_value__auto_value__1_6_3_generate_api',
+        runtime_deps = [':apt___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
         exported_plugins = [
-            ':main_deps___com_google_auto_value__auto_value__1_6_3_generate_api_0',
-            ':main_deps___com_google_auto_value__auto_value__1_6_3_generate_api_1',
-            ':main_deps___com_google_auto_value__auto_value__1_6_3_generate_api_2',
-            ':main_deps___com_google_auto_value__auto_value__1_6_3_generate_api_3',
-            ':main_deps___com_google_auto_value__auto_value__1_6_3_generate_api_4',
+            ':apt___com_google_auto_value__auto_value__1_6_3_generate_api_0',
+            ':apt___com_google_auto_value__auto_value__1_6_3_generate_api_1',
+            ':apt___com_google_auto_value__auto_value__1_6_3_generate_api_2',
+            ':apt___com_google_auto_value__auto_value__1_6_3_generate_api_3',
+            ':apt___com_google_auto_value__auto_value__1_6_3_generate_api_4',
         ],
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    native.java_plugin(name = 'main_deps___com_google_auto_value__auto_value__1_6_3_generate_api_0',
+    native.java_plugin(name = 'apt___com_google_auto_value__auto_value__1_6_3_generate_api_0',
         processor_class = 'com.google.auto.value.extension.memoized.processor.MemoizedValidator',
         generates_api = 1,
-        deps = [':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
+        deps = [':apt___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    native.java_plugin(name = 'main_deps___com_google_auto_value__auto_value__1_6_3_generate_api_1',
+    native.java_plugin(name = 'apt___com_google_auto_value__auto_value__1_6_3_generate_api_1',
         processor_class = 'com.google.auto.value.processor.AutoAnnotationProcessor',
         generates_api = 1,
-        deps = [':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
+        deps = [':apt___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    native.java_plugin(name = 'main_deps___com_google_auto_value__auto_value__1_6_3_generate_api_2',
+    native.java_plugin(name = 'apt___com_google_auto_value__auto_value__1_6_3_generate_api_2',
         processor_class = 'com.google.auto.value.processor.AutoOneOfProcessor',
         generates_api = 1,
-        deps = [':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
+        deps = [':apt___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    native.java_plugin(name = 'main_deps___com_google_auto_value__auto_value__1_6_3_generate_api_3',
+    native.java_plugin(name = 'apt___com_google_auto_value__auto_value__1_6_3_generate_api_3',
         processor_class = 'com.google.auto.value.processor.AutoValueBuilderProcessor',
         generates_api = 1,
-        deps = [':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
+        deps = [':apt___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    native.java_plugin(name = 'main_deps___com_google_auto_value__auto_value__1_6_3_generate_api_4',
+    native.java_plugin(name = 'apt___com_google_auto_value__auto_value__1_6_3_generate_api_4',
         processor_class = 'com.google.auto.value.processor.AutoValueProcessor',
         generates_api = 1,
-        deps = [':main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
+        deps = [':apt___com_google_auto_value__auto_value__1_6_3_java_plugin_lib'],
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    native.java_import(name = 'main_deps___com_google_auto_value__auto_value__1_6_3_java_plugin_lib',
-        jars = ['@main_deps___com_google_auto_value__auto_value__1_6_3//file'],
+    native.java_import(name = 'apt___com_google_auto_value__auto_value__1_6_3_java_plugin_lib',
+        jars = ['@apt___com_google_auto_value__auto_value__1_6_3//file'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -169,8 +169,8 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    native.alias(name = 'main_deps___com_google_auto_value__auto_value_generate_api',
-        actual = ':main_deps___com_google_auto_value__auto_value__1_6_3_generate_api',
+    native.alias(name = 'apt___com_google_auto_value__auto_value_generate_api',
+        actual = ':apt___com_google_auto_value__auto_value__1_6_3_generate_api',
         visibility = ['//visibility:public'],
     )
 

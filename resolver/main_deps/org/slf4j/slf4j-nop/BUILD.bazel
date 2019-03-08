@@ -2,7 +2,7 @@
 # for artifact org.slf4j:slf4j-nop
 
 alias(name = 'slf4j-nop',
-    actual = '//resolver:main_deps___org_slf4j__slf4j_nop',
+    actual = '//resolver:org_slf4j__slf4j_nop',
     visibility = ['//visibility:public'],
 )
 

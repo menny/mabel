@@ -2,7 +2,7 @@
 # for artifact org.apache.maven:maven-model-builder
 
 alias(name = 'maven-model-builder',
-    actual = '//resolver:main_deps___org_apache_maven__maven_model_builder',
+    actual = '//resolver:org_apache_maven__maven_model_builder',
     visibility = ['//visibility:public'],
 )
 

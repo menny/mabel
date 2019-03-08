@@ -2,7 +2,7 @@
 # for artifact androidx.print:print
 
 alias(name = 'print',
-    actual = '//program:main_deps___androidx_print__print',
+    actual = '//program:androidx_print__print',
     visibility = ['//visibility:public'],
 )
 

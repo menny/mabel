@@ -2,7 +2,7 @@
 # for artifact androidx.coordinatorlayout:coordinatorlayout
 
 alias(name = 'coordinatorlayout',
-    actual = '//program:main_deps___androidx_coordinatorlayout__coordinatorlayout',
+    actual = '//program:androidx_coordinatorlayout__coordinatorlayout',
     visibility = ['//visibility:public'],
 )
 

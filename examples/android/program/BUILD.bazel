@@ -34,7 +34,7 @@ android_binary(
     deps = [
         "//program/main_deps/androidx/appcompat/appcompat",
         "//program/main_deps/androidx/annotation/annotation",
-        "//program/main_deps/androidx/fragment/fragment",
+        "//program:androidx_fragment__fragment",
 
         "//program/main_deps/com/github/menny/Chauffeur/permissions",
     ],

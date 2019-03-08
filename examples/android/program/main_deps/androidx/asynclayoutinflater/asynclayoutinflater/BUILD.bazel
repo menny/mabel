@@ -2,7 +2,7 @@
 # for artifact androidx.asynclayoutinflater:asynclayoutinflater
 
 alias(name = 'asynclayoutinflater',
-    actual = '//program:main_deps___androidx_asynclayoutinflater__asynclayoutinflater',
+    actual = '//program:androidx_asynclayoutinflater__asynclayoutinflater',
     visibility = ['//visibility:public'],
 )
 

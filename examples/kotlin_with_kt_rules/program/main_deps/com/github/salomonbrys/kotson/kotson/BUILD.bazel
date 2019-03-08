@@ -2,7 +2,7 @@
 # for artifact com.github.salomonbrys.kotson:kotson
 
 alias(name = 'kotson',
-    actual = '//program:main_deps___com_github_salomonbrys_kotson__kotson',
+    actual = '//program:com_github_salomonbrys_kotson__kotson',
     visibility = ['//visibility:public'],
 )
 

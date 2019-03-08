@@ -2,7 +2,7 @@
 # for artifact org.objenesis:objenesis
 
 alias(name = 'objenesis',
-    actual = '//resolver:main_deps___org_objenesis__objenesis',
+    actual = '//resolver:org_objenesis__objenesis',
     visibility = ['//visibility:public'],
 )
 

@@ -2,7 +2,7 @@
 # for artifact androidx.customview:customview
 
 alias(name = 'customview',
-    actual = '//program:main_deps___androidx_customview__customview',
+    actual = '//program:androidx_customview__customview',
     visibility = ['//visibility:public'],
 )
 

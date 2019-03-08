@@ -2,7 +2,7 @@
 # for artifact androidx.activity:activity
 
 alias(name = 'activity',
-    actual = '//program:main_deps___androidx_activity__activity',
+    actual = '//program:androidx_activity__activity',
     visibility = ['//visibility:public'],
 )
 

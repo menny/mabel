@@ -2,7 +2,7 @@
 # for artifact androidx.documentfile:documentfile
 
 alias(name = 'documentfile',
-    actual = '//program:main_deps___androidx_documentfile__documentfile',
+    actual = '//program:androidx_documentfile__documentfile',
     visibility = ['//visibility:public'],
 )
 

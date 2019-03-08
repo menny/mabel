@@ -2,7 +2,7 @@
 # for artifact commons-logging:commons-logging
 
 alias(name = 'commons-logging',
-    actual = '//resolver:main_deps___commons_logging__commons_logging',
+    actual = '//resolver:commons_logging__commons_logging',
     visibility = ['//visibility:public'],
 )
 

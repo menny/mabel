@@ -2,7 +2,7 @@
 # for artifact org.jetbrains.kotlin:kotlin-stdlib
 
 alias(name = 'kotlin-stdlib',
-    actual = '//program:main_deps___org_jetbrains_kotlin__kotlin_stdlib',
+    actual = '//program:org_jetbrains_kotlin__kotlin_stdlib',
     visibility = ['//visibility:public'],
 )
 

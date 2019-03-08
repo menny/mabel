@@ -61,7 +61,8 @@ deps_workspace_generator_rule(name = 'main_deps',
         artifact("org.apache.commons:commons-lang3:jar:3.8.1"),
         artifact("com.google.code.findbugs:jsr305:3.0.2"),
         artifact("com.google.auto.value:auto-value:1.6.3")
-    ])
+    ],
+    generated_targets_prefix = "main_deps___")
 ```
 In this example above we defined the target `//resolver:main_deps` with 4 maven dependencies:
 
@@ -102,7 +103,10 @@ resolver/
                         BUILD.bazel (with alias commons-lang3 -> //resolver:main_deps___org_apache_commons__commons_lang3)
 ```
 
-These prefixes allows you to generate several graphs for different cases (for example, compile vs annotation-processor stages). This file will need to be checked into your repository, same as [Yarn's lock file](https://yarnpkg.com/lang/en/docs/yarn-lock/).<br/>
+You'll noticed that there's a prefix `main_deps___` to all targets, this prefix allows you to generate several graphs for different cases (for example, compile vs annotation-processor stages).
+It was added because we specified `generated_targets_prefix = "main_deps___"` in the target definition.
+<br/>
+This file will need to be checked into your repository, same as [Yarn's lock file](https://yarnpkg.com/lang/en/docs/yarn-lock/).<br/>
 _NOTE:_ If you do not wish the rule to generate the sub-folders, you can add `generate_deps_sub_folder = False` to your `artifact` target definition.
  
 ### Using the generated Maven dependencies
@@ -139,6 +143,7 @@ Attributes:
 * `maven_deps`: List of `artifact` targets representing a Maven coordinate.
 * `generate_deps_sub_folder`: Default `True`. Will create sub-folders with `BUILD.bazel` file for each dependency.'
 * `fetch_srcjar`: Default `True`. Will also try to fetch sources jar for each dependency.'
+* `generated_targets_prefix`: A prefix to add to all generated targets. Default is an empty string, meaning no-prefix. This might be useful if you want to generate several, unrelated, graphs. 
 * `output_graph_to_file`: If set to `True`, will output the graph to `dependencies.txt`. Default is `False`.
 
 ### `maven_dependency_graph_resolving_rule` or `artifact`

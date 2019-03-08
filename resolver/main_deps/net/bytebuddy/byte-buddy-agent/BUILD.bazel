@@ -2,7 +2,7 @@
 # for artifact net.bytebuddy:byte-buddy-agent
 
 alias(name = 'byte-buddy-agent',
-    actual = '//resolver:main_deps___net_bytebuddy__byte_buddy_agent',
+    actual = '//resolver:net_bytebuddy__byte_buddy_agent',
     visibility = ['//visibility:public'],
 )
 

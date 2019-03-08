@@ -2,7 +2,7 @@
 # for artifact androidx.lifecycle:lifecycle-viewmodel
 
 alias(name = 'lifecycle-viewmodel',
-    actual = '//program:main_deps___androidx_lifecycle__lifecycle_viewmodel',
+    actual = '//program:androidx_lifecycle__lifecycle_viewmodel',
     visibility = ['//visibility:public'],
 )
 

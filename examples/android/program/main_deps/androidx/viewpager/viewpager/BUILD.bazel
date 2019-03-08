@@ -2,7 +2,7 @@
 # for artifact androidx.viewpager:viewpager
 
 alias(name = 'viewpager',
-    actual = '//program:main_deps___androidx_viewpager__viewpager',
+    actual = '//program:androidx_viewpager__viewpager',
     visibility = ['//visibility:public'],
 )
 

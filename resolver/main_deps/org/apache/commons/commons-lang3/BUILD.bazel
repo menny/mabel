@@ -2,7 +2,7 @@
 # for artifact org.apache.commons:commons-lang3
 
 alias(name = 'commons-lang3',
-    actual = '//resolver:main_deps___org_apache_commons__commons_lang3',
+    actual = '//resolver:org_apache_commons__commons_lang3',
     visibility = ['//visibility:public'],
 )
 

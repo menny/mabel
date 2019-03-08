@@ -2,7 +2,7 @@
 # for artifact org.apache.maven:maven-repository-metadata
 
 alias(name = 'maven-repository-metadata',
-    actual = '//resolver:main_deps___org_apache_maven__maven_repository_metadata',
+    actual = '//resolver:org_apache_maven__maven_repository_metadata',
     visibility = ['//visibility:public'],
 )
 
