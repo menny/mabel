@@ -2,7 +2,7 @@
 # for artifact androidx.annotation:annotation
 
 alias(name = 'annotation',
-    actual = '//program:main_deps___androidx_annotation__annotation',
+    actual = '//program:androidx_annotation__annotation',
     visibility = ['//visibility:public'],
 )
 

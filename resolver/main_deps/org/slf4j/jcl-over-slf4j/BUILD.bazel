@@ -2,7 +2,7 @@
 # for artifact org.slf4j:jcl-over-slf4j
 
 alias(name = 'jcl-over-slf4j',
-    actual = '//resolver:main_deps___org_slf4j__jcl_over_slf4j',
+    actual = '//resolver:org_slf4j__jcl_over_slf4j',
     visibility = ['//visibility:public'],
 )
 

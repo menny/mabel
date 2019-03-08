@@ -2,7 +2,7 @@
 # for artifact androidx.versionedparcelable:versionedparcelable
 
 alias(name = 'versionedparcelable',
-    actual = '//program:main_deps___androidx_versionedparcelable__versionedparcelable',
+    actual = '//program:androidx_versionedparcelable__versionedparcelable',
     visibility = ['//visibility:public'],
 )
 

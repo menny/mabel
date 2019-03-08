@@ -2,7 +2,7 @@
 # for artifact androidx.drawerlayout:drawerlayout
 
 alias(name = 'drawerlayout',
-    actual = '//program:main_deps___androidx_drawerlayout__drawerlayout',
+    actual = '//program:androidx_drawerlayout__drawerlayout',
     visibility = ['//visibility:public'],
 )
 

@@ -2,7 +2,7 @@
 # for artifact org.jetbrains.kotlin:kotlin-runtime
 
 alias(name = 'kotlin-runtime',
-    actual = '//program:main_deps___org_jetbrains_kotlin__kotlin_runtime',
+    actual = '//program:org_jetbrains_kotlin__kotlin_runtime',
     visibility = ['//visibility:public'],
 )
 

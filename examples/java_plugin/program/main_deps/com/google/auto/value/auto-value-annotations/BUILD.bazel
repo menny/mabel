@@ -2,7 +2,7 @@
 # for artifact com.google.auto.value:auto-value-annotations
 
 alias(name = 'auto-value-annotations',
-    actual = '//program:main_deps___com_google_auto_value__auto_value_annotations',
+    actual = '//program:apt___com_google_auto_value__auto_value_annotations',
     visibility = ['//visibility:public'],
 )
 

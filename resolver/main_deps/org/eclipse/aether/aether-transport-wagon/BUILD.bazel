@@ -2,7 +2,7 @@
 # for artifact org.eclipse.aether:aether-transport-wagon
 
 alias(name = 'aether-transport-wagon',
-    actual = '//resolver:main_deps___org_eclipse_aether__aether_transport_wagon',
+    actual = '//resolver:org_eclipse_aether__aether_transport_wagon',
     visibility = ['//visibility:public'],
 )
 

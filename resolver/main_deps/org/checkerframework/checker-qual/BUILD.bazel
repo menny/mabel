@@ -2,7 +2,7 @@
 # for artifact org.checkerframework:checker-qual
 
 alias(name = 'checker-qual',
-    actual = '//resolver:main_deps___org_checkerframework__checker_qual',
+    actual = '//resolver:org_checkerframework__checker_qual',
     visibility = ['//visibility:public'],
 )
 

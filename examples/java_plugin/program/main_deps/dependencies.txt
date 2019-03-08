@@ -1,4 +1,4 @@
 
- * com.google.auto.value:auto-value:1.6.3 (main_deps___com_google_auto_value__auto_value__1_6_3)
+ * com.google.auto.value:auto-value:1.6.3 (apt___com_google_auto_value__auto_value__1_6_3)
 
- * com.google.auto.value:auto-value-annotations:1.6.3 (main_deps___com_google_auto_value__auto_value_annotations__1_6_3)
+ * com.google.auto.value:auto-value-annotations:1.6.3 (apt___com_google_auto_value__auto_value_annotations__1_6_3)

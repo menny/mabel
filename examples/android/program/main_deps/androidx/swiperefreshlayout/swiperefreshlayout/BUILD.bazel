@@ -2,7 +2,7 @@
 # for artifact androidx.swiperefreshlayout:swiperefreshlayout
 
 alias(name = 'swiperefreshlayout',
-    actual = '//program:main_deps___androidx_swiperefreshlayout__swiperefreshlayout',
+    actual = '//program:androidx_swiperefreshlayout__swiperefreshlayout',
     visibility = ['//visibility:public'],
 )
 

@@ -2,7 +2,7 @@
 # for artifact com.beust:jcommander
 
 alias(name = 'jcommander',
-    actual = '//resolver:main_deps___com_beust__jcommander',
+    actual = '//resolver:com_beust__jcommander',
     visibility = ['//visibility:public'],
 )
 

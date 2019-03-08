@@ -2,12 +2,12 @@
 # for artifact com.google.auto.value:auto-value
 
 alias(name = 'auto-value',
-    actual = '//program:main_deps___com_google_auto_value__auto_value',
+    actual = '//program:apt___com_google_auto_value__auto_value',
     visibility = ['//visibility:public'],
 )
 
-alias(name = 'main_deps___com_google_auto_value__auto_value_generate_api',
-    actual = '//program:main_deps___com_google_auto_value__auto_value_generate_api',
+alias(name = 'apt___com_google_auto_value__auto_value_generate_api',
+    actual = '//program:apt___com_google_auto_value__auto_value_generate_api',
     visibility = ['//visibility:public'],
 )
 

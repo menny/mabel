@@ -2,7 +2,7 @@
 # for artifact org.eclipse.aether:aether-util
 
 alias(name = 'aether-util',
-    actual = '//resolver:main_deps___org_eclipse_aether__aether_util',
+    actual = '//resolver:org_eclipse_aether__aether_util',
     visibility = ['//visibility:public'],
 )
 

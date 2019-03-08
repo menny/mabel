@@ -2,7 +2,7 @@
 # for artifact androidx.cursoradapter:cursoradapter
 
 alias(name = 'cursoradapter',
-    actual = '//program:main_deps___androidx_cursoradapter__cursoradapter',
+    actual = '//program:androidx_cursoradapter__cursoradapter',
     visibility = ['//visibility:public'],
 )
 

@@ -2,7 +2,7 @@
 # for artifact commons-codec:commons-codec
 
 alias(name = 'commons-codec',
-    actual = '//resolver:main_deps___commons_codec__commons_codec',
+    actual = '//resolver:commons_codec__commons_codec',
     visibility = ['//visibility:public'],
 )
 

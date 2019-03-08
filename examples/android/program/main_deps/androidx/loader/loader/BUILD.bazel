@@ -2,7 +2,7 @@
 # for artifact androidx.loader:loader
 
 alias(name = 'loader',
-    actual = '//program:main_deps___androidx_loader__loader',
+    actual = '//program:androidx_loader__loader',
     visibility = ['//visibility:public'],
 )
 

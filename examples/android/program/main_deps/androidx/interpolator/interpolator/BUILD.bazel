@@ -2,7 +2,7 @@
 # for artifact androidx.interpolator:interpolator
 
 alias(name = 'interpolator',
-    actual = '//program:main_deps___androidx_interpolator__interpolator',
+    actual = '//program:androidx_interpolator__interpolator',
     visibility = ['//visibility:public'],
 )
 

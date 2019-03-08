@@ -2,7 +2,7 @@
 # for artifact androidx.fragment:fragment
 
 alias(name = 'fragment',
-    actual = '//program:main_deps___androidx_fragment__fragment',
+    actual = '//program:androidx_fragment__fragment',
     visibility = ['//visibility:public'],
 )
 

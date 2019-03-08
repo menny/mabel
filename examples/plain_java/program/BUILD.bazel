@@ -5,10 +5,11 @@ generate_transitive_dependency_targets()
 load("@mabel//rules/maven_deps:maven_deps_workspace_generator.bzl", "deps_workspace_generator_rule", "artifact")
 
 deps_workspace_generator_rule(name = 'main_deps',
-    maven_deps = [artifact("com.google.guava:guava:20.0")]
+    maven_deps = [artifact("com.google.guava:guava:20.0")],
+    generated_targets_prefix = ""
     )
 
 java_binary(name = "plain_java",
             srcs = ["HelloWorld.java"],
             main_class = "examples.plain_java.program.HelloWorld",
-            deps = ["//program/main_deps/com/google/guava/guava"])
+            deps = ["//program:com_google_guava__guava"])

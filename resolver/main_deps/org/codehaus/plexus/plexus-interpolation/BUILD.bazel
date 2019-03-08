@@ -2,7 +2,7 @@
 # for artifact org.codehaus.plexus:plexus-interpolation
 
 alias(name = 'plexus-interpolation',
-    actual = '//resolver:main_deps___org_codehaus_plexus__plexus_interpolation',
+    actual = '//resolver:org_codehaus_plexus__plexus_interpolation',
     visibility = ['//visibility:public'],
 )
 

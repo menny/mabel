@@ -11,13 +11,15 @@ deps_workspace_generator_rule(name = 'main_deps',
     ],
     fetch_srcjar = False,
     output_graph_to_file = True,
+    generated_targets_prefix = "apt___"
     )
 
 java_binary(name = "java_plugin",
             srcs = ["HelloWorld.java", "Program.java"],
             main_class = "examples.java_plugin.program.HelloWorld",
             deps = [
-                "//program/main_deps/com/google/auto/value/auto-value-annotations",
                 # NOTE: Although 'auto-value' is a java_plugin, we put it in the deps since deps_workspace_generator_rule created a java_library for it
-                "//program/main_deps/com/google/auto/value/auto-value"
+                "//program/main_deps/com/google/auto/value/auto-value",
+                # we can also reference the target via the generated target. Note that we used `generated_targets_prefix` so there is a prefix.
+                "//program:apt___com_google_auto_value__auto_value_annotations",
             ])

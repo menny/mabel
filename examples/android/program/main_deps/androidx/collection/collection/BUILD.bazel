@@ -2,7 +2,7 @@
 # for artifact androidx.collection:collection
 
 alias(name = 'collection',
-    actual = '//program:main_deps___androidx_collection__collection',
+    actual = '//program:androidx_collection__collection',
     visibility = ['//visibility:public'],
 )
 

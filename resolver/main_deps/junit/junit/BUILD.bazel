@@ -2,7 +2,7 @@
 # for artifact junit:junit
 
 alias(name = 'junit',
-    actual = '//resolver:main_deps___junit__junit',
+    actual = '//resolver:junit__junit',
     visibility = ['//visibility:public'],
 )
 

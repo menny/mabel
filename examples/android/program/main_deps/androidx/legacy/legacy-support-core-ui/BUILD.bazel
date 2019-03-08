@@ -2,7 +2,7 @@
 # for artifact androidx.legacy:legacy-support-core-ui
 
 alias(name = 'legacy-support-core-ui',
-    actual = '//program:main_deps___androidx_legacy__legacy_support_core_ui',
+    actual = '//program:androidx_legacy__legacy_support_core_ui',
     visibility = ['//visibility:public'],
 )
 
