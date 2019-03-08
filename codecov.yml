@@ -1,0 +1,9 @@
+codecov:
+  notify:
+    require_ci_to_pass: yes
+
+ignore:
+  - "examples/.*"
+  - "rules/.*"
+  - "resolver/main_deps/.*"
+  - "resolver/src/main/java/com/google/.*"
