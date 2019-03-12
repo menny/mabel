@@ -87,7 +87,9 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from com.github.salomonbrys.kotson:kotson:2.5.0
-    kotlin_jar_support(name = 'com_github_salomonbrys_kotson__kotson__2_5_0',
+    native.java_import(name = 'com_github_salomonbrys_kotson__kotson__2_5_0',
+        jars = ['@com_github_salomonbrys_kotson__kotson__2_5_0//file'],
+        licenses = ['notice'],
         deps = [
             ':com_google_code_gson__gson',
             ':org_jetbrains_kotlin__kotlin_stdlib',
@@ -97,9 +99,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
             ':org_jetbrains_kotlin__kotlin_stdlib',
         ],
         runtime_deps = [],
-        jar = '@com_github_salomonbrys_kotson__kotson__2_5_0//file',
-        kt_jvm_import = kt_jvm_import,
-        kt_jvm_library = kt_jvm_library,
+        srcjar = '@com_github_salomonbrys_kotson__kotson__2_5_0__sources//file',
     )
 
     # from com.google.code.gson:gson:2.8.0
@@ -125,13 +125,13 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from org.jetbrains.kotlin:kotlin-runtime:1.0.6
-    kotlin_jar_support(name = 'org_jetbrains_kotlin__kotlin_runtime__1_0_6',
+    native.java_import(name = 'org_jetbrains_kotlin__kotlin_runtime__1_0_6',
+        jars = ['@org_jetbrains_kotlin__kotlin_runtime__1_0_6//file'],
+        licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],
-        jar = '@org_jetbrains_kotlin__kotlin_runtime__1_0_6//file',
-        kt_jvm_import = kt_jvm_import,
-        kt_jvm_library = kt_jvm_library,
+        srcjar = '@org_jetbrains_kotlin__kotlin_runtime__1_0_6__sources//file',
     )
 
     # from org.jetbrains.kotlin:kotlin-stdlib:1.0.6
@@ -141,13 +141,13 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from org.jetbrains.kotlin:kotlin-stdlib:1.0.6
-    kotlin_jar_support(name = 'org_jetbrains_kotlin__kotlin_stdlib__1_0_6',
+    native.java_import(name = 'org_jetbrains_kotlin__kotlin_stdlib__1_0_6',
+        jars = ['@org_jetbrains_kotlin__kotlin_stdlib__1_0_6//file'],
+        licenses = ['notice'],
         deps = [':org_jetbrains_kotlin__kotlin_runtime'],
         exports = [':org_jetbrains_kotlin__kotlin_runtime'],
         runtime_deps = [],
-        jar = '@org_jetbrains_kotlin__kotlin_stdlib__1_0_6//file',
-        kt_jvm_import = kt_jvm_import,
-        kt_jvm_library = kt_jvm_library,
+        srcjar = '@org_jetbrains_kotlin__kotlin_stdlib__1_0_6__sources//file',
     )
 
 

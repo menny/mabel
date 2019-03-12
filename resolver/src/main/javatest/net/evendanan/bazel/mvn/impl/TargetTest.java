@@ -37,10 +37,7 @@ public class TargetTest {
         underTest.addList("list_single_attr", Collections.singleton("only_one"));
         underTest.addList("list_multiple_attr", Arrays.asList("one", "two", "three"));
 
-        StringBuilder builder = new StringBuilder();
-        underTest.outputTarget("      ", builder);
-
-        Assert.assertEquals(HAPPY_PATH_OUTPUT, builder.toString());
+        Assert.assertEquals(HAPPY_PATH_OUTPUT, underTest.outputString("      "));
     }
 
     @Test
@@ -63,10 +60,7 @@ public class TargetTest {
         underTest.addString("str_attr", "string value");
         underTest.setPublicVisibility();
 
-        StringBuilder builder = new StringBuilder();
-        underTest.outputTarget(" ", builder);
-
-        Assert.assertEquals(PUBLIC_HAPPY_PATH_OUTPUT, builder.toString());
+        Assert.assertEquals(PUBLIC_HAPPY_PATH_OUTPUT, underTest.outputString(" "));
     }
 
     @Test
@@ -79,9 +73,7 @@ public class TargetTest {
         underTest.addInt("ab_int_attr", 1);
         underTest.addInt("cc_int_attr", 1);
 
-        StringBuilder builder = new StringBuilder();
-        underTest.outputTarget(" ", builder);
-        String output = builder.toString();
+        String output = underTest.outputString(" ");
 
         Assert.assertTrue(output.indexOf("b_str_attr") < output.indexOf("c_str_attr"));
         Assert.assertTrue(output.indexOf("c_str_attr") < output.indexOf("a_str_attr"));
@@ -94,9 +86,8 @@ public class TargetTest {
     public void testListValuesSorted() {
         Target underTest = new Target("group:id:1.2", "public_test_rule", "public_name");
         underTest.addList("attrs", Arrays.asList("z_value", "aaa_value", "bbb_value", "a_value", "b_value", "dddddd_value"));
-        StringBuilder builder = new StringBuilder();
-        underTest.outputTarget(" ", builder);
-        String output = builder.toString();
+
+        String output = underTest.outputString(" ");
 
         Assert.assertTrue(output.indexOf("a_value") < output.indexOf("aaa_value"));
         Assert.assertTrue(output.indexOf("aaa_value") < output.indexOf("b_value"));

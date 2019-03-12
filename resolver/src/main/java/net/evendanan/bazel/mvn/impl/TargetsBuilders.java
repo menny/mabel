@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.Target;
 import net.evendanan.bazel.mvn.api.TargetsBuilder;
@@ -141,7 +140,9 @@ public class TargetsBuilders {
 
     public static class JavaPluginFormatter implements TargetsBuilder {
 
-        private static final String API_POST_FIX = "_generate_api";
+        private static final String PROCESSOR_CLASS_POST_FIX = "___processor_class_";
+        private static final String PLUGIN_WITH_API = "___generates_api";
+        private static final String PROCESSOR_CLASS_POST_FIX_WITH_API = PLUGIN_WITH_API + PROCESSOR_CLASS_POST_FIX;
         private final List<String> processorClasses;
         private final boolean asNative;
 
@@ -164,41 +165,48 @@ public class TargetsBuilders {
         public List<Target> buildTargets(Dependency dependency) {
             List<Target> targets = new ArrayList<>();
 
-            Collection<String> deps = convertRulesToStrings(dependency.dependencies());
-            deps.add(":" + dependency.repositoryRuleName() + "_java_plugin_lib");
-            targets.add(addJavaImportRule(asNative, dependency, "_java_plugin_lib"));
+            //just as java-library
+            targets.add(addJavaImportRule(asNative, dependency, ""));
+            targets.add(addAlias(asNative, dependency));
 
+            Collection<String> deps = convertRulesToStrings(dependency.dependencies());
+            deps.add(":" + dependency.repositoryRuleName());
+            //as java_plugins
+            List<String> noApiPlugins = new ArrayList<>();
+            List<String> withApiPlugins = new ArrayList<>();
             for (int processorClassIndex = 0; processorClassIndex < processorClasses.size(); processorClassIndex++) {
                 final String processorClass = processorClasses.get(processorClassIndex);
 
-                targets.add(new Target(dependency.mavenCoordinates(), asNative ? "native.java_plugin":"java_plugin", dependency.repositoryRuleName() + "_" + processorClassIndex)
+                final String noApiTargetName = dependency.repositoryRuleName() + PROCESSOR_CLASS_POST_FIX + processorClassIndex;
+                noApiPlugins.add(":" + noApiTargetName);
+                targets.add(new Target(dependency.mavenCoordinates(), asNative ? "native.java_plugin":"java_plugin", noApiTargetName)
                         .addString("processor_class", processorClass)
                         .addInt("generates_api", 0)
                         .addList("deps", deps));
+                targets.add(addAlias(asNative, dependency, PROCESSOR_CLASS_POST_FIX + processorClassIndex));
 
-                targets.add(new Target(dependency.mavenCoordinates(), asNative ? "native.java_plugin":"java_plugin", dependency.repositoryRuleName() + API_POST_FIX + "_" + processorClassIndex)
+                final String withApiTargetName = dependency.repositoryRuleName() + PROCESSOR_CLASS_POST_FIX_WITH_API + processorClassIndex;
+                withApiPlugins.add(":" + withApiTargetName);
+                targets.add(new Target(dependency.mavenCoordinates(), asNative ? "native.java_plugin":"java_plugin", withApiTargetName)
                         .addString("processor_class", processorClass)
                         .addInt("generates_api", 1)
                         .addList("deps", deps));
+                targets.add(addAlias(asNative, dependency, PROCESSOR_CLASS_POST_FIX_WITH_API + processorClassIndex));
             }
 
-            //composite libraries
-            targets.add(new Target(dependency.mavenCoordinates(), asNative ? "native.java_library":"java_library", dependency.repositoryRuleName())
-                    //since there are no sources in this library, we put all deps as runtime_deps
-                    .addList("runtime_deps", deps)
-                    .addList("exported_plugins", IntStream.range(0, processorClasses.size())
-                            .mapToObj(index -> ":" + dependency.repositoryRuleName() + "_" + index)
-                            .collect(Collectors.toList())));
+            //collected java_plugins into a java_library.
+            //If using those, then do not add them to the `plugins` list, but rather to the `deps`.
+            targets.add(new Target(dependency.mavenCoordinates(),
+                    asNative ? "native.java_library":"java_library",
+                    dependency.repositoryRuleName() + PROCESSOR_CLASS_POST_FIX + "all")
+                    .addList("exported_plugins", noApiPlugins));
+            targets.add(addAlias(asNative, dependency, PROCESSOR_CLASS_POST_FIX + "all"));
 
-            targets.add(new Target(dependency.mavenCoordinates(), asNative ? "native.java_library":"java_library", dependency.repositoryRuleName() + API_POST_FIX)
-                    //since there are no sources in this library, we put all deps as runtime_deps
-                    .addList("runtime_deps", deps)
-                    .addList("exported_plugins", IntStream.range(0, processorClasses.size())
-                            .mapToObj(index -> ":" + dependency.repositoryRuleName() + API_POST_FIX + "_" + index)
-                            .collect(Collectors.toList())));
-
-            targets.add(addAlias(asNative, dependency));
-            targets.add(addAlias(asNative, dependency, API_POST_FIX));
+            targets.add(new Target(dependency.mavenCoordinates(),
+                    asNative ? "native.java_library":"java_library",
+                    dependency.repositoryRuleName() + PROCESSOR_CLASS_POST_FIX_WITH_API + "all")
+                    .addList("exported_plugins", withApiPlugins));
+            targets.add(addAlias(asNative, dependency, PROCESSOR_CLASS_POST_FIX_WITH_API + "all"));
 
             return targets;
         }

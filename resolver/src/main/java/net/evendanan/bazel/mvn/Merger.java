@@ -47,9 +47,9 @@ public class Merger {
 
     private Merger(final Options options) {
         final File parent = new File(options.output_target_build_files_base_path);
-        this.macrosFile = new File(parent, options.output_macro_file);
-        this.merger = new DefaultMerger();
-        this.repositoryRulesMacroWriter = new RuleWriters.HttpRepoRulesMacroWriter(
+        macrosFile = new File(parent, options.output_macro_file);
+        merger = new DefaultMerger();
+        repositoryRulesMacroWriter = new RuleWriters.HttpRepoRulesMacroWriter(
                 macrosFile,
                 "generate_workspace_rules");
         targetsMacroWriter = new RuleWriters.TransitiveRulesMacroWriter(
