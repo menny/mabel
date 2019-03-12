@@ -36,7 +36,7 @@ There are several attempts to solve this problem (such as [sync-deps](https://gi
 ### WORKSPACE file
 Add this repository to your WORKSPACE (set `bazel_mvn_deps_version` to the latest [release](https://github.com/menny/mabel/releases) or, if you are adventurous, [commit](https://github.com/menny/mabel/commits/master)):
 ```python
-mabel_version = "0.3.5"
+mabel_version = "0.5.0"
 http_archive(
     name = "mabel",
     urls = ["https://github.com/menny/mabel/archive/%s.zip" % mabel_version],
@@ -172,15 +172,19 @@ For dependencies that are detected as annotation-processors we are creating a [`
 [`processor_class`](https://docs.bazel.build/versions/master/be/java.html#java_plugin.processor_class), and then wrap all of these rules in a `java_library` rule that
 [exports](https://docs.bazel.build/versions/master/be/java.html#java_library.exported_plugins) the plugins.<br/>
 In the example above we included `com.google.auto.value:auto-value:1.6.3`, which is a Java annotation-processor, we create the following rules:
-* `//resolver:main_deps___com_google_auto_value__auto_value` - which does not generate API.
-* `//resolver:main_deps___com_google_auto_value__auto_value_generate_api` - which _does_ [generate API](https://docs.bazel.build/versions/master/be/java.html#java_plugin.generates_api).
+* `//resolver:main_deps___com_google_auto_value__auto_value` - which is a `java_library` without any annotation-processing capabilities.
+* `//resolver:main_deps___com_google_auto_value__auto_value___processor_class_0`..4 - which is a `java_plugin` with annotation-processing capabilities using the first detected processor-class. Four of those, because there are four such classes.
+* `//resolver:main_deps___com_google_auto_value__auto_value___generates_api___processor_class_0`..4 - the same as before, but [generate API](https://docs.bazel.build/versions/master/be/java.html#java_plugin.generates_api).
+* `//resolver:main_deps___com_google_auto_value__auto_value___processor_class_all` - a `java_library` that groups all the processors that do not generate API.
+* `//resolver:main_deps___com_google_auto_value__auto_value___generates_api___processor_class_all` - same as before, but generates API.
 
 Please, read the [Bazel docs](https://docs.bazel.build/versions/master/be/java.html#java_plugin.generates_api) about which variant you want.<br/>
-Also, since we are wrapping the `java_plugin` rules in a `java_library` rules, you should add them to the `deps` list of your rule, and not to the `plugins` list.
+Also, since we are wrapping the `java_plugin` rules in a `java_library` rules, you should add them to the `deps` list of your rule and not to the `plugins` list, unless
+you are directly using the `X___processor_class_Y` variant in which case you should use it in the `plugins` field.
 
 ### Kotlin
 
-__NOTE__ : I recommend not to provide kt rule-impl to the macro, and just use regular `java_import`. See [relavent issue](https://github.com/menny/mabel/issues/5).
+__NOTE__ : I recommend not to provide kt rule-impl to the macro, and just use regular `java_import`. See [relevant issue](https://github.com/menny/mabel/issues/5).
 
 For [Kotlin](https://github.com/bazelbuild/rules_kotlin), we create a `kt_jvm_import` for each artifact, and then wrap it (along with its deps) in a `kt_jvm_library`. Your rule
 depends on the `kt_jvm_library`.<br/>
@@ -197,7 +201,7 @@ main_generate_transitive_dependency_targets(kt_jvm_import = kt_jvm_import, kt_jv
 
 _Note_: If you decide _not_ to provide `kt_*` implementations, we will try to use `java_import` instead. It should be okay.
 <br/>
-**NOTE:** Although the mechanism above exists, I couldn't make it work. Either, you know how to fix this, or just use the regular `java_import` (by not supplying `kt_jvm_*`).
+**NOTE:** Although the mechanism above exists, I could not make it work. Either, you know how to fix this, or just use the regular `java_import` (by not supplying `kt_jvm_*`).
 <br/>
 Another **NOTE**: There is a problem with this, at the moment: `kt_jvm_library` in _master_ does not allow no-source-libraries. So, until the [fix](https://github.com/bazelbuild/rules_kotlin/pull/170) is merged, you can use my branch of the rules:
 
