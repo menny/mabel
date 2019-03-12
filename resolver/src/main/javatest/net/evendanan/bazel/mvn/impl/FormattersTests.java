@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import net.evendanan.bazel.mvn.api.Dependency;
+import net.evendanan.bazel.mvn.api.License;
 import net.evendanan.bazel.mvn.api.Target;
 import org.junit.Assert;
 import org.junit.Test;
@@ -548,7 +549,7 @@ public class FormattersTests {
         dependency = new Dependency(dependency.groupId(), dependency.artifactId(), dependency.version(), dependency.packaging(),
                 dependency.dependencies(), dependency.exports(), dependency.runtimeDependencies(),
                 dependency.url(), dependency.sourcesUrl(), dependency.javadocUrl(),
-                Collections.singleton(Dependency.License.notice));
+                Collections.singleton(License.notice));
 
         final String ruleText = targetsToString("    ", TargetsBuilders.NATIVE_JAVA_IMPORT.buildTargets(
                 dependency));

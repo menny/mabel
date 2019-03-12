@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.Reader;
 import net.evendanan.bazel.mvn.api.Dependency;
+import net.evendanan.bazel.mvn.api.License;
 
 public class Serialization {
 
@@ -13,8 +14,8 @@ public class Serialization {
         mGson = new GsonBuilder()
                 .registerTypeAdapter(Dependency.class, new Adapters.DependencySerializer())
                 .registerTypeAdapter(Dependency.class, new Adapters.DependencyDeserializer())
-                .registerTypeAdapter(Dependency.License.class, new Adapters.LicenseSerializer())
-                .registerTypeAdapter(Dependency.License.class, new Adapters.LicenseDeserializer())
+                .registerTypeAdapter(License.class, new Adapters.LicenseSerializer())
+                .registerTypeAdapter(License.class, new Adapters.LicenseDeserializer())
                 .create();
 
     }

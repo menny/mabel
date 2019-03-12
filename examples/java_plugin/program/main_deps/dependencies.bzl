@@ -533,7 +533,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.errorprone:javac-shaded:9-dev-r4023-3
     native.java_import(name = 'apt___com_google_errorprone__javac_shaded__9_dev_r4023_3',
         jars = ['@apt___com_google_errorprone__javac_shaded__9_dev_r4023_3//file'],
-        licenses = [],
+        licenses = ['restricted'],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -626,7 +626,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from javax.annotation:jsr250-api:1.0
     native.java_import(name = 'apt___javax_annotation__jsr250_api__1_0',
         jars = ['@apt___javax_annotation__jsr250_api__1_0//file'],
-        licenses = [],
+        licenses = ['notice'],
         deps = [],
         exports = [],
         runtime_deps = [],
@@ -656,7 +656,10 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.checkerframework:checker-compat-qual:2.5.3
     native.java_import(name = 'apt___org_checkerframework__checker_compat_qual__2_5_3',
         jars = ['@apt___org_checkerframework__checker_compat_qual__2_5_3//file'],
-        licenses = ['notice'],
+        licenses = [
+            'notice',
+            'restricted',
+        ],
         deps = [],
         exports = [],
         runtime_deps = [],

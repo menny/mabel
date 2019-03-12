@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import net.evendanan.bazel.mvn.api.Dependency;
-import org.apache.maven.model.License;
+import net.evendanan.bazel.mvn.api.License;
 
 public class RuleToDependency {
 
@@ -25,8 +25,8 @@ public class RuleToDependency {
                 URI.create(""),
                 URI.create(""),
                 rule.getLicenses().stream()
-                        .map(License::getName)
-                        .map(net.evendanan.bazel.mvn.api.Dependency.License::fromLicenseName)
+                        .map(org.apache.maven.model.License::getName)
+                        .map(License::fromLicenseName)
                         .filter(Objects::nonNull)
                         .collect(Collectors.toList()));
 

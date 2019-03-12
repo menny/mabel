@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import net.evendanan.bazel.mvn.api.Dependency;
+import net.evendanan.bazel.mvn.api.License;
 
 class Adapters {
 
@@ -62,7 +63,7 @@ class Adapters {
                         groupId, artifactId, version, jsonObject.get("packaging").getAsString(),
                         asList(context, jsonObject.getAsJsonArray("dependencies"), Dependency.class), asList(context, jsonObject.getAsJsonArray("exports"), Dependency.class), asList(context, jsonObject.getAsJsonArray("runtimeDependencies"), Dependency.class),
                         URI.create(jsonObject.get("url").getAsString()), URI.create(jsonObject.get("sourcesUrl").getAsString()), URI.create(jsonObject.get("javadocUrl").getAsString()),
-                        asList(context, jsonObject.getAsJsonArray("licenses"), Dependency.License.class));
+                        asList(context, jsonObject.getAsJsonArray("licenses"), License.class));
                 cache.put(maven, dependency);
                 return dependency;
             }
@@ -94,7 +95,7 @@ class Adapters {
                 jsonObject.addProperty("javadocUrl", dependency.javadocUrl().toASCIIString());
                 jsonObject.addProperty("javadocUrl", dependency.javadocUrl().toASCIIString());
 
-                jsonObject.add("licenses", fromList(context, dependency.licenses(), Dependency.License.class));
+                jsonObject.add("licenses", fromList(context, dependency.licenses(), License.class));
 
                 cache.put(maven, jsonObject);
 
@@ -103,17 +104,17 @@ class Adapters {
         }
     }
 
-    static class LicenseDeserializer implements JsonDeserializer<Dependency.License> {
+    static class LicenseDeserializer implements JsonDeserializer<License> {
         @Override
-        public Dependency.License deserialize(final JsonElement jsonElement, final Type type, final JsonDeserializationContext context) throws JsonParseException {
-            return Dependency.License.valueOf(Dependency.License.class, jsonElement.getAsString());
+        public License deserialize(final JsonElement jsonElement, final Type type, final JsonDeserializationContext context) throws JsonParseException {
+            return License.valueOf(License.class, jsonElement.getAsString());
         }
     }
 
-    static class LicenseSerializer implements JsonSerializer<Dependency.License> {
+    static class LicenseSerializer implements JsonSerializer<License> {
 
         @Override
-        public JsonElement serialize(final Dependency.License license, final Type type, final JsonSerializationContext jsonSerializationContext) {
+        public JsonElement serialize(final License license, final Type type, final JsonSerializationContext jsonSerializationContext) {
             return new JsonPrimitive(license.name());
         }
     }

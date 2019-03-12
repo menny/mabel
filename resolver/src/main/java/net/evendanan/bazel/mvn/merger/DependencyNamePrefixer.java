@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import net.evendanan.bazel.mvn.api.Dependency;
+import net.evendanan.bazel.mvn.api.License;
 
 public class DependencyNamePrefixer {
 
