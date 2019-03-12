@@ -93,16 +93,47 @@ public class DependencyTest {
         Assert.assertNull(License.fromLicenseName(null));
 
         Assert.assertEquals(License.notice, License.fromLicenseName("Apache 2.0"));
+        Assert.assertEquals(License.notice, License.fromLicenseName("Apache License"));
+        Assert.assertEquals(License.notice, License.fromLicenseName("Similar to Apache License but with the acknowledgment clause removed"));
+        Assert.assertEquals(License.notice, License.fromLicenseName("ASF 2.0"));
         Assert.assertEquals(License.notice, License.fromLicenseName("Apache License, Version 2.0"));
         Assert.assertEquals(License.notice, License.fromLicenseName("The Apache Software License, Version 2.0"));
         Assert.assertEquals(License.notice, License.fromLicenseName("The MIT License"));
         Assert.assertEquals(License.notice, License.fromLicenseName("MIT License"));
         Assert.assertEquals(License.notice, License.fromLicenseName("MIT"));
+        Assert.assertEquals(License.notice, License.fromLicenseName("Bouncy Castle Licence"));
         Assert.assertEquals(License.notice, License.fromLicenseName("New BSD License"));
+        Assert.assertEquals(License.notice, License.fromLicenseName("BSD 2-Clause License"));
+        Assert.assertEquals(License.notice, License.fromLicenseName("BSD License"));
+        Assert.assertEquals(License.notice, License.fromLicenseName("Facebook Platform License"));
+        Assert.assertEquals(License.notice, License.fromLicenseName("The JSON License"));
+        Assert.assertEquals(License.notice, License.fromLicenseName("Common Public License Version 1.0"));
+        Assert.assertEquals(License.notice, License.fromLicenseName("CDDL + GPLv2 with classpath exception"));
+        Assert.assertEquals(License.notice, License.fromLicenseName("CDDL/GPLv2+CE"));
+        Assert.assertEquals(License.notice, License.fromLicenseName("COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0"));
+        Assert.assertEquals(License.notice, License.fromLicenseName("Google Cloud Software License"));
+        Assert.assertEquals(License.notice, License.fromLicenseName("Indiana University Extreme! Lab Software License, version 1.1.1"));
+        Assert.assertEquals(License.notice, License.fromLicenseName("Indiana University Extreme! Lab Software License, version 1.2"));
+        Assert.assertEquals(License.notice, License.fromLicenseName("Indiana University Extreme! Lab Software License"));
+        Assert.assertEquals(License.notice, License.fromLicenseName("ICU License"));
 
         Assert.assertEquals(License.reciprocal, License.fromLicenseName("Eclipse Public License 1.0"));
+        Assert.assertEquals(License.reciprocal, License.fromLicenseName("Eclipse Public License v 1.0"));
         Assert.assertEquals(License.reciprocal, License.fromLicenseName("Eclipse Public License, Version 1.0"));
+        Assert.assertEquals(License.reciprocal, License.fromLicenseName("EPL 1"));
+        Assert.assertEquals(License.reciprocal, License.fromLicenseName("MPL 1.1"));
+        Assert.assertEquals(License.reciprocal, License.fromLicenseName("Mozilla License"));
+
+        Assert.assertEquals(License.restricted, License.fromLicenseName("GNU GPL v2"));
+        Assert.assertEquals(License.restricted, License.fromLicenseName("GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1"));
+        Assert.assertEquals(License.restricted, License.fromLicenseName("GNU Lesser Public License"));
+        Assert.assertEquals(License.restricted, License.fromLicenseName("LGPL"));
 
         Assert.assertEquals(License.unencumbered, License.fromLicenseName("CC0 1.0 Universal License"));
+        Assert.assertEquals(License.unencumbered, License.fromLicenseName("Public Domain"));
+        Assert.assertEquals(License.unencumbered, License.fromLicenseName("Android Software Development Kit License"));
+        Assert.assertEquals(License.unencumbered, License.fromLicenseName("provided without support or warranty"));
+
+        Assert.assertEquals(License.permissive, License.fromLicenseName("WTFPL"));
     }
 }
