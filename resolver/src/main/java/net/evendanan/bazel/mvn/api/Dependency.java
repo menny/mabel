@@ -6,7 +6,6 @@ import java.net.URI;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
-import javax.annotation.Nullable;
 
 public class Dependency {
 
@@ -123,69 +122,4 @@ public class Dependency {
         return mavenCoordinates().hashCode();
     }
 
-    /**
-     * Types of licenses. Taken from https://docs.bazel.build/versions/master/be/functions.html#licenses
-     */
-    public enum License {
-        /**
-         * Requires mandatory source distribution.
-         */
-        restricted,
-
-        /**
-         * Allows usage of software freely in unmodified form. Any modifications must be made freely available.
-         */
-        reciprocal,
-
-        /**
-         * Original or modified third-party software may be shipped without danger nor encumbering other sources. All of the licenses in this category do, however, have an "original Copyright notice" or "advertising clause", wherein any external distributions must include the notice or clause specified in the license.
-         */
-        notice,
-
-        /**
-         * Code that is under a license but does not require a notice.
-         */
-        permissive,
-
-        /**
-         * Public domain, free for any use.
-         */
-        unencumbered;
-
-        /**
-         * Mapping between a license and its type.
-         * Data taken from https://en.wikipedia.org/wiki/Comparison_of_free_and_open-source_software_licenses
-         */
-        @Nullable
-        public static License fromLicenseName(final String licenseName) {
-            if (Strings.isNullOrEmpty(licenseName)) return null;
-            switch (licenseName) {
-                case "Apache 2.0":
-                case "Apache 2":
-                case "Apache License, Version 2.0":
-                case "The Apache Software License, Version 2.0":
-                case "The MIT License":
-                case "MIT License":
-                case "MIT":
-                case "MIT license":
-                case "New BSD License":
-                    return notice;
-
-                case "Eclipse Public License - v 1.0":
-                case "Eclipse Public License 1.0":
-                case "Eclipse Public License, Version 1.0":
-                    return reciprocal;
-
-                case "GNU Lesser General Public License":
-                case "GNU Lesser Public License":
-                    return reciprocal;
-
-                case "CC0 1.0 Universal License":
-                    return unencumbered;
-
-                default:
-                    //System.out.println(String.format(Locale.ROOT, "License with name '%s' is unrecognized.", licenseName));
-                    return null;
-            }
-        }}
 }

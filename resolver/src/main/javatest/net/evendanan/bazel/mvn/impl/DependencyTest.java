@@ -3,6 +3,7 @@ package net.evendanan.bazel.mvn.impl;
 import java.net.URI;
 import java.util.Collections;
 import net.evendanan.bazel.mvn.api.Dependency;
+import net.evendanan.bazel.mvn.api.License;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -29,7 +30,7 @@ public class DependencyTest {
                 URI.create("https://maven.com/m2/com/example/lib.jar"),
                 URI.create("https://maven.com/m2/com/example/lib-sources.jar"),
                 URI.create("https://maven.com/m2/com/example/lib-javadoc.jar"),
-                Collections.singleton(Dependency.License.notice));
+                Collections.singleton(License.notice));
 
         Assert.assertEquals("net.group", dependency.groupId());
         Assert.assertEquals("some_lib", dependency.artifactId());
@@ -50,7 +51,7 @@ public class DependencyTest {
         Assert.assertEquals("https://maven.com/m2/com/example/lib-javadoc.jar", dependency.javadocUrl().toASCIIString());
 
         Assert.assertEquals(1, dependency.licenses().size());
-        Assert.assertEquals(Dependency.License.notice, dependency.licenses().iterator().next());
+        Assert.assertEquals(License.notice, dependency.licenses().iterator().next());
     }
 
     @Test
@@ -88,20 +89,20 @@ public class DependencyTest {
 
     @Test
     public void testLicenseParsing() {
-        Assert.assertNull(Dependency.License.fromLicenseName(""));
-        Assert.assertNull(Dependency.License.fromLicenseName(null));
+        Assert.assertNull(License.fromLicenseName(""));
+        Assert.assertNull(License.fromLicenseName(null));
 
-        Assert.assertEquals(Dependency.License.notice, Dependency.License.fromLicenseName("Apache 2.0"));
-        Assert.assertEquals(Dependency.License.notice, Dependency.License.fromLicenseName("Apache License, Version 2.0"));
-        Assert.assertEquals(Dependency.License.notice, Dependency.License.fromLicenseName("The Apache Software License, Version 2.0"));
-        Assert.assertEquals(Dependency.License.notice, Dependency.License.fromLicenseName("The MIT License"));
-        Assert.assertEquals(Dependency.License.notice, Dependency.License.fromLicenseName("MIT License"));
-        Assert.assertEquals(Dependency.License.notice, Dependency.License.fromLicenseName("MIT"));
-        Assert.assertEquals(Dependency.License.notice, Dependency.License.fromLicenseName("New BSD License"));
+        Assert.assertEquals(License.notice, License.fromLicenseName("Apache 2.0"));
+        Assert.assertEquals(License.notice, License.fromLicenseName("Apache License, Version 2.0"));
+        Assert.assertEquals(License.notice, License.fromLicenseName("The Apache Software License, Version 2.0"));
+        Assert.assertEquals(License.notice, License.fromLicenseName("The MIT License"));
+        Assert.assertEquals(License.notice, License.fromLicenseName("MIT License"));
+        Assert.assertEquals(License.notice, License.fromLicenseName("MIT"));
+        Assert.assertEquals(License.notice, License.fromLicenseName("New BSD License"));
 
-        Assert.assertEquals(Dependency.License.reciprocal, Dependency.License.fromLicenseName("Eclipse Public License 1.0"));
-        Assert.assertEquals(Dependency.License.reciprocal, Dependency.License.fromLicenseName("Eclipse Public License, Version 1.0"));
+        Assert.assertEquals(License.reciprocal, License.fromLicenseName("Eclipse Public License 1.0"));
+        Assert.assertEquals(License.reciprocal, License.fromLicenseName("Eclipse Public License, Version 1.0"));
 
-        Assert.assertEquals(Dependency.License.unencumbered, Dependency.License.fromLicenseName("CC0 1.0 Universal License"));
+        Assert.assertEquals(License.unencumbered, License.fromLicenseName("CC0 1.0 Universal License"));
     }
 }

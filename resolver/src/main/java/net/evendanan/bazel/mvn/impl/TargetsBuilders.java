@@ -12,6 +12,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 import net.evendanan.bazel.mvn.api.Dependency;
+import net.evendanan.bazel.mvn.api.License;
 import net.evendanan.bazel.mvn.api.Target;
 import net.evendanan.bazel.mvn.api.TargetsBuilder;
 
@@ -59,7 +60,7 @@ public class TargetsBuilders {
                 .addList("jars", "pom".equalsIgnoreCase(dependency.packaging()) ?
                         Collections.emptyList()
                         :Collections.singletonList(String.format(Locale.US, "@%s//file", dependency.repositoryRuleName())))
-                .addList("licenses", dependency.licenses().stream().map(Dependency.License::toString).collect(Collectors.toList()))
+                .addList("licenses", dependency.licenses().stream().map(License::toString).collect(Collectors.toList()))
                 .addList("deps", convertRulesToStrings(dependency.dependencies()))
                 .addList("exports", convertRulesToStrings(dependency.exports()))
                 .addList("runtime_deps", convertRulesToStrings(dependency.runtimeDependencies()));
