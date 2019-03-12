@@ -166,7 +166,7 @@ public class FormattersTests {
             "        visibility = ['//visibility:public'],\n" +
             "    )\n" +
             "\n";
-    private static final String JAVA_PLUGIN_TEXT = " java_import(name = 'aar__lib___java_plugin_lib',\n" +
+    private static final String JAVA_PLUGIN_TEXT = " java_import(name = 'aar__lib__',\n" +
             "     jars = ['@aar__lib__//file'],\n" +
             "     licenses = [],\n" +
             "     deps = [\n" +
@@ -183,81 +183,96 @@ public class FormattersTests {
             "     ],\n" +
             " )\n" +
             "\n" +
-            " java_plugin(name = 'aar__lib___0',\n" +
-            "     processor_class = 'com.example.Processor',\n" +
-            "     generates_api = 0,\n" +
-            "     deps = [\n" +
-            "         ':aar__lib___java_plugin_lib',\n" +
-            "         ':safe_mvn__dep1',\n" +
-            "         ':safe_mvn__dep2',\n" +
-            "     ],\n" +
-            " )\n" +
-            "\n" +
-            " java_plugin(name = 'aar__lib___generate_api_0',\n" +
-            "     processor_class = 'com.example.Processor',\n" +
-            "     generates_api = 1,\n" +
-            "     deps = [\n" +
-            "         ':aar__lib___java_plugin_lib',\n" +
-            "         ':safe_mvn__dep1',\n" +
-            "         ':safe_mvn__dep2',\n" +
-            "     ],\n" +
-            " )\n" +
-            "\n" +
-            " java_plugin(name = 'aar__lib___1',\n" +
-            "     processor_class = 'com.example.Processor2',\n" +
-            "     generates_api = 0,\n" +
-            "     deps = [\n" +
-            "         ':aar__lib___java_plugin_lib',\n" +
-            "         ':safe_mvn__dep1',\n" +
-            "         ':safe_mvn__dep2',\n" +
-            "     ],\n" +
-            " )\n" +
-            "\n" +
-            " java_plugin(name = 'aar__lib___generate_api_1',\n" +
-            "     processor_class = 'com.example.Processor2',\n" +
-            "     generates_api = 1,\n" +
-            "     deps = [\n" +
-            "         ':aar__lib___java_plugin_lib',\n" +
-            "         ':safe_mvn__dep1',\n" +
-            "         ':safe_mvn__dep2',\n" +
-            "     ],\n" +
-            " )\n" +
-            "\n" +
-            " java_library(name = 'aar__lib__',\n" +
-            "     runtime_deps = [\n" +
-            "         ':aar__lib___java_plugin_lib',\n" +
-            "         ':safe_mvn__dep1',\n" +
-            "         ':safe_mvn__dep2',\n" +
-            "     ],\n" +
-            "     exported_plugins = [\n" +
-            "         ':aar__lib___0',\n" +
-            "         ':aar__lib___1',\n" +
-            "     ],\n" +
-            " )\n" +
-            "\n" +
-            " java_library(name = 'aar__lib___generate_api',\n" +
-            "     runtime_deps = [\n" +
-            "         ':aar__lib___java_plugin_lib',\n" +
-            "         ':safe_mvn__dep1',\n" +
-            "         ':safe_mvn__dep2',\n" +
-            "     ],\n" +
-            "     exported_plugins = [\n" +
-            "         ':aar__lib___generate_api_0',\n" +
-            "         ':aar__lib___generate_api_1',\n" +
-            "     ],\n" +
-            " )\n" +
-            "\n" +
             " alias(name = 'aar__lib',\n" +
             "     actual = ':aar__lib__',\n" +
             "     visibility = ['//visibility:public'],\n" +
             " )\n" +
             "\n" +
-            " alias(name = 'aar__lib_generate_api',\n" +
-            "     actual = ':aar__lib___generate_api',\n" +
+            " java_plugin(name = 'aar__lib_____processor_class_0',\n" +
+            "     processor_class = 'com.example.Processor',\n" +
+            "     generates_api = 0,\n" +
+            "     deps = [\n" +
+            "         ':aar__lib__',\n" +
+            "         ':safe_mvn__dep1',\n" +
+            "         ':safe_mvn__dep2',\n" +
+            "     ],\n" +
+            " )\n" +
+            "\n" +
+            " alias(name = 'aar__lib___processor_class_0',\n" +
+            "     actual = ':aar__lib_____processor_class_0',\n" +
+            "     visibility = ['//visibility:public'],\n" +
+            " )\n" +
+            "\n" +
+            " java_plugin(name = 'aar__lib_____generates_api___processor_class_0',\n" +
+            "     processor_class = 'com.example.Processor',\n" +
+            "     generates_api = 1,\n" +
+            "     deps = [\n" +
+            "         ':aar__lib__',\n" +
+            "         ':safe_mvn__dep1',\n" +
+            "         ':safe_mvn__dep2',\n" +
+            "     ],\n" +
+            " )\n" +
+            "\n" +
+            " alias(name = 'aar__lib___generates_api___processor_class_0',\n" +
+            "     actual = ':aar__lib_____generates_api___processor_class_0',\n" +
+            "     visibility = ['//visibility:public'],\n" +
+            " )\n" +
+            "\n" +
+            " java_plugin(name = 'aar__lib_____processor_class_1',\n" +
+            "     processor_class = 'com.example.Processor2',\n" +
+            "     generates_api = 0,\n" +
+            "     deps = [\n" +
+            "         ':aar__lib__',\n" +
+            "         ':safe_mvn__dep1',\n" +
+            "         ':safe_mvn__dep2',\n" +
+            "     ],\n" +
+            " )\n" +
+            "\n" +
+            " alias(name = 'aar__lib___processor_class_1',\n" +
+            "     actual = ':aar__lib_____processor_class_1',\n" +
+            "     visibility = ['//visibility:public'],\n" +
+            " )\n" +
+            "\n" +
+            " java_plugin(name = 'aar__lib_____generates_api___processor_class_1',\n" +
+            "     processor_class = 'com.example.Processor2',\n" +
+            "     generates_api = 1,\n" +
+            "     deps = [\n" +
+            "         ':aar__lib__',\n" +
+            "         ':safe_mvn__dep1',\n" +
+            "         ':safe_mvn__dep2',\n" +
+            "     ],\n" +
+            " )\n" +
+            "\n" +
+            " alias(name = 'aar__lib___generates_api___processor_class_1',\n" +
+            "     actual = ':aar__lib_____generates_api___processor_class_1',\n" +
+            "     visibility = ['//visibility:public'],\n" +
+            " )\n" +
+            "\n" +
+            " java_library(name = 'aar__lib_____processor_class_all',\n" +
+            "     exported_plugins = [\n" +
+            "         ':aar__lib_____processor_class_0',\n" +
+            "         ':aar__lib_____processor_class_1',\n" +
+            "     ],\n" +
+            " )\n" +
+            "\n" +
+            " alias(name = 'aar__lib___processor_class_all',\n" +
+            "     actual = ':aar__lib_____processor_class_all',\n" +
+            "     visibility = ['//visibility:public'],\n" +
+            " )\n" +
+            "\n" +
+            " java_library(name = 'aar__lib_____generates_api___processor_class_all',\n" +
+            "     exported_plugins = [\n" +
+            "         ':aar__lib_____generates_api___processor_class_0',\n" +
+            "         ':aar__lib_____generates_api___processor_class_1',\n" +
+            "     ],\n" +
+            " )\n" +
+            "\n" +
+            " alias(name = 'aar__lib___generates_api___processor_class_all',\n" +
+            "     actual = ':aar__lib_____generates_api___processor_class_all',\n" +
             "     visibility = ['//visibility:public'],\n" +
             " )\n" +
             "\n";
-    private static final String NATIVE_JAVA_PLUGIN_TEXT = "    native.java_import(name = 'aar__lib___java_plugin_lib',\n" +
+    private static final String NATIVE_JAVA_PLUGIN_TEXT = "    native.java_import(name = 'aar__lib__',\n" +
             "        jars = ['@aar__lib__//file'],\n" +
             "        licenses = [],\n" +
             "        deps = [\n" +
@@ -274,77 +289,92 @@ public class FormattersTests {
             "        ],\n" +
             "    )\n" +
             "\n" +
-            "    native.java_plugin(name = 'aar__lib___0',\n" +
-            "        processor_class = 'com.example.Processor',\n" +
-            "        generates_api = 0,\n" +
-            "        deps = [\n" +
-            "            ':aar__lib___java_plugin_lib',\n" +
-            "            ':safe_mvn__dep1',\n" +
-            "            ':safe_mvn__dep2',\n" +
-            "        ],\n" +
-            "    )\n" +
-            "\n" +
-            "    native.java_plugin(name = 'aar__lib___generate_api_0',\n" +
-            "        processor_class = 'com.example.Processor',\n" +
-            "        generates_api = 1,\n" +
-            "        deps = [\n" +
-            "            ':aar__lib___java_plugin_lib',\n" +
-            "            ':safe_mvn__dep1',\n" +
-            "            ':safe_mvn__dep2',\n" +
-            "        ],\n" +
-            "    )\n" +
-            "\n" +
-            "    native.java_plugin(name = 'aar__lib___1',\n" +
-            "        processor_class = 'com.example.Processor2',\n" +
-            "        generates_api = 0,\n" +
-            "        deps = [\n" +
-            "            ':aar__lib___java_plugin_lib',\n" +
-            "            ':safe_mvn__dep1',\n" +
-            "            ':safe_mvn__dep2',\n" +
-            "        ],\n" +
-            "    )\n" +
-            "\n" +
-            "    native.java_plugin(name = 'aar__lib___generate_api_1',\n" +
-            "        processor_class = 'com.example.Processor2',\n" +
-            "        generates_api = 1,\n" +
-            "        deps = [\n" +
-            "            ':aar__lib___java_plugin_lib',\n" +
-            "            ':safe_mvn__dep1',\n" +
-            "            ':safe_mvn__dep2',\n" +
-            "        ],\n" +
-            "    )\n" +
-            "\n" +
-            "    native.java_library(name = 'aar__lib__',\n" +
-            "        runtime_deps = [\n" +
-            "            ':aar__lib___java_plugin_lib',\n" +
-            "            ':safe_mvn__dep1',\n" +
-            "            ':safe_mvn__dep2',\n" +
-            "        ],\n" +
-            "        exported_plugins = [\n" +
-            "            ':aar__lib___0',\n" +
-            "            ':aar__lib___1',\n" +
-            "        ],\n" +
-            "    )\n" +
-            "\n" +
-            "    native.java_library(name = 'aar__lib___generate_api',\n" +
-            "        runtime_deps = [\n" +
-            "            ':aar__lib___java_plugin_lib',\n" +
-            "            ':safe_mvn__dep1',\n" +
-            "            ':safe_mvn__dep2',\n" +
-            "        ],\n" +
-            "        exported_plugins = [\n" +
-            "            ':aar__lib___generate_api_0',\n" +
-            "            ':aar__lib___generate_api_1',\n" +
-            "        ],\n" +
-            "    )\n" +
-            "\n" +
             "    native.alias(name = 'aar__lib',\n" +
             "        actual = ':aar__lib__',\n" +
             "        visibility = ['//visibility:public'],\n" +
             "    )\n" +
             "\n" +
-            "    native.alias(name = 'aar__lib_generate_api',\n" +
-            "        actual = ':aar__lib___generate_api',\n" +
+            "    native.java_plugin(name = 'aar__lib_____processor_class_0',\n" +
+            "        processor_class = 'com.example.Processor',\n" +
+            "        generates_api = 0,\n" +
+            "        deps = [\n" +
+            "            ':aar__lib__',\n" +
+            "            ':safe_mvn__dep1',\n" +
+            "            ':safe_mvn__dep2',\n" +
+            "        ],\n" +
+            "    )\n" +
+            "\n" +
+            "    native.alias(name = 'aar__lib___processor_class_0',\n" +
+            "        actual = ':aar__lib_____processor_class_0',\n" +
+            "        visibility = ['//visibility:public'],\n" +
+            "    )\n" +
+            "\n" +
+            "    native.java_plugin(name = 'aar__lib_____generates_api___processor_class_0',\n" +
+            "        processor_class = 'com.example.Processor',\n" +
+            "        generates_api = 1,\n" +
+            "        deps = [\n" +
+            "            ':aar__lib__',\n" +
+            "            ':safe_mvn__dep1',\n" +
+            "            ':safe_mvn__dep2',\n" +
+            "        ],\n" +
+            "    )\n" +
+            "\n" +
+            "    native.alias(name = 'aar__lib___generates_api___processor_class_0',\n" +
+            "        actual = ':aar__lib_____generates_api___processor_class_0',\n" +
+            "        visibility = ['//visibility:public'],\n" +
+            "    )\n" +
+            "\n" +
+            "    native.java_plugin(name = 'aar__lib_____processor_class_1',\n" +
+            "        processor_class = 'com.example.Processor2',\n" +
+            "        generates_api = 0,\n" +
+            "        deps = [\n" +
+            "            ':aar__lib__',\n" +
+            "            ':safe_mvn__dep1',\n" +
+            "            ':safe_mvn__dep2',\n" +
+            "        ],\n" +
+            "    )\n" +
+            "\n" +
+            "    native.alias(name = 'aar__lib___processor_class_1',\n" +
+            "        actual = ':aar__lib_____processor_class_1',\n" +
+            "        visibility = ['//visibility:public'],\n" +
+            "    )\n" +
+            "\n" +
+            "    native.java_plugin(name = 'aar__lib_____generates_api___processor_class_1',\n" +
+            "        processor_class = 'com.example.Processor2',\n" +
+            "        generates_api = 1,\n" +
+            "        deps = [\n" +
+            "            ':aar__lib__',\n" +
+            "            ':safe_mvn__dep1',\n" +
+            "            ':safe_mvn__dep2',\n" +
+            "        ],\n" +
+            "    )\n" +
+            "\n" +
+            "    native.alias(name = 'aar__lib___generates_api___processor_class_1',\n" +
+            "        actual = ':aar__lib_____generates_api___processor_class_1',\n" +
+            "        visibility = ['//visibility:public'],\n" +
+            "    )\n" +
+            "\n" +
+            "    native.java_library(name = 'aar__lib_____processor_class_all',\n" +
+            "        exported_plugins = [\n" +
+            "            ':aar__lib_____processor_class_0',\n" +
+            "            ':aar__lib_____processor_class_1',\n" +
+            "        ],\n" +
+            "    )\n" +
+            "\n" +
+            "    native.alias(name = 'aar__lib___processor_class_all',\n" +
+            "        actual = ':aar__lib_____processor_class_all',\n" +
+            "        visibility = ['//visibility:public'],\n" +
+            "    )\n" +
+            "\n" +
+            "    native.java_library(name = 'aar__lib_____generates_api___processor_class_all',\n" +
+            "        exported_plugins = [\n" +
+            "            ':aar__lib_____generates_api___processor_class_0',\n" +
+            "            ':aar__lib_____generates_api___processor_class_1',\n" +
+            "        ],\n" +
+            "    )\n" +
+            "\n" +
+            "    native.alias(name = 'aar__lib___generates_api___processor_class_all',\n" +
+            "        actual = ':aar__lib_____generates_api___processor_class_all',\n" +
             "        visibility = ['//visibility:public'],\n" +
             "    )\n" +
             "\n";
@@ -393,10 +423,9 @@ public class FormattersTests {
 
     private static String targetsToString(String indent, List<Target> targets) {
         StringBuilder builder = new StringBuilder();
-        targets.forEach(target -> {
-            target.outputTarget(indent, builder);
-            builder.append(System.lineSeparator());
-        });
+        targets.forEach(target -> builder
+                .append(target.outputString(indent))
+                .append(System.lineSeparator()));
 
         return builder.toString();
     }

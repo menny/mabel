@@ -64,7 +64,7 @@ public class Target {
         return this;
     }
 
-    public void outputTarget(String indent, StringBuilder builder) {
+    private void outputTarget(String indent, StringBuilder builder) {
         builder.append(indent).append(ruleName).append("(name = '").append(targetName).append("',");
 
         attributes.forEach((key, value) -> {
