@@ -6,6 +6,7 @@ import com.beust.jcommander.ParameterException;
 import com.beust.jcommander.Parameters;
 import com.beust.jcommander.converters.IParameterSplitter;
 import com.google.common.base.Charsets;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,6 +20,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
+import java.util.zip.ZipInputStream;
 import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.GraphMerger;
 import net.evendanan.bazel.mvn.api.RuleWriter;
@@ -167,8 +169,11 @@ public class Merger {
         final List<Dependency> dependencies = options.artifacts.stream()
                 .map(inputFile -> {
                     System.out.print('.');
-                    try (final InputStreamReader fileReader = new InputStreamReader(new FileInputStream(inputFile), Charsets.UTF_8)) {
-                        return serialization.deserialize(fileReader);
+                    try (final ZipInputStream zipper = new ZipInputStream(new FileInputStream(inputFile), Charsets.UTF_8)) {
+                        zipper.getNextEntry();
+                        try (final BufferedReader fileReader = new BufferedReader(new InputStreamReader(zipper))) {
+                            return serialization.deserialize(fileReader);
+                        }
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -292,7 +297,13 @@ public class Merger {
                 names = {"--fetch_srcjar"},
                 description = "Will also try to locate srcjar for the dependency.",
                 arity = 1
-        ) boolean fetch_srcjar = true;
+        ) boolean fetch_srcjar = false;
+
+        @Parameter(
+                names = {"--calculate_sha"},
+                description = "Will also calculate SHA256 for the dependency.",
+                arity = 1
+        ) boolean calculate_sha = true;
 
         @Parameter(
                 names = {"--debug_logs"},

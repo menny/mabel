@@ -155,6 +155,10 @@ public class Rule implements Comparable<Rule> {
         return calculateMavenCoordinates(groupId(), artifactId(), version());
     }
 
+    public String mavenShortCoordinates() {
+        return calculateMavenCoordinates(groupId(), artifactId(), "");
+    }
+
     public Artifact getArtifact() {
         return artifact;
     }

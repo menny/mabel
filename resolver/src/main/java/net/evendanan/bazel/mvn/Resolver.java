@@ -15,6 +15,8 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.GraphResolver;
 import net.evendanan.bazel.mvn.serialization.Serialization;
@@ -59,16 +61,17 @@ public class Resolver {
     private void writeResults(Options options, Dependency resolvedDependency) throws Exception {
         Serialization serialization = new Serialization();
 
-        String serialized = serialization.serialize(resolvedDependency);
-
         final File outputFile = new File(options.output_file);
         final File parentFolder = outputFile.getParentFile();
         if (!parentFolder.isDirectory() && !parentFolder.mkdirs()) {
             throw new IOException("Failed to create folder for json file: " + parentFolder.getAbsolutePath());
         }
 
-        try (final OutputStreamWriter fileWriter = new OutputStreamWriter(new FileOutputStream(outputFile, false), Charsets.UTF_8)) {
-            fileWriter.append(serialized);
+        try (final ZipOutputStream zipper = new ZipOutputStream(new FileOutputStream(outputFile, false), Charsets.UTF_8)) {
+            zipper.putNextEntry(new ZipEntry(outputFile.getName()));
+            try (final OutputStreamWriter fileWriter = new OutputStreamWriter(zipper)) {
+                serialization.serialize(resolvedDependency, fileWriter);
+            }
         }
     }
 
