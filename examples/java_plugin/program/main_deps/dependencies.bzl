@@ -160,6 +160,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.auto.value:auto-value-annotations:1.6.3
     native.java_import(name = 'apt___com_google_auto_value__auto_value_annotations__1_6_3',
         jars = ['@apt___com_google_auto_value__auto_value_annotations__1_6_3//file'],
+        tags = ['maven_coordinates=com.google.auto.value:auto-value-annotations:1.6.3'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -175,6 +176,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.auto.value:auto-value:1.6.3
     native.java_import(name = 'apt___com_google_auto_value__auto_value__1_6_3',
         jars = ['@apt___com_google_auto_value__auto_value__1_6_3//file'],
+        tags = ['maven_coordinates=com.google.auto.value:auto-value:1.6.3'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -354,6 +356,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.code.findbugs:jsr305:1.3.9
     native.java_import(name = 'apt___com_google_code_findbugs__jsr305__1_3_9',
         jars = ['@apt___com_google_code_findbugs__jsr305__1_3_9//file'],
+        tags = ['maven_coordinates=com.google.code.findbugs:jsr305:1.3.9'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -369,6 +372,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.dagger:dagger-compiler:2.19
     native.java_import(name = 'apt___com_google_dagger__dagger_compiler__2_19',
         jars = ['@apt___com_google_dagger__dagger_compiler__2_19//file'],
+        tags = ['maven_coordinates=com.google.dagger:dagger-compiler:2.19'],
         licenses = ['notice'],
         deps = [
             ':apt___com_google_dagger__dagger',
@@ -470,6 +474,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.dagger:dagger-producers:2.19
     native.java_import(name = 'apt___com_google_dagger__dagger_producers__2_19',
         jars = ['@apt___com_google_dagger__dagger_producers__2_19//file'],
+        tags = ['maven_coordinates=com.google.dagger:dagger-producers:2.19'],
         licenses = ['notice'],
         deps = [
             ':apt___com_google_dagger__dagger',
@@ -495,6 +500,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.dagger:dagger-spi:2.19
     native.java_import(name = 'apt___com_google_dagger__dagger_spi__2_19',
         jars = ['@apt___com_google_dagger__dagger_spi__2_19//file'],
+        tags = ['maven_coordinates=com.google.dagger:dagger-spi:2.19'],
         licenses = ['notice'],
         deps = [
             ':apt___com_google_dagger__dagger',
@@ -520,6 +526,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.dagger:dagger:2.19
     native.java_import(name = 'apt___com_google_dagger__dagger__2_19',
         jars = ['@apt___com_google_dagger__dagger__2_19//file'],
+        tags = ['maven_coordinates=com.google.dagger:dagger:2.19'],
         licenses = ['notice'],
         deps = [':apt___javax_inject__javax_inject'],
         exports = [':apt___javax_inject__javax_inject'],
@@ -535,6 +542,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.errorprone:error_prone_annotations:2.1.3
     native.java_import(name = 'apt___com_google_errorprone__error_prone_annotations__2_1_3',
         jars = ['@apt___com_google_errorprone__error_prone_annotations__2_1_3//file'],
+        tags = ['maven_coordinates=com.google.errorprone:error_prone_annotations:2.1.3'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -550,6 +558,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.errorprone:javac-shaded:9-dev-r4023-3
     native.java_import(name = 'apt___com_google_errorprone__javac_shaded__9_dev_r4023_3',
         jars = ['@apt___com_google_errorprone__javac_shaded__9_dev_r4023_3//file'],
+        tags = ['maven_coordinates=com.google.errorprone:javac-shaded:9-dev-r4023-3'],
         licenses = ['restricted'],
         deps = [],
         exports = [],
@@ -565,6 +574,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.googlejavaformat:google-java-format:1.5
     native.java_import(name = 'apt___com_google_googlejavaformat__google_java_format__1_5',
         jars = ['@apt___com_google_googlejavaformat__google_java_format__1_5//file'],
+        tags = ['maven_coordinates=com.google.googlejavaformat:google-java-format:1.5'],
         licenses = ['notice'],
         deps = [
             ':apt___com_google_errorprone__javac_shaded',
@@ -586,6 +596,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.guava:guava:25.0-jre
     native.java_import(name = 'apt___com_google_guava__guava__25_0_jre',
         jars = ['@apt___com_google_guava__guava__25_0_jre//file'],
+        tags = ['maven_coordinates=com.google.guava:guava:25.0-jre'],
         licenses = ['notice'],
         deps = [
             ':apt___com_google_code_findbugs__jsr305',
@@ -613,6 +624,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.j2objc:j2objc-annotations:1.1
     native.java_import(name = 'apt___com_google_j2objc__j2objc_annotations__1_1',
         jars = ['@apt___com_google_j2objc__j2objc_annotations__1_1//file'],
+        tags = ['maven_coordinates=com.google.j2objc:j2objc-annotations:1.1'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -628,6 +640,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.squareup:javapoet:1.11.1
     native.java_import(name = 'apt___com_squareup__javapoet__1_11_1',
         jars = ['@apt___com_squareup__javapoet__1_11_1//file'],
+        tags = ['maven_coordinates=com.squareup:javapoet:1.11.1'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -643,6 +656,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from javax.annotation:jsr250-api:1.0
     native.java_import(name = 'apt___javax_annotation__jsr250_api__1_0',
         jars = ['@apt___javax_annotation__jsr250_api__1_0//file'],
+        tags = ['maven_coordinates=javax.annotation:jsr250-api:1.0'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -658,6 +672,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from javax.inject:javax.inject:1
     native.java_import(name = 'apt___javax_inject__javax_inject__1',
         jars = ['@apt___javax_inject__javax_inject__1//file'],
+        tags = ['maven_coordinates=javax.inject:javax.inject:1'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -673,6 +688,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.checkerframework:checker-compat-qual:2.5.3
     native.java_import(name = 'apt___org_checkerframework__checker_compat_qual__2_5_3',
         jars = ['@apt___org_checkerframework__checker_compat_qual__2_5_3//file'],
+        tags = ['maven_coordinates=org.checkerframework:checker-compat-qual:2.5.3'],
         licenses = [
             'notice',
             'restricted',
@@ -691,6 +707,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.codehaus.mojo:animal-sniffer-annotations:1.14
     native.java_import(name = 'apt___org_codehaus_mojo__animal_sniffer_annotations__1_14',
         jars = ['@apt___org_codehaus_mojo__animal_sniffer_annotations__1_14//file'],
+        tags = ['maven_coordinates=org.codehaus.mojo:animal-sniffer-annotations:1.14'],
         licenses = ['notice'],
         deps = [],
         exports = [],

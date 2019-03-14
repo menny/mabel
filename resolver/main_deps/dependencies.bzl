@@ -335,6 +335,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.beust:jcommander:1.72
     native.java_import(name = 'com_beust__jcommander__1_72',
         jars = ['@com_beust__jcommander__1_72//file'],
+        tags = ['maven_coordinates=com.beust:jcommander:1.72'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -350,6 +351,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.code.findbugs:jsr305:3.0.2
     native.java_import(name = 'com_google_code_findbugs__jsr305__3_0_2',
         jars = ['@com_google_code_findbugs__jsr305__3_0_2//file'],
+        tags = ['maven_coordinates=com.google.code.findbugs:jsr305:3.0.2'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -365,6 +367,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.code.gson:gson:2.8.5
     native.java_import(name = 'com_google_code_gson__gson__2_8_5',
         jars = ['@com_google_code_gson__gson__2_8_5//file'],
+        tags = ['maven_coordinates=com.google.code.gson:gson:2.8.5'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -380,6 +383,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.errorprone:error_prone_annotations:2.2.0
     native.java_import(name = 'com_google_errorprone__error_prone_annotations__2_2_0',
         jars = ['@com_google_errorprone__error_prone_annotations__2_2_0//file'],
+        tags = ['maven_coordinates=com.google.errorprone:error_prone_annotations:2.2.0'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -395,6 +399,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.guava:failureaccess:1.0.1
     native.java_import(name = 'com_google_guava__failureaccess__1_0_1',
         jars = ['@com_google_guava__failureaccess__1_0_1//file'],
+        tags = ['maven_coordinates=com.google.guava:failureaccess:1.0.1'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -410,6 +415,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.guava:guava:27.0.1-jre
     native.java_import(name = 'com_google_guava__guava__27_0_1_jre',
         jars = ['@com_google_guava__guava__27_0_1_jre//file'],
+        tags = ['maven_coordinates=com.google.guava:guava:27.0.1-jre'],
         licenses = ['notice'],
         deps = [
             ':com_google_code_findbugs__jsr305',
@@ -441,6 +447,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
     native.java_import(name = 'com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava',
         jars = ['@com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava//file'],
+        tags = ['maven_coordinates=com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -456,6 +463,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.j2objc:j2objc-annotations:1.1
     native.java_import(name = 'com_google_j2objc__j2objc_annotations__1_1',
         jars = ['@com_google_j2objc__j2objc_annotations__1_1//file'],
+        tags = ['maven_coordinates=com.google.j2objc:j2objc-annotations:1.1'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -471,6 +479,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from commons-codec:commons-codec:1.9
     native.java_import(name = 'commons_codec__commons_codec__1_9',
         jars = ['@commons_codec__commons_codec__1_9//file'],
+        tags = ['maven_coordinates=commons-codec:commons-codec:1.9'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -486,6 +495,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from commons-logging:commons-logging:1.2
     native.java_import(name = 'commons_logging__commons_logging__1_2',
         jars = ['@commons_logging__commons_logging__1_2//file'],
+        tags = ['maven_coordinates=commons-logging:commons-logging:1.2'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -501,6 +511,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from junit:junit:4.12
     native.java_import(name = 'junit__junit__4_12',
         jars = ['@junit__junit__4_12//file'],
+        tags = ['maven_coordinates=junit:junit:4.12'],
         licenses = ['reciprocal'],
         deps = [':org_hamcrest__hamcrest_core'],
         exports = [':org_hamcrest__hamcrest_core'],
@@ -516,6 +527,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from net.bytebuddy:byte-buddy-agent:1.9.3
     native.java_import(name = 'net_bytebuddy__byte_buddy_agent__1_9_3',
         jars = ['@net_bytebuddy__byte_buddy_agent__1_9_3//file'],
+        tags = ['maven_coordinates=net.bytebuddy:byte-buddy-agent:1.9.3'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -531,6 +543,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from net.bytebuddy:byte-buddy:1.9.3
     native.java_import(name = 'net_bytebuddy__byte_buddy__1_9_3',
         jars = ['@net_bytebuddy__byte_buddy__1_9_3//file'],
+        tags = ['maven_coordinates=net.bytebuddy:byte-buddy:1.9.3'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -546,6 +559,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.apache.commons:commons-lang3:3.8.1
     native.java_import(name = 'org_apache_commons__commons_lang3__3_8_1',
         jars = ['@org_apache_commons__commons_lang3__3_8_1//file'],
+        tags = ['maven_coordinates=org.apache.commons:commons-lang3:3.8.1'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -561,6 +575,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.apache.httpcomponents:httpclient:4.5.3
     native.java_import(name = 'org_apache_httpcomponents__httpclient__4_5_3',
         jars = ['@org_apache_httpcomponents__httpclient__4_5_3//file'],
+        tags = ['maven_coordinates=org.apache.httpcomponents:httpclient:4.5.3'],
         licenses = ['notice'],
         deps = [
             ':commons_codec__commons_codec',
@@ -584,6 +599,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.apache.httpcomponents:httpcore:4.4.6
     native.java_import(name = 'org_apache_httpcomponents__httpcore__4_4_6',
         jars = ['@org_apache_httpcomponents__httpcore__4_4_6//file'],
+        tags = ['maven_coordinates=org.apache.httpcomponents:httpcore:4.4.6'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -599,6 +615,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.apache.maven.wagon:wagon-provider-api:1.0
     native.java_import(name = 'org_apache_maven_wagon__wagon_provider_api__1_0',
         jars = ['@org_apache_maven_wagon__wagon_provider_api__1_0//file'],
+        tags = ['maven_coordinates=org.apache.maven.wagon:wagon-provider-api:1.0'],
         licenses = ['notice'],
         deps = [':org_codehaus_plexus__plexus_utils'],
         exports = [':org_codehaus_plexus__plexus_utils'],
@@ -614,6 +631,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.apache.maven:maven-aether-provider:3.2.3
     native.java_import(name = 'org_apache_maven__maven_aether_provider__3_2_3',
         jars = ['@org_apache_maven__maven_aether_provider__3_2_3//file'],
+        tags = ['maven_coordinates=org.apache.maven:maven-aether-provider:3.2.3'],
         licenses = ['notice'],
         deps = [
             ':org_apache_maven__maven_model',
@@ -649,6 +667,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.apache.maven:maven-artifact:3.5.0
     native.java_import(name = 'org_apache_maven__maven_artifact__3_5_0',
         jars = ['@org_apache_maven__maven_artifact__3_5_0//file'],
+        tags = ['maven_coordinates=org.apache.maven:maven-artifact:3.5.0'],
         licenses = ['notice'],
         deps = [
             ':org_apache_commons__commons_lang3',
@@ -670,6 +689,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.apache.maven:maven-model-builder:3.2.3
     native.java_import(name = 'org_apache_maven__maven_model_builder__3_2_3',
         jars = ['@org_apache_maven__maven_model_builder__3_2_3//file'],
+        tags = ['maven_coordinates=org.apache.maven:maven-model-builder:3.2.3'],
         licenses = ['notice'],
         deps = [
             ':org_apache_maven__maven_model',
@@ -695,6 +715,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.apache.maven:maven-model:3.2.3
     native.java_import(name = 'org_apache_maven__maven_model__3_2_3',
         jars = ['@org_apache_maven__maven_model__3_2_3//file'],
+        tags = ['maven_coordinates=org.apache.maven:maven-model:3.2.3'],
         licenses = ['notice'],
         deps = [':org_codehaus_plexus__plexus_utils'],
         exports = [':org_codehaus_plexus__plexus_utils'],
@@ -710,6 +731,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.apache.maven:maven-repository-metadata:3.2.3
     native.java_import(name = 'org_apache_maven__maven_repository_metadata__3_2_3',
         jars = ['@org_apache_maven__maven_repository_metadata__3_2_3//file'],
+        tags = ['maven_coordinates=org.apache.maven:maven-repository-metadata:3.2.3'],
         licenses = ['notice'],
         deps = [':org_codehaus_plexus__plexus_utils'],
         exports = [':org_codehaus_plexus__plexus_utils'],
@@ -725,6 +747,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.checkerframework:checker-qual:2.5.2
     native.java_import(name = 'org_checkerframework__checker_qual__2_5_2',
         jars = ['@org_checkerframework__checker_qual__2_5_2//file'],
+        tags = ['maven_coordinates=org.checkerframework:checker-qual:2.5.2'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -740,6 +763,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.codehaus.mojo:animal-sniffer-annotations:1.17
     native.java_import(name = 'org_codehaus_mojo__animal_sniffer_annotations__1_17',
         jars = ['@org_codehaus_mojo__animal_sniffer_annotations__1_17//file'],
+        tags = ['maven_coordinates=org.codehaus.mojo:animal-sniffer-annotations:1.17'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -755,6 +779,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.codehaus.plexus:plexus-component-annotations:1.5.5
     native.java_import(name = 'org_codehaus_plexus__plexus_component_annotations__1_5_5',
         jars = ['@org_codehaus_plexus__plexus_component_annotations__1_5_5//file'],
+        tags = ['maven_coordinates=org.codehaus.plexus:plexus-component-annotations:1.5.5'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -770,6 +795,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.codehaus.plexus:plexus-interpolation:1.24
     native.java_import(name = 'org_codehaus_plexus__plexus_interpolation__1_24',
         jars = ['@org_codehaus_plexus__plexus_interpolation__1_24//file'],
+        tags = ['maven_coordinates=org.codehaus.plexus:plexus-interpolation:1.24'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -785,6 +811,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.codehaus.plexus:plexus-utils:3.0.24
     native.java_import(name = 'org_codehaus_plexus__plexus_utils__3_0_24',
         jars = ['@org_codehaus_plexus__plexus_utils__3_0_24//file'],
+        tags = ['maven_coordinates=org.codehaus.plexus:plexus-utils:3.0.24'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -800,6 +827,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.eclipse.aether:aether-api:1.1.0
     native.java_import(name = 'org_eclipse_aether__aether_api__1_1_0',
         jars = ['@org_eclipse_aether__aether_api__1_1_0//file'],
+        tags = ['maven_coordinates=org.eclipse.aether:aether-api:1.1.0'],
         licenses = ['reciprocal'],
         deps = [],
         exports = [],
@@ -815,6 +843,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.eclipse.aether:aether-connector-basic:1.1.0
     native.java_import(name = 'org_eclipse_aether__aether_connector_basic__1_1_0',
         jars = ['@org_eclipse_aether__aether_connector_basic__1_1_0//file'],
+        tags = ['maven_coordinates=org.eclipse.aether:aether-connector-basic:1.1.0'],
         licenses = ['reciprocal'],
         deps = [
             ':org_eclipse_aether__aether_api',
@@ -838,6 +867,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.eclipse.aether:aether-impl:1.1.0
     native.java_import(name = 'org_eclipse_aether__aether_impl__1_1_0',
         jars = ['@org_eclipse_aether__aether_impl__1_1_0//file'],
+        tags = ['maven_coordinates=org.eclipse.aether:aether-impl:1.1.0'],
         licenses = ['reciprocal'],
         deps = [
             ':org_eclipse_aether__aether_api',
@@ -861,6 +891,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.eclipse.aether:aether-spi:1.1.0
     native.java_import(name = 'org_eclipse_aether__aether_spi__1_1_0',
         jars = ['@org_eclipse_aether__aether_spi__1_1_0//file'],
+        tags = ['maven_coordinates=org.eclipse.aether:aether-spi:1.1.0'],
         licenses = ['reciprocal'],
         deps = [':org_eclipse_aether__aether_api'],
         exports = [':org_eclipse_aether__aether_api'],
@@ -876,6 +907,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.eclipse.aether:aether-transport-classpath:1.1.0
     native.java_import(name = 'org_eclipse_aether__aether_transport_classpath__1_1_0',
         jars = ['@org_eclipse_aether__aether_transport_classpath__1_1_0//file'],
+        tags = ['maven_coordinates=org.eclipse.aether:aether-transport-classpath:1.1.0'],
         licenses = ['reciprocal'],
         deps = [
             ':org_eclipse_aether__aether_api',
@@ -899,6 +931,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.eclipse.aether:aether-transport-file:1.1.0
     native.java_import(name = 'org_eclipse_aether__aether_transport_file__1_1_0',
         jars = ['@org_eclipse_aether__aether_transport_file__1_1_0//file'],
+        tags = ['maven_coordinates=org.eclipse.aether:aether-transport-file:1.1.0'],
         licenses = ['reciprocal'],
         deps = [
             ':org_eclipse_aether__aether_api',
@@ -922,6 +955,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.eclipse.aether:aether-transport-http:1.1.0
     native.java_import(name = 'org_eclipse_aether__aether_transport_http__1_1_0',
         jars = ['@org_eclipse_aether__aether_transport_http__1_1_0//file'],
+        tags = ['maven_coordinates=org.eclipse.aether:aether-transport-http:1.1.0'],
         licenses = ['reciprocal'],
         deps = [
             ':org_apache_httpcomponents__httpclient',
@@ -949,6 +983,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.eclipse.aether:aether-transport-wagon:1.1.0
     native.java_import(name = 'org_eclipse_aether__aether_transport_wagon__1_1_0',
         jars = ['@org_eclipse_aether__aether_transport_wagon__1_1_0//file'],
+        tags = ['maven_coordinates=org.eclipse.aether:aether-transport-wagon:1.1.0'],
         licenses = ['reciprocal'],
         deps = [
             ':org_apache_maven_wagon__wagon_provider_api',
@@ -974,6 +1009,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.eclipse.aether:aether-util:1.1.0
     native.java_import(name = 'org_eclipse_aether__aether_util__1_1_0',
         jars = ['@org_eclipse_aether__aether_util__1_1_0//file'],
+        tags = ['maven_coordinates=org.eclipse.aether:aether-util:1.1.0'],
         licenses = ['reciprocal'],
         deps = [':org_eclipse_aether__aether_api'],
         exports = [':org_eclipse_aether__aether_api'],
@@ -989,6 +1025,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.hamcrest:hamcrest-core:1.3
     native.java_import(name = 'org_hamcrest__hamcrest_core__1_3',
         jars = ['@org_hamcrest__hamcrest_core__1_3//file'],
+        tags = ['maven_coordinates=org.hamcrest:hamcrest-core:1.3'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -1004,6 +1041,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.mockito:mockito-core:2.23.4
     native.java_import(name = 'org_mockito__mockito_core__2_23_4',
         jars = ['@org_mockito__mockito_core__2_23_4//file'],
+        tags = ['maven_coordinates=org.mockito:mockito-core:2.23.4'],
         licenses = ['notice'],
         deps = [
             ':net_bytebuddy__byte_buddy',
@@ -1027,6 +1065,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.objenesis:objenesis:2.6
     native.java_import(name = 'org_objenesis__objenesis__2_6',
         jars = ['@org_objenesis__objenesis__2_6//file'],
+        tags = ['maven_coordinates=org.objenesis:objenesis:2.6'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -1042,6 +1081,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.slf4j:jcl-over-slf4j:1.6.2
     native.java_import(name = 'org_slf4j__jcl_over_slf4j__1_6_2',
         jars = ['@org_slf4j__jcl_over_slf4j__1_6_2//file'],
+        tags = ['maven_coordinates=org.slf4j:jcl-over-slf4j:1.6.2'],
         licenses = ['notice'],
         deps = [':org_slf4j__slf4j_api'],
         exports = [':org_slf4j__slf4j_api'],
@@ -1057,6 +1097,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.slf4j:slf4j-api:1.7.25
     native.java_import(name = 'org_slf4j__slf4j_api__1_7_25',
         jars = ['@org_slf4j__slf4j_api__1_7_25//file'],
+        tags = ['maven_coordinates=org.slf4j:slf4j-api:1.7.25'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -1072,6 +1113,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from org.slf4j:slf4j-nop:1.7.25
     native.java_import(name = 'org_slf4j__slf4j_nop__1_7_25',
         jars = ['@org_slf4j__slf4j_nop__1_7_25//file'],
+        tags = ['maven_coordinates=org.slf4j:slf4j-nop:1.7.25'],
         licenses = ['notice'],
         deps = [':org_slf4j__slf4j_api'],
         exports = [':org_slf4j__slf4j_api'],

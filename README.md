@@ -22,6 +22,7 @@ This WORKSPACE will provide `deps_workspace_generator_rule` rule and `artifact` 
   * Profiles and placeholders.
   * Version-specification.
   * Dependencies that do not have POM.
+  * Exports the Maven coordinate as a tag in the `java_import` rule.
 * Calculates `sha256` for each remote artifact.
 * Produces a _lock_ file that describes the dependency graph. This file should be checked into your repo.
 
@@ -37,7 +38,7 @@ There are several attempts to solve this problem (such as [sync-deps](https://gi
 ### WORKSPACE file
 Add this repository to your WORKSPACE (set `bazel_mvn_deps_version` to the latest [release](https://github.com/menny/mabel/releases) or, if you are adventurous, [commit](https://github.com/menny/mabel/commits/master)):
 ```python
-mabel_version = "0.5.3"
+mabel_version = "0.5.4"
 http_archive(
     name = "mabel",
     urls = ["https://github.com/menny/mabel/archive/%s.zip" % mabel_version],
