@@ -205,7 +205,7 @@ public class WritersTests {
                 Collections.emptyList()));
 
         Assert.assertEquals(1, targets.size());
-        Assert.assertTrue(targets.get(0).outputString("").contains("sha256 = '85738F8F9A7F1B04B5329C590EBCB9E425925C6D0984089C43A022DE4F19C281'"));
+        Assert.assertTrue(targets.get(0).outputString("").contains("sha256 = '85738f8f9a7f1b04b5329c590ebcb9e425925c6d0984089c43a022de4f19c281'"));
     }
 
     @Test

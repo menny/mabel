@@ -10,6 +10,7 @@ def generate_workspace_rules():
     http_file(name = 'com_google_guava__guava__20_0',
         urls = ['https://repo1.maven.org/maven2/com/google/guava/guava/20.0/guava-20.0.jar'],
         downloaded_file_path = 'guava-20.0.jar',
+        sha256 = '36a666e3b71ae7f0f0dca23654b67e086e6c93d192f60ba5dfd5519db6c288c8',
     )
 
 
