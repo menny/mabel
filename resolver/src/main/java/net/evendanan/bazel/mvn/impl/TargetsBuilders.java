@@ -48,7 +48,8 @@ public class TargetsBuilders {
         final Target target = new Target(dependency.mavenCoordinates(), asNative ? "native.java_import":"java_import", dependency.repositoryRuleName() + postFix)
                 .addList("jars", "pom".equalsIgnoreCase(dependency.packaging()) ?
                         Collections.emptyList()
-                        :Collections.singletonList(String.format(Locale.US, "@%s//file", dependency.repositoryRuleName())))
+                        :Collections.singletonList(String.format(Locale.ROOT, "@%s//file", dependency.repositoryRuleName())))
+                .addList("tags", Collections.singletonList(String.format(Locale.ROOT, "maven_coordinates=%s", dependency.mavenCoordinates())))
                 .addList("licenses", dependency.licenses().stream().map(License::toString).collect(Collectors.toList()))
                 .addList("deps", convertRulesToStrings(dependency.dependencies()))
                 .addList("exports", convertRulesToStrings(dependency.exports()))
