@@ -10,24 +10,28 @@ def generate_workspace_rules():
     http_file(name = 'com_github_salomonbrys_kotson__kotson__2_5_0',
         urls = ['https://repo1.maven.org/maven2/com/github/salomonbrys/kotson/kotson/2.5.0/kotson-2.5.0.jar'],
         downloaded_file_path = 'kotson-2.5.0.jar',
+        sha256 = 'c94b68e7076620cd334907f2a3c87d63ef7fd500c2f200fbd46f9ee2c9c63501',
     )
 
     # from com.google.code.gson:gson:2.8.0
     http_file(name = 'com_google_code_gson__gson__2_8_0',
         urls = ['https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.0/gson-2.8.0.jar'],
         downloaded_file_path = 'gson-2.8.0.jar',
+        sha256 = 'c6221763bd79c4f1c3dc7f750b5f29a0bb38b367b81314c4f71896e340c40825',
     )
 
     # from org.jetbrains.kotlin:kotlin-runtime:1.0.6
     http_file(name = 'org_jetbrains_kotlin__kotlin_runtime__1_0_6',
         urls = ['https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-runtime/1.0.6/kotlin-runtime-1.0.6.jar'],
         downloaded_file_path = 'kotlin-runtime-1.0.6.jar',
+        sha256 = '59dcf4c5fb74f95b7c9405330b5b7f9d74dfef012bc11a9d51d6e0415e639b51',
     )
 
     # from org.jetbrains.kotlin:kotlin-stdlib:1.0.6
     http_file(name = 'org_jetbrains_kotlin__kotlin_stdlib__1_0_6',
         urls = ['https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.0.6/kotlin-stdlib-1.0.6.jar'],
         downloaded_file_path = 'kotlin-stdlib-1.0.6.jar',
+        sha256 = '38dd8d4e1bbff75e67d16b78d6fde1d55a7720172f099ea95135f2ec7996b11f',
     )
 
 

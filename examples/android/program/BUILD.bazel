@@ -21,7 +21,8 @@ deps_workspace_generator_rule(name = 'main_deps',
                      maven_exclude_deps = [
                          'com.android.support'
                      ])
-    ]
+    ],
+    calculate_sha = False
 )
 
 android_binary(

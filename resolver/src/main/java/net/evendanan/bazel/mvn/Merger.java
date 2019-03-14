@@ -19,12 +19,14 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.zip.ZipInputStream;
 import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.GraphMerger;
 import net.evendanan.bazel.mvn.api.RuleWriter;
 import net.evendanan.bazel.mvn.api.Target;
+import net.evendanan.bazel.mvn.api.TargetsBuilder;
 import net.evendanan.bazel.mvn.impl.RuleClassifiers;
 import net.evendanan.bazel.mvn.impl.RuleWriters;
 import net.evendanan.bazel.mvn.impl.TargetsBuilders;
@@ -100,7 +102,7 @@ public class Merger {
             dependencies = DependencyNamePrefixer.wrap(dependencies, options.rule_prefix);
         }
 
-        driver.writeResults(dependencies, args);
+        driver.writeResults(dependencies, args, options);
 
         if (!options.output_pretty_dep_graph_filename.isEmpty()) {
             File prettyOutput = new File(options.output_target_build_files_base_path, options.output_pretty_dep_graph_filename);
@@ -187,7 +189,7 @@ public class Merger {
         return merged;
     }
 
-    private void writeResults(Collection<Dependency> resolvedDependencies, final String[] args) throws Exception {
+    private void writeResults(Collection<Dependency> resolvedDependencies, final String[] args, final Options options) throws Exception {
         System.out.print("Flattening dependency tree for writing...");
         resolvedDependencies = DependencyTreeFlatter.flatten(resolvedDependencies)
                 .stream()
@@ -216,31 +218,22 @@ public class Merger {
             fileWriter.append(System.lineSeparator());
         }
 
-        final TaskTiming timer = new TaskTiming();
         System.out.println(String.format("Processing %s resolved rules...", resolvedDependencies.size()));
 
-        timer.start(resolvedDependencies.size());
+        ProgressTimer timer = new ProgressTimer(resolvedDependencies.size(), "** Converting to Bazel targets, %d out of %d (%.2f%%%s): %s...");
         List<Target> targets = resolvedDependencies.stream()
-                .peek(dependency -> {
-                    final TimingData timingData = timer.taskDone();
-                    final String estimatedTimeLeft;
-                    if (timingData.doneTasks >= 3) {
-                        estimatedTimeLeft = String.format(Locale.ROOT, ", %s left", TaskTiming.humanReadableTime(timingData.estimatedTimeLeft));
-                    } else {
-                        estimatedTimeLeft = "";
-                    }
-                    System.out.println(
-                            String.format(Locale.ROOT, "** Converting to Bazel targets, %d out of %d (%.2f%%%s): %s...",
-                                    timingData.doneTasks, timingData.totalTasks, 100 * timingData.ratioOfDone, estimatedTimeLeft,
-                                    dependency.repositoryRuleName()));
-                })
+                .peek(timer::taskDone)
                 .map(rule -> RuleClassifiers.NATIVE_RULE_MAPPER.apply(rule).buildTargets(rule))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
 
         System.out.print(String.format("Writing %d Bazel repository rules...", targets.size()));
+        timer = new ProgressTimer(resolvedDependencies.size(), "** Calculating SHA, %d out of %d (%.2f%%%s): %s...");
+        final TargetsBuilder fileImporter = options.calculate_sha ? TargetsBuilders.HTTP_FILE_WITH_SHA:TargetsBuilders.HTTP_FILE;
+        final Consumer<Dependency> fileImporterProgress = options.calculate_sha ? timer::taskDone:dependency -> { };
         repositoryRulesMacroWriter.write(resolvedDependencies.stream()
-                .map(TargetsBuilders.HTTP_FILE::buildTargets)
+                .peek(fileImporterProgress)
+                .map(fileImporter::buildTargets)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList()));
         System.out.println("✓");
@@ -253,6 +246,30 @@ public class Merger {
             System.out.print("Writing aliases targets...");
             hardAliasesWriter.write(targets);
             System.out.println("✓");
+        }
+    }
+
+    private static class ProgressTimer {
+        private final TaskTiming timer = new TaskTiming();
+        private final String progressText;
+
+        ProgressTimer(int tasksCount, String progressText) {
+            this.progressText = progressText;
+            this.timer.start(tasksCount);
+        }
+
+        void taskDone(Dependency dependency) {
+            final TimingData timingData = timer.taskDone();
+            final String estimatedTimeLeft;
+            if (timingData.doneTasks >= 3) {
+                estimatedTimeLeft = String.format(Locale.ROOT, ", %s left", TaskTiming.humanReadableTime(timingData.estimatedTimeLeft));
+            } else {
+                estimatedTimeLeft = "";
+            }
+            System.out.println(
+                    String.format(Locale.ROOT, progressText,
+                            timingData.doneTasks, timingData.totalTasks, 100 * timingData.ratioOfDone, estimatedTimeLeft,
+                            dependency.repositoryRuleName()));
         }
     }
 

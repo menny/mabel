@@ -2,6 +2,9 @@ package net.evendanan.bazel.mvn.impl;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
+import java.io.InputStream;
+import java.net.URI;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -18,22 +21,8 @@ import net.evendanan.bazel.mvn.api.TargetsBuilder;
 
 public class TargetsBuilders {
 
-    public static final TargetsBuilder HTTP_FILE = dependency -> {
-        if ("pom".equalsIgnoreCase(dependency.packaging())) return Collections.emptyList();
-
-        final Target jarTarget = new Target(dependency.mavenCoordinates(), "http_file", dependency.repositoryRuleName())
-                .addList("urls", Collections.singleton(dependency.url().toASCIIString()))
-                .addString("downloaded_file_path", getFilenameFromUrl(dependency.url().getPath()));
-        if (dependency.sourcesUrl().toASCIIString().isEmpty()) {
-            return Collections.singletonList(jarTarget);
-        } else {
-            final Target sourceTarget = new Target(dependency.mavenCoordinates(), "http_file", dependency.repositoryRuleName() + "__sources")
-                    .addList("urls", Collections.singleton(dependency.sourcesUrl().toASCIIString()))
-                    .addString("downloaded_file_path", getFilenameFromUrl(dependency.sourcesUrl().getPath()));
-
-            return Arrays.asList(jarTarget, sourceTarget);
-        }
-    };
+    public static final TargetsBuilder HTTP_FILE = new HttpTargetsBuilder(false);
+    public static final TargetsBuilder HTTP_FILE_WITH_SHA = new HttpTargetsBuilder(true);
     static final TargetsBuilder JAVA_IMPORT = dependency -> {
         List<Target> targets = new ArrayList<>();
         targets.add(addJavaImportRule(false, dependency, ""));
@@ -95,6 +84,64 @@ public class TargetsBuilders {
         return new Target(dependency.mavenCoordinates(), asNative ? "native.alias":"alias", dependency.targetName() + postFix)
                 .addString("actual", String.format(Locale.US, ":%s%s", dependency.repositoryRuleName(), postFix))
                 .setPublicVisibility();
+    }
+
+    @VisibleForTesting
+    static class HttpTargetsBuilder implements TargetsBuilder {
+        private final static char[] hexArray = "0123456789abcdef".toCharArray();
+        private final boolean calculateSha;
+        private final byte[] readBuffer;
+
+        HttpTargetsBuilder(boolean calculateSha) {
+            this.calculateSha = calculateSha;
+            this.readBuffer = calculateSha ? new byte[4096]:new byte[0];
+        }
+
+        @Override
+        public List<Target> buildTargets(final Dependency dependency) {
+            if ("pom".equalsIgnoreCase(dependency.packaging())) return Collections.emptyList();
+
+            final Target jarTarget = new Target(dependency.mavenCoordinates(), "http_file", dependency.repositoryRuleName())
+                    .addList("urls", Collections.singleton(dependency.url().toASCIIString()))
+                    .addString("downloaded_file_path", getFilenameFromUrl(dependency.url().getPath()));
+
+            if (calculateSha) {
+                try (InputStream inputStream = inputStreamForUrl(dependency.url())) {
+                    final MessageDigest digest = MessageDigest.getInstance("SHA-256");
+
+                    int bytesCount;
+                    while ((bytesCount = inputStream.read(readBuffer))!=-1) {
+                        digest.update(readBuffer, 0, bytesCount);
+                    }
+
+                    byte[] digestBytes = digest.digest();
+                    char[] hexChars = new char[digestBytes.length * 2];
+                    for (int digestByteIndex = 0; digestByteIndex < digestBytes.length; digestByteIndex++) {
+                        int v = digestBytes[digestByteIndex] & 0xFF;
+                        hexChars[digestByteIndex * 2] = hexArray[v >>> 4];
+                        hexChars[digestByteIndex * 2 + 1] = hexArray[v & 0x0F];
+                    }
+                    final String hexStringValue = new String(hexChars);
+                    jarTarget.addString("sha256", hexStringValue);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (dependency.sourcesUrl().toASCIIString().isEmpty()) {
+                return Collections.singletonList(jarTarget);
+            } else {
+                final Target sourceTarget = new Target(dependency.mavenCoordinates(), "http_file", dependency.repositoryRuleName() + "__sources")
+                        .addList("urls", Collections.singleton(dependency.sourcesUrl().toASCIIString()))
+                        .addString("downloaded_file_path", getFilenameFromUrl(dependency.sourcesUrl().getPath()));
+
+                return Arrays.asList(jarTarget, sourceTarget);
+            }
+        }
+
+        @VisibleForTesting
+        InputStream inputStreamForUrl(final URI url) throws Exception {
+            return url.toURL().openStream();
+        }
     }
 
     public static class CompositeBuilder implements TargetsBuilder {
