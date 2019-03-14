@@ -22,6 +22,7 @@ This WORKSPACE will provide `deps_workspace_generator_rule` rule and `artifact` 
   * Profiles and placeholders.
   * Version-specification.
   * Dependencies that do not have POM.
+* Calculates `sha256` for each remote artifact.
 * Produces a _lock_ file that describes the dependency graph. This file should be checked into your repo.
 
 ## Why
@@ -36,7 +37,7 @@ There are several attempts to solve this problem (such as [sync-deps](https://gi
 ### WORKSPACE file
 Add this repository to your WORKSPACE (set `bazel_mvn_deps_version` to the latest [release](https://github.com/menny/mabel/releases) or, if you are adventurous, [commit](https://github.com/menny/mabel/commits/master)):
 ```python
-mabel_version = "0.5.0"
+mabel_version = "0.5.3"
 http_archive(
     name = "mabel",
     urls = ["https://github.com/menny/mabel/archive/%s.zip" % mabel_version],
@@ -141,8 +142,9 @@ This rule will merge the dependencies into one, version-conflict-resolved, depen
 Attributes:
 
 * `maven_deps`: List of `artifact` targets representing a Maven coordinate.
-* `generate_deps_sub_folder`: Default `True`. Will create sub-folders with `BUILD.bazel` file for each dependency.'
-* `fetch_srcjar`: Default `False`. Will also try to fetch sources jar for each dependency.'
+* `generate_deps_sub_folder`: Default `True`. Will create sub-folders with `BUILD.bazel` file for each dependency.
+* `calculate_sha`: Default `True`. Will calculate the `sha256` value of each remote artifact.
+* `fetch_srcjar`: Default `False`. Will also try to fetch sources jar for each dependency.
 * `generated_targets_prefix`: A prefix to add to all generated targets. Default is an empty string, meaning no-prefix. This might be useful if you want to generate several, unrelated, graphs. 
 * `output_graph_to_file`: If set to `True`, will output the graph to `dependencies.txt`. Default is `False`.
 
