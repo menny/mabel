@@ -20,6 +20,7 @@ public class FormattersTests {
             "\n";
     private static final String JAVA_IMPORT_TEXT = " java_import(name = 'java__lib__',\n" +
             "     jars = ['@java__lib__//file'],\n" +
+            "     tags = ['maven_coordinates=java:lib:'],\n" +
             "     licenses = [],\n" +
             "     deps = [\n" +
             "         ':safe_mvn__dep1',\n" +
@@ -42,6 +43,7 @@ public class FormattersTests {
             "\n";
     private static final String JAVA_IMPORT_TEXT_WITH_SOURCES = " java_import(name = 'java__lib__',\n" +
             "     jars = ['@java__lib__//file'],\n" +
+            "     tags = ['maven_coordinates=java:lib:'],\n" +
             "     licenses = [],\n" +
             "     deps = [\n" +
             "         ':safe_mvn__dep1',\n" +
@@ -65,6 +67,7 @@ public class FormattersTests {
             "\n";
     private static final String POM_ONLY_NATIVE_IMPORT_TEXT = " native.java_import(name = 'parent__lib__',\n" +
             "     jars = [],\n" +
+            "     tags = ['maven_coordinates=parent:lib:'],\n" +
             "     licenses = [],\n" +
             "     deps = [\n" +
             "         ':safe_mvn__dep1',\n" +
@@ -87,6 +90,7 @@ public class FormattersTests {
             "\n";
     private static final String NATIVE_JAVA_IMPORT_TEXT = "    native.java_import(name = 'java__lib__',\n" +
             "        jars = ['@java__lib__//file'],\n" +
+            "        tags = ['maven_coordinates=java:lib:'],\n" +
             "        licenses = [],\n" +
             "        deps = [\n" +
             "            ':safe_mvn__dep1',\n" +
@@ -109,6 +113,7 @@ public class FormattersTests {
             "\n";
     private static final String NATIVE_JAVA_IMPORT_WITH_LICENSE_TEXT = "    native.java_import(name = 'java__lib__',\n" +
             "        jars = ['@java__lib__//file'],\n" +
+            "        tags = ['maven_coordinates=java:lib:'],\n" +
             "        licenses = ['notice'],\n" +
             "        deps = [\n" +
             "            ':safe_mvn__dep1',\n" +
@@ -169,6 +174,7 @@ public class FormattersTests {
             "\n";
     private static final String JAVA_PLUGIN_TEXT = " java_import(name = 'aar__lib__',\n" +
             "     jars = ['@aar__lib__//file'],\n" +
+            "     tags = ['maven_coordinates=aar:lib:'],\n" +
             "     licenses = [],\n" +
             "     deps = [\n" +
             "         ':safe_mvn__dep1',\n" +
@@ -275,6 +281,7 @@ public class FormattersTests {
             "\n";
     private static final String NATIVE_JAVA_PLUGIN_TEXT = "    native.java_import(name = 'aar__lib__',\n" +
             "        jars = ['@aar__lib__//file'],\n" +
+            "        tags = ['maven_coordinates=aar:lib:'],\n" +
             "        licenses = [],\n" +
             "        deps = [\n" +
             "            ':safe_mvn__dep1',\n" +

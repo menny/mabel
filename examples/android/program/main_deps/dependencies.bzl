@@ -262,6 +262,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from androidx.annotation:annotation:1.0.0
     native.java_import(name = 'androidx_annotation__annotation__1_0_0',
         jars = ['@androidx_annotation__annotation__1_0_0//file'],
+        tags = ['maven_coordinates=androidx.annotation:annotation:1.0.0'],
         licenses = ['notice'],
         deps = [],
         exports = [],
@@ -308,6 +309,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from androidx.arch.core:core-common:2.0.0
     native.java_import(name = 'androidx_arch_core__core_common__2_0_0',
         jars = ['@androidx_arch_core__core_common__2_0_0//file'],
+        tags = ['maven_coordinates=androidx.arch.core:core-common:2.0.0'],
         licenses = ['notice'],
         deps = [':androidx_annotation__annotation'],
         exports = [':androidx_annotation__annotation'],
@@ -361,6 +363,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from androidx.collection:collection:1.0.0
     native.java_import(name = 'androidx_collection__collection__1_0_0',
         jars = ['@androidx_collection__collection__1_0_0//file'],
+        tags = ['maven_coordinates=androidx.collection:collection:1.0.0'],
         licenses = ['notice'],
         deps = [':androidx_annotation__annotation'],
         exports = [':androidx_annotation__annotation'],
@@ -592,6 +595,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from androidx.lifecycle:lifecycle-common:2.0.0
     native.java_import(name = 'androidx_lifecycle__lifecycle_common__2_0_0',
         jars = ['@androidx_lifecycle__lifecycle_common__2_0_0//file'],
+        tags = ['maven_coordinates=androidx.lifecycle:lifecycle-common:2.0.0'],
         licenses = ['notice'],
         deps = [':androidx_annotation__annotation'],
         exports = [':androidx_annotation__annotation'],

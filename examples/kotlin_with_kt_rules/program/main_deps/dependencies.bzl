@@ -91,6 +91,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     # from com.google.code.gson:gson:2.8.0
     native.java_import(name = 'com_google_code_gson__gson__2_8_0',
         jars = ['@com_google_code_gson__gson__2_8_0//file'],
+        tags = ['maven_coordinates=com.google.code.gson:gson:2.8.0'],
         licenses = ['notice'],
         deps = [],
         exports = [],
