@@ -142,7 +142,7 @@ Attributes:
 
 * `maven_deps`: List of `artifact` targets representing a Maven coordinate.
 * `generate_deps_sub_folder`: Default `True`. Will create sub-folders with `BUILD.bazel` file for each dependency.'
-* `fetch_srcjar`: Default `True`. Will also try to fetch sources jar for each dependency.'
+* `fetch_srcjar`: Default `False`. Will also try to fetch sources jar for each dependency.'
 * `generated_targets_prefix`: A prefix to add to all generated targets. Default is an empty string, meaning no-prefix. This might be useful if you want to generate several, unrelated, graphs. 
 * `output_graph_to_file`: If set to `True`, will output the graph to `dependencies.txt`. Default is `False`.
 

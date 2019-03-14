@@ -12,22 +12,10 @@ def generate_workspace_rules():
         downloaded_file_path = 'activity-1.0.0-alpha02.aar',
     )
 
-    # from androidx.activity:activity:1.0.0-alpha02
-    http_file(name = 'androidx_activity__activity__1_0_0_alpha02__sources',
-        urls = ['https://maven.google.com/androidx/activity/activity/1.0.0-alpha02/activity-1.0.0-alpha02-sources.jar'],
-        downloaded_file_path = 'activity-1.0.0-alpha02-sources.jar',
-    )
-
     # from androidx.annotation:annotation:1.0.0
     http_file(name = 'androidx_annotation__annotation__1_0_0',
         urls = ['https://maven.google.com/androidx/annotation/annotation/1.0.0/annotation-1.0.0.jar'],
         downloaded_file_path = 'annotation-1.0.0.jar',
-    )
-
-    # from androidx.annotation:annotation:1.0.0
-    http_file(name = 'androidx_annotation__annotation__1_0_0__sources',
-        urls = ['https://maven.google.com/androidx/annotation/annotation/1.0.0/annotation-1.0.0-sources.jar'],
-        downloaded_file_path = 'annotation-1.0.0-sources.jar',
     )
 
     # from androidx.appcompat:appcompat:1.0.2
@@ -36,22 +24,10 @@ def generate_workspace_rules():
         downloaded_file_path = 'appcompat-1.0.2.aar',
     )
 
-    # from androidx.appcompat:appcompat:1.0.2
-    http_file(name = 'androidx_appcompat__appcompat__1_0_2__sources',
-        urls = ['https://maven.google.com/androidx/appcompat/appcompat/1.0.2/appcompat-1.0.2-sources.jar'],
-        downloaded_file_path = 'appcompat-1.0.2-sources.jar',
-    )
-
     # from androidx.arch.core:core-common:2.0.0
     http_file(name = 'androidx_arch_core__core_common__2_0_0',
         urls = ['https://maven.google.com/androidx/arch/core/core-common/2.0.0/core-common-2.0.0.jar'],
         downloaded_file_path = 'core-common-2.0.0.jar',
-    )
-
-    # from androidx.arch.core:core-common:2.0.0
-    http_file(name = 'androidx_arch_core__core_common__2_0_0__sources',
-        urls = ['https://maven.google.com/androidx/arch/core/core-common/2.0.0/core-common-2.0.0-sources.jar'],
-        downloaded_file_path = 'core-common-2.0.0-sources.jar',
     )
 
     # from androidx.arch.core:core-runtime:2.0.0
@@ -60,22 +36,10 @@ def generate_workspace_rules():
         downloaded_file_path = 'core-runtime-2.0.0.aar',
     )
 
-    # from androidx.arch.core:core-runtime:2.0.0
-    http_file(name = 'androidx_arch_core__core_runtime__2_0_0__sources',
-        urls = ['https://maven.google.com/androidx/arch/core/core-runtime/2.0.0/core-runtime-2.0.0-sources.jar'],
-        downloaded_file_path = 'core-runtime-2.0.0-sources.jar',
-    )
-
     # from androidx.asynclayoutinflater:asynclayoutinflater:1.0.0
     http_file(name = 'androidx_asynclayoutinflater__asynclayoutinflater__1_0_0',
         urls = ['https://maven.google.com/androidx/asynclayoutinflater/asynclayoutinflater/1.0.0/asynclayoutinflater-1.0.0.aar'],
         downloaded_file_path = 'asynclayoutinflater-1.0.0.aar',
-    )
-
-    # from androidx.asynclayoutinflater:asynclayoutinflater:1.0.0
-    http_file(name = 'androidx_asynclayoutinflater__asynclayoutinflater__1_0_0__sources',
-        urls = ['https://maven.google.com/androidx/asynclayoutinflater/asynclayoutinflater/1.0.0/asynclayoutinflater-1.0.0-sources.jar'],
-        downloaded_file_path = 'asynclayoutinflater-1.0.0-sources.jar',
     )
 
     # from androidx.collection:collection:1.0.0
@@ -84,22 +48,10 @@ def generate_workspace_rules():
         downloaded_file_path = 'collection-1.0.0.jar',
     )
 
-    # from androidx.collection:collection:1.0.0
-    http_file(name = 'androidx_collection__collection__1_0_0__sources',
-        urls = ['https://maven.google.com/androidx/collection/collection/1.0.0/collection-1.0.0-sources.jar'],
-        downloaded_file_path = 'collection-1.0.0-sources.jar',
-    )
-
     # from androidx.coordinatorlayout:coordinatorlayout:1.0.0
     http_file(name = 'androidx_coordinatorlayout__coordinatorlayout__1_0_0',
         urls = ['https://maven.google.com/androidx/coordinatorlayout/coordinatorlayout/1.0.0/coordinatorlayout-1.0.0.aar'],
         downloaded_file_path = 'coordinatorlayout-1.0.0.aar',
-    )
-
-    # from androidx.coordinatorlayout:coordinatorlayout:1.0.0
-    http_file(name = 'androidx_coordinatorlayout__coordinatorlayout__1_0_0__sources',
-        urls = ['https://maven.google.com/androidx/coordinatorlayout/coordinatorlayout/1.0.0/coordinatorlayout-1.0.0-sources.jar'],
-        downloaded_file_path = 'coordinatorlayout-1.0.0-sources.jar',
     )
 
     # from androidx.core:core:1.1.0-alpha01
@@ -108,22 +60,10 @@ def generate_workspace_rules():
         downloaded_file_path = 'core-1.1.0-alpha01.aar',
     )
 
-    # from androidx.core:core:1.1.0-alpha01
-    http_file(name = 'androidx_core__core__1_1_0_alpha01__sources',
-        urls = ['https://maven.google.com/androidx/core/core/1.1.0-alpha01/core-1.1.0-alpha01-sources.jar'],
-        downloaded_file_path = 'core-1.1.0-alpha01-sources.jar',
-    )
-
     # from androidx.cursoradapter:cursoradapter:1.0.0
     http_file(name = 'androidx_cursoradapter__cursoradapter__1_0_0',
         urls = ['https://maven.google.com/androidx/cursoradapter/cursoradapter/1.0.0/cursoradapter-1.0.0.aar'],
         downloaded_file_path = 'cursoradapter-1.0.0.aar',
-    )
-
-    # from androidx.cursoradapter:cursoradapter:1.0.0
-    http_file(name = 'androidx_cursoradapter__cursoradapter__1_0_0__sources',
-        urls = ['https://maven.google.com/androidx/cursoradapter/cursoradapter/1.0.0/cursoradapter-1.0.0-sources.jar'],
-        downloaded_file_path = 'cursoradapter-1.0.0-sources.jar',
     )
 
     # from androidx.customview:customview:1.0.0
@@ -132,22 +72,10 @@ def generate_workspace_rules():
         downloaded_file_path = 'customview-1.0.0.aar',
     )
 
-    # from androidx.customview:customview:1.0.0
-    http_file(name = 'androidx_customview__customview__1_0_0__sources',
-        urls = ['https://maven.google.com/androidx/customview/customview/1.0.0/customview-1.0.0-sources.jar'],
-        downloaded_file_path = 'customview-1.0.0-sources.jar',
-    )
-
     # from androidx.documentfile:documentfile:1.0.0
     http_file(name = 'androidx_documentfile__documentfile__1_0_0',
         urls = ['https://maven.google.com/androidx/documentfile/documentfile/1.0.0/documentfile-1.0.0.aar'],
         downloaded_file_path = 'documentfile-1.0.0.aar',
-    )
-
-    # from androidx.documentfile:documentfile:1.0.0
-    http_file(name = 'androidx_documentfile__documentfile__1_0_0__sources',
-        urls = ['https://maven.google.com/androidx/documentfile/documentfile/1.0.0/documentfile-1.0.0-sources.jar'],
-        downloaded_file_path = 'documentfile-1.0.0-sources.jar',
     )
 
     # from androidx.drawerlayout:drawerlayout:1.0.0
@@ -156,22 +84,10 @@ def generate_workspace_rules():
         downloaded_file_path = 'drawerlayout-1.0.0.aar',
     )
 
-    # from androidx.drawerlayout:drawerlayout:1.0.0
-    http_file(name = 'androidx_drawerlayout__drawerlayout__1_0_0__sources',
-        urls = ['https://maven.google.com/androidx/drawerlayout/drawerlayout/1.0.0/drawerlayout-1.0.0-sources.jar'],
-        downloaded_file_path = 'drawerlayout-1.0.0-sources.jar',
-    )
-
     # from androidx.fragment:fragment:1.1.0-alpha02
     http_file(name = 'androidx_fragment__fragment__1_1_0_alpha02',
         urls = ['https://maven.google.com/androidx/fragment/fragment/1.1.0-alpha02/fragment-1.1.0-alpha02.aar'],
         downloaded_file_path = 'fragment-1.1.0-alpha02.aar',
-    )
-
-    # from androidx.fragment:fragment:1.1.0-alpha02
-    http_file(name = 'androidx_fragment__fragment__1_1_0_alpha02__sources',
-        urls = ['https://maven.google.com/androidx/fragment/fragment/1.1.0-alpha02/fragment-1.1.0-alpha02-sources.jar'],
-        downloaded_file_path = 'fragment-1.1.0-alpha02-sources.jar',
     )
 
     # from androidx.interpolator:interpolator:1.0.0
@@ -180,22 +96,10 @@ def generate_workspace_rules():
         downloaded_file_path = 'interpolator-1.0.0.aar',
     )
 
-    # from androidx.interpolator:interpolator:1.0.0
-    http_file(name = 'androidx_interpolator__interpolator__1_0_0__sources',
-        urls = ['https://maven.google.com/androidx/interpolator/interpolator/1.0.0/interpolator-1.0.0-sources.jar'],
-        downloaded_file_path = 'interpolator-1.0.0-sources.jar',
-    )
-
     # from androidx.legacy:legacy-support-core-ui:1.0.0
     http_file(name = 'androidx_legacy__legacy_support_core_ui__1_0_0',
         urls = ['https://maven.google.com/androidx/legacy/legacy-support-core-ui/1.0.0/legacy-support-core-ui-1.0.0.aar'],
         downloaded_file_path = 'legacy-support-core-ui-1.0.0.aar',
-    )
-
-    # from androidx.legacy:legacy-support-core-ui:1.0.0
-    http_file(name = 'androidx_legacy__legacy_support_core_ui__1_0_0__sources',
-        urls = ['https://maven.google.com/androidx/legacy/legacy-support-core-ui/1.0.0/legacy-support-core-ui-1.0.0-sources.jar'],
-        downloaded_file_path = 'legacy-support-core-ui-1.0.0-sources.jar',
     )
 
     # from androidx.legacy:legacy-support-core-utils:1.0.0
@@ -204,22 +108,10 @@ def generate_workspace_rules():
         downloaded_file_path = 'legacy-support-core-utils-1.0.0.aar',
     )
 
-    # from androidx.legacy:legacy-support-core-utils:1.0.0
-    http_file(name = 'androidx_legacy__legacy_support_core_utils__1_0_0__sources',
-        urls = ['https://maven.google.com/androidx/legacy/legacy-support-core-utils/1.0.0/legacy-support-core-utils-1.0.0-sources.jar'],
-        downloaded_file_path = 'legacy-support-core-utils-1.0.0-sources.jar',
-    )
-
     # from androidx.lifecycle:lifecycle-common:2.0.0
     http_file(name = 'androidx_lifecycle__lifecycle_common__2_0_0',
         urls = ['https://maven.google.com/androidx/lifecycle/lifecycle-common/2.0.0/lifecycle-common-2.0.0.jar'],
         downloaded_file_path = 'lifecycle-common-2.0.0.jar',
-    )
-
-    # from androidx.lifecycle:lifecycle-common:2.0.0
-    http_file(name = 'androidx_lifecycle__lifecycle_common__2_0_0__sources',
-        urls = ['https://maven.google.com/androidx/lifecycle/lifecycle-common/2.0.0/lifecycle-common-2.0.0-sources.jar'],
-        downloaded_file_path = 'lifecycle-common-2.0.0-sources.jar',
     )
 
     # from androidx.lifecycle:lifecycle-livedata-core:2.0.0
@@ -228,22 +120,10 @@ def generate_workspace_rules():
         downloaded_file_path = 'lifecycle-livedata-core-2.0.0.aar',
     )
 
-    # from androidx.lifecycle:lifecycle-livedata-core:2.0.0
-    http_file(name = 'androidx_lifecycle__lifecycle_livedata_core__2_0_0__sources',
-        urls = ['https://maven.google.com/androidx/lifecycle/lifecycle-livedata-core/2.0.0/lifecycle-livedata-core-2.0.0-sources.jar'],
-        downloaded_file_path = 'lifecycle-livedata-core-2.0.0-sources.jar',
-    )
-
     # from androidx.lifecycle:lifecycle-livedata:2.0.0
     http_file(name = 'androidx_lifecycle__lifecycle_livedata__2_0_0',
         urls = ['https://maven.google.com/androidx/lifecycle/lifecycle-livedata/2.0.0/lifecycle-livedata-2.0.0.aar'],
         downloaded_file_path = 'lifecycle-livedata-2.0.0.aar',
-    )
-
-    # from androidx.lifecycle:lifecycle-livedata:2.0.0
-    http_file(name = 'androidx_lifecycle__lifecycle_livedata__2_0_0__sources',
-        urls = ['https://maven.google.com/androidx/lifecycle/lifecycle-livedata/2.0.0/lifecycle-livedata-2.0.0-sources.jar'],
-        downloaded_file_path = 'lifecycle-livedata-2.0.0-sources.jar',
     )
 
     # from androidx.lifecycle:lifecycle-runtime:2.0.0
@@ -252,22 +132,10 @@ def generate_workspace_rules():
         downloaded_file_path = 'lifecycle-runtime-2.0.0.aar',
     )
 
-    # from androidx.lifecycle:lifecycle-runtime:2.0.0
-    http_file(name = 'androidx_lifecycle__lifecycle_runtime__2_0_0__sources',
-        urls = ['https://maven.google.com/androidx/lifecycle/lifecycle-runtime/2.0.0/lifecycle-runtime-2.0.0-sources.jar'],
-        downloaded_file_path = 'lifecycle-runtime-2.0.0-sources.jar',
-    )
-
     # from androidx.lifecycle:lifecycle-viewmodel:2.0.0
     http_file(name = 'androidx_lifecycle__lifecycle_viewmodel__2_0_0',
         urls = ['https://maven.google.com/androidx/lifecycle/lifecycle-viewmodel/2.0.0/lifecycle-viewmodel-2.0.0.aar'],
         downloaded_file_path = 'lifecycle-viewmodel-2.0.0.aar',
-    )
-
-    # from androidx.lifecycle:lifecycle-viewmodel:2.0.0
-    http_file(name = 'androidx_lifecycle__lifecycle_viewmodel__2_0_0__sources',
-        urls = ['https://maven.google.com/androidx/lifecycle/lifecycle-viewmodel/2.0.0/lifecycle-viewmodel-2.0.0-sources.jar'],
-        downloaded_file_path = 'lifecycle-viewmodel-2.0.0-sources.jar',
     )
 
     # from androidx.loader:loader:1.0.0
@@ -276,22 +144,10 @@ def generate_workspace_rules():
         downloaded_file_path = 'loader-1.0.0.aar',
     )
 
-    # from androidx.loader:loader:1.0.0
-    http_file(name = 'androidx_loader__loader__1_0_0__sources',
-        urls = ['https://maven.google.com/androidx/loader/loader/1.0.0/loader-1.0.0-sources.jar'],
-        downloaded_file_path = 'loader-1.0.0-sources.jar',
-    )
-
     # from androidx.localbroadcastmanager:localbroadcastmanager:1.0.0
     http_file(name = 'androidx_localbroadcastmanager__localbroadcastmanager__1_0_0',
         urls = ['https://maven.google.com/androidx/localbroadcastmanager/localbroadcastmanager/1.0.0/localbroadcastmanager-1.0.0.aar'],
         downloaded_file_path = 'localbroadcastmanager-1.0.0.aar',
-    )
-
-    # from androidx.localbroadcastmanager:localbroadcastmanager:1.0.0
-    http_file(name = 'androidx_localbroadcastmanager__localbroadcastmanager__1_0_0__sources',
-        urls = ['https://maven.google.com/androidx/localbroadcastmanager/localbroadcastmanager/1.0.0/localbroadcastmanager-1.0.0-sources.jar'],
-        downloaded_file_path = 'localbroadcastmanager-1.0.0-sources.jar',
     )
 
     # from androidx.print:print:1.0.0
@@ -300,22 +156,10 @@ def generate_workspace_rules():
         downloaded_file_path = 'print-1.0.0.aar',
     )
 
-    # from androidx.print:print:1.0.0
-    http_file(name = 'androidx_print__print__1_0_0__sources',
-        urls = ['https://maven.google.com/androidx/print/print/1.0.0/print-1.0.0-sources.jar'],
-        downloaded_file_path = 'print-1.0.0-sources.jar',
-    )
-
     # from androidx.slidingpanelayout:slidingpanelayout:1.0.0
     http_file(name = 'androidx_slidingpanelayout__slidingpanelayout__1_0_0',
         urls = ['https://maven.google.com/androidx/slidingpanelayout/slidingpanelayout/1.0.0/slidingpanelayout-1.0.0.aar'],
         downloaded_file_path = 'slidingpanelayout-1.0.0.aar',
-    )
-
-    # from androidx.slidingpanelayout:slidingpanelayout:1.0.0
-    http_file(name = 'androidx_slidingpanelayout__slidingpanelayout__1_0_0__sources',
-        urls = ['https://maven.google.com/androidx/slidingpanelayout/slidingpanelayout/1.0.0/slidingpanelayout-1.0.0-sources.jar'],
-        downloaded_file_path = 'slidingpanelayout-1.0.0-sources.jar',
     )
 
     # from androidx.swiperefreshlayout:swiperefreshlayout:1.0.0
@@ -324,22 +168,10 @@ def generate_workspace_rules():
         downloaded_file_path = 'swiperefreshlayout-1.0.0.aar',
     )
 
-    # from androidx.swiperefreshlayout:swiperefreshlayout:1.0.0
-    http_file(name = 'androidx_swiperefreshlayout__swiperefreshlayout__1_0_0__sources',
-        urls = ['https://maven.google.com/androidx/swiperefreshlayout/swiperefreshlayout/1.0.0/swiperefreshlayout-1.0.0-sources.jar'],
-        downloaded_file_path = 'swiperefreshlayout-1.0.0-sources.jar',
-    )
-
     # from androidx.vectordrawable:vectordrawable-animated:1.0.0
     http_file(name = 'androidx_vectordrawable__vectordrawable_animated__1_0_0',
         urls = ['https://maven.google.com/androidx/vectordrawable/vectordrawable-animated/1.0.0/vectordrawable-animated-1.0.0.aar'],
         downloaded_file_path = 'vectordrawable-animated-1.0.0.aar',
-    )
-
-    # from androidx.vectordrawable:vectordrawable-animated:1.0.0
-    http_file(name = 'androidx_vectordrawable__vectordrawable_animated__1_0_0__sources',
-        urls = ['https://maven.google.com/androidx/vectordrawable/vectordrawable-animated/1.0.0/vectordrawable-animated-1.0.0-sources.jar'],
-        downloaded_file_path = 'vectordrawable-animated-1.0.0-sources.jar',
     )
 
     # from androidx.vectordrawable:vectordrawable:1.0.1
@@ -348,22 +180,10 @@ def generate_workspace_rules():
         downloaded_file_path = 'vectordrawable-1.0.1.aar',
     )
 
-    # from androidx.vectordrawable:vectordrawable:1.0.1
-    http_file(name = 'androidx_vectordrawable__vectordrawable__1_0_1__sources',
-        urls = ['https://maven.google.com/androidx/vectordrawable/vectordrawable/1.0.1/vectordrawable-1.0.1-sources.jar'],
-        downloaded_file_path = 'vectordrawable-1.0.1-sources.jar',
-    )
-
     # from androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01
     http_file(name = 'androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01',
         urls = ['https://maven.google.com/androidx/versionedparcelable/versionedparcelable/1.1.0-alpha01/versionedparcelable-1.1.0-alpha01.aar'],
         downloaded_file_path = 'versionedparcelable-1.1.0-alpha01.aar',
-    )
-
-    # from androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01
-    http_file(name = 'androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01__sources',
-        urls = ['https://maven.google.com/androidx/versionedparcelable/versionedparcelable/1.1.0-alpha01/versionedparcelable-1.1.0-alpha01-sources.jar'],
-        downloaded_file_path = 'versionedparcelable-1.1.0-alpha01-sources.jar',
     )
 
     # from androidx.viewpager:viewpager:1.0.0
@@ -372,34 +192,16 @@ def generate_workspace_rules():
         downloaded_file_path = 'viewpager-1.0.0.aar',
     )
 
-    # from androidx.viewpager:viewpager:1.0.0
-    http_file(name = 'androidx_viewpager__viewpager__1_0_0__sources',
-        urls = ['https://maven.google.com/androidx/viewpager/viewpager/1.0.0/viewpager-1.0.0-sources.jar'],
-        downloaded_file_path = 'viewpager-1.0.0-sources.jar',
-    )
-
     # from com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406
     http_file(name = 'com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406',
         urls = ['https://jitpack.io/com/github/menny/Chauffeur/lib/90e703256785b7baf9cd37370b62b1d7d3830406/lib-90e703256785b7baf9cd37370b62b1d7d3830406.aar'],
         downloaded_file_path = 'lib-90e703256785b7baf9cd37370b62b1d7d3830406.aar',
     )
 
-    # from com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406
-    http_file(name = 'com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406__sources',
-        urls = ['https://jitpack.io/com/github/menny/Chauffeur/lib/90e703256785b7baf9cd37370b62b1d7d3830406/lib-90e703256785b7baf9cd37370b62b1d7d3830406-sources.jar'],
-        downloaded_file_path = 'lib-90e703256785b7baf9cd37370b62b1d7d3830406-sources.jar',
-    )
-
     # from com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406
     http_file(name = 'com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406',
         urls = ['https://jitpack.io/com/github/menny/Chauffeur/permissions/90e703256785b7baf9cd37370b62b1d7d3830406/permissions-90e703256785b7baf9cd37370b62b1d7d3830406.aar'],
         downloaded_file_path = 'permissions-90e703256785b7baf9cd37370b62b1d7d3830406.aar',
-    )
-
-    # from com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406
-    http_file(name = 'com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406__sources',
-        urls = ['https://jitpack.io/com/github/menny/Chauffeur/permissions/90e703256785b7baf9cd37370b62b1d7d3830406/permissions-90e703256785b7baf9cd37370b62b1d7d3830406-sources.jar'],
-        downloaded_file_path = 'permissions-90e703256785b7baf9cd37370b62b1d7d3830406-sources.jar',
     )
 
 
@@ -464,7 +266,6 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         deps = [],
         exports = [],
         runtime_deps = [],
-        srcjar = '@androidx_annotation__annotation__1_0_0__sources//file',
     )
 
     # from androidx.appcompat:appcompat:1.0.2
@@ -511,7 +312,6 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         deps = [':androidx_annotation__annotation'],
         exports = [':androidx_annotation__annotation'],
         runtime_deps = [],
-        srcjar = '@androidx_arch_core__core_common__2_0_0__sources//file',
     )
 
     # from androidx.arch.core:core-runtime:2.0.0
@@ -565,7 +365,6 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         deps = [':androidx_annotation__annotation'],
         exports = [':androidx_annotation__annotation'],
         runtime_deps = [],
-        srcjar = '@androidx_collection__collection__1_0_0__sources//file',
     )
 
     # from androidx.coordinatorlayout:coordinatorlayout:1.0.0
@@ -797,7 +596,6 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         deps = [':androidx_annotation__annotation'],
         exports = [':androidx_annotation__annotation'],
         runtime_deps = [],
-        srcjar = '@androidx_lifecycle__lifecycle_common__2_0_0__sources//file',
     )
 
     # from androidx.lifecycle:lifecycle-livedata-core:2.0.0

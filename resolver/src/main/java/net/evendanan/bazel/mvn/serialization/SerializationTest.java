@@ -55,10 +55,9 @@ public class SerializationTest {
     public void testHappyPath() {
         Serialization serialization = new Serialization();
 
-        final String serialized = serialization.serialize(DEP);
+        StringBuilder builder = new StringBuilder();
+        serialization.serialize(DEP, builder);
 
-        final Dependency deserialized = serialization.deserialize(new StringReader(serialized));
-
-        assertEqualDeps(DEP, deserialized);
+        assertEqualDeps(DEP, serialization.deserialize(new StringReader(builder.toString())));
     }
 }
