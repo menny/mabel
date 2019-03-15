@@ -106,7 +106,7 @@ public class TargetsBuilders {
                     .addList("urls", Collections.singleton(dependency.url().toASCIIString()))
                     .addString("downloaded_file_path", getFilenameFromUrl(dependency.url().getPath()));
 
-            if (calculateSha) {
+            if (calculateSha && !dependency.version().contains("SNAPSHOT")) {
                 try (InputStream inputStream = inputStreamForUrl(dependency.url())) {
                     final MessageDigest digest = MessageDigest.getInstance("SHA-256");
 

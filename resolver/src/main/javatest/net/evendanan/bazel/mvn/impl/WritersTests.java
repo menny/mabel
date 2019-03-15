@@ -164,6 +164,7 @@ public class WritersTests {
         String contents = readFileContents(outputFile);
 
         Assert.assertEquals(REPO_RULES_MACRO_OUTPUT, contents);
+        Assert.assertFalse(contents.contains("sha256"));
     }
 
     @Test
@@ -206,6 +207,27 @@ public class WritersTests {
 
         Assert.assertEquals(1, targets.size());
         Assert.assertTrue(targets.get(0).outputString("").contains("sha256 = '85738f8f9a7f1b04b5329c590ebcb9e425925c6d0984089c43a022de4f19c281'"));
+    }
+
+    @Test
+    public void testRepositoryRulesMacroWriterWithShaButDoesNotGeneratesIfVersionIsSnapshot() throws Exception {
+        final TargetsBuilders.HttpTargetsBuilder httpTargetsBuilder = new TargetsBuilders.HttpTargetsBuilder(true) {
+            @Override
+            InputStream inputStreamForUrl(final URI url) {
+                return new ByteArrayInputStream("whatever".getBytes());
+            }
+        };
+
+        final List<Target> targets = httpTargetsBuilder.buildTargets(new Dependency("net.evendanan", "dep1", "1.2.3-SNAPSHOT",
+                "jar",
+                Collections.emptyList(), Collections.emptyList(), Collections.emptyList(),
+                URI.create("https://maven.central.org/repo/net/evendanan/dep1/dep1-1.2.3-SNAPSHOT.jar"),
+                URI.create(""),
+                URI.create(""),
+                Collections.emptyList()));
+
+        Assert.assertEquals(1, targets.size());
+        Assert.assertFalse(targets.get(0).outputString("").contains("sha256"));
     }
 
     @Test
