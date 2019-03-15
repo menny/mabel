@@ -7,7 +7,7 @@ This WORKSPACE will provide `deps_workspace_generator_rule` rule and `artifact` 
 
 ## Features
 
-* Transitively resolves all dependencies from a given list of Maven dependencies.
+* Transitively resolves all dependencies from a given list of Maven dependencies, and manages version conflicts - ensuring that only one version of each artifact is available in the dependencies graph.
 * Generates repository-rules for all remote artifacts.
 * Generates required Java rule (with transitive dependencies).
 * Automatically detects which rule-type to create for a given dependency:
