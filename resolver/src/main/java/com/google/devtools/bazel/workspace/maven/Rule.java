@@ -127,11 +127,19 @@ public class Rule implements Comparable<Rule> {
     }
 
     public void setPackaging(String packaging) {
-        if (MigrationToolingMavenResolver.isEmpty(packaging) || "bundle".equals(packaging)) {
+        if (MigrationToolingMavenResolver.isEmpty(packaging)) {
             return;
         }
-
-        this.packaging = packaging;
+        switch (packaging) {
+            case "bundle":
+            case "maven-plugin":
+            case "eclipse-plugin":
+                this.packaging = DEFAULT_PACKAGING;
+                break;
+            default:
+                this.packaging = packaging;
+                break;
+        }
     }
 
     public String scope() {
