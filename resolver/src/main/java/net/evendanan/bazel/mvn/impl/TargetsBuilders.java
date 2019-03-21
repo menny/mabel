@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.License;
@@ -21,19 +22,17 @@ import net.evendanan.bazel.mvn.api.TargetsBuilder;
 
 public class TargetsBuilders {
 
-    public static final TargetsBuilder HTTP_FILE = new HttpTargetsBuilder(false);
-    public static final TargetsBuilder HTTP_FILE_WITH_SHA = new HttpTargetsBuilder(true);
+    public static final TargetsBuilder NATIVE_JAVA_IMPORT = dependency -> {
+        List<Target> targets = new ArrayList<>();
+        targets.add(addJavaImportRule(true, dependency, ""));
+        targets.add(addAlias(true, dependency));
+
+        return targets;
+    };
     static final TargetsBuilder JAVA_IMPORT = dependency -> {
         List<Target> targets = new ArrayList<>();
         targets.add(addJavaImportRule(false, dependency, ""));
         targets.add(addAlias(false, dependency));
-
-        return targets;
-    };
-    static final TargetsBuilder NATIVE_JAVA_IMPORT = dependency -> {
-        List<Target> targets = new ArrayList<>();
-        targets.add(addJavaImportRule(true, dependency, ""));
-        targets.add(addAlias(true, dependency));
 
         return targets;
     };
@@ -87,15 +86,16 @@ public class TargetsBuilders {
                 .setPublicVisibility();
     }
 
-    @VisibleForTesting
-    static class HttpTargetsBuilder implements TargetsBuilder {
+    public static class HttpTargetsBuilder implements TargetsBuilder {
         private final static char[] hexArray = "0123456789abcdef".toCharArray();
         private final boolean calculateSha;
         private final byte[] readBuffer;
+        private final Function<Dependency, URI> downloader;
 
-        HttpTargetsBuilder(boolean calculateSha) {
+        public HttpTargetsBuilder(boolean calculateSha, Function<Dependency, URI> downloader) {
             this.calculateSha = calculateSha;
             this.readBuffer = calculateSha ? new byte[4096]:new byte[0];
+            this.downloader = downloader;
         }
 
         @Override
@@ -107,7 +107,7 @@ public class TargetsBuilders {
                     .addString("downloaded_file_path", getFilenameFromUrl(dependency.url().getPath()));
 
             if (calculateSha && !dependency.version().contains("SNAPSHOT")) {
-                try (InputStream inputStream = inputStreamForUrl(dependency.url())) {
+                try (InputStream inputStream = downloader.apply(dependency).toURL().openStream()) {
                     final MessageDigest digest = MessageDigest.getInstance("SHA-256");
 
                     int bytesCount;
@@ -137,11 +137,6 @@ public class TargetsBuilders {
 
                 return Arrays.asList(jarTarget, sourceTarget);
             }
-        }
-
-        @VisibleForTesting
-        InputStream inputStreamForUrl(final URI url) throws Exception {
-            return url.toURL().openStream();
         }
     }
 

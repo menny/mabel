@@ -1,9 +1,9 @@
 package net.evendanan.bazel.mvn.impl;
 
-import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Charsets;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -18,65 +18,13 @@ import net.evendanan.bazel.mvn.api.TargetsBuilder;
 
 public class RuleClassifiers {
 
-    static final RuleClassifier AAR_IMPORT = new AarClassifier(false);
-    static final RuleClassifier NATIVE_AAR_IMPORT = new AarClassifier(true);
-    static final RuleClassifier POM_IMPORT = new PomClassifier(false);
-    static final RuleClassifier NATIVE_POM_IMPORT = new PomClassifier(true);
-    private static final RuleClassifier JAR_INSPECTOR = new JarInspector(false);
-    public static final Function<Dependency, TargetsBuilder> NONE_NATIVE_RULE_MAPPER =
-            dependency -> ruleClassifier(Arrays.asList(POM_IMPORT, AAR_IMPORT, JAR_INSPECTOR), TargetsBuilders.JAVA_IMPORT, dependency);
-    private static final RuleClassifier NATIVE_JAR_INSPECTOR = new JarInspector(true);
-    public static final Function<Dependency, TargetsBuilder> NATIVE_RULE_MAPPER =
-            dependency -> ruleClassifier(Arrays.asList(NATIVE_POM_IMPORT, NATIVE_AAR_IMPORT, NATIVE_JAR_INSPECTOR), TargetsBuilders.NATIVE_JAVA_IMPORT, dependency);
-
-    private static TargetsBuilder ruleClassifier(Collection<RuleClassifier> classifiers, TargetsBuilder defaultFormatter, final Dependency dependency) {
+    public static TargetsBuilder priorityRuleClassifier(Collection<RuleClassifier> classifiers, TargetsBuilder defaultFormatter, final Dependency dependency) {
         return classifiers.stream()
                 .map(classifier -> classifier.classifyRule(dependency))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .findFirst()
                 .orElse(defaultFormatter);
-    }
-
-    @VisibleForTesting
-    static Optional<TargetsBuilder> performRemoteJarInspection(boolean asNative, InputStream networkInputStream) throws IOException {
-        try (JarInputStream zipInputStream = new JarInputStream(networkInputStream, false)) {
-            JarEntry jarEntry = zipInputStream.getNextJarEntry();
-            while (jarEntry!=null) {
-                final String jarEntryName = jarEntry.getName();
-                if (jarEntryName.equalsIgnoreCase("META-INF/services/javax.annotation.processing.Processor")) {
-                    StringBuilder contentBuilder = new StringBuilder();
-                    final byte[] buffer = new byte[1024];
-                    int read = 0;
-                    while ((read = zipInputStream.read(buffer, 0, buffer.length)) >= 0) {
-                        contentBuilder.append(new String(buffer, 0, read, Charsets.UTF_8));
-                    }
-
-                    return parseServicesProcessorFileContent(asNative, contentBuilder.toString());
-                } else if (jarEntryName.startsWith("META-INF/") && jarEntryName.endsWith(".kotlin_module")) {
-                    return Optional.of(asNative ? TargetsBuilders.NATIVE_KOTLIN_IMPORT:TargetsBuilders.KOTLIN_IMPORT);
-                }
-                zipInputStream.closeEntry();
-                jarEntry = zipInputStream.getNextJarEntry();
-            }
-        }
-
-        return Optional.empty();
-    }
-
-    private static Optional<TargetsBuilder> parseServicesProcessorFileContent(boolean asNative, String processorContent) {
-        if (processorContent!=null && processorContent.length() > 0) {
-            final List<String> processors = Arrays.stream(processorContent.split("\n", -1))
-                    .filter(s -> s!=null && s.length() > 0)
-                    .map(String::trim)
-                    .filter(s -> !s.isEmpty())
-                    .collect(Collectors.toList());
-
-            if (processors.size() > 0) {
-                return Optional.of(new TargetsBuilders.JavaPluginFormatter(asNative, processors));
-            }
-        }
-        return Optional.empty();
     }
 
     private static class PackagingClassifier implements RuleClassifier {
@@ -103,29 +51,71 @@ public class RuleClassifiers {
         }
     }
 
-    private static class AarClassifier extends PackagingClassifier {
-        private AarClassifier(final boolean asNative) {
+    public static class AarClassifier extends PackagingClassifier {
+        public AarClassifier(final boolean asNative) {
             super(asNative, "aar", TargetsBuilders.NATIVE_AAR_IMPORT, TargetsBuilders.AAR_IMPORT);
         }
     }
 
-    private static class PomClassifier extends PackagingClassifier {
-        private PomClassifier(final boolean asNative) {
+    public static class PomClassifier extends PackagingClassifier {
+        public PomClassifier(final boolean asNative) {
             super(asNative, "pom", TargetsBuilders.NATIVE_JAVA_IMPORT, TargetsBuilders.JAVA_IMPORT);
         }
     }
 
-    private static class JarInspector implements RuleClassifier {
+    public static class JarInspector implements RuleClassifier {
 
         private final boolean asNative;
+        private final Function<Dependency, URI> downloader;
 
-        private JarInspector(final boolean asNative) {
+        public JarInspector(boolean asNative, Function<Dependency, URI> downloader) {
             this.asNative = asNative;
+            this.downloader = downloader;
+        }
+
+        private static Optional<TargetsBuilder> performRemoteJarInspection(boolean asNative, InputStream inputStream) throws IOException {
+            try (JarInputStream zipInputStream = new JarInputStream(inputStream, false)) {
+                JarEntry jarEntry = zipInputStream.getNextJarEntry();
+                while (jarEntry!=null) {
+                    final String jarEntryName = jarEntry.getName();
+                    if (jarEntryName.equalsIgnoreCase("META-INF/services/javax.annotation.processing.Processor")) {
+                        StringBuilder contentBuilder = new StringBuilder();
+                        final byte[] buffer = new byte[1024];
+                        int read = 0;
+                        while ((read = zipInputStream.read(buffer, 0, buffer.length)) >= 0) {
+                            contentBuilder.append(new String(buffer, 0, read, Charsets.UTF_8));
+                        }
+
+                        return parseServicesProcessorFileContent(asNative, contentBuilder.toString());
+                    } else if (jarEntryName.startsWith("META-INF/") && jarEntryName.endsWith(".kotlin_module")) {
+                        return Optional.of(asNative ? TargetsBuilders.NATIVE_KOTLIN_IMPORT:TargetsBuilders.KOTLIN_IMPORT);
+                    }
+                    zipInputStream.closeEntry();
+                    jarEntry = zipInputStream.getNextJarEntry();
+                }
+            }
+
+            return Optional.empty();
+        }
+
+        private static Optional<TargetsBuilder> parseServicesProcessorFileContent(boolean asNative, String processorContent) {
+            if (processorContent!=null && processorContent.length() > 0) {
+                final List<String> processors = Arrays.stream(processorContent.split("\n", -1))
+                        .filter(s -> s!=null && s.length() > 0)
+                        .map(String::trim)
+                        .filter(s -> !s.isEmpty())
+                        .collect(Collectors.toList());
+
+                if (processors.size() > 0) {
+                    return Optional.of(new TargetsBuilders.JavaPluginFormatter(asNative, processors));
+                }
+            }
+            return Optional.empty();
         }
 
         @Override
         public Optional<TargetsBuilder> classifyRule(final Dependency dependency) {
-            try (InputStream networkInputStream = dependency.url().toURL().openStream()) {
+            try (InputStream networkInputStream = downloader.apply(dependency).toURL().openStream()) {
                 return performRemoteJarInspection(asNative, networkInputStream);
             } catch (IOException e) {
                 e.printStackTrace();

@@ -260,14 +260,28 @@ java_test(name = "merger_tests",
       ":api_lib",
 
       "//resolver/main_deps/junit/junit",
-      "//resolver/main_deps/org/mockito/mockito-core"
+      "//resolver/main_deps/org/mockito/mockito-core",
        ],
   srcs= [
-      "src/main/javatest/net/evendanan/bazel/mvn/merger/GraphUtilsTest.java",
-      "src/main/javatest/net/evendanan/bazel/mvn/merger/DefaultMergerTest.java"
+      "src/main/javatest/net/evendanan/bazel/mvn/merger/DefaultMergerTest.java",
+      #GraphUtilsTest is needed because it has some utility functions
+      "src/main/javatest/net/evendanan/bazel/mvn/merger/GraphUtilsTest.java"
       ],
   size="small",
   test_class = "net.evendanan.bazel.mvn.merger.DefaultMergerTest",
+)
+
+java_test(name = "downloader_tests",
+  deps=[
+      ":merger",
+      ":api_lib",
+
+      "//resolver/main_deps/junit/junit",
+      "//resolver:com_google_guava__guava"
+       ],
+  srcs= ["src/main/javatest/net/evendanan/bazel/mvn/merger/ArtifactDownloaderTest.java"],
+  size="small",
+  test_class = "net.evendanan.bazel.mvn.merger.ArtifactDownloaderTest",
 )
 
 java_test(name = "graph_util_tests",
