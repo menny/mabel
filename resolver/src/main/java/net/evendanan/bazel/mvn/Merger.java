@@ -14,13 +14,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.URI;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.zip.ZipInputStream;
 import net.evendanan.bazel.mvn.api.Dependency;
@@ -31,6 +34,7 @@ import net.evendanan.bazel.mvn.api.TargetsBuilder;
 import net.evendanan.bazel.mvn.impl.RuleClassifiers;
 import net.evendanan.bazel.mvn.impl.RuleWriters;
 import net.evendanan.bazel.mvn.impl.TargetsBuilders;
+import net.evendanan.bazel.mvn.merger.ArtifactDownloader;
 import net.evendanan.bazel.mvn.merger.ClearSrcJarAttribute;
 import net.evendanan.bazel.mvn.merger.DefaultMerger;
 import net.evendanan.bazel.mvn.merger.DependencyNamePrefixer;
@@ -39,6 +43,7 @@ import net.evendanan.bazel.mvn.merger.SourcesJarLocator;
 import net.evendanan.bazel.mvn.serialization.Serialization;
 import net.evendanan.timing.TaskTiming;
 import net.evendanan.timing.TimingData;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static net.evendanan.bazel.mvn.merger.GraphUtils.DfsTraveller;
@@ -91,7 +96,21 @@ public class Merger {
         }
 
         Merger driver = new Merger(options);
-        Collection<Dependency> dependencies = driver.generateFromInputs(options);
+        Collection<Dependency> dependencies = driver.mergeDependencyGraphsIntoOne(options);
+        final File artifactsFolder = new File(options.artifacts_path.replace("~", System.getProperty("user.home")));
+        if (!artifactsFolder.isDirectory() && !artifactsFolder.mkdirs()) {
+            throw new IOException("Failed to create artifacts folder "+artifactsFolder.getAbsolutePath());
+        }
+        System.out.println("artifactsFolder: " + artifactsFolder.getAbsolutePath());
+        final ArtifactDownloader artifactDownloader = new ArtifactDownloader(artifactsFolder);
+
+        final Function<Dependency, URI> downloader = dependency1 -> {
+            try {
+                return artifactDownloader.getLocalUriForDependency(dependency1);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        };
 
         if (options.fetch_srcjar) {
             System.out.print("Locating sources JARs for resolved dependencies...");
@@ -107,7 +126,7 @@ public class Merger {
             dependencies = DependencyNamePrefixer.wrap(dependencies, options.rule_prefix);
         }
 
-        driver.writeResults(dependencies, options);
+        driver.writeResults(dependencies, downloader, options);
 
         if (!options.output_pretty_dep_graph_filename.isEmpty()) {
             File prettyOutput = new File(options.output_target_build_files_base_path, options.output_pretty_dep_graph_filename);
@@ -169,7 +188,7 @@ public class Merger {
         return ret && path.delete();
     }
 
-    private Collection<Dependency> generateFromInputs(Options options) {
+    private Collection<Dependency> mergeDependencyGraphsIntoOne(Options options) {
         System.out.print(String.format("Reading %s root artifacts...", options.artifacts.size()));
 
         final Serialization serialization = new Serialization();
@@ -194,7 +213,7 @@ public class Merger {
         return merged;
     }
 
-    private void writeResults(Collection<Dependency> resolvedDependencies, final Options options) throws Exception {
+    private void writeResults(Collection<Dependency> resolvedDependencies, final Function<Dependency, @Nullable URI> downloader, final Options options) throws Exception {
         System.out.print("Flattening dependency tree for writing...");
         resolvedDependencies = DependencyTreeFlatter.flatten(resolvedDependencies)
                 .stream()
@@ -222,19 +241,17 @@ public class Merger {
 
         System.out.println(String.format("Processing %s resolved rules...", resolvedDependencies.size()));
 
+        final Function<Dependency, TargetsBuilder> ruleMapper = buildRuleMapper(downloader);
         ProgressTimer timer = new ProgressTimer(resolvedDependencies.size(), "** Converting to Bazel targets, %d out of %d (%.2f%%%s): %s...");
         List<Target> targets = resolvedDependencies.stream()
                 .peek(timer::taskDone)
-                .map(rule -> RuleClassifiers.NATIVE_RULE_MAPPER.apply(rule).buildTargets(rule))
+                .map(rule -> ruleMapper.apply(rule).buildTargets(rule))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
 
         System.out.print(String.format("Writing %d Bazel repository rules...", targets.size()));
-        timer = new ProgressTimer(resolvedDependencies.size(), "** Calculating SHA, %d out of %d (%.2f%%%s): %s...");
-        final TargetsBuilder fileImporter = options.calculate_sha ? TargetsBuilders.HTTP_FILE_WITH_SHA:TargetsBuilders.HTTP_FILE;
-        final Consumer<Dependency> fileImporterProgress = options.calculate_sha ? timer::taskDone:dependency -> { };
+        final TargetsBuilder fileImporter = new TargetsBuilders.HttpTargetsBuilder(options.calculate_sha, downloader);
         repositoryRulesMacroWriter.write(resolvedDependencies.stream()
-                .peek(fileImporterProgress)
                 .map(fileImporter::buildTargets)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList()));
@@ -251,6 +268,15 @@ public class Merger {
             hardAliasesWriter.write(targets);
             System.out.println("✓");
         }
+    }
+
+    private Function<Dependency, TargetsBuilder> buildRuleMapper(final Function<Dependency, @Nullable URI> downloader) {
+        return dependency -> RuleClassifiers.priorityRuleClassifier(
+                Arrays.asList(
+                        new RuleClassifiers.PomClassifier(true),
+                        new RuleClassifiers.AarClassifier(true),
+                        new RuleClassifiers.JarInspector(true, downloader)),
+                TargetsBuilders.NATIVE_JAVA_IMPORT, dependency);
     }
 
     private static class ProgressTimer {
@@ -336,6 +362,11 @@ public class Merger {
                 names = {"--output_pretty_dep_graph_filename"},
                 description = "If set, will output the dependency graph to this file."
         ) String output_pretty_dep_graph_filename = "";
+        @Parameter(
+                names = {"--artifacts_path"},
+                description = "Where to store downloaded artifacts.",
+                required = true
+        ) private String artifacts_path;
     }
 
     /**

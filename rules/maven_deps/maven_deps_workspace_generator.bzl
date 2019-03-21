@@ -55,7 +55,8 @@ java -jar {merger} {graph_files_list} \
     --rule_prefix={rule_prefix} \
     --debug_logs={debug_logs} \
     --create_deps_sub_folders={create_deps_sub_folders} \
-    --output_pretty_dep_graph_filename={output_pretty_dep_graph_filename}
+    --output_pretty_dep_graph_filename={output_pretty_dep_graph_filename} \
+    --artifacts_path={artifacts_path}
 
 echo "Stored resolved dependencies graph (rules) at ${{BUILD_WORKING_DIRECTORY}}/{output_target_build_files_base_path}{output_filename}"
 """
@@ -77,6 +78,7 @@ def _impl_merger(ctx):
         calculate_sha = '{}'.format(ctx.attr.calculate_sha).lower(),
         debug_logs = '{}'.format(ctx.attr.debug_logs).lower(),
         rule_prefix = ctx.attr.generated_targets_prefix,
+        artifacts_path = "~/.mabel/artifacts/".format("~") if ctx.attr.artifacts_path == "" else ctx.attr.artifacts_path,
         output_pretty_dep_graph_filename = "dependencies.txt" if ctx.attr.output_graph_to_file else "",
         create_deps_sub_folders = '{}'.format(ctx.attr.generate_deps_sub_folder).lower()
         )
@@ -107,6 +109,7 @@ deps_workspace_generator_rule = rule(implementation=_impl_merger,
          "generate_deps_sub_folder": attr.bool(default=True, doc='If set to True (the default), will create sub-folders with BUILD.bazel file for each dependency.', mandatory=False),
          "debug_logs": attr.bool(default=False, doc='If set to True, will print out debug logs while resolving dependencies. Default is False.', mandatory=False),
          "generated_targets_prefix": attr.string(default="", doc='A prefix to add to all generated targets. Default is an empty string, meaning no prefix.', mandatory=False),
+         "artifacts_path": attr.string(default="", doc='Cache location to download artifacts into. Empty means `[user-home-folder]/.mabel/artifacts/`', mandatory=False),
          "output_graph_to_file": attr.bool(default=False, doc='If set to True, will output the graph to dependencies.txt. Default is False.', mandatory=False),
          "_merger": attr.label(executable=True, allow_files=True, single_file=True, cfg="host", default=Label("//resolver:merger_bin_deploy.jar"))
      },

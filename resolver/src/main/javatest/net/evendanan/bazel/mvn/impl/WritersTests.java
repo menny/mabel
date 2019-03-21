@@ -1,15 +1,16 @@
 package net.evendanan.bazel.mvn.impl;
 
 import com.google.common.base.Charsets;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.Target;
 import org.junit.Assert;
@@ -146,14 +147,14 @@ public class WritersTests {
         File outputFile = File.createTempFile("testRepositoryRulesMacroWriter", ".bzl");
         RuleWriters.HttpRepoRulesMacroWriter writer = new RuleWriters.HttpRepoRulesMacroWriter(outputFile, "macro_name");
         writer.write(Arrays.asList(
-                TargetsBuilders.HTTP_FILE.buildTargets(
+                new TargetsBuilders.HttpTargetsBuilder(false, dep -> URI.create("")).buildTargets(
                         createDependency(
                                 "net.evendanan.dep1:artifact:1.2.3",
                                 "https://example.com/net/evendanan/dep.jar",
                                 Arrays.asList("dep_1_1", "dep_1_2"),
                                 Collections.emptyList(),
                                 Collections.emptyList())).get(0),
-                TargetsBuilders.HTTP_FILE.buildTargets(
+                new TargetsBuilders.HttpTargetsBuilder(false, dep -> URI.create("")).buildTargets(
                         createDependency(
                                 "net.evendanan.dep2:artifact:2.0",
                                 "https://example.com/com/example/dep2.jar",
@@ -169,7 +170,7 @@ public class WritersTests {
 
     @Test
     public void testRepositoryRulesMacroWriterWithSources() throws Exception {
-        final List<Target> targets = TargetsBuilders.HTTP_FILE.buildTargets(new Dependency("net.evendanan", "dep1", "1.2.3",
+        final List<Target> targets = new TargetsBuilders.HttpTargetsBuilder(false, dep -> URI.create("")).buildTargets(new Dependency("net.evendanan", "dep1", "1.2.3",
                 "jar",
                 Collections.emptyList(), Collections.emptyList(), Collections.emptyList(),
                 URI.create("https://maven.central.org/repo/net/evendanan/dep1/dep1-1.2.3.jar"),
@@ -190,12 +191,16 @@ public class WritersTests {
 
     @Test
     public void testRepositoryRulesMacroWriterWithSha() throws Exception {
-        final TargetsBuilders.HttpTargetsBuilder httpTargetsBuilder = new TargetsBuilders.HttpTargetsBuilder(true) {
-            @Override
-            InputStream inputStreamForUrl(final URI url) {
-                return new ByteArrayInputStream("whatever".getBytes());
+        final Function<Dependency, URI> dependencyURIFunction = dep -> {
+            try {
+                final File file = File.createTempFile("testRepositoryRulesMacroWriterWithSha", "test");
+                Files.write(file.toPath(), "whatever".getBytes(), StandardOpenOption.CREATE);
+                return file.toURI();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         };
+        final TargetsBuilders.HttpTargetsBuilder httpTargetsBuilder = new TargetsBuilders.HttpTargetsBuilder(true, dependencyURIFunction);
 
         final List<Target> targets = httpTargetsBuilder.buildTargets(new Dependency("net.evendanan", "dep1", "1.2.3",
                 "jar",
@@ -211,12 +216,16 @@ public class WritersTests {
 
     @Test
     public void testRepositoryRulesMacroWriterWithShaButDoesNotGeneratesIfVersionIsSnapshot() throws Exception {
-        final TargetsBuilders.HttpTargetsBuilder httpTargetsBuilder = new TargetsBuilders.HttpTargetsBuilder(true) {
-            @Override
-            InputStream inputStreamForUrl(final URI url) {
-                return new ByteArrayInputStream("whatever".getBytes());
+        final Function<Dependency, URI> dependencyURIFunction = dep -> {
+            try {
+                final File file = File.createTempFile("testRepositoryRulesMacroWriterWithShaButDoesNotGeneratesIfVersionIsSnapshot", "test");
+                Files.write(file.toPath(), "whatever".getBytes(), StandardOpenOption.CREATE);
+                return file.toURI();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         };
+        final TargetsBuilders.HttpTargetsBuilder httpTargetsBuilder = new TargetsBuilders.HttpTargetsBuilder(true, dependencyURIFunction);
 
         final List<Target> targets = httpTargetsBuilder.buildTargets(new Dependency("net.evendanan", "dep1", "1.2.3-SNAPSHOT",
                 "jar",

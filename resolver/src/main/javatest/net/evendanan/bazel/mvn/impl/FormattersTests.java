@@ -1,5 +1,6 @@
 package net.evendanan.bazel.mvn.impl;
 
+import java.net.URI;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -452,7 +453,7 @@ public class FormattersTests {
 
     @Test
     public void testPomOnlyArtifactHttp() {
-        Assert.assertTrue(TargetsBuilders.HTTP_FILE.buildTargets(
+        Assert.assertTrue(new TargetsBuilders.HttpTargetsBuilder(false, dep -> URI.create("")).buildTargets(
                 createDependency("parent:lib",
                         "some_url.pom",
                         Arrays.asList("dep1", "dep2"),
@@ -474,7 +475,7 @@ public class FormattersTests {
 
     @Test
     public void testHttpFormatter() {
-        final String ruleText = targetsToString(" ", TargetsBuilders.HTTP_FILE.buildTargets(
+        final String ruleText = targetsToString(" ", new TargetsBuilders.HttpTargetsBuilder(false, dep -> URI.create("")).buildTargets(
                 createDependency("aar:lib",
                         "https://some_url/ss.aar",
                         Arrays.asList("dep1", "dep2"),
