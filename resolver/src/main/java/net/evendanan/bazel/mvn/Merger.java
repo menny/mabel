@@ -97,7 +97,13 @@ public class Merger {
 
         Merger driver = new Merger(options);
         Collection<Dependency> dependencies = driver.mergeDependencyGraphsIntoOne(options);
-        final ArtifactDownloader artifactDownloader = new ArtifactDownloader(new File(options.artifacts_path));
+        final File artifactsFolder = new File(options.artifacts_path.replace("~", System.getProperty("user.home")));
+        if (!artifactsFolder.isDirectory() && !artifactsFolder.mkdirs()) {
+            throw new IOException("Failed to create artifacts folder "+artifactsFolder.getAbsolutePath());
+        }
+        System.out.println("artifactsFolder: " + artifactsFolder.getAbsolutePath());
+        final ArtifactDownloader artifactDownloader = new ArtifactDownloader(artifactsFolder);
+
         final Function<Dependency, URI> downloader = dependency1 -> {
             try {
                 return artifactDownloader.getLocalUriForDependency(dependency1);
@@ -244,12 +250,8 @@ public class Merger {
                 .collect(Collectors.toList());
 
         System.out.print(String.format("Writing %d Bazel repository rules...", targets.size()));
-        timer = new ProgressTimer(resolvedDependencies.size(), "** Calculating SHA, %d out of %d (%.2f%%%s): %s...");
         final TargetsBuilder fileImporter = new TargetsBuilders.HttpTargetsBuilder(options.calculate_sha, downloader);
-        final Consumer<Dependency> fileImporterProgress = options.calculate_sha ? timer::taskDone:dependency -> {
-        };
         repositoryRulesMacroWriter.write(resolvedDependencies.stream()
-                .peek(fileImporterProgress)
                 .map(fileImporter::buildTargets)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList()));

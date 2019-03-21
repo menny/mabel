@@ -40,7 +40,6 @@ public class ArtifactDownloader {
         final File tempDownloadFile = File.createTempFile("mabel_ArtifactDownloader", localPath.getName());
         try (final ReadableByteChannel readableByteChannel = Channels.newChannel(mConnectionOpenner.openInputStream(dependency.url().toURL()))) {
             try (final FileOutputStream tempOutput = new FileOutputStream(tempDownloadFile, false)) {
-                System.out.print('⇵');
                 tempOutput.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
             }
         }
