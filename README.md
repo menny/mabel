@@ -31,7 +31,7 @@ This WORKSPACE will provide `deps_workspace_generator_rule` rule and `artifact` 
 Unlike other build systems, Bazel does not provide a dependency management service as part of the build and
 does not provide a way to specify a Maven dependency (which will be resolved transitively) and be available during compilation.
 <br/>
-There are several attempts to solve this problem (such as [sync-deps](https://github.com/spotify/bazel-tools/tree/master/sync-deps), [gmaven](https://github.com/bazelbuild/gmaven_rules), [migration-tooling](https://github.com/bazelbuild/migration-tooling), [maven-rules](https://github.com/jin/rules_maven) and [bazel-deps](https://github.com/johnynek/bazel-deps)), but some do not support Kotlin or Android, some do not support customized Maven repositories, etc.
+There are several attempts to solve this problem (such as [sync-deps](https://github.com/spotify/bazel-tools/tree/master/sync-deps), [gmaven](https://github.com/bazelbuild/gmaven_rules), [rules_jvm_external](https://github.com/bazelbuild/rules_jvm_external), [migration-tooling](https://github.com/bazelbuild/migration-tooling), [maven-rules](https://github.com/jin/rules_maven) and [bazel-deps](https://github.com/johnynek/bazel-deps)), but some do not support Kotlin or Android, some do not support customized Maven repositories, etc.
 
 ## Example
 
