@@ -111,7 +111,7 @@ deps_workspace_generator_rule = rule(implementation=_impl_merger,
          "generated_targets_prefix": attr.string(default="", doc='A prefix to add to all generated targets. Default is an empty string, meaning no prefix.', mandatory=False),
          "artifacts_path": attr.string(default="", doc='Cache location to download artifacts into. Empty means `[user-home-folder]/.mabel/artifacts/`', mandatory=False),
          "output_graph_to_file": attr.bool(default=False, doc='If set to True, will output the graph to dependencies.txt. Default is False.', mandatory=False),
-         "_merger": attr.label(executable=True, allow_files=True, single_file=True, cfg="host", default=Label("//resolver:merger_bin_deploy.jar"))
+         "_merger": attr.label(executable=True, allow_single_file=True, cfg="host", default=Label("//resolver:merger_bin_deploy.jar"))
      },
      outputs={"out": "%{name}-generate-deps.sh"})
 
