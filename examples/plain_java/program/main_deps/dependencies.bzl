@@ -18,10 +18,10 @@ def generate_workspace_rules():
 # not to provide those implementations we'll try to use java_* rules.
 
 # This is a help macro to handle Kotlin rules.
-def kotlin_jar_support(name, deps, exports, runtime_deps, jar, kt_jvm_import=None, kt_jvm_library=None):
+def kotlin_jar_support(name, deps, exports, runtime_deps, jar, java_import_impl, kt_jvm_import=None, kt_jvm_library=None):
     #In case the developer did not provide a kt_* impl, we'll try to use java_*, should work
     if kt_jvm_import == None:
-        native.java_import(name = name,
+        java_import_impl(name = name,
             jars = [jar],
             deps = deps,
             exports = exports,
@@ -37,7 +37,10 @@ def kotlin_jar_support(name, deps, exports, runtime_deps, jar, kt_jvm_import=Non
             runtime_deps = runtime_deps,
         )
 
-def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=None):
+# Macro to set up the transitive rules.
+# You can provide your own implementation of java_import and aar_import. This can be used
+# in cases where you need to shade (or jar_jar or jetify) your jars.
+def generate_transitive_dependency_targets(java_import_impl=native.java_import, aar_import_impl=native.aar_import, kt_jvm_import=None, kt_jvm_library=None):
     # from com.google.guava:guava:20.0
     native.alias(name = 'com_google_guava__guava',
         actual = ':com_google_guava__guava__20_0',
@@ -45,7 +48,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from com.google.guava:guava:20.0
-    native.java_import(name = 'com_google_guava__guava__20_0',
+    java_import_impl(name = 'com_google_guava__guava__20_0',
         jars = ['@com_google_guava__guava__20_0//file'],
         tags = ['maven_coordinates=com.google.guava:guava:20.0'],
         licenses = ['notice'],

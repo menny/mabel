@@ -39,10 +39,10 @@ def generate_workspace_rules():
 # not to provide those implementations we'll try to use java_* rules.
 
 # This is a help macro to handle Kotlin rules.
-def kotlin_jar_support(name, deps, exports, runtime_deps, jar, kt_jvm_import=None, kt_jvm_library=None):
+def kotlin_jar_support(name, deps, exports, runtime_deps, jar, java_import_impl, kt_jvm_import=None, kt_jvm_library=None):
     #In case the developer did not provide a kt_* impl, we'll try to use java_*, should work
     if kt_jvm_import == None:
-        native.java_import(name = name,
+        java_import_impl(name = name,
             jars = [jar],
             deps = deps,
             exports = exports,
@@ -58,7 +58,10 @@ def kotlin_jar_support(name, deps, exports, runtime_deps, jar, kt_jvm_import=Non
             runtime_deps = runtime_deps,
         )
 
-def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=None):
+# Macro to set up the transitive rules.
+# You can provide your own implementation of java_import and aar_import. This can be used
+# in cases where you need to shade (or jar_jar or jetify) your jars.
+def generate_transitive_dependency_targets(java_import_impl=native.java_import, aar_import_impl=native.aar_import, kt_jvm_import=None, kt_jvm_library=None):
     # from com.github.salomonbrys.kotson:kotson:2.5.0
     native.alias(name = 'com_github_salomonbrys_kotson__kotson',
         actual = ':com_github_salomonbrys_kotson__kotson__2_5_0',
@@ -77,6 +80,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         ],
         runtime_deps = [],
         jar = '@com_github_salomonbrys_kotson__kotson__2_5_0//file',
+        java_import_impl = java_import_impl,
         kt_jvm_import = kt_jvm_import,
         kt_jvm_library = kt_jvm_library,
     )
@@ -88,7 +92,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from com.google.code.gson:gson:2.8.0
-    native.java_import(name = 'com_google_code_gson__gson__2_8_0',
+    java_import_impl(name = 'com_google_code_gson__gson__2_8_0',
         jars = ['@com_google_code_gson__gson__2_8_0//file'],
         tags = ['maven_coordinates=com.google.code.gson:gson:2.8.0'],
         licenses = ['notice'],
@@ -109,6 +113,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         exports = [],
         runtime_deps = [],
         jar = '@org_jetbrains_kotlin__kotlin_runtime__1_0_6//file',
+        java_import_impl = java_import_impl,
         kt_jvm_import = kt_jvm_import,
         kt_jvm_library = kt_jvm_library,
     )
@@ -125,6 +130,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
         exports = [':org_jetbrains_kotlin__kotlin_runtime'],
         runtime_deps = [],
         jar = '@org_jetbrains_kotlin__kotlin_stdlib__1_0_6//file',
+        java_import_impl = java_import_impl,
         kt_jvm_import = kt_jvm_import,
         kt_jvm_library = kt_jvm_library,
     )
