@@ -29,22 +29,18 @@ public class RuleClassifiers {
 
     private static class PackagingClassifier implements RuleClassifier {
 
-        private final boolean asNative;
         private final String packaging;
-        private final TargetsBuilder nativeBuilder;
-        private final TargetsBuilder nonNativeBuilder;
+        private final TargetsBuilder targetsBuilder;
 
-        private PackagingClassifier(final boolean asNative, final String packaging, TargetsBuilder nativeBuilder, TargetsBuilder nonNativeBuilder) {
-            this.asNative = asNative;
+        private PackagingClassifier(final String packaging, TargetsBuilder targetsBuilder) {
             this.packaging = packaging;
-            this.nativeBuilder = nativeBuilder;
-            this.nonNativeBuilder = nonNativeBuilder;
+            this.targetsBuilder = targetsBuilder;
         }
 
         @Override
         public Optional<TargetsBuilder> classifyRule(final Dependency dependency) {
             if (packaging.equals(dependency.packaging())) {
-                return Optional.of(asNative ? nativeBuilder:nonNativeBuilder);
+                return Optional.of(targetsBuilder);
             } else {
                 return Optional.empty();
             }
@@ -52,28 +48,26 @@ public class RuleClassifiers {
     }
 
     public static class AarClassifier extends PackagingClassifier {
-        public AarClassifier(final boolean asNative) {
-            super(asNative, "aar", TargetsBuilders.NATIVE_AAR_IMPORT, TargetsBuilders.AAR_IMPORT);
+        public AarClassifier() {
+            super("aar", TargetsBuilders.AAR_IMPORT);
         }
     }
 
     public static class PomClassifier extends PackagingClassifier {
-        public PomClassifier(final boolean asNative) {
-            super(asNative, "pom", TargetsBuilders.NATIVE_JAVA_IMPORT, TargetsBuilders.JAVA_IMPORT);
+        public PomClassifier() {
+            super("pom", TargetsBuilders.JAVA_IMPORT);
         }
     }
 
     public static class JarInspector implements RuleClassifier {
 
-        private final boolean asNative;
         private final Function<Dependency, URI> downloader;
 
-        public JarInspector(boolean asNative, Function<Dependency, URI> downloader) {
-            this.asNative = asNative;
+        public JarInspector(Function<Dependency, URI> downloader) {
             this.downloader = downloader;
         }
 
-        private static Optional<TargetsBuilder> performRemoteJarInspection(boolean asNative, InputStream inputStream) throws IOException {
+        private static Optional<TargetsBuilder> performRemoteJarInspection(InputStream inputStream) throws IOException {
             try (JarInputStream zipInputStream = new JarInputStream(inputStream, false)) {
                 JarEntry jarEntry = zipInputStream.getNextJarEntry();
                 while (jarEntry!=null) {
@@ -86,9 +80,9 @@ public class RuleClassifiers {
                             contentBuilder.append(new String(buffer, 0, read, Charsets.UTF_8));
                         }
 
-                        return parseServicesProcessorFileContent(asNative, contentBuilder.toString());
+                        return parseServicesProcessorFileContent(contentBuilder.toString());
                     } else if (jarEntryName.startsWith("META-INF/") && jarEntryName.endsWith(".kotlin_module")) {
-                        return Optional.of(asNative ? TargetsBuilders.NATIVE_KOTLIN_IMPORT:TargetsBuilders.KOTLIN_IMPORT);
+                        return Optional.of(TargetsBuilders.KOTLIN_IMPORT);
                     }
                     zipInputStream.closeEntry();
                     jarEntry = zipInputStream.getNextJarEntry();
@@ -98,7 +92,7 @@ public class RuleClassifiers {
             return Optional.empty();
         }
 
-        private static Optional<TargetsBuilder> parseServicesProcessorFileContent(boolean asNative, String processorContent) {
+        private static Optional<TargetsBuilder> parseServicesProcessorFileContent(String processorContent) {
             if (processorContent!=null && processorContent.length() > 0) {
                 final List<String> processors = Arrays.stream(processorContent.split("\n", -1))
                         .filter(s -> s!=null && s.length() > 0)
@@ -107,7 +101,7 @@ public class RuleClassifiers {
                         .collect(Collectors.toList());
 
                 if (processors.size() > 0) {
-                    return Optional.of(new TargetsBuilders.JavaPluginFormatter(asNative, processors));
+                    return Optional.of(new TargetsBuilders.JavaPluginFormatter(processors));
                 }
             }
             return Optional.empty();
@@ -116,7 +110,7 @@ public class RuleClassifiers {
         @Override
         public Optional<TargetsBuilder> classifyRule(final Dependency dependency) {
             try (InputStream networkInputStream = downloader.apply(dependency).toURL().openStream()) {
-                return performRemoteJarInspection(asNative, networkInputStream);
+                return performRemoteJarInspection(networkInputStream);
             } catch (IOException e) {
                 e.printStackTrace();
                 return Optional.empty();

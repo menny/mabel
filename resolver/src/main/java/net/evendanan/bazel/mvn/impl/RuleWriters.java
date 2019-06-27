@@ -81,10 +81,10 @@ public class RuleWriters {
                 fileWriter.append(NEW_LINE);
 
                 fileWriter.append("# This is a help macro to handle Kotlin rules.").append(NEW_LINE);
-                fileWriter.append("def ").append(KOTLIN_LIB_MACRO_NAME).append("(name, deps, exports, runtime_deps, jar, kt_jvm_import=None, kt_jvm_library=None):").append(NEW_LINE);
+                fileWriter.append("def ").append(KOTLIN_LIB_MACRO_NAME).append("(name, deps, exports, runtime_deps, jar, java_import_impl, kt_jvm_import=None, kt_jvm_library=None):").append(NEW_LINE);
                 fileWriter.append(INDENT).append("#In case the developer did not provide a kt_* impl, we'll try to use java_*, should work").append(NEW_LINE);
                 fileWriter.append(INDENT).append("if kt_jvm_import == None:").append(NEW_LINE);
-                fileWriter.append(INDENT).append(INDENT).append("native.java_import(name = name,").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append("java_import_impl(name = name,").append(NEW_LINE);
                 fileWriter.append(INDENT).append(INDENT).append(INDENT).append("jars = [jar],").append(NEW_LINE);
                 fileWriter.append(INDENT).append(INDENT).append(INDENT).append("deps = deps,").append(NEW_LINE);
                 fileWriter.append(INDENT).append(INDENT).append(INDENT).append("exports = exports,").append(NEW_LINE);
@@ -101,7 +101,10 @@ public class RuleWriters {
                 fileWriter.append(INDENT).append(INDENT).append(")").append(NEW_LINE);
                 fileWriter.append(NEW_LINE);
 
-                fileWriter.append("def ").append(macroName).append("(kt_jvm_import=None, kt_jvm_library=None):").append(NEW_LINE);
+                fileWriter.append("# Macro to set up the transitive rules.").append(NEW_LINE);
+                fileWriter.append("# You can provide your own implementation of java_import and aar_import. This can be used").append(NEW_LINE);
+                fileWriter.append("# in cases where you need to shade (or jar_jar or jetify) your jars.").append(NEW_LINE);
+                fileWriter.append("def ").append(macroName).append("(java_import_impl=native.java_import, aar_import_impl=native.aar_import, kt_jvm_import=None, kt_jvm_library=None):").append(NEW_LINE);
                 if (targets.isEmpty()) {
                     fileWriter.append(INDENT).append("pass");
                 } else {
