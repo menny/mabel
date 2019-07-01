@@ -22,7 +22,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.zip.ZipInputStream;
@@ -99,7 +98,7 @@ public class Merger {
         Collection<Dependency> dependencies = driver.mergeDependencyGraphsIntoOne(options);
         final File artifactsFolder = new File(options.artifacts_path.replace("~", System.getProperty("user.home")));
         if (!artifactsFolder.isDirectory() && !artifactsFolder.mkdirs()) {
-            throw new IOException("Failed to create artifacts folder "+artifactsFolder.getAbsolutePath());
+            throw new IOException("Failed to create artifacts folder " + artifactsFolder.getAbsolutePath());
         }
         System.out.println("artifactsFolder: " + artifactsFolder.getAbsolutePath());
         final ArtifactDownloader artifactDownloader = new ArtifactDownloader(artifactsFolder);
@@ -273,10 +272,10 @@ public class Merger {
     private Function<Dependency, TargetsBuilder> buildRuleMapper(final Function<Dependency, @Nullable URI> downloader) {
         return dependency -> RuleClassifiers.priorityRuleClassifier(
                 Arrays.asList(
-                        new RuleClassifiers.PomClassifier(true),
-                        new RuleClassifiers.AarClassifier(true),
-                        new RuleClassifiers.JarInspector(true, downloader)),
-                TargetsBuilders.NATIVE_JAVA_IMPORT, dependency);
+                        new RuleClassifiers.PomClassifier(),
+                        new RuleClassifiers.AarClassifier(),
+                        new RuleClassifiers.JarInspector(downloader)),
+                TargetsBuilders.JAVA_IMPORT, dependency);
     }
 
     private static class ProgressTimer {

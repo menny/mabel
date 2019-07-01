@@ -15,6 +15,7 @@ This WORKSPACE will provide `deps_workspace_generator_rule` rule and `artifact` 
   * `java_plugin` + `java_library` for annotation-processors. More about this [here](#annotation-processors).
   * `kt_jvm_import` + `kt_jvm_library` or `java_import` for Kotlin modules. More about this [here](#kotlin).
   * `java_import` for anything else.
+* Allow implementation replacement for `java_import` and `aar_import`. Those can be replaced with another rule or macro. See `examples/android/program/BUILD.bazel` for an example.
 * Support custom Maven repo URLs and locking dependency for a Maven repository.
 * Adds `licenses` data to `java_import` rules, if license is declared in the artifact's POM file.
 * Adds `srcjar` if sources available in the Maven repository.

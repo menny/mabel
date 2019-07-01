@@ -209,10 +209,10 @@ def generate_workspace_rules():
 # not to provide those implementations we'll try to use java_* rules.
 
 # This is a help macro to handle Kotlin rules.
-def kotlin_jar_support(name, deps, exports, runtime_deps, jar, kt_jvm_import=None, kt_jvm_library=None):
+def kotlin_jar_support(name, deps, exports, runtime_deps, jar, java_import_impl, kt_jvm_import=None, kt_jvm_library=None):
     #In case the developer did not provide a kt_* impl, we'll try to use java_*, should work
     if kt_jvm_import == None:
-        native.java_import(name = name,
+        java_import_impl(name = name,
             jars = [jar],
             deps = deps,
             exports = exports,
@@ -228,7 +228,10 @@ def kotlin_jar_support(name, deps, exports, runtime_deps, jar, kt_jvm_import=Non
             runtime_deps = runtime_deps,
         )
 
-def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=None):
+# Macro to set up the transitive rules.
+# You can provide your own implementation of java_import and aar_import. This can be used
+# in cases where you need to shade (or jar_jar or jetify) your jars.
+def generate_transitive_dependency_targets(java_import_impl=native.java_import, aar_import_impl=native.aar_import, kt_jvm_import=None, kt_jvm_library=None):
     # from androidx.activity:activity:1.0.0-alpha02
     native.alias(name = 'androidx_activity__activity',
         actual = ':androidx_activity__activity__1_0_0_alpha02',
@@ -236,7 +239,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.activity:activity:1.0.0-alpha02
-    native.aar_import(name = 'androidx_activity__activity__1_0_0_alpha02',
+    aar_import_impl(name = 'androidx_activity__activity__1_0_0_alpha02',
         aar = '@androidx_activity__activity__1_0_0_alpha02//file',
         deps = [
             ':androidx_annotation__annotation',
@@ -259,7 +262,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.annotation:annotation:1.0.0
-    native.java_import(name = 'androidx_annotation__annotation__1_0_0',
+    java_import_impl(name = 'androidx_annotation__annotation__1_0_0',
         jars = ['@androidx_annotation__annotation__1_0_0//file'],
         tags = ['maven_coordinates=androidx.annotation:annotation:1.0.0'],
         licenses = ['notice'],
@@ -275,7 +278,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.appcompat:appcompat:1.0.2
-    native.aar_import(name = 'androidx_appcompat__appcompat__1_0_2',
+    aar_import_impl(name = 'androidx_appcompat__appcompat__1_0_2',
         aar = '@androidx_appcompat__appcompat__1_0_2//file',
         deps = [
             ':androidx_annotation__annotation',
@@ -306,7 +309,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.arch.core:core-common:2.0.0
-    native.java_import(name = 'androidx_arch_core__core_common__2_0_0',
+    java_import_impl(name = 'androidx_arch_core__core_common__2_0_0',
         jars = ['@androidx_arch_core__core_common__2_0_0//file'],
         tags = ['maven_coordinates=androidx.arch.core:core-common:2.0.0'],
         licenses = ['notice'],
@@ -322,7 +325,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.arch.core:core-runtime:2.0.0
-    native.aar_import(name = 'androidx_arch_core__core_runtime__2_0_0',
+    aar_import_impl(name = 'androidx_arch_core__core_runtime__2_0_0',
         aar = '@androidx_arch_core__core_runtime__2_0_0//file',
         deps = [
             ':androidx_annotation__annotation',
@@ -341,7 +344,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.asynclayoutinflater:asynclayoutinflater:1.0.0
-    native.aar_import(name = 'androidx_asynclayoutinflater__asynclayoutinflater__1_0_0',
+    aar_import_impl(name = 'androidx_asynclayoutinflater__asynclayoutinflater__1_0_0',
         aar = '@androidx_asynclayoutinflater__asynclayoutinflater__1_0_0//file',
         deps = [
             ':androidx_annotation__annotation',
@@ -360,7 +363,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.collection:collection:1.0.0
-    native.java_import(name = 'androidx_collection__collection__1_0_0',
+    java_import_impl(name = 'androidx_collection__collection__1_0_0',
         jars = ['@androidx_collection__collection__1_0_0//file'],
         tags = ['maven_coordinates=androidx.collection:collection:1.0.0'],
         licenses = ['notice'],
@@ -376,7 +379,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.coordinatorlayout:coordinatorlayout:1.0.0
-    native.aar_import(name = 'androidx_coordinatorlayout__coordinatorlayout__1_0_0',
+    aar_import_impl(name = 'androidx_coordinatorlayout__coordinatorlayout__1_0_0',
         aar = '@androidx_coordinatorlayout__coordinatorlayout__1_0_0//file',
         deps = [
             ':androidx_annotation__annotation',
@@ -397,7 +400,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.core:core:1.1.0-alpha01
-    native.aar_import(name = 'androidx_core__core__1_1_0_alpha01',
+    aar_import_impl(name = 'androidx_core__core__1_1_0_alpha01',
         aar = '@androidx_core__core__1_1_0_alpha01//file',
         deps = [
             ':androidx_annotation__annotation',
@@ -420,7 +423,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.cursoradapter:cursoradapter:1.0.0
-    native.aar_import(name = 'androidx_cursoradapter__cursoradapter__1_0_0',
+    aar_import_impl(name = 'androidx_cursoradapter__cursoradapter__1_0_0',
         aar = '@androidx_cursoradapter__cursoradapter__1_0_0//file',
         deps = [':androidx_annotation__annotation'],
         exports = [':androidx_annotation__annotation'],
@@ -433,7 +436,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.customview:customview:1.0.0
-    native.aar_import(name = 'androidx_customview__customview__1_0_0',
+    aar_import_impl(name = 'androidx_customview__customview__1_0_0',
         aar = '@androidx_customview__customview__1_0_0//file',
         deps = [
             ':androidx_annotation__annotation',
@@ -452,7 +455,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.documentfile:documentfile:1.0.0
-    native.aar_import(name = 'androidx_documentfile__documentfile__1_0_0',
+    aar_import_impl(name = 'androidx_documentfile__documentfile__1_0_0',
         aar = '@androidx_documentfile__documentfile__1_0_0//file',
         deps = [':androidx_annotation__annotation'],
         exports = [':androidx_annotation__annotation'],
@@ -465,7 +468,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.drawerlayout:drawerlayout:1.0.0
-    native.aar_import(name = 'androidx_drawerlayout__drawerlayout__1_0_0',
+    aar_import_impl(name = 'androidx_drawerlayout__drawerlayout__1_0_0',
         aar = '@androidx_drawerlayout__drawerlayout__1_0_0//file',
         deps = [
             ':androidx_annotation__annotation',
@@ -486,7 +489,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.fragment:fragment:1.1.0-alpha02
-    native.aar_import(name = 'androidx_fragment__fragment__1_1_0_alpha02',
+    aar_import_impl(name = 'androidx_fragment__fragment__1_1_0_alpha02',
         aar = '@androidx_fragment__fragment__1_1_0_alpha02//file',
         deps = [
             ':androidx_activity__activity',
@@ -513,7 +516,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.interpolator:interpolator:1.0.0
-    native.aar_import(name = 'androidx_interpolator__interpolator__1_0_0',
+    aar_import_impl(name = 'androidx_interpolator__interpolator__1_0_0',
         aar = '@androidx_interpolator__interpolator__1_0_0//file',
         deps = [':androidx_annotation__annotation'],
         exports = [':androidx_annotation__annotation'],
@@ -526,7 +529,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.legacy:legacy-support-core-ui:1.0.0
-    native.aar_import(name = 'androidx_legacy__legacy_support_core_ui__1_0_0',
+    aar_import_impl(name = 'androidx_legacy__legacy_support_core_ui__1_0_0',
         aar = '@androidx_legacy__legacy_support_core_ui__1_0_0//file',
         deps = [
             ':androidx_annotation__annotation',
@@ -565,7 +568,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.legacy:legacy-support-core-utils:1.0.0
-    native.aar_import(name = 'androidx_legacy__legacy_support_core_utils__1_0_0',
+    aar_import_impl(name = 'androidx_legacy__legacy_support_core_utils__1_0_0',
         aar = '@androidx_legacy__legacy_support_core_utils__1_0_0//file',
         deps = [
             ':androidx_annotation__annotation',
@@ -592,7 +595,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.lifecycle:lifecycle-common:2.0.0
-    native.java_import(name = 'androidx_lifecycle__lifecycle_common__2_0_0',
+    java_import_impl(name = 'androidx_lifecycle__lifecycle_common__2_0_0',
         jars = ['@androidx_lifecycle__lifecycle_common__2_0_0//file'],
         tags = ['maven_coordinates=androidx.lifecycle:lifecycle-common:2.0.0'],
         licenses = ['notice'],
@@ -608,7 +611,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.lifecycle:lifecycle-livedata-core:2.0.0
-    native.aar_import(name = 'androidx_lifecycle__lifecycle_livedata_core__2_0_0',
+    aar_import_impl(name = 'androidx_lifecycle__lifecycle_livedata_core__2_0_0',
         aar = '@androidx_lifecycle__lifecycle_livedata_core__2_0_0//file',
         deps = [
             ':androidx_arch_core__core_common',
@@ -629,7 +632,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.lifecycle:lifecycle-livedata:2.0.0
-    native.aar_import(name = 'androidx_lifecycle__lifecycle_livedata__2_0_0',
+    aar_import_impl(name = 'androidx_lifecycle__lifecycle_livedata__2_0_0',
         aar = '@androidx_lifecycle__lifecycle_livedata__2_0_0//file',
         deps = [
             ':androidx_arch_core__core_common',
@@ -650,7 +653,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.lifecycle:lifecycle-runtime:2.0.0
-    native.aar_import(name = 'androidx_lifecycle__lifecycle_runtime__2_0_0',
+    aar_import_impl(name = 'androidx_lifecycle__lifecycle_runtime__2_0_0',
         aar = '@androidx_lifecycle__lifecycle_runtime__2_0_0//file',
         deps = [
             ':androidx_annotation__annotation',
@@ -671,7 +674,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.lifecycle:lifecycle-viewmodel:2.0.0
-    native.aar_import(name = 'androidx_lifecycle__lifecycle_viewmodel__2_0_0',
+    aar_import_impl(name = 'androidx_lifecycle__lifecycle_viewmodel__2_0_0',
         aar = '@androidx_lifecycle__lifecycle_viewmodel__2_0_0//file',
         deps = [':androidx_annotation__annotation'],
         exports = [':androidx_annotation__annotation'],
@@ -684,7 +687,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.loader:loader:1.0.0
-    native.aar_import(name = 'androidx_loader__loader__1_0_0',
+    aar_import_impl(name = 'androidx_loader__loader__1_0_0',
         aar = '@androidx_loader__loader__1_0_0//file',
         deps = [
             ':androidx_annotation__annotation',
@@ -707,7 +710,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.localbroadcastmanager:localbroadcastmanager:1.0.0
-    native.aar_import(name = 'androidx_localbroadcastmanager__localbroadcastmanager__1_0_0',
+    aar_import_impl(name = 'androidx_localbroadcastmanager__localbroadcastmanager__1_0_0',
         aar = '@androidx_localbroadcastmanager__localbroadcastmanager__1_0_0//file',
         deps = [':androidx_annotation__annotation'],
         exports = [':androidx_annotation__annotation'],
@@ -720,7 +723,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.print:print:1.0.0
-    native.aar_import(name = 'androidx_print__print__1_0_0',
+    aar_import_impl(name = 'androidx_print__print__1_0_0',
         aar = '@androidx_print__print__1_0_0//file',
         deps = [':androidx_annotation__annotation'],
         exports = [':androidx_annotation__annotation'],
@@ -733,7 +736,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.slidingpanelayout:slidingpanelayout:1.0.0
-    native.aar_import(name = 'androidx_slidingpanelayout__slidingpanelayout__1_0_0',
+    aar_import_impl(name = 'androidx_slidingpanelayout__slidingpanelayout__1_0_0',
         aar = '@androidx_slidingpanelayout__slidingpanelayout__1_0_0//file',
         deps = [
             ':androidx_annotation__annotation',
@@ -754,7 +757,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.swiperefreshlayout:swiperefreshlayout:1.0.0
-    native.aar_import(name = 'androidx_swiperefreshlayout__swiperefreshlayout__1_0_0',
+    aar_import_impl(name = 'androidx_swiperefreshlayout__swiperefreshlayout__1_0_0',
         aar = '@androidx_swiperefreshlayout__swiperefreshlayout__1_0_0//file',
         deps = [
             ':androidx_annotation__annotation',
@@ -775,7 +778,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.vectordrawable:vectordrawable-animated:1.0.0
-    native.aar_import(name = 'androidx_vectordrawable__vectordrawable_animated__1_0_0',
+    aar_import_impl(name = 'androidx_vectordrawable__vectordrawable_animated__1_0_0',
         aar = '@androidx_vectordrawable__vectordrawable_animated__1_0_0//file',
         deps = [
             ':androidx_legacy__legacy_support_core_ui',
@@ -794,7 +797,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.vectordrawable:vectordrawable:1.0.1
-    native.aar_import(name = 'androidx_vectordrawable__vectordrawable__1_0_1',
+    aar_import_impl(name = 'androidx_vectordrawable__vectordrawable__1_0_1',
         aar = '@androidx_vectordrawable__vectordrawable__1_0_1//file',
         deps = [
             ':androidx_annotation__annotation',
@@ -813,7 +816,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01
-    native.aar_import(name = 'androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01',
+    aar_import_impl(name = 'androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01',
         aar = '@androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01//file',
         deps = [
             ':androidx_annotation__annotation',
@@ -832,7 +835,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from androidx.viewpager:viewpager:1.0.0
-    native.aar_import(name = 'androidx_viewpager__viewpager__1_0_0',
+    aar_import_impl(name = 'androidx_viewpager__viewpager__1_0_0',
         aar = '@androidx_viewpager__viewpager__1_0_0//file',
         deps = [
             ':androidx_annotation__annotation',
@@ -853,7 +856,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406
-    native.aar_import(name = 'com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406',
+    aar_import_impl(name = 'com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406',
         aar = '@com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406//file',
         deps = [
             ':androidx_annotation__annotation',
@@ -870,7 +873,7 @@ def generate_transitive_dependency_targets(kt_jvm_import=None, kt_jvm_library=No
     )
 
     # from com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406
-    native.aar_import(name = 'com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406',
+    aar_import_impl(name = 'com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406',
         aar = '@com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406//file',
         deps = [
             ':androidx_annotation__annotation',

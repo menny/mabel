@@ -7,13 +7,7 @@ import net.evendanan.bazel.mvn.api.Target;
 
 class SortTargetsByName {
 
-    private static final Comparator<? super Target> TARGET_COMPARATOR = (Comparator<Target>) (o1, o2) -> {
-        final int mavenDiff = o1.getMavenCoordinates().compareTo(o2.getMavenCoordinates());
-
-        if (mavenDiff!=0) return mavenDiff;
-
-        return o1.getTargetName().compareTo(o2.getTargetName());
-    };
+    private static final Comparator<? super Target> TARGET_COMPARATOR = Comparator.comparing(Target::getMavenCoordinates).thenComparing(Target::getTargetName);
 
     public static Collection<Target> sort(Collection<Target> targets) {
         ArrayList<Target> sorted = new ArrayList<>(targets);

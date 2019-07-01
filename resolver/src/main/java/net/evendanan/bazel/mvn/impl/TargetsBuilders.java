@@ -22,29 +22,19 @@ import net.evendanan.bazel.mvn.api.TargetsBuilder;
 
 public class TargetsBuilders {
 
-    public static final TargetsBuilder NATIVE_JAVA_IMPORT = dependency -> {
+    public static final TargetsBuilder JAVA_IMPORT = dependency -> {
         List<Target> targets = new ArrayList<>();
-        targets.add(addJavaImportRule(true, dependency, ""));
-        targets.add(addAlias(true, dependency));
+        targets.add(addJavaImportRule(dependency));
+        targets.add(addAlias(dependency));
 
         return targets;
     };
-    static final TargetsBuilder JAVA_IMPORT = dependency -> {
-        List<Target> targets = new ArrayList<>();
-        targets.add(addJavaImportRule(false, dependency, ""));
-        targets.add(addAlias(false, dependency));
-
-        return targets;
-    };
-    static final TargetsBuilder KOTLIN_IMPORT = new KotlinImport(false);
-    static final TargetsBuilder NATIVE_KOTLIN_IMPORT = new KotlinImport(true);
+    static final TargetsBuilder KOTLIN_IMPORT = new KotlinImport();
     @VisibleForTesting
-    static final TargetsBuilder AAR_IMPORT = new AarImport(false);
-    @VisibleForTesting
-    static final TargetsBuilder NATIVE_AAR_IMPORT = new AarImport(true);
+    static final TargetsBuilder AAR_IMPORT = new AarImport();
 
-    private static Target addJavaImportRule(boolean asNative, Dependency dependency, String postFix) {
-        final Target target = new Target(dependency.mavenCoordinates(), asNative ? "native.java_import":"java_import", dependency.repositoryRuleName() + postFix)
+    private static Target addJavaImportRule(Dependency dependency) {
+        final Target target = new Target(dependency.mavenCoordinates(), "java_import_impl", dependency.repositoryRuleName())
                 .addList("jars", "pom".equalsIgnoreCase(dependency.packaging()) ?
                         Collections.emptyList()
                         :Collections.singletonList(String.format(Locale.ROOT, "@%s//file", dependency.repositoryRuleName())))
@@ -76,12 +66,12 @@ public class TargetsBuilders {
                 .collect(Collectors.toList());
     }
 
-    private static Target addAlias(boolean asNative, Dependency dependency) {
-        return addAlias(asNative, dependency, "");
+    private static Target addAlias(Dependency dependency) {
+        return addAlias(dependency, "");
     }
 
-    private static Target addAlias(boolean asNative, Dependency dependency, String postFix) {
-        return new Target(dependency.mavenCoordinates(), asNative ? "native.alias":"alias", dependency.targetName() + postFix)
+    private static Target addAlias(Dependency dependency, String postFix) {
+        return new Target(dependency.mavenCoordinates(), "native.alias", dependency.targetName() + postFix)
                 .addString("actual", String.format(Locale.US, ":%s%s", dependency.repositoryRuleName(), postFix))
                 .setPublicVisibility();
     }
@@ -160,12 +150,6 @@ public class TargetsBuilders {
 
     public static class KotlinImport implements TargetsBuilder {
 
-        private final boolean asNative;
-
-        KotlinImport(final boolean asNative) {
-            this.asNative = asNative;
-        }
-
         @Override
         public List<Target> buildTargets(final Dependency dependency) {
             List<Target> targets = new ArrayList<>();
@@ -174,9 +158,10 @@ public class TargetsBuilders {
                     .addList("deps", convertRulesToStrings(dependency.dependencies()))
                     .addList("exports", convertRulesToStrings(dependency.exports()))
                     .addList("runtime_deps", convertRulesToStrings(dependency.runtimeDependencies()))
-                    .addString("jar", String.format(Locale.US, "@%s//file", dependency.repositoryRuleName())));
+                    .addString("jar", String.format(Locale.US, "@%s//file", dependency.repositoryRuleName()))
+                    .addVariable("java_import_impl", "java_import_impl"));
 
-            targets.add(addAlias(asNative, dependency));
+            targets.add(addAlias(dependency));
 
             return targets;
         }
@@ -188,10 +173,8 @@ public class TargetsBuilders {
         private static final String PLUGIN_WITH_API = "___generates_api";
         private static final String PROCESSOR_CLASS_POST_FIX_WITH_API = PLUGIN_WITH_API + PROCESSOR_CLASS_POST_FIX;
         private final List<String> processorClasses;
-        private final boolean asNative;
 
-        JavaPluginFormatter(final boolean asNative, final Collection<String> processorClasses) {
-            this.asNative = asNative;
+        JavaPluginFormatter(final Collection<String> processorClasses) {
             this.processorClasses = ImmutableList.copyOf(processorClasses);
         }
 
@@ -200,18 +183,13 @@ public class TargetsBuilders {
             return processorClasses;
         }
 
-        @VisibleForTesting
-        boolean getIsNative() {
-            return asNative;
-        }
-
         @Override
         public List<Target> buildTargets(Dependency dependency) {
             List<Target> targets = new ArrayList<>();
 
             //just as java-library
-            targets.add(addJavaImportRule(asNative, dependency, ""));
-            targets.add(addAlias(asNative, dependency));
+            targets.add(addJavaImportRule(dependency));
+            targets.add(addAlias(dependency));
 
             Collection<String> deps = convertRulesToStrings(dependency.dependencies());
             deps.add(":" + dependency.repositoryRuleName());
@@ -223,34 +201,34 @@ public class TargetsBuilders {
 
                 final String noApiTargetName = dependency.repositoryRuleName() + PROCESSOR_CLASS_POST_FIX + processorClassIndex;
                 noApiPlugins.add(":" + noApiTargetName);
-                targets.add(new Target(dependency.mavenCoordinates(), asNative ? "native.java_plugin":"java_plugin", noApiTargetName)
+                targets.add(new Target(dependency.mavenCoordinates(), "native.java_plugin", noApiTargetName)
                         .addString("processor_class", processorClass)
                         .addInt("generates_api", 0)
                         .addList("deps", deps));
-                targets.add(addAlias(asNative, dependency, PROCESSOR_CLASS_POST_FIX + processorClassIndex));
+                targets.add(addAlias(dependency, PROCESSOR_CLASS_POST_FIX + processorClassIndex));
 
                 final String withApiTargetName = dependency.repositoryRuleName() + PROCESSOR_CLASS_POST_FIX_WITH_API + processorClassIndex;
                 withApiPlugins.add(":" + withApiTargetName);
-                targets.add(new Target(dependency.mavenCoordinates(), asNative ? "native.java_plugin":"java_plugin", withApiTargetName)
+                targets.add(new Target(dependency.mavenCoordinates(), "native.java_plugin", withApiTargetName)
                         .addString("processor_class", processorClass)
                         .addInt("generates_api", 1)
                         .addList("deps", deps));
-                targets.add(addAlias(asNative, dependency, PROCESSOR_CLASS_POST_FIX_WITH_API + processorClassIndex));
+                targets.add(addAlias(dependency, PROCESSOR_CLASS_POST_FIX_WITH_API + processorClassIndex));
             }
 
             //collected java_plugins into a java_library.
             //If using those, then do not add them to the `plugins` list, but rather to the `deps`.
             targets.add(new Target(dependency.mavenCoordinates(),
-                    asNative ? "native.java_library":"java_library",
+                    "native.java_library",
                     dependency.repositoryRuleName() + PROCESSOR_CLASS_POST_FIX + "all")
                     .addList("exported_plugins", noApiPlugins));
-            targets.add(addAlias(asNative, dependency, PROCESSOR_CLASS_POST_FIX + "all"));
+            targets.add(addAlias(dependency, PROCESSOR_CLASS_POST_FIX + "all"));
 
             targets.add(new Target(dependency.mavenCoordinates(),
-                    asNative ? "native.java_library":"java_library",
+                    "native.java_library",
                     dependency.repositoryRuleName() + PROCESSOR_CLASS_POST_FIX_WITH_API + "all")
                     .addList("exported_plugins", withApiPlugins));
-            targets.add(addAlias(asNative, dependency, PROCESSOR_CLASS_POST_FIX_WITH_API + "all"));
+            targets.add(addAlias(dependency, PROCESSOR_CLASS_POST_FIX_WITH_API + "all"));
 
             return targets;
         }
@@ -258,24 +236,18 @@ public class TargetsBuilders {
 
     static class AarImport implements TargetsBuilder {
 
-        private final boolean asNative;
-
-        AarImport(final boolean asNative) {
-            this.asNative = asNative;
-        }
-
         @Override
         public List<Target> buildTargets(final Dependency dependency) {
             List<Target> targets = new ArrayList<>();
             final Set<Dependency> deps = new HashSet<>(dependency.dependencies());
             deps.addAll(dependency.runtimeDependencies());
 
-            targets.add(new Target(dependency.mavenCoordinates(), asNative ? "native.aar_import":"aar_import", dependency.repositoryRuleName())
+            targets.add(new Target(dependency.mavenCoordinates(), "aar_import_impl", dependency.repositoryRuleName())
                     .addString("aar", String.format(Locale.US, "@%s//file", dependency.repositoryRuleName()))
                     .addList("deps", convertRulesToStrings(deps))
                     .addList("exports", convertRulesToStrings(dependency.exports())));
 
-            targets.add(addAlias(asNative, dependency));
+            targets.add(addAlias(dependency));
 
             return targets;
         }
