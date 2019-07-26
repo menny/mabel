@@ -125,6 +125,7 @@ public class DependencyTest {
         Assert.assertEquals(License.reciprocal, License.fromLicenseName("Mozilla License"));
 
         Assert.assertEquals(License.restricted, License.fromLicenseName("GNU GPL v2"));
+        Assert.assertEquals(License.restricted, License.fromLicenseName("GPL 3.0"));
         Assert.assertEquals(License.restricted, License.fromLicenseName("GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1"));
         Assert.assertEquals(License.restricted, License.fromLicenseName("GNU Lesser Public License"));
         Assert.assertEquals(License.restricted, License.fromLicenseName("LGPL"));

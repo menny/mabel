@@ -62,7 +62,7 @@ public enum License {
 
     //restricted licenses
     private static Pattern GNU = Pattern.compile(".*GNU.*");
-    private static Pattern LGPL = Pattern.compile(".*LGPL.*");
+    private static Pattern LGPL_GPL = Pattern.compile(".*GPL.*");
 
     //unencumbered licenses
     private static Pattern CC0 = Pattern.compile(".*CC0.*");
@@ -85,7 +85,7 @@ public enum License {
 
         return ifAnyMatch(notice, licenseName, APACHE, APACHE_ASF, APACHE_ASF_LICENSE, MIT, BSD, FACEBOOK, JSON, BOUNCY_CASTLE, COMMON_PUBLIC, CDDL, CDDL_FULL, GOOGLE_CLOUD, INDIANA_U, ICU)
                 .orElseGet(() -> ifAnyMatch(reciprocal, licenseName, ECLIPSE, EPL, MOZILLA_MPL, MOZILLA)
-                        .orElseGet(() -> ifAnyMatch(restricted, licenseName, GNU, LGPL)
+                        .orElseGet(() -> ifAnyMatch(restricted, licenseName, GNU, LGPL_GPL)
                                 .orElseGet(() -> ifAnyMatch(unencumbered, licenseName, CC0, PUBLIC_DOMAIN, ANDROID_SDK, NO_WARRANTY)
                                         .orElseGet(() -> ifAnyMatch(permissive, licenseName, WTFPL)
                                                 .orElseGet(() -> {
