@@ -54,6 +54,6 @@ public class MigrationToolingGraphResolver implements GraphResolver {
             rule.setPackaging(packaging);
         }
 
-        return RuleToDependency.from(rule);
+        return new RuleToDependency(debugLogs).from(rule);
     }
 }
