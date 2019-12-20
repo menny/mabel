@@ -1,5 +1,5 @@
 # Mabel
-[![Latest release](https://img.shields.io/github/release/menny/mabel.svg)](https://github.com/menny/mabel/releases) [![Build Status](https://cloud.drone.io/api/badges/menny/mabel/status.svg)](https://cloud.drone.io/menny/mabel) [![codecov](https://codecov.io/gh/menny/mabel/branch/master/graph/badge.svg)](https://codecov.io/gh/menny/mabel)
+[![Latest release](https://img.shields.io/github/release/menny/mabel.svg)](https://github.com/menny/mabel/releases) ![](https://github.com/menny/mabel/workflows/CI/badge.svg?event=push&branch=master) [![codecov](https://codecov.io/gh/menny/mabel/branch/master/graph/badge.svg)](https://codecov.io/gh/menny/mabel)
 
 Yet another Maven dependency graph generator for Bazel.
 

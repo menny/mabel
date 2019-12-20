@@ -1,6 +1,14 @@
 name: CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - '*'
+    paths-ignore:
+      - '**.md'
 
 env:
   TERM: dumb
@@ -13,6 +21,9 @@ jobs:
       - uses: actions/checkout@v1
         with:
           fetch-depth: 1
+      - name: build
+        run: |
+          bazel build $(bazel query 'attr(visibility, "//visibility:public", //...)')
       - name: test
         run: |
           bazel test --build_tests_only //...
