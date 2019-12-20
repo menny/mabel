@@ -1,0 +1,38 @@
+name: CI
+
+on: [push, pull_request]
+
+env:
+  TERM: dumb
+
+jobs:
+  checks:
+    runs-on: ubuntu-18.04
+    container: menny/android_bazel:1.10.2
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+      - name: test
+        run: |
+          bazel test --build_tests_only //...
+          bazel coverage --build_tests_only //...
+          curl -s https://codecov.io/bash > .codecov
+          chmod +x .codecov
+          ./.codecov -t bb45a5d9-b124-469b-a8ce-695b54a0ce12 -s "bazel-out/" -G "**/coverage.dat"
+      - name: verify_rules_generation
+        run: |
+          bazel run //resolver:main_deps
+          bazel run //resolver:main_deps
+      - name: build-examples
+        run: |
+          (cd examples/plain_java/ ; bazel build //...)
+          (cd examples/java_plugin/ ; bazel build //...)
+          (cd examples/android/ ; bazel build //...)
+          (cd examples/kotlin/ ; bazel build //...)
+      - name: regenerate-examples
+        run: |
+          (cd examples/plain_java/ ; bazel run //program:main_deps ; bazel build //...)
+          (cd examples/java_plugin/ ; bazel run //program:main_deps ; bazel build //...)
+          (cd examples/android/ ; bazel run //program:main_deps ; bazel build //...)
+          (cd examples/kotlin/ ; bazel run //program:main_deps ; bazel build //...)
