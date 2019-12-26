@@ -16,7 +16,7 @@ env:
 jobs:
   checks:
     runs-on: ubuntu-18.04
-    container: menny/android_bazel:1.10.2
+    container: menny/android_bazel:1.13.5
     steps:
       - uses: actions/checkout@v1
         with:
