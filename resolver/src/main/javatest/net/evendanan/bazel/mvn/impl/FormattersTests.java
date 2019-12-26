@@ -374,10 +374,6 @@ public class FormattersTests {
                         Arrays.asList("runtime1", "runtime2")),
                 DependencyTools.DEFAULT));
 
-        System.out.println("actual:");
-        System.out.println(ruleText);
-        System.out.println("actual:");
-        System.out.println(ruleText);
         Assert.assertEquals(JAVA_IMPORT_TEXT, ruleText);
     }
 

@@ -183,7 +183,6 @@ public class Merger {
                 .map(inputFile -> {
                     System.out.print('.');
                     try (final FileInputStream inputStream = new FileInputStream(inputFile)) {
-                        System.out.println("input " + inputFile);
                         return Dependency.parseFrom(inputStream);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
