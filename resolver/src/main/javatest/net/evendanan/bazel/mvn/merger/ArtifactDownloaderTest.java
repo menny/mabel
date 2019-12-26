@@ -1,6 +1,12 @@
 package net.evendanan.bazel.mvn.merger;
 
 import com.google.common.base.Charsets;
+import net.evendanan.bazel.mvn.api.Dependency;
+import net.evendanan.bazel.mvn.api.DependencyTools;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -8,24 +14,19 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import net.evendanan.bazel.mvn.api.Dependency;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 public class ArtifactDownloaderTest {
 
-    private TestOpenner mTestOpenner;
+    private TestOpener mTestOpener;
     private Dependency mDependency;
     private File expectedOutputFile;
     private ArtifactDownloader mUnderTest;
 
     @Before
     public void setup() throws Exception {
-        mTestOpenner = new TestOpenner();
+        mTestOpener = new TestOpener();
         final File artifactDownloaderFolder = File.createTempFile("ArtifactDownloaderTest", "test");
         if (!artifactDownloaderFolder.delete()) {
             throw new IOException("Failed to setup temp folder for test");
@@ -33,11 +34,16 @@ public class ArtifactDownloaderTest {
         if (!artifactDownloaderFolder.mkdir()) {
             throw new IOException("Failed to create temp folder for test");
         }
-        mUnderTest = new ArtifactDownloader(mTestOpenner, artifactDownloaderFolder);
+        mUnderTest = new ArtifactDownloader(mTestOpener, artifactDownloaderFolder, DependencyTools.DEFAULT);
 
-        mDependency = new Dependency("group", "artifact", "1.1", "jar", Collections.emptyList(), Collections.emptyList(), Collections.emptyList(),
-                URI.create("https://example.com/temp.jar"), URI.create(""), URI.create(""), Collections.emptyList());
-        expectedOutputFile = new File(artifactDownloaderFolder, mDependency.repositoryRuleName());
+        mDependency = Dependency.newBuilder()
+                .setGroupId("group")
+                .setArtifactId("artifact")
+                .setVersion("1.1")
+                .setPackaging("jar")
+                .setUrl("https://example.com/temp.jar")
+                .build();
+        expectedOutputFile = new File(artifactDownloaderFolder, DependencyTools.DEFAULT.repositoryRuleName(mDependency));
     }
 
     @Test
@@ -49,7 +55,7 @@ public class ArtifactDownloaderTest {
         Assert.assertTrue(expectedOutputFile.exists());
         Assert.assertEquals(expectedOutputFile.getAbsolutePath(), new File(localUri).getAbsolutePath());
 
-        Assert.assertFalse(mTestOpenner.mAccessCounters.containsKey(mDependency.url().toURL()));
+        Assert.assertFalse(mTestOpener.mAccessCounters.containsKey(new URL(mDependency.getUrl())));
     }
 
     @Test
@@ -61,7 +67,7 @@ public class ArtifactDownloaderTest {
         Assert.assertTrue(expectedOutputFile.exists());
         Assert.assertEquals(expectedOutputFile.getAbsolutePath(), new File(localUri).getAbsolutePath());
 
-        Assert.assertArrayEquals(TestOpenner.TEST_OUTPUT.getBytes(), Files.readAllBytes(expectedOutputFile.toPath()));
+        Assert.assertArrayEquals(TestOpener.TEST_OUTPUT.getBytes(), Files.readAllBytes(expectedOutputFile.toPath()));
     }
 
     @Test
@@ -73,18 +79,18 @@ public class ArtifactDownloaderTest {
 
         Assert.assertEquals(expectedOutputFile.getAbsolutePath(), new File(localUri2).getAbsolutePath());
 
-        Assert.assertArrayEquals(TestOpenner.TEST_OUTPUT.getBytes(), Files.readAllBytes(expectedOutputFile.toPath()));
-        Assert.assertEquals(Integer.valueOf(1), mTestOpenner.mAccessCounters.get(mDependency.url().toURL()));
+        Assert.assertArrayEquals(TestOpener.TEST_OUTPUT.getBytes(), Files.readAllBytes(expectedOutputFile.toPath()));
+        Assert.assertEquals(Integer.valueOf(1), mTestOpener.mAccessCounters.get(new URL(mDependency.getUrl())));
     }
 
-    private static class TestOpenner implements ArtifactDownloader.ConnectionOpener {
+    private static class TestOpener implements ArtifactDownloader.ConnectionOpener {
         private static String TEST_OUTPUT = "testing 1 2 3";
         private Map<URL, Integer> mAccessCounters = new HashMap<>();
 
         @Override
         public InputStream openInputStream(final URL url) throws IOException {
             mAccessCounters.compute(url, (urlKey, currentValue) -> {
-                if (currentValue==null) return 1;
+                if (currentValue == null) return 1;
                 else return currentValue + 1;
             });
 

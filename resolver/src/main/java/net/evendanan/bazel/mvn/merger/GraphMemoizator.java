@@ -5,23 +5,23 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import net.evendanan.bazel.mvn.api.Dependency;
 
-public abstract class GraphMemoizator {
-    private final Map<String, Dependency> cache = new HashMap<>();
+public abstract class GraphMemoizator<T> {
+    private final Map<String, T> cache = new HashMap<>();
 
     @Nonnull
-    protected abstract Dependency calculate(@Nonnull Dependency original);
+    protected abstract T calculate(@Nonnull T original);
 
     @Nonnull
-    public Dependency map(@Nonnull Dependency original) {
-        final String key = getKeyForDependency(original);
+    public T map(@Nonnull T original) {
+        final String key = getKeyForObject(original);
         if (cache.containsKey(key)) {
             return cache.get(key);
         } else {
-            final Dependency revisedDependency = calculate(original);
-            cache.put(key, revisedDependency);
-            return revisedDependency;
+            final T revised = calculate(original);
+            cache.put(key, revised);
+            return revised;
         }
     }
 
-    protected abstract String getKeyForDependency(final Dependency dependency);
+    protected abstract String getKeyForObject(final T object);
 }

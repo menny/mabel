@@ -15,31 +15,28 @@ public class RuleClassifiersTest {
 
     @Test
     public void testAarClassifier() {
-        final Dependency aar = Mockito.mock(Dependency.class);
-        Mockito.doReturn("aar").when(aar).packaging();
-        Assert.assertSame(TargetsBuilders.AAR_IMPORT, new RuleClassifiers.AarClassifier().classifyRule(aar).orElse(null));
+        Dependency dep = Dependency.newBuilder().setPackaging("aar").build();
+        Assert.assertSame(TargetsBuilders.AAR_IMPORT, new RuleClassifiers.AarClassifier().classifyRule(dep).orElse(null));
 
-        Mockito.doReturn("jar").when(aar).packaging();
-        Assert.assertSame(Optional.empty(), new RuleClassifiers.AarClassifier().classifyRule(aar));
+        dep = Dependency.newBuilder().setPackaging("jar").build();
+        Assert.assertSame(Optional.empty(), new RuleClassifiers.AarClassifier().classifyRule(dep));
 
-        Mockito.doReturn("pom").when(aar).packaging();
-        Assert.assertSame(Optional.empty(), new RuleClassifiers.AarClassifier().classifyRule(aar));
+        dep = Dependency.newBuilder().setPackaging("pom").build();
+        Assert.assertSame(Optional.empty(), new RuleClassifiers.AarClassifier().classifyRule(dep));
     }
 
     @Test
     public void testPomClassifier() {
-        final Dependency pom = Mockito.mock(Dependency.class);
-        Mockito.doReturn("pom").when(pom).packaging();
-        Assert.assertSame(TargetsBuilders.JAVA_IMPORT, new RuleClassifiers.PomClassifier().classifyRule(pom).orElse(null));
+        Dependency dep = Dependency.newBuilder().setPackaging("pom").build();
+        Assert.assertSame(TargetsBuilders.JAVA_IMPORT, new RuleClassifiers.PomClassifier().classifyRule(dep).orElse(null));
 
-        Mockito.doReturn("jar").when(pom).packaging();
-        Assert.assertSame(Optional.empty(), new RuleClassifiers.PomClassifier().classifyRule(pom));
+        dep = Dependency.newBuilder().setPackaging("jar").build();
+        Assert.assertSame(Optional.empty(), new RuleClassifiers.PomClassifier().classifyRule(dep));
     }
 
     @Test
     public void testJarInspector_unknown() throws Exception {
-        final Dependency dependency = Mockito.mock(Dependency.class);
-        Mockito.doReturn(URI.create("")).when(dependency).url();
+        final Dependency dependency = Dependency.newBuilder().build();
         final Function<Dependency, URI> dependencyURIFunction = dep -> {
             try {
                 return RuleClassifiersTest.class.getClassLoader().getResource("dataenum-1.0.2.jar").toURI();
@@ -52,8 +49,7 @@ public class RuleClassifiersTest {
 
     @Test
     public void testJarInspector_java_plugin() throws Exception {
-        final Dependency dependency = Mockito.mock(Dependency.class);
-        Mockito.doReturn(URI.create("")).when(dependency).url();
+        final Dependency dependency = Dependency.newBuilder().build();
         final Function<Dependency, URI> dependencyURIFunction = dep -> {
             try {
                 return RuleClassifiersTest.class.getClassLoader().getResource("dataenum-processor-1.0.2.jar").toURI();
@@ -71,8 +67,7 @@ public class RuleClassifiersTest {
 
     @Test
     public void testJarInspector_java_plugin_native() throws Exception {
-        final Dependency dependency = Mockito.mock(Dependency.class);
-        Mockito.doReturn(URI.create("")).when(dependency).url();
+        final Dependency dependency = Dependency.newBuilder().build();
         final Function<Dependency, URI> dependencyURIFunction = dep -> {
             try {
                 return RuleClassifiersTest.class.getClassLoader().getResource("dataenum-processor-1.0.2.jar").toURI();
@@ -90,8 +85,7 @@ public class RuleClassifiersTest {
 
     @Test
     public void testJarInspector_kotlin() throws Exception {
-        final Dependency dependency = Mockito.mock(Dependency.class);
-        Mockito.doReturn(URI.create("")).when(dependency).url();
+        final Dependency dependency = Dependency.newBuilder().build();
         final Function<Dependency, URI> dependencyURIFunction = dep -> {
             try {
                 return RuleClassifiersTest.class.getClassLoader().getResource("mockk-1.0.jar").toURI();

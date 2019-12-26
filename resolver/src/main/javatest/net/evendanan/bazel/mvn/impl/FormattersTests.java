@@ -1,14 +1,16 @@
 package net.evendanan.bazel.mvn.impl;
 
-import java.net.URI;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import net.evendanan.bazel.mvn.api.Dependency;
+import net.evendanan.bazel.mvn.api.DependencyTools;
 import net.evendanan.bazel.mvn.api.License;
 import net.evendanan.bazel.mvn.api.Target;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.net.URI;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static net.evendanan.bazel.mvn.TestUtils.createDependency;
 
@@ -319,7 +321,8 @@ public class FormattersTests {
                         "some_url.pom",
                         Arrays.asList("dep1", "dep2"),
                         Arrays.asList("export1", "export2"),
-                        Arrays.asList("runtime1", "runtime2"))));
+                        Arrays.asList("runtime1", "runtime2")),
+                DependencyTools.DEFAULT));
 
         Assert.assertEquals(POM_ONLY_NATIVE_IMPORT_TEXT, ruleText);
     }
@@ -331,7 +334,8 @@ public class FormattersTests {
                         "some_url.pom",
                         Arrays.asList("dep1", "dep2"),
                         Arrays.asList("export1", "export2"),
-                        Arrays.asList("runtime1", "runtime2"))).isEmpty());
+                        Arrays.asList("runtime1", "runtime2")),
+                DependencyTools.DEFAULT).isEmpty());
     }
 
     @Test
@@ -341,7 +345,8 @@ public class FormattersTests {
                         "some_url",
                         Arrays.asList("dep1", "dep2"),
                         Arrays.asList("export1", "export2"),
-                        Arrays.asList("runtime1", "runtime2"))));
+                        Arrays.asList("runtime1", "runtime2")),
+                DependencyTools.DEFAULT));
 
         Assert.assertEquals(AAR_IMPORT_TEXT, ruleText);
     }
@@ -353,7 +358,8 @@ public class FormattersTests {
                         "https://some_url/ss.aar",
                         Arrays.asList("dep1", "dep2"),
                         Arrays.asList("export1", "export2"),
-                        Arrays.asList("runtime1", "runtime2"))));
+                        Arrays.asList("runtime1", "runtime2")),
+                DependencyTools.DEFAULT));
 
         Assert.assertEquals(HTTP_FILE_TEXT, ruleText);
     }
@@ -365,8 +371,13 @@ public class FormattersTests {
                         "https://some_url",
                         Arrays.asList("dep1", "dep2"),
                         Arrays.asList("export1", "export2"),
-                        Arrays.asList("runtime1", "runtime2"))));
+                        Arrays.asList("runtime1", "runtime2")),
+                DependencyTools.DEFAULT));
 
+        System.out.println("actual:");
+        System.out.println(ruleText);
+        System.out.println("actual:");
+        System.out.println(ruleText);
         Assert.assertEquals(JAVA_IMPORT_TEXT, ruleText);
     }
 
@@ -378,7 +389,8 @@ public class FormattersTests {
                         "https://some_url-sources",
                         Arrays.asList("dep1", "dep2"),
                         Arrays.asList("export1", "export2"),
-                        Arrays.asList("runtime1", "runtime2"))));
+                        Arrays.asList("runtime1", "runtime2")),
+                DependencyTools.DEFAULT));
 
         Assert.assertEquals(JAVA_IMPORT_TEXT_WITH_SOURCES, ruleText);
     }
@@ -390,7 +402,8 @@ public class FormattersTests {
                         "some_url",
                         Arrays.asList("dep1", "dep2"),
                         Arrays.asList("export1", "export2"),
-                        Arrays.asList("runtime1", "runtime2"))));
+                        Arrays.asList("runtime1", "runtime2")),
+                DependencyTools.DEFAULT));
 
         Assert.assertEquals(NATIVE_AAR_IMPORT_TEXT, ruleText);
     }
@@ -402,26 +415,24 @@ public class FormattersTests {
                         "https://some_url",
                         Arrays.asList("dep1", "dep2"),
                         Arrays.asList("export1", "export2"),
-                        Arrays.asList("runtime1", "runtime2"))));
+                        Arrays.asList("runtime1", "runtime2")),
+                DependencyTools.DEFAULT));
 
         Assert.assertEquals(NATIVE_JAVA_IMPORT_TEXT, ruleText);
     }
 
     @Test
     public void testNativeJavaImportWithLicenses() {
-        Dependency dependency = createDependency("java:lib",
+        Dependency dependency = Dependency.newBuilder(createDependency("java:lib",
                 "https://some_url",
                 Arrays.asList("dep1", "dep2"),
                 Arrays.asList("export1", "export2"),
-                Arrays.asList("runtime1", "runtime2"));
+                Arrays.asList("runtime1", "runtime2")))
+                .clearLicenses()
+                .addAllLicenses(Collections.singleton(License.notice))
+                .build();
 
-        dependency = new Dependency(dependency.groupId(), dependency.artifactId(), dependency.version(), dependency.packaging(),
-                dependency.dependencies(), dependency.exports(), dependency.runtimeDependencies(),
-                dependency.url(), dependency.sourcesUrl(), dependency.javadocUrl(),
-                Collections.singleton(License.notice));
-
-        final String ruleText = targetsToString("    ", TargetsBuilders.JAVA_IMPORT.buildTargets(
-                dependency));
+        final String ruleText = targetsToString("    ", TargetsBuilders.JAVA_IMPORT.buildTargets(dependency, DependencyTools.DEFAULT));
 
         Assert.assertEquals(NATIVE_JAVA_IMPORT_WITH_LICENSE_TEXT, ruleText);
     }
@@ -434,7 +445,8 @@ public class FormattersTests {
                                 "https://some_url",
                                 Arrays.asList("dep1", "dep2"),
                                 Arrays.asList("export1", "export2"),
-                                Arrays.asList("runtime1", "runtime2"))));
+                                Arrays.asList("runtime1", "runtime2")),
+                        DependencyTools.DEFAULT));
 
         Assert.assertEquals(NATIVE_JAVA_PLUGIN_TEXT, ruleText);
     }
@@ -446,7 +458,8 @@ public class FormattersTests {
                         "https://some_url",
                         Arrays.asList("dep1", "dep2"),
                         Arrays.asList("export1", "export2"),
-                        Arrays.asList("runtime1", "runtime2"))));
+                        Arrays.asList("runtime1", "runtime2")),
+                DependencyTools.DEFAULT));
 
         Assert.assertEquals(NATIVE_KOTLIN_IMPORT_TEXT, ruleText);
     }

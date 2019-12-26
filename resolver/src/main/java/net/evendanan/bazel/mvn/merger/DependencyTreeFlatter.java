@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import net.evendanan.bazel.mvn.api.Dependency;
+import net.evendanan.bazel.mvn.api.DependencyTools;
 
 public class DependencyTreeFlatter {
 
@@ -14,8 +15,8 @@ public class DependencyTreeFlatter {
         List<Dependency> flatten = new ArrayList<>();
 
         GraphUtils.DfsTraveller(dependencies, (dep, level) -> {
-            if (!seen.contains(dep.mavenCoordinates())) {
-                seen.add(dep.mavenCoordinates());
+            if (!seen.contains(DependencyTools.DEFAULT.mavenCoordinates(dep))) {
+                seen.add(DependencyTools.DEFAULT.mavenCoordinates(dep));
                 flatten.add(dep);
             }
         });

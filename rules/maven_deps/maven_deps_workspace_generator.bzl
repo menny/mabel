@@ -2,28 +2,28 @@
 TransitiveDataInfo = provider(fields=["graph_file"])
 
 def _impl_resolver(ctx):
-    json = ctx.outputs.out
+    output_file = ctx.outputs.out
 
     arguments = ['--repository={}'.format(repository) for repository in ctx.attr.repositories] + \
         ['--blacklist={}'.format(exclude_artifact_list) for exclude_artifact_list in ctx.attr.maven_exclude_deps] + \
         [
             '--artifact={}'.format(ctx.attr.coordinate),
-            '--output_file={}'.format(json.path),
+            '--output_file={}'.format(output_file.path),
             '--debug_logs={}'.format(ctx.attr.debug_logs).lower()
         ]
 
     ctx.actions.run(
-        outputs=[json],
+        outputs=[output_file],
         executable=ctx.executable._resolver,
         arguments = arguments,
         mnemonic='MavenTransitiveDependencyResolve')
 
-    return [TransitiveDataInfo(graph_file=json)]
+    return [TransitiveDataInfo(graph_file=output_file)]
 
 DEFAULT_MAVEN_SERVERS = ['https://repo1.maven.org/maven2/']
 
 maven_dependency_graph_resolving_rule = rule(implementation=_impl_resolver,
-    doc = "Generates a json file that represents this Maven dependency and its transitive dependencies.",
+    doc = "Generates a file that represents this Maven dependency and its transitive dependencies.",
     attrs = {
        "coordinate": attr.string(mandatory=True, doc = "Maven coordinate in the form of `group-id:artifact-id:version`."),
        "maven_exclude_deps": attr.string_list(allow_empty=True, default = [], doc = "List of Maven dependencies which should not be resolved. You can omit the `version` or both `artifact-id:version`."),
@@ -31,7 +31,7 @@ maven_dependency_graph_resolving_rule = rule(implementation=_impl_resolver,
        "debug_logs": attr.bool(default=False, doc='If set to True, will print out debug logs while resolving dependencies. Default is False.', mandatory=False),
        "_resolver": attr.label(executable=True, allow_files=True, cfg="host", default=Label("//resolver:resolver_bin"))
     },
-    outputs={"out": "%{name}-transitive-graph.json"})
+    outputs={"out": "%{name}-transitive-graph.data"})
 
 def artifact(coordinate, maven_exclude_deps=[], repositories=DEFAULT_MAVEN_SERVERS, debug_logs=False):
     rule_name = "maven_dependency_graph_resolving_rule_{}".format(coordinate.replace(':', '__').replace('-', '_').replace('.', '_'))
@@ -65,12 +65,12 @@ def _impl_merger(ctx):
     output_filename = 'dependencies.bzl'
     output_target_build_files_base_path = '{}/{}/'.format(ctx.label.package, ctx.label.name)
     package_path = ctx.label.package
-    source_json_files = [dep[TransitiveDataInfo].graph_file for dep in ctx.attr.maven_deps]
+    source_files = [dep[TransitiveDataInfo].graph_file for dep in ctx.attr.maven_deps]
     script = ctx.outputs.out
 
     script_content = script_merger_template.format(
         merger = ctx.executable._merger.short_path,
-        graph_files_list = " ".join(['--graph_file={}'.format(file.short_path) for file in source_json_files]),
+        graph_files_list = " ".join(['--graph_file={}'.format(file.short_path) for file in source_files]),
         output_filename = output_filename,
         output_target_build_files_base_path = output_target_build_files_base_path,
         package_path = package_path,
@@ -85,7 +85,7 @@ def _impl_merger(ctx):
 
     ctx.actions.write(script, script_content, is_executable=True)
 
-    return [DefaultInfo(executable=script, runfiles=ctx.runfiles(files = [ctx.executable._merger] + source_json_files))]
+    return [DefaultInfo(executable=script, runfiles=ctx.runfiles(files = [ctx.executable._merger] + source_files))]
 
 deps_workspace_generator_rule = rule(implementation=_impl_merger,
      doc = """Generates a bzl file with repository-rules and targets which describes a Maven dependecy graph based on

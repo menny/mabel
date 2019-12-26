@@ -1,25 +1,28 @@
 package net.evendanan.bazel.mvn;
 
-import java.net.URI;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import net.evendanan.bazel.mvn.api.Dependency;
-import org.mockito.Mockito;
 
 public class TestUtils {
 
     public static Dependency createDependency(String mavenDep, String url, String sourcesUrl, List<String> depsLabels, List<String> exportsLabels, List<String> runtimeLabels) {
         final String[] depsPart = mavenDep.split(":", -1);
 
-        return new Dependency(depsPart[0], depsPart[1], depsPart.length > 2 ? depsPart[2]:"",
-                url.substring(url.length() - 3),
-                generateDeps(depsLabels), generateDeps(exportsLabels), generateDeps(runtimeLabels),
-                URI.create(url),
-                URI.create(sourcesUrl),
-                URI.create(""),
-                Collections.emptyList());
+        return Dependency.newBuilder()
+                .setGroupId(depsPart[0])
+                .setArtifactId(depsPart[1])
+                .setVersion(depsPart.length > 2 ? depsPart[2] : "")
+                .setPackaging(url.substring(url.length() - 3))
+                .addAllDependencies(generateDeps(depsLabels))
+                .addAllExports(generateDeps(exportsLabels))
+                .addAllRuntimeDependencies(generateDeps(runtimeLabels))
+                .setUrl(url)
+                .setSourcesUrl(sourcesUrl)
+                .setJavadocUrl("")
+                .build();
     }
 
     public static Dependency createDependency(String mavenDep, String url, List<String> depsLabels, List<String> exportsLabels, List<String> runtimeLabels) {
@@ -28,12 +31,11 @@ public class TestUtils {
 
 
     private static Collection<Dependency> generateDeps(final List<String> depsLabels) {
-        Collection<Dependency> deps = new ArrayList<>(depsLabels.size());
-        depsLabels.forEach(dep -> {
-            final Dependency dependency = Mockito.mock(Dependency.class);
-            Mockito.doReturn("safe_mvn__" + dep).when(dependency).targetName();
-            deps.add(dependency);
-        });
-        return deps;
+        return depsLabels.stream()
+                .map(label -> Dependency.newBuilder()
+                        .setGroupId("safe_mvn")
+                        .setArtifactId(label)
+                        .build())
+                .collect(Collectors.toList());
     }
 }

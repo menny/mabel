@@ -1,12 +1,13 @@
 package com.google.devtools.bazel.workspace.maven.adapter;
 
 import com.google.devtools.bazel.workspace.maven.Rule;
-import java.net.URI;
+
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
 import net.evendanan.bazel.mvn.api.Dependency;
-import net.evendanan.bazel.mvn.api.License;
+import net.evendanan.bazel.mvn.api.LicenseTools;
 
 public class RuleToDependency {
 
@@ -31,18 +32,21 @@ public class RuleToDependency {
             return cache.get(rule.mavenCoordinates());
         }
 
-        Dependency mapped = new Dependency(rule.groupId(), rule.artifactId(), rule.version(), rule.packaging(),
-                rule.getDeps().stream().map(dep -> from(dep, cache)).collect(Collectors.toList()),
-                rule.getExportDeps().stream().map(dep -> from(dep, cache)).collect(Collectors.toList()),
-                rule.getRuntimeDeps().stream().map(dep -> from(dep, cache)).collect(Collectors.toList()),
-                rule.isValid() ? URI.create(rule.getUrl()):URI.create(""),
-                URI.create(""),
-                URI.create(""),
-                rule.getLicenses().stream()
+        Dependency mapped = Dependency.newBuilder()
+                .setGroupId(rule.groupId())
+                .setArtifactId(rule.artifactId())
+                .setVersion(rule.version())
+                .setPackaging(rule.packaging())
+                .addAllDependencies(rule.getDeps().stream().map(dep -> from(dep, cache)).collect(Collectors.toList()))
+                .addAllExports(rule.getExportDeps().stream().map(dep -> from(dep, cache)).collect(Collectors.toList()))
+                .addAllRuntimeDependencies(rule.getRuntimeDeps().stream().map(dep -> from(dep, cache)).collect(Collectors.toList()))
+                .setUrl(rule.isValid() ? rule.getUrl() : "")
+                .addAllLicenses(rule.getLicenses().stream()
                         .map(org.apache.maven.model.License::getName)
-                        .map(License::fromLicenseName)
+                        .map(LicenseTools::fromLicenseName)
                         .filter(Objects::nonNull)
-                        .collect(Collectors.toList()));
+                        .collect(Collectors.toList()))
+                .build();
 
         if (debugLogs) {
             System.out.println("Caching dependencies for " + rule.mavenCoordinates());

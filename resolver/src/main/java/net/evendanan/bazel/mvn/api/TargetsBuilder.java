@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface TargetsBuilder {
 
-    List<Target> buildTargets(Dependency dependency);
+    List<Target> buildTargets(Dependency dependency, DependencyTools dependencyTools);
 }

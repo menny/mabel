@@ -12,32 +12,7 @@ import static java.util.regex.Pattern.CASE_INSENSITIVE;
 /**
  * Types of licenses. Taken from https://docs.bazel.build/versions/master/be/functions.html#licenses
  */
-public enum License {
-    /**
-     * Requires mandatory source distribution.
-     */
-    restricted,
-
-    /**
-     * Allows usage of software freely in unmodified form. Any modifications must be made freely available.
-     */
-    reciprocal,
-
-    /**
-     * Original or modified third-party software may be shipped without danger nor encumbering other sources. All of the licenses in this category do, however, have an "original Copyright notice" or "advertising clause", wherein any external distributions must include the notice or clause specified in the license.
-     */
-    notice,
-
-    /**
-     * Code that is under a license but does not require a notice.
-     */
-    permissive,
-
-    /**
-     * Public domain, free for any use.
-     */
-    unencumbered;
-
+public final class LicenseTools {
     //notice licenses
     private static Pattern APACHE = Pattern.compile(".*Apache.*");
     private static Pattern APACHE_ASF_LICENSE = Pattern.compile(".*ASF.*License.*");
@@ -83,11 +58,11 @@ public enum License {
     public static License fromLicenseName(final String licenseName) {
         if (Strings.isNullOrEmpty(licenseName)) return null;
 
-        return ifAnyMatch(notice, licenseName, APACHE, APACHE_ASF, APACHE_ASF_LICENSE, MIT, BSD, FACEBOOK, JSON, BOUNCY_CASTLE, COMMON_PUBLIC, CDDL, CDDL_FULL, GOOGLE_CLOUD, INDIANA_U, ICU)
-                .orElseGet(() -> ifAnyMatch(reciprocal, licenseName, ECLIPSE, EPL, MOZILLA_MPL, MOZILLA)
-                        .orElseGet(() -> ifAnyMatch(restricted, licenseName, GNU, LGPL_GPL)
-                                .orElseGet(() -> ifAnyMatch(unencumbered, licenseName, CC0, PUBLIC_DOMAIN, ANDROID_SDK, NO_WARRANTY)
-                                        .orElseGet(() -> ifAnyMatch(permissive, licenseName, WTFPL)
+        return ifAnyMatch(License.notice, licenseName, APACHE, APACHE_ASF, APACHE_ASF_LICENSE, MIT, BSD, FACEBOOK, JSON, BOUNCY_CASTLE, COMMON_PUBLIC, CDDL, CDDL_FULL, GOOGLE_CLOUD, INDIANA_U, ICU)
+                .orElseGet(() -> ifAnyMatch(License.reciprocal, licenseName, ECLIPSE, EPL, MOZILLA_MPL, MOZILLA)
+                        .orElseGet(() -> ifAnyMatch(License.restricted, licenseName, GNU, LGPL_GPL)
+                                .orElseGet(() -> ifAnyMatch(License.unencumbered, licenseName, CC0, PUBLIC_DOMAIN, ANDROID_SDK, NO_WARRANTY)
+                                        .orElseGet(() -> ifAnyMatch(License.permissive, licenseName, WTFPL)
                                                 .orElseGet(() -> {
                                                     System.out.println(String.format(Locale.ROOT, "License with name '%s' is unrecognized.", licenseName));
                                                     return null;
