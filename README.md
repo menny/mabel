@@ -39,7 +39,7 @@ There are several attempts to solve this problem (such as [sync-deps](https://gi
 ### WORKSPACE file
 Add this repository to your WORKSPACE (set `bazel_mvn_deps_version` to the latest [release](https://github.com/menny/mabel/releases) or, if you are adventurous, [commit](https://github.com/menny/mabel/commits/master)):
 ```python
-mabel_version = "0.6.0"
+mabel_version = "0.7.0"
 http_archive(
     name = "mabel",
     urls = ["https://github.com/menny/mabel/archive/%s.zip" % mabel_version],
@@ -47,8 +47,10 @@ http_archive(
     strip_prefix = "mabel-%s" % mabel_version
 )
 
-load("@mabel//resolver/main_deps:dependencies.bzl", generate_bazel_mvn_deps_workspace_rules = "generate_workspace_rules")
-generate_bazel_mvn_deps_workspace_rules()
+load("@mabel//:init_deps.bzl", "init_mabel_deps")
+init_mabel_deps()
+load("@mabel//:init_rules.bzl", "init_mabel_rules")
+init_mabel_rules()
 ```
 
 ### target definition
