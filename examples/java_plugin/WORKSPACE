@@ -6,8 +6,10 @@ local_repository(
     path = "../../",
 )
 
-load("@mabel//resolver/main_deps:dependencies.bzl", generate_bazel_mvn_deps_workspace_rules = "generate_workspace_rules")
-generate_bazel_mvn_deps_workspace_rules()
+load("@mabel//:init_deps.bzl", "init_mabel_deps")
+init_mabel_deps()
+load("@mabel//:init_rules.bzl", "init_mabel_rules")
+init_mabel_rules()
 
 load("//program/main_deps:dependencies.bzl", generate_example_workspace_rules = "generate_workspace_rules")
 generate_example_workspace_rules()
