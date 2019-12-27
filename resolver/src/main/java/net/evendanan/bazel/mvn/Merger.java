@@ -6,26 +6,8 @@ import com.beust.jcommander.ParameterException;
 import com.beust.jcommander.Parameters;
 import com.beust.jcommander.converters.IParameterSplitter;
 import com.google.common.base.Charsets;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.URI;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.zip.ZipInputStream;
-import net.evendanan.bazel.mvn.api.Dependency;
+import net.evendanan.bazel.mvn.api.*;
+import net.evendanan.bazel.mvn.api.DependencyTools;
 import net.evendanan.bazel.mvn.api.GraphMerger;
 import net.evendanan.bazel.mvn.api.RuleWriter;
 import net.evendanan.bazel.mvn.api.Target;
@@ -36,16 +18,22 @@ import net.evendanan.bazel.mvn.impl.TargetsBuilders;
 import net.evendanan.bazel.mvn.merger.ArtifactDownloader;
 import net.evendanan.bazel.mvn.merger.ClearSrcJarAttribute;
 import net.evendanan.bazel.mvn.merger.DefaultMerger;
-import net.evendanan.bazel.mvn.merger.DependencyNamePrefixer;
+import net.evendanan.bazel.mvn.merger.DependencyToolsWithPrefix;
 import net.evendanan.bazel.mvn.merger.DependencyTreeFlatter;
-import net.evendanan.bazel.mvn.merger.SourcesJarLocator;
-import net.evendanan.bazel.mvn.serialization.Serialization;
 import net.evendanan.timing.TaskTiming;
 import net.evendanan.timing.TimingData;
-import org.checkerframework.checker.nullness.qual.Nullable;
+
+import java.io.*;
+import java.net.URI;
+import java.nio.file.Files;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static net.evendanan.bazel.mvn.merger.GraphUtils.DfsTraveller;
+
+;
 
 public class Merger {
 
@@ -94,6 +82,13 @@ public class Merger {
             return;
         }
 
+        final DependencyTools dependencyTools;
+        if (options.rule_prefix.isEmpty()) {
+            dependencyTools = new DependencyTools();
+        } else {
+            dependencyTools = new DependencyToolsWithPrefix(options.rule_prefix);
+        }
+
         Merger driver = new Merger(options);
         Collection<Dependency> dependencies = driver.mergeDependencyGraphsIntoOne(options);
         final File artifactsFolder = new File(options.artifacts_path.replace("~", System.getProperty("user.home")));
@@ -101,7 +96,7 @@ public class Merger {
             throw new IOException("Failed to create artifacts folder " + artifactsFolder.getAbsolutePath());
         }
         System.out.println("artifactsFolder: " + artifactsFolder.getAbsolutePath());
-        final ArtifactDownloader artifactDownloader = new ArtifactDownloader(artifactsFolder);
+        final ArtifactDownloader artifactDownloader = new ArtifactDownloader(artifactsFolder, dependencyTools);
 
         final Function<Dependency, URI> downloader = dependency1 -> {
             try {
@@ -113,7 +108,7 @@ public class Merger {
 
         if (options.fetch_srcjar) {
             System.out.print("Locating sources JARs for resolved dependencies...");
-            dependencies = new SourcesJarLocator().fillSourcesAttribute(dependencies);
+            dependencies = new net.evendanan.bazel.mvn.merger.SourcesJarLocator().fillSourcesAttribute(dependencies);
             System.out.println("✓");
         } else {
             System.out.print("Clearing srcjar...");
@@ -121,11 +116,7 @@ public class Merger {
             System.out.println("✓");
         }
 
-        if (!options.rule_prefix.isEmpty()) {
-            dependencies = DependencyNamePrefixer.wrap(dependencies, options.rule_prefix);
-        }
-
-        driver.writeResults(dependencies, downloader, options);
+        driver.writeResults(dependencies, downloader, options, dependencyTools);
 
         if (!options.output_pretty_dep_graph_filename.isEmpty()) {
             File prettyOutput = new File(options.output_target_build_files_base_path, options.output_pretty_dep_graph_filename);
@@ -137,7 +128,7 @@ public class Merger {
                 DfsTraveller(dependencies,
                         (dependency, level) -> {
                             try {
-                                if (level==1) {
+                                if (level == 1) {
                                     fileWriter.append(System.lineSeparator());
                                     fileWriter.append(" * ");
                                 } else {
@@ -147,8 +138,8 @@ public class Merger {
                                     }
                                 }
 
-                                fileWriter.append(dependency.mavenCoordinates())
-                                        .append(" (").append(dependency.repositoryRuleName()).append(")")
+                                fileWriter.append(dependencyTools.mavenCoordinates(dependency))
+                                        .append(" (").append(dependencyTools.repositoryRuleName(dependency)).append(")")
                                         .append(System.lineSeparator());
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
@@ -165,9 +156,7 @@ public class Merger {
      * We need something a little more brutal - this does the equivalent of "rm -r"
      *
      * @param path Root File Path
-     *
      * @return true iff the file and all sub files/directories have been removed
-     *
      * @throws FileNotFoundException if the path to remove does not exist
      * @implNote taken from https://stackoverflow.com/a/4026761/1324235
      */
@@ -178,7 +167,7 @@ public class Merger {
         boolean ret = true;
         if (path.isDirectory()) {
             final File[] files = path.listFiles();
-            if (files!=null) {
+            if (files != null) {
                 for (File f : files) {
                     ret = ret && deleteRecursive(f);
                 }
@@ -190,15 +179,11 @@ public class Merger {
     private Collection<Dependency> mergeDependencyGraphsIntoOne(Options options) {
         System.out.print(String.format("Reading %s root artifacts...", options.artifacts.size()));
 
-        final Serialization serialization = new Serialization();
         final List<Dependency> dependencies = options.artifacts.stream()
                 .map(inputFile -> {
                     System.out.print('.');
-                    try (final ZipInputStream zipper = new ZipInputStream(new FileInputStream(inputFile), Charsets.UTF_8)) {
-                        zipper.getNextEntry();
-                        try (final BufferedReader fileReader = new BufferedReader(new InputStreamReader(zipper))) {
-                            return serialization.deserialize(fileReader);
-                        }
+                    try (final FileInputStream inputStream = new FileInputStream(inputFile)) {
+                        return Dependency.parseFrom(inputStream);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -212,11 +197,11 @@ public class Merger {
         return merged;
     }
 
-    private void writeResults(Collection<Dependency> resolvedDependencies, final Function<Dependency, @Nullable URI> downloader, final Options options) throws Exception {
+    private void writeResults(Collection<Dependency> resolvedDependencies, final Function<Dependency, URI> downloader, final Options options, DependencyTools dependencyTools) throws Exception {
         System.out.print("Flattening dependency tree for writing...");
         resolvedDependencies = DependencyTreeFlatter.flatten(resolvedDependencies)
                 .stream()
-                .filter(dependency -> !dependency.url().toASCIIString().equals(""))
+                .filter(dependency -> !dependency.getUrl().equals(""))
                 .collect(Collectors.toList());
 
         System.out.println();
@@ -231,10 +216,10 @@ public class Merger {
         }
 
         try (final OutputStreamWriter fileWriter = new OutputStreamWriter(new FileOutputStream(new File(depsFolder, "BUILD.bazel"), false), Charsets.UTF_8)) {
-            fileWriter.append("# Auto-generated by https://github.com/menny/bazel-mvn-deps").append(System.lineSeparator());
+            fileWriter.append("# Auto-generated by https://github.com/menny/mabel").append(System.lineSeparator());
         }
         try (final OutputStreamWriter fileWriter = new OutputStreamWriter(new FileOutputStream(macrosFile, false), Charsets.UTF_8)) {
-            fileWriter.append("# Auto-generated by https://github.com/menny/bazel-mvn-deps").append(System.lineSeparator());
+            fileWriter.append("# Auto-generated by https://github.com/menny/mabel").append(System.lineSeparator());
             fileWriter.append(System.lineSeparator());
         }
 
@@ -244,14 +229,14 @@ public class Merger {
         ProgressTimer timer = new ProgressTimer(resolvedDependencies.size(), "** Converting to Bazel targets, %d out of %d (%.2f%%%s): %s...");
         List<Target> targets = resolvedDependencies.stream()
                 .peek(timer::taskDone)
-                .map(rule -> ruleMapper.apply(rule).buildTargets(rule))
+                .map(rule -> ruleMapper.apply(rule).buildTargets(rule, dependencyTools))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
 
         System.out.print(String.format("Writing %d Bazel repository rules...", targets.size()));
         final TargetsBuilder fileImporter = new TargetsBuilders.HttpTargetsBuilder(options.calculate_sha, downloader);
         repositoryRulesMacroWriter.write(resolvedDependencies.stream()
-                .map(fileImporter::buildTargets)
+                .map( d -> fileImporter.buildTargets(d, dependencyTools))
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList()));
         System.out.println("✓");
@@ -262,14 +247,14 @@ public class Merger {
 
         Files.move(macrosFile.toPath(), actualMacrosFile.toPath(), REPLACE_EXISTING);
 
-        if (hardAliasesWriter!=null) {
+        if (hardAliasesWriter != null) {
             System.out.print("Writing aliases targets...");
             hardAliasesWriter.write(targets);
             System.out.println("✓");
         }
     }
 
-    private Function<Dependency, TargetsBuilder> buildRuleMapper(final Function<Dependency, @Nullable URI> downloader) {
+    private Function<Dependency, TargetsBuilder> buildRuleMapper(final Function<Dependency, URI> downloader) {
         return dependency -> RuleClassifiers.priorityRuleClassifier(
                 Arrays.asList(
                         new RuleClassifiers.PomClassifier(),
@@ -298,7 +283,7 @@ public class Merger {
             System.out.println(
                     String.format(Locale.ROOT, progressText,
                             timingData.doneTasks, timingData.totalTasks, 100 * timingData.ratioOfDone, estimatedTimeLeft,
-                            dependency.repositoryRuleName()));
+                            DependencyTools.DEFAULT.mavenCoordinates(dependency)));
         }
     }
 
@@ -310,69 +295,80 @@ public class Merger {
                 splitter = NoSplitter.class,
                 description = "JSON files representing dependency-graph.",
                 required = true
-        ) List<String> artifacts = new ArrayList<>();
+        )
+        List<String> artifacts = new ArrayList<>();
 
         @Parameter(
                 names = {"--output_macro_file_path"},
                 description = "Path to output macros bzl file",
                 required = true
-        ) String output_macro_file = "";
+        )
+        String output_macro_file = "";
 
         @Parameter(
                 names = {"--output_target_build_files_base_path"},
                 description = "Base path to output alias targets BUILD.bazel files"
-        ) String output_target_build_files_base_path = "";
+        )
+        String output_target_build_files_base_path = "";
 
         @Parameter(
                 names = {"--package_path"},
                 description = "Package path for for transitive rules."
-        ) String package_path = "";
+        )
+        String package_path = "";
 
         @Parameter(
                 names = {"--rule_prefix"},
                 description = "Prefix to add to all rules."
-        ) String rule_prefix = "";
+        )
+        String rule_prefix = "";
 
         @Parameter(
                 names = {"--create_deps_sub_folders"},
                 description = "Generate sub-folders matching dependencies tree.",
                 arity = 1
-        ) boolean create_deps_sub_folders = true;
+        )
+        boolean create_deps_sub_folders = true;
 
         @Parameter(
                 names = {"--fetch_srcjar"},
                 description = "Will also try to locate srcjar for the dependency.",
                 arity = 1
-        ) boolean fetch_srcjar = false;
+        )
+        boolean fetch_srcjar = false;
 
         @Parameter(
                 names = {"--calculate_sha"},
                 description = "Will also calculate SHA256 for the dependency.",
                 arity = 1
-        ) boolean calculate_sha = true;
+        )
+        boolean calculate_sha = true;
 
         @Parameter(
                 names = {"--debug_logs"},
                 description = "Will print out debug logs.",
                 arity = 1
-        ) boolean debug_logs = false;
+        )
+        boolean debug_logs = false;
 
         @Parameter(
                 names = {"--output_pretty_dep_graph_filename"},
                 description = "If set, will output the dependency graph to this file."
-        ) String output_pretty_dep_graph_filename = "";
+        )
+        String output_pretty_dep_graph_filename = "";
         @Parameter(
                 names = {"--artifacts_path"},
                 description = "Where to store downloaded artifacts.",
                 required = true
-        ) private String artifacts_path;
+        )
+        private String artifacts_path;
     }
 
     /**
      * Jcommander defaults to splitting each parameter by comma. For example,
      * --a=group:artifact:[x1,x2] is parsed as two items 'group:artifact:[x1' and 'x2]',
      * instead of the intended 'group:artifact:[x1,x2]'
-     *
+     * <p>
      * For more information: http://jcommander.org/#_splitting
      */
     public static class NoSplitter implements IParameterSplitter {

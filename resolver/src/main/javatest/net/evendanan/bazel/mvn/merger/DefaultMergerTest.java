@@ -1,15 +1,12 @@
 package net.evendanan.bazel.mvn.merger;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import net.evendanan.bazel.mvn.api.Dependency;
+import net.evendanan.bazel.mvn.api.DependencyTools;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.*;
 
 public class DefaultMergerTest {
 
@@ -153,7 +150,6 @@ public class DefaultMergerTest {
     }
 
 
-
     @Test
     public void testIgnoreEmptyRepository() {
         final String expected = "  net.evendanan:dep1:0.1\n" +
@@ -199,51 +195,43 @@ public class DefaultMergerTest {
 
     @Test
     public void testNamePrefix() {
-        AtomicInteger nodesCount = new AtomicInteger();
-
-        GraphUtils.DfsTraveller(GraphUtilsTest.NO_REPEATS_GRAPH, ((dependency, integer) -> nodesCount.incrementAndGet()));
-        Assert.assertTrue(nodesCount.get() > 0);
-
         final String prefix = "prefix___";
-        final Collection<Dependency> dependencies = DependencyNamePrefixer.wrap(GraphUtilsTest.NO_REPEATS_GRAPH, prefix);
+        net.evendanan.bazel.mvn.merger.DependencyToolsWithPrefix prefixer = new net.evendanan.bazel.mvn.merger.DependencyToolsWithPrefix(prefix);
 
-        GraphUtils.DfsTraveller(dependencies, ((dependency, integer) -> nodesCount.decrementAndGet()));
-        Assert.assertEquals(0, nodesCount.get());
+        Dependency dependency = Dependency.newBuilder().setGroupId("group").setArtifactId("artifact").setVersion("1.0").build();
 
-        GraphUtils.DfsTraveller(dependencies, ((dependency, integer) -> {
-            Assert.assertTrue(dependency.repositoryRuleName().startsWith(prefix));
-            Assert.assertTrue(dependency.targetName().startsWith(prefix));
-        }));
+        Assert.assertTrue(prefixer.repositoryRuleName(dependency).startsWith(prefix));
+        Assert.assertTrue(prefixer.targetName(dependency).startsWith(prefix));
     }
 
     @Test
     public void testFlattenTreeWithNoRepeats() {
         final ArrayList<Dependency> flatten = new ArrayList<>(DependencyTreeFlatter.flatten(GraphUtilsTest.NO_REPEATS_GRAPH));
         Assert.assertEquals(7, flatten.size());
-        Assert.assertEquals("net.evendanan:dep1:0.1", flatten.get(0).mavenCoordinates());
-        Assert.assertEquals("net.evendanan:inner1:0.1", flatten.get(1).mavenCoordinates());
-        Assert.assertEquals("net.evendanan:inner-inner1:0.1", flatten.get(2).mavenCoordinates());
-        Assert.assertEquals("net.evendanan:inner-inner2:0.1", flatten.get(3).mavenCoordinates());
-        Assert.assertEquals("net.evendanan:dep2:0.1", flatten.get(4).mavenCoordinates());
-        Assert.assertEquals("net.evendanan:dep3:0.2", flatten.get(5).mavenCoordinates());
-        Assert.assertEquals("net.evendanan:inner2:0.1", flatten.get(6).mavenCoordinates());
+        Assert.assertEquals("net.evendanan:dep1:0.1", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(0)));
+        Assert.assertEquals("net.evendanan:inner1:0.1", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(1)));
+        Assert.assertEquals("net.evendanan:inner-inner1:0.1", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(2)));
+        Assert.assertEquals("net.evendanan:inner-inner2:0.1", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(3)));
+        Assert.assertEquals("net.evendanan:dep2:0.1", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(4)));
+        Assert.assertEquals("net.evendanan:dep3:0.2", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(5)));
+        Assert.assertEquals("net.evendanan:inner2:0.1", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(6)));
 
     }
 
     @Test
     public void testClearSrcJar() {
-        Assert.assertNotEquals("", ((List<Dependency>) ((List<Dependency>) GraphUtilsTest.SRC_JAR_GRAPH).get(0).dependencies()).get(0).sourcesUrl().toASCIIString());
-        Assert.assertNotEquals("", ((List<Dependency>) ((List<Dependency>) GraphUtilsTest.SRC_JAR_GRAPH).get(1).runtimeDependencies()).get(0).url().toASCIIString());
-        Assert.assertNotEquals("", ((List<Dependency>) ((List<Dependency>) GraphUtilsTest.SRC_JAR_GRAPH).get(1).runtimeDependencies()).get(0).sourcesUrl().toASCIIString());
-        Assert.assertNotEquals("", ((List<Dependency>) ((List<Dependency>) GraphUtilsTest.SRC_JAR_GRAPH).get(1).runtimeDependencies()).get(0).javadocUrl().toASCIIString());
+        Assert.assertNotEquals("", ((List<Dependency>) GraphUtilsTest.SRC_JAR_GRAPH).get(0).getDependenciesList().get(0).getSourcesUrl());
+        Assert.assertNotEquals("", ((List<Dependency>) GraphUtilsTest.SRC_JAR_GRAPH).get(1).getRuntimeDependenciesList().get(0).getUrl());
+        Assert.assertNotEquals("", ((List<Dependency>) GraphUtilsTest.SRC_JAR_GRAPH).get(1).getRuntimeDependenciesList().get(0).getSourcesUrl());
+        Assert.assertNotEquals("", ((List<Dependency>) GraphUtilsTest.SRC_JAR_GRAPH).get(1).getRuntimeDependenciesList().get(0).getJavadocUrl());
         final ArrayList<Dependency> cleared = new ArrayList<>(ClearSrcJarAttribute.clearSrcJar(GraphUtilsTest.SRC_JAR_GRAPH));
         Assert.assertEquals(2, cleared.size());
-        GraphUtils.DfsTraveller(cleared, (dep, level) -> Assert.assertEquals("", dep.sourcesUrl().toASCIIString()));
+        GraphUtils.DfsTraveller(cleared, (dep, level) -> Assert.assertEquals("", dep.getSourcesUrl()));
 
-        Assert.assertEquals("", ((List<Dependency>) cleared.get(0).dependencies()).get(0).sourcesUrl().toASCIIString());
-        Assert.assertNotEquals("", ((List<Dependency>) cleared.get(1).runtimeDependencies()).get(0).url().toASCIIString());
-        Assert.assertEquals("", ((List<Dependency>) cleared.get(1).runtimeDependencies()).get(0).sourcesUrl().toASCIIString());
-        Assert.assertNotEquals("", ((List<Dependency>) cleared.get(1).runtimeDependencies()).get(0).javadocUrl().toASCIIString());
+        Assert.assertEquals("", cleared.get(0).getDependenciesList().get(0).getSourcesUrl());
+        Assert.assertNotEquals("", cleared.get(1).getRuntimeDependenciesList().get(0).getUrl());
+        Assert.assertEquals("", cleared.get(1).getRuntimeDependenciesList().get(0).getSourcesUrl());
+        Assert.assertNotEquals("", cleared.get(1).getRuntimeDependenciesList().get(0).getJavadocUrl());
     }
 
     @Test
@@ -256,16 +244,16 @@ public class DefaultMergerTest {
         final int expectedSize = 10;
         Assert.assertEquals(expectedSize, flatten.size());
         int flatDepIndex = 0;
-        Assert.assertEquals("net.evendanan:dep1:0.1", flatten.get(flatDepIndex++).mavenCoordinates());
-        Assert.assertEquals("net.evendanan:inner1:0.1", flatten.get(flatDepIndex++).mavenCoordinates());
-        Assert.assertEquals("net.evendanan:inner-inner1:0.1", flatten.get(flatDepIndex++).mavenCoordinates());
-        Assert.assertEquals("net.evendanan:dep6:0.0.1", flatten.get(flatDepIndex++).mavenCoordinates());
-        Assert.assertEquals("net.evendanan:dep2:0.1", flatten.get(flatDepIndex++).mavenCoordinates());
-        Assert.assertEquals("net.evendanan:dep1:0.2", flatten.get(flatDepIndex++).mavenCoordinates());
-        Assert.assertEquals("net.evendanan:inner2:0.1", flatten.get(flatDepIndex++).mavenCoordinates());
-        Assert.assertEquals("net.evendanan:dep6:0.1", flatten.get(flatDepIndex++).mavenCoordinates());
-        Assert.assertEquals("net.evendanan:a1:0.2", flatten.get(flatDepIndex++).mavenCoordinates());
-        Assert.assertEquals("net.evendanan:inner-inner1:0.4", flatten.get(flatDepIndex++).mavenCoordinates());
+        Assert.assertEquals("net.evendanan:dep1:0.1", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(flatDepIndex++)));
+        Assert.assertEquals("net.evendanan:inner1:0.1", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(flatDepIndex++)));
+        Assert.assertEquals("net.evendanan:inner-inner1:0.1", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(flatDepIndex++)));
+        Assert.assertEquals("net.evendanan:dep6:0.0.1", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(flatDepIndex++)));
+        Assert.assertEquals("net.evendanan:dep2:0.1", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(flatDepIndex++)));
+        Assert.assertEquals("net.evendanan:dep1:0.2", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(flatDepIndex++)));
+        Assert.assertEquals("net.evendanan:inner2:0.1", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(flatDepIndex++)));
+        Assert.assertEquals("net.evendanan:dep6:0.1", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(flatDepIndex++)));
+        Assert.assertEquals("net.evendanan:a1:0.2", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(flatDepIndex++)));
+        Assert.assertEquals("net.evendanan:inner-inner1:0.4", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(flatDepIndex++)));
 
         Assert.assertEquals(expectedSize, flatDepIndex);
     }

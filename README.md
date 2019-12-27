@@ -1,5 +1,5 @@
 # Mabel
-[![Latest release](https://img.shields.io/github/release/menny/mabel.svg)](https://github.com/menny/mabel/releases) [![Build Status](https://cloud.drone.io/api/badges/menny/mabel/status.svg)](https://cloud.drone.io/menny/mabel) [![codecov](https://codecov.io/gh/menny/mabel/branch/master/graph/badge.svg)](https://codecov.io/gh/menny/mabel)
+[![Latest release](https://img.shields.io/github/release/menny/mabel.svg)](https://github.com/menny/mabel/releases) ![](https://github.com/menny/mabel/workflows/CI/badge.svg?event=push&branch=master) [![codecov](https://codecov.io/gh/menny/mabel/branch/master/graph/badge.svg)](https://codecov.io/gh/menny/mabel)
 
 Yet another Maven dependency graph generator for Bazel.
 
@@ -39,7 +39,7 @@ There are several attempts to solve this problem (such as [sync-deps](https://gi
 ### WORKSPACE file
 Add this repository to your WORKSPACE (set `bazel_mvn_deps_version` to the latest [release](https://github.com/menny/mabel/releases) or, if you are adventurous, [commit](https://github.com/menny/mabel/commits/master)):
 ```python
-mabel_version = "0.6.0"
+mabel_version = "0.7.0"
 http_archive(
     name = "mabel",
     urls = ["https://github.com/menny/mabel/archive/%s.zip" % mabel_version],
@@ -47,8 +47,10 @@ http_archive(
     strip_prefix = "mabel-%s" % mabel_version
 )
 
-load("@mabel//resolver/main_deps:dependencies.bzl", generate_bazel_mvn_deps_workspace_rules = "generate_workspace_rules")
-generate_bazel_mvn_deps_workspace_rules()
+load("@mabel//:init_deps.bzl", "init_mabel_deps")
+init_mabel_deps()
+load("@mabel//:init_rules.bzl", "init_mabel_rules")
+init_mabel_rules()
 ```
 
 ### target definition

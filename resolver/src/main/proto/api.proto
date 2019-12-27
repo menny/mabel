@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package net.evendanan.bazel.mvn.api;
+
+option java_multiple_files = true;
+option optimize_for = SPEED;
+
+enum License {
+  restricted = 0;
+  reciprocal = 1;
+  notice = 2;
+  permissive = 3;
+  unencumbered = 4;
+}
+
+message Dependency {
+  string groupId = 1;
+  string artifactId = 2;
+  string version = 3;
+  string packaging = 4;
+
+  repeated Dependency dependencies = 5;
+  repeated Dependency exports = 6;
+  repeated Dependency runtimeDependencies = 7;
+
+  string url = 8;
+
+  string sourcesUrl = 9;
+  string javadocUrl = 10;
+
+  repeated License licenses = 11;
+}

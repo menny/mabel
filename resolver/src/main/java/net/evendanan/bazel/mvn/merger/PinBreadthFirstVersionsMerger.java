@@ -1,17 +1,18 @@
 package net.evendanan.bazel.mvn.merger;
 
+import net.evendanan.bazel.mvn.api.Dependency;
+import net.evendanan.bazel.mvn.api.GraphMerger;
+
+import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
-import javax.annotation.Nonnull;
-import net.evendanan.bazel.mvn.api.Dependency;
-import net.evendanan.bazel.mvn.api.GraphMerger;
 
 public class PinBreadthFirstVersionsMerger implements GraphMerger {
     private static String dependencyKey(Dependency dependency) {
-        return String.format(Locale.US, "%s:%s", dependency.groupId(), dependency.artifactId());
+        return String.format(Locale.ROOT, "%s:%s", dependency.getGroupId(), dependency.getArtifactId());
     }
 
     private static Collection<Dependency> replaceWithPinned(Collection<Dependency> dependencies, MemoizeDependency memoizeDependency) {
@@ -26,7 +27,7 @@ public class PinBreadthFirstVersionsMerger implements GraphMerger {
 
         GraphUtils.BfsTraveller(dependencies, (dependency, level) -> pinnedVersions.compute(dependencyKey(dependency),
                 (key, previousDep) -> {
-                    if (previousDep==null || previousDep.url().toASCIIString().equals("")) return dependency;
+                    if (previousDep == null || previousDep.getUrl().equals("")) return dependency;
                     else return previousDep;
                 }
         ));
@@ -34,7 +35,7 @@ public class PinBreadthFirstVersionsMerger implements GraphMerger {
         return replaceWithPinned(dependencies, new MemoizeDependency(pinnedVersions));
     }
 
-    private static class MemoizeDependency extends GraphMemoizator {
+    private static class MemoizeDependency extends GraphMemoizator<Dependency> {
 
         final Map<String, Dependency> pinnedVersions;
 
@@ -46,15 +47,16 @@ public class PinBreadthFirstVersionsMerger implements GraphMerger {
         @Override
         protected Dependency calculate(@Nonnull final Dependency original) {
             Dependency pinned = pinnedVersions.get(dependencyKey(original));
-            return new Dependency(pinned.groupId(), pinned.artifactId(), pinned.version(), pinned.packaging(),
-                    replaceWithPinned(pinned.dependencies(), this),
-                    replaceWithPinned(pinned.exports(), this),
-                    replaceWithPinned(pinned.runtimeDependencies(), this),
-                    pinned.url(), pinned.sourcesUrl(), pinned.javadocUrl(), pinned.licenses());
+
+            return Dependency.newBuilder(pinned)
+                    .clearDependencies().addAllDependencies(replaceWithPinned(pinned.getDependenciesList(), this))
+                    .clearExports().addAllExports(replaceWithPinned(pinned.getExportsList(), this))
+                    .clearRuntimeDependencies().addAllRuntimeDependencies(replaceWithPinned(pinned.getRuntimeDependenciesList(), this))
+                    .build();
         }
 
         @Override
-        protected String getKeyForDependency(final Dependency dependency) {
+        protected String getKeyForObject(final Dependency dependency) {
             return dependencyKey(dependency);
         }
     }

@@ -5,13 +5,14 @@ import com.google.devtools.bazel.workspace.maven.DefaultModelResolver;
 import com.google.devtools.bazel.workspace.maven.MigrationToolingMavenResolver;
 import com.google.devtools.bazel.workspace.maven.Rule;
 import com.google.devtools.bazel.workspace.maven.VersionResolver;
+import net.evendanan.bazel.mvn.api.Dependency;
+import net.evendanan.bazel.mvn.api.GraphResolver;
+import org.apache.maven.model.Repository;
+
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import net.evendanan.bazel.mvn.api.Dependency;
-import net.evendanan.bazel.mvn.api.GraphResolver;
-import org.apache.maven.model.Repository;
 
 public class MigrationToolingGraphResolver implements GraphResolver {
 
@@ -20,6 +21,7 @@ public class MigrationToolingGraphResolver implements GraphResolver {
     public MigrationToolingGraphResolver(boolean debugLogs) {
         this.debugLogs = debugLogs;
     }
+
     private static List<Repository> buildRepositories(Collection<String> repositories) {
         ArrayList<Repository> repositoryList = new ArrayList<>(repositories.size());
         for (String repositoryUrlString : repositories) {

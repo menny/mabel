@@ -1,10 +1,11 @@
 package net.evendanan.bazel.mvn.merger;
 
-import java.net.URI;
+import net.evendanan.bazel.mvn.api.Dependency;
+import net.evendanan.bazel.mvn.api.DependencyTools;
+
+import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.stream.Collectors;
-import javax.annotation.Nonnull;
-import net.evendanan.bazel.mvn.api.Dependency;
 
 public class ClearSrcJarAttribute {
     public static Collection<Dependency> clearSrcJar(final Collection<Dependency> dependencies) {
@@ -17,21 +18,22 @@ public class ClearSrcJarAttribute {
                 .collect(Collectors.toList());
     }
 
-    private static class MemoizeDependency extends GraphMemoizator {
+    private static class MemoizeDependency extends GraphMemoizator<Dependency> {
 
         @Nonnull
         @Override
         protected Dependency calculate(@Nonnull final Dependency original) {
-            return new Dependency(original.groupId(), original.artifactId(), original.version(), original.packaging(),
-                    clearSrcJar(original.dependencies(), this),
-                    clearSrcJar(original.exports(), this),
-                    clearSrcJar(original.runtimeDependencies(), this),
-                    original.url(), URI.create(""), original.javadocUrl(), original.licenses());
+            return Dependency.newBuilder(original)
+                    .clearDependencies().addAllDependencies(clearSrcJar(original.getDependenciesList(), this))
+                    .clearExports().addAllExports(clearSrcJar(original.getExportsList(), this))
+                    .clearRuntimeDependencies().addAllRuntimeDependencies(clearSrcJar(original.getRuntimeDependenciesList(), this))
+                    .clearSourcesUrl()
+                    .build();
         }
 
         @Override
-        protected String getKeyForDependency(final Dependency dependency) {
-            return dependency.mavenCoordinates();
+        protected String getKeyForObject(final Dependency dependency) {
+            return DependencyTools.DEFAULT.mavenCoordinates(dependency);
         }
     }
 }

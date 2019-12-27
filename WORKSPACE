@@ -1,5 +1,6 @@
 workspace(name="mabel")
 
-# Modified migration-toolings deps
-load("//resolver/main_deps:dependencies.bzl", generate_bazel_mvn_deps_workspace_rules = "generate_workspace_rules")
-generate_bazel_mvn_deps_workspace_rules()
+load("//:init_deps.bzl", "init_mabel_deps")
+init_mabel_deps()
+load("//:init_rules.bzl", "init_mabel_rules")
+init_mabel_rules()

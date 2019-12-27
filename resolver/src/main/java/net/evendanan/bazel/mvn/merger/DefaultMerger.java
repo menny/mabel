@@ -1,8 +1,9 @@
 package net.evendanan.bazel.mvn.merger;
 
-import java.util.Collection;
 import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.GraphMerger;
+
+import java.util.Collection;
 
 public class DefaultMerger implements GraphMerger {
 
@@ -14,7 +15,6 @@ public class DefaultMerger implements GraphMerger {
         final Collection<Dependency> mergedDependencies = new PinBreadthFirstVersionsMerger().mergeGraphs(dependencies);
         //2. de-duping
         System.out.println("Removing duplicate dependencies...");
-        return new FilterDuplicateDependenciesEntries().filterDuplicateDependencies(mergedDependencies);
+        return FilterDuplicateDependenciesEntries.filterDuplicateDependencies(mergedDependencies);
     }
-
 }

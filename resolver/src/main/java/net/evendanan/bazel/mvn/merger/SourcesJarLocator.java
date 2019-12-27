@@ -1,32 +1,33 @@
 package net.evendanan.bazel.mvn.merger;
 
 import com.google.common.annotations.VisibleForTesting;
+import net.evendanan.bazel.mvn.api.Dependency;
+import net.evendanan.bazel.mvn.api.DependencyTools;
+
+import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
-import javax.annotation.Nonnull;
-import net.evendanan.bazel.mvn.api.Dependency;
 
 public class SourcesJarLocator {
 
     private static final String SOURCES_CLASSIFIER = "sources";
 
-    private final ConnectionOpener mConnectionOpenner;
-    private final Map<URI, URI> mURLCache = new HashMap<>();
+    private final ConnectionFactory mConnectionFactory;
+    private final Map<String, String> mURLCache = new HashMap<>();
 
     public SourcesJarLocator() {
         this(url -> (HttpURLConnection) url.openConnection());
     }
 
     @VisibleForTesting
-    SourcesJarLocator(final ConnectionOpener opener) {
-        mConnectionOpenner = opener;
+    SourcesJarLocator(final ConnectionFactory opener) {
+        mConnectionFactory = opener;
     }
 
     private static Collection<Dependency> fillSourcesAttribute(Collection<Dependency> dependencies, DependencyMemoizator memoizator) {
@@ -39,13 +40,12 @@ public class SourcesJarLocator {
         return fillSourcesAttribute(dependencies, new DependencyMemoizator());
     }
 
-    private URI uriWithClassifier(final URI uri) {
+    private String uriWithClassifier(final String uri) {
         return mURLCache.computeIfAbsent(uri, this::hotFetch);
     }
 
-    private URI hotFetch(final URI uri) {
+    private String hotFetch(final String url) {
         System.out.print('.');
-        final String url = uri.toASCIIString();
         final int extStartIndex = url.lastIndexOf(".");
         if (extStartIndex > 0) {
             try {
@@ -55,41 +55,44 @@ public class SourcesJarLocator {
                 // https://repo1.maven.org/maven2/com/google/guava/guava/20.0/guava-20.0-sources.jar (always jar ext)
                 final String urlWithClassifier = String.format(Locale.US, "%s-%s.jar", url.substring(0, extStartIndex), SOURCES_CLASSIFIER);
                 final URL classifiedUrl = new URL(urlWithClassifier);
-                HttpURLConnection con = mConnectionOpenner.openUrlConnection(classifiedUrl);
+                HttpURLConnection con = mConnectionFactory.openUrlConnection(classifiedUrl);
                 con.setRequestMethod("HEAD");
                 final int responseCode = con.getResponseCode();
                 if (responseCode >= 200 && responseCode < 300) {
-                    return classifiedUrl.toURI();
+                    return classifiedUrl.toString();
                 } else {
-                    return URI.create("");
+                    return "";
                 }
             } catch (Exception e) {
-                return URI.create("");
+                return "";
             }
         } else {
-            return URI.create("");
+            return "";
         }
     }
 
-    interface ConnectionOpener {
+    interface ConnectionFactory {
         HttpURLConnection openUrlConnection(URL url) throws IOException;
     }
 
-    private class DependencyMemoizator extends GraphMemoizator {
+    private class DependencyMemoizator extends GraphMemoizator<Dependency> {
+
+        private final DependencyTools mDependencyTools = new DependencyTools();
 
         @Nonnull
         @Override
         protected Dependency calculate(@Nonnull final Dependency original) {
-            return new Dependency(original.groupId(), original.artifactId(), original.version(), original.packaging(),
-                    fillSourcesAttribute(original.dependencies(), this),
-                    fillSourcesAttribute(original.exports(), this),
-                    fillSourcesAttribute(original.runtimeDependencies(), this),
-                    original.url(), uriWithClassifier(original.url()), original.javadocUrl(), original.licenses());
+            return Dependency.newBuilder(original)
+                    .clearDependencies().addAllDependencies(fillSourcesAttribute(original.getDependenciesList(), this))
+                    .clearExports().addAllExports(fillSourcesAttribute(original.getExportsList(), this))
+                    .clearRuntimeDependencies().addAllRuntimeDependencies(fillSourcesAttribute(original.getRuntimeDependenciesList(), this))
+                    .setSourcesUrl(uriWithClassifier(original.getUrl()))
+                    .build();
         }
 
         @Override
-        protected String getKeyForDependency(final Dependency dependency) {
-            return dependency.mavenCoordinates();
+        protected String getKeyForObject(final Dependency dependency) {
+            return mDependencyTools.mavenCoordinates(dependency);
         }
     }
 }

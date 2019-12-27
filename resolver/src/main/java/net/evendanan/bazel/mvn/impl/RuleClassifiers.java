@@ -39,7 +39,7 @@ public class RuleClassifiers {
 
         @Override
         public Optional<TargetsBuilder> classifyRule(final Dependency dependency) {
-            if (packaging.equals(dependency.packaging())) {
+            if (packaging.equals(dependency.getPackaging())) {
                 return Optional.of(targetsBuilder);
             } else {
                 return Optional.empty();

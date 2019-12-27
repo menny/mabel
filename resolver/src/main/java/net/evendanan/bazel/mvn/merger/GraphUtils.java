@@ -1,18 +1,17 @@
 package net.evendanan.bazel.mvn.merger;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Queue;
+import net.evendanan.bazel.mvn.api.Dependency;
+import net.evendanan.bazel.mvn.api.DependencyTools;
+
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
-import net.evendanan.bazel.mvn.api.Dependency;
 
 public class GraphUtils {
 
     static String printGraph(Collection<Dependency> dependencies) {
+        final DependencyTools dependencyTools = new DependencyTools();
         final StringBuilder builder = new StringBuilder();
 
         DfsTraveller(dependencies,
@@ -21,7 +20,7 @@ public class GraphUtils {
                         builder.append("  ");
                     }
 
-                    builder.append(dependency.mavenCoordinates()).append(System.lineSeparator());
+                    builder.append(dependencyTools.mavenCoordinates(dependency)).append(System.lineSeparator());
                 });
 
         return builder.toString();
@@ -39,9 +38,9 @@ public class GraphUtils {
             final Consumer<Dependency> childConsumer = child -> {
                 if (!children.contains(child)) children.add(child);
             };
-            dependency.dependencies().forEach(childConsumer);
-            dependency.exports().forEach(childConsumer);
-            dependency.runtimeDependencies().forEach(childConsumer);
+            dependency.getDependenciesList().forEach(childConsumer);
+            dependency.getExportsList().forEach(childConsumer);
+            dependency.getRuntimeDependenciesList().forEach(childConsumer);
 
             DfsTraveller(children, level + 1, visitor);
         });
@@ -60,9 +59,9 @@ public class GraphUtils {
             final Consumer<Dependency> childConsumer = child -> {
                 if (!children.contains(child)) children.add(child);
             };
-            dependency.dependencies().forEach(childConsumer);
-            dependency.exports().forEach(childConsumer);
-            dependency.runtimeDependencies().forEach(childConsumer);
+            dependency.getDependenciesList().forEach(childConsumer);
+            dependency.getExportsList().forEach(childConsumer);
+            dependency.getRuntimeDependenciesList().forEach(childConsumer);
 
             queue.addAll(children);
         }
@@ -70,11 +69,11 @@ public class GraphUtils {
 
     static Collection<Dependency> deepCopyDeps(final Collection<Dependency> deps) {
         return deps.stream()
-                .map(dependency -> new Dependency(dependency.groupId(), dependency.artifactId(), dependency.version(), dependency.packaging(),
-                        deepCopyDeps(dependency.dependencies()),
-                        deepCopyDeps(dependency.exports()),
-                        deepCopyDeps(dependency.runtimeDependencies()),
-                        dependency.url(), dependency.sourcesUrl(), dependency.javadocUrl(), dependency.licenses()))
+                .map(dependency -> Dependency.newBuilder(dependency)
+                        .clearDependencies().addAllDependencies(deepCopyDeps(dependency.getDependenciesList()))
+                        .clearExports().addAllExports(deepCopyDeps(dependency.getExportsList()))
+                        .clearRuntimeDependencies().addAllRuntimeDependencies(deepCopyDeps(dependency.getRuntimeDependenciesList()))
+                        .build())
                 .collect(Collectors.toList());
     }
 

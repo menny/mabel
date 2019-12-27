@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import net.evendanan.bazel.mvn.api.Dependency;
+import net.evendanan.bazel.mvn.api.DependencyTools;
 
 public class VerifyNoConflictingVersions {
 
@@ -12,9 +13,9 @@ public class VerifyNoConflictingVersions {
         final Map<String, String> pinnedVersions = new HashMap<>();
 
         GraphUtils.DfsTraveller(dependencies, ((dependency, level) -> {
-            final String pinnedVersion = pinnedVersions.putIfAbsent(dependencyKey(dependency), dependency.version());
-            if (pinnedVersion!=null && !pinnedVersion.equals(dependency.version())) {
-                throw new IllegalStateException("Dependency " + dependency.mavenCoordinates() + " is pinned to " + pinnedVersion + " but needed " + dependency.version());
+            final String pinnedVersion = pinnedVersions.putIfAbsent(dependencyKey(dependency), dependency.getVersion());
+            if (pinnedVersion!=null && !pinnedVersion.equals(dependency.getVersion())) {
+                throw new IllegalStateException("Dependency " + DependencyTools.DEFAULT.mavenCoordinates(dependency) + " is pinned to " + pinnedVersion + " but needed " + dependency.getVersion());
             }
         }));
 
@@ -22,6 +23,6 @@ public class VerifyNoConflictingVersions {
     }
 
     private static String dependencyKey(Dependency dependency) {
-        return String.format(Locale.US, "%s:%s", dependency.groupId(), dependency.artifactId());
+        return String.format(Locale.US, "%s:%s", dependency.getGroupId(), dependency.getArtifactId());
     }
 }
