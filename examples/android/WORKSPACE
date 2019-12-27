@@ -1,9 +1,20 @@
 workspace(name="mabel_examples_android")
+### http_archive
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "build_bazel_rules_android",
+    sha256 = "cd06d15dd8bb59926e4d65f9003bfc20f9da4b2519985c27e190cddc8b7a7806",
+    strip_prefix = "rules_android-0.1.1",
+    urls = ["https://github.com/bazelbuild/rules_android/archive/v0.1.1.zip"],
+)
+
+load("@build_bazel_rules_android//android:rules.bzl", "android_sdk_repository")
 
 android_sdk_repository(
     name = "androidsdk",
-    api_level = 28,
-    build_tools_version = "28.0.3")
+    api_level = 29,
+    build_tools_version = "29.0.2")
 
 
 # Of course, this `local_repository` should be `http_archive` in your project (read the README.md file at the root)
