@@ -3,6 +3,7 @@ package net.evendanan.bazel.mvn.merger;
 import com.google.common.base.Charsets;
 import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.DependencyTools;
+import net.evendanan.bazel.mvn.api.MavenCoordinate;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,10 +38,12 @@ public class ArtifactDownloaderTest {
         mUnderTest = new ArtifactDownloader(mTestOpener, artifactDownloaderFolder, DependencyTools.DEFAULT);
 
         mDependency = Dependency.newBuilder()
-                .setGroupId("group")
-                .setArtifactId("artifact")
-                .setVersion("1.1")
-                .setPackaging("jar")
+                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                        .setGroupId("group")
+                        .setArtifactId("artifact")
+                        .setVersion("1.1")
+                        .setPackaging("jar")
+                        .build())
                 .setUrl("https://example.com/temp.jar")
                 .build();
         expectedOutputFile = new File(artifactDownloaderFolder, DependencyTools.DEFAULT.repositoryRuleName(mDependency));

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import net.evendanan.bazel.mvn.api.Dependency;
+import net.evendanan.bazel.mvn.api.MavenCoordinate;
 import net.evendanan.bazel.mvn.api.TargetsBuilder;
 import org.junit.Assert;
 import org.junit.Test;
@@ -15,22 +16,22 @@ public class RuleClassifiersTest {
 
     @Test
     public void testAarClassifier() {
-        Dependency dep = Dependency.newBuilder().setPackaging("aar").build();
+        Dependency dep = Dependency.newBuilder().setMavenCoordinate(MavenCoordinate.newBuilder().setPackaging("aar").build()).build();
         Assert.assertSame(TargetsBuilders.AAR_IMPORT, new RuleClassifiers.AarClassifier().classifyRule(dep).orElse(null));
 
-        dep = Dependency.newBuilder().setPackaging("jar").build();
+        dep = Dependency.newBuilder().setMavenCoordinate(MavenCoordinate.newBuilder().setPackaging("jar").build()).build();
         Assert.assertSame(Optional.empty(), new RuleClassifiers.AarClassifier().classifyRule(dep));
 
-        dep = Dependency.newBuilder().setPackaging("pom").build();
+        dep = Dependency.newBuilder().setMavenCoordinate(MavenCoordinate.newBuilder().setPackaging("pom").build()).build();
         Assert.assertSame(Optional.empty(), new RuleClassifiers.AarClassifier().classifyRule(dep));
     }
 
     @Test
     public void testPomClassifier() {
-        Dependency dep = Dependency.newBuilder().setPackaging("pom").build();
+        Dependency dep = dep = Dependency.newBuilder().setMavenCoordinate(MavenCoordinate.newBuilder().setPackaging("pom").build()).build();
         Assert.assertSame(TargetsBuilders.JAVA_IMPORT, new RuleClassifiers.PomClassifier().classifyRule(dep).orElse(null));
 
-        dep = Dependency.newBuilder().setPackaging("jar").build();
+        dep = dep = Dependency.newBuilder().setMavenCoordinate(MavenCoordinate.newBuilder().setPackaging("jar").build()).build();
         Assert.assertSame(Optional.empty(), new RuleClassifiers.PomClassifier().classifyRule(dep));
     }
 

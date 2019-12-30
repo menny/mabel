@@ -16,8 +16,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import net.evendanan.bazel.mvn.api.Dependency;
-import net.evendanan.bazel.mvn.api.License;
+import net.evendanan.bazel.mvn.api.*;
 import net.evendanan.bazel.mvn.api.DependencyTools;
 import net.evendanan.bazel.mvn.api.Target;
 import net.evendanan.bazel.mvn.api.TargetsBuilder;
@@ -37,7 +36,7 @@ public class TargetsBuilders {
 
     private static Target addJavaImportRule(Dependency dependency, DependencyTools dependencyTools) {
         final Target target = new Target(dependencyTools.mavenCoordinates(dependency), "java_import_impl", dependencyTools.repositoryRuleName(dependency))
-                .addList("jars", "pom".equalsIgnoreCase(dependency.getPackaging()) ?
+                .addList("jars", "pom".equalsIgnoreCase(dependency.getMavenCoordinate().getPackaging()) ?
                         Collections.emptyList()
                         :Collections.singletonList(String.format(Locale.ROOT, "@%s//file", dependencyTools.repositoryRuleName(dependency))))
                 .addList("tags", Collections.singletonList(String.format(Locale.ROOT, "maven_coordinates=%s", dependencyTools.mavenCoordinates(dependency))))
@@ -60,7 +59,7 @@ public class TargetsBuilders {
         return url.substring(lastPathSeparator + 1);
     }
 
-    private static Collection<String> convertRulesToStrings(final Collection<Dependency> dependencies, DependencyTools dependencyTools) {
+    private static Collection<String> convertRulesToStrings(final Collection<MavenCoordinate> dependencies, DependencyTools dependencyTools) {
         return dependencies.stream()
                 //using the friendly name (without version), so the mapping will be done via the alias mechanism.
                 .map(dependencyTools::targetName)
@@ -92,13 +91,13 @@ public class TargetsBuilders {
 
         @Override
         public List<Target> buildTargets(final Dependency dependency, DependencyTools dependencyTools) {
-            if ("pom".equalsIgnoreCase(dependency.getPackaging())) return Collections.emptyList();
+            if ("pom".equalsIgnoreCase(dependency.getMavenCoordinate().getPackaging())) return Collections.emptyList();
 
             final Target jarTarget = new Target(dependencyTools.mavenCoordinates(dependency), "http_file", dependencyTools.repositoryRuleName(dependency))
                     .addList("urls", Collections.singleton(dependency.getUrl()))
                     .addString("downloaded_file_path", getFilenameFromUrl(dependency.getUrl()));
 
-            if (calculateSha && !dependency.getVersion().contains("SNAPSHOT")) {
+            if (calculateSha && !dependency.getMavenCoordinate().getVersion().contains("SNAPSHOT")) {
                 try (InputStream inputStream = downloader.apply(dependency).toURL().openStream()) {
                     final MessageDigest digest = MessageDigest.getInstance("SHA-256");
 
@@ -241,7 +240,7 @@ public class TargetsBuilders {
         @Override
         public List<Target> buildTargets(final Dependency dependency, DependencyTools dependencyTools) {
             List<Target> targets = new ArrayList<>();
-            final Set<Dependency> deps = new HashSet<>(dependency.getDependenciesList());
+            final Set<MavenCoordinate> deps = new HashSet<>(dependency.getDependenciesList());
             deps.addAll(dependency.getRuntimeDependenciesList());
 
             targets.add(new Target(dependencyTools.mavenCoordinates(dependency), "aar_import_impl", dependencyTools.repositoryRuleName(dependency))

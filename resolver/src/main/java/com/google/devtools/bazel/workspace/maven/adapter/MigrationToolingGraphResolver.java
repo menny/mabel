@@ -7,6 +7,7 @@ import com.google.devtools.bazel.workspace.maven.Rule;
 import com.google.devtools.bazel.workspace.maven.VersionResolver;
 import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.GraphResolver;
+import net.evendanan.bazel.mvn.api.Resolution;
 import org.apache.maven.model.Repository;
 
 import java.net.URI;
@@ -38,7 +39,7 @@ public class MigrationToolingGraphResolver implements GraphResolver {
     }
 
     @Override
-    public Dependency resolve(String mavenCoordinate, final Collection<String> repositoriesUrls, final Collection<String> excludes) {
+    public Resolution resolve(String mavenCoordinate, final Collection<String> repositoriesUrls, final Collection<String> excludes) {
         final List<Repository> repositories = buildRepositories(repositoriesUrls);
         final VersionResolver versionResolver = VersionResolver.defaultResolver(debugLogs);
         MigrationToolingMavenResolver resolver = new MigrationToolingMavenResolver(

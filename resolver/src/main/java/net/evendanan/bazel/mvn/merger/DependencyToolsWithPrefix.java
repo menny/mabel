@@ -1,7 +1,7 @@
 package net.evendanan.bazel.mvn.merger;
 
-import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.DependencyTools;
+import net.evendanan.bazel.mvn.api.MavenCoordinate;
 
 public class DependencyToolsWithPrefix extends DependencyTools {
     private final String mPrefix;
@@ -11,12 +11,12 @@ public class DependencyToolsWithPrefix extends DependencyTools {
     }
 
     @Override
-    public String repositoryRuleName(Dependency dependency) {
+    public String repositoryRuleName(MavenCoordinate dependency) {
         return mPrefix + super.repositoryRuleName(dependency);
     }
 
     @Override
-    public String targetName(Dependency dependency) {
+    public String targetName(MavenCoordinate dependency) {
         return mPrefix + super.targetName(dependency);
     }
 }

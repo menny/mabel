@@ -7,19 +7,10 @@ import com.beust.jcommander.Parameters;
 import com.beust.jcommander.converters.IParameterSplitter;
 import com.google.common.base.Charsets;
 import net.evendanan.bazel.mvn.api.*;
-import net.evendanan.bazel.mvn.api.DependencyTools;
-import net.evendanan.bazel.mvn.api.GraphMerger;
-import net.evendanan.bazel.mvn.api.RuleWriter;
-import net.evendanan.bazel.mvn.api.Target;
-import net.evendanan.bazel.mvn.api.TargetsBuilder;
 import net.evendanan.bazel.mvn.impl.RuleClassifiers;
 import net.evendanan.bazel.mvn.impl.RuleWriters;
 import net.evendanan.bazel.mvn.impl.TargetsBuilders;
-import net.evendanan.bazel.mvn.merger.ArtifactDownloader;
-import net.evendanan.bazel.mvn.merger.ClearSrcJarAttribute;
-import net.evendanan.bazel.mvn.merger.DefaultMerger;
-import net.evendanan.bazel.mvn.merger.DependencyToolsWithPrefix;
-import net.evendanan.bazel.mvn.merger.DependencyTreeFlatter;
+import net.evendanan.bazel.mvn.merger.*;
 import net.evendanan.timing.TaskTiming;
 import net.evendanan.timing.TimingData;
 
@@ -32,8 +23,6 @@ import java.util.stream.Collectors;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static net.evendanan.bazel.mvn.merger.GraphUtils.DfsTraveller;
-
-;
 
 public class Merger {
 
@@ -90,7 +79,9 @@ public class Merger {
         }
 
         Merger driver = new Merger(options);
-        Collection<Dependency> dependencies = driver.mergeDependencyGraphsIntoOne(options);
+        Collection<Resolution> resolutions = driver.readResolutions(options);
+        Collection<Dependency> dependencies = driver.mergeResolutions(resolutions);
+
         final File artifactsFolder = new File(options.artifacts_path.replace("~", System.getProperty("user.home")));
         if (!artifactsFolder.isDirectory() && !artifactsFolder.mkdirs()) {
             throw new IOException("Failed to create artifacts folder " + artifactsFolder.getAbsolutePath());
@@ -108,7 +99,7 @@ public class Merger {
 
         if (options.fetch_srcjar) {
             System.out.print("Locating sources JARs for resolved dependencies...");
-            dependencies = new net.evendanan.bazel.mvn.merger.SourcesJarLocator().fillSourcesAttribute(dependencies);
+            dependencies = new SourcesJarLocator().fillSourcesAttribute(dependencies);
             System.out.println("✓");
         } else {
             System.out.print("Clearing srcjar...");
@@ -125,7 +116,15 @@ public class Merger {
             }
 
             try (final OutputStreamWriter fileWriter = new OutputStreamWriter(new FileOutputStream(prettyOutput, false), Charsets.UTF_8)) {
-                DfsTraveller(dependencies,
+                final Collection<Dependency> dependenciesToPrint = dependencies;
+                List<Resolution> resolutionsToPrint = resolutions.stream()
+                        .map(Resolution::newBuilder)
+                        .map(Resolution.Builder::clearAllResolvedDependencies)
+                        .map(builder -> builder.addAllAllResolvedDependencies(dependenciesToPrint))
+                        .map(Resolution.Builder::build)
+                        .collect(Collectors.toList());
+
+                DfsTraveller(resolutionsToPrint,
                         (dependency, level) -> {
                             try {
                                 if (level == 1) {
@@ -176,14 +175,14 @@ public class Merger {
         return ret && path.delete();
     }
 
-    private Collection<Dependency> mergeDependencyGraphsIntoOne(Options options) {
+    private Collection<Resolution> readResolutions(Options options) {
         System.out.print(String.format("Reading %s root artifacts...", options.artifacts.size()));
 
-        final List<Dependency> dependencies = options.artifacts.stream()
+        final List<Resolution> resolutions = options.artifacts.stream()
                 .map(inputFile -> {
                     System.out.print('.');
                     try (final FileInputStream inputStream = new FileInputStream(inputFile)) {
-                        return Dependency.parseFrom(inputStream);
+                        return Resolution.parseFrom(inputStream);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -191,15 +190,18 @@ public class Merger {
                 .collect(Collectors.toList());
         System.out.println();
 
-        System.out.print(String.format("Merging %s dependencies...", dependencies.size()));
-        final Collection<Dependency> merged = merger.mergeGraphs(dependencies);
+        return resolutions;
+    }
+
+    private Collection<Dependency> mergeResolutions(Collection<Resolution> resolutions) {
+        System.out.print(String.format("Merging %s root dependencies...", resolutions.size()));
+        final Collection<Dependency> merged = merger.mergeGraphs(resolutions);
         System.out.println();
         return merged;
     }
 
     private void writeResults(Collection<Dependency> resolvedDependencies, final Function<Dependency, URI> downloader, final Options options, DependencyTools dependencyTools) throws Exception {
-        System.out.print("Flattening dependency tree for writing...");
-        resolvedDependencies = DependencyTreeFlatter.flatten(resolvedDependencies)
+        resolvedDependencies = resolvedDependencies
                 .stream()
                 .filter(dependency -> !dependency.getUrl().equals(""))
                 .collect(Collectors.toList());
@@ -236,7 +238,7 @@ public class Merger {
         System.out.print(String.format("Writing %d Bazel repository rules...", targets.size()));
         final TargetsBuilder fileImporter = new TargetsBuilders.HttpTargetsBuilder(options.calculate_sha, downloader);
         repositoryRulesMacroWriter.write(resolvedDependencies.stream()
-                .map( d -> fileImporter.buildTargets(d, dependencyTools))
+                .map(d -> fileImporter.buildTargets(d, dependencyTools))
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList()));
         System.out.println("✓");

@@ -24,9 +24,6 @@ public class ClearSrcJarAttribute {
         @Override
         protected Dependency calculate(@Nonnull final Dependency original) {
             return Dependency.newBuilder(original)
-                    .clearDependencies().addAllDependencies(clearSrcJar(original.getDependenciesList(), this))
-                    .clearExports().addAllExports(clearSrcJar(original.getExportsList(), this))
-                    .clearRuntimeDependencies().addAllRuntimeDependencies(clearSrcJar(original.getRuntimeDependenciesList(), this))
                     .clearSourcesUrl()
                     .build();
         }
