@@ -77,6 +77,18 @@ public class TaskTimingTest {
                 20, 2, 10, 12, 18, 0.1f);
     }
 
+    @Test
+    public void testFinish() {
+        TestableTimer timer = new TestableTimer();
+        timer.start(10);
+        timer.currentTime++;
+        assertTimingData(timer.taskDone(),
+                10, 1, 10, 11, 9, 0.1f);
+
+        assertTimingData(timer.finish(),
+                10, 1, 10, 11, 9, 0.1f);
+    }
+
     private static class TestableTimer extends TaskTiming {
 
         private int currentTime = 10;

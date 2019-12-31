@@ -225,35 +225,47 @@ public class Merger {
             fileWriter.append(System.lineSeparator());
         }
 
-        System.out.println(String.format("Processing %s resolved rules...", resolvedDependencies.size()));
+        System.out.println(String.format("Processing %s targets rules...", resolvedDependencies.size()));
 
         final Function<Dependency, TargetsBuilder> ruleMapper = buildRuleMapper(downloader);
-        ProgressTimer timer = new ProgressTimer(resolvedDependencies.size(), "** Converting to Bazel targets, %d out of %d (%.2f%%%s): %s...");
-        List<Target> targets = resolvedDependencies.stream()
+        final TargetsBuilder fileImporter = new TargetsBuilders.HttpTargetsBuilder(options.calculate_sha, downloader);
+        ProgressTimer timer = new ProgressTimer(resolvedDependencies.size(), "Constructing Bazel targets", "%d out of %d (%.2f%%%s): %s...");
+        List<TargetsToWrite> targetsToWritePairs = resolvedDependencies.stream()
                 .peek(timer::taskDone)
-                .map(rule -> ruleMapper.apply(rule).buildTargets(rule, dependencyTools))
-                .flatMap(List::stream)
+                .map(dependency -> new TargetsToWrite(
+                        fileImporter.buildTargets(dependency, dependencyTools),
+                        ruleMapper.apply(dependency).buildTargets(dependency, dependencyTools)))
                 .collect(Collectors.toList());
 
-        timer = new ProgressTimer(resolvedDependencies.size(), "** Writing repository rules, %d out of %d (%.2f%%%s): %s...");
-        System.out.println(String.format("Writing %d repository rules...", targets.size()));
-        final TargetsBuilder fileImporter = new TargetsBuilders.HttpTargetsBuilder(options.calculate_sha, downloader);
-        repositoryRulesMacroWriter.write(resolvedDependencies.stream()
-                .peek(timer::taskDone)
-                .map(d -> fileImporter.buildTargets(d, dependencyTools))
-                .flatMap(Collection::stream)
+        timer.finish();
+
+        System.out.print("Writing targets to files...");
+        repositoryRulesMacroWriter.write(targetsToWritePairs.stream()
+                .map(t -> t.repositoryRules)
+                .flatMap(List::stream)
                 .collect(Collectors.toList()));
 
-        System.out.print(String.format("Writing %d Bazel dependency targets...", targets.size()));
+        List<Target> targets = targetsToWritePairs.stream()
+                .map(t -> t.targets)
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+        if (hardAliasesWriter != null) {
+            hardAliasesWriter.write(targets);
+        }
         targetsMacroWriter.write(targets);
-        System.out.println("✓");
 
         Files.move(macrosFile.toPath(), actualMacrosFile.toPath(), REPLACE_EXISTING);
 
-        if (hardAliasesWriter != null) {
-            System.out.print("Writing aliases targets...");
-            hardAliasesWriter.write(targets);
-            System.out.println("✓");
+        System.out.println("✓");
+    }
+
+    private static class TargetsToWrite {
+        final List<Target> repositoryRules;
+        final List<Target> targets;
+
+        private TargetsToWrite(List<Target> repositoryRules, List<Target> targets) {
+            this.repositoryRules = repositoryRules;
+            this.targets = targets;
         }
     }
 
@@ -268,9 +280,11 @@ public class Merger {
 
     private static class ProgressTimer {
         private final TaskTiming timer = new TaskTiming();
+        private final String title;
         private final String progressText;
 
-        ProgressTimer(int tasksCount, String progressText) {
+        ProgressTimer(int tasksCount, String title, String progressText) {
+            this.title = title;
             this.progressText = progressText;
             this.timer.start(tasksCount);
         }
@@ -283,10 +297,19 @@ public class Merger {
             } else {
                 estimatedTimeLeft = "";
             }
-            System.out.println(
-                    String.format(Locale.ROOT, progressText,
-                            timingData.doneTasks, timingData.totalTasks, 100 * timingData.ratioOfDone, estimatedTimeLeft,
-                            DependencyTools.DEFAULT.mavenCoordinates(dependency)));
+            report(progressText,
+                    timingData.doneTasks, timingData.totalTasks, 100 * timingData.ratioOfDone, estimatedTimeLeft,
+                    DependencyTools.DEFAULT.mavenCoordinates(dependency));
+        }
+
+        void finish() {
+            TimingData finish = timer.finish();
+            report("Finished. %s", TaskTiming.humanReadableTime(finish.totalTime - finish.startTime));
+        }
+
+        private void report(String text, Object... args) {
+            String msg = String.format(Locale.ROOT, text, args);
+            System.out.println(String.format(Locale.ROOT, "[%s] %s", title, msg));
         }
     }
 
