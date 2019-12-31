@@ -14,7 +14,7 @@ import static java.util.regex.Pattern.CASE_INSENSITIVE;
  */
 public final class LicenseTools {
     //notice licenses
-    private static Pattern APACHE = Pattern.compile(".*Apache.*");
+    private static Pattern APACHE = Pattern.compile(".*Apache.*", CASE_INSENSITIVE);
     private static Pattern APACHE_ASF_LICENSE = Pattern.compile(".*ASF.*License.*");
     private static Pattern APACHE_ASF = Pattern.compile(".*ASF.*2.*");
     private static Pattern MIT = Pattern.compile(".*MIT.*");
@@ -25,12 +25,12 @@ public final class LicenseTools {
     private static Pattern CDDL = Pattern.compile(".*CDDL.*");
     private static Pattern COMMON_PUBLIC = Pattern.compile(".*Common.+Public.+License.*", CASE_INSENSITIVE);
     private static Pattern CDDL_FULL = Pattern.compile(".*COMMON.+DEVELOPMENT.+AND.+DISTRIBUTION.+LICENSE.*", CASE_INSENSITIVE);
-    private static Pattern GOOGLE_CLOUD = Pattern.compile("Google Cloud Software License");
-    private static Pattern INDIANA_U = Pattern.compile(".*Indiana.+University.+License.*");
+    private static Pattern GOOGLE_CLOUD = Pattern.compile("Google Cloud Software License", CASE_INSENSITIVE);
+    private static Pattern INDIANA_U = Pattern.compile(".*Indiana.+University.+License.*", CASE_INSENSITIVE);
     private static Pattern ICU = Pattern.compile(".*ICU.+License.*");
 
     //reciprocal licenses
-    private static Pattern ECLIPSE = Pattern.compile(".*Eclipse\\s+Public\\s+License.*\\s+.*1.*");
+    private static Pattern ECLIPSE = Pattern.compile(".*Eclipse\\s+Public\\s+License.*\\s+.*1.*", CASE_INSENSITIVE);
     private static Pattern EPL = Pattern.compile(".*EPL\\s+.*1.*");
     private static Pattern MOZILLA_MPL = Pattern.compile(".*MPL.*1.1.*");
     private static Pattern MOZILLA = Pattern.compile(".*Mozilla.*License.*", CASE_INSENSITIVE);
@@ -41,9 +41,9 @@ public final class LicenseTools {
 
     //unencumbered licenses
     private static Pattern CC0 = Pattern.compile(".*CC0.*");
-    private static Pattern PUBLIC_DOMAIN = Pattern.compile(".*Public.*Domain.*");
-    private static Pattern ANDROID_SDK = Pattern.compile(".*Android.*License.*");
-    private static Pattern NO_WARRANTY = Pattern.compile(".*provided.*without.*support.*or.*warranty.*");
+    private static Pattern PUBLIC_DOMAIN = Pattern.compile(".*Public.*Domain.*", CASE_INSENSITIVE);
+    private static Pattern ANDROID_SDK = Pattern.compile(".*Android.*License.*", CASE_INSENSITIVE);
+    private static Pattern NO_WARRANTY = Pattern.compile(".*provided.*without.*support.*or.*warranty.*", CASE_INSENSITIVE);
 
     //permissive
     private static Pattern WTFPL = Pattern.compile(".*WTFPL.*");

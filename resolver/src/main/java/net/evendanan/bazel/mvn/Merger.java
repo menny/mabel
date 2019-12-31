@@ -235,13 +235,14 @@ public class Merger {
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
 
-        System.out.print(String.format("Writing %d Bazel repository rules...", targets.size()));
+        timer = new ProgressTimer(resolvedDependencies.size(), "** Writing repository rules, %d out of %d (%.2f%%%s): %s...");
+        System.out.println(String.format("Writing %d repository rules...", targets.size()));
         final TargetsBuilder fileImporter = new TargetsBuilders.HttpTargetsBuilder(options.calculate_sha, downloader);
         repositoryRulesMacroWriter.write(resolvedDependencies.stream()
+                .peek(timer::taskDone)
                 .map(d -> fileImporter.buildTargets(d, dependencyTools))
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList()));
-        System.out.println("✓");
 
         System.out.print(String.format("Writing %d Bazel dependency targets...", targets.size()));
         targetsMacroWriter.write(targets);

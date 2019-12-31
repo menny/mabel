@@ -76,6 +76,8 @@ public class DependencyToolsTest {
         Assert.assertNull(LicenseTools.fromLicenseName(null));
 
         Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("Apache 2.0"));
+        Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("Apache 2"));
+        Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("APACHE-2"));
         Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("Apache License"));
         Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("Similar to Apache License but with the acknowledgment clause removed"));
         Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("ASF 2.0"));
