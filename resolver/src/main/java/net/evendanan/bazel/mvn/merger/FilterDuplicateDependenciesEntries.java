@@ -11,15 +11,15 @@ import java.util.stream.Collectors;
 
 public class FilterDuplicateDependenciesEntries {
 
-    private static Collection<Dependency> filterDuplicateEntries(Collection<Dependency> dependencies, MemoizeDependency memoization) {
+    private static Set<Dependency> filterDuplicateEntries(Collection<Dependency> dependencies, MemoizeDependency memoization) {
         Set<String> pinnedDeps = new HashSet<>();
         return dependencies.stream()
                 .filter(dep -> pinnedDeps.add(DependencyTools.DEFAULT.mavenCoordinates(dep)))
                 .map(memoization::map)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 
-    public static Collection<Dependency> filterDuplicateDependencies(final Collection<Dependency> dependencies) {
+    public static Set<Dependency> filterDuplicateDependencies(final Collection<Dependency> dependencies) {
         return filterDuplicateEntries(dependencies, new MemoizeDependency());
     }
 
@@ -28,9 +28,9 @@ public class FilterDuplicateDependenciesEntries {
         @Override
         protected Dependency calculate(@Nonnull final Dependency original) {
             return Dependency.newBuilder(original)
-                    .clearDependencies().addAllDependencies(filterDuplicateEntries(original.getDependenciesList(), this))
-                    .clearExports().addAllExports(filterDuplicateEntries(original.getExportsList(), this))
-                    .clearRuntimeDependencies().addAllRuntimeDependencies(filterDuplicateEntries(original.getRuntimeDependenciesList(), this))
+                    .clearDependencies().addAllDependencies(original.getDependenciesList().stream().distinct().collect(Collectors.toList()))
+                    .clearExports().addAllExports(original.getExportsList().stream().distinct().collect(Collectors.toList()))
+                    .clearRuntimeDependencies().addAllRuntimeDependencies(original.getRuntimeDependenciesList().stream().distinct().collect(Collectors.toList()))
                     .build();
         }
 

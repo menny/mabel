@@ -1,10 +1,11 @@
 package net.evendanan.bazel.mvn;
 
+import net.evendanan.bazel.mvn.api.Dependency;
+import net.evendanan.bazel.mvn.api.MavenCoordinate;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import net.evendanan.bazel.mvn.api.Dependency;
 
 public class TestUtils {
 
@@ -12,10 +13,12 @@ public class TestUtils {
         final String[] depsPart = mavenDep.split(":", -1);
 
         return Dependency.newBuilder()
-                .setGroupId(depsPart[0])
-                .setArtifactId(depsPart[1])
-                .setVersion(depsPart.length > 2 ? depsPart[2] : "")
-                .setPackaging(url.substring(url.length() - 3))
+                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                        .setGroupId(depsPart[0])
+                        .setArtifactId(depsPart[1])
+                        .setVersion(depsPart.length > 2 ? depsPart[2] : "")
+                        .setPackaging(url.substring(url.length() - 3))
+                        .build())
                 .addAllDependencies(generateDeps(depsLabels))
                 .addAllExports(generateDeps(exportsLabels))
                 .addAllRuntimeDependencies(generateDeps(runtimeLabels))
@@ -30,9 +33,9 @@ public class TestUtils {
     }
 
 
-    private static Collection<Dependency> generateDeps(final List<String> depsLabels) {
+    private static Collection<MavenCoordinate> generateDeps(final List<String> depsLabels) {
         return depsLabels.stream()
-                .map(label -> Dependency.newBuilder()
+                .map(label -> MavenCoordinate.newBuilder()
                         .setGroupId("safe_mvn")
                         .setArtifactId(label)
                         .build())

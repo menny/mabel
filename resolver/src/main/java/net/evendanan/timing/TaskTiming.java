@@ -42,6 +42,10 @@ public class TaskTiming {
         return generateTimingData();
     }
 
+    public TimingData finish() {
+        return generateTimingData();
+    }
+
     private TimingData generateTimingData() {
         final long totalTime = getCurrentTime();
         final long duration = totalTime - startTime;

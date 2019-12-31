@@ -1,15 +1,15 @@
 package net.evendanan.bazel.mvn.impl;
 
-import java.net.URI;
-import java.util.Collections;
-
 import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.DependencyTools;
 import net.evendanan.bazel.mvn.api.License;
 import net.evendanan.bazel.mvn.api.LicenseTools;
+import net.evendanan.bazel.mvn.api.MavenCoordinate;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.net.URI;
 
 public class DependencyToolsTest {
     public static Dependency create(final String groupId, final String artifactId, final String version) {
@@ -18,10 +18,12 @@ public class DependencyToolsTest {
                 + artifactId.replace('.', '/') + "/"
                 + version + "/");
         return Dependency.newBuilder()
-                .setGroupId(groupId)
-                .setArtifactId(artifactId)
-                .setVersion(version)
-                .setPackaging("jar")
+                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                        .setGroupId(groupId)
+                        .setArtifactId(artifactId)
+                        .setVersion(version)
+                        .setPackaging("jar")
+                        .build())
                 .setUrl(urlBase.resolve("lib.jar").toASCIIString())
                 .setSourcesUrl(urlBase.resolve("lib-sources.jar").toASCIIString())
                 .setJavadocUrl(urlBase.resolve("lib-javadoc.jar").toASCIIString())
@@ -38,10 +40,12 @@ public class DependencyToolsTest {
     @Test
     public void testMavenFunctions() {
         Dependency dependency = Dependency.newBuilder()
-                .setGroupId("net.group")
-                .setArtifactId("some_lib")
-                .setVersion("1.2")
-                .setPackaging("jar")
+                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                        .setGroupId("net.group")
+                        .setArtifactId("some_lib")
+                        .setVersion("1.2")
+                        .setPackaging("jar")
+                        .build())
                 .build();
 
         Assert.assertEquals("net.group:some_lib:1.2", mUnderTest.mavenCoordinates(dependency));
@@ -72,6 +76,8 @@ public class DependencyToolsTest {
         Assert.assertNull(LicenseTools.fromLicenseName(null));
 
         Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("Apache 2.0"));
+        Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("Apache 2"));
+        Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("APACHE-2"));
         Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("Apache License"));
         Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("Similar to Apache License but with the acknowledgment clause removed"));
         Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("ASF 2.0"));

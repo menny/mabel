@@ -1,20 +1,27 @@
 package net.evendanan.bazel.mvn.merger;
 
+import com.google.common.base.Preconditions;
 import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.DependencyTools;
+import net.evendanan.bazel.mvn.api.MavenCoordinate;
+import net.evendanan.bazel.mvn.api.Resolution;
 
 import java.util.*;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 public class GraphUtils {
 
-    static String printGraph(Collection<Dependency> dependencies) {
+    static String printGraph(Resolution resolution) {
+        return printGraph(Collections.singleton(resolution));
+    }
+
+    static String printGraph(Collection<Resolution> resolutions) {
         final DependencyTools dependencyTools = new DependencyTools();
         final StringBuilder builder = new StringBuilder();
 
-        DfsTraveller(dependencies,
+        DfsTraveller(resolutions,
                 (dependency, level) -> {
                     for (int i = 0; i < level; i++) {
                         builder.append("  ");
@@ -26,55 +33,45 @@ public class GraphUtils {
         return builder.toString();
     }
 
-    public static void DfsTraveller(Collection<Dependency> dependencies, BiConsumer<Dependency, Integer> visitor) {
-        DfsTraveller(dependencies, 1, visitor);
+    public static void DfsTraveller(Collection<Resolution> resolutions, BiConsumer<Dependency, Integer> visitor) {
+        Map<MavenCoordinate, Dependency> mapper = new HashMap<>();
+        resolutions.forEach(resolution -> resolution.getAllResolvedDependenciesList().forEach(dep -> mapper.put(dep.getMavenCoordinate(), dep)));
+
+        resolutions.forEach(resolution -> DfsTraveller(resolution.getRootDependency(), mapper::get, 1, visitor));
     }
 
-    private static void DfsTraveller(Collection<Dependency> dependencies, int level, BiConsumer<Dependency, Integer> visitor) {
-        dependencies.forEach(dependency -> {
-            visitor.accept(dependency, level);
-            final List<Dependency> children = new ArrayList<>();
+    private static void DfsTraveller(MavenCoordinate mavenCoordinate, Function<MavenCoordinate, Dependency> dependencyMap, int level, BiConsumer<Dependency, Integer> visitor) {
+        Dependency dependency = Preconditions.checkNotNull(dependencyMap.apply(mavenCoordinate), "Can not find mapping for " + mavenCoordinate);
+        visitor.accept(dependency, level);
 
-            final Consumer<Dependency> childConsumer = child -> {
-                if (!children.contains(child)) children.add(child);
-            };
-            dependency.getDependenciesList().forEach(childConsumer);
-            dependency.getExportsList().forEach(childConsumer);
-            dependency.getRuntimeDependenciesList().forEach(childConsumer);
-
-            DfsTraveller(children, level + 1, visitor);
-        });
+        Stream.concat(
+                Stream.concat(
+                        dependency.getDependenciesList().stream(),
+                        dependency.getExportsList().stream()),
+                dependency.getRuntimeDependenciesList().stream())
+                .distinct()
+                .forEach(child -> DfsTraveller(child, dependencyMap, level + 1, visitor));
     }
 
+    static void BfsTraveller(Collection<Resolution> resolutions, BiConsumer<Dependency, Integer> visitor) {
+        Map<MavenCoordinate, Dependency> mapper = new HashMap<>();
+        resolutions.forEach(resolution -> resolution.getAllResolvedDependenciesList().forEach(dep -> mapper.put(dep.getMavenCoordinate(), dep)));
 
-    static void BfsTraveller(Collection<Dependency> dependencies, BiConsumer<Dependency, Integer> visitor) {
-        Queue<Dependency> queue = new ArrayDeque<>(dependencies);
+        Queue<MavenCoordinate> queue = new ArrayDeque<>();
+        resolutions.forEach(resolution -> queue.add(resolution.getRootDependency()));
 
         while (!queue.isEmpty()) {
-            final Dependency dependency = queue.remove();
+            final Dependency dependency = Preconditions.checkNotNull(mapper.get(queue.remove()), "Can not find mapping for " + queue.peek());
             visitor.accept(dependency, queue.size());
 
-            final List<Dependency> children = new ArrayList<>();
-
-            final Consumer<Dependency> childConsumer = child -> {
-                if (!children.contains(child)) children.add(child);
-            };
-            dependency.getDependenciesList().forEach(childConsumer);
-            dependency.getExportsList().forEach(childConsumer);
-            dependency.getRuntimeDependenciesList().forEach(childConsumer);
-
-            queue.addAll(children);
+            Stream.concat(
+                    Stream.concat(
+                            dependency.getDependenciesList().stream(),
+                            dependency.getExportsList().stream()),
+                    dependency.getRuntimeDependenciesList().stream())
+                    .distinct()
+                    .forEach(queue::add);
         }
-    }
-
-    static Collection<Dependency> deepCopyDeps(final Collection<Dependency> deps) {
-        return deps.stream()
-                .map(dependency -> Dependency.newBuilder(dependency)
-                        .clearDependencies().addAllDependencies(deepCopyDeps(dependency.getDependenciesList()))
-                        .clearExports().addAllExports(deepCopyDeps(dependency.getExportsList()))
-                        .clearRuntimeDependencies().addAllRuntimeDependencies(deepCopyDeps(dependency.getRuntimeDependenciesList()))
-                        .build())
-                .collect(Collectors.toList());
     }
 
 }

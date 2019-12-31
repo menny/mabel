@@ -83,9 +83,6 @@ public class SourcesJarLocator {
         @Override
         protected Dependency calculate(@Nonnull final Dependency original) {
             return Dependency.newBuilder(original)
-                    .clearDependencies().addAllDependencies(fillSourcesAttribute(original.getDependenciesList(), this))
-                    .clearExports().addAllExports(fillSourcesAttribute(original.getExportsList(), this))
-                    .clearRuntimeDependencies().addAllRuntimeDependencies(fillSourcesAttribute(original.getRuntimeDependenciesList(), this))
                     .setSourcesUrl(uriWithClassifier(original.getUrl()))
                     .build();
         }

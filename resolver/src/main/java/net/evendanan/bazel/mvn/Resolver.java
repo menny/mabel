@@ -10,6 +10,7 @@ import com.google.common.base.Strings;
 import com.google.devtools.bazel.workspace.maven.adapter.MigrationToolingGraphResolver;
 import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.GraphResolver;
+import net.evendanan.bazel.mvn.api.Resolution;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -51,11 +52,11 @@ public class Resolver {
         driver.writeResults(options, driver.generateFromArtifacts(options));
     }
 
-    private Dependency generateFromArtifacts(Options options) {
+    private Resolution generateFromArtifacts(Options options) {
         return resolver.resolve(options.artifact, options.repositories, options.blacklist);
     }
 
-    private void writeResults(Options options, Dependency resolvedDependency) throws Exception {
+    private void writeResults(Options options, Resolution resolution) throws Exception {
         final File outputFile = new File(options.output_file);
         final File parentFolder = outputFile.getParentFile();
         if (!parentFolder.isDirectory() && !parentFolder.mkdirs()) {
@@ -63,7 +64,7 @@ public class Resolver {
         }
 
         try (final FileOutputStream outputStream = new FileOutputStream(outputFile, false)) {
-            resolvedDependency.writeTo(outputStream);
+            resolution.writeTo(outputStream);
             outputStream.flush();
         }
     }

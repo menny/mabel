@@ -1,7 +1,8 @@
 package net.evendanan.bazel.mvn.merger;
 
 import net.evendanan.bazel.mvn.api.Dependency;
-import net.evendanan.bazel.mvn.api.DependencyTools;
+import net.evendanan.bazel.mvn.api.MavenCoordinate;
+import net.evendanan.bazel.mvn.api.Resolution;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,251 +11,571 @@ import java.util.*;
 
 public class DefaultMergerTest {
 
+    private Resolution mBasicResolution;
+    private String mBasicResolutionGraph;
+
     @Before
     public void setup() {
+        mBasicResolution = Resolution.newBuilder()
+                .setRootDependency(MavenCoordinate.newBuilder()
+                        .setGroupId("net.evendanan")
+                        .setArtifactId("dep1")
+                        .setVersion("0.1")
+                        .build())
+                .addAllAllResolvedDependencies(Arrays.asList(
+                        Dependency.newBuilder()
+                                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                                        .setGroupId("net.evendanan")
+                                        .setArtifactId("dep1")
+                                        .setVersion("0.1")
+                                        .build())
+                                .addAllDependencies(Collections.singleton(MavenCoordinate.newBuilder()
+                                        .setGroupId("net.evendanan")
+                                        .setArtifactId("inner1")
+                                        .setVersion("0.1")
+                                        .build()))
+                                .setUrl("http://example.com/artifact1.jar")
+                                .build(),
+                        Dependency.newBuilder()
+                                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                                        .setGroupId("net.evendanan")
+                                        .setArtifactId("inner1")
+                                        .setVersion("0.1")
+                                        .build())
+                                .setUrl("http://example.com/artifact2.jar")
+                                .addAllDependencies(Arrays.asList(
+                                        MavenCoordinate.newBuilder()
+                                                .setGroupId("net.evendanan")
+                                                .setArtifactId("inner-inner1")
+                                                .setVersion("0.1")
+                                                .build(),
+                                        MavenCoordinate.newBuilder()
+                                                .setGroupId("net.evendanan")
+                                                .setArtifactId("inner-inner2")
+                                                .setVersion("0.1")
+                                                .build()
+                                ))
+                                .build(),
+                        Dependency.newBuilder()
+                                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                                        .setGroupId("net.evendanan")
+                                        .setArtifactId("inner-inner1")
+                                        .setVersion("0.1")
+                                        .build())
+                                .setUrl("http://example.com/artifact3.jar")
+                                .build(),
+                        Dependency.newBuilder()
+                                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                                        .setGroupId("net.evendanan")
+                                        .setArtifactId("inner-inner2")
+                                        .setVersion("0.1")
+                                        .build())
+                                .setUrl("http://example.com/artifact4.jar")
+                                .build()))
+                .build();
+        mBasicResolutionGraph = GraphUtils.printGraph(mBasicResolution);
     }
 
     @Test
     public void testExcludes_NoRemovalIfEmptyExclude() {
-        String originalGraph = GraphUtils.printGraph(GraphUtilsTest.NO_REPEATS_GRAPH);
+        Collection<Dependency> actual = ExcludesFilter.filterDependencies(mBasicResolution.getAllResolvedDependenciesList(),
+                Collections.emptyList());
 
-        Assert.assertEquals(originalGraph, GraphUtils.printGraph(ExcludesFilter.filterDependencies(GraphUtilsTest.NO_REPEATS_GRAPH, Collections.emptyList())));
+        Assert.assertEquals(mBasicResolution.getAllResolvedDependenciesCount(), actual.size());
+        actual.forEach(dep -> Assert.assertTrue(mBasicResolution.getAllResolvedDependenciesList().contains(dep)));
+
+        Assert.assertEquals(mBasicResolutionGraph, GraphUtils.printGraph(Resolution.newBuilder()
+                .setRootDependency(mBasicResolution.getRootDependency())
+                .addAllAllResolvedDependencies(actual)
+                .build()));
     }
 
     @Test
     public void testExcludes_NoRemovalIfNoMatches() {
-        String originalGraph = GraphUtils.printGraph(GraphUtilsTest.NO_REPEATS_GRAPH);
+        Collection<Dependency> actual = ExcludesFilter.filterDependencies(mBasicResolution.getAllResolvedDependenciesList(),
+                Arrays.asList("some:other:1.2", "net.evendanan:dep1:333.00", "net.evendanan:dep5"));
 
-        Assert.assertEquals(originalGraph, GraphUtils.printGraph(ExcludesFilter.filterDependencies(GraphUtilsTest.NO_REPEATS_GRAPH, Arrays.asList("some:other:1.2", "net.evendanan:dep1:333.00", "net.evendanan:dep5"))));
+        Assert.assertEquals(mBasicResolution.getAllResolvedDependenciesCount(), actual.size());
+        actual.forEach(dep -> Assert.assertTrue(mBasicResolution.getAllResolvedDependenciesList().contains(dep)));
+
+        Assert.assertEquals(mBasicResolutionGraph, GraphUtils.printGraph(Resolution.newBuilder()
+                .setRootDependency(mBasicResolution.getRootDependency())
+                .addAllAllResolvedDependencies(actual)
+                .build()));
+    }
+
+    @Test
+    public void testExcludes_RemoveMatchesSubString() {
+        Collection<Dependency> actual = ExcludesFilter.filterDependencies(mBasicResolution.getAllResolvedDependenciesList(),
+                Collections.singletonList("net.evendanan:inner-inner2"));
+
+        Assert.assertEquals(mBasicResolution.getAllResolvedDependenciesCount() - 1, actual.size());
+        Assert.assertTrue(actual.stream()
+                .map(Dependency::getMavenCoordinate)
+                .noneMatch(mvn -> mvn.getGroupId().equals("net.evendanan") && mvn.getArtifactId().equals("inner-inner2")));
+
+        Assert.assertEquals("" +
+                        "  net.evendanan:dep1:0.1\n" +
+                        "    net.evendanan:inner1:0.1\n" +
+                        "      net.evendanan:inner-inner1:0.1\n",
+                GraphUtils.printGraph(Resolution.newBuilder()
+                        .setRootDependency(mBasicResolution.getRootDependency())
+                        .addAllAllResolvedDependencies(actual)
+                        .build()));
     }
 
     @Test
     public void testExcludes_RemoveMatchesSubTree() {
-        String originalGraph = GraphUtils.printGraph(GraphUtilsTest.NO_REPEATS_GRAPH);
+        Collection<Dependency> actual = ExcludesFilter.filterDependencies(mBasicResolution.getAllResolvedDependenciesList(),
+                Collections.singletonList("net.evendanan:inner1"));
 
-        final String expectedOriginalGraph = "" +
-                "  net.evendanan:dep1:0.1\n" +
-                "    net.evendanan:inner1:0.1\n" +
-                "      net.evendanan:inner-inner1:0.1\n" +
-                "      net.evendanan:inner-inner2:0.1\n" +
-                "  net.evendanan:dep2:0.1\n" +
-                "    net.evendanan:dep3:0.2\n" +
-                "    net.evendanan:inner2:0.1\n";
-
-        Assert.assertEquals(expectedOriginalGraph, originalGraph);
-
-        final String actual = GraphUtils.printGraph(ExcludesFilter.filterDependencies(GraphUtilsTest.NO_REPEATS_GRAPH, Collections.singletonList("net.evendanan:inner-inner2")));
-        Assert.assertNotEquals(originalGraph, actual);
-
-        final String expected = "" +
-                "  net.evendanan:dep1:0.1\n" +
-                "    net.evendanan:inner1:0.1\n" +
-                "      net.evendanan:inner-inner1:0.1\n" +
-                "  net.evendanan:dep2:0.1\n" +
-                "    net.evendanan:dep3:0.2\n" +
-                "    net.evendanan:inner2:0.1\n";
-        Assert.assertEquals(expected, actual);
+        Assert.assertEquals("  net.evendanan:dep1:0.1\n",
+                GraphUtils.printGraph(Resolution.newBuilder()
+                        .setRootDependency(mBasicResolution.getRootDependency())
+                        .addAllAllResolvedDependencies(actual)
+                        .build()));
     }
 
     @Test
     public void testReturnsUnChangedCopyWhenDependenciesDoNotAffectEachOther() {
-        String expected = GraphUtils.printGraph(GraphUtilsTest.NO_REPEATS_GRAPH);
+        Resolution secondResolution = Resolution.newBuilder()
+                .setRootDependency(MavenCoordinate.newBuilder()
+                        .setGroupId("com.evendanan")
+                        .setArtifactId("dep1")
+                        .setVersion("0.1")
+                        .build())
+                .addAllAllResolvedDependencies(Arrays.asList(
+                        Dependency.newBuilder()
+                                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                                        .setGroupId("com.evendanan")
+                                        .setArtifactId("dep1")
+                                        .setVersion("0.1")
+                                        .build())
+                                .setUrl("http://example.com/artifact20.jar")
+                                .addAllDependencies(Collections.singleton(MavenCoordinate.newBuilder()
+                                        .setGroupId("com.evendanan")
+                                        .setArtifactId("inner1")
+                                        .setVersion("0.1")
+                                        .build()))
+                                .build(),
+                        Dependency.newBuilder()
+                                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                                        .setGroupId("com.evendanan")
+                                        .setArtifactId("inner1")
+                                        .setVersion("0.1")
+                                        .build())
+                                .setUrl("http://example.com/artifact21.jar")
+                                .build()))
+                .build();
 
-        PinBreadthFirstVersionsMerger merger = new PinBreadthFirstVersionsMerger();
+        Collection<Dependency> actual = new PinBreadthFirstVersionsMerger().mergeGraphs(
+                Arrays.asList(mBasicResolution, secondResolution));
 
-        Collection<Dependency> mergedDependencies = merger.mergeGraphs(GraphUtilsTest.NO_REPEATS_GRAPH);
-
-        Assert.assertEquals(expected, GraphUtils.printGraph(mergedDependencies));
+        Assert.assertEquals(
+                mBasicResolution.getAllResolvedDependenciesCount() + secondResolution.getAllResolvedDependenciesCount(),
+                actual.size());
+        actual.forEach(dep -> Assert.assertTrue(
+                mBasicResolution.getAllResolvedDependenciesList().contains(dep) ||
+                        secondResolution.getAllResolvedDependenciesList().contains(dep)));
     }
 
     @Test
     public void testPinsTopLevelVersion() {
-        String expected = "" +
-                "  net.evendanan:dep1:0.1\n" +
-                "    net.evendanan:inner1:0.1\n" +
-                "      net.evendanan:inner-inner1:0.1\n" +
-                "      net.evendanan:inner-inner2:0.1\n" +
-                "  net.evendanan:dep2:0.1\n" +
-                "    net.evendanan:dep1:0.1\n" +
-                "      net.evendanan:inner1:0.1\n" +
-                "        net.evendanan:inner-inner1:0.1\n" +
-                "        net.evendanan:inner-inner2:0.1\n" +
-                "    net.evendanan:inner2:0.1\n";
+        Resolution secondResolution = Resolution.newBuilder()
+                .setRootDependency(MavenCoordinate.newBuilder()
+                        .setGroupId("com.evendanan")
+                        .setArtifactId("dep1")
+                        .setVersion("0.1")
+                        .build())
+                .addAllAllResolvedDependencies(Arrays.asList(
+                        Dependency.newBuilder()
+                                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                                        .setGroupId("com.evendanan")
+                                        .setArtifactId("dep1")
+                                        .setVersion("0.1")
+                                        .build())
+                                .setUrl("http://example.com/artifact20.jar")
+                                .addAllDependencies(Collections.singleton(MavenCoordinate.newBuilder()
+                                        .setGroupId("net.evendanan")
+                                        .setArtifactId("inner1")
+                                        .setVersion("0.2")//this will be changed to "0.1"
+                                        .build()))
+                                .build(),
+                        Dependency.newBuilder()//this will be discarded
+                                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                                        .setGroupId("net.evendanan")
+                                        .setArtifactId("inner1")
+                                        .setVersion("0.2")
+                                        .build())
+                                .setUrl("http://example.com/artifact21.jar")
+                                .build()))
+                .build();
 
-        PinBreadthFirstVersionsMerger merger = new PinBreadthFirstVersionsMerger();
+        Collection<Dependency> actual = new PinBreadthFirstVersionsMerger().mergeGraphs(
+                Arrays.asList(mBasicResolution, secondResolution));
 
-        Collection<Dependency> mergedDependencies = merger.mergeGraphs(GraphUtilsTest.REPEATS_DEP1_AT_ROOT_GRAPH);
+        //only adds the root of the second resolution
+        Assert.assertEquals(mBasicResolution.getAllResolvedDependenciesCount() + 1, actual.size());
 
-        final String actual = GraphUtils.printGraph(mergedDependencies);
-        Assert.assertEquals(expected, actual);
+        Assert.assertTrue(actual.stream()
+                .map(Dependency::getMavenCoordinate)
+                .noneMatch(mvn -> mvn.getGroupId().equals("net.evendanan") && mvn.getArtifactId().equals("inner1") && mvn.getVersion().equals("0.2")));
+
+        Assert.assertEquals("" +
+                        "  com.evendanan:dep1:0.1\n" +
+                        "    net.evendanan:inner1:0.1\n" +
+                        "      net.evendanan:inner-inner1:0.1\n" +
+                        "      net.evendanan:inner-inner2:0.1\n",
+                GraphUtils.printGraph(Resolution.newBuilder()
+                        .setRootDependency(secondResolution.getRootDependency())
+                        .addAllAllResolvedDependencies(actual)
+                        .build()));
     }
 
     @Test
-    public void testPinnedVersionsCheckerWhenNoRepeats() {
-        final Collection<Dependency> dependencies = VerifyNoConflictingVersions.checkNoConflictingVersions(GraphUtilsTest.NO_REPEATS_GRAPH);
-        Assert.assertSame(GraphUtilsTest.NO_REPEATS_GRAPH, dependencies);
-    }
+    public void testUseEmptyUrlDepIfNoOther() {
+        Resolution resolution = Resolution.newBuilder()
+                .setRootDependency(MavenCoordinate.newBuilder()
+                        .setGroupId("com.evendanan")
+                        .setArtifactId("dep1")
+                        .setVersion("0.1")
+                        .build())
+                .addAllAllResolvedDependencies(Arrays.asList(
+                        Dependency.newBuilder()
+                                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                                        .setGroupId("com.evendanan")
+                                        .setArtifactId("dep1")
+                                        .setVersion("0.1")
+                                        .build())
+                                .addAllDependencies(Collections.singleton(MavenCoordinate.newBuilder()
+                                        .setGroupId("net.evendanan")
+                                        .setArtifactId("inner1")
+                                        .setVersion("0.2")
+                                        .build()))
+                                .setUrl("http://example.com/artifact.jar")
+                                .build(),
+                        Dependency.newBuilder()
+                                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                                        .setGroupId("net.evendanan")
+                                        .setArtifactId("inner1")
+                                        .setVersion("0.2")
+                                        .build())
+                                .build()))
+                .build();
 
-    @Test(expected = IllegalStateException.class)
-    public void testPinnedVersionsCheckerWhenRepeats() {
-        VerifyNoConflictingVersions.checkNoConflictingVersions(GraphUtilsTest.REPEATS_DEP6_AT_ROOT_GRAPH);
-    }
+        Collection<Dependency> mergedDependencies = new PinBreadthFirstVersionsMerger().mergeGraphs(Collections.singleton(resolution));
 
-    @Test
-    public void testPinsFirstSeenVersion() {
-        String expected = "" +
-                "  net.evendanan:dep1:0.1\n" +
-                "    net.evendanan:inner1:0.1\n" +
-                "      net.evendanan:inner-inner1:0.1\n" +
-                "      net.evendanan:inner2:0.3\n" +
-                "  net.evendanan:dep2:0.1\n" +
-                "    net.evendanan:dep3:0.2\n" +
-                "    net.evendanan:inner2:0.3\n";
-
-        PinBreadthFirstVersionsMerger merger = new PinBreadthFirstVersionsMerger();
-
-        Collection<Dependency> mergedDependencies = merger.mergeGraphs(GraphUtilsTest.REPEATS_INNER1_GRAPH);
-
-        final String actual = GraphUtils.printGraph(mergedDependencies);
-
-        Assert.assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testFirstBreadthSeenVersion() {
-        String expected = "" +
-                "  net.evendanan:dep1:0.1\n" +
-                "    net.evendanan:inner1:0.1\n" +
-                "      net.evendanan:inner-inner1:0.4\n" +
-                "      net.evendanan:dep6:0.1\n" +
-                "        net.evendanan:a1:0.2\n" +
-                "        net.evendanan:inner-inner1:0.4\n" +
-                "  net.evendanan:dep2:0.1\n" +
-                "    net.evendanan:dep1:0.1\n" +
-                "      net.evendanan:inner1:0.1\n" +
-                "        net.evendanan:inner-inner1:0.4\n" +
-                "        net.evendanan:dep6:0.1\n" +
-                "          net.evendanan:a1:0.2\n" +
-                "          net.evendanan:inner-inner1:0.4\n" +
-                "    net.evendanan:inner2:0.1\n" +
-                "  net.evendanan:dep6:0.1\n" +
-                "    net.evendanan:a1:0.2\n" +
-                "    net.evendanan:inner-inner1:0.4\n";
-
-        PinBreadthFirstVersionsMerger merger = new PinBreadthFirstVersionsMerger();
-
-        Collection<Dependency> mergedDependencies = merger.mergeGraphs(GraphUtilsTest.REPEATS_DEP6_AT_ROOT_GRAPH);
-
-        final String actual = GraphUtils.printGraph(mergedDependencies);
-        Assert.assertEquals(expected, actual);
-    }
-
-
-    @Test
-    public void testIgnoreEmptyRepository() {
-        final String expected = "  net.evendanan:dep1:0.1\n" +
-                "    net.evendanan:inner1:0.1\n" +
-                "      net.evendanan:inner-inner1:0.1\n" +
-                "      net.evendanan:inner-inner2:0.1.1\n" +
-                "  net.evendanan:dep2:0.1\n" +
-                "    net.evendanan:dep3:0.2\n" +
-                "      net.evendanan:inner-inner1:0.1\n" +
-                "      net.evendanan:inner-inner2:0.1.1\n" +
-                "    net.evendanan:inner2:0.1\n";
-
-        Collection<Dependency> mergedDependencies = new PinBreadthFirstVersionsMerger().mergeGraphs(GraphUtilsTest.GRAPH_WITH_EMPTY_REPO_AND_DIFFERENT_VERSIONS);
-
-        Assert.assertEquals(expected, GraphUtils.printGraph(mergedDependencies));
+        Assert.assertTrue(mergedDependencies.stream()
+                .filter(dependency -> dependency.getUrl().isEmpty())
+                .map(Dependency::getMavenCoordinate)
+                .anyMatch(mvn -> mvn.getGroupId().equals("net.evendanan") && mvn.getArtifactId().equals("inner1") && mvn.getVersion().equals("0.2")));
     }
 
     @Test
-    public void testReturnsUnchangedIfNoDuplicateDeps() {
-        String expected = GraphUtils.printGraph(GraphUtilsTest.NO_REPEATS_GRAPH);
+    public void testDiscardEmptyUrlDependency() {
+        Resolution resolution = Resolution.newBuilder()
+                .setRootDependency(MavenCoordinate.newBuilder()
+                        .setGroupId("net.evendanan")
+                        .setArtifactId("dep1")
+                        .setVersion("0.1")
+                        .build())
+                .addAllAllResolvedDependencies(Arrays.asList(
+                        Dependency.newBuilder()
+                                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                                        .setGroupId("net.evendanan")
+                                        .setArtifactId("dep1")
+                                        .setVersion("0.1")
+                                        .build())
+                                .addAllDependencies(Arrays.asList(
+                                        MavenCoordinate.newBuilder()
+                                                .setGroupId("net.evendanan")
+                                                .setArtifactId("inner1")
+                                                .setVersion("0.1")
+                                                .build(),
+                                        MavenCoordinate.newBuilder()
+                                                .setGroupId("net.evendanan")
+                                                .setArtifactId("inner2")
+                                                .setVersion("0.1")
+                                                .build()
+                                ))
+                                .setUrl("http://example.com/artifact1.jar")
+                                .build(),
+                        Dependency.newBuilder()
+                                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                                        .setGroupId("net.evendanan")
+                                        .setArtifactId("inner1")
+                                        .setVersion("0.1")
+                                        .build())
+                                .setUrl("http://example.com/artifact2.jar")
+                                .addAllDependencies(Arrays.asList(
+                                        MavenCoordinate.newBuilder()
+                                                .setGroupId("net.evendanan")
+                                                .setArtifactId("inner-inner1")
+                                                .setVersion("0.1")
+                                                .build(),
+                                        MavenCoordinate.newBuilder()
+                                                .setGroupId("net.evendanan")
+                                                .setArtifactId("inner-inner2")
+                                                .setVersion("0.1")
+                                                .build()
+                                ))
+                                .build(),
+                        Dependency.newBuilder()
+                                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                                        .setGroupId("net.evendanan")
+                                        .setArtifactId("inner-inner1")
+                                        .setVersion("0.1")
+                                        .build())
+                                .build(),
+                        Dependency.newBuilder()
+                                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                                        .setGroupId("net.evendanan")
+                                        .setArtifactId("inner-inner2")
+                                        .setVersion("0.1")
+                                        .build())
+                                .setUrl("http://example.com/artifact4.jar")
+                                .build(),
+                        Dependency.newBuilder()
+                                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                                        .setGroupId("net.evendanan")
+                                        .setArtifactId("inner2")
+                                        .setVersion("0.1")
+                                        .build())
+                                .setUrl("http://example.com/artifact2-inner2.jar")
+                                .addAllDependencies(Arrays.asList(
+                                        MavenCoordinate.newBuilder()
+                                                .setGroupId("net.evendanan")
+                                                .setArtifactId("inner-inner1")
+                                                .setVersion("0.2")
+                                                .build(),
+                                        MavenCoordinate.newBuilder()
+                                                .setGroupId("net.evendanan")
+                                                .setArtifactId("inner-inner2")
+                                                .setVersion("0.1")
+                                                .build()
+                                ))
+                                .build(),
+                        Dependency.newBuilder()
+                                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                                        .setGroupId("net.evendanan")
+                                        .setArtifactId("inner-inner1")
+                                        .setVersion("0.2")
+                                        .build())
+                                .setUrl("http://example.com/artifact1-inner1-v2.jar")
+                                .build()))
+                .build();
 
-        FilterDuplicateDependenciesEntries merger = new FilterDuplicateDependenciesEntries();
+        Collection<Dependency> mergedDependencies = new PinBreadthFirstVersionsMerger().mergeGraphs(Collections.singleton(resolution));
 
-        Collection<Dependency> dependencies = merger.filterDuplicateDependencies(GraphUtilsTest.NO_REPEATS_GRAPH);
-
-        Assert.assertEquals(expected, GraphUtils.printGraph(dependencies));
+        Assert.assertTrue(mergedDependencies.stream()
+                .noneMatch(dependency -> dependency.getUrl().isEmpty()));
+        Assert.assertTrue(mergedDependencies.stream()
+                .map(Dependency::getMavenCoordinate)
+                .noneMatch(mvn -> mvn.getGroupId().equals("net.evendanan") && mvn.getArtifactId().equals("inner-inner1") && mvn.getVersion().equals("0.1")));
     }
 
     @Test
-    public void testReturnsDeDupDuplicateDeps() {
-        List<Dependency> dependencies = (List<Dependency>) GraphUtils.deepCopyDeps(GraphUtilsTest.NO_REPEATS_GRAPH);
+    public void testReturnsUnchangedIfNoDuplicateDependencies() {
+        Set<Dependency> actual = FilterDuplicateDependenciesEntries.filterDuplicateDependencies(mBasicResolution.getAllResolvedDependenciesList());
 
-        //duplicating one root
-        dependencies.add(dependencies.get(1));
+        Assert.assertEquals(mBasicResolution.getAllResolvedDependenciesCount(), actual.size());
+        actual.forEach(dep -> Assert.assertTrue(mBasicResolution.getAllResolvedDependenciesList().contains(dep)));
 
-        FilterDuplicateDependenciesEntries merger = new FilterDuplicateDependenciesEntries();
-
-        Collection<Dependency> deDuped = merger.filterDuplicateDependencies(dependencies);
-        String expected = GraphUtils.printGraph(GraphUtilsTest.NO_REPEATS_GRAPH);
-
-        Assert.assertEquals(expected, GraphUtils.printGraph(deDuped));
+        Assert.assertEquals(mBasicResolutionGraph, GraphUtils.printGraph(Resolution.newBuilder()
+                .setRootDependency(mBasicResolution.getRootDependency())
+                .addAllAllResolvedDependencies(actual)
+                .build()));
     }
 
     @Test
-    public void testNamePrefix() {
+    public void testReturnsDeDupDuplicateResolvedDependencies() {
+        List<Dependency> testData = new ArrayList<>(mBasicResolution.getAllResolvedDependenciesList());
+        testData.add(testData.get(testData.size() - 1));
+        Set<Dependency> actual = FilterDuplicateDependenciesEntries.filterDuplicateDependencies(testData);
+
+        Assert.assertEquals(mBasicResolution.getAllResolvedDependenciesCount(), actual.size());
+        actual.forEach(dep -> Assert.assertTrue(mBasicResolution.getAllResolvedDependenciesList().contains(dep)));
+
+        Assert.assertEquals(mBasicResolutionGraph, GraphUtils.printGraph(Resolution.newBuilder()
+                .setRootDependency(mBasicResolution.getRootDependency())
+                .addAllAllResolvedDependencies(actual)
+                .build()));
+    }
+
+    @Test
+    public void testReturnsDeDupDuplicateDependencyDownstreamDependencies() {
+        Resolution resolution = Resolution.newBuilder()
+                .setRootDependency(MavenCoordinate.newBuilder()
+                        .setGroupId("net.evendanan")
+                        .setArtifactId("dep1")
+                        .setVersion("0.1")
+                        .build())
+                .addAllAllResolvedDependencies(Arrays.asList(
+                        Dependency.newBuilder()
+                                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                                        .setGroupId("net.evendanan")
+                                        .setArtifactId("dep1")
+                                        .setVersion("0.1")
+                                        .build())
+                                .addAllDependencies(Collections.singleton(MavenCoordinate.newBuilder()
+                                        .setGroupId("net.evendanan")
+                                        .setArtifactId("inner1")
+                                        .setVersion("0.1")
+                                        .build()))
+                                .setUrl("http://example.com/artifact1.jar")
+                                .build(),
+                        Dependency.newBuilder()
+                                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                                        .setGroupId("net.evendanan")
+                                        .setArtifactId("inner1")
+                                        .setVersion("0.1")
+                                        .build())
+                                .setUrl("http://example.com/artifact2.jar")
+                                .addAllDependencies(Arrays.asList(
+                                        MavenCoordinate.newBuilder()
+                                                .setGroupId("net.evendanan")
+                                                .setArtifactId("inner-inner1")
+                                                .setVersion("0.1")
+                                                .build(),
+                                        MavenCoordinate.newBuilder()
+                                                .setGroupId("net.evendanan")
+                                                .setArtifactId("inner-inner1")
+                                                .setVersion("0.1")
+                                                .build(),
+                                        MavenCoordinate.newBuilder()
+                                                .setGroupId("net.evendanan")
+                                                .setArtifactId("inner-inner2")
+                                                .setVersion("0.1")
+                                                .build()
+                                ))
+                                .build(),
+                        Dependency.newBuilder()
+                                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                                        .setGroupId("net.evendanan")
+                                        .setArtifactId("inner-inner1")
+                                        .setVersion("0.1")
+                                        .build())
+                                .setUrl("http://example.com/artifact3.jar")
+                                .build(),
+                        Dependency.newBuilder()
+                                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                                        .setGroupId("net.evendanan")
+                                        .setArtifactId("inner-inner2")
+                                        .setVersion("0.1")
+                                        .build())
+                                .setUrl("http://example.com/artifact4.jar")
+                                .build()))
+                .build();
+
+        Set<Dependency> actual = FilterDuplicateDependenciesEntries.filterDuplicateDependencies(resolution.getAllResolvedDependenciesList());
+
+        Assert.assertEquals(mBasicResolution.getAllResolvedDependenciesCount(), actual.size());
+        actual.forEach(dep -> Assert.assertTrue(mBasicResolution.getAllResolvedDependenciesList().contains(dep)));
+
+        Assert.assertEquals(mBasicResolutionGraph, GraphUtils.printGraph(Resolution.newBuilder()
+                .setRootDependency(mBasicResolution.getRootDependency())
+                .addAllAllResolvedDependencies(actual)
+                .build()));
+    }
+
+    @Test
+    public void testNamePrefixWithDependency() {
         final String prefix = "prefix___";
-        net.evendanan.bazel.mvn.merger.DependencyToolsWithPrefix prefixer = new net.evendanan.bazel.mvn.merger.DependencyToolsWithPrefix(prefix);
+        DependencyToolsWithPrefix prefixing = new DependencyToolsWithPrefix(prefix);
 
-        Dependency dependency = Dependency.newBuilder().setGroupId("group").setArtifactId("artifact").setVersion("1.0").build();
+        Dependency dependency = Dependency.newBuilder().setMavenCoordinate(
+                MavenCoordinate.newBuilder()
+                        .setGroupId("group").setArtifactId("artifact").setVersion("1.0")
+                        .build()
+        ).build();
 
-        Assert.assertTrue(prefixer.repositoryRuleName(dependency).startsWith(prefix));
-        Assert.assertTrue(prefixer.targetName(dependency).startsWith(prefix));
+        Assert.assertTrue(prefixing.repositoryRuleName(dependency).startsWith(prefix));
+        Assert.assertTrue(prefixing.targetName(dependency).startsWith(prefix));
     }
 
     @Test
-    public void testFlattenTreeWithNoRepeats() {
-        final ArrayList<Dependency> flatten = new ArrayList<>(DependencyTreeFlatter.flatten(GraphUtilsTest.NO_REPEATS_GRAPH));
-        Assert.assertEquals(7, flatten.size());
-        Assert.assertEquals("net.evendanan:dep1:0.1", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(0)));
-        Assert.assertEquals("net.evendanan:inner1:0.1", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(1)));
-        Assert.assertEquals("net.evendanan:inner-inner1:0.1", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(2)));
-        Assert.assertEquals("net.evendanan:inner-inner2:0.1", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(3)));
-        Assert.assertEquals("net.evendanan:dep2:0.1", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(4)));
-        Assert.assertEquals("net.evendanan:dep3:0.2", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(5)));
-        Assert.assertEquals("net.evendanan:inner2:0.1", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(6)));
+    public void testNamePrefixWithMavenCoordinates() {
+        final String prefix = "prefix___";
+        DependencyToolsWithPrefix prefixing = new DependencyToolsWithPrefix(prefix);
 
+        MavenCoordinate dependency = MavenCoordinate.newBuilder()
+                .setGroupId("group").setArtifactId("artifact").setVersion("1.0")
+                .build();
+
+        Assert.assertTrue(prefixing.repositoryRuleName(dependency).startsWith(prefix));
+        Assert.assertTrue(prefixing.targetName(dependency).startsWith(prefix));
     }
 
     @Test
     public void testClearSrcJar() {
-        Assert.assertNotEquals("", ((List<Dependency>) GraphUtilsTest.SRC_JAR_GRAPH).get(0).getDependenciesList().get(0).getSourcesUrl());
-        Assert.assertNotEquals("", ((List<Dependency>) GraphUtilsTest.SRC_JAR_GRAPH).get(1).getRuntimeDependenciesList().get(0).getUrl());
-        Assert.assertNotEquals("", ((List<Dependency>) GraphUtilsTest.SRC_JAR_GRAPH).get(1).getRuntimeDependenciesList().get(0).getSourcesUrl());
-        Assert.assertNotEquals("", ((List<Dependency>) GraphUtilsTest.SRC_JAR_GRAPH).get(1).getRuntimeDependenciesList().get(0).getJavadocUrl());
-        final ArrayList<Dependency> cleared = new ArrayList<>(ClearSrcJarAttribute.clearSrcJar(GraphUtilsTest.SRC_JAR_GRAPH));
-        Assert.assertEquals(2, cleared.size());
-        GraphUtils.DfsTraveller(cleared, (dep, level) -> Assert.assertEquals("", dep.getSourcesUrl()));
+        Resolution resolution = Resolution.newBuilder()
+                .setRootDependency(MavenCoordinate.newBuilder()
+                        .setGroupId("net.evendanan")
+                        .setArtifactId("dep1")
+                        .setVersion("0.1")
+                        .build())
+                .addAllAllResolvedDependencies(Arrays.asList(
+                        Dependency.newBuilder()
+                                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                                        .setGroupId("net.evendanan")
+                                        .setArtifactId("dep1")
+                                        .setVersion("0.1")
+                                        .build())
+                                .addAllDependencies(Collections.singleton(MavenCoordinate.newBuilder()
+                                        .setGroupId("net.evendanan")
+                                        .setArtifactId("inner1")
+                                        .setVersion("0.1")
+                                        .build()))
+                                .setUrl("http://example.com/artifact1.jar")
+                                .setSourcesUrl("http://example.com/artifact1-src.jar")
+                                .build(),
+                        Dependency.newBuilder()
+                                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                                        .setGroupId("net.evendanan")
+                                        .setArtifactId("inner1")
+                                        .setVersion("0.1")
+                                        .build())
+                                .setUrl("http://example.com/artifact2.jar")
+                                .addAllDependencies(Arrays.asList(
+                                        MavenCoordinate.newBuilder()
+                                                .setGroupId("net.evendanan")
+                                                .setArtifactId("inner-inner1")
+                                                .setVersion("0.1")
+                                                .build(),
+                                        MavenCoordinate.newBuilder()
+                                                .setGroupId("net.evendanan")
+                                                .setArtifactId("inner-inner2")
+                                                .setVersion("0.1")
+                                                .build()
+                                ))
+                                .build(),
+                        Dependency.newBuilder()
+                                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                                        .setGroupId("net.evendanan")
+                                        .setArtifactId("inner-inner1")
+                                        .setVersion("0.1")
+                                        .build())
+                                .setUrl("http://example.com/artifact3.jar")
+                                .build(),
+                        Dependency.newBuilder()
+                                .setMavenCoordinate(MavenCoordinate.newBuilder()
+                                        .setGroupId("net.evendanan")
+                                        .setArtifactId("inner-inner2")
+                                        .setVersion("0.1")
+                                        .build())
+                                .setUrl("http://example.com/artifact4.jar")
+                                .setSourcesUrl("http://example.com/artifact4-src.jar")
+                                .build()))
+                .build();
 
-        Assert.assertEquals("", cleared.get(0).getDependenciesList().get(0).getSourcesUrl());
-        Assert.assertNotEquals("", cleared.get(1).getRuntimeDependenciesList().get(0).getUrl());
-        Assert.assertEquals("", cleared.get(1).getRuntimeDependenciesList().get(0).getSourcesUrl());
-        Assert.assertNotEquals("", cleared.get(1).getRuntimeDependenciesList().get(0).getJavadocUrl());
-    }
+        Assert.assertTrue(resolution.getAllResolvedDependenciesList().stream()
+                .filter(dependency -> !dependency.getSourcesUrl().isEmpty())
+                .map(Dependency::getMavenCoordinate)
+                .anyMatch(mvn -> mvn.getGroupId().equals("net.evendanan") && mvn.getArtifactId().equals("inner-inner2")));
 
-    @Test
-    public void testFlattenWithRepeats() {
-        final ArrayList<Dependency> dependencies = new ArrayList<>(GraphUtils.deepCopyDeps(GraphUtilsTest.REPEATS_DEP6_AT_ROOT_GRAPH));
-        dependencies.add(dependencies.get(1));
+        Collection<Dependency> actual = ClearSrcJarAttribute.clearSrcJar(resolution.getAllResolvedDependenciesList());
 
-        final ArrayList<Dependency> flatten = new ArrayList<>(DependencyTreeFlatter.flatten(dependencies));
-
-        final int expectedSize = 10;
-        Assert.assertEquals(expectedSize, flatten.size());
-        int flatDepIndex = 0;
-        Assert.assertEquals("net.evendanan:dep1:0.1", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(flatDepIndex++)));
-        Assert.assertEquals("net.evendanan:inner1:0.1", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(flatDepIndex++)));
-        Assert.assertEquals("net.evendanan:inner-inner1:0.1", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(flatDepIndex++)));
-        Assert.assertEquals("net.evendanan:dep6:0.0.1", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(flatDepIndex++)));
-        Assert.assertEquals("net.evendanan:dep2:0.1", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(flatDepIndex++)));
-        Assert.assertEquals("net.evendanan:dep1:0.2", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(flatDepIndex++)));
-        Assert.assertEquals("net.evendanan:inner2:0.1", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(flatDepIndex++)));
-        Assert.assertEquals("net.evendanan:dep6:0.1", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(flatDepIndex++)));
-        Assert.assertEquals("net.evendanan:a1:0.2", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(flatDepIndex++)));
-        Assert.assertEquals("net.evendanan:inner-inner1:0.4", DependencyTools.DEFAULT.mavenCoordinates(flatten.get(flatDepIndex++)));
-
-        Assert.assertEquals(expectedSize, flatDepIndex);
+        Assert.assertTrue(actual.stream()
+                .allMatch(dependency -> dependency.getSourcesUrl().isEmpty()));
     }
 }

@@ -307,6 +307,19 @@ java_test(name = "graph_util_tests",
   test_class = "net.evendanan.bazel.mvn.merger.GraphUtilsTest",
 )
 
+java_test(name = "graph_checks_tests",
+  deps=[
+      ":merger",
+      ":api_lib",
+
+      "//resolver/main_deps/junit/junit",
+      "//resolver/main_deps/org/mockito/mockito-core"
+       ],
+  srcs= ["src/main/javatest/net/evendanan/bazel/mvn/merger/GraphVerificationsTest.java"],
+  size="small",
+  test_class = "net.evendanan.bazel.mvn.merger.GraphVerificationsTest",
+)
+
 java_test(name = "formatters_test",
   deps=[
       ":impl_lib",

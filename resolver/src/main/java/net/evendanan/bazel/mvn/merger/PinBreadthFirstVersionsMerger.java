@@ -1,63 +1,45 @@
 package net.evendanan.bazel.mvn.merger;
 
+import com.google.common.base.Preconditions;
 import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.GraphMerger;
+import net.evendanan.bazel.mvn.api.MavenCoordinate;
+import net.evendanan.bazel.mvn.api.Resolution;
 
-import javax.annotation.Nonnull;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class PinBreadthFirstVersionsMerger implements GraphMerger {
-    private static String dependencyKey(Dependency dependency) {
-        return String.format(Locale.ROOT, "%s:%s", dependency.getGroupId(), dependency.getArtifactId());
-    }
-
-    private static Collection<Dependency> replaceWithPinned(Collection<Dependency> dependencies, MemoizeDependency memoizeDependency) {
-        return dependencies.stream()
-                .map(memoizeDependency::map)
-                .collect(Collectors.toList());
+    private static String dependencyKey(MavenCoordinate mavenCoordinate) {
+        return String.format(Locale.ROOT, "%s:%s", mavenCoordinate.getGroupId(), mavenCoordinate.getArtifactId());
     }
 
     @Override
-    public Collection<Dependency> mergeGraphs(final Collection<Dependency> dependencies) {
+    public Collection<Dependency> mergeGraphs(final Collection<Resolution> resolutions) {
         Map<String, Dependency> pinnedVersions = new HashMap<>();
 
-        GraphUtils.BfsTraveller(dependencies, (dependency, level) -> pinnedVersions.compute(dependencyKey(dependency),
+        GraphUtils.BfsTraveller(resolutions, (dependency, level) -> pinnedVersions.compute(dependencyKey(dependency.getMavenCoordinate()),
                 (key, previousDep) -> {
                     if (previousDep == null || previousDep.getUrl().equals("")) return dependency;
                     else return previousDep;
-                }
-        ));
+                }));
 
-        return replaceWithPinned(dependencies, new MemoizeDependency(pinnedVersions));
-    }
+        Function<List<MavenCoordinate>, List<MavenCoordinate>> convertDependencies = dependencies -> dependencies.stream()
+                .map(mvn -> Preconditions.checkNotNull(pinnedVersions.get(dependencyKey(mvn))).getMavenCoordinate())
+                .distinct()
+                .collect(Collectors.toList());
 
-    private static class MemoizeDependency extends GraphMemoizator<Dependency> {
-
-        final Map<String, Dependency> pinnedVersions;
-
-        private MemoizeDependency(final Map<String, Dependency> pinnedVersions) {
-            this.pinnedVersions = pinnedVersions;
-        }
-
-        @Nonnull
-        @Override
-        protected Dependency calculate(@Nonnull final Dependency original) {
-            Dependency pinned = pinnedVersions.get(dependencyKey(original));
-
-            return Dependency.newBuilder(pinned)
-                    .clearDependencies().addAllDependencies(replaceWithPinned(pinned.getDependenciesList(), this))
-                    .clearExports().addAllExports(replaceWithPinned(pinned.getExportsList(), this))
-                    .clearRuntimeDependencies().addAllRuntimeDependencies(replaceWithPinned(pinned.getRuntimeDependenciesList(), this))
-                    .build();
-        }
-
-        @Override
-        protected String getKeyForObject(final Dependency dependency) {
-            return dependencyKey(dependency);
-        }
+        return resolutions.stream()
+                .map(Resolution::getAllResolvedDependenciesList)
+                .flatMap(List::stream)
+                .map(original -> pinnedVersions.get(dependencyKey(original.getMavenCoordinate())))
+                .map(original -> Dependency.newBuilder(original)
+                        .clearDependencies().addAllDependencies(convertDependencies.apply(original.getDependenciesList()))
+                        .clearExports().addAllExports(convertDependencies.apply(original.getExportsList()))
+                        .clearRuntimeDependencies().addAllRuntimeDependencies(convertDependencies.apply(original.getRuntimeDependenciesList()))
+                        .build())
+                .distinct()
+                .collect(Collectors.toList());
     }
 }
