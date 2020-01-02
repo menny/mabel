@@ -80,7 +80,21 @@ public class Merger {
 
         Merger driver = new Merger(options);
         Collection<Resolution> resolutions = driver.readResolutions(options);
+
+        System.out.print("Verifying resolved artifacts graphs...");
+        resolutions.forEach(resolution -> {
+            GraphVerifications.checkAllGraphDependenciesAreResolved(resolution);
+            GraphVerifications.checkGraphDoesNotHaveDanglingDependencies(resolution);
+        });
+        System.out.println("✓");
+
         Collection<Dependency> dependencies = driver.mergeResolutions(resolutions);
+
+        System.out.print("Verifying merged graph...");
+        GraphVerifications.checkNoRepeatingDependencies(dependencies);
+        GraphVerifications.checkAllDependenciesAreResolved(dependencies);
+        GraphVerifications.checkNoConflictingVersions(dependencies);
+        System.out.println("✓");
 
         final File artifactsFolder = new File(options.artifacts_path.replace("~", System.getProperty("user.home")));
         if (!artifactsFolder.isDirectory() && !artifactsFolder.mkdirs()) {
@@ -196,7 +210,7 @@ public class Merger {
     private Collection<Dependency> mergeResolutions(Collection<Resolution> resolutions) {
         System.out.print(String.format("Merging %s root dependencies...", resolutions.size()));
         final Collection<Dependency> merged = merger.mergeGraphs(resolutions);
-        System.out.println();
+        System.out.println("✓");
         return merged;
     }
 
