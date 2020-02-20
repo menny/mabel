@@ -1,10 +1,10 @@
 package net.evendanan.bazel.mvn.impl;
 
-import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.DependencyTools;
-import net.evendanan.bazel.mvn.api.License;
 import net.evendanan.bazel.mvn.api.LicenseTools;
-import net.evendanan.bazel.mvn.api.MavenCoordinate;
+import net.evendanan.bazel.mvn.api.model.Dependency;
+import net.evendanan.bazel.mvn.api.model.License;
+import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,16 +17,11 @@ public class DependencyToolsTest {
                 + groupId.replace('.', '/') + "/"
                 + artifactId.replace('.', '/') + "/"
                 + version + "/");
-        return Dependency.newBuilder()
-                .setMavenCoordinate(MavenCoordinate.newBuilder()
-                        .setGroupId(groupId)
-                        .setArtifactId(artifactId)
-                        .setVersion(version)
-                        .setPackaging("jar")
-                        .build())
-                .setUrl(urlBase.resolve("lib.jar").toASCIIString())
-                .setSourcesUrl(urlBase.resolve("lib-sources.jar").toASCIIString())
-                .setJavadocUrl(urlBase.resolve("lib-javadoc.jar").toASCIIString())
+        return Dependency.builder()
+                .mavenCoordinate(MavenCoordinate.create(groupId, artifactId, version, "jar"))
+                .url(urlBase.resolve("lib.jar").toASCIIString())
+                .sourcesUrl(urlBase.resolve("lib-sources.jar").toASCIIString())
+                .javadocUrl(urlBase.resolve("lib-javadoc.jar").toASCIIString())
                 .build();
     }
 
@@ -39,13 +34,9 @@ public class DependencyToolsTest {
 
     @Test
     public void testMavenFunctions() {
-        Dependency dependency = Dependency.newBuilder()
-                .setMavenCoordinate(MavenCoordinate.newBuilder()
-                        .setGroupId("net.group")
-                        .setArtifactId("some_lib")
-                        .setVersion("1.2")
-                        .setPackaging("jar")
-                        .build())
+        Dependency dependency = Dependency.builder()
+                .mavenCoordinate(
+                        MavenCoordinate.create("net.group", "some_lib", "1.2", "jar"))
                 .build();
 
         Assert.assertEquals("net.group:some_lib:1.2", mUnderTest.mavenCoordinates(dependency));

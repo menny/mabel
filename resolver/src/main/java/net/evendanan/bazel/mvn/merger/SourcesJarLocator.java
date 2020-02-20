@@ -1,8 +1,8 @@
 package net.evendanan.bazel.mvn.merger;
 
 import com.google.common.annotations.VisibleForTesting;
-import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.DependencyTools;
+import net.evendanan.bazel.mvn.api.model.Dependency;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
@@ -82,8 +82,8 @@ public class SourcesJarLocator {
         @Nonnull
         @Override
         protected Dependency calculate(@Nonnull final Dependency original) {
-            return Dependency.newBuilder(original)
-                    .setSourcesUrl(uriWithClassifier(original.getUrl()))
+            return Dependency.builder(original)
+                    .sourcesUrl(uriWithClassifier(original.url()))
                     .build();
         }
 

@@ -5,9 +5,8 @@ import com.google.devtools.bazel.workspace.maven.DefaultModelResolver;
 import com.google.devtools.bazel.workspace.maven.MigrationToolingMavenResolver;
 import com.google.devtools.bazel.workspace.maven.Rule;
 import com.google.devtools.bazel.workspace.maven.VersionResolver;
-import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.GraphResolver;
-import net.evendanan.bazel.mvn.api.Resolution;
+import net.evendanan.bazel.mvn.api.model.Resolution;
 import org.apache.maven.model.Repository;
 
 import java.net.URI;

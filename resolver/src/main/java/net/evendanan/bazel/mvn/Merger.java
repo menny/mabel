@@ -7,6 +7,9 @@ import com.beust.jcommander.Parameters;
 import com.beust.jcommander.converters.IParameterSplitter;
 import com.google.common.base.Charsets;
 import net.evendanan.bazel.mvn.api.*;
+import net.evendanan.bazel.mvn.api.model.Dependency;
+import net.evendanan.bazel.mvn.api.model.Resolution;
+import net.evendanan.bazel.mvn.api.serialization.Serialization;
 import net.evendanan.bazel.mvn.impl.RuleClassifiers;
 import net.evendanan.bazel.mvn.impl.RuleWriters;
 import net.evendanan.bazel.mvn.impl.TargetsBuilders;
@@ -132,10 +135,7 @@ public class Merger {
             try (final OutputStreamWriter fileWriter = new OutputStreamWriter(new FileOutputStream(prettyOutput, false), Charsets.UTF_8)) {
                 final Collection<Dependency> dependenciesToPrint = dependencies;
                 List<Resolution> resolutionsToPrint = resolutions.stream()
-                        .map(Resolution::newBuilder)
-                        .map(Resolution.Builder::clearAllResolvedDependencies)
-                        .map(builder -> builder.addAllAllResolvedDependencies(dependenciesToPrint))
-                        .map(Resolution.Builder::build)
+                        .map(old -> Resolution.create(old.rootDependency(), dependenciesToPrint))
                         .collect(Collectors.toList());
 
                 DfsTraveller(resolutionsToPrint,
@@ -192,11 +192,12 @@ public class Merger {
     private Collection<Resolution> readResolutions(Options options) {
         System.out.print(String.format("Reading %s root artifacts...", options.artifacts.size()));
 
+        final Serialization serialization = new Serialization();
         final List<Resolution> resolutions = options.artifacts.stream()
                 .map(inputFile -> {
                     System.out.print('.');
-                    try (final FileInputStream inputStream = new FileInputStream(inputFile)) {
-                        return Resolution.parseFrom(inputStream);
+                    try (final FileReader reader = new FileReader(inputFile, Charsets.UTF_8)) {
+                        return serialization.deserialize(reader);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -217,7 +218,7 @@ public class Merger {
     private void writeResults(Collection<Dependency> resolvedDependencies, final Function<Dependency, URI> downloader, final Options options, DependencyTools dependencyTools) throws Exception {
         resolvedDependencies = resolvedDependencies
                 .stream()
-                .filter(dependency -> !dependency.getUrl().equals(""))
+                .filter(dependency -> !dependency.url().isEmpty())
                 .collect(Collectors.toList());
 
         System.out.println();

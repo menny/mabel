@@ -2,10 +2,10 @@ package net.evendanan.bazel.mvn.merger;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.DependencyTools;
-import net.evendanan.bazel.mvn.api.MavenCoordinate;
-import net.evendanan.bazel.mvn.api.Resolution;
+import net.evendanan.bazel.mvn.api.model.Dependency;
+import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
+import net.evendanan.bazel.mvn.api.model.Resolution;
 import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.*;
@@ -39,35 +39,35 @@ public final class GraphVerifications {
     }
 
     public static void checkNoConflictingVersions(final Collection<Dependency> dependencies) {
-        final Function<Dependency, String> dependencyKey = dependency -> String.format(Locale.US, "%s:%s", dependency.getMavenCoordinate().getGroupId(), dependency.getMavenCoordinate().getArtifactId());
+        final Function<Dependency, String> dependencyKey = dependency -> String.format(Locale.US, "%s:%s", dependency.mavenCoordinate().groupId(), dependency.mavenCoordinate().artifactId());
         final Map<String, String> pinnedVersions = new HashMap<>();
 
         dependencies.forEach(dependency -> {
-            final String pinnedVersion = pinnedVersions.putIfAbsent(dependencyKey.apply(dependency), dependency.getMavenCoordinate().getVersion());
-            if (pinnedVersion != null && !pinnedVersion.equals(dependency.getMavenCoordinate().getVersion())) {
+            final String pinnedVersion = pinnedVersions.putIfAbsent(dependencyKey.apply(dependency), dependency.mavenCoordinate().version());
+            if (pinnedVersion != null && !pinnedVersion.equals(dependency.mavenCoordinate().version())) {
                 throw new InvalidGraphException(
                         "NoConflictingVersions",
-                        dependency.getMavenCoordinate(),
-                        "Pinned to " + pinnedVersion + " but needed " + dependency.getMavenCoordinate().getVersion());
+                        dependency.mavenCoordinate(),
+                        "Pinned to " + pinnedVersion + " but needed " + dependency.mavenCoordinate().version());
             }
         });
     }
 
     public static void checkAllGraphDependenciesAreResolved(Resolution resolution) {
         Set<MavenCoordinate> resolved = new HashSet<>();
-        resolution.getAllResolvedDependenciesList().forEach(dep -> resolved.add(dep.getMavenCoordinate()));
+        resolution.allResolvedDependencies().forEach(dep -> resolved.add(dep.mavenCoordinate()));
 
         GraphUtils.DfsTraveller(Collections.singleton(resolution), (dependency, level) -> {
-            if (!resolved.contains(dependency.getMavenCoordinate()))
-                throw new GraphVerifications.InvalidGraphException("AllGraphDependenciesAreResolved", dependency.getMavenCoordinate());
+            if (!resolved.contains(dependency.mavenCoordinate()))
+                throw new GraphVerifications.InvalidGraphException("AllGraphDependenciesAreResolved", dependency.mavenCoordinate());
         });
     }
 
     public static void checkGraphDoesNotHaveDanglingDependencies(Resolution resolution) {
         Set<MavenCoordinate> resolved = new HashSet<>();
-        resolution.getAllResolvedDependenciesList().forEach(dep -> resolved.add(dep.getMavenCoordinate()));
+        resolution.allResolvedDependencies().forEach(dep -> resolved.add(dep.mavenCoordinate()));
 
-        GraphUtils.DfsTraveller(Collections.singleton(resolution), (dependency, level) -> resolved.remove(dependency.getMavenCoordinate()));
+        GraphUtils.DfsTraveller(Collections.singleton(resolution), (dependency, level) -> resolved.remove(dependency.mavenCoordinate()));
 
         if (!resolved.isEmpty()) {
             throw new GraphVerifications.InvalidGraphException("GraphDoesNotHaveDanglingDependencies", new ArrayList<>(resolved).get(0));
@@ -76,13 +76,13 @@ public final class GraphVerifications {
 
     public static void checkAllDependenciesAreResolved(Collection<Dependency> dependencies) {
         Set<MavenCoordinate> resolved = new HashSet<>();
-        dependencies.forEach(dep -> resolved.add(dep.getMavenCoordinate()));
+        dependencies.forEach(dep -> resolved.add(dep.mavenCoordinate()));
 
         Optional<MavenCoordinate> first = dependencies.stream()
                 .map(dependency -> Triple.of(
-                        dependency.getDependenciesList().stream(),
-                        dependency.getExportsList().stream(),
-                        dependency.getRuntimeDependenciesList().stream()))
+                        dependency.dependencies().stream(),
+                        dependency.exports().stream(),
+                        dependency.runtimeDependencies().stream()))
                 .flatMap(triple -> Stream.concat(Stream.concat(triple.getLeft(), triple.getMiddle()), triple.getRight()))
                 .filter(mvn -> !resolved.contains(mvn))
                 .findFirst();
@@ -96,8 +96,8 @@ public final class GraphVerifications {
         Set<MavenCoordinate> seen = new HashSet<>();
 
         dependencies.forEach(resolved -> {
-            if (!seen.add(resolved.getMavenCoordinate())) {
-                throw new GraphVerifications.InvalidGraphException("NoRepeatingDependencies", resolved.getMavenCoordinate());
+            if (!seen.add(resolved.mavenCoordinate())) {
+                throw new GraphVerifications.InvalidGraphException("NoRepeatingDependencies", resolved.mavenCoordinate());
             }
         });
     }

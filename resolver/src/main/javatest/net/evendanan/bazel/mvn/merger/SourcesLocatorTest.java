@@ -1,7 +1,7 @@
 package net.evendanan.bazel.mvn.merger;
 
-import net.evendanan.bazel.mvn.api.Dependency;
-import net.evendanan.bazel.mvn.api.MavenCoordinate;
+import net.evendanan.bazel.mvn.api.model.Dependency;
+import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,35 +27,18 @@ public class SourcesLocatorTest {
     @Before
     public void setup() {
         mTestData = Arrays.asList(
-                Dependency.newBuilder()
-                        .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                .setGroupId("net.evendanan")
-                                .setArtifactId("dep1")
-                                .setVersion("1.0.0")
-                                .setPackaging("jar")
-                                .build())
-                        .addAllRuntimeDependencies(Collections.singleton(MavenCoordinate.newBuilder()
-                                .setGroupId("net.evendanan")
-                                .setArtifactId("dep2")
-                                .setVersion("1.0.0")
-                                .setPackaging("jar")
-                                .build()))
-                        .setUrl(dep1Uri).build(),
-                Dependency.newBuilder()
-                        .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                .setGroupId("net.evendanan")
-                                .setArtifactId("dep3")
-                                .setVersion("2.0.0")
-                                .setPackaging("aar")
-                                .build())
-                        .addAllDependencies(Collections.singleton(
-                                MavenCoordinate.newBuilder()
-                                        .setGroupId("net.evendanan")
-                                        .setArtifactId("dep2")
-                                        .setVersion("1.0.0")
-                                        .setPackaging("jar")
-                                        .build()))
-                        .setUrl(dep3Uri).build());
+                Dependency.builder()
+                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "dep1", "1.0.0", "jar"))
+                        .dependencies(Collections.singleton(MavenCoordinate.create("net.evendanan", "dep2", "1.0.0", "jar")))
+                        .url(dep1Uri)
+                        .build(),
+                Dependency.builder()
+                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "dep3", "2.0.0", "aar"))
+                        .dependencies(Collections.singleton(
+                                MavenCoordinate.create("net.evendanan", "dep2", "1.0.0", "jar"))
+                        )
+                        .url(dep3Uri)
+                        .build());
 
         mFakeOpener = new FakeOpener();
         mUnderTest = new SourcesJarLocator(mFakeOpener);
@@ -72,8 +55,8 @@ public class SourcesLocatorTest {
 
         final List<Dependency> fixedDeps = new ArrayList<>(mUnderTest.fillSourcesAttribute(mTestData));
 
-        Assert.assertEquals(dep1UriSources, fixedDeps.get(0).getSourcesUrl());
-        Assert.assertEquals(dep3UriSources, fixedDeps.get(1).getSourcesUrl());
+        Assert.assertEquals(dep1UriSources, fixedDeps.get(0).sourcesUrl());
+        Assert.assertEquals(dep3UriSources, fixedDeps.get(1).sourcesUrl());
     }
 
     @Test
@@ -86,8 +69,8 @@ public class SourcesLocatorTest {
 
         final List<Dependency> fixedDeps = new ArrayList<>(mUnderTest.fillSourcesAttribute(mTestData));
 
-        Assert.assertEquals("", fixedDeps.get(0).getSourcesUrl());
-        Assert.assertEquals("", fixedDeps.get(1).getSourcesUrl());
+        Assert.assertEquals("", fixedDeps.get(0).sourcesUrl());
+        Assert.assertEquals("", fixedDeps.get(1).sourcesUrl());
     }
 
     @Test
@@ -100,16 +83,16 @@ public class SourcesLocatorTest {
 
         final List<Dependency> fixedDeps = new ArrayList<>(mUnderTest.fillSourcesAttribute(mTestData));
 
-        Assert.assertEquals("", fixedDeps.get(0).getSourcesUrl());
-        Assert.assertEquals("", fixedDeps.get(1).getSourcesUrl());
+        Assert.assertEquals("", fixedDeps.get(0).sourcesUrl());
+        Assert.assertEquals("", fixedDeps.get(1).sourcesUrl());
     }
 
     @Test
     public void testDoesNotAddOnNullConnection() throws Exception {
         final List<Dependency> fixedDeps = new ArrayList<>(mUnderTest.fillSourcesAttribute(mTestData));
 
-        Assert.assertEquals("", fixedDeps.get(0).getSourcesUrl());
-        Assert.assertEquals("", fixedDeps.get(1).getSourcesUrl());
+        Assert.assertEquals("", fixedDeps.get(0).sourcesUrl());
+        Assert.assertEquals("", fixedDeps.get(1).sourcesUrl());
     }
 
     @Test
@@ -118,8 +101,8 @@ public class SourcesLocatorTest {
 
         final List<Dependency> fixedDeps = new ArrayList<>(mUnderTest.fillSourcesAttribute(mTestData));
 
-        Assert.assertEquals("", fixedDeps.get(0).getSourcesUrl());
-        Assert.assertEquals("", fixedDeps.get(1).getSourcesUrl());
+        Assert.assertEquals("", fixedDeps.get(0).sourcesUrl());
+        Assert.assertEquals("", fixedDeps.get(1).sourcesUrl());
     }
 
     @Test
@@ -135,27 +118,19 @@ public class SourcesLocatorTest {
         mFakeOpener.returnedConnections.put(new URL(dep3UriSources), httpURLConnection3);
 
         final List<Dependency> repeatedDeps = Arrays.asList(
-                Dependency.newBuilder()
-                        .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                .setGroupId("net.evendanan")
-                                .setArtifactId("dep1")
-                                .setVersion("1.0.0")
-                                .setPackaging("jar")
-                                .build())
-                        .setUrl(dep1Uri).build(),
-                Dependency.newBuilder()
-                        .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                .setGroupId("net.evendanan")
-                                .setArtifactId("dep1")
-                                .setVersion("1.0.0")
-                                .setPackaging("jar")
-                                .build())
-                        .setUrl(dep1Uri).build()
+                Dependency.builder()
+                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "dep1", "1.0.0", "jar"))
+                        .url(dep1Uri)
+                        .build(),
+                Dependency.builder()
+                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "dep1", "1.0.0", "jar"))
+                        .url(dep1Uri)
+                        .build()
         );
         final List<Dependency> fixedDeps = new ArrayList<>(mUnderTest.fillSourcesAttribute(repeatedDeps));
 
-        Assert.assertEquals(dep1UriSources, fixedDeps.get(0).getSourcesUrl());
-        Assert.assertEquals(dep1UriSources, fixedDeps.get(1).getSourcesUrl());
+        Assert.assertEquals(dep1UriSources, fixedDeps.get(0).sourcesUrl());
+        Assert.assertEquals(dep1UriSources, fixedDeps.get(1).sourcesUrl());
 
         Assert.assertEquals(1, mFakeOpener.buildsCounter.size());
         mFakeOpener.buildsCounter.forEach((url, integer) -> Assert.assertEquals(1, integer.intValue()));

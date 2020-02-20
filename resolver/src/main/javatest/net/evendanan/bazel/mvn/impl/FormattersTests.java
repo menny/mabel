@@ -1,9 +1,9 @@
 package net.evendanan.bazel.mvn.impl;
 
-import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.DependencyTools;
-import net.evendanan.bazel.mvn.api.License;
 import net.evendanan.bazel.mvn.api.Target;
+import net.evendanan.bazel.mvn.api.model.Dependency;
+import net.evendanan.bazel.mvn.api.model.License;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -419,13 +419,12 @@ public class FormattersTests {
 
     @Test
     public void testNativeJavaImportWithLicenses() {
-        Dependency dependency = Dependency.newBuilder(createDependency("java:lib",
+        Dependency dependency = Dependency.builder(createDependency("java:lib",
                 "https://some_url",
                 Arrays.asList("dep1", "dep2"),
                 Arrays.asList("export1", "export2"),
                 Arrays.asList("runtime1", "runtime2")))
-                .clearLicenses()
-                .addAllLicenses(Collections.singleton(License.notice))
+                .licenses(Collections.singleton(License.notice))
                 .build();
 
         final String ruleText = targetsToString("    ", TargetsBuilders.JAVA_IMPORT.buildTargets(dependency, DependencyTools.DEFAULT));

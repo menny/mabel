@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import net.evendanan.bazel.mvn.api.model.License;
 
 import static java.util.regex.Pattern.CASE_INSENSITIVE;
 

@@ -12,7 +12,7 @@ import java.util.function.Function;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 import java.util.stream.Collectors;
-import net.evendanan.bazel.mvn.api.Dependency;
+import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.RuleClassifier;
 import net.evendanan.bazel.mvn.api.TargetsBuilder;
 
@@ -39,7 +39,7 @@ public class RuleClassifiers {
 
         @Override
         public Optional<TargetsBuilder> classifyRule(final Dependency dependency) {
-            if (packaging.equals(dependency.getMavenCoordinate().getPackaging())) {
+            if (packaging.equals(dependency.mavenCoordinate().packaging())) {
                 return Optional.of(targetsBuilder);
             } else {
                 return Optional.empty();

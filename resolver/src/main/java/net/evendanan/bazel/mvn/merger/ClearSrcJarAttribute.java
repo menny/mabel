@@ -1,7 +1,7 @@
 package net.evendanan.bazel.mvn.merger;
 
-import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.DependencyTools;
+import net.evendanan.bazel.mvn.api.model.Dependency;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
@@ -23,8 +23,8 @@ public class ClearSrcJarAttribute {
         @Nonnull
         @Override
         protected Dependency calculate(@Nonnull final Dependency original) {
-            return Dependency.newBuilder(original)
-                    .clearSourcesUrl()
+            return Dependency.builder(original)
+                    .sourcesUrl("")
                     .build();
         }
 

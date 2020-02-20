@@ -1,8 +1,8 @@
 package net.evendanan.bazel.mvn.merger;
 
-import net.evendanan.bazel.mvn.api.Dependency;
-import net.evendanan.bazel.mvn.api.MavenCoordinate;
-import net.evendanan.bazel.mvn.api.Resolution;
+import net.evendanan.bazel.mvn.api.model.Dependency;
+import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
+import net.evendanan.bazel.mvn.api.model.Resolution;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,96 +15,46 @@ public class GraphVerificationsTest {
 
     @Before
     public void setup() {
-        mBasicResolution = Resolution.newBuilder()
-                .setRootDependency(MavenCoordinate.newBuilder()
-                        .setGroupId("net.evendanan")
-                        .setArtifactId("dep1")
-                        .setVersion("0.1")
-                        .build())
-                .addAllAllResolvedDependencies(Arrays.asList(
-                        Dependency.newBuilder()
-                                .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                        .setGroupId("net.evendanan")
-                                        .setArtifactId("dep1")
-                                        .setVersion("0.1")
-                                        .build())
-                                .addAllDependencies(Collections.singleton(MavenCoordinate.newBuilder()
-                                        .setGroupId("net.evendanan")
-                                        .setArtifactId("inner1")
-                                        .setVersion("0.1")
-                                        .build()))
+        mBasicResolution = Resolution.create(
+                MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
+                Arrays.asList(
+                        Dependency.builder()
+                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""))
+                                .dependencies(Collections.singleton(MavenCoordinate.create("net.evendanan", "inner1", "0.1", "")))
                                 .build(),
-                        Dependency.newBuilder()
-                                .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                        .setGroupId("net.evendanan")
-                                        .setArtifactId("inner1")
-                                        .setVersion("0.1")
-                                        .build())
-                                .addAllDependencies(Arrays.asList(
-                                        MavenCoordinate.newBuilder()
-                                                .setGroupId("net.evendanan")
-                                                .setArtifactId("inner-inner1")
-                                                .setVersion("0.1")
-                                                .build(),
-                                        MavenCoordinate.newBuilder()
-                                                .setGroupId("net.evendanan")
-                                                .setArtifactId("inner-inner2")
-                                                .setVersion("0.1")
-                                                .build()
-                                ))
+                        Dependency.builder()
+                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner1", "0.1", ""))
+                                .dependencies(Arrays.asList(
+                                        MavenCoordinate.create("net.evendanan", "inner-inner1", "0.1", ""),
+                                        MavenCoordinate.create("net.evendanan", "inner-inner2", "0.1", "")))
                                 .build(),
-                        Dependency.newBuilder()
-                                .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                        .setGroupId("net.evendanan")
-                                        .setArtifactId("inner-inner1")
-                                        .setVersion("0.1")
-                                        .build())
+                        Dependency.builder()
+                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner1", "0.1", ""))
                                 .build(),
-                        Dependency.newBuilder()
-                                .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                        .setGroupId("net.evendanan")
-                                        .setArtifactId("inner-inner2")
-                                        .setVersion("0.1")
-                                        .build())
-                                .build()))
-                .build();
+                        Dependency.builder()
+                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner2", "0.1", ""))
+                                .build()));
     }
 
     @Test
     public void checkNoConflictingVersions_HappyPath() {
-        GraphVerifications.checkNoConflictingVersions(mBasicResolution.getAllResolvedDependenciesList());
+        GraphVerifications.checkNoConflictingVersions(mBasicResolution.allResolvedDependencies());
     }
 
     @Test(expected = GraphVerifications.InvalidGraphException.class)
     public void checkNoConflictingVersions_Fail() {
         GraphVerifications.checkNoConflictingVersions(Arrays.asList(
-                Dependency.newBuilder()
-                        .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                .setGroupId("net.evendanan")
-                                .setArtifactId("dep1")
-                                .setVersion("0.1")
-                                .build())
+                Dependency.builder()
+                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""))
                         .build(),
-                Dependency.newBuilder()
-                        .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                .setGroupId("net.evendanan")
-                                .setArtifactId("inner1")
-                                .setVersion("0.1")
-                                .build())
+                Dependency.builder()
+                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner1", "0.1", ""))
                         .build(),
-                Dependency.newBuilder()
-                        .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                .setGroupId("net.evendanan")
-                                .setArtifactId("inner-inner1")
-                                .setVersion("0.1")
-                                .build())
+                Dependency.builder()
+                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner1", "0.1", ""))
                         .build(),
-                Dependency.newBuilder()
-                        .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                .setGroupId("net.evendanan")
-                                .setArtifactId("inner-inner1")
-                                .setVersion("0.2")
-                                .build())
+                Dependency.builder()
+                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner1", "0.2", ""))
                         .build()));
     }
 
@@ -115,97 +65,42 @@ public class GraphVerificationsTest {
 
     @Test(expected = NullPointerException.class)
     public void checkAllGraphDependenciesAreResolved_FailRootMissing() {
-        GraphVerifications.checkAllGraphDependenciesAreResolved(Resolution.newBuilder()
-                .setRootDependency(MavenCoordinate.newBuilder()
-                        .setGroupId("net.evendanan")
-                        .setArtifactId("dep1")
-                        .setVersion("0.1")
-                        .build())
-                .addAllAllResolvedDependencies(Arrays.asList(
-                        Dependency.newBuilder()
-                                .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                        .setGroupId("net.evendanan")
-                                        .setArtifactId("inner1")
-                                        .setVersion("0.1")
-                                        .build())
-                                .addAllDependencies(Arrays.asList(
-                                        MavenCoordinate.newBuilder()
-                                                .setGroupId("net.evendanan")
-                                                .setArtifactId("inner-inner1")
-                                                .setVersion("0.1")
-                                                .build(),
-                                        MavenCoordinate.newBuilder()
-                                                .setGroupId("net.evendanan")
-                                                .setArtifactId("inner-inner2")
-                                                .setVersion("0.1")
-                                                .build()
+        GraphVerifications.checkAllGraphDependenciesAreResolved(Resolution.create(
+                MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
+                Arrays.asList(
+                        Dependency.builder()
+                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner1", "0.1", ""))
+                                .dependencies(Arrays.asList(
+                                        MavenCoordinate.create("net.evendanan", "inner-inner1", "0.1", ""),
+                                        MavenCoordinate.create("net.evendanan", "inner-inner2", "0.1", "")
                                 ))
                                 .build(),
-                        Dependency.newBuilder()
-                                .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                        .setGroupId("net.evendanan")
-                                        .setArtifactId("inner-inner1")
-                                        .setVersion("0.1")
-                                        .build())
+                        Dependency.builder()
+                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner1", "0.1", ""))
                                 .build(),
-                        Dependency.newBuilder()
-                                .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                        .setGroupId("net.evendanan")
-                                        .setArtifactId("inner-inner2")
-                                        .setVersion("0.1")
-                                        .build())
-                                .build()))
-                .build());
+                        Dependency.builder()
+                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner2", "0.1", ""))
+                                .build())));
     }
 
     @Test(expected = NullPointerException.class)
     public void checkAllGraphDependenciesAreResolved_FailDependencyMissing() {
-        GraphVerifications.checkAllGraphDependenciesAreResolved(Resolution.newBuilder()
-                .setRootDependency(MavenCoordinate.newBuilder()
-                        .setGroupId("net.evendanan")
-                        .setArtifactId("dep1")
-                        .setVersion("0.1")
-                        .build())
-                .addAllAllResolvedDependencies(Arrays.asList(
-                        Dependency.newBuilder()
-                                .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                        .setGroupId("net.evendanan")
-                                        .setArtifactId("dep1")
-                                        .setVersion("0.1")
-                                        .build())
-                                .addAllDependencies(Collections.singleton(MavenCoordinate.newBuilder()
-                                        .setGroupId("net.evendanan")
-                                        .setArtifactId("inner1")
-                                        .setVersion("0.1")
-                                        .build()))
+        GraphVerifications.checkAllGraphDependenciesAreResolved(Resolution.create(
+                MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
+                Arrays.asList(
+                        Dependency.builder()
+                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""))
+                                .dependencies(Collections.singleton(MavenCoordinate.create("net.evendanan", "inner1", "0.1", "")))
                                 .build(),
-                        Dependency.newBuilder()
-                                .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                        .setGroupId("net.evendanan")
-                                        .setArtifactId("inner1")
-                                        .setVersion("0.1")
-                                        .build())
-                                .addAllDependencies(Arrays.asList(
-                                        MavenCoordinate.newBuilder()
-                                                .setGroupId("net.evendanan")
-                                                .setArtifactId("inner-inner1")
-                                                .setVersion("0.1")
-                                                .build(),
-                                        MavenCoordinate.newBuilder()
-                                                .setGroupId("net.evendanan")
-                                                .setArtifactId("inner-inner2")
-                                                .setVersion("0.1")
-                                                .build()
-                                ))
+                        Dependency.builder()
+                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner1", "0.1", ""))
+                                .dependencies(Arrays.asList(
+                                        MavenCoordinate.create("net.evendanan", "inner-inner1", "0.1", ""),
+                                        MavenCoordinate.create("net.evendanan", "inner-inner2", "0.1", "")))
                                 .build(),
-                        Dependency.newBuilder()
-                                .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                        .setGroupId("net.evendanan")
-                                        .setArtifactId("inner-inner1")
-                                        .setVersion("0.1")
-                                        .build())
-                                .build()))
-                .build());
+                        Dependency.builder()
+                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner1", "0.1", ""))
+                                .build())));
     }
 
     @Test
@@ -215,175 +110,82 @@ public class GraphVerificationsTest {
 
     @Test(expected = GraphVerifications.InvalidGraphException.class)
     public void checkGraphDoesNotHaveDanglingDependencies_Fail() {
-        GraphVerifications.checkGraphDoesNotHaveDanglingDependencies(Resolution.newBuilder()
-                .setRootDependency(MavenCoordinate.newBuilder()
-                        .setGroupId("net.evendanan")
-                        .setArtifactId("dep1")
-                        .setVersion("0.1")
-                        .build())
-                .addAllAllResolvedDependencies(Arrays.asList(
-                        Dependency.newBuilder()
-                                .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                        .setGroupId("net.evendanan")
-                                        .setArtifactId("dep1")
-                                        .setVersion("0.1")
-                                        .build())
-                                .addAllDependencies(Collections.singleton(MavenCoordinate.newBuilder()
-                                        .setGroupId("net.evendanan")
-                                        .setArtifactId("inner1")
-                                        .setVersion("0.1")
-                                        .build()))
+        GraphVerifications.checkGraphDoesNotHaveDanglingDependencies(Resolution.create(
+                MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
+                Arrays.asList(
+                        Dependency.builder()
+                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""))
+                                .dependencies(Collections.singleton(MavenCoordinate.create("net.evendanan", "inner1", "0.1", "")))
                                 .build(),
-                        Dependency.newBuilder()
-                                .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                        .setGroupId("net.evendanan")
-                                        .setArtifactId("inner1")
-                                        .setVersion("0.1")
-                                        .build())
-                                .addAllDependencies(Arrays.asList(
-                                        MavenCoordinate.newBuilder()
-                                                .setGroupId("net.evendanan")
-                                                .setArtifactId("inner-inner1")
-                                                .setVersion("0.1")
-                                                .build(),
-                                        MavenCoordinate.newBuilder()
-                                                .setGroupId("net.evendanan")
-                                                .setArtifactId("inner-inner2")
-                                                .setVersion("0.1")
-                                                .build()
+                        Dependency.builder()
+                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner1", "0.1", ""))
+                                .dependencies(Arrays.asList(
+                                        MavenCoordinate.create("net.evendanan", "inner-inner1", "0.1", ""),
+                                        MavenCoordinate.create("net.evendanan", "inner-inner2", "0.1", "")
                                 ))
                                 .build(),
-                        Dependency.newBuilder()
-                                .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                        .setGroupId("net.evendanan")
-                                        .setArtifactId("inner-inner1")
-                                        .setVersion("0.1")
-                                        .build())
+                        Dependency.builder()
+                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner1", "0.1", ""))
                                 .build(),
-                        Dependency.newBuilder()
-                                .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                        .setGroupId("net.evendanan")
-                                        .setArtifactId("inner-inner2")
-                                        .setVersion("0.1")
-                                        .build())
+                        Dependency.builder()
+                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner2", "0.1", ""))
                                 .build(),
-                        Dependency.newBuilder()
-                                .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                        .setGroupId("net.evendanan")
-                                        .setArtifactId("inner-inner3")//dangling
-                                        .setVersion("0.1")
-                                        .build())
-                                .build()))
-                .build());
+                        Dependency.builder()
+                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner3"/*dangling*/, "0.1", ""))
+                                .build())));
     }
 
     @Test
     public void checkAllDependenciesAreResolved_HappyPath() {
-        GraphVerifications.checkAllDependenciesAreResolved(mBasicResolution.getAllResolvedDependenciesList());
+        GraphVerifications.checkAllDependenciesAreResolved(mBasicResolution.allResolvedDependencies());
     }
 
     @Test(expected = GraphVerifications.InvalidGraphException.class)
     public void checkAllDependenciesAreResolved_Fail() {
         GraphVerifications.checkAllDependenciesAreResolved(Arrays.asList(
-                Dependency.newBuilder()
-                        .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                .setGroupId("net.evendanan")
-                                .setArtifactId("dep1")
-                                .setVersion("0.1")
-                                .build())
-                        .addAllDependencies(Collections.singleton(MavenCoordinate.newBuilder()
-                                .setGroupId("net.evendanan")
-                                .setArtifactId("inner1")
-                                .setVersion("0.1")
-                                .build()))
+                Dependency.builder()
+                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""))
+                        .dependencies(Collections.singleton(MavenCoordinate.create("net.evendanan", "inner1", "0.1", "")))
                         .build(),
-                Dependency.newBuilder()
-                        .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                .setGroupId("net.evendanan")
-                                .setArtifactId("inner1")
-                                .setVersion("0.1")
-                                .build())
-                        .addAllDependencies(Arrays.asList(
-                                MavenCoordinate.newBuilder()
-                                        .setGroupId("net.evendanan")
-                                        .setArtifactId("inner-inner1")
-                                        .setVersion("0.1")
-                                        .build(),
-                                MavenCoordinate.newBuilder()
-                                        .setGroupId("net.evendanan")
-                                        .setArtifactId("inner-inner2")//this is missing
-                                        .setVersion("0.1")
-                                        .build()
+                Dependency.builder()
+                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner1", "0.1", ""))
+                        .dependencies(Arrays.asList(
+                                MavenCoordinate.create("net.evendanan", "inner-inner1", "0.1", ""),
+                                MavenCoordinate.create("net.evendanan", "inner-inner2"/*this is missing*/, "0.1", "")
                         ))
                         .build(),
-                Dependency.newBuilder()
-                        .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                .setGroupId("net.evendanan")
-                                .setArtifactId("inner-inner1")
-                                .setVersion("0.1")
-                                .build())
+                Dependency.builder()
+                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner1", "0.1", ""))
                         .build()));
     }
 
     @Test
     public void checkNoRepeatingDependencies_HappyPath() {
-        GraphVerifications.checkNoRepeatingDependencies(mBasicResolution.getAllResolvedDependenciesList());
+        GraphVerifications.checkNoRepeatingDependencies(mBasicResolution.allResolvedDependencies());
     }
 
     @Test(expected = GraphVerifications.InvalidGraphException.class)
     public void checkNoRepeatingDependencies_Fail() {
         GraphVerifications.checkNoRepeatingDependencies(Arrays.asList(
-                Dependency.newBuilder()
-                        .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                .setGroupId("net.evendanan")
-                                .setArtifactId("dep1")
-                                .setVersion("0.1")
-                                .build())
-                        .addAllDependencies(Collections.singleton(MavenCoordinate.newBuilder()
-                                .setGroupId("net.evendanan")
-                                .setArtifactId("inner1")
-                                .setVersion("0.1")
-                                .build()))
+                Dependency.builder()
+                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""))
+                        .dependencies(Collections.singleton(MavenCoordinate.create("net.evendanan", "inner1", "0.1", "")))
                         .build(),
-                Dependency.newBuilder()
-                        .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                .setGroupId("net.evendanan")
-                                .setArtifactId("inner1")
-                                .setVersion("0.1")
-                                .build())
-                        .addAllDependencies(Arrays.asList(
-                                MavenCoordinate.newBuilder()
-                                        .setGroupId("net.evendanan")
-                                        .setArtifactId("inner-inner1")
-                                        .setVersion("0.1")
-                                        .build(),
-                                MavenCoordinate.newBuilder()
-                                        .setGroupId("net.evendanan")
-                                        .setArtifactId("inner-inner2")
-                                        .setVersion("0.1")
-                                        .build()
+                Dependency.builder()
+                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner1", "0.1", ""))
+                        .dependencies(Arrays.asList(
+                                MavenCoordinate.create("net.evendanan", "inner-inner1", "0.1", ""),
+                                MavenCoordinate.create("net.evendanan", "inner-inner2", "0.1", "")
                         ))
                         .build(),
-                Dependency.newBuilder()
-                        .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                .setGroupId("net.evendanan")
-                                .setArtifactId("inner-inner1")
-                                .setVersion("0.1")
-                                .build())
+                Dependency.builder()
+                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner1", "0.1", ""))
                         .build(),
-                Dependency.newBuilder()
-                        .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                .setGroupId("net.evendanan")
-                                .setArtifactId("inner-inner1")//repeating
-                                .setVersion("0.1")
-                                .build())
+                Dependency.builder()
+                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner1"/*repeating*/, "0.1", ""))
                         .build(),
-                Dependency.newBuilder()
-                        .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                .setGroupId("net.evendanan")
-                                .setArtifactId("inner-inner2")
-                                .setVersion("0.1")
-                                .build())
+                Dependency.builder()
+                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner2", "0.1", ""))
                         .build()));
     }
 }

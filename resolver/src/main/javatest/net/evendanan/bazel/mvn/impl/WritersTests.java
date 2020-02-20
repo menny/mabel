@@ -1,9 +1,9 @@
 package net.evendanan.bazel.mvn.impl;
 
 import com.google.common.base.Charsets;
-import net.evendanan.bazel.mvn.api.Dependency;
+import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.DependencyTools;
-import net.evendanan.bazel.mvn.api.MavenCoordinate;
+import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import net.evendanan.bazel.mvn.api.Target;
 import org.junit.Assert;
 import org.junit.Test;
@@ -178,15 +178,10 @@ public class WritersTests {
     @Test
     public void testRepositoryRulesMacroWriterWithSources() throws Exception {
         final List<Target> targets = new TargetsBuilders.HttpTargetsBuilder(false, dep -> URI.create("")).buildTargets(
-                Dependency.newBuilder()
-                        .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                .setGroupId("net.evendanan")
-                                .setArtifactId("dep1")
-                                .setVersion("1.2.3")
-                                .setPackaging("jar")
-                                .build())
-                        .setUrl("https://maven.central.org/repo/net/evendanan/dep1/dep1-1.2.3.jar")
-                        .setSourcesUrl("https://maven.central.org/repo/net/evendanan/dep1/dep1-1.2.3-sources.jar")
+                Dependency.builder()
+                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "dep1", "1.2.3", "jar"))
+                        .url("https://maven.central.org/repo/net/evendanan/dep1/dep1-1.2.3.jar")
+                        .sourcesUrl("https://maven.central.org/repo/net/evendanan/dep1/dep1-1.2.3-sources.jar")
                         .build(),
                 DependencyTools.DEFAULT);
 
@@ -214,14 +209,9 @@ public class WritersTests {
         };
         final TargetsBuilders.HttpTargetsBuilder httpTargetsBuilder = new TargetsBuilders.HttpTargetsBuilder(true, dependencyURIFunction);
 
-        final List<Target> targets = httpTargetsBuilder.buildTargets(Dependency.newBuilder()
-                        .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                .setGroupId("net.evendanan")
-                                .setArtifactId("dep1")
-                                .setVersion("1.2.3")
-                                .setPackaging("jar")
-                                .build())
-                        .setUrl("https://maven.central.org/repo/net/evendanan/dep1/dep1-1.2.3.jar")
+        final List<Target> targets = httpTargetsBuilder.buildTargets(Dependency.builder()
+                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "dep1", "1.2.3", "jar"))
+                        .url("https://maven.central.org/repo/net/evendanan/dep1/dep1-1.2.3.jar")
                         .build(),
                 DependencyTools.DEFAULT);
 
@@ -242,14 +232,9 @@ public class WritersTests {
         };
         final TargetsBuilders.HttpTargetsBuilder httpTargetsBuilder = new TargetsBuilders.HttpTargetsBuilder(true, dependencyURIFunction);
 
-        final List<Target> targets = httpTargetsBuilder.buildTargets(Dependency.newBuilder()
-                        .setMavenCoordinate(MavenCoordinate.newBuilder()
-                                .setGroupId("net.evendanan")
-                                .setArtifactId("dep1")
-                                .setVersion("1.2.3-SNAPSHOT")
-                                .setPackaging("jar")
-                                .build())
-                        .setUrl("https://maven.central.org/repo/net/evendanan/dep1/dep1-1.2.3-SNAPSHOT.jar")
+        final List<Target> targets = httpTargetsBuilder.buildTargets(Dependency.builder()
+                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "dep1", "1.2.3-SNAPSHOT", "jar"))
+                        .url("https://maven.central.org/repo/net/evendanan/dep1/dep1-1.2.3-SNAPSHOT.jar")
                         .build(),
                 DependencyTools.DEFAULT);
 

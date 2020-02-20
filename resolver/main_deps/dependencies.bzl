@@ -12,11 +12,32 @@ def generate_workspace_rules():
         sha256 = 'e0de160b129b2414087e01fe845609cd55caec6820cfd4d0c90fabcc7bdb8c1e',
     )
 
+    # from com.google.auto.value:auto-value-annotations:1.7
+    http_file(name = 'com_google_auto_value__auto_value_annotations__1_7',
+        urls = ['https://repo1.maven.org/maven2/com/google/auto/value/auto-value-annotations/1.7/auto-value-annotations-1.7.jar'],
+        downloaded_file_path = 'auto-value-annotations-1.7.jar',
+        sha256 = 'b134bab5082e9f49f2b45802573c78e0726e059b645323645da03e328e501f86',
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    http_file(name = 'com_google_auto_value__auto_value__1_7',
+        urls = ['https://repo1.maven.org/maven2/com/google/auto/value/auto-value/1.7/auto-value-1.7.jar'],
+        downloaded_file_path = 'auto-value-1.7.jar',
+        sha256 = 'b66df6984d5c29f15a6253514c817fb046e8e242efffc79e42c33f2dde0edf41',
+    )
+
     # from com.google.code.findbugs:jsr305:3.0.2
     http_file(name = 'com_google_code_findbugs__jsr305__3_0_2',
         urls = ['https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar'],
         downloaded_file_path = 'jsr305-3.0.2.jar',
         sha256 = '766ad2a0783f2687962c8ad74ceecc38a28b9f72a2d085ee438b7813e928d0c7',
+    )
+
+    # from com.google.code.gson:gson:2.8.5
+    http_file(name = 'com_google_code_gson__gson__2_8_5',
+        urls = ['https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.5/gson-2.8.5.jar'],
+        downloaded_file_path = 'gson-2.8.5.jar',
+        sha256 = '233a0149fc365c9f6edbd683cfe266b19bdc773be98eabdaf6b3c924b48e7d81',
     )
 
     # from com.google.errorprone:error_prone_annotations:2.2.0
@@ -337,6 +358,202 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         runtime_deps = [],
     )
 
+    # from com.google.auto.value:auto-value-annotations:1.7
+    native.alias(name = 'com_google_auto_value__auto_value_annotations',
+        actual = ':com_google_auto_value__auto_value_annotations__1_7',
+        visibility = ['//visibility:public'],
+    )
+
+    # from com.google.auto.value:auto-value-annotations:1.7
+    java_import_impl(name = 'com_google_auto_value__auto_value_annotations__1_7',
+        jars = ['@com_google_auto_value__auto_value_annotations__1_7//file'],
+        tags = ['maven_coordinates=com.google.auto.value:auto-value-annotations:1.7'],
+        licenses = ['notice'],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    native.alias(name = 'com_google_auto_value__auto_value',
+        actual = ':com_google_auto_value__auto_value__1_7',
+        visibility = ['//visibility:public'],
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    java_import_impl(name = 'com_google_auto_value__auto_value__1_7',
+        jars = ['@com_google_auto_value__auto_value__1_7//file'],
+        tags = ['maven_coordinates=com.google.auto.value:auto-value:1.7'],
+        licenses = ['notice'],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    native.java_plugin(name = 'com_google_auto_value__auto_value__1_7___generates_api___processor_class_0',
+        processor_class = 'com.google.auto.value.extension.memoized.processor.MemoizedValidator',
+        generates_api = 1,
+        deps = [':com_google_auto_value__auto_value__1_7'],
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    native.java_plugin(name = 'com_google_auto_value__auto_value__1_7___generates_api___processor_class_1',
+        processor_class = 'com.google.auto.value.processor.AutoAnnotationProcessor',
+        generates_api = 1,
+        deps = [':com_google_auto_value__auto_value__1_7'],
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    native.java_plugin(name = 'com_google_auto_value__auto_value__1_7___generates_api___processor_class_2',
+        processor_class = 'com.google.auto.value.processor.AutoOneOfProcessor',
+        generates_api = 1,
+        deps = [':com_google_auto_value__auto_value__1_7'],
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    native.java_plugin(name = 'com_google_auto_value__auto_value__1_7___generates_api___processor_class_3',
+        processor_class = 'com.google.auto.value.processor.AutoValueBuilderProcessor',
+        generates_api = 1,
+        deps = [':com_google_auto_value__auto_value__1_7'],
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    native.java_plugin(name = 'com_google_auto_value__auto_value__1_7___generates_api___processor_class_4',
+        processor_class = 'com.google.auto.value.processor.AutoValueProcessor',
+        generates_api = 1,
+        deps = [':com_google_auto_value__auto_value__1_7'],
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    native.java_library(name = 'com_google_auto_value__auto_value__1_7___generates_api___processor_class_all',
+        exported_plugins = [
+            ':com_google_auto_value__auto_value__1_7___generates_api___processor_class_0',
+            ':com_google_auto_value__auto_value__1_7___generates_api___processor_class_1',
+            ':com_google_auto_value__auto_value__1_7___generates_api___processor_class_2',
+            ':com_google_auto_value__auto_value__1_7___generates_api___processor_class_3',
+            ':com_google_auto_value__auto_value__1_7___generates_api___processor_class_4',
+        ],
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    native.java_plugin(name = 'com_google_auto_value__auto_value__1_7___processor_class_0',
+        processor_class = 'com.google.auto.value.extension.memoized.processor.MemoizedValidator',
+        generates_api = 0,
+        deps = [':com_google_auto_value__auto_value__1_7'],
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    native.java_plugin(name = 'com_google_auto_value__auto_value__1_7___processor_class_1',
+        processor_class = 'com.google.auto.value.processor.AutoAnnotationProcessor',
+        generates_api = 0,
+        deps = [':com_google_auto_value__auto_value__1_7'],
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    native.java_plugin(name = 'com_google_auto_value__auto_value__1_7___processor_class_2',
+        processor_class = 'com.google.auto.value.processor.AutoOneOfProcessor',
+        generates_api = 0,
+        deps = [':com_google_auto_value__auto_value__1_7'],
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    native.java_plugin(name = 'com_google_auto_value__auto_value__1_7___processor_class_3',
+        processor_class = 'com.google.auto.value.processor.AutoValueBuilderProcessor',
+        generates_api = 0,
+        deps = [':com_google_auto_value__auto_value__1_7'],
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    native.java_plugin(name = 'com_google_auto_value__auto_value__1_7___processor_class_4',
+        processor_class = 'com.google.auto.value.processor.AutoValueProcessor',
+        generates_api = 0,
+        deps = [':com_google_auto_value__auto_value__1_7'],
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    native.java_library(name = 'com_google_auto_value__auto_value__1_7___processor_class_all',
+        exported_plugins = [
+            ':com_google_auto_value__auto_value__1_7___processor_class_0',
+            ':com_google_auto_value__auto_value__1_7___processor_class_1',
+            ':com_google_auto_value__auto_value__1_7___processor_class_2',
+            ':com_google_auto_value__auto_value__1_7___processor_class_3',
+            ':com_google_auto_value__auto_value__1_7___processor_class_4',
+        ],
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    native.alias(name = 'com_google_auto_value__auto_value___generates_api___processor_class_0',
+        actual = ':com_google_auto_value__auto_value__1_7___generates_api___processor_class_0',
+        visibility = ['//visibility:public'],
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    native.alias(name = 'com_google_auto_value__auto_value___generates_api___processor_class_1',
+        actual = ':com_google_auto_value__auto_value__1_7___generates_api___processor_class_1',
+        visibility = ['//visibility:public'],
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    native.alias(name = 'com_google_auto_value__auto_value___generates_api___processor_class_2',
+        actual = ':com_google_auto_value__auto_value__1_7___generates_api___processor_class_2',
+        visibility = ['//visibility:public'],
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    native.alias(name = 'com_google_auto_value__auto_value___generates_api___processor_class_3',
+        actual = ':com_google_auto_value__auto_value__1_7___generates_api___processor_class_3',
+        visibility = ['//visibility:public'],
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    native.alias(name = 'com_google_auto_value__auto_value___generates_api___processor_class_4',
+        actual = ':com_google_auto_value__auto_value__1_7___generates_api___processor_class_4',
+        visibility = ['//visibility:public'],
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    native.alias(name = 'com_google_auto_value__auto_value___generates_api___processor_class_all',
+        actual = ':com_google_auto_value__auto_value__1_7___generates_api___processor_class_all',
+        visibility = ['//visibility:public'],
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    native.alias(name = 'com_google_auto_value__auto_value___processor_class_0',
+        actual = ':com_google_auto_value__auto_value__1_7___processor_class_0',
+        visibility = ['//visibility:public'],
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    native.alias(name = 'com_google_auto_value__auto_value___processor_class_1',
+        actual = ':com_google_auto_value__auto_value__1_7___processor_class_1',
+        visibility = ['//visibility:public'],
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    native.alias(name = 'com_google_auto_value__auto_value___processor_class_2',
+        actual = ':com_google_auto_value__auto_value__1_7___processor_class_2',
+        visibility = ['//visibility:public'],
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    native.alias(name = 'com_google_auto_value__auto_value___processor_class_3',
+        actual = ':com_google_auto_value__auto_value__1_7___processor_class_3',
+        visibility = ['//visibility:public'],
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    native.alias(name = 'com_google_auto_value__auto_value___processor_class_4',
+        actual = ':com_google_auto_value__auto_value__1_7___processor_class_4',
+        visibility = ['//visibility:public'],
+    )
+
+    # from com.google.auto.value:auto-value:1.7
+    native.alias(name = 'com_google_auto_value__auto_value___processor_class_all',
+        actual = ':com_google_auto_value__auto_value__1_7___processor_class_all',
+        visibility = ['//visibility:public'],
+    )
+
     # from com.google.code.findbugs:jsr305:3.0.2
     native.alias(name = 'com_google_code_findbugs__jsr305',
         actual = ':com_google_code_findbugs__jsr305__3_0_2',
@@ -347,6 +564,22 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
     java_import_impl(name = 'com_google_code_findbugs__jsr305__3_0_2',
         jars = ['@com_google_code_findbugs__jsr305__3_0_2//file'],
         tags = ['maven_coordinates=com.google.code.findbugs:jsr305:3.0.2'],
+        licenses = ['notice'],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from com.google.code.gson:gson:2.8.5
+    native.alias(name = 'com_google_code_gson__gson',
+        actual = ':com_google_code_gson__gson__2_8_5',
+        visibility = ['//visibility:public'],
+    )
+
+    # from com.google.code.gson:gson:2.8.5
+    java_import_impl(name = 'com_google_code_gson__gson__2_8_5',
+        jars = ['@com_google_code_gson__gson__2_8_5//file'],
+        tags = ['maven_coordinates=com.google.code.gson:gson:2.8.5'],
         licenses = ['notice'],
         deps = [],
         exports = [],

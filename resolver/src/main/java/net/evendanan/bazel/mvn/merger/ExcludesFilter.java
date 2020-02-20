@@ -1,8 +1,8 @@
 package net.evendanan.bazel.mvn.merger;
 
-import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.DependencyTools;
-import net.evendanan.bazel.mvn.api.MavenCoordinate;
+import net.evendanan.bazel.mvn.api.model.Dependency;
+import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -12,10 +12,10 @@ public class ExcludesFilter {
     static Collection<Dependency> filterDependencies(final Collection<Dependency> dependencies, final Collection<String> excludes) {
         return dependencies.stream()
                 .filter(dependency -> excludes.stream().noneMatch(exclude -> DependencyTools.DEFAULT.mavenCoordinates(dependency).startsWith(exclude)))
-                .map(dependency -> Dependency.newBuilder(dependency)
-                        .clearDependencies().addAllDependencies(filterMavenDependencies(dependency.getDependenciesList(), excludes))
-                        .clearExports().addAllExports(filterMavenDependencies(dependency.getExportsList(), excludes))
-                        .clearRuntimeDependencies().addAllRuntimeDependencies(filterMavenDependencies(dependency.getRuntimeDependenciesList(), excludes))
+                .map(dependency -> Dependency.builder(dependency)
+                        .dependencies(filterMavenDependencies(dependency.dependencies(), excludes))
+                        .exports(filterMavenDependencies(dependency.exports(), excludes))
+                        .runtimeDependencies(filterMavenDependencies(dependency.runtimeDependencies(), excludes))
                         .build())
                 .collect(Collectors.toList());
     }
