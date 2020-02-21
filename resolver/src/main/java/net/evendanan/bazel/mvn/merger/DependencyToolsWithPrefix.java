@@ -1,7 +1,7 @@
 package net.evendanan.bazel.mvn.merger;
 
 import net.evendanan.bazel.mvn.api.DependencyTools;
-import net.evendanan.bazel.mvn.api.MavenCoordinate;
+import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 
 public class DependencyToolsWithPrefix extends DependencyTools {
     private final String mPrefix;

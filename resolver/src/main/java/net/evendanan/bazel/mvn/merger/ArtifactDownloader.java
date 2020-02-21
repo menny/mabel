@@ -1,8 +1,8 @@
 package net.evendanan.bazel.mvn.merger;
 
 import com.google.common.annotations.VisibleForTesting;
-import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.DependencyTools;
+import net.evendanan.bazel.mvn.api.model.Dependency;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -42,7 +42,7 @@ public class ArtifactDownloader {
 
         //second, download to unique temp file
         final File tempDownloadFile = File.createTempFile("mabel_ArtifactDownloader", localPath.getName());
-        try (final ReadableByteChannel readableByteChannel = Channels.newChannel(mConnectionOpener.openInputStream(new URL(dependency.getUrl())))) {
+        try (final ReadableByteChannel readableByteChannel = Channels.newChannel(mConnectionOpener.openInputStream(new URL(dependency.url())))) {
             try (final FileOutputStream tempOutput = new FileOutputStream(tempDownloadFile, false)) {
                 tempOutput.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
             }

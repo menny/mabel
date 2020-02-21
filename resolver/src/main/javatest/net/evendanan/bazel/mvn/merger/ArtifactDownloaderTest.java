@@ -1,9 +1,9 @@
 package net.evendanan.bazel.mvn.merger;
 
 import com.google.common.base.Charsets;
-import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.DependencyTools;
-import net.evendanan.bazel.mvn.api.MavenCoordinate;
+import net.evendanan.bazel.mvn.api.model.Dependency;
+import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,14 +37,9 @@ public class ArtifactDownloaderTest {
         }
         mUnderTest = new ArtifactDownloader(mTestOpener, artifactDownloaderFolder, DependencyTools.DEFAULT);
 
-        mDependency = Dependency.newBuilder()
-                .setMavenCoordinate(MavenCoordinate.newBuilder()
-                        .setGroupId("group")
-                        .setArtifactId("artifact")
-                        .setVersion("1.1")
-                        .setPackaging("jar")
-                        .build())
-                .setUrl("https://example.com/temp.jar")
+        mDependency = Dependency.builder()
+                .mavenCoordinate(MavenCoordinate.create("group", "artifact", "1.1", "jar"))
+                .url("https://example.com/temp.jar")
                 .build();
         expectedOutputFile = new File(artifactDownloaderFolder, DependencyTools.DEFAULT.repositoryRuleName(mDependency));
     }
@@ -58,7 +53,7 @@ public class ArtifactDownloaderTest {
         Assert.assertTrue(expectedOutputFile.exists());
         Assert.assertEquals(expectedOutputFile.getAbsolutePath(), new File(localUri).getAbsolutePath());
 
-        Assert.assertFalse(mTestOpener.mAccessCounters.containsKey(new URL(mDependency.getUrl())));
+        Assert.assertFalse(mTestOpener.mAccessCounters.containsKey(new URL(mDependency.url())));
     }
 
     @Test
@@ -83,7 +78,7 @@ public class ArtifactDownloaderTest {
         Assert.assertEquals(expectedOutputFile.getAbsolutePath(), new File(localUri2).getAbsolutePath());
 
         Assert.assertArrayEquals(TestOpener.TEST_OUTPUT.getBytes(), Files.readAllBytes(expectedOutputFile.toPath()));
-        Assert.assertEquals(Integer.valueOf(1), mTestOpener.mAccessCounters.get(new URL(mDependency.getUrl())));
+        Assert.assertEquals(Integer.valueOf(1), mTestOpener.mAccessCounters.get(new URL(mDependency.url())));
     }
 
     private static class TestOpener implements ArtifactDownloader.ConnectionOpener {

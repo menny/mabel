@@ -1,10 +1,10 @@
 package net.evendanan.bazel.mvn.merger;
 
 import com.google.common.base.Preconditions;
-import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.DependencyTools;
-import net.evendanan.bazel.mvn.api.MavenCoordinate;
-import net.evendanan.bazel.mvn.api.Resolution;
+import net.evendanan.bazel.mvn.api.model.Dependency;
+import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
+import net.evendanan.bazel.mvn.api.model.Resolution;
 
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -35,9 +35,9 @@ public class GraphUtils {
 
     public static void DfsTraveller(Collection<Resolution> resolutions, BiConsumer<Dependency, Integer> visitor) {
         Map<MavenCoordinate, Dependency> mapper = new HashMap<>();
-        resolutions.forEach(resolution -> resolution.getAllResolvedDependenciesList().forEach(dep -> mapper.put(dep.getMavenCoordinate(), dep)));
+        resolutions.forEach(resolution -> resolution.allResolvedDependencies().forEach(dep -> mapper.put(dep.mavenCoordinate(), dep)));
 
-        resolutions.forEach(resolution -> DfsTraveller(resolution.getRootDependency(), mapper::get, 1, visitor));
+        resolutions.forEach(resolution -> DfsTraveller(resolution.rootDependency(), mapper::get, 1, visitor));
     }
 
     private static void DfsTraveller(MavenCoordinate mavenCoordinate, Function<MavenCoordinate, Dependency> dependencyMap, int level, BiConsumer<Dependency, Integer> visitor) {
@@ -46,19 +46,19 @@ public class GraphUtils {
 
         Stream.concat(
                 Stream.concat(
-                        dependency.getDependenciesList().stream(),
-                        dependency.getExportsList().stream()),
-                dependency.getRuntimeDependenciesList().stream())
+                        dependency.dependencies().stream(),
+                        dependency.exports().stream()),
+                dependency.runtimeDependencies().stream())
                 .distinct()
                 .forEach(child -> DfsTraveller(child, dependencyMap, level + 1, visitor));
     }
 
     static void BfsTraveller(Collection<Resolution> resolutions, BiConsumer<Dependency, Integer> visitor) {
         Map<MavenCoordinate, Dependency> mapper = new HashMap<>();
-        resolutions.forEach(resolution -> resolution.getAllResolvedDependenciesList().forEach(dep -> mapper.put(dep.getMavenCoordinate(), dep)));
+        resolutions.forEach(resolution -> resolution.allResolvedDependencies().forEach(dep -> mapper.put(dep.mavenCoordinate(), dep)));
 
         Queue<MavenCoordinate> queue = new ArrayDeque<>();
-        resolutions.forEach(resolution -> queue.add(resolution.getRootDependency()));
+        resolutions.forEach(resolution -> queue.add(resolution.rootDependency()));
 
         while (!queue.isEmpty()) {
             final Dependency dependency = Preconditions.checkNotNull(mapper.get(queue.remove()), "Can not find mapping for " + queue.peek());
@@ -66,9 +66,9 @@ public class GraphUtils {
 
             Stream.concat(
                     Stream.concat(
-                            dependency.getDependenciesList().stream(),
-                            dependency.getExportsList().stream()),
-                    dependency.getRuntimeDependenciesList().stream())
+                            dependency.dependencies().stream(),
+                            dependency.exports().stream()),
+                    dependency.runtimeDependencies().stream())
                     .distinct()
                     .forEach(queue::add);
         }

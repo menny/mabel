@@ -1,9 +1,10 @@
 package net.evendanan.bazel.mvn.impl;
 
-import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.DependencyTools;
 import net.evendanan.bazel.mvn.api.Target;
 import net.evendanan.bazel.mvn.api.TargetsBuilder;
+import net.evendanan.bazel.mvn.api.model.Dependency;
+import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -22,7 +23,9 @@ public class CompositeFormatterTest {
 
         final TargetsBuilders.CompositeBuilder compositeBuilder = new TargetsBuilders.CompositeBuilder(formatter1, formatter2);
 
-        Dependency dependency = Dependency.newBuilder().build();
+        Dependency dependency = Dependency.builder()
+                .mavenCoordinate(MavenCoordinate.create("g", "a", "1", "jar"))
+                .build();
 
         final List<Target> targets = compositeBuilder.buildTargets(dependency, DependencyTools.DEFAULT);
 

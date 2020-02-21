@@ -1,7 +1,7 @@
 package net.evendanan.bazel.mvn.merger;
 
-import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.DependencyTools;
+import net.evendanan.bazel.mvn.api.model.Dependency;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
@@ -27,10 +27,10 @@ public class FilterDuplicateDependenciesEntries {
         @Nonnull
         @Override
         protected Dependency calculate(@Nonnull final Dependency original) {
-            return Dependency.newBuilder(original)
-                    .clearDependencies().addAllDependencies(original.getDependenciesList().stream().distinct().collect(Collectors.toList()))
-                    .clearExports().addAllExports(original.getExportsList().stream().distinct().collect(Collectors.toList()))
-                    .clearRuntimeDependencies().addAllRuntimeDependencies(original.getRuntimeDependenciesList().stream().distinct().collect(Collectors.toList()))
+            return Dependency.builder(original)
+                    .dependencies(original.dependencies().stream().distinct().collect(Collectors.toList()))
+                    .exports(original.exports().stream().distinct().collect(Collectors.toList()))
+                    .runtimeDependencies(original.runtimeDependencies().stream().distinct().collect(Collectors.toList()))
                     .build();
         }
 

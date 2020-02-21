@@ -5,13 +5,15 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
 import com.beust.jcommander.Parameters;
 import com.beust.jcommander.converters.IParameterSplitter;
+import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
 import com.google.devtools.bazel.workspace.maven.adapter.MigrationToolingGraphResolver;
 import net.evendanan.bazel.mvn.api.GraphResolver;
-import net.evendanan.bazel.mvn.api.Resolution;
+import net.evendanan.bazel.mvn.api.model.Resolution;
+import net.evendanan.bazel.mvn.api.serialization.Serialization;
 
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,9 +63,8 @@ public class Resolver {
             throw new IOException("Failed to create folder for json file: " + parentFolder.getAbsolutePath());
         }
 
-        try (final FileOutputStream outputStream = new FileOutputStream(outputFile, false)) {
-            resolution.writeTo(outputStream);
-            outputStream.flush();
+        try (final FileWriter writer = new FileWriter(outputFile, Charsets.UTF_8, false)) {
+            new Serialization().serialize(resolution, writer);
         }
     }
 

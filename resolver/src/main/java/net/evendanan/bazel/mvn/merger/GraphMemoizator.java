@@ -1,9 +1,8 @@
 package net.evendanan.bazel.mvn.merger;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
-import javax.annotation.Nonnull;
-import net.evendanan.bazel.mvn.api.Dependency;
 
 public abstract class GraphMemoizator<T> {
     private final Map<String, T> cache = new HashMap<>();

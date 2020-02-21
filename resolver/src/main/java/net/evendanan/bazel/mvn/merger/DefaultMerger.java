@@ -1,11 +1,10 @@
 package net.evendanan.bazel.mvn.merger;
 
-import net.evendanan.bazel.mvn.api.Dependency;
 import net.evendanan.bazel.mvn.api.GraphMerger;
-import net.evendanan.bazel.mvn.api.Resolution;
+import net.evendanan.bazel.mvn.api.model.Dependency;
+import net.evendanan.bazel.mvn.api.model.Resolution;
 
 import java.util.Collection;
-import java.util.Set;
 
 public class DefaultMerger implements GraphMerger {
 

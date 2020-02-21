@@ -46,7 +46,7 @@ def artifact(coordinate, maven_exclude_deps=[], repositories=DEFAULT_MAVEN_SERVE
     return ":%s" % rule_name
 
 script_merger_template = """
-java -jar {merger} {graph_files_list} \
+{java} -jar {merger} {graph_files_list} \
     --output_macro_file_path={output_filename} \
     --output_target_build_files_base_path=${{BUILD_WORKING_DIRECTORY}}/{output_target_build_files_base_path} \
     --calculate_sha={calculate_sha} \
@@ -67,8 +67,11 @@ def _impl_merger(ctx):
     package_path = ctx.label.package
     source_files = [dep[TransitiveDataInfo].graph_file for dep in ctx.attr.maven_deps]
     script = ctx.outputs.out
+    java_runtime = ctx.attr._jdk[java_common.JavaRuntimeInfo]
+    java_path = str(java_runtime.java_executable_exec_path)
 
     script_content = script_merger_template.format(
+        java = java_path,
         merger = ctx.executable._merger.short_path,
         graph_files_list = " ".join(['--graph_file={}'.format(file.short_path) for file in source_files]),
         output_filename = output_filename,
@@ -85,7 +88,7 @@ def _impl_merger(ctx):
 
     ctx.actions.write(script, script_content, is_executable=True)
 
-    return [DefaultInfo(executable=script, runfiles=ctx.runfiles(files = [ctx.executable._merger] + source_files))]
+    return [DefaultInfo(executable=script, runfiles=ctx.runfiles(files = [ctx.executable._merger] + source_files + ctx.files._jdk))]
 
 deps_workspace_generator_rule = rule(implementation=_impl_merger,
      doc = """Generates a bzl file with repository-rules and targets which describes a Maven dependecy graph based on
@@ -111,6 +114,7 @@ deps_workspace_generator_rule = rule(implementation=_impl_merger,
          "generated_targets_prefix": attr.string(default="", doc='A prefix to add to all generated targets. Default is an empty string, meaning no prefix.', mandatory=False),
          "artifacts_path": attr.string(default="", doc='Cache location to download artifacts into. Empty means `[user-home-folder]/.mabel/artifacts/`', mandatory=False),
          "output_graph_to_file": attr.bool(default=False, doc='If set to True, will output the graph to dependencies.txt. Default is False.', mandatory=False),
+         "_jdk": attr.label(default = Label("@bazel_tools//tools/jdk:remote_jdk11"), providers = [java_common.JavaRuntimeInfo]),
          "_merger": attr.label(executable=True, allow_single_file=True, cfg="host", default=Label("//resolver:merger_bin_deploy.jar"))
      },
      outputs={"out": "%{name}-generate-deps.sh"})
