@@ -65,6 +65,7 @@ public class DependencyToolsTest {
     public void testLicenseParsing() {
         Assert.assertNull(LicenseTools.fromLicenseName(""));
         Assert.assertNull(LicenseTools.fromLicenseName(null));
+        Assert.assertNull(LicenseTools.fromLicenseName("some-unknown-license"));
 
         Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("Apache 2.0"));
         Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("Apache 2"));

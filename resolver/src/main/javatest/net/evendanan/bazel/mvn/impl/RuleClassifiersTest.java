@@ -1,14 +1,17 @@
 package net.evendanan.bazel.mvn.impl;
 
+import net.evendanan.bazel.mvn.api.RuleClassifier;
 import net.evendanan.bazel.mvn.api.TargetsBuilder;
 import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -104,5 +107,45 @@ public class RuleClassifiersTest {
         };
 
         Assert.assertSame(TargetsBuilders.KOTLIN_IMPORT, new RuleClassifiers.JarInspector(dependencyURIFunction).classifyRule(dependency).orElse(null));
+    }
+
+    @Test
+    public void testPriority() {
+        RuleClassifier classifier1 = Mockito.mock(RuleClassifier.class);
+        Mockito.when(classifier1.classifyRule(Mockito.any())).thenReturn(Optional.empty());
+        RuleClassifier classifier2 = Mockito.mock(RuleClassifier.class);
+        TargetsBuilder targetsBuilder2 = Mockito.mock(TargetsBuilder.class);
+        Mockito.when(classifier2.classifyRule(Mockito.any())).thenReturn(Optional.of(targetsBuilder2));
+        RuleClassifier classifier3 = Mockito.mock(RuleClassifier.class);
+        TargetsBuilder targetsBuilder3 = Mockito.mock(TargetsBuilder.class);
+        Mockito.when(classifier3.classifyRule(Mockito.any())).thenReturn(Optional.of(targetsBuilder3));
+
+        TargetsBuilder defaultTargetBuilder = Mockito.mock(TargetsBuilder.class);
+        TargetsBuilder actualTargetBuilder = RuleClassifiers.priorityRuleClassifier(
+                Arrays.asList(classifier1, classifier2, classifier3),
+                defaultTargetBuilder,
+                Dependency.builder().mavenCoordinate(MavenCoordinate.create("g", "a", "1", "")).build()
+        );
+
+        Assert.assertSame(targetsBuilder2, actualTargetBuilder);
+    }
+
+    @Test
+    public void testPriorityToDefault() {
+        RuleClassifier classifier1 = Mockito.mock(RuleClassifier.class);
+        Mockito.when(classifier1.classifyRule(Mockito.any())).thenReturn(Optional.empty());
+        RuleClassifier classifier2 = Mockito.mock(RuleClassifier.class);
+        Mockito.when(classifier2.classifyRule(Mockito.any())).thenReturn(Optional.empty());
+        RuleClassifier classifier3 = Mockito.mock(RuleClassifier.class);
+        Mockito.when(classifier3.classifyRule(Mockito.any())).thenReturn(Optional.empty());
+
+        TargetsBuilder defaultTargetBuilder = Mockito.mock(TargetsBuilder.class);
+        TargetsBuilder actualTargetBuilder = RuleClassifiers.priorityRuleClassifier(
+                Arrays.asList(classifier1, classifier2, classifier3),
+                defaultTargetBuilder,
+                Dependency.builder().mavenCoordinate(MavenCoordinate.create("g", "a", "1", "")).build()
+        );
+
+        Assert.assertSame(defaultTargetBuilder, actualTargetBuilder);
     }
 }
