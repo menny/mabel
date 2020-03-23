@@ -1,10 +1,11 @@
 package net.evendanan.bazel.mvn.impl;
 
-import java.util.Arrays;
-import java.util.Collections;
 import net.evendanan.bazel.mvn.api.Target;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 public class TargetTest {
 
@@ -38,6 +39,20 @@ public class TargetTest {
         underTest.addList("list_multiple_attr", Arrays.asList("one", "two", "three"));
 
         Assert.assertEquals(HAPPY_PATH_OUTPUT, underTest.outputString("      "));
+    }
+
+    @Test
+    public void testNameSpacedHappyPath() {
+        Target underTest = new Target("group:id:1.2", "test_rule", "target_name", "name_spaced");
+        Assert.assertEquals("target_name", underTest.getTargetName());
+        Assert.assertEquals("name_spaced", underTest.getNameSpacedTargetName());
+    }
+
+    @Test
+    public void testNameSpacedHappyPathWithDefaultName() {
+        Target underTest = new Target("group:id:1.2", "test_rule", "target_name");
+        Assert.assertEquals("target_name", underTest.getTargetName());
+        Assert.assertEquals("target_name", underTest.getNameSpacedTargetName());
     }
 
     @Test

@@ -173,7 +173,6 @@ public class RuleWriters {
             for (Map.Entry<String, List<Target>> entry : publicTargets.entrySet()) {
                 String key = entry.getKey();
                 List<Target> packageTargets = entry.getValue();
-                final Target defaultTarget = packageTargets.get(0);
                 final String[] mavenCoordinates = key.split(":", -1);
                 final File buildFileFolder = new File(baseFolder, getFilePathFromMavenName(mavenCoordinates[0], mavenCoordinates[1]));
                 if (!buildFileFolder.exists() && !buildFileFolder.mkdirs()) {
@@ -189,7 +188,7 @@ public class RuleWriters {
                     fileWriter.append(NEW_LINE);
 
                     for (final Target target : packageTargets) {
-                        fileWriter.append(new Target(target.getMavenCoordinates(), "alias", defaultTarget == target ? buildFileFolder.getName() : target.getTargetName())
+                        fileWriter.append(new Target(target.getMavenCoordinates(), "alias", target.getNameSpacedTargetName())
                                 .addString("actual", String.format(Locale.US, "//%s:%s", pathToTransitiveRulesPackage, target.getTargetName()))
                                 .setPublicVisibility()
                                 .outputString(""))
