@@ -1,10 +1,10 @@
 package net.evendanan.bazel.mvn.impl;
 
 import com.google.common.base.Charsets;
-import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.DependencyTools;
-import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import net.evendanan.bazel.mvn.api.Target;
+import net.evendanan.bazel.mvn.api.model.Dependency;
+import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -25,8 +25,10 @@ public class WritersTests {
     private static final String REPO_RULES_MACRO_OUTPUT_WITH_SOURCES = "# Loading a drop-in replacement for native.http_file\n" +
             "load('@bazel_tools//tools/build_defs/repo:http.bzl', 'http_file')\n" +
             "\n" +
-            "# Repository rules macro to be run in the WORKSPACE file.\n" +
             "def macro_name():\n" +
+            "    \"\"\"\n" +
+            "    Repository rules macro to be run in the WORKSPACE file.\n" +
+            "    \"\"\"\n" +
             "    # from net.evendanan:dep1:1.2.3\n" +
             "    http_file(name = 'net_evendanan__dep1__1_2_3',\n" +
             "        urls = ['https://maven.central.org/repo/net/evendanan/dep1/dep1-1.2.3.jar'],\n" +
@@ -38,14 +40,15 @@ public class WritersTests {
             "        urls = ['https://maven.central.org/repo/net/evendanan/dep1/dep1-1.2.3-sources.jar'],\n" +
             "        downloaded_file_path = 'dep1-1.2.3-sources.jar',\n" +
             "    )\n" +
-            "\n" +
-            "\n";
+            "\n\n";
 
     private static final String REPO_RULES_MACRO_OUTPUT = "# Loading a drop-in replacement for native.http_file\n" +
             "load('@bazel_tools//tools/build_defs/repo:http.bzl', 'http_file')\n" +
             "\n" +
-            "# Repository rules macro to be run in the WORKSPACE file.\n" +
             "def macro_name():\n" +
+            "    \"\"\"\n" +
+            "    Repository rules macro to be run in the WORKSPACE file.\n" +
+            "    \"\"\"\n" +
             "    # from net.evendanan.dep1:artifact:1.2.3\n" +
             "    http_file(name = 'net_evendanan_dep1__artifact__1_2_3',\n" +
             "        urls = ['https://example.com/net/evendanan/dep.jar'],\n" +
@@ -60,12 +63,25 @@ public class WritersTests {
             "\n" +
             "\n";
 
-    private static final String TRANSITIVE_TARGETS_MACRO_OUTPUT = "# Transitive rules macro to be run in the BUILD.bazel file.\n" +
-            "# If you use kt_* rules, you MUST provide the correct rule implementation when call this macro, if you decide\n" +
-            "# not to provide those implementations we'll try to use java_* rules.\n" +
-            "\n" +
-            "# This is a help macro to handle Kotlin rules.\n" +
+    private static final String TRANSITIVE_TARGETS_MACRO_OUTPUT = "\n" +
             "def kotlin_jar_support(name, deps, exports, runtime_deps, jar, java_import_impl, kt_jvm_import=None, kt_jvm_library=None):\n" +
+            "    \"\"\"\n" +
+            "    This is a help macro to handle Kotlin rules.\n" +
+            "\n" +
+            "    Transitive rules macro to be run in the BUILD.bazel file.\n" +
+            "    If you use kt_* rules, you MUST provide the correct rule implementation when call this macro, if you decide\n" +
+            "    not to provide those implementations we'll try to use java_* rules.\n" +
+            "    \n" +
+            "    Args:\n" +
+            "        name: A unique name for this target.\n" +
+            "        deps: The list of other libraries to be linked in to the target.\n" +
+            "        exports: Targets to make available to users of this rule.\n" +
+            "        runtime_deps: Libraries to make available to the final binary or test at runtime only.\n" +
+            "        jar: The JAR file provided to Java targets that depend on this target.\n" +
+            "        java_import_impl: rule implementation for java_import.\n" +
+            "        kt_jvm_import: rule implementation for kt_jvm_import. Can be None.\n" +
+            "        kt_jvm_library: rule implementation for kt_jvm_library. Can be None.\n" +
+            "    \"\"\"\n" +
             "    #In case the developer did not provide a kt_* impl, we'll try to use java_*, should work\n" +
             "    if kt_jvm_import == None:\n" +
             "        java_import_impl(name = name,\n" +
@@ -84,10 +100,19 @@ public class WritersTests {
             "            runtime_deps = runtime_deps,\n" +
             "        )\n" +
             "\n" +
-            "# Macro to set up the transitive rules.\n" +
-            "# You can provide your own implementation of java_import and aar_import. This can be used\n" +
-            "# in cases where you need to shade (or jar_jar or jetify) your jars.\n" +
             "def macro_name(java_import_impl=native.java_import, aar_import_impl=native.aar_import, kt_jvm_import=None, kt_jvm_library=None):\n" +
+            "    \"\"\"\n" +
+            "    Macro to set up the transitive rules.\n" +
+            "\n" +
+            "    You can provide your own implementation of java_import and aar_import. This can be used\n" +
+            "    in cases where you need to shade (or jar_jar or jetify) your jars.\n" +
+            "    \n" +
+            "    Args:\n" +
+            "        java_import_impl: rule implementation for java_import.\n" +
+            "        aar_import_impl: rule implementation for aar_import.\n" +
+            "        kt_jvm_import: rule implementation for kt_jvm_import.\n" +
+            "        kt_jvm_library: rule implementation for kt_jvm_library.\n" +
+            "    \"\"\"\n" +
             "    # from net.evendanan.dep1:artifact:1.2.3\n" +
             "    rule(name = 'name_name_1',\n" +
             "    )\n" +
@@ -97,35 +122,51 @@ public class WritersTests {
             "    )\n" +
             "\n" +
             "\n";
-    private static final String ALIAS_DEP_1 = "#Auto-generated by https://github.com/menny/mabel\n"
-            + "# for artifact net.evendanan.dep1:artifact\n\n"
+    private static final String ALIAS_DEP_1 = "\"\"\"\n" +
+            "External Maven targets for artifact net.evendanan.dep1:artifact\n" +
+            "\n" +
+            "Auto-generated by https://github.com/menny/mabel\n" +
+            "\"\"\"\n\n"
             + "alias(name = 'artifact',\n"
             + "    actual = '//path/to/bzl:name_name_1',\n"
             + "    visibility = ['//visibility:public'],\n"
             + ")\n\n";
-    private static final String ALIAS_DEP_2 = "#Auto-generated by https://github.com/menny/mabel\n"
-            + "# for artifact net.evendanan.dep2:artifact\n\n"
+    private static final String ALIAS_DEP_2 = "\"\"\"\n" +
+            "External Maven targets for artifact net.evendanan.dep2:artifact\n" +
+            "\n" +
+            "Auto-generated by https://github.com/menny/mabel\n" +
+            "\"\"\"\n\n"
             + "alias(name = 'artifact',\n"
             + "    actual = '//path/to/bzl:name_name_2',\n"
             + "    visibility = ['//visibility:public'],\n"
             + ")\n\n";
-    private static final String ALIAS_DEP_2_MULTIPLE = "#Auto-generated by https://github.com/menny/mabel\n" +
-            "# for artifact net.evendanan.dep2:artifact\n\n" +
+    private static final String ALIAS_DEP_2_MULTIPLE = "\"\"\"\n" +
+            "External Maven targets for artifact net.evendanan.dep2:artifact\n" +
+            "\n" +
+            "Auto-generated by https://github.com/menny/mabel\n" +
+            "\"\"\"\n" +
+            "\n" +
             "alias(name = 'artifact',\n" +
             "    actual = '//path/to/bzl:name_name_2',\n" +
             "    visibility = ['//visibility:public'],\n" +
-            ")\n\n" +
+            ")\n" +
+            "\n" +
             "alias(name = 'name_name_2_somethingelse',\n" +
             "    actual = '//path/to/bzl:name_name_2_somethingelse',\n" +
             "    visibility = ['//visibility:public'],\n" +
             ")\n" +
             "\n";
-    private static final String ALIAS_DEP_IGNORES_VERSIONS = "#Auto-generated by https://github.com/menny/mabel\n" +
-            "# for artifact net.evendanan.dep1:artifact\n\n" +
+    private static final String ALIAS_DEP_IGNORES_VERSIONS = "\"\"\"\n" +
+            "External Maven targets for artifact net.evendanan.dep1:artifact\n" +
+            "\n" +
+            "Auto-generated by https://github.com/menny/mabel\n" +
+            "\"\"\"\n" +
+            "\n" +
             "alias(name = 'artifact',\n" +
             "    actual = '//path/to/bzl:name_name_1',\n" +
             "    visibility = ['//visibility:public'],\n" +
-            ")\n\n" +
+            ")\n" +
+            "\n" +
             "alias(name = 'name_name_2',\n" +
             "    actual = '//path/to/bzl:name_name_2',\n" +
             "    visibility = ['//visibility:public'],\n" +
@@ -170,7 +211,6 @@ public class WritersTests {
                         DependencyTools.DEFAULT).get(0)));
 
         String contents = readFileContents(outputFile);
-
         Assert.assertEquals(REPO_RULES_MACRO_OUTPUT, contents);
         Assert.assertFalse(contents.contains("sha256"));
     }
@@ -192,7 +232,6 @@ public class WritersTests {
         writer.write(targets);
 
         String contents = readFileContents(outputFile);
-
         Assert.assertEquals(REPO_RULES_MACRO_OUTPUT_WITH_SOURCES, contents);
     }
 
@@ -326,8 +365,6 @@ public class WritersTests {
                 new Target("net.evendanan.dep2:artifact:2.0", "rule", "name_name_2")));
 
         String contents = readFileContents(outputFile);
-
-
         Assert.assertEquals(TRANSITIVE_TARGETS_MACRO_OUTPUT, contents);
     }
 
