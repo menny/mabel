@@ -2,6 +2,9 @@ package net.evendanan.bazel.mvn.impl;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Charsets;
+import net.evendanan.bazel.mvn.api.RuleWriter;
+import net.evendanan.bazel.mvn.api.Target;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,8 +14,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
-import net.evendanan.bazel.mvn.api.RuleWriter;
-import net.evendanan.bazel.mvn.api.Target;
 
 public class RuleWriters {
 
@@ -44,8 +45,10 @@ public class RuleWriters {
                 fileWriter.append("load('@bazel_tools//tools/build_defs/repo:http.bzl', 'http_file')").append(NEW_LINE);
                 fileWriter.append(NEW_LINE);
 
-                fileWriter.append("# Repository rules macro to be run in the WORKSPACE file.").append(NEW_LINE);
                 fileWriter.append("def ").append(macroName).append("():").append(NEW_LINE);
+                fileWriter.append(INDENT).append("\"\"\"").append(NEW_LINE);
+                fileWriter.append(INDENT).append("Repository rules macro to be run in the WORKSPACE file.").append(NEW_LINE);
+                fileWriter.append(INDENT).append("\"\"\"").append(NEW_LINE);
                 if (targets.isEmpty()) {
                     fileWriter.append(INDENT).append("pass");
                 } else {
@@ -75,13 +78,26 @@ public class RuleWriters {
             targets = SortTargetsByName.sort(targets);
 
             try (final OutputStreamWriter fileWriter = new OutputStreamWriter(new FileOutputStream(outputFile, true), Charsets.UTF_8)) {
-                fileWriter.append("# Transitive rules macro to be run in the BUILD.bazel file.").append(NEW_LINE);
-                fileWriter.append("# If you use kt_* rules, you MUST provide the correct rule implementation when call this macro, if you decide").append(NEW_LINE);
-                fileWriter.append("# not to provide those implementations we'll try to use java_* rules.").append(NEW_LINE);
                 fileWriter.append(NEW_LINE);
 
-                fileWriter.append("# This is a help macro to handle Kotlin rules.").append(NEW_LINE);
                 fileWriter.append("def ").append(KOTLIN_LIB_MACRO_NAME).append("(name, deps, exports, runtime_deps, jar, java_import_impl, kt_jvm_import=None, kt_jvm_library=None):").append(NEW_LINE);
+                fileWriter.append(INDENT).append("\"\"\"").append(NEW_LINE);
+                fileWriter.append(INDENT).append("This is a help macro to handle Kotlin rules.").append(NEW_LINE);
+                fileWriter.append(NEW_LINE);
+                fileWriter.append(INDENT).append("Transitive rules macro to be run in the BUILD.bazel file.").append(NEW_LINE);
+                fileWriter.append(INDENT).append("If you use kt_* rules, you MUST provide the correct rule implementation when call this macro, if you decide").append(NEW_LINE);
+                fileWriter.append(INDENT).append("not to provide those implementations we'll try to use java_* rules.").append(NEW_LINE);
+                fileWriter.append(INDENT).append(NEW_LINE);
+                fileWriter.append(INDENT).append("Args:").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append("name: A unique name for this target.").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append("deps: The list of other libraries to be linked in to the target.").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append("exports: Targets to make available to users of this rule.").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append("runtime_deps: Libraries to make available to the final binary or test at runtime only.").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append("jar: The JAR file provided to Java targets that depend on this target.").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append("java_import_impl: rule implementation for java_import.").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append("kt_jvm_import: rule implementation for kt_jvm_import. Can be None.").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append("kt_jvm_library: rule implementation for kt_jvm_library. Can be None.").append(NEW_LINE);
+                fileWriter.append(INDENT).append("\"\"\"").append(NEW_LINE);
                 fileWriter.append(INDENT).append("#In case the developer did not provide a kt_* impl, we'll try to use java_*, should work").append(NEW_LINE);
                 fileWriter.append(INDENT).append("if kt_jvm_import == None:").append(NEW_LINE);
                 fileWriter.append(INDENT).append(INDENT).append("java_import_impl(name = name,").append(NEW_LINE);
@@ -101,10 +117,19 @@ public class RuleWriters {
                 fileWriter.append(INDENT).append(INDENT).append(")").append(NEW_LINE);
                 fileWriter.append(NEW_LINE);
 
-                fileWriter.append("# Macro to set up the transitive rules.").append(NEW_LINE);
-                fileWriter.append("# You can provide your own implementation of java_import and aar_import. This can be used").append(NEW_LINE);
-                fileWriter.append("# in cases where you need to shade (or jar_jar or jetify) your jars.").append(NEW_LINE);
                 fileWriter.append("def ").append(macroName).append("(java_import_impl=native.java_import, aar_import_impl=native.aar_import, kt_jvm_import=None, kt_jvm_library=None):").append(NEW_LINE);
+                fileWriter.append(INDENT).append("\"\"\"").append(NEW_LINE);
+                fileWriter.append(INDENT).append("Macro to set up the transitive rules.").append(NEW_LINE);
+                fileWriter.append(NEW_LINE);
+                fileWriter.append(INDENT).append("You can provide your own implementation of java_import and aar_import. This can be used").append(NEW_LINE);
+                fileWriter.append(INDENT).append("in cases where you need to shade (or jar_jar or jetify) your jars.").append(NEW_LINE);
+                fileWriter.append(INDENT).append(NEW_LINE);
+                fileWriter.append(INDENT).append("Args:").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append("java_import_impl: rule implementation for java_import.").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append("aar_import_impl: rule implementation for aar_import.").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append("kt_jvm_import: rule implementation for kt_jvm_import.").append(NEW_LINE);
+                fileWriter.append(INDENT).append(INDENT).append("kt_jvm_library: rule implementation for kt_jvm_library.").append(NEW_LINE);
+                fileWriter.append(INDENT).append("\"\"\"").append(NEW_LINE);
                 if (targets.isEmpty()) {
                     fileWriter.append(INDENT).append("pass");
                 } else {
@@ -156,11 +181,15 @@ public class RuleWriters {
                 }
 
                 try (final OutputStreamWriter fileWriter = new OutputStreamWriter(new FileOutputStream(new File(buildFileFolder, "BUILD.bazel"), false), Charsets.UTF_8)) {
-                    fileWriter.append("#Auto-generated by https://github.com/menny/mabel").append(NEW_LINE);
-                    fileWriter.append("# for artifact ").append(key).append(NEW_LINE).append(NEW_LINE);
+                    fileWriter.append("\"\"\"").append(NEW_LINE);
+                    fileWriter.append("External Maven targets for artifact ").append(key).append(NEW_LINE);
+                    fileWriter.append(NEW_LINE);
+                    fileWriter.append("Auto-generated by https://github.com/menny/mabel").append(NEW_LINE);
+                    fileWriter.append("\"\"\"").append(NEW_LINE);
+                    fileWriter.append(NEW_LINE);
 
                     for (final Target target : packageTargets) {
-                        fileWriter.append(new Target(target.getMavenCoordinates(), "alias", defaultTarget==target ? buildFileFolder.getName():target.getTargetName())
+                        fileWriter.append(new Target(target.getMavenCoordinates(), "alias", defaultTarget == target ? buildFileFolder.getName() : target.getTargetName())
                                 .addString("actual", String.format(Locale.US, "//%s:%s", pathToTransitiveRulesPackage, target.getTargetName()))
                                 .setPublicVisibility()
                                 .outputString(""))
