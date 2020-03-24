@@ -1,6 +1,7 @@
 package net.evendanan.bazel.mvn.api;
 
 import com.google.common.collect.ImmutableList;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -19,12 +20,18 @@ public class Target {
     private final String mavenCoordinates;
     private final String ruleName;
     private final String targetName;
+    private final String nameSpacedTargetName;
     private final Map<String, AttributeValue> attributes = new LinkedHashMap<>();
 
-    public Target(final String maven, final String rule, final String targetName) {
+    public Target(final String maven, final String rule, final String targetName, final String nameSpacedTargetName) {
         this.mavenCoordinates = maven;
         this.ruleName = rule;
         this.targetName = targetName;
+        this.nameSpacedTargetName = nameSpacedTargetName;
+    }
+
+    public Target(final String maven, final String rule, final String targetName) {
+        this(maven, rule, targetName, targetName);
     }
 
     public String getMavenCoordinates() {
@@ -37,6 +44,10 @@ public class Target {
 
     public String getTargetName() {
         return targetName;
+    }
+
+    public String getNameSpacedTargetName() {
+        return nameSpacedTargetName;
     }
 
     public Target addBoolean(String name, boolean value) {
@@ -90,7 +101,7 @@ public class Target {
         for (final String value : values) {
             if (lineIndex > 0) {
                 builder.append(System.lineSeparator()).append(indent);
-                if (lineIndex!=(values.size() - 1)) {
+                if (lineIndex != (values.size() - 1)) {
                     builder.append(EXTRA_INDENT);
                 }
             }
@@ -106,7 +117,7 @@ public class Target {
     }
 
     public boolean isPublic() {
-        return attributes.getOrDefault(VISIBILITY_ATTR, new ListValue(Collections.emptyList()))==PUBLIC_VISIBILITY;
+        return attributes.getOrDefault(VISIBILITY_ATTR, new ListValue(Collections.emptyList())) == PUBLIC_VISIBILITY;
     }
 
     private interface AttributeValue {
@@ -124,7 +135,7 @@ public class Target {
 
         @Override
         public Collection<String> outputValue() {
-            return Collections.singletonList(value ? "True":"False");
+            return Collections.singletonList(value ? "True" : "False");
         }
     }
 
@@ -183,7 +194,7 @@ public class Target {
             if (value.isEmpty()) {
                 return Collections.singletonList("[]");
             }
-            if (value.size()==1) {
+            if (value.size() == 1) {
                 return Collections.singletonList(String.format(Locale.US, "['%s']", value.iterator().next()));
             }
 
