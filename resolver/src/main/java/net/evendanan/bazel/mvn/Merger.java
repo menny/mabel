@@ -226,11 +226,11 @@ public class Merger {
         System.out.println();
         //first, deleting everything that's already there.
         final File depsFolder = actualMacrosFile.getParentFile();
-        if (depsFolder.isDirectory()) {
+        if (depsFolder.isDirectory() && !options.keep_output_folder) {
             deleteRecursive(depsFolder);
         }
 
-        if (!depsFolder.mkdirs()) {
+        if (!depsFolder.isDirectory() && !depsFolder.mkdirs()) {
             throw new IOException("Failed to create folder for dependency files: " + depsFolder.getAbsolutePath());
         }
 
@@ -405,12 +405,20 @@ public class Merger {
                 description = "If set, will output the dependency graph to this file."
         )
         String output_pretty_dep_graph_filename = "";
+
         @Parameter(
                 names = {"--artifacts_path"},
                 description = "Where to store downloaded artifacts.",
                 required = true
         )
         private String artifacts_path;
+
+        @Parameter(
+                names = {"--keep_output_folder"},
+                description = "Do not delete the output-folder prior to writing generated files. This helps if you store other files at the same folder.",
+                arity = 1
+        )
+        private boolean keep_output_folder = false;
     }
 
     /**
