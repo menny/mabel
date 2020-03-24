@@ -2,13 +2,6 @@ package net.evendanan.bazel.mvn.impl;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
-import java.io.InputStream;
-import java.net.URI;
-import java.security.MessageDigest;
-import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
 import net.evendanan.bazel.mvn.api.DependencyTools;
 import net.evendanan.bazel.mvn.api.Target;
 import net.evendanan.bazel.mvn.api.TargetsBuilder;
@@ -16,12 +9,19 @@ import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.model.License;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 
+import java.io.InputStream;
+import java.net.URI;
+import java.security.MessageDigest;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 public class TargetsBuilders {
 
     public static final TargetsBuilder JAVA_IMPORT = (dependency, dependencyTools) -> {
         List<Target> targets = new ArrayList<>();
         targets.add(addJavaImportRule(dependency, dependencyTools));
-        targets.add(addAlias(dependency, dependencyTools));
+        targets.add(addAlias(dependency, dependency.mavenCoordinate().artifactId(), "", dependencyTools));
 
         return targets;
     };
@@ -33,7 +33,7 @@ public class TargetsBuilders {
         final Target target = new Target(dependencyTools.mavenCoordinates(dependency), "java_import_impl", dependencyTools.repositoryRuleName(dependency))
                 .addList("jars", "pom".equalsIgnoreCase(dependency.mavenCoordinate().packaging()) ?
                         Collections.emptyList()
-                        :Collections.singletonList(String.format(Locale.ROOT, "@%s//file", dependencyTools.repositoryRuleName(dependency))))
+                        : Collections.singletonList(String.format(Locale.ROOT, "@%s//file", dependencyTools.repositoryRuleName(dependency))))
                 .addList("tags", Collections.singletonList(String.format(Locale.ROOT, "maven_coordinates=%s", dependencyTools.mavenCoordinates(dependency))))
                 .addList("licenses", dependency.licenses().stream().map(License::toString).collect(Collectors.toList()))
                 .addList("deps", convertRulesToStrings(dependency.dependencies(), dependencyTools))
@@ -67,8 +67,12 @@ public class TargetsBuilders {
     }
 
     private static Target addAlias(Dependency dependency, String postFix, DependencyTools dependencyTools) {
-        return new Target(dependencyTools.mavenCoordinates(dependency), "native.alias", dependencyTools.targetName(dependency) + postFix)
-                .addString("actual", String.format(Locale.US, ":%s%s", dependencyTools.repositoryRuleName(dependency), postFix))
+        return addAlias(dependency, String.format(Locale.ROOT, "%s%s", dependencyTools.targetName(dependency), postFix), postFix, dependencyTools);
+    }
+
+    private static Target addAlias(Dependency dependency, String nameSpaced, String postFix, DependencyTools dependencyTools) {
+        return new Target(dependencyTools.mavenCoordinates(dependency), "native.alias", String.format(Locale.ROOT, "%s%s", dependencyTools.targetName(dependency), postFix), nameSpaced)
+                .addString("actual", String.format(Locale.ROOT, ":%s%s", dependencyTools.repositoryRuleName(dependency), postFix))
                 .setPublicVisibility();
     }
 
@@ -80,7 +84,7 @@ public class TargetsBuilders {
 
         public HttpTargetsBuilder(boolean calculateSha, Function<Dependency, URI> downloader) {
             this.calculateSha = calculateSha;
-            this.readBuffer = calculateSha ? new byte[4096]:new byte[0];
+            this.readBuffer = calculateSha ? new byte[4096] : new byte[0];
             this.downloader = downloader;
         }
 
@@ -97,7 +101,7 @@ public class TargetsBuilders {
                     final MessageDigest digest = MessageDigest.getInstance("SHA-256");
 
                     int bytesCount;
-                    while ((bytesCount = inputStream.read(readBuffer))!=-1) {
+                    while ((bytesCount = inputStream.read(readBuffer)) != -1) {
                         digest.update(readBuffer, 0, bytesCount);
                     }
 
@@ -157,7 +161,7 @@ public class TargetsBuilders {
                     .addString("jar", String.format(Locale.US, "@%s//file", dependencyTools.repositoryRuleName(dependency)))
                     .addVariable("java_import_impl", "java_import_impl"));
 
-            targets.add(addAlias(dependency, dependencyTools));
+            targets.add(addAlias(dependency, dependency.mavenCoordinate().artifactId(), "", dependencyTools));
 
             return targets;
         }
@@ -185,7 +189,7 @@ public class TargetsBuilders {
 
             //just as java-library
             targets.add(addJavaImportRule(dependency, dependencyTools));
-            targets.add(addAlias(dependency, dependencyTools));
+            targets.add(addAlias(dependency, dependency.mavenCoordinate().artifactId(), "", dependencyTools));
 
             Collection<String> deps = convertRulesToStrings(dependency.dependencies(), dependencyTools);
             deps.add(":" + dependencyTools.repositoryRuleName(dependency));
@@ -243,7 +247,7 @@ public class TargetsBuilders {
                     .addList("deps", convertRulesToStrings(deps, dependencyTools))
                     .addList("exports", convertRulesToStrings(dependency.exports(), dependencyTools)));
 
-            targets.add(addAlias(dependency, dependencyTools));
+            targets.add(addAlias(dependency, dependency.mavenCoordinate().artifactId(), "", dependencyTools));
 
             return targets;
         }
