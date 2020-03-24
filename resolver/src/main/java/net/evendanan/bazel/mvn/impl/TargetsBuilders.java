@@ -222,13 +222,13 @@ public class TargetsBuilders {
                     "native.java_library",
                     dependencyTools.repositoryRuleName(dependency) + PROCESSOR_CLASS_POST_FIX + "all")
                     .addList("exported_plugins", noApiPlugins));
-            targets.add(addAlias(dependency, PROCESSOR_CLASS_POST_FIX + "all", dependencyTools));
+            targets.add(addAlias(dependency, "processors", PROCESSOR_CLASS_POST_FIX + "all", dependencyTools));
 
             targets.add(new Target(dependencyTools.mavenCoordinates(dependency),
                     "native.java_library",
                     dependencyTools.repositoryRuleName(dependency) + PROCESSOR_CLASS_POST_FIX_WITH_API + "all")
                     .addList("exported_plugins", withApiPlugins));
-            targets.add(addAlias(dependency, PROCESSOR_CLASS_POST_FIX_WITH_API + "all", dependencyTools));
+            targets.add(addAlias(dependency, "processors_with_api",PROCESSOR_CLASS_POST_FIX_WITH_API + "all", dependencyTools));
 
             return targets;
         }
