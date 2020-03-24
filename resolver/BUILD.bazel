@@ -56,7 +56,7 @@ java_library(
     srcs = glob(["src/main/java/net/evendanan/bazel/mvn/api/model/*.java"]),
     deps = [
         "//resolver/main_deps/com/google/auto/value/auto-value-annotations",
-        "//resolver/main_deps/com/google/auto/value/auto-value:com_google_auto_value__auto_value___processor_class_all"
+        "//resolver/main_deps/com/google/auto/value/auto-value:processors"
     ],
 )
 

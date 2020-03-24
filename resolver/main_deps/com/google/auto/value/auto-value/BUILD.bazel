@@ -59,12 +59,12 @@ alias(name = 'com_google_auto_value__auto_value___generates_api___processor_clas
     visibility = ['//visibility:public'],
 )
 
-alias(name = 'com_google_auto_value__auto_value___processor_class_all',
+alias(name = 'processors',
     actual = '//resolver:com_google_auto_value__auto_value___processor_class_all',
     visibility = ['//visibility:public'],
 )
 
-alias(name = 'com_google_auto_value__auto_value___generates_api___processor_class_all',
+alias(name = 'processors_with_api',
     actual = '//resolver:com_google_auto_value__auto_value___generates_api___processor_class_all',
     visibility = ['//visibility:public'],
 )

@@ -59,12 +59,12 @@ alias(name = 'apt___com_google_auto_value__auto_value___generates_api___processo
     visibility = ['//visibility:public'],
 )
 
-alias(name = 'apt___com_google_auto_value__auto_value___processor_class_all',
+alias(name = 'processors',
     actual = '//program:apt___com_google_auto_value__auto_value___processor_class_all',
     visibility = ['//visibility:public'],
 )
 
-alias(name = 'apt___com_google_auto_value__auto_value___generates_api___processor_class_all',
+alias(name = 'processors_with_api',
     actual = '//program:apt___com_google_auto_value__auto_value___generates_api___processor_class_all',
     visibility = ['//visibility:public'],
 )
