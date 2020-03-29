@@ -384,6 +384,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [],
         exports = [],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from com.google.auto.value:auto-value-annotations:1.7
@@ -400,6 +401,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [],
         exports = [],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from com.google.auto.value:auto-value:1.7
@@ -416,6 +418,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [],
         exports = [],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from com.google.auto.value:auto-value:1.7
@@ -423,6 +426,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         processor_class = 'com.google.auto.value.extension.memoized.processor.MemoizedValidator',
         generates_api = 1,
         deps = [':com_google_auto_value__auto_value__1_7'],
+        visibility = ['//visibility:private'],
     )
 
     # from com.google.auto.value:auto-value:1.7
@@ -430,6 +434,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         processor_class = 'com.google.auto.value.processor.AutoAnnotationProcessor',
         generates_api = 1,
         deps = [':com_google_auto_value__auto_value__1_7'],
+        visibility = ['//visibility:private'],
     )
 
     # from com.google.auto.value:auto-value:1.7
@@ -437,6 +442,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         processor_class = 'com.google.auto.value.processor.AutoOneOfProcessor',
         generates_api = 1,
         deps = [':com_google_auto_value__auto_value__1_7'],
+        visibility = ['//visibility:private'],
     )
 
     # from com.google.auto.value:auto-value:1.7
@@ -444,6 +450,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         processor_class = 'com.google.auto.value.processor.AutoValueBuilderProcessor',
         generates_api = 1,
         deps = [':com_google_auto_value__auto_value__1_7'],
+        visibility = ['//visibility:private'],
     )
 
     # from com.google.auto.value:auto-value:1.7
@@ -451,6 +458,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         processor_class = 'com.google.auto.value.processor.AutoValueProcessor',
         generates_api = 1,
         deps = [':com_google_auto_value__auto_value__1_7'],
+        visibility = ['//visibility:private'],
     )
 
     # from com.google.auto.value:auto-value:1.7
@@ -462,6 +470,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
             ':com_google_auto_value__auto_value__1_7___generates_api___processor_class_3',
             ':com_google_auto_value__auto_value__1_7___generates_api___processor_class_4',
         ],
+        visibility = ['//visibility:private'],
     )
 
     # from com.google.auto.value:auto-value:1.7
@@ -469,6 +478,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         processor_class = 'com.google.auto.value.extension.memoized.processor.MemoizedValidator',
         generates_api = 0,
         deps = [':com_google_auto_value__auto_value__1_7'],
+        visibility = ['//visibility:private'],
     )
 
     # from com.google.auto.value:auto-value:1.7
@@ -476,6 +486,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         processor_class = 'com.google.auto.value.processor.AutoAnnotationProcessor',
         generates_api = 0,
         deps = [':com_google_auto_value__auto_value__1_7'],
+        visibility = ['//visibility:private'],
     )
 
     # from com.google.auto.value:auto-value:1.7
@@ -483,6 +494,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         processor_class = 'com.google.auto.value.processor.AutoOneOfProcessor',
         generates_api = 0,
         deps = [':com_google_auto_value__auto_value__1_7'],
+        visibility = ['//visibility:private'],
     )
 
     # from com.google.auto.value:auto-value:1.7
@@ -490,6 +502,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         processor_class = 'com.google.auto.value.processor.AutoValueBuilderProcessor',
         generates_api = 0,
         deps = [':com_google_auto_value__auto_value__1_7'],
+        visibility = ['//visibility:private'],
     )
 
     # from com.google.auto.value:auto-value:1.7
@@ -497,6 +510,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         processor_class = 'com.google.auto.value.processor.AutoValueProcessor',
         generates_api = 0,
         deps = [':com_google_auto_value__auto_value__1_7'],
+        visibility = ['//visibility:private'],
     )
 
     # from com.google.auto.value:auto-value:1.7
@@ -508,6 +522,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
             ':com_google_auto_value__auto_value__1_7___processor_class_3',
             ':com_google_auto_value__auto_value__1_7___processor_class_4',
         ],
+        visibility = ['//visibility:private'],
     )
 
     # from com.google.auto.value:auto-value:1.7
@@ -596,6 +611,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [],
         exports = [],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from com.google.code.gson:gson:2.8.5
@@ -612,12 +628,13 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [],
         exports = [],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from com.google.errorprone:error_prone_annotations:2.2.0
     native.alias(name = 'com_google_errorprone__error_prone_annotations',
         actual = ':com_google_errorprone__error_prone_annotations__2_2_0',
-        visibility = ['//visibility:public'],
+        visibility = ['//visibility:private'],
     )
 
     # from com.google.errorprone:error_prone_annotations:2.2.0
@@ -628,12 +645,13 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [],
         exports = [],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from com.google.guava:failureaccess:1.0.1
     native.alias(name = 'com_google_guava__failureaccess',
         actual = ':com_google_guava__failureaccess__1_0_1',
-        visibility = ['//visibility:public'],
+        visibility = ['//visibility:private'],
     )
 
     # from com.google.guava:failureaccess:1.0.1
@@ -644,6 +662,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [],
         exports = [],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from com.google.guava:guava:27.0.1-jre
@@ -676,12 +695,13 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
             ':org_codehaus_mojo__animal_sniffer_annotations',
         ],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
     native.alias(name = 'com_google_guava__listenablefuture',
         actual = ':com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava',
-        visibility = ['//visibility:public'],
+        visibility = ['//visibility:private'],
     )
 
     # from com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
@@ -692,12 +712,13 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [],
         exports = [],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from com.google.j2objc:j2objc-annotations:1.1
     native.alias(name = 'com_google_j2objc__j2objc_annotations',
         actual = ':com_google_j2objc__j2objc_annotations__1_1',
-        visibility = ['//visibility:public'],
+        visibility = ['//visibility:private'],
     )
 
     # from com.google.j2objc:j2objc-annotations:1.1
@@ -708,12 +729,13 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [],
         exports = [],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from commons-codec:commons-codec:1.9
     native.alias(name = 'commons_codec__commons_codec',
         actual = ':commons_codec__commons_codec__1_9',
-        visibility = ['//visibility:public'],
+        visibility = ['//visibility:private'],
     )
 
     # from commons-codec:commons-codec:1.9
@@ -724,12 +746,13 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [],
         exports = [],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from commons-logging:commons-logging:1.2
     native.alias(name = 'commons_logging__commons_logging',
         actual = ':commons_logging__commons_logging__1_2',
-        visibility = ['//visibility:public'],
+        visibility = ['//visibility:private'],
     )
 
     # from commons-logging:commons-logging:1.2
@@ -740,6 +763,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [],
         exports = [],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from junit:junit:4.12
@@ -756,12 +780,13 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [':org_hamcrest__hamcrest_core'],
         exports = [':org_hamcrest__hamcrest_core'],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from net.bytebuddy:byte-buddy-agent:1.9.3
     native.alias(name = 'net_bytebuddy__byte_buddy_agent',
         actual = ':net_bytebuddy__byte_buddy_agent__1_9_3',
-        visibility = ['//visibility:public'],
+        visibility = ['//visibility:private'],
     )
 
     # from net.bytebuddy:byte-buddy-agent:1.9.3
@@ -772,12 +797,13 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [],
         exports = [],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from net.bytebuddy:byte-buddy:1.9.3
     native.alias(name = 'net_bytebuddy__byte_buddy',
         actual = ':net_bytebuddy__byte_buddy__1_9_3',
-        visibility = ['//visibility:public'],
+        visibility = ['//visibility:private'],
     )
 
     # from net.bytebuddy:byte-buddy:1.9.3
@@ -788,6 +814,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [],
         exports = [],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.apache.commons:commons-lang3:3.8.1
@@ -804,6 +831,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [],
         exports = [],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.apache.httpcomponents:httpclient:4.5.3
@@ -828,6 +856,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
             ':org_apache_httpcomponents__httpcore',
         ],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.apache.httpcomponents:httpcore:4.4.6
@@ -844,12 +873,13 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [],
         exports = [],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.apache.maven.wagon:wagon-provider-api:1.0
     native.alias(name = 'org_apache_maven_wagon__wagon_provider_api',
         actual = ':org_apache_maven_wagon__wagon_provider_api__1_0',
-        visibility = ['//visibility:public'],
+        visibility = ['//visibility:private'],
     )
 
     # from org.apache.maven.wagon:wagon-provider-api:1.0
@@ -860,6 +890,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [':org_codehaus_plexus__plexus_utils'],
         exports = [':org_codehaus_plexus__plexus_utils'],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.apache.maven:maven-aether-provider:3.2.3
@@ -896,6 +927,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
             ':org_eclipse_aether__aether_util',
         ],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.apache.maven:maven-artifact:3.5.0
@@ -918,6 +950,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
             ':org_codehaus_plexus__plexus_utils',
         ],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.apache.maven:maven-model-builder:3.2.3
@@ -944,6 +977,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
             ':org_codehaus_plexus__plexus_utils',
         ],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.apache.maven:maven-model:3.2.3
@@ -960,6 +994,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [':org_codehaus_plexus__plexus_utils'],
         exports = [':org_codehaus_plexus__plexus_utils'],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.apache.maven:maven-repository-metadata:3.2.3
@@ -976,12 +1011,13 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [':org_codehaus_plexus__plexus_utils'],
         exports = [':org_codehaus_plexus__plexus_utils'],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.checkerframework:checker-qual:2.5.2
     native.alias(name = 'org_checkerframework__checker_qual',
         actual = ':org_checkerframework__checker_qual__2_5_2',
-        visibility = ['//visibility:public'],
+        visibility = ['//visibility:private'],
     )
 
     # from org.checkerframework:checker-qual:2.5.2
@@ -992,12 +1028,13 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [],
         exports = [],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.codehaus.mojo:animal-sniffer-annotations:1.17
     native.alias(name = 'org_codehaus_mojo__animal_sniffer_annotations',
         actual = ':org_codehaus_mojo__animal_sniffer_annotations__1_17',
-        visibility = ['//visibility:public'],
+        visibility = ['//visibility:private'],
     )
 
     # from org.codehaus.mojo:animal-sniffer-annotations:1.17
@@ -1008,12 +1045,13 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [],
         exports = [],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.codehaus.plexus:plexus-component-annotations:1.5.5
     native.alias(name = 'org_codehaus_plexus__plexus_component_annotations',
         actual = ':org_codehaus_plexus__plexus_component_annotations__1_5_5',
-        visibility = ['//visibility:public'],
+        visibility = ['//visibility:private'],
     )
 
     # from org.codehaus.plexus:plexus-component-annotations:1.5.5
@@ -1024,6 +1062,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [],
         exports = [],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.codehaus.plexus:plexus-interpolation:1.24
@@ -1040,6 +1079,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [],
         exports = [],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.codehaus.plexus:plexus-utils:3.0.24
@@ -1056,6 +1096,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [],
         exports = [],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.eclipse.aether:aether-api:1.1.0
@@ -1072,6 +1113,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [],
         exports = [],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.eclipse.aether:aether-connector-basic:1.1.0
@@ -1096,6 +1138,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
             ':org_eclipse_aether__aether_util',
         ],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.eclipse.aether:aether-impl:1.1.0
@@ -1120,6 +1163,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
             ':org_eclipse_aether__aether_util',
         ],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.eclipse.aether:aether-spi:1.1.0
@@ -1136,6 +1180,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [':org_eclipse_aether__aether_api'],
         exports = [':org_eclipse_aether__aether_api'],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.eclipse.aether:aether-transport-classpath:1.1.0
@@ -1160,6 +1205,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
             ':org_eclipse_aether__aether_util',
         ],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.eclipse.aether:aether-transport-file:1.1.0
@@ -1184,6 +1230,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
             ':org_eclipse_aether__aether_util',
         ],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.eclipse.aether:aether-transport-http:1.1.0
@@ -1212,6 +1259,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
             ':org_slf4j__jcl_over_slf4j',
         ],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.eclipse.aether:aether-transport-wagon:1.1.0
@@ -1238,6 +1286,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
             ':org_eclipse_aether__aether_util',
         ],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.eclipse.aether:aether-util:1.1.0
@@ -1254,12 +1303,13 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [':org_eclipse_aether__aether_api'],
         exports = [':org_eclipse_aether__aether_api'],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.hamcrest:hamcrest-core:1.3
     native.alias(name = 'org_hamcrest__hamcrest_core',
         actual = ':org_hamcrest__hamcrest_core__1_3',
-        visibility = ['//visibility:public'],
+        visibility = ['//visibility:private'],
     )
 
     # from org.hamcrest:hamcrest-core:1.3
@@ -1270,6 +1320,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [],
         exports = [],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.mockito:mockito-core:2.23.4
@@ -1294,12 +1345,13 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
             ':org_objenesis__objenesis',
         ],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.objenesis:objenesis:2.6
     native.alias(name = 'org_objenesis__objenesis',
         actual = ':org_objenesis__objenesis__2_6',
-        visibility = ['//visibility:public'],
+        visibility = ['//visibility:private'],
     )
 
     # from org.objenesis:objenesis:2.6
@@ -1310,12 +1362,13 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [],
         exports = [],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.slf4j:jcl-over-slf4j:1.6.2
     native.alias(name = 'org_slf4j__jcl_over_slf4j',
         actual = ':org_slf4j__jcl_over_slf4j__1_6_2',
-        visibility = ['//visibility:public'],
+        visibility = ['//visibility:private'],
     )
 
     # from org.slf4j:jcl-over-slf4j:1.6.2
@@ -1326,12 +1379,13 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [':org_slf4j__slf4j_api'],
         exports = [':org_slf4j__slf4j_api'],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.slf4j:slf4j-api:1.7.25
     native.alias(name = 'org_slf4j__slf4j_api',
         actual = ':org_slf4j__slf4j_api__1_7_25',
-        visibility = ['//visibility:public'],
+        visibility = ['//visibility:private'],
     )
 
     # from org.slf4j:slf4j-api:1.7.25
@@ -1342,6 +1396,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [],
         exports = [],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
     # from org.slf4j:slf4j-nop:1.7.25
@@ -1358,6 +1413,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [':org_slf4j__slf4j_api'],
         exports = [':org_slf4j__slf4j_api'],
         runtime_deps = [],
+        visibility = ['//visibility:private'],
     )
 
 
