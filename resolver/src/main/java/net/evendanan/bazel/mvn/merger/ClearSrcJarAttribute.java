@@ -12,10 +12,9 @@ public class ClearSrcJarAttribute {
         return clearSrcJar(dependencies, new MemoizeDependency());
     }
 
-    private static Collection<Dependency> clearSrcJar(final Collection<Dependency> dependencies, MemoizeDependency memoizeDependency) {
-        return dependencies.stream()
-                .map(memoizeDependency::map)
-                .collect(Collectors.toList());
+    private static Collection<Dependency> clearSrcJar(
+            final Collection<Dependency> dependencies, MemoizeDependency memoizeDependency) {
+        return dependencies.stream().map(memoizeDependency::map).collect(Collectors.toList());
     }
 
     private static class MemoizeDependency extends GraphMemoizator<Dependency> {
@@ -23,9 +22,7 @@ public class ClearSrcJarAttribute {
         @Nonnull
         @Override
         protected Dependency calculate(@Nonnull final Dependency original) {
-            return Dependency.builder(original)
-                    .sourcesUrl("")
-                    .build();
+            return Dependency.builder(original).sourcesUrl("").build();
         }
 
         @Override

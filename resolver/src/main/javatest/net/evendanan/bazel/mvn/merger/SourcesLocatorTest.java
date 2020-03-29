@@ -14,31 +14,46 @@ import java.util.*;
 
 public class SourcesLocatorTest {
 
-    private final String dep1Uri = "https://example.com/repo/net/evendanan/dep1/1.0.0/dep1-1.0.0.jar";
-    private final String dep1UriSources = "https://example.com/repo/net/evendanan/dep1/1.0.0/dep1-1.0.0-sources.jar";
-    private final String dep2Uri = "https://example.com/repo/net/evendanan/dep2/1.0.0/dep2-1.0.0.jar";
-    private final String dep2UriSources = "https://example.com/repo/net/evendanan/dep2/1.0.0/dep2-1.0.0-sources.jar";
-    private final String dep3Uri = "https://example.com/repo/net/evendanan/dep3/2.0.0/dep3-2.0.0.aar";
-    private final String dep3UriSources = "https://example.com/repo/net/evendanan/dep3/2.0.0/dep3-2.0.0-sources.jar";
+    private final String dep1Uri =
+            "https://example.com/repo/net/evendanan/dep1/1.0.0/dep1-1.0.0.jar";
+    private final String dep1UriSources =
+            "https://example.com/repo/net/evendanan/dep1/1.0.0/dep1-1.0.0-sources.jar";
+    private final String dep2Uri =
+            "https://example.com/repo/net/evendanan/dep2/1.0.0/dep2-1.0.0.jar";
+    private final String dep2UriSources =
+            "https://example.com/repo/net/evendanan/dep2/1.0.0/dep2-1.0.0-sources.jar";
+    private final String dep3Uri =
+            "https://example.com/repo/net/evendanan/dep3/2.0.0/dep3-2.0.0.aar";
+    private final String dep3UriSources =
+            "https://example.com/repo/net/evendanan/dep3/2.0.0/dep3-2.0.0-sources.jar";
     private SourcesJarLocator mUnderTest;
     private FakeOpener mFakeOpener;
     private List<Dependency> mTestData;
 
     @Before
     public void setup() {
-        mTestData = Arrays.asList(
-                Dependency.builder()
-                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "dep1", "1.0.0", "jar"))
-                        .dependencies(Collections.singleton(MavenCoordinate.create("net.evendanan", "dep2", "1.0.0", "jar")))
-                        .url(dep1Uri)
-                        .build(),
-                Dependency.builder()
-                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "dep3", "2.0.0", "aar"))
-                        .dependencies(Collections.singleton(
-                                MavenCoordinate.create("net.evendanan", "dep2", "1.0.0", "jar"))
-                        )
-                        .url(dep3Uri)
-                        .build());
+        mTestData =
+                Arrays.asList(
+                        Dependency.builder()
+                                .mavenCoordinate(
+                                        MavenCoordinate.create(
+                                                "net.evendanan", "dep1", "1.0.0", "jar"))
+                                .dependencies(
+                                        Collections.singleton(
+                                                MavenCoordinate.create(
+                                                        "net.evendanan", "dep2", "1.0.0", "jar")))
+                                .url(dep1Uri)
+                                .build(),
+                        Dependency.builder()
+                                .mavenCoordinate(
+                                        MavenCoordinate.create(
+                                                "net.evendanan", "dep3", "2.0.0", "aar"))
+                                .dependencies(
+                                        Collections.singleton(
+                                                MavenCoordinate.create(
+                                                        "net.evendanan", "dep2", "1.0.0", "jar")))
+                                .url(dep3Uri)
+                                .build());
 
         mFakeOpener = new FakeOpener();
         mUnderTest = new SourcesJarLocator(mFakeOpener);
@@ -53,7 +68,8 @@ public class SourcesLocatorTest {
         mFakeOpener.returnedConnections.put(new URL(dep2UriSources), httpURLConnection);
         mFakeOpener.returnedConnections.put(new URL(dep3UriSources), httpURLConnection);
 
-        final List<Dependency> fixedDeps = new ArrayList<>(mUnderTest.fillSourcesAttribute(mTestData));
+        final List<Dependency> fixedDeps =
+                new ArrayList<>(mUnderTest.fillSourcesAttribute(mTestData));
 
         Assert.assertEquals(dep1UriSources, fixedDeps.get(0).sourcesUrl());
         Assert.assertEquals(dep3UriSources, fixedDeps.get(1).sourcesUrl());
@@ -67,7 +83,8 @@ public class SourcesLocatorTest {
         mFakeOpener.returnedConnections.put(new URL(dep2Uri), httpURLConnection);
         mFakeOpener.returnedConnections.put(new URL(dep3Uri), httpURLConnection);
 
-        final List<Dependency> fixedDeps = new ArrayList<>(mUnderTest.fillSourcesAttribute(mTestData));
+        final List<Dependency> fixedDeps =
+                new ArrayList<>(mUnderTest.fillSourcesAttribute(mTestData));
 
         Assert.assertEquals("", fixedDeps.get(0).sourcesUrl());
         Assert.assertEquals("", fixedDeps.get(1).sourcesUrl());
@@ -81,7 +98,8 @@ public class SourcesLocatorTest {
         mFakeOpener.returnedConnections.put(new URL(dep2Uri), httpURLConnection);
         mFakeOpener.returnedConnections.put(new URL(dep3Uri), httpURLConnection);
 
-        final List<Dependency> fixedDeps = new ArrayList<>(mUnderTest.fillSourcesAttribute(mTestData));
+        final List<Dependency> fixedDeps =
+                new ArrayList<>(mUnderTest.fillSourcesAttribute(mTestData));
 
         Assert.assertEquals("", fixedDeps.get(0).sourcesUrl());
         Assert.assertEquals("", fixedDeps.get(1).sourcesUrl());
@@ -89,7 +107,8 @@ public class SourcesLocatorTest {
 
     @Test
     public void testDoesNotAddOnNullConnection() throws Exception {
-        final List<Dependency> fixedDeps = new ArrayList<>(mUnderTest.fillSourcesAttribute(mTestData));
+        final List<Dependency> fixedDeps =
+                new ArrayList<>(mUnderTest.fillSourcesAttribute(mTestData));
 
         Assert.assertEquals("", fixedDeps.get(0).sourcesUrl());
         Assert.assertEquals("", fixedDeps.get(1).sourcesUrl());
@@ -99,7 +118,8 @@ public class SourcesLocatorTest {
     public void testDoesNotAddOnOpenException() {
         mFakeOpener.openFailure = true;
 
-        final List<Dependency> fixedDeps = new ArrayList<>(mUnderTest.fillSourcesAttribute(mTestData));
+        final List<Dependency> fixedDeps =
+                new ArrayList<>(mUnderTest.fillSourcesAttribute(mTestData));
 
         Assert.assertEquals("", fixedDeps.get(0).sourcesUrl());
         Assert.assertEquals("", fixedDeps.get(1).sourcesUrl());
@@ -117,23 +137,29 @@ public class SourcesLocatorTest {
         Mockito.doReturn(200).when(httpURLConnection3).getResponseCode();
         mFakeOpener.returnedConnections.put(new URL(dep3UriSources), httpURLConnection3);
 
-        final List<Dependency> repeatedDeps = Arrays.asList(
-                Dependency.builder()
-                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "dep1", "1.0.0", "jar"))
-                        .url(dep1Uri)
-                        .build(),
-                Dependency.builder()
-                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "dep1", "1.0.0", "jar"))
-                        .url(dep1Uri)
-                        .build()
-        );
-        final List<Dependency> fixedDeps = new ArrayList<>(mUnderTest.fillSourcesAttribute(repeatedDeps));
+        final List<Dependency> repeatedDeps =
+                Arrays.asList(
+                        Dependency.builder()
+                                .mavenCoordinate(
+                                        MavenCoordinate.create(
+                                                "net.evendanan", "dep1", "1.0.0", "jar"))
+                                .url(dep1Uri)
+                                .build(),
+                        Dependency.builder()
+                                .mavenCoordinate(
+                                        MavenCoordinate.create(
+                                                "net.evendanan", "dep1", "1.0.0", "jar"))
+                                .url(dep1Uri)
+                                .build());
+        final List<Dependency> fixedDeps =
+                new ArrayList<>(mUnderTest.fillSourcesAttribute(repeatedDeps));
 
         Assert.assertEquals(dep1UriSources, fixedDeps.get(0).sourcesUrl());
         Assert.assertEquals(dep1UriSources, fixedDeps.get(1).sourcesUrl());
 
         Assert.assertEquals(1, mFakeOpener.buildsCounter.size());
-        mFakeOpener.buildsCounter.forEach((url, integer) -> Assert.assertEquals(1, integer.intValue()));
+        mFakeOpener.buildsCounter.forEach(
+                (url, integer) -> Assert.assertEquals(1, integer.intValue()));
 
         Mockito.verify(httpURLConnection1).getResponseCode();
         Mockito.verify(httpURLConnection1).setRequestMethod("HEAD");
@@ -142,7 +168,8 @@ public class SourcesLocatorTest {
         Mockito.verifyZeroInteractions(httpURLConnection2, httpURLConnection3);
     }
 
-    private static class FakeOpener implements net.evendanan.bazel.mvn.merger.SourcesJarLocator.ConnectionFactory {
+    private static class FakeOpener
+            implements net.evendanan.bazel.mvn.merger.SourcesJarLocator.ConnectionFactory {
 
         private final Map<URL, Integer> buildsCounter = new HashMap<>();
         private final Map<URL, HttpURLConnection> returnedConnections = new HashMap<>();

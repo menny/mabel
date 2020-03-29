@@ -11,17 +11,21 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 
 class Adapters {
-    private static final Type DEPENDENCIES_LIST_TYPE = new TypeToken<Collection<Dependency>>() {
-    }.getType();
-    private static final Type MAVEN_LIST_TYPE = new TypeToken<Collection<MavenCoordinate>>() {
-    }.getType();
-    private static final Type LICENSES_LIST_TYPE = new TypeToken<Collection<License>>() {
-    }.getType();
+    private static final Type DEPENDENCIES_LIST_TYPE =
+            new TypeToken<Collection<Dependency>>() {}.getType();
+    private static final Type MAVEN_LIST_TYPE =
+            new TypeToken<Collection<MavenCoordinate>>() {}.getType();
+    private static final Type LICENSES_LIST_TYPE =
+            new TypeToken<Collection<License>>() {}.getType();
 
     static class ResolutionDeserializer implements JsonDeserializer<Resolution> {
 
         @Override
-        public Resolution deserialize(final JsonElement jsonElement, final Type type, final JsonDeserializationContext context) throws JsonParseException {
+        public Resolution deserialize(
+                final JsonElement jsonElement,
+                final Type type,
+                final JsonDeserializationContext context)
+                throws JsonParseException {
             JsonObject jsonObject = jsonElement.getAsJsonObject();
 
             return Resolution.create(
@@ -33,11 +37,18 @@ class Adapters {
     static class ResolutionSerializer implements JsonSerializer<Resolution> {
 
         @Override
-        public JsonElement serialize(final Resolution resolution, final Type type, final JsonSerializationContext context) {
+        public JsonElement serialize(
+                final Resolution resolution,
+                final Type type,
+                final JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
 
-            jsonObject.add("c", context.serialize(resolution.rootDependency(), MavenCoordinate.class));
-            jsonObject.add("d", context.serialize(resolution.allResolvedDependencies(), DEPENDENCIES_LIST_TYPE));
+            jsonObject.add(
+                    "c", context.serialize(resolution.rootDependency(), MavenCoordinate.class));
+            jsonObject.add(
+                    "d",
+                    context.serialize(
+                            resolution.allResolvedDependencies(), DEPENDENCIES_LIST_TYPE));
 
             return jsonObject;
         }
@@ -46,14 +57,19 @@ class Adapters {
     static class DependencyDeserializer implements JsonDeserializer<Dependency> {
 
         @Override
-        public Dependency deserialize(final JsonElement jsonElement, final Type type, final JsonDeserializationContext context) throws JsonParseException {
+        public Dependency deserialize(
+                final JsonElement jsonElement,
+                final Type type,
+                final JsonDeserializationContext context)
+                throws JsonParseException {
             JsonObject jsonObject = jsonElement.getAsJsonObject();
 
             return Dependency.builder()
                     .url(jsonObject.get("u").getAsString())
                     .sourcesUrl(jsonObject.get("sU").getAsString())
                     .javadocUrl(jsonObject.get("jU").getAsString())
-                    .mavenCoordinate(context.deserialize(jsonObject.get("c"), MavenCoordinate.class))
+                    .mavenCoordinate(
+                            context.deserialize(jsonObject.get("c"), MavenCoordinate.class))
                     .dependencies(context.deserialize(jsonObject.get("d"), MAVEN_LIST_TYPE))
                     .exports(context.deserialize(jsonObject.get("e"), MAVEN_LIST_TYPE))
                     .runtimeDependencies(context.deserialize(jsonObject.get("r"), MAVEN_LIST_TYPE))
@@ -65,18 +81,23 @@ class Adapters {
     static class DependencySerializer implements JsonSerializer<Dependency> {
 
         @Override
-        public JsonElement serialize(final Dependency dependency, final Type type, final JsonSerializationContext context) {
+        public JsonElement serialize(
+                final Dependency dependency,
+                final Type type,
+                final JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
 
             jsonObject.addProperty("u", dependency.url());
             jsonObject.addProperty("sU", dependency.sourcesUrl());
             jsonObject.addProperty("jU", dependency.javadocUrl());
 
-            jsonObject.add("c", context.serialize(dependency.mavenCoordinate(), MavenCoordinate.class));
+            jsonObject.add(
+                    "c", context.serialize(dependency.mavenCoordinate(), MavenCoordinate.class));
 
             jsonObject.add("d", context.serialize(dependency.dependencies(), MAVEN_LIST_TYPE));
             jsonObject.add("e", context.serialize(dependency.exports(), MAVEN_LIST_TYPE));
-            jsonObject.add("r", context.serialize(dependency.runtimeDependencies(), MAVEN_LIST_TYPE));
+            jsonObject.add(
+                    "r", context.serialize(dependency.runtimeDependencies(), MAVEN_LIST_TYPE));
 
             jsonObject.add("l", context.serialize(dependency.licenses(), LICENSES_LIST_TYPE));
 
@@ -86,7 +107,11 @@ class Adapters {
 
     static class MavenCoordinateDeserializer implements JsonDeserializer<MavenCoordinate> {
         @Override
-        public MavenCoordinate deserialize(final JsonElement jsonElement, final Type type, final JsonDeserializationContext context) throws JsonParseException {
+        public MavenCoordinate deserialize(
+                final JsonElement jsonElement,
+                final Type type,
+                final JsonDeserializationContext context)
+                throws JsonParseException {
             JsonObject jsonObject = jsonElement.getAsJsonObject();
 
             final String groupId = jsonObject.get("g").getAsString();
@@ -101,7 +126,10 @@ class Adapters {
     static class MavenCoordinateSerializer implements JsonSerializer<MavenCoordinate> {
 
         @Override
-        public JsonElement serialize(final MavenCoordinate mavenCoordinate, final Type type, final JsonSerializationContext jsonSerializationContext) {
+        public JsonElement serialize(
+                final MavenCoordinate mavenCoordinate,
+                final Type type,
+                final JsonSerializationContext jsonSerializationContext) {
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("g", mavenCoordinate.groupId());
             jsonObject.addProperty("a", mavenCoordinate.artifactId());
@@ -114,7 +142,11 @@ class Adapters {
 
     static class LicenseDeserializer implements JsonDeserializer<License> {
         @Override
-        public License deserialize(final JsonElement jsonElement, final Type type, final JsonDeserializationContext context) throws JsonParseException {
+        public License deserialize(
+                final JsonElement jsonElement,
+                final Type type,
+                final JsonDeserializationContext context)
+                throws JsonParseException {
             return License.valueOf(License.class, jsonElement.getAsString());
         }
     }
@@ -122,7 +154,10 @@ class Adapters {
     static class LicenseSerializer implements JsonSerializer<License> {
 
         @Override
-        public JsonElement serialize(final License license, final Type type, final JsonSerializationContext jsonSerializationContext) {
+        public JsonElement serialize(
+                final License license,
+                final Type type,
+                final JsonSerializationContext jsonSerializationContext) {
             return new JsonPrimitive(license.name());
         }
     }

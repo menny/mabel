@@ -14,16 +14,21 @@ public class Serialization {
     private final Gson mGson;
 
     public Serialization() {
-        mGson = new GsonBuilder()
-                .registerTypeAdapter(Resolution.class, new Adapters.ResolutionSerializer())
-                .registerTypeAdapter(Resolution.class, new Adapters.ResolutionDeserializer())
-                .registerTypeAdapter(Dependency.class, new Adapters.DependencySerializer())
-                .registerTypeAdapter(Dependency.class, new Adapters.DependencyDeserializer())
-                .registerTypeAdapter(MavenCoordinate.class, new Adapters.MavenCoordinateSerializer())
-                .registerTypeAdapter(MavenCoordinate.class, new Adapters.MavenCoordinateDeserializer())
-                .registerTypeAdapter(License.class, new Adapters.LicenseSerializer())
-                .registerTypeAdapter(License.class, new Adapters.LicenseDeserializer())
-                .create();
+        mGson =
+                new GsonBuilder()
+                        .registerTypeAdapter(Resolution.class, new Adapters.ResolutionSerializer())
+                        .registerTypeAdapter(
+                                Resolution.class, new Adapters.ResolutionDeserializer())
+                        .registerTypeAdapter(Dependency.class, new Adapters.DependencySerializer())
+                        .registerTypeAdapter(
+                                Dependency.class, new Adapters.DependencyDeserializer())
+                        .registerTypeAdapter(
+                                MavenCoordinate.class, new Adapters.MavenCoordinateSerializer())
+                        .registerTypeAdapter(
+                                MavenCoordinate.class, new Adapters.MavenCoordinateDeserializer())
+                        .registerTypeAdapter(License.class, new Adapters.LicenseSerializer())
+                        .registerTypeAdapter(License.class, new Adapters.LicenseDeserializer())
+                        .create();
     }
 
     public Resolution deserialize(Reader jsonInput) {

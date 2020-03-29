@@ -1,7 +1,8 @@
 package net.evendanan.bazel.mvn.api;
 
-import java.util.List;
 import net.evendanan.bazel.mvn.api.model.Dependency;
+
+import java.util.List;
 
 public interface TargetsBuilder {
 

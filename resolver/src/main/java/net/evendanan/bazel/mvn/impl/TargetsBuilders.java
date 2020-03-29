@@ -18,29 +18,68 @@ import java.util.stream.Collectors;
 
 public class TargetsBuilders {
 
-    public static final TargetsBuilder JAVA_IMPORT = (dependency, dependencyTools) -> {
-        List<Target> targets = new ArrayList<>();
-        targets.add(addJavaImportRule(dependency, dependencyTools));
-        targets.add(addAlias(dependency, dependency.mavenCoordinate().artifactId(), "", dependencyTools));
+    public static final TargetsBuilder JAVA_IMPORT =
+            (dependency, dependencyTools) -> {
+                List<Target> targets = new ArrayList<>();
+                targets.add(addJavaImportRule(dependency, dependencyTools));
+                targets.add(
+                        addAlias(
+                                dependency,
+                                dependency.mavenCoordinate().artifactId(),
+                                "",
+                                dependencyTools));
 
-        return targets;
-    };
+                return targets;
+            };
     static final TargetsBuilder KOTLIN_IMPORT = new KotlinImport();
-    @VisibleForTesting
-    static final TargetsBuilder AAR_IMPORT = new AarImport();
+    @VisibleForTesting static final TargetsBuilder AAR_IMPORT = new AarImport();
 
-    private static Target addJavaImportRule(Dependency dependency, DependencyTools dependencyTools) {
-        final Target target = new Target(dependencyTools.mavenCoordinates(dependency), "java_import_impl", dependencyTools.repositoryRuleName(dependency))
-                .addList("jars", "pom".equalsIgnoreCase(dependency.mavenCoordinate().packaging()) ?
-                        Collections.emptyList()
-                        : Collections.singletonList(String.format(Locale.ROOT, "@%s//file", dependencyTools.repositoryRuleName(dependency))))
-                .addList("tags", Collections.singletonList(String.format(Locale.ROOT, "maven_coordinates=%s", dependencyTools.mavenCoordinates(dependency))))
-                .addList("licenses", dependency.licenses().stream().map(License::toString).collect(Collectors.toList()))
-                .addList("deps", convertRulesToStrings(dependency.dependencies(), dependencyTools))
-                .addList("exports", convertRulesToStrings(dependency.exports(), dependencyTools))
-                .addList("runtime_deps", convertRulesToStrings(dependency.runtimeDependencies(), dependencyTools));
+    private static Target addJavaImportRule(
+            Dependency dependency, DependencyTools dependencyTools) {
+        final Target target =
+                new Target(
+                                dependencyTools.mavenCoordinates(dependency),
+                                "java_import_impl",
+                                dependencyTools.repositoryRuleName(dependency))
+                        .addList(
+                                "jars",
+                                "pom".equalsIgnoreCase(dependency.mavenCoordinate().packaging())
+                                        ? Collections.emptyList()
+                                        : Collections.singletonList(
+                                                String.format(
+                                                        Locale.ROOT,
+                                                        "@%s//file",
+                                                        dependencyTools.repositoryRuleName(
+                                                                dependency))))
+                        .addList(
+                                "tags",
+                                Collections.singletonList(
+                                        String.format(
+                                                Locale.ROOT,
+                                                "maven_coordinates=%s",
+                                                dependencyTools.mavenCoordinates(dependency))))
+                        .addList(
+                                "licenses",
+                                dependency.licenses().stream()
+                                        .map(License::toString)
+                                        .collect(Collectors.toList()))
+                        .addList(
+                                "deps",
+                                convertRulesToStrings(dependency.dependencies(), dependencyTools))
+                        .addList(
+                                "exports",
+                                convertRulesToStrings(dependency.exports(), dependencyTools))
+                        .addList(
+                                "runtime_deps",
+                                convertRulesToStrings(
+                                        dependency.runtimeDependencies(), dependencyTools));
         if (!dependency.sourcesUrl().isEmpty()) {
-            target.addString("srcjar", String.format(Locale.US, "@%s__sources//file", dependencyTools.repositoryRuleName(dependency)));
+            target.addString(
+                    "srcjar",
+                    String.format(
+                            Locale.US,
+                            "@%s__sources//file",
+                            dependencyTools.repositoryRuleName(dependency)));
         }
         return target;
     }
@@ -54,9 +93,11 @@ public class TargetsBuilders {
         return url.substring(lastPathSeparator + 1);
     }
 
-    private static Collection<String> convertRulesToStrings(final Collection<MavenCoordinate> dependencies, DependencyTools dependencyTools) {
+    private static Collection<String> convertRulesToStrings(
+            final Collection<MavenCoordinate> dependencies, DependencyTools dependencyTools) {
         return dependencies.stream()
-                //using the friendly name (without version), so the mapping will be done via the alias mechanism.
+                // using the friendly name (without version), so the mapping will be done via the
+                // alias mechanism.
                 .map(dependencyTools::targetName)
                 .map(name -> String.format(Locale.US, ":%s", name))
                 .collect(Collectors.toList());
@@ -66,18 +107,41 @@ public class TargetsBuilders {
         return addAlias(dependency, "", dependencyTools);
     }
 
-    private static Target addAlias(Dependency dependency, String postFix, DependencyTools dependencyTools) {
-        return addAlias(dependency, String.format(Locale.ROOT, "%s%s", dependencyTools.targetName(dependency), postFix), postFix, dependencyTools);
+    private static Target addAlias(
+            Dependency dependency, String postFix, DependencyTools dependencyTools) {
+        return addAlias(
+                dependency,
+                String.format(Locale.ROOT, "%s%s", dependencyTools.targetName(dependency), postFix),
+                postFix,
+                dependencyTools);
     }
 
-    private static Target addAlias(Dependency dependency, String nameSpaced, String postFix, DependencyTools dependencyTools) {
-        return new Target(dependencyTools.mavenCoordinates(dependency), "native.alias", String.format(Locale.ROOT, "%s%s", dependencyTools.targetName(dependency), postFix), nameSpaced)
-                .addString("actual", String.format(Locale.ROOT, ":%s%s", dependencyTools.repositoryRuleName(dependency), postFix))
+    private static Target addAlias(
+            Dependency dependency,
+            String nameSpaced,
+            String postFix,
+            DependencyTools dependencyTools) {
+        return new Target(
+                        dependencyTools.mavenCoordinates(dependency),
+                        "native.alias",
+                        String.format(
+                                Locale.ROOT,
+                                "%s%s",
+                                dependencyTools.targetName(dependency),
+                                postFix),
+                        nameSpaced)
+                .addString(
+                        "actual",
+                        String.format(
+                                Locale.ROOT,
+                                ":%s%s",
+                                dependencyTools.repositoryRuleName(dependency),
+                                postFix))
                 .setPublicVisibility();
     }
 
     public static class HttpTargetsBuilder implements TargetsBuilder {
-        private final static char[] hexArray = "0123456789abcdef".toCharArray();
+        private static final char[] hexArray = "0123456789abcdef".toCharArray();
         private final boolean calculateSha;
         private final byte[] readBuffer;
         private final Function<Dependency, URI> downloader;
@@ -89,12 +153,19 @@ public class TargetsBuilders {
         }
 
         @Override
-        public List<Target> buildTargets(final Dependency dependency, DependencyTools dependencyTools) {
-            if ("pom".equalsIgnoreCase(dependency.mavenCoordinate().packaging())) return Collections.emptyList();
+        public List<Target> buildTargets(
+                final Dependency dependency, DependencyTools dependencyTools) {
+            if ("pom".equalsIgnoreCase(dependency.mavenCoordinate().packaging()))
+                return Collections.emptyList();
 
-            final Target jarTarget = new Target(dependencyTools.mavenCoordinates(dependency), "http_file", dependencyTools.repositoryRuleName(dependency))
-                    .addList("urls", Collections.singleton(dependency.url()))
-                    .addString("downloaded_file_path", getFilenameFromUrl(dependency.url()));
+            final Target jarTarget =
+                    new Target(
+                                    dependencyTools.mavenCoordinates(dependency),
+                                    "http_file",
+                                    dependencyTools.repositoryRuleName(dependency))
+                            .addList("urls", Collections.singleton(dependency.url()))
+                            .addString(
+                                    "downloaded_file_path", getFilenameFromUrl(dependency.url()));
 
             if (calculateSha && !dependency.mavenCoordinate().version().contains("SNAPSHOT")) {
                 try (InputStream inputStream = downloader.apply(dependency).toURL().openStream()) {
@@ -107,7 +178,9 @@ public class TargetsBuilders {
 
                     byte[] digestBytes = digest.digest();
                     char[] hexChars = new char[digestBytes.length * 2];
-                    for (int digestByteIndex = 0; digestByteIndex < digestBytes.length; digestByteIndex++) {
+                    for (int digestByteIndex = 0;
+                            digestByteIndex < digestBytes.length;
+                            digestByteIndex++) {
                         int v = digestBytes[digestByteIndex] & 0xFF;
                         hexChars[digestByteIndex * 2] = hexArray[v >>> 4];
                         hexChars[digestByteIndex * 2 + 1] = hexArray[v & 0x0F];
@@ -121,9 +194,16 @@ public class TargetsBuilders {
             if (dependency.sourcesUrl().isEmpty()) {
                 return Collections.singletonList(jarTarget);
             } else {
-                final Target sourceTarget = new Target(dependencyTools.mavenCoordinates(dependency), "http_file", dependencyTools.repositoryRuleName(dependency) + "__sources")
-                        .addList("urls", Collections.singleton(dependency.sourcesUrl()))
-                        .addString("downloaded_file_path", getFilenameFromUrl(dependency.sourcesUrl()));
+                final Target sourceTarget =
+                        new Target(
+                                        dependencyTools.mavenCoordinates(dependency),
+                                        "http_file",
+                                        dependencyTools.repositoryRuleName(dependency)
+                                                + "__sources")
+                                .addList("urls", Collections.singleton(dependency.sourcesUrl()))
+                                .addString(
+                                        "downloaded_file_path",
+                                        getFilenameFromUrl(dependency.sourcesUrl()));
 
                 return Arrays.asList(jarTarget, sourceTarget);
             }
@@ -144,24 +224,49 @@ public class TargetsBuilders {
 
         @Override
         public List<Target> buildTargets(Dependency dependency, DependencyTools dependencyTools) {
-            return targetsBuilders.stream().flatMap(builder -> builder.buildTargets(dependency, dependencyTools).stream()).collect(Collectors.toList());
+            return targetsBuilders.stream()
+                    .flatMap(builder -> builder.buildTargets(dependency, dependencyTools).stream())
+                    .collect(Collectors.toList());
         }
     }
 
     public static class KotlinImport implements TargetsBuilder {
 
         @Override
-        public List<Target> buildTargets(final Dependency dependency, DependencyTools dependencyTools) {
+        public List<Target> buildTargets(
+                final Dependency dependency, DependencyTools dependencyTools) {
             List<Target> targets = new ArrayList<>();
 
-            targets.add(new Target(dependencyTools.mavenCoordinates(dependency), "kotlin_jar_support", dependencyTools.repositoryRuleName(dependency))
-                    .addList("deps", convertRulesToStrings(dependency.dependencies(), dependencyTools))
-                    .addList("exports", convertRulesToStrings(dependency.exports(), dependencyTools))
-                    .addList("runtime_deps", convertRulesToStrings(dependency.runtimeDependencies(), dependencyTools))
-                    .addString("jar", String.format(Locale.US, "@%s//file", dependencyTools.repositoryRuleName(dependency)))
-                    .addVariable("java_import_impl", "java_import_impl"));
+            targets.add(
+                    new Target(
+                                    dependencyTools.mavenCoordinates(dependency),
+                                    "kotlin_jar_support",
+                                    dependencyTools.repositoryRuleName(dependency))
+                            .addList(
+                                    "deps",
+                                    convertRulesToStrings(
+                                            dependency.dependencies(), dependencyTools))
+                            .addList(
+                                    "exports",
+                                    convertRulesToStrings(dependency.exports(), dependencyTools))
+                            .addList(
+                                    "runtime_deps",
+                                    convertRulesToStrings(
+                                            dependency.runtimeDependencies(), dependencyTools))
+                            .addString(
+                                    "jar",
+                                    String.format(
+                                            Locale.US,
+                                            "@%s//file",
+                                            dependencyTools.repositoryRuleName(dependency)))
+                            .addVariable("java_import_impl", "java_import_impl"));
 
-            targets.add(addAlias(dependency, dependency.mavenCoordinate().artifactId(), "", dependencyTools));
+            targets.add(
+                    addAlias(
+                            dependency,
+                            dependency.mavenCoordinate().artifactId(),
+                            "",
+                            dependencyTools));
 
             return targets;
         }
@@ -171,7 +276,8 @@ public class TargetsBuilders {
 
         private static final String PROCESSOR_CLASS_POST_FIX = "___processor_class_";
         private static final String PLUGIN_WITH_API = "___generates_api";
-        private static final String PROCESSOR_CLASS_POST_FIX_WITH_API = PLUGIN_WITH_API + PROCESSOR_CLASS_POST_FIX;
+        private static final String PROCESSOR_CLASS_POST_FIX_WITH_API =
+                PLUGIN_WITH_API + PROCESSOR_CLASS_POST_FIX;
         private final List<String> processorClasses;
 
         JavaPluginFormatter(final Collection<String> processorClasses) {
@@ -187,48 +293,96 @@ public class TargetsBuilders {
         public List<Target> buildTargets(Dependency dependency, DependencyTools dependencyTools) {
             List<Target> targets = new ArrayList<>();
 
-            //just as java-library
+            // just as java-library
             targets.add(addJavaImportRule(dependency, dependencyTools));
-            targets.add(addAlias(dependency, dependency.mavenCoordinate().artifactId(), "", dependencyTools));
+            targets.add(
+                    addAlias(
+                            dependency,
+                            dependency.mavenCoordinate().artifactId(),
+                            "",
+                            dependencyTools));
 
-            Collection<String> deps = convertRulesToStrings(dependency.dependencies(), dependencyTools);
+            Collection<String> deps =
+                    convertRulesToStrings(dependency.dependencies(), dependencyTools);
             deps.add(":" + dependencyTools.repositoryRuleName(dependency));
-            //as java_plugins
+            // as java_plugins
             List<String> noApiPlugins = new ArrayList<>();
             List<String> withApiPlugins = new ArrayList<>();
-            for (int processorClassIndex = 0; processorClassIndex < processorClasses.size(); processorClassIndex++) {
+            for (int processorClassIndex = 0;
+                    processorClassIndex < processorClasses.size();
+                    processorClassIndex++) {
                 final String processorClass = processorClasses.get(processorClassIndex);
 
-                final String noApiTargetName = dependencyTools.repositoryRuleName(dependency) + PROCESSOR_CLASS_POST_FIX + processorClassIndex;
+                final String noApiTargetName =
+                        dependencyTools.repositoryRuleName(dependency)
+                                + PROCESSOR_CLASS_POST_FIX
+                                + processorClassIndex;
                 noApiPlugins.add(":" + noApiTargetName);
-                targets.add(new Target(dependencyTools.mavenCoordinates(dependency), "native.java_plugin", noApiTargetName)
-                        .addString("processor_class", processorClass)
-                        .addInt("generates_api", 0)
-                        .addList("deps", deps));
-                targets.add(addAlias(dependency, PROCESSOR_CLASS_POST_FIX + processorClassIndex, dependencyTools));
+                targets.add(
+                        new Target(
+                                        dependencyTools.mavenCoordinates(dependency),
+                                        "native.java_plugin",
+                                        noApiTargetName)
+                                .addString("processor_class", processorClass)
+                                .addInt("generates_api", 0)
+                                .addList("deps", deps));
+                targets.add(
+                        addAlias(
+                                dependency,
+                                PROCESSOR_CLASS_POST_FIX + processorClassIndex,
+                                dependencyTools));
 
-                final String withApiTargetName = dependencyTools.repositoryRuleName(dependency) + PROCESSOR_CLASS_POST_FIX_WITH_API + processorClassIndex;
+                final String withApiTargetName =
+                        dependencyTools.repositoryRuleName(dependency)
+                                + PROCESSOR_CLASS_POST_FIX_WITH_API
+                                + processorClassIndex;
                 withApiPlugins.add(":" + withApiTargetName);
-                targets.add(new Target(dependencyTools.mavenCoordinates(dependency), "native.java_plugin", withApiTargetName)
-                        .addString("processor_class", processorClass)
-                        .addInt("generates_api", 1)
-                        .addList("deps", deps));
-                targets.add(addAlias(dependency, PROCESSOR_CLASS_POST_FIX_WITH_API + processorClassIndex, dependencyTools));
+                targets.add(
+                        new Target(
+                                        dependencyTools.mavenCoordinates(dependency),
+                                        "native.java_plugin",
+                                        withApiTargetName)
+                                .addString("processor_class", processorClass)
+                                .addInt("generates_api", 1)
+                                .addList("deps", deps));
+                targets.add(
+                        addAlias(
+                                dependency,
+                                PROCESSOR_CLASS_POST_FIX_WITH_API + processorClassIndex,
+                                dependencyTools));
             }
 
-            //collected java_plugins into a java_library.
-            //If using those, then do not add them to the `plugins` list, but rather to the `deps`.
-            targets.add(new Target(dependencyTools.mavenCoordinates(dependency),
-                    "native.java_library",
-                    dependencyTools.repositoryRuleName(dependency) + PROCESSOR_CLASS_POST_FIX + "all")
-                    .addList("exported_plugins", noApiPlugins));
-            targets.add(addAlias(dependency, "processors", PROCESSOR_CLASS_POST_FIX + "all", dependencyTools));
+            // collected java_plugins into a java_library.
+            // If using those, then do not add them to the `plugins` list, but rather to the `deps`.
+            targets.add(
+                    new Target(
+                                    dependencyTools.mavenCoordinates(dependency),
+                                    "native.java_library",
+                                    dependencyTools.repositoryRuleName(dependency)
+                                            + PROCESSOR_CLASS_POST_FIX
+                                            + "all")
+                            .addList("exported_plugins", noApiPlugins));
+            targets.add(
+                    addAlias(
+                            dependency,
+                            "processors",
+                            PROCESSOR_CLASS_POST_FIX + "all",
+                            dependencyTools));
 
-            targets.add(new Target(dependencyTools.mavenCoordinates(dependency),
-                    "native.java_library",
-                    dependencyTools.repositoryRuleName(dependency) + PROCESSOR_CLASS_POST_FIX_WITH_API + "all")
-                    .addList("exported_plugins", withApiPlugins));
-            targets.add(addAlias(dependency, "processors_with_api",PROCESSOR_CLASS_POST_FIX_WITH_API + "all", dependencyTools));
+            targets.add(
+                    new Target(
+                                    dependencyTools.mavenCoordinates(dependency),
+                                    "native.java_library",
+                                    dependencyTools.repositoryRuleName(dependency)
+                                            + PROCESSOR_CLASS_POST_FIX_WITH_API
+                                            + "all")
+                            .addList("exported_plugins", withApiPlugins));
+            targets.add(
+                    addAlias(
+                            dependency,
+                            "processors_with_api",
+                            PROCESSOR_CLASS_POST_FIX_WITH_API + "all",
+                            dependencyTools));
 
             return targets;
         }
@@ -237,17 +391,34 @@ public class TargetsBuilders {
     static class AarImport implements TargetsBuilder {
 
         @Override
-        public List<Target> buildTargets(final Dependency dependency, DependencyTools dependencyTools) {
+        public List<Target> buildTargets(
+                final Dependency dependency, DependencyTools dependencyTools) {
             List<Target> targets = new ArrayList<>();
             final Set<MavenCoordinate> deps = new HashSet<>(dependency.dependencies());
             deps.addAll(dependency.runtimeDependencies());
 
-            targets.add(new Target(dependencyTools.mavenCoordinates(dependency), "aar_import_impl", dependencyTools.repositoryRuleName(dependency))
-                    .addString("aar", String.format(Locale.US, "@%s//file", dependencyTools.repositoryRuleName(dependency)))
-                    .addList("deps", convertRulesToStrings(deps, dependencyTools))
-                    .addList("exports", convertRulesToStrings(dependency.exports(), dependencyTools)));
+            targets.add(
+                    new Target(
+                                    dependencyTools.mavenCoordinates(dependency),
+                                    "aar_import_impl",
+                                    dependencyTools.repositoryRuleName(dependency))
+                            .addString(
+                                    "aar",
+                                    String.format(
+                                            Locale.US,
+                                            "@%s//file",
+                                            dependencyTools.repositoryRuleName(dependency)))
+                            .addList("deps", convertRulesToStrings(deps, dependencyTools))
+                            .addList(
+                                    "exports",
+                                    convertRulesToStrings(dependency.exports(), dependencyTools)));
 
-            targets.add(addAlias(dependency, dependency.mavenCoordinate().artifactId(), "", dependencyTools));
+            targets.add(
+                    addAlias(
+                            dependency,
+                            dependency.mavenCoordinate().artifactId(),
+                            "",
+                            dependencyTools));
 
             return targets;
         }

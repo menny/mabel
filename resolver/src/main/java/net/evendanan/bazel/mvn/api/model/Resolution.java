@@ -6,11 +6,12 @@ import java.util.Collection;
 
 @AutoValue
 public abstract class Resolution {
+    public static Resolution create(
+            MavenCoordinate rootDependency, Collection<Dependency> allResolvedDependencies) {
+        return new AutoValue_Resolution(rootDependency, allResolvedDependencies);
+    }
+
     public abstract MavenCoordinate rootDependency();
 
     public abstract Collection<Dependency> allResolvedDependencies();
-
-    public static Resolution create(MavenCoordinate rootDependency, Collection<Dependency> allResolvedDependencies) {
-        return new AutoValue_Resolution(rootDependency, allResolvedDependencies);
-    }
 }

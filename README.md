@@ -148,6 +148,7 @@ Attributes:
 * `maven_deps`: List of `artifact` targets representing a Maven coordinate.
 * `generate_deps_sub_folder`: Default `True`. Will create sub-folders with `BUILD.bazel` file for each dependency.
 * `keep_output_folder`: Default `False`. Will delete the output folder prior to generating the outputs.
+* `public_targets_category`: Default `all`. Set public visibility of resolved targets. Can be: `requested_deps`, `recursive_exports`, `all`.
 * `calculate_sha`: Default `True`. Will calculate the `sha256` value of each remote artifact.
 * `fetch_srcjar`: Default `False`. Will also try to fetch sources jar for each dependency.
 * `generated_targets_prefix`: A prefix to add to all generated targets. Default is an empty string, meaning no-prefix. This might be useful if you want to generate several, unrelated, graphs. 

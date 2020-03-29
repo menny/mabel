@@ -5,5 +5,5 @@ public enum License {
     reciprocal,
     notice,
     permissive,
-    unencumbered;
+    unencumbered
 }

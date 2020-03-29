@@ -21,57 +21,77 @@ public class GraphUtils {
         final DependencyTools dependencyTools = new DependencyTools();
         final StringBuilder builder = new StringBuilder();
 
-        DfsTraveller(resolutions,
+        DfsTraveller(
+                resolutions,
                 (dependency, level) -> {
                     for (int i = 0; i < level; i++) {
                         builder.append("  ");
                     }
 
-                    builder.append(dependencyTools.mavenCoordinates(dependency)).append(System.lineSeparator());
+                    builder.append(dependencyTools.mavenCoordinates(dependency))
+                            .append(System.lineSeparator());
                 });
 
         return builder.toString();
     }
 
-    public static void DfsTraveller(Collection<Resolution> resolutions, BiConsumer<Dependency, Integer> visitor) {
+    public static void DfsTraveller(
+            Collection<Resolution> resolutions, BiConsumer<Dependency, Integer> visitor) {
         Map<MavenCoordinate, Dependency> mapper = new HashMap<>();
-        resolutions.forEach(resolution -> resolution.allResolvedDependencies().forEach(dep -> mapper.put(dep.mavenCoordinate(), dep)));
+        resolutions.forEach(
+                resolution ->
+                        resolution
+                                .allResolvedDependencies()
+                                .forEach(dep -> mapper.put(dep.mavenCoordinate(), dep)));
 
-        resolutions.forEach(resolution -> DfsTraveller(resolution.rootDependency(), mapper::get, 1, visitor));
+        resolutions.forEach(
+                resolution -> DfsTraveller(resolution.rootDependency(), mapper::get, 1, visitor));
     }
 
-    private static void DfsTraveller(MavenCoordinate mavenCoordinate, Function<MavenCoordinate, Dependency> dependencyMap, int level, BiConsumer<Dependency, Integer> visitor) {
-        Dependency dependency = Preconditions.checkNotNull(dependencyMap.apply(mavenCoordinate), "Can not find mapping for " + mavenCoordinate);
+    private static void DfsTraveller(
+            MavenCoordinate mavenCoordinate,
+            Function<MavenCoordinate, Dependency> dependencyMap,
+            int level,
+            BiConsumer<Dependency, Integer> visitor) {
+        Dependency dependency =
+                Preconditions.checkNotNull(
+                        dependencyMap.apply(mavenCoordinate),
+                        "Can not find mapping for " + mavenCoordinate);
         visitor.accept(dependency, level);
 
         Stream.concat(
-                Stream.concat(
-                        dependency.dependencies().stream(),
-                        dependency.exports().stream()),
-                dependency.runtimeDependencies().stream())
+                        Stream.concat(
+                                dependency.dependencies().stream(), dependency.exports().stream()),
+                        dependency.runtimeDependencies().stream())
                 .distinct()
                 .forEach(child -> DfsTraveller(child, dependencyMap, level + 1, visitor));
     }
 
-    static void BfsTraveller(Collection<Resolution> resolutions, BiConsumer<Dependency, Integer> visitor) {
+    static void BfsTraveller(
+            Collection<Resolution> resolutions, BiConsumer<Dependency, Integer> visitor) {
         Map<MavenCoordinate, Dependency> mapper = new HashMap<>();
-        resolutions.forEach(resolution -> resolution.allResolvedDependencies().forEach(dep -> mapper.put(dep.mavenCoordinate(), dep)));
+        resolutions.forEach(
+                resolution ->
+                        resolution
+                                .allResolvedDependencies()
+                                .forEach(dep -> mapper.put(dep.mavenCoordinate(), dep)));
 
         Queue<MavenCoordinate> queue = new ArrayDeque<>();
         resolutions.forEach(resolution -> queue.add(resolution.rootDependency()));
 
         while (!queue.isEmpty()) {
-            final Dependency dependency = Preconditions.checkNotNull(mapper.get(queue.remove()), "Can not find mapping for " + queue.peek());
+            final Dependency dependency =
+                    Preconditions.checkNotNull(
+                            mapper.get(queue.remove()), "Can not find mapping for " + queue.peek());
             visitor.accept(dependency, queue.size());
 
             Stream.concat(
-                    Stream.concat(
-                            dependency.dependencies().stream(),
-                            dependency.exports().stream()),
-                    dependency.runtimeDependencies().stream())
+                            Stream.concat(
+                                    dependency.dependencies().stream(),
+                                    dependency.exports().stream()),
+                            dependency.runtimeDependencies().stream())
                     .distinct()
                     .forEach(queue::add);
         }
     }
-
 }

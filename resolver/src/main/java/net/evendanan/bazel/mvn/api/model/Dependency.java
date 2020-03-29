@@ -7,22 +7,6 @@ import java.util.Collections;
 
 @AutoValue
 public abstract class Dependency {
-    public abstract MavenCoordinate mavenCoordinate();
-
-    public abstract Collection<MavenCoordinate> dependencies();
-
-    public abstract Collection<MavenCoordinate> exports();
-
-    public abstract Collection<MavenCoordinate> runtimeDependencies();
-
-    public abstract String url();
-
-    public abstract String sourcesUrl();
-
-    public abstract String javadocUrl();
-
-    public abstract Collection<License> licenses();
-
     public static Builder builder() {
         return new AutoValue_Dependency.Builder()
                 .dependencies(Collections.emptyList())
@@ -46,6 +30,22 @@ public abstract class Dependency {
                 .licenses(original.licenses());
     }
 
+    public abstract MavenCoordinate mavenCoordinate();
+
+    public abstract Collection<MavenCoordinate> dependencies();
+
+    public abstract Collection<MavenCoordinate> exports();
+
+    public abstract Collection<MavenCoordinate> runtimeDependencies();
+
+    public abstract String url();
+
+    public abstract String sourcesUrl();
+
+    public abstract String javadocUrl();
+
+    public abstract Collection<License> licenses();
+
     @AutoValue.Builder
     public abstract static class Builder {
         public abstract Builder mavenCoordinate(MavenCoordinate mavenCoordinate);
@@ -54,7 +54,8 @@ public abstract class Dependency {
 
         public abstract Builder exports(Collection<MavenCoordinate> exports);
 
-        public abstract Builder runtimeDependencies(Collection<MavenCoordinate> runtimeDependencies);
+        public abstract Builder runtimeDependencies(
+                Collection<MavenCoordinate> runtimeDependencies);
 
         public abstract Builder url(String url);
 

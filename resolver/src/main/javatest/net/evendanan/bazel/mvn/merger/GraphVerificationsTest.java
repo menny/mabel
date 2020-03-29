@@ -15,25 +15,49 @@ public class GraphVerificationsTest {
 
     @Before
     public void setup() {
-        mBasicResolution = Resolution.create(
-                MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
-                Arrays.asList(
-                        Dependency.builder()
-                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""))
-                                .dependencies(Collections.singleton(MavenCoordinate.create("net.evendanan", "inner1", "0.1", "")))
-                                .build(),
-                        Dependency.builder()
-                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner1", "0.1", ""))
-                                .dependencies(Arrays.asList(
-                                        MavenCoordinate.create("net.evendanan", "inner-inner1", "0.1", ""),
-                                        MavenCoordinate.create("net.evendanan", "inner-inner2", "0.1", "")))
-                                .build(),
-                        Dependency.builder()
-                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner1", "0.1", ""))
-                                .build(),
-                        Dependency.builder()
-                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner2", "0.1", ""))
-                                .build()));
+        mBasicResolution =
+                Resolution.create(
+                        MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
+                        Arrays.asList(
+                                Dependency.builder()
+                                        .mavenCoordinate(
+                                                MavenCoordinate.create(
+                                                        "net.evendanan", "dep1", "0.1", ""))
+                                        .dependencies(
+                                                Collections.singleton(
+                                                        MavenCoordinate.create(
+                                                                "net.evendanan",
+                                                                "inner1",
+                                                                "0.1",
+                                                                "")))
+                                        .build(),
+                                Dependency.builder()
+                                        .mavenCoordinate(
+                                                MavenCoordinate.create(
+                                                        "net.evendanan", "inner1", "0.1", ""))
+                                        .dependencies(
+                                                Arrays.asList(
+                                                        MavenCoordinate.create(
+                                                                "net.evendanan",
+                                                                "inner-inner1",
+                                                                "0.1",
+                                                                ""),
+                                                        MavenCoordinate.create(
+                                                                "net.evendanan",
+                                                                "inner-inner2",
+                                                                "0.1",
+                                                                "")))
+                                        .build(),
+                                Dependency.builder()
+                                        .mavenCoordinate(
+                                                MavenCoordinate.create(
+                                                        "net.evendanan", "inner-inner1", "0.1", ""))
+                                        .build(),
+                                Dependency.builder()
+                                        .mavenCoordinate(
+                                                MavenCoordinate.create(
+                                                        "net.evendanan", "inner-inner2", "0.1", ""))
+                                        .build()));
     }
 
     @Test
@@ -43,19 +67,27 @@ public class GraphVerificationsTest {
 
     @Test(expected = GraphVerifications.InvalidGraphException.class)
     public void checkNoConflictingVersions_Fail() {
-        GraphVerifications.checkNoConflictingVersions(Arrays.asList(
-                Dependency.builder()
-                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""))
-                        .build(),
-                Dependency.builder()
-                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner1", "0.1", ""))
-                        .build(),
-                Dependency.builder()
-                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner1", "0.1", ""))
-                        .build(),
-                Dependency.builder()
-                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner1", "0.2", ""))
-                        .build()));
+        GraphVerifications.checkNoConflictingVersions(
+                Arrays.asList(
+                        Dependency.builder()
+                                .mavenCoordinate(
+                                        MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""))
+                                .build(),
+                        Dependency.builder()
+                                .mavenCoordinate(
+                                        MavenCoordinate.create(
+                                                "net.evendanan", "inner1", "0.1", ""))
+                                .build(),
+                        Dependency.builder()
+                                .mavenCoordinate(
+                                        MavenCoordinate.create(
+                                                "net.evendanan", "inner-inner1", "0.1", ""))
+                                .build(),
+                        Dependency.builder()
+                                .mavenCoordinate(
+                                        MavenCoordinate.create(
+                                                "net.evendanan", "inner-inner1", "0.2", ""))
+                                .build()));
     }
 
     @Test
@@ -65,42 +97,79 @@ public class GraphVerificationsTest {
 
     @Test(expected = NullPointerException.class)
     public void checkAllGraphDependenciesAreResolved_FailRootMissing() {
-        GraphVerifications.checkAllGraphDependenciesAreResolved(Resolution.create(
-                MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
-                Arrays.asList(
-                        Dependency.builder()
-                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner1", "0.1", ""))
-                                .dependencies(Arrays.asList(
-                                        MavenCoordinate.create("net.evendanan", "inner-inner1", "0.1", ""),
-                                        MavenCoordinate.create("net.evendanan", "inner-inner2", "0.1", "")
-                                ))
-                                .build(),
-                        Dependency.builder()
-                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner1", "0.1", ""))
-                                .build(),
-                        Dependency.builder()
-                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner2", "0.1", ""))
-                                .build())));
+        GraphVerifications.checkAllGraphDependenciesAreResolved(
+                Resolution.create(
+                        MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
+                        Arrays.asList(
+                                Dependency.builder()
+                                        .mavenCoordinate(
+                                                MavenCoordinate.create(
+                                                        "net.evendanan", "inner1", "0.1", ""))
+                                        .dependencies(
+                                                Arrays.asList(
+                                                        MavenCoordinate.create(
+                                                                "net.evendanan",
+                                                                "inner-inner1",
+                                                                "0.1",
+                                                                ""),
+                                                        MavenCoordinate.create(
+                                                                "net.evendanan",
+                                                                "inner-inner2",
+                                                                "0.1",
+                                                                "")))
+                                        .build(),
+                                Dependency.builder()
+                                        .mavenCoordinate(
+                                                MavenCoordinate.create(
+                                                        "net.evendanan", "inner-inner1", "0.1", ""))
+                                        .build(),
+                                Dependency.builder()
+                                        .mavenCoordinate(
+                                                MavenCoordinate.create(
+                                                        "net.evendanan", "inner-inner2", "0.1", ""))
+                                        .build())));
     }
 
     @Test(expected = NullPointerException.class)
     public void checkAllGraphDependenciesAreResolved_FailDependencyMissing() {
-        GraphVerifications.checkAllGraphDependenciesAreResolved(Resolution.create(
-                MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
-                Arrays.asList(
-                        Dependency.builder()
-                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""))
-                                .dependencies(Collections.singleton(MavenCoordinate.create("net.evendanan", "inner1", "0.1", "")))
-                                .build(),
-                        Dependency.builder()
-                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner1", "0.1", ""))
-                                .dependencies(Arrays.asList(
-                                        MavenCoordinate.create("net.evendanan", "inner-inner1", "0.1", ""),
-                                        MavenCoordinate.create("net.evendanan", "inner-inner2", "0.1", "")))
-                                .build(),
-                        Dependency.builder()
-                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner1", "0.1", ""))
-                                .build())));
+        GraphVerifications.checkAllGraphDependenciesAreResolved(
+                Resolution.create(
+                        MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
+                        Arrays.asList(
+                                Dependency.builder()
+                                        .mavenCoordinate(
+                                                MavenCoordinate.create(
+                                                        "net.evendanan", "dep1", "0.1", ""))
+                                        .dependencies(
+                                                Collections.singleton(
+                                                        MavenCoordinate.create(
+                                                                "net.evendanan",
+                                                                "inner1",
+                                                                "0.1",
+                                                                "")))
+                                        .build(),
+                                Dependency.builder()
+                                        .mavenCoordinate(
+                                                MavenCoordinate.create(
+                                                        "net.evendanan", "inner1", "0.1", ""))
+                                        .dependencies(
+                                                Arrays.asList(
+                                                        MavenCoordinate.create(
+                                                                "net.evendanan",
+                                                                "inner-inner1",
+                                                                "0.1",
+                                                                ""),
+                                                        MavenCoordinate.create(
+                                                                "net.evendanan",
+                                                                "inner-inner2",
+                                                                "0.1",
+                                                                "")))
+                                        .build(),
+                                Dependency.builder()
+                                        .mavenCoordinate(
+                                                MavenCoordinate.create(
+                                                        "net.evendanan", "inner-inner1", "0.1", ""))
+                                        .build())));
     }
 
     @Test
@@ -110,53 +179,96 @@ public class GraphVerificationsTest {
 
     @Test(expected = GraphVerifications.InvalidGraphException.class)
     public void checkGraphDoesNotHaveDanglingDependencies_Fail() {
-        GraphVerifications.checkGraphDoesNotHaveDanglingDependencies(Resolution.create(
-                MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
-                Arrays.asList(
-                        Dependency.builder()
-                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""))
-                                .dependencies(Collections.singleton(MavenCoordinate.create("net.evendanan", "inner1", "0.1", "")))
-                                .build(),
-                        Dependency.builder()
-                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner1", "0.1", ""))
-                                .dependencies(Arrays.asList(
-                                        MavenCoordinate.create("net.evendanan", "inner-inner1", "0.1", ""),
-                                        MavenCoordinate.create("net.evendanan", "inner-inner2", "0.1", "")
-                                ))
-                                .build(),
-                        Dependency.builder()
-                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner1", "0.1", ""))
-                                .build(),
-                        Dependency.builder()
-                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner2", "0.1", ""))
-                                .build(),
-                        Dependency.builder()
-                                .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner3"/*dangling*/, "0.1", ""))
-                                .build())));
+        GraphVerifications.checkGraphDoesNotHaveDanglingDependencies(
+                Resolution.create(
+                        MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
+                        Arrays.asList(
+                                Dependency.builder()
+                                        .mavenCoordinate(
+                                                MavenCoordinate.create(
+                                                        "net.evendanan", "dep1", "0.1", ""))
+                                        .dependencies(
+                                                Collections.singleton(
+                                                        MavenCoordinate.create(
+                                                                "net.evendanan",
+                                                                "inner1",
+                                                                "0.1",
+                                                                "")))
+                                        .build(),
+                                Dependency.builder()
+                                        .mavenCoordinate(
+                                                MavenCoordinate.create(
+                                                        "net.evendanan", "inner1", "0.1", ""))
+                                        .dependencies(
+                                                Arrays.asList(
+                                                        MavenCoordinate.create(
+                                                                "net.evendanan",
+                                                                "inner-inner1",
+                                                                "0.1",
+                                                                ""),
+                                                        MavenCoordinate.create(
+                                                                "net.evendanan",
+                                                                "inner-inner2",
+                                                                "0.1",
+                                                                "")))
+                                        .build(),
+                                Dependency.builder()
+                                        .mavenCoordinate(
+                                                MavenCoordinate.create(
+                                                        "net.evendanan", "inner-inner1", "0.1", ""))
+                                        .build(),
+                                Dependency.builder()
+                                        .mavenCoordinate(
+                                                MavenCoordinate.create(
+                                                        "net.evendanan", "inner-inner2", "0.1", ""))
+                                        .build(),
+                                Dependency.builder()
+                                        .mavenCoordinate(
+                                                MavenCoordinate.create(
+                                                        "net.evendanan",
+                                                        "inner-inner3" /*dangling*/,
+                                                        "0.1",
+                                                        ""))
+                                        .build())));
     }
 
     @Test
     public void checkAllDependenciesAreResolved_HappyPath() {
-        GraphVerifications.checkAllDependenciesAreResolved(mBasicResolution.allResolvedDependencies());
+        GraphVerifications.checkAllDependenciesAreResolved(
+                mBasicResolution.allResolvedDependencies());
     }
 
     @Test(expected = GraphVerifications.InvalidGraphException.class)
     public void checkAllDependenciesAreResolved_Fail() {
-        GraphVerifications.checkAllDependenciesAreResolved(Arrays.asList(
-                Dependency.builder()
-                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""))
-                        .dependencies(Collections.singleton(MavenCoordinate.create("net.evendanan", "inner1", "0.1", "")))
-                        .build(),
-                Dependency.builder()
-                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner1", "0.1", ""))
-                        .dependencies(Arrays.asList(
-                                MavenCoordinate.create("net.evendanan", "inner-inner1", "0.1", ""),
-                                MavenCoordinate.create("net.evendanan", "inner-inner2"/*this is missing*/, "0.1", "")
-                        ))
-                        .build(),
-                Dependency.builder()
-                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner1", "0.1", ""))
-                        .build()));
+        GraphVerifications.checkAllDependenciesAreResolved(
+                Arrays.asList(
+                        Dependency.builder()
+                                .mavenCoordinate(
+                                        MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""))
+                                .dependencies(
+                                        Collections.singleton(
+                                                MavenCoordinate.create(
+                                                        "net.evendanan", "inner1", "0.1", "")))
+                                .build(),
+                        Dependency.builder()
+                                .mavenCoordinate(
+                                        MavenCoordinate.create(
+                                                "net.evendanan", "inner1", "0.1", ""))
+                                .dependencies(
+                                        Arrays.asList(
+                                                MavenCoordinate.create(
+                                                        "net.evendanan", "inner-inner1", "0.1", ""),
+                                                MavenCoordinate.create(
+                                                        "net.evendanan",
+                                                        "inner-inner2" /*this is missing*/,
+                                                        "0.1",
+                                                        "")))
+                                .build(),
+                        Dependency.builder()
+                                .mavenCoordinate(
+                                        MavenCoordinate.create(
+                                                "net.evendanan", "inner-inner1", "0.1", ""))
+                                .build()));
     }
 
     @Test
@@ -166,26 +278,47 @@ public class GraphVerificationsTest {
 
     @Test(expected = GraphVerifications.InvalidGraphException.class)
     public void checkNoRepeatingDependencies_Fail() {
-        GraphVerifications.checkNoRepeatingDependencies(Arrays.asList(
-                Dependency.builder()
-                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""))
-                        .dependencies(Collections.singleton(MavenCoordinate.create("net.evendanan", "inner1", "0.1", "")))
-                        .build(),
-                Dependency.builder()
-                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner1", "0.1", ""))
-                        .dependencies(Arrays.asList(
-                                MavenCoordinate.create("net.evendanan", "inner-inner1", "0.1", ""),
-                                MavenCoordinate.create("net.evendanan", "inner-inner2", "0.1", "")
-                        ))
-                        .build(),
-                Dependency.builder()
-                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner1", "0.1", ""))
-                        .build(),
-                Dependency.builder()
-                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner1"/*repeating*/, "0.1", ""))
-                        .build(),
-                Dependency.builder()
-                        .mavenCoordinate(MavenCoordinate.create("net.evendanan", "inner-inner2", "0.1", ""))
-                        .build()));
+        GraphVerifications.checkNoRepeatingDependencies(
+                Arrays.asList(
+                        Dependency.builder()
+                                .mavenCoordinate(
+                                        MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""))
+                                .dependencies(
+                                        Collections.singleton(
+                                                MavenCoordinate.create(
+                                                        "net.evendanan", "inner1", "0.1", "")))
+                                .build(),
+                        Dependency.builder()
+                                .mavenCoordinate(
+                                        MavenCoordinate.create(
+                                                "net.evendanan", "inner1", "0.1", ""))
+                                .dependencies(
+                                        Arrays.asList(
+                                                MavenCoordinate.create(
+                                                        "net.evendanan", "inner-inner1", "0.1", ""),
+                                                MavenCoordinate.create(
+                                                        "net.evendanan",
+                                                        "inner-inner2",
+                                                        "0.1",
+                                                        "")))
+                                .build(),
+                        Dependency.builder()
+                                .mavenCoordinate(
+                                        MavenCoordinate.create(
+                                                "net.evendanan", "inner-inner1", "0.1", ""))
+                                .build(),
+                        Dependency.builder()
+                                .mavenCoordinate(
+                                        MavenCoordinate.create(
+                                                "net.evendanan",
+                                                "inner-inner1" /*repeating*/,
+                                                "0.1",
+                                                ""))
+                                .build(),
+                        Dependency.builder()
+                                .mavenCoordinate(
+                                        MavenCoordinate.create(
+                                                "net.evendanan", "inner-inner2", "0.1", ""))
+                                .build()));
     }
 }

@@ -27,31 +27,36 @@ public class ArtifactDownloader {
     }
 
     @VisibleForTesting
-    ArtifactDownloader(ConnectionOpener opener, File artifactsFolder, DependencyTools dependencyTools) {
+    ArtifactDownloader(
+            ConnectionOpener opener, File artifactsFolder, DependencyTools dependencyTools) {
         mConnectionOpener = opener;
         mArtifactsFolder = artifactsFolder;
         mDependencyTools = dependencyTools;
     }
 
     public URI getLocalUriForDependency(Dependency dependency) throws IOException {
-        final File localPath = new File(mArtifactsFolder, mDependencyTools.repositoryRuleName(dependency));
-        //first, is the file exists locally already?
+        final File localPath =
+                new File(mArtifactsFolder, mDependencyTools.repositoryRuleName(dependency));
+        // first, is the file exists locally already?
         if (localPath.exists() && localPath.isFile()) {
             return localPath.toURI();
         }
 
-        //second, download to unique temp file
-        final File tempDownloadFile = File.createTempFile("mabel_ArtifactDownloader", localPath.getName());
-        try (final ReadableByteChannel readableByteChannel = Channels.newChannel(mConnectionOpener.openInputStream(new URL(dependency.url())))) {
-            try (final FileOutputStream tempOutput = new FileOutputStream(tempDownloadFile, false)) {
+        // second, download to unique temp file
+        final File tempDownloadFile =
+                File.createTempFile("mabel_ArtifactDownloader", localPath.getName());
+        try (final ReadableByteChannel readableByteChannel =
+                Channels.newChannel(mConnectionOpener.openInputStream(new URL(dependency.url())))) {
+            try (final FileOutputStream tempOutput =
+                    new FileOutputStream(tempDownloadFile, false)) {
                 tempOutput.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
             }
         }
 
-        //third, rename the temp file to localPath
+        // third, rename the temp file to localPath
         Files.move(tempDownloadFile.toPath(), localPath.toPath(), REPLACE_EXISTING);
 
-        //done
+        // done
         return localPath.toURI();
     }
 
