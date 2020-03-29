@@ -131,7 +131,7 @@ public class Merger {
             System.out.println("✓");
         }
 
-        driver.writeResults(dependencies, downloader, options, dependencyTools);
+        driver.writeResults(resolutions, dependencies, downloader, options, dependencyTools);
 
         if (!options.output_pretty_dep_graph_filename.isEmpty()) {
             File prettyOutput =
@@ -246,6 +246,7 @@ public class Merger {
     }
 
     private void writeResults(
+            Collection<Resolution> resolutions,
             Collection<Dependency> resolvedDependencies,
             final Function<Dependency, URI> downloader,
             final CommandLineOptions options,
@@ -324,7 +325,12 @@ public class Merger {
                         .collect(Collectors.toList()));
 
         final Function<Target, Target> visibilityFixer =
-                PublicTargetsCategory.create(options.public_targets_category);
+                PublicTargetsCategory.create(
+                        options.public_targets_category,
+                        resolutions.stream()
+                                .map(Resolution::rootDependency)
+                                .collect(Collectors.toList()),
+                        resolvedDependencies);
 
         List<Target> targets =
                 targetsToWritePairs.stream()

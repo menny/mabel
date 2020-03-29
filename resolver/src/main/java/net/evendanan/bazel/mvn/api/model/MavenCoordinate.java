@@ -2,6 +2,8 @@ package net.evendanan.bazel.mvn.api.model;
 
 import com.google.auto.value.AutoValue;
 
+import java.util.Locale;
+
 @AutoValue
 public abstract class MavenCoordinate {
     public static MavenCoordinate create(
@@ -16,4 +18,8 @@ public abstract class MavenCoordinate {
     public abstract String version();
 
     public abstract String packaging();
+
+    public String toMavenString() {
+        return String.format(Locale.ROOT, "%s:%s:%s", groupId(), artifactId(), version());
+    }
 }
