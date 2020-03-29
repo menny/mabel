@@ -15,33 +15,51 @@ import java.util.stream.Collectors;
 
 public class PinBreadthFirstVersionsMerger implements GraphMerger {
     private static String dependencyKey(MavenCoordinate mavenCoordinate) {
-        return String.format(Locale.ROOT, "%s:%s", mavenCoordinate.groupId(), mavenCoordinate.artifactId());
+        return String.format(
+                Locale.ROOT, "%s:%s", mavenCoordinate.groupId(), mavenCoordinate.artifactId());
     }
 
     @Override
     public Collection<Dependency> mergeGraphs(final Collection<Resolution> resolutions) {
         Map<String, Dependency> pinnedVersions = new HashMap<>();
 
-        GraphUtils.BfsTraveller(resolutions, (dependency, level) -> pinnedVersions.compute(dependencyKey(dependency.mavenCoordinate()),
-                (key, previousDep) -> {
-                    if (previousDep == null || previousDep.url().isEmpty()) return dependency;
-                    else return previousDep;
-                }));
+        GraphUtils.BfsTraveller(
+                resolutions,
+                (dependency, level) ->
+                        pinnedVersions.compute(
+                                dependencyKey(dependency.mavenCoordinate()),
+                                (key, previousDep) -> {
+                                    if (previousDep == null || previousDep.url().isEmpty())
+                                        return dependency;
+                                    else return previousDep;
+                                }));
 
-        Function<Collection<MavenCoordinate>, Collection<MavenCoordinate>> convertDependencies = dependencies -> dependencies.stream()
-                .map(mvn -> Preconditions.checkNotNull(pinnedVersions.get(dependencyKey(mvn))).mavenCoordinate())
-                .distinct()
-                .collect(Collectors.toList());
+        Function<Collection<MavenCoordinate>, Collection<MavenCoordinate>> convertDependencies =
+                dependencies ->
+                        dependencies.stream()
+                                .map(
+                                        mvn ->
+                                                Preconditions.checkNotNull(
+                                                                pinnedVersions.get(
+                                                                        dependencyKey(mvn)))
+                                                        .mavenCoordinate())
+                                .distinct()
+                                .collect(Collectors.toList());
 
         return resolutions.stream()
                 .map(Resolution::allResolvedDependencies)
                 .flatMap(Collection::stream)
                 .map(original -> pinnedVersions.get(dependencyKey(original.mavenCoordinate())))
-                .map(original -> Dependency.builder(original)
-                        .dependencies(convertDependencies.apply(original.dependencies()))
-                        .exports(convertDependencies.apply(original.exports()))
-                        .runtimeDependencies(convertDependencies.apply(original.runtimeDependencies()))
-                        .build())
+                .map(
+                        original ->
+                                Dependency.builder(original)
+                                        .dependencies(
+                                                convertDependencies.apply(original.dependencies()))
+                                        .exports(convertDependencies.apply(original.exports()))
+                                        .runtimeDependencies(
+                                                convertDependencies.apply(
+                                                        original.runtimeDependencies()))
+                                        .build())
                 .distinct()
                 .collect(Collectors.toList());
     }

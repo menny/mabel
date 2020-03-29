@@ -1,6 +1,10 @@
 package net.evendanan.bazel.mvn.impl;
 
 import com.google.common.base.Charsets;
+import net.evendanan.bazel.mvn.api.RuleClassifier;
+import net.evendanan.bazel.mvn.api.TargetsBuilder;
+import net.evendanan.bazel.mvn.api.model.Dependency;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -12,13 +16,13 @@ import java.util.function.Function;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 import java.util.stream.Collectors;
-import net.evendanan.bazel.mvn.api.model.Dependency;
-import net.evendanan.bazel.mvn.api.RuleClassifier;
-import net.evendanan.bazel.mvn.api.TargetsBuilder;
 
 public class RuleClassifiers {
 
-    public static TargetsBuilder priorityRuleClassifier(Collection<RuleClassifier> classifiers, TargetsBuilder defaultFormatter, final Dependency dependency) {
+    public static TargetsBuilder priorityRuleClassifier(
+            Collection<RuleClassifier> classifiers,
+            TargetsBuilder defaultFormatter,
+            final Dependency dependency) {
         return classifiers.stream()
                 .map(classifier -> classifier.classifyRule(dependency))
                 .filter(Optional::isPresent)
@@ -67,12 +71,14 @@ public class RuleClassifiers {
             this.downloader = downloader;
         }
 
-        private static Optional<TargetsBuilder> performRemoteJarInspection(InputStream inputStream) throws IOException {
+        private static Optional<TargetsBuilder> performRemoteJarInspection(InputStream inputStream)
+                throws IOException {
             try (JarInputStream zipInputStream = new JarInputStream(inputStream, false)) {
                 JarEntry jarEntry = zipInputStream.getNextJarEntry();
-                while (jarEntry!=null) {
+                while (jarEntry != null) {
                     final String jarEntryName = jarEntry.getName();
-                    if (jarEntryName.equalsIgnoreCase("META-INF/services/javax.annotation.processing.Processor")) {
+                    if (jarEntryName.equalsIgnoreCase(
+                            "META-INF/services/javax.annotation.processing.Processor")) {
                         StringBuilder contentBuilder = new StringBuilder();
                         final byte[] buffer = new byte[1024];
                         int read = 0;
@@ -81,7 +87,8 @@ public class RuleClassifiers {
                         }
 
                         return parseServicesProcessorFileContent(contentBuilder.toString());
-                    } else if (jarEntryName.startsWith("META-INF/") && jarEntryName.endsWith(".kotlin_module")) {
+                    } else if (jarEntryName.startsWith("META-INF/")
+                            && jarEntryName.endsWith(".kotlin_module")) {
                         return Optional.of(TargetsBuilders.KOTLIN_IMPORT);
                     }
                     zipInputStream.closeEntry();
@@ -92,13 +99,15 @@ public class RuleClassifiers {
             return Optional.empty();
         }
 
-        private static Optional<TargetsBuilder> parseServicesProcessorFileContent(String processorContent) {
-            if (processorContent!=null && processorContent.length() > 0) {
-                final List<String> processors = Arrays.stream(processorContent.split("\n", -1))
-                        .filter(s -> s!=null && s.length() > 0)
-                        .map(String::trim)
-                        .filter(s -> !s.isEmpty())
-                        .collect(Collectors.toList());
+        private static Optional<TargetsBuilder> parseServicesProcessorFileContent(
+                String processorContent) {
+            if (processorContent != null && processorContent.length() > 0) {
+                final List<String> processors =
+                        Arrays.stream(processorContent.split("\n", -1))
+                                .filter(s -> s != null && s.length() > 0)
+                                .map(String::trim)
+                                .filter(s -> !s.isEmpty())
+                                .collect(Collectors.toList());
 
                 if (processors.size() > 0) {
                     return Optional.of(new TargetsBuilders.JavaPluginFormatter(processors));
@@ -109,7 +118,8 @@ public class RuleClassifiers {
 
         @Override
         public Optional<TargetsBuilder> classifyRule(final Dependency dependency) {
-            try (InputStream networkInputStream = downloader.apply(dependency).toURL().openStream()) {
+            try (InputStream networkInputStream =
+                    downloader.apply(dependency).toURL().openStream()) {
                 return performRemoteJarInspection(networkInputStream);
             } catch (IOException e) {
                 e.printStackTrace();

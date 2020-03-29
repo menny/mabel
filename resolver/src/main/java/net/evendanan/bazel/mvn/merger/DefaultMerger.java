@@ -11,10 +11,11 @@ public class DefaultMerger implements GraphMerger {
     @Override
     public Collection<Dependency> mergeGraphs(Collection<Resolution> dependencies) {
         // strategy
-        //1. pinning breadth-first versions and resolve versions on all graphs
+        // 1. pinning breadth-first versions and resolve versions on all graphs
         System.out.print("Resolving conflicting versions...");
-        final Collection<Dependency> mergedDependencies = new PinBreadthFirstVersionsMerger().mergeGraphs(dependencies);
-        //2. de-duping
+        final Collection<Dependency> mergedDependencies =
+                new PinBreadthFirstVersionsMerger().mergeGraphs(dependencies);
+        // 2. de-duping
         System.out.print("Removing duplicate dependencies...");
         return FilterDuplicateDependenciesEntries.filterDuplicateDependencies(mergedDependencies);
     }

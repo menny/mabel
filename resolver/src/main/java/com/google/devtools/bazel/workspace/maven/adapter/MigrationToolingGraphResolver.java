@@ -25,7 +25,10 @@ public class MigrationToolingGraphResolver implements GraphResolver {
     private static List<Repository> buildRepositories(Collection<String> repositories) {
         ArrayList<Repository> repositoryList = new ArrayList<>(repositories.size());
         for (String repositoryUrlString : repositories) {
-            Preconditions.checkState(repositoryUrlString.endsWith("/"), "Repository url '%s' should end with '/'", repositoryUrlString);
+            Preconditions.checkState(
+                    repositoryUrlString.endsWith("/"),
+                    "Repository url '%s' should end with '/'",
+                    repositoryUrlString);
             final Repository repository = new Repository();
             URI repositoryUri = URI.create(repositoryUrlString);
             repository.setId(repositoryUri.getHost());
@@ -38,11 +41,19 @@ public class MigrationToolingGraphResolver implements GraphResolver {
     }
 
     @Override
-    public Resolution resolve(String mavenCoordinate, final Collection<String> repositoriesUrls, final Collection<String> excludes) {
+    public Resolution resolve(
+            String mavenCoordinate,
+            final Collection<String> repositoriesUrls,
+            final Collection<String> excludes) {
         final List<Repository> repositories = buildRepositories(repositoriesUrls);
         final VersionResolver versionResolver = VersionResolver.defaultResolver(debugLogs);
-        MigrationToolingMavenResolver resolver = new MigrationToolingMavenResolver(
-                repositories, new DefaultModelResolver(repositories, versionResolver), versionResolver, excludes, debugLogs);
+        MigrationToolingMavenResolver resolver =
+                new MigrationToolingMavenResolver(
+                        repositories,
+                        new DefaultModelResolver(repositories, versionResolver),
+                        versionResolver,
+                        excludes,
+                        debugLogs);
 
         final int packagingIndex = mavenCoordinate.indexOf('@');
         String packaging = null;

@@ -17,20 +17,14 @@ package com.google.devtools.bazel.workspace.maven;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
 import org.apache.maven.model.License;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.util.artifact.JavaScopes;
 
-/**
- * A struct representing the fields of maven_jar to be written to the WORKSPACE file.
- */
-//TODO(petros): Kill this after refactoring resolvers.
+import java.util.*;
+
+/** A struct representing the fields of maven_jar to be written to the WORKSPACE file. */
+// TODO(petros): Kill this after refactoring resolvers.
 public class Rule implements Comparable<Rule> {
 
     private static final String DEFAULT_MAVEN_REPOSITORY = "https://repo1.maven.org/maven2/";
@@ -60,7 +54,11 @@ public class Rule implements Comparable<Rule> {
     }
 
     static String generateFullName(String groupId, String artifactId, String version) {
-        return normalizedWorkspaceName(groupId) + "__" + normalizedWorkspaceName(artifactId) + "__" + normalizedWorkspaceName(version);
+        return normalizedWorkspaceName(groupId)
+                + "__"
+                + normalizedWorkspaceName(artifactId)
+                + "__"
+                + normalizedWorkspaceName(version);
     }
 
     private static String normalizedWorkspaceName(final String name) {
@@ -71,7 +69,8 @@ public class Rule implements Comparable<Rule> {
         return name.replace('.', '_');
     }
 
-    public static String calculateMavenCoordinates(final String groupId, final String artifactId, final String version) {
+    public static String calculateMavenCoordinates(
+            final String groupId, final String artifactId, final String version) {
         return groupId + ":" + artifactId + ":" + version;
     }
 
@@ -151,12 +150,16 @@ public class Rule implements Comparable<Rule> {
     }
 
     /**
-     * A unique name for this artifact which includes Maven meta-data.
-     * This can later be decoded back into a maven annotation.
-     * Should be used as the name of a lib, never an external workspace
+     * A unique name for this artifact which includes Maven meta-data. This can later be decoded
+     * back into a maven annotation. Should be used as the name of a lib, never an external
+     * workspace
      */
     public String mavenGeneratedName() {
-        return normalizeMavenName(groupId()) + "__" + normalizeMavenName(artifactId()) + "__" + normalizeMavenName(version());
+        return normalizeMavenName(groupId())
+                + "__"
+                + normalizeMavenName(artifactId())
+                + "__"
+                + normalizeMavenName(version());
     }
 
     public String mavenCoordinates() {
@@ -172,21 +175,32 @@ public class Rule implements Comparable<Rule> {
     }
 
     private String getUri() {
-        return groupId().replaceAll("\\.", "/") + "/" + artifactId() + "/" + version() + "/"
-                + artifactId() + "-" + version() + (artifact.getClassifier().isEmpty() ? "":"-" + artifact.getClassifier()) + "." + packaging();
+        return groupId().replaceAll("\\.", "/")
+                + "/"
+                + artifactId()
+                + "/"
+                + version()
+                + "/"
+                + artifactId()
+                + "-"
+                + version()
+                + (artifact.getClassifier().isEmpty() ? "" : "-" + artifact.getClassifier())
+                + "."
+                + packaging();
     }
 
     public String getUrl() {
-        Preconditions.checkState(repository.endsWith("/"), "Repository url '%s' should end with '/'", repository);
+        Preconditions.checkState(
+                repository.endsWith("/"), "Repository url '%s' should end with '/'", repository);
         return repository + getUri();
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this==o) {
+        if (this == o) {
             return true;
         }
-        if (o==null || getClass()!=o.getClass()) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
 

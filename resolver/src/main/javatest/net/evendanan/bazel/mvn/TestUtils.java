@@ -9,11 +9,22 @@ import java.util.stream.Collectors;
 
 public class TestUtils {
 
-    public static Dependency createDependency(String mavenDep, String url, String sourcesUrl, List<String> depsLabels, List<String> exportsLabels, List<String> runtimeLabels) {
+    public static Dependency createDependency(
+            String mavenDep,
+            String url,
+            String sourcesUrl,
+            List<String> depsLabels,
+            List<String> exportsLabels,
+            List<String> runtimeLabels) {
         final String[] depsPart = mavenDep.split(":", -1);
 
         return Dependency.builder()
-                .mavenCoordinate(MavenCoordinate.create(depsPart[0], depsPart[1], depsPart.length > 2 ? depsPart[2] : "", url.substring(url.length() - 3)))
+                .mavenCoordinate(
+                        MavenCoordinate.create(
+                                depsPart[0],
+                                depsPart[1],
+                                depsPart.length > 2 ? depsPart[2] : "",
+                                url.substring(url.length() - 3)))
                 .dependencies(generateDeps(depsLabels))
                 .exports(generateDeps(exportsLabels))
                 .runtimeDependencies(generateDeps(runtimeLabels))
@@ -23,10 +34,14 @@ public class TestUtils {
                 .build();
     }
 
-    public static Dependency createDependency(String mavenDep, String url, List<String> depsLabels, List<String> exportsLabels, List<String> runtimeLabels) {
+    public static Dependency createDependency(
+            String mavenDep,
+            String url,
+            List<String> depsLabels,
+            List<String> exportsLabels,
+            List<String> runtimeLabels) {
         return createDependency(mavenDep, url, "", depsLabels, exportsLabels, runtimeLabels);
     }
-
 
     private static Collection<MavenCoordinate> generateDeps(final List<String> depsLabels) {
         return depsLabels.stream()

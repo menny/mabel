@@ -205,7 +205,10 @@ java_binary(
     name = "merger_bin",
     main_class = "net.evendanan.bazel.mvn.Merger",
     visibility = ["//visibility:public"],
-    srcs = glob(["src/main/java/net/evendanan/bazel/mvn/Merger.java"]),
+    srcs = [
+        "src/main/java/net/evendanan/bazel/mvn/Merger.java",
+        "src/main/java/net/evendanan/bazel/mvn/CommandLineOptions.java"
+        ],
     deps = [
         ":api_lib",
         ":serialization",
@@ -303,6 +306,21 @@ java_test(name = "merger_tests",
       ],
   size="small",
   test_class = "net.evendanan.bazel.mvn.merger.DefaultMergerTest",
+)
+
+java_test(name = "public_category_tests",
+  deps=[
+      ":api_lib",
+
+      "//resolver/main_deps/junit/junit",
+      "//resolver/main_deps/org/mockito/mockito-core",
+       ],
+  srcs= [
+      "src/main/java/net/evendanan/bazel/mvn/merger/PublicTargetsCategory.java",
+      "src/main/javatest/net/evendanan/bazel/mvn/merger/PublicTargetsCategoryTest.java"
+      ],
+  size="small",
+  test_class = "net.evendanan.bazel.mvn.merger.PublicTargetsCategoryTest",
 )
 
 java_test(name = "downloader_tests",

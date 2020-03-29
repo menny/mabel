@@ -60,7 +60,8 @@ public class Resolver {
         final File outputFile = new File(options.output_file);
         final File parentFolder = outputFile.getParentFile();
         if (!parentFolder.isDirectory() && !parentFolder.mkdirs()) {
-            throw new IOException("Failed to create folder for json file: " + parentFolder.getAbsolutePath());
+            throw new IOException(
+                    "Failed to create folder for json file: " + parentFolder.getAbsolutePath());
         }
 
         try (final FileWriter writer = new FileWriter(outputFile, Charsets.UTF_8, false)) {
@@ -75,46 +76,42 @@ public class Resolver {
                 names = {"--artifact", "-a"},
                 splitter = NoSplitter.class,
                 description = "Maven artifact coordinate (e.g. groupId:artifactId:version).",
-                required = true
-        )
+                required = true)
         String artifact;
 
         @Parameter(
                 names = {"--blacklist", "-b"},
                 splitter = NoSplitter.class,
-                description = "Blacklisted Maven artifact coordinates (e.g. groupId:artifactId:version)."
-        )
+                description =
+                        "Blacklisted Maven artifact coordinates (e.g. groupId:artifactId:version).")
         List<String> blacklist = new ArrayList<>();
 
         @Parameter(
                 names = {"--repository"},
                 splitter = NoSplitter.class,
                 description = "Maven repository url.",
-                required = true
-        )
+                required = true)
         List<String> repositories = new ArrayList<>();
 
         @Parameter(
                 names = {"--output_file"},
                 description = "Path to output graph json file",
-                required = true
-        )
+                required = true)
         String output_file = "";
 
         @Parameter(
                 names = {"--debug_logs"},
                 description = "Will print out debug logs.",
-                arity = 1
-        )
+                arity = 1)
         boolean debug_logs = false;
     }
 
     /**
      * Jcommander defaults to splitting each parameter by comma. For example,
-     * --a=group:artifact:[x1,x2] is parsed as two items 'group:artifact:[x1' and 'x2]',
-     * instead of the intended 'group:artifact:[x1,x2]'
-     * <p>
-     * For more information: http://jcommander.org/#_splitting
+     * --a=group:artifact:[x1,x2] is parsed as two items 'group:artifact:[x1' and 'x2]', instead of
+     * the intended 'group:artifact:[x1,x2]'
+     *
+     * <p>For more information: http://jcommander.org/#_splitting
      */
     public static class NoSplitter implements IParameterSplitter {
 

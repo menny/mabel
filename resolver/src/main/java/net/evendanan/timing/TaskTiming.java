@@ -52,7 +52,8 @@ public class TaskTiming {
         final float ratioOfDone = completedTasks / (float) totalTasks;
         final long estimatedTimeLeft = (long) (duration / ratioOfDone) - duration;
 
-        return new TimingData(totalTasks, completedTasks, startTime, totalTime, estimatedTimeLeft, ratioOfDone);
+        return new TimingData(
+                totalTasks, completedTasks, startTime, totalTime, estimatedTimeLeft, ratioOfDone);
     }
 
     @VisibleForTesting

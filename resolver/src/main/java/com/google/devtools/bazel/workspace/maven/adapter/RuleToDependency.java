@@ -18,6 +18,11 @@ public class RuleToDependency {
         this.debugLogs = debugLogs;
     }
 
+    private static MavenCoordinate ruleToMavenCoordinate(Rule rule) {
+        return MavenCoordinate.create(
+                rule.groupId(), rule.artifactId(), rule.version(), rule.packaging());
+    }
+
     public Resolution from(Rule rule) {
         HashMap<String, Dependency> cache = new HashMap<>();
         Dependency rootDependency = from(rule, cache);
@@ -36,18 +41,29 @@ public class RuleToDependency {
             return cache.get(rule.mavenCoordinates());
         }
 
-        Dependency mapped = Dependency.builder()
-                .mavenCoordinate(ruleToMavenCoordinate(rule))
-                .dependencies(rule.getDeps().stream().map(RuleToDependency::ruleToMavenCoordinate).collect(Collectors.toList()))
-                .exports(rule.getExportDeps().stream().map(RuleToDependency::ruleToMavenCoordinate).collect(Collectors.toList()))
-                .runtimeDependencies(rule.getRuntimeDeps().stream().map(RuleToDependency::ruleToMavenCoordinate).collect(Collectors.toList()))
-                .url(rule.isValid() ? rule.getUrl() : "")
-                .licenses(rule.getLicenses().stream()
-                        .map(org.apache.maven.model.License::getName)
-                        .map(LicenseTools::fromLicenseName)
-                        .filter(Objects::nonNull)
-                        .collect(Collectors.toList()))
-                .build();
+        Dependency mapped =
+                Dependency.builder()
+                        .mavenCoordinate(ruleToMavenCoordinate(rule))
+                        .dependencies(
+                                rule.getDeps().stream()
+                                        .map(RuleToDependency::ruleToMavenCoordinate)
+                                        .collect(Collectors.toList()))
+                        .exports(
+                                rule.getExportDeps().stream()
+                                        .map(RuleToDependency::ruleToMavenCoordinate)
+                                        .collect(Collectors.toList()))
+                        .runtimeDependencies(
+                                rule.getRuntimeDeps().stream()
+                                        .map(RuleToDependency::ruleToMavenCoordinate)
+                                        .collect(Collectors.toList()))
+                        .url(rule.isValid() ? rule.getUrl() : "")
+                        .licenses(
+                                rule.getLicenses().stream()
+                                        .map(org.apache.maven.model.License::getName)
+                                        .map(LicenseTools::fromLicenseName)
+                                        .filter(Objects::nonNull)
+                                        .collect(Collectors.toList()))
+                        .build();
 
         if (debugLogs) {
             System.out.println("Caching dependencies for " + rule.mavenCoordinates());
@@ -59,13 +75,5 @@ public class RuleToDependency {
         rule.getRuntimeDeps().forEach(dep -> cache.put(dep.mavenCoordinates(), from(dep, cache)));
 
         return mapped;
-    }
-
-    private static MavenCoordinate ruleToMavenCoordinate(Rule rule) {
-        return MavenCoordinate.create(
-                rule.groupId(),
-                rule.artifactId(),
-                rule.version(),
-                rule.packaging());
     }
 }

@@ -9,7 +9,10 @@ public class ArtifactBuilderTest {
 
     @Test
     public void testNoProfilesNoPlaceholders() {
-        Assert.assertEquals("something", ArtifactBuilder.ProfilePlaceholderUtil.replacePlaceholders(new Model(), "something"));
+        Assert.assertEquals(
+                "something",
+                ArtifactBuilder.ProfilePlaceholderUtil.replacePlaceholders(
+                        new Model(), "something"));
     }
 
     @Test
@@ -19,7 +22,9 @@ public class ArtifactBuilderTest {
         model.getProfiles().get(0).getProperties().put("key", "value");
         model.getProfiles().get(0).getProperties().put("something", "other");
 
-        Assert.assertEquals("something", ArtifactBuilder.ProfilePlaceholderUtil.replacePlaceholders(model, "something"));
+        Assert.assertEquals(
+                "something",
+                ArtifactBuilder.ProfilePlaceholderUtil.replacePlaceholders(model, "something"));
     }
 
     @Test
@@ -29,7 +34,9 @@ public class ArtifactBuilderTest {
         model.getProfiles().get(0).getProperties().put("key", "value");
         model.getProfiles().get(0).getProperties().put("something", "other");
 
-        Assert.assertEquals("${not.found}", ArtifactBuilder.ProfilePlaceholderUtil.replacePlaceholders(model, "${not.found}"));
+        Assert.assertEquals(
+                "${not.found}",
+                ArtifactBuilder.ProfilePlaceholderUtil.replacePlaceholders(model, "${not.found}"));
     }
 
     @Test
@@ -42,8 +49,10 @@ public class ArtifactBuilderTest {
         model.getProfiles().add(new Profile());
         model.getProfiles().get(1).getProperties().put("key2", "vehicle");
 
-
-        Assert.assertEquals("car is vehicle", ArtifactBuilder.ProfilePlaceholderUtil.replacePlaceholders(model, "${something} is ${key2}"));
+        Assert.assertEquals(
+                "car is vehicle",
+                ArtifactBuilder.ProfilePlaceholderUtil.replacePlaceholders(
+                        model, "${something} is ${key2}"));
     }
 
     @Test
@@ -56,6 +65,9 @@ public class ArtifactBuilderTest {
         model.getProfiles().add(new Profile());
         model.getProfiles().get(1).getProperties().put("key", "vehicle");
 
-        Assert.assertEquals("car is object", ArtifactBuilder.ProfilePlaceholderUtil.replacePlaceholders(model, "${something} is ${key}"));
+        Assert.assertEquals(
+                "car is object",
+                ArtifactBuilder.ProfilePlaceholderUtil.replacePlaceholders(
+                        model, "${something} is ${key}"));
     }
 }

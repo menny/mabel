@@ -8,7 +8,13 @@ public class TimingData {
     public final long estimatedTimeLeft;
     public final float ratioOfDone;
 
-    public TimingData(int totalTasks, int doneTasks, long startTime, long totalTime, long estimatedTimeLeft, float ratioOfDone) {
+    public TimingData(
+            int totalTasks,
+            int doneTasks,
+            long startTime,
+            long totalTime,
+            long estimatedTimeLeft,
+            float ratioOfDone) {
         this.totalTasks = totalTasks;
         this.doneTasks = doneTasks;
         this.startTime = startTime;

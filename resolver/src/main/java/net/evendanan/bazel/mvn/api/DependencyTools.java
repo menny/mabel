@@ -1,8 +1,9 @@
 package net.evendanan.bazel.mvn.api;
 
-import java.util.Locale;
 import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
+
+import java.util.Locale;
 
 public class DependencyTools {
 
@@ -17,7 +18,12 @@ public class DependencyTools {
     }
 
     public String mavenCoordinates(MavenCoordinate mavenCoordinate) {
-        return String.format(Locale.ROOT, "%s:%s:%s", mavenCoordinate.groupId(), mavenCoordinate.artifactId(), mavenCoordinate.version());
+        return String.format(
+                Locale.ROOT,
+                "%s:%s:%s",
+                mavenCoordinate.groupId(),
+                mavenCoordinate.artifactId(),
+                mavenCoordinate.version());
     }
 
     public final String repositoryRuleName(Dependency dependency) {
@@ -25,7 +31,12 @@ public class DependencyTools {
     }
 
     public String repositoryRuleName(MavenCoordinate mavenCoordinate) {
-        return String.format(Locale.ROOT, "%s__%s__%s", normalize(mavenCoordinate.groupId()), normalize(mavenCoordinate.artifactId()), normalize(mavenCoordinate.version()));
+        return String.format(
+                Locale.ROOT,
+                "%s__%s__%s",
+                normalize(mavenCoordinate.groupId()),
+                normalize(mavenCoordinate.artifactId()),
+                normalize(mavenCoordinate.version()));
     }
 
     public final String targetName(Dependency dependency) {
@@ -33,6 +44,10 @@ public class DependencyTools {
     }
 
     public String targetName(MavenCoordinate mavenCoordinate) {
-        return String.format(Locale.ROOT, "%s__%s", normalize(mavenCoordinate.groupId()), normalize(mavenCoordinate.artifactId()));
+        return String.format(
+                Locale.ROOT,
+                "%s__%s",
+                normalize(mavenCoordinate.groupId()),
+                normalize(mavenCoordinate.artifactId()));
     }
 }

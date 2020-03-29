@@ -14,9 +14,7 @@
 
 package com.google.devtools.bazel.workspace.maven;
 
-
 import com.google.common.collect.Lists;
-import java.util.List;
 import org.apache.maven.repository.internal.MavenRepositorySystemUtils;
 import org.eclipse.aether.DefaultRepositorySystemSession;
 import org.eclipse.aether.RepositorySystem;
@@ -36,11 +34,11 @@ import org.eclipse.aether.transport.http.HttpTransporterFactory;
 import org.eclipse.aether.util.graph.manager.ClassicDependencyManager;
 import org.eclipse.aether.version.Version;
 
+import java.util.List;
+
 import static java.util.stream.Collectors.toList;
 
-/**
- * Facade around aether. This class is used to make various requests to the aether subsystem.
- */
+/** Facade around aether. This class is used to make various requests to the aether subsystem. */
 public class Aether {
 
     private RepositorySystem repositorySystem;
@@ -49,8 +47,10 @@ public class Aether {
 
     private List<RemoteRepository> remoteRepositories;
 
-    private Aether(RepositorySystem repositorySystem,
-                   RepositorySystemSession session, List<RemoteRepository> remoteRepositories) {
+    private Aether(
+            RepositorySystem repositorySystem,
+            RepositorySystemSession session,
+            List<RemoteRepository> remoteRepositories) {
         this.repositorySystem = repositorySystem;
         this.repositorySystemSession = session;
         this.remoteRepositories = remoteRepositories;
@@ -63,8 +63,10 @@ public class Aether {
 
     /** Given an artifacts requests a version range for it. */
     List<String> requestVersionRange(Artifact artifact) throws VersionRangeResolutionException {
-        VersionRangeRequest rangeRequest = new VersionRangeRequest(artifact, remoteRepositories, null);
-        VersionRangeResult result = repositorySystem.resolveVersionRange(repositorySystemSession, rangeRequest);
+        VersionRangeRequest rangeRequest =
+                new VersionRangeRequest(artifact, remoteRepositories, null);
+        VersionRangeResult result =
+                repositorySystem.resolveVersionRange(repositorySystemSession, rangeRequest);
         return result.getVersions().stream().map(Version::toString).collect(toList());
     }
 
@@ -100,32 +102,32 @@ public class Aether {
         /* Creates a new aether repository system. */
         static RepositorySystem newRepositorySystem() {
             DefaultServiceLocator locator = MavenRepositorySystemUtils.newServiceLocator();
-            locator.addService(RepositoryConnectorFactory.class, BasicRepositoryConnectorFactory.class);
+            locator.addService(
+                    RepositoryConnectorFactory.class, BasicRepositoryConnectorFactory.class);
             locator.addService(TransporterFactory.class, FileTransporterFactory.class);
             locator.addService(TransporterFactory.class, HttpTransporterFactory.class);
             return locator.getService(RepositorySystem.class);
         }
 
         /**
-         * Aether and its components are designed to be stateless. All configurations and state
-         * are provided through the RepositorySystemSession.
+         * Aether and its components are designed to be stateless. All configurations and state are
+         * provided through the RepositorySystemSession.
          *
-         * TODO(petros): Separate this out into its own class.
-         * This is the most intricate element of Aether.
-         * There are various settings that are useful to us.
-         * Specifically, these are the (1) LocalRepositoryManager, (2) DependencyManager,
-         * (3) DependencyGraphTransformer, (4) TransferListener, (5) ProxySelector
+         * <p>TODO(petros): Separate this out into its own class. This is the most intricate element
+         * of Aether. There are various settings that are useful to us. Specifically, these are the
+         * (1) LocalRepositoryManager, (2) DependencyManager, (3) DependencyGraphTransformer, (4)
+         * TransferListener, (5) ProxySelector
          */
         static RepositorySystemSession newRepositorySession(RepositorySystem system) {
             DefaultRepositorySystemSession session = MavenRepositorySystemUtils.newSession();
 
             // TODO(petros): Decide on where to cache things.
             LocalRepository localRepository = new LocalRepository("target/local-repo");
-            session.setLocalRepositoryManager(system.newLocalRepositoryManager(session, localRepository));
+            session.setLocalRepositoryManager(
+                    system.newLocalRepositoryManager(session, localRepository));
 
             session.setDependencyManager(new ClassicDependencyManager());
             return session;
         }
     }
-
 }

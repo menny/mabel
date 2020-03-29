@@ -35,13 +35,19 @@ public class ArtifactDownloaderTest {
         if (!artifactDownloaderFolder.mkdir()) {
             throw new IOException("Failed to create temp folder for test");
         }
-        mUnderTest = new ArtifactDownloader(mTestOpener, artifactDownloaderFolder, DependencyTools.DEFAULT);
+        mUnderTest =
+                new ArtifactDownloader(
+                        mTestOpener, artifactDownloaderFolder, DependencyTools.DEFAULT);
 
-        mDependency = Dependency.builder()
-                .mavenCoordinate(MavenCoordinate.create("group", "artifact", "1.1", "jar"))
-                .url("https://example.com/temp.jar")
-                .build();
-        expectedOutputFile = new File(artifactDownloaderFolder, DependencyTools.DEFAULT.repositoryRuleName(mDependency));
+        mDependency =
+                Dependency.builder()
+                        .mavenCoordinate(MavenCoordinate.create("group", "artifact", "1.1", "jar"))
+                        .url("https://example.com/temp.jar")
+                        .build();
+        expectedOutputFile =
+                new File(
+                        artifactDownloaderFolder,
+                        DependencyTools.DEFAULT.repositoryRuleName(mDependency));
     }
 
     @Test
@@ -51,7 +57,8 @@ public class ArtifactDownloaderTest {
         final URI localUri = mUnderTest.getLocalUriForDependency(mDependency);
 
         Assert.assertTrue(expectedOutputFile.exists());
-        Assert.assertEquals(expectedOutputFile.getAbsolutePath(), new File(localUri).getAbsolutePath());
+        Assert.assertEquals(
+                expectedOutputFile.getAbsolutePath(), new File(localUri).getAbsolutePath());
 
         Assert.assertFalse(mTestOpener.mAccessCounters.containsKey(new URL(mDependency.url())));
     }
@@ -63,9 +70,11 @@ public class ArtifactDownloaderTest {
         final URI localUri = mUnderTest.getLocalUriForDependency(mDependency);
 
         Assert.assertTrue(expectedOutputFile.exists());
-        Assert.assertEquals(expectedOutputFile.getAbsolutePath(), new File(localUri).getAbsolutePath());
+        Assert.assertEquals(
+                expectedOutputFile.getAbsolutePath(), new File(localUri).getAbsolutePath());
 
-        Assert.assertArrayEquals(TestOpener.TEST_OUTPUT.getBytes(), Files.readAllBytes(expectedOutputFile.toPath()));
+        Assert.assertArrayEquals(
+                TestOpener.TEST_OUTPUT.getBytes(), Files.readAllBytes(expectedOutputFile.toPath()));
     }
 
     @Test
@@ -75,10 +84,13 @@ public class ArtifactDownloaderTest {
         mUnderTest.getLocalUriForDependency(mDependency);
         final URI localUri2 = mUnderTest.getLocalUriForDependency(mDependency);
 
-        Assert.assertEquals(expectedOutputFile.getAbsolutePath(), new File(localUri2).getAbsolutePath());
+        Assert.assertEquals(
+                expectedOutputFile.getAbsolutePath(), new File(localUri2).getAbsolutePath());
 
-        Assert.assertArrayEquals(TestOpener.TEST_OUTPUT.getBytes(), Files.readAllBytes(expectedOutputFile.toPath()));
-        Assert.assertEquals(Integer.valueOf(1), mTestOpener.mAccessCounters.get(new URL(mDependency.url())));
+        Assert.assertArrayEquals(
+                TestOpener.TEST_OUTPUT.getBytes(), Files.readAllBytes(expectedOutputFile.toPath()));
+        Assert.assertEquals(
+                Integer.valueOf(1), mTestOpener.mAccessCounters.get(new URL(mDependency.url())));
     }
 
     private static class TestOpener implements ArtifactDownloader.ConnectionOpener {
@@ -87,10 +99,12 @@ public class ArtifactDownloaderTest {
 
         @Override
         public InputStream openInputStream(final URL url) throws IOException {
-            mAccessCounters.compute(url, (urlKey, currentValue) -> {
-                if (currentValue == null) return 1;
-                else return currentValue + 1;
-            });
+            mAccessCounters.compute(
+                    url,
+                    (urlKey, currentValue) -> {
+                        if (currentValue == null) return 1;
+                        else return currentValue + 1;
+                    });
 
             return new ByteArrayInputStream(TEST_OUTPUT.getBytes(Charsets.UTF_8));
         }

@@ -30,10 +30,9 @@ public class SourcesJarLocator {
         mConnectionFactory = opener;
     }
 
-    private static Collection<Dependency> fillSourcesAttribute(Collection<Dependency> dependencies, DependencyMemoizator memoizator) {
-        return dependencies.stream()
-                .map(memoizator::map)
-                .collect(Collectors.toList());
+    private static Collection<Dependency> fillSourcesAttribute(
+            Collection<Dependency> dependencies, DependencyMemoizator memoizator) {
+        return dependencies.stream().map(memoizator::map).collect(Collectors.toList());
     }
 
     public Collection<Dependency> fillSourcesAttribute(Collection<Dependency> dependencies) {
@@ -49,11 +48,17 @@ public class SourcesJarLocator {
         final int extStartIndex = url.lastIndexOf(".");
         if (extStartIndex > 0) {
             try {
-                //for example
+                // for example
                 // https://repo1.maven.org/maven2/com/google/guava/guava/20.0/guava-20.0.jar
                 // will become
-                // https://repo1.maven.org/maven2/com/google/guava/guava/20.0/guava-20.0-sources.jar (always jar ext)
-                final String urlWithClassifier = String.format(Locale.US, "%s-%s.jar", url.substring(0, extStartIndex), SOURCES_CLASSIFIER);
+                // https://repo1.maven.org/maven2/com/google/guava/guava/20.0/guava-20.0-sources.jar
+                // (always jar ext)
+                final String urlWithClassifier =
+                        String.format(
+                                Locale.US,
+                                "%s-%s.jar",
+                                url.substring(0, extStartIndex),
+                                SOURCES_CLASSIFIER);
                 final URL classifiedUrl = new URL(urlWithClassifier);
                 HttpURLConnection con = mConnectionFactory.openUrlConnection(classifiedUrl);
                 con.setRequestMethod("HEAD");
