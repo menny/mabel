@@ -98,7 +98,7 @@ public class RuleWriters {
                         .append("def ")
                         .append(KOTLIN_LIB_MACRO_NAME)
                         .append(
-                                "(name, deps, exports, runtime_deps, jar, java_import_impl, kt_jvm_import=None, kt_jvm_library=None):")
+                                "(name, deps, exports, runtime_deps, jar, java_import_impl, kt_jvm_import=None, kt_jvm_library=None, visibility = ['//visibility:public']):")
                         .append(NEW_LINE);
                 fileWriter.append(INDENT).append("\"\"\"").append(NEW_LINE);
                 fileWriter
@@ -166,6 +166,12 @@ public class RuleWriters {
                         .append(
                                 "kt_jvm_library: rule implementation for kt_jvm_library. Can be None.")
                         .append(NEW_LINE);
+                fileWriter
+                        .append(INDENT)
+                        .append(INDENT)
+                        .append(
+                                "visibility: Target visibility to pass to actual targets.")
+                        .append(NEW_LINE);
                 fileWriter.append(INDENT).append("\"\"\"").append(NEW_LINE);
                 fileWriter
                         .append(INDENT)
@@ -202,6 +208,12 @@ public class RuleWriters {
                         .append(INDENT)
                         .append("runtime_deps = runtime_deps,")
                         .append(NEW_LINE);
+                fileWriter
+                        .append(INDENT)
+                        .append(INDENT)
+                        .append(INDENT)
+                        .append("visibility = visibility,")
+                        .append(NEW_LINE);
                 fileWriter.append(INDENT).append(INDENT).append(")").append(NEW_LINE);
                 fileWriter.append(INDENT).append("else:").append(NEW_LINE);
                 fileWriter
@@ -214,6 +226,12 @@ public class RuleWriters {
                         .append(INDENT)
                         .append(INDENT)
                         .append("jars = [jar],")
+                        .append(NEW_LINE);
+                fileWriter
+                        .append(INDENT)
+                        .append(INDENT)
+                        .append(INDENT)
+                        .append("visibility = visibility,")
                         .append(NEW_LINE);
                 fileWriter.append(INDENT).append(INDENT).append(")").append(NEW_LINE);
                 fileWriter
@@ -238,6 +256,12 @@ public class RuleWriters {
                         .append(INDENT)
                         .append(INDENT)
                         .append("runtime_deps = runtime_deps,")
+                        .append(NEW_LINE);
+                fileWriter
+                        .append(INDENT)
+                        .append(INDENT)
+                        .append(INDENT)
+                        .append("visibility = visibility,")
                         .append(NEW_LINE);
                 fileWriter.append(INDENT).append(INDENT).append(")").append(NEW_LINE);
                 fileWriter.append(NEW_LINE);
