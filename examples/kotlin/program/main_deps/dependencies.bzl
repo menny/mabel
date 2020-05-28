@@ -41,7 +41,7 @@ def generate_workspace_rules():
 
 
 
-def kotlin_jar_support(name, deps, exports, runtime_deps, jar, java_import_impl, kt_jvm_import=None, kt_jvm_library=None, visibility = ['//visibility:public']):
+def kotlin_jar_support(name, deps, exports, runtime_deps, jar, tags, java_import_impl, kt_jvm_import=None, kt_jvm_library=None, visibility = ['//visibility:public']):
     """
     This is a help macro to handle Kotlin rules.
 
@@ -59,6 +59,7 @@ def kotlin_jar_support(name, deps, exports, runtime_deps, jar, java_import_impl,
         kt_jvm_import: rule implementation for kt_jvm_import. Can be None.
         kt_jvm_library: rule implementation for kt_jvm_library. Can be None.
         visibility: Target visibility to pass to actual targets.
+        tags: List of arbitrary text tags. Tags may be any valid string.
     """
     #In case the developer did not provide a kt_* impl, we'll try to use java_*, should work
     if kt_jvm_import == None:
@@ -68,16 +69,19 @@ def kotlin_jar_support(name, deps, exports, runtime_deps, jar, java_import_impl,
             exports = exports,
             runtime_deps = runtime_deps,
             visibility = visibility,
+            tags = tags,
         )
     else:
         kt_jvm_import(name = '{}_kotlin_jar'.format(name),
             jars = [jar],
+            tags = tags,
             visibility = visibility,
         )
         kt_jvm_library(name = name,
             deps = deps + [':{}_kotlin_jar'.format(name)],
             exports = exports + [':{}_kotlin_jar'.format(name)],
             runtime_deps = runtime_deps,
+            tags = tags,
             visibility = visibility,
         )
 
@@ -111,6 +115,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
             ':org_jetbrains_kotlin__kotlin_stdlib',
         ],
         runtime_deps = [],
+        tags = ['maven_coordinates=com.github.salomonbrys.kotson:kotson:2.5.0'],
         jar = '@com_github_salomonbrys_kotson__kotson__2_5_0//file',
         java_import_impl = java_import_impl,
         kt_jvm_import = kt_jvm_import,
@@ -144,6 +149,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [],
         exports = [],
         runtime_deps = [],
+        tags = ['maven_coordinates=org.jetbrains.kotlin:kotlin-runtime:1.0.6'],
         jar = '@org_jetbrains_kotlin__kotlin_runtime__1_0_6//file',
         java_import_impl = java_import_impl,
         kt_jvm_import = kt_jvm_import,
@@ -161,6 +167,7 @@ def generate_transitive_dependency_targets(java_import_impl=native.java_import, 
         deps = [':org_jetbrains_kotlin__kotlin_runtime'],
         exports = [':org_jetbrains_kotlin__kotlin_runtime'],
         runtime_deps = [],
+        tags = ['maven_coordinates=org.jetbrains.kotlin:kotlin-stdlib:1.0.6'],
         jar = '@org_jetbrains_kotlin__kotlin_stdlib__1_0_6//file',
         java_import_impl = java_import_impl,
         kt_jvm_import = kt_jvm_import,
