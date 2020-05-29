@@ -3,7 +3,7 @@
 
 Yet another Maven dependency graph generator for Bazel.
 
-This WORKSPACE will provide `deps_workspace_generator_rule` rule and `artifact` macro which will automatically generate a set of targets that can be used as dependencies based on a given list of Maven coordinates. The rule will output the dependencies-graph to a file (similar to Yarn's lock-file).
+This WORKSPACE will provide `mabel_rule` rule and `artifact` macro which will automatically generate a set of targets that can be used as dependencies based on a given list of Maven coordinates. The rule will output the dependencies-graph to a file (similar to Yarn's lock-file).
 
 ## Features
 
@@ -56,11 +56,11 @@ init_mabel_rules()
 ### target definition
 In your module's `BUILD.bazel` file (let's say `resolver/BUILD.bazel`) load the dependencies rule and `artifact` macro:
 ```python
-load("@mabel//rules/maven_deps:maven_deps_workspace_generator.bzl", "deps_workspace_generator_rule", "artifact")
+load("@mabel//rules/maven_deps:maven_deps_workspace_generator.bzl", "mabel_rule", "artifact")
 ```
 And define a target for resolving dependencies:
 ```python
-deps_workspace_generator_rule(name = 'main_deps',
+mabel_rule(name = 'main_deps',
     maven_deps = [
         artifact("com.google.guava:guava:20.0"),
         artifact("org.apache.commons:commons-lang3:jar:3.8.1"),
@@ -122,7 +122,7 @@ load("//resolver/main_deps:dependencies.bzl", main_mabel_deps_rules = "generate_
 main_mabel_deps_rules()
 ```
 
-And, in the same module you declared `deps_workspace_generator_rule` (in our example `//resolver`) add to the `BUILD.bazel` file:
+And, in the same module you declared `mabel_rule` (in our example `//resolver`) add to the `BUILD.bazel` file:
 ```python
 load("//resolver/main_deps:dependencies.bzl", main_generate_transitive_dependency_targets = "generate_transitive_dependency_targets")
 main_generate_transitive_dependency_targets()
@@ -140,7 +140,7 @@ Or, you can use the sub-folder structure (IDEs find this easier to auto-complete
 
 ## Rule configuration
 
-### `deps_workspace_generator_rule`
+### `mabel_rule`
 
 This rule will merge the dependencies into one, version-conflict-resolved, dependencies graph ensuring you do not have conflicting versions of an artifact in your classpath.</br>
 Attributes:
@@ -154,7 +154,7 @@ Attributes:
 * `generated_targets_prefix`: A prefix to add to all generated targets. Default is an empty string, meaning no-prefix. This might be useful if you want to generate several, unrelated, graphs. 
 * `output_graph_to_file`: If set to `True`, will output the graph to `dependencies.txt`. Default is `False`.
 
-### `maven_dependency_graph_resolving_rule` or `artifact`
+### `artifact`
 
 This rule declares a Maven dependency to be resolved and import into your WORKSPACE.</br>
 Attributes:

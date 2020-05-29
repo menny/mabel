@@ -22,7 +22,7 @@ def _impl_resolver(ctx):
 
 DEFAULT_MAVEN_SERVERS = ['https://repo1.maven.org/maven2/']
 
-maven_dependency_graph_resolving_rule = rule(implementation=_impl_resolver,
+_mabel_maven_dependency_graph_resolving_rule = rule(implementation=_impl_resolver,
     doc = "Generates a file that represents this Maven dependency and its transitive dependencies.",
     attrs = {
        "coordinate": attr.string(mandatory=True, doc = "Maven coordinate in the form of `group-id:artifact-id:version`."),
@@ -34,10 +34,10 @@ maven_dependency_graph_resolving_rule = rule(implementation=_impl_resolver,
     outputs={"out": "%{name}-transitive-graph.data"})
 
 def artifact(coordinate, maven_exclude_deps=[], repositories=DEFAULT_MAVEN_SERVERS, debug_logs=False):
-    rule_name = "maven_dependency_graph_resolving_rule_{}".format(coordinate.replace(':', '__').replace('-', '_').replace('.', '_'))
-    # different deps_workspace_generator_rule targets may use the same artifact
+    rule_name = "_mabel_maven_dependency_graph_resolving_rule_{}".format(coordinate.replace(':', '__').replace('-', '_').replace('.', '_'))
+    # different targets may use the same artifact
     if native.existing_rule(rule_name) == None:
-        maven_dependency_graph_resolving_rule(name = rule_name,
+        _mabel_maven_dependency_graph_resolving_rule(name = rule_name,
                                         coordinate = coordinate,
                                         maven_exclude_deps = maven_exclude_deps,
                                         repositories = repositories,
@@ -94,7 +94,7 @@ def _impl_merger(ctx):
 
     return [DefaultInfo(executable=script, runfiles=ctx.runfiles(files = [ctx.executable._merger] + source_files + ctx.files._jdk))]
 
-deps_workspace_generator_rule = rule(implementation=_impl_merger,
+mabel_rule = rule(implementation=_impl_merger,
      doc = """Generates a bzl file with repository-rules and targets which describes a Maven dependecy graph based on
      the provided `maven_deps` values. The result will be stored in a `bzl` file in a sub-folder named the same as this rule target's name.
      The generated file will contain two macros:

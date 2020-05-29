@@ -5,9 +5,9 @@ generate_transitive_dependency_targets()
 
 load("@rules_java//java:defs.bzl", "java_library")
 
-load("//rules/maven_deps:maven_deps_workspace_generator.bzl", "deps_workspace_generator_rule", "artifact")
+load("//rules/maven_deps:mabel.bzl", "mabel_rule", "artifact")
 
-deps_workspace_generator_rule(name = 'main_deps',
+mabel_rule(name = 'main_deps',
     maven_deps = [
         artifact("com.google.guava:guava:27.0.1-jre"),
         artifact("org.apache.commons:commons-lang3:jar:3.8.1"),
