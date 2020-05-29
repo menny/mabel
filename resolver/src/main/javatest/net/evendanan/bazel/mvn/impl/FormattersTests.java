@@ -146,6 +146,7 @@ public class FormattersTests {
     private static final String AAR_IMPORT_TEXT =
             " aar_import_impl(name = 'aar__lib__',\n"
                     + "     aar = '@aar__lib__//file',\n"
+                    + "     tags = ['maven_coordinates=aar:lib:'],\n"
                     + "     deps = [\n"
                     + "         ':safe_mvn__dep1',\n"
                     + "         ':safe_mvn__dep2',\n"
@@ -166,6 +167,7 @@ public class FormattersTests {
     private static final String NATIVE_AAR_IMPORT_TEXT =
             "    aar_import_impl(name = 'aar__lib__',\n"
                     + "        aar = '@aar__lib__//file',\n"
+                    + "        tags = ['maven_coordinates=aar:lib:'],\n"
                     + "        deps = [\n"
                     + "            ':safe_mvn__dep1',\n"
                     + "            ':safe_mvn__dep2',\n"
@@ -305,6 +307,7 @@ public class FormattersTests {
                     + "            ':safe_mvn__runtime1',\n"
                     + "            ':safe_mvn__runtime2',\n"
                     + "        ],\n"
+                    + "        tags = ['maven_coordinates=kotlin:lib:'],\n"
                     + "        jar = '@kotlin__lib__//file',\n"
                     + "        java_import_impl = java_import_impl,\n"
                     + "    )\n"

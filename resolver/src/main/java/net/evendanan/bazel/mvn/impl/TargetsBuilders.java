@@ -253,6 +253,13 @@ public class TargetsBuilders {
                                     "runtime_deps",
                                     convertRulesToStrings(
                                             dependency.runtimeDependencies(), dependencyTools))
+                            .addList(
+                                    "tags",
+                                    Collections.singletonList(
+                                            String.format(
+                                                    Locale.ROOT,
+                                                    "maven_coordinates=%s",
+                                                    dependencyTools.mavenCoordinates(dependency))))
                             .addString(
                                     "jar",
                                     String.format(
@@ -408,6 +415,13 @@ public class TargetsBuilders {
                                             Locale.US,
                                             "@%s//file",
                                             dependencyTools.repositoryRuleName(dependency)))
+                            .addList(
+                                    "tags",
+                                    Collections.singletonList(
+                                            String.format(
+                                                    Locale.ROOT,
+                                                    "maven_coordinates=%s",
+                                                    dependencyTools.mavenCoordinates(dependency))))
                             .addList("deps", convertRulesToStrings(deps, dependencyTools))
                             .addList(
                                     "exports",
