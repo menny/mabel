@@ -16,7 +16,7 @@ def _impl_resolver(ctx):
         outputs=[output_file],
         executable=ctx.executable._resolver,
         arguments = arguments,
-        mnemonic='MavenTransitiveDependencyResolve')
+        mnemonic='MabelMavenTransitiveDependencyResolve')
 
     return [TransitiveDataInfo(graph_file=output_file)]
 
@@ -34,7 +34,7 @@ _mabel_maven_dependency_graph_resolving_rule = rule(implementation=_impl_resolve
     outputs={"out": "%{name}-transitive-graph.data"})
 
 def artifact(coordinate, maven_exclude_deps=[], repositories=DEFAULT_MAVEN_SERVERS, debug_logs=False):
-    rule_name = "_mabel_maven_dependency_graph_resolving_rule_{}".format(coordinate.replace(':', '__').replace('-', '_').replace('.', '_'))
+    rule_name = "_mabel_maven_dependency_graph_resolving_{}".format(coordinate.replace(':', '__').replace('-', '_').replace('.', '_'))
     # different targets may use the same artifact
     if native.existing_rule(rule_name) == None:
         _mabel_maven_dependency_graph_resolving_rule(name = rule_name,
@@ -58,6 +58,7 @@ script_merger_template = """
     --output_pretty_dep_graph_filename={output_pretty_dep_graph_filename} \
     --artifacts_path={artifacts_path} \
     --public_targets_category={public_targets_category} \
+    --version_conflict_resolver={version_conflict_resolver} \
     --keep_output_folder={keep_output_folder}
 
 echo "Stored resolved dependencies graph (rules) at ${{BUILD_WORKING_DIRECTORY}}/{output_target_build_files_base_path}{output_filename}"
@@ -87,6 +88,7 @@ def _impl_merger(ctx):
         output_pretty_dep_graph_filename = "dependencies.txt" if ctx.attr.output_graph_to_file else "",
         create_deps_sub_folders = '{}'.format(ctx.attr.generate_deps_sub_folder).lower(),
         public_targets_category = ctx.attr.public_targets_category,
+        version_conflict_resolver = ctx.attr.version_conflict_resolver,
         keep_output_folder = '{}'.format(ctx.attr.keep_output_folder).lower()
         )
 
@@ -120,6 +122,7 @@ mabel_rule = rule(implementation=_impl_merger,
          "artifacts_path": attr.string(default="", doc='Cache location to download artifacts into. Empty means `[user-home-folder]/.mabel/artifacts/`', mandatory=False),
          "output_graph_to_file": attr.bool(default=False, doc='If set to True, will output the graph to dependencies.txt. Default is False.', mandatory=False),
          "public_targets_category": attr.string(mandatory=False, default="all", values=["requested_deps", "recursive_exports", "all"], doc="Set public visibility of resolved targets. Default is 'all'. Can be: 'requested_deps', 'recursive_exports', 'all'."),
+         "version_conflict_resolver": attr.string(mandatory=False, default="latest_version", values=["latest_version", "breadth_first"], doc="Defines the strategy used to resolve version-conflicts. Default is 'latest_version'. Can be: 'latest_version', 'breadth_first'."),
          "_jdk": attr.label(default = Label("@bazel_tools//tools/jdk:remote_jdk11"), providers = [java_common.JavaRuntimeInfo]),
          "_merger": attr.label(executable=True, allow_single_file=True, cfg="host", default=Label("//resolver:merger_bin_deploy.jar"))
      },

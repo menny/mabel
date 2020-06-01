@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-bazel test --build_tests_only //...
 bazel coverage --build_tests_only //...
 curl -s https://codecov.io/bash > .codecov
 chmod +x .codecov

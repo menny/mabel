@@ -8,13 +8,18 @@ import java.util.Collection;
 
 public class DefaultMerger implements GraphMerger {
 
+    private final GraphMerger mMainMerger;
+
+    public DefaultMerger(GraphMerger merger) {
+        mMainMerger = merger;
+    }
+
     @Override
     public Collection<Dependency> mergeGraphs(Collection<Resolution> dependencies) {
         // strategy
         // 1. pinning breadth-first versions and resolve versions on all graphs
-        System.out.print("Resolving conflicting versions...");
-        final Collection<Dependency> mergedDependencies =
-                new PinBreadthFirstVersionsMerger().mergeGraphs(dependencies);
+        System.out.print(mMainMerger.getClass().getSimpleName() + ": Resolving conflicting versions...");
+        final Collection<Dependency> mergedDependencies = mMainMerger.mergeGraphs(dependencies);
         // 2. de-duping
         System.out.print("Removing duplicate dependencies...");
         return FilterDuplicateDependenciesEntries.filterDuplicateDependencies(mergedDependencies);

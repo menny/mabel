@@ -309,15 +309,44 @@ java_test(name = "merger_tests",
   test_class = "net.evendanan.bazel.mvn.merger.DefaultMergerTest",
 )
 
+java_test(name = "latest_version_merger_tests",
+  deps=[
+      ":merger",
+      ":api_model",
+
+      "//resolver/main_deps/junit/junit",
+      "//resolver/main_deps/org/mockito/mockito-core",
+       ],
+  srcs= [
+      "src/main/javatest/net/evendanan/bazel/mvn/merger/LatestVersionMergerTest.java",
+      ],
+  size="small",
+  test_class = "net.evendanan.bazel.mvn.merger.LatestVersionMergerTest",
+)
+
+java_test(name = "version_compare_tests",
+  deps=[
+      ":merger",
+
+      "//resolver/main_deps/junit/junit",
+      "//resolver/main_deps/org/mockito/mockito-core",
+       ],
+  srcs= [
+      "src/main/javatest/net/evendanan/bazel/mvn/merger/VersionComparatorTest.java",
+      ],
+  size="small",
+  test_class = "net.evendanan.bazel.mvn.merger.VersionComparatorTest",
+)
+
 java_test(name = "public_category_tests",
   deps=[
+      ":merger",
       ":api_lib",
 
       "//resolver/main_deps/junit/junit",
       "//resolver/main_deps/org/mockito/mockito-core",
        ],
   srcs= [
-      "src/main/java/net/evendanan/bazel/mvn/merger/PublicTargetsCategory.java",
       "src/main/javatest/net/evendanan/bazel/mvn/merger/PublicTargetsCategoryTest.java"
       ],
   size="small",
