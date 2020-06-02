@@ -595,4 +595,10 @@ public class DefaultMergerTest {
         Assert.assertTrue(
                 actual.stream().allMatch(dependency -> dependency.sourcesUrl().isEmpty()));
     }
+
+    @Test
+    public void testConflictResolutionEnumCreatesTheRightType() {
+        Assert.assertEquals(PinBreadthFirstVersionsMerger.class, VersionConflictResolution.breadth_first.createMerger().getClass());
+        Assert.assertEquals(PinLatestVersionMerger.class, VersionConflictResolution.latest_version.createMerger().getClass());
+    }
 }

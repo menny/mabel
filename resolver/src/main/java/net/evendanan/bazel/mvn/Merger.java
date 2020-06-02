@@ -42,7 +42,7 @@ public class Merger {
         actualMacrosFile = new File(parent, options.output_macro_file);
         macrosFile = File.createTempFile("temp_mabel_deps", actualMacrosFile.getName());
 
-        merger = new DefaultMerger();
+        merger = new DefaultMerger(options.version_conflict_resolver.createMerger());
         repositoryRulesMacroWriter =
                 new RuleWriters.HttpRepoRulesMacroWriter(macrosFile, "generate_workspace_rules");
         targetsMacroWriter =
