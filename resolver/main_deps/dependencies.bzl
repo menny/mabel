@@ -367,7 +367,6 @@ def generate_workspace_rules(name = "generate_workspace_rules"):
         sha256 = "6cb127138f41b5a869f9ecdd061ad17799a0e3fe7204600797154eb0432eeb12",
     )
 
-
 def kotlin_jar_support(name, deps, exports, runtime_deps, jar, tags, java_import_impl, kt_jvm_import = None, kt_jvm_library = None, visibility = ["//visibility:public"]):
     """
     This is a help macro to handle Kotlin rules.
@@ -1590,4 +1589,3 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
-

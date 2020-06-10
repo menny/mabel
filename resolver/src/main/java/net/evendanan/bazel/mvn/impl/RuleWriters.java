@@ -9,10 +9,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class RuleWriters {
@@ -68,13 +65,15 @@ public class RuleWriters {
                 if (targets.isEmpty()) {
                     fileWriter.append(INDENT).append("pass");
                 } else {
-                    for (Target target : targets) {
+                    for (Iterator<Target> iterator = targets.iterator(); iterator.hasNext(); ) {
+                        Target target = iterator.next();
                         fileWriter
                                 .append(INDENT)
                                 .append("# from ")
                                 .append(target.getMavenCoordinates())
                                 .append(NEW_LINE);
-                        fileWriter.append(target.outputString(INDENT)).append(NEW_LINE).append(NEW_LINE);
+                        fileWriter.append(target.outputString(INDENT)).append(NEW_LINE);
+                        if (iterator.hasNext()) fileWriter.append(NEW_LINE);
                     }
                 }
             }
@@ -378,7 +377,8 @@ public class RuleWriters {
                 if (targets.isEmpty()) {
                     fileWriter.append(INDENT).append("pass");
                 } else {
-                    for (Target target : targets) {
+                    for (Iterator<Target> iterator = targets.iterator(); iterator.hasNext(); ) {
+                        Target target = iterator.next();
                         fileWriter
                                 .append(INDENT)
                                 .append("# from ")
@@ -389,7 +389,8 @@ public class RuleWriters {
                             target.addVariable("kt_jvm_import", "kt_jvm_import")
                                     .addVariable("kt_jvm_library", "kt_jvm_library");
                         }
-                        fileWriter.append(target.outputString(INDENT)).append(NEW_LINE).append(NEW_LINE);
+                        fileWriter.append(target.outputString(INDENT)).append(NEW_LINE);
+                        if (iterator.hasNext()) fileWriter.append(NEW_LINE);
                     }
                 }
             }

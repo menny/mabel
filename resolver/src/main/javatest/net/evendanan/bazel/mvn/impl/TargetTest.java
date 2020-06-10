@@ -10,24 +10,26 @@ import java.util.Collections;
 public class TargetTest {
 
     private static final String PUBLIC_HAPPY_PATH_OUTPUT =
-            " public_test_rule(name = 'public_name',\n"
-                    + "     str_attr = 'string value',\n"
-                    + "     visibility = ['//visibility:public'],\n"
-                    + " )\n";
+            " public_test_rule(\n"
+                    + "     name = \"public_name\",\n"
+                    + "     str_attr = \"string value\",\n"
+                    + "     visibility = [\"//visibility:public\"],\n"
+                    + " )";
     private static final String HAPPY_PATH_OUTPUT =
-            "      test_rule(name = 'target_name',\n"
-                    + "          str_attr = 'string value',\n"
+            "      test_rule(\n"
+                    + "          name = \"target_name\",\n"
+                    + "          str_attr = \"string value\",\n"
                     + "          bool_attr = True,\n"
                     + "          bool2_attr = False,\n"
                     + "          int_attr = 46,\n"
                     + "          list_empty_attr = [],\n"
-                    + "          list_single_attr = ['only_one'],\n"
+                    + "          list_single_attr = [\"only_one\"],\n"
                     + "          list_multiple_attr = [\n"
-                    + "              'one',\n"
-                    + "              'three',\n"
-                    + "              'two',\n"
+                    + "              \"one\",\n"
+                    + "              \"three\",\n"
+                    + "              \"two\",\n"
                     + "          ],\n"
-                    + "      )\n";
+                    + "      )";
 
     @Test
     public void testHappyPath() {
