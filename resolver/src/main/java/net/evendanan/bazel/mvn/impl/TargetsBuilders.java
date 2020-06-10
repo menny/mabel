@@ -328,7 +328,7 @@ public class TargetsBuilders {
                 targets.add(
                         new Target(
                                         dependencyTools.mavenCoordinates(dependency),
-                                        "native.java_plugin",
+                                        "java_plugin_impl",
                                         noApiTargetName)
                                 .addString("processor_class", processorClass)
                                 .addInt("generates_api", 0)
@@ -347,7 +347,7 @@ public class TargetsBuilders {
                 targets.add(
                         new Target(
                                         dependencyTools.mavenCoordinates(dependency),
-                                        "native.java_plugin",
+                                        "java_plugin_impl",
                                         withApiTargetName)
                                 .addString("processor_class", processorClass)
                                 .addInt("generates_api", 1)
@@ -364,7 +364,7 @@ public class TargetsBuilders {
             targets.add(
                     new Target(
                                     dependencyTools.mavenCoordinates(dependency),
-                                    "native.java_library",
+                                    "java_library_impl",
                                     dependencyTools.repositoryRuleName(dependency)
                                             + PROCESSOR_CLASS_POST_FIX
                                             + "all")
@@ -379,7 +379,7 @@ public class TargetsBuilders {
             targets.add(
                     new Target(
                                     dependencyTools.mavenCoordinates(dependency),
-                                    "native.java_library",
+                                    "java_library_impl",
                                     dependencyTools.repositoryRuleName(dependency)
                                             + PROCESSOR_CLASS_POST_FIX_WITH_API
                                             + "all")

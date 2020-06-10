@@ -78,8 +78,13 @@ public class Target {
     }
 
     private void outputTarget(String indent, StringBuilder builder) {
-        builder.append(indent).append(ruleName).append("(name = '").append(targetName).append("',");
+        builder.append(indent).append(ruleName).append("(");
+        builder.append(System.lineSeparator());
+        builder.append(indent).append(EXTRA_INDENT).append("name").append(" = \"").append(targetName).append("\",");
 
+        List<Map.Entry<String, Target.AttributeValue>> attributesToWrite = new ArrayList<>(attributes.size() + 1);
+        attributesToWrite.addAll(attributes.entrySet());
+        attributesToWrite.sort(Comparator.comparing(Map.Entry::getKey));
         attributes.forEach(
                 (key, value) -> {
                     builder.append(System.lineSeparator());
@@ -90,8 +95,7 @@ public class Target {
 
         builder.append(System.lineSeparator())
                 .append(indent)
-                .append(')')
-                .append(System.lineSeparator());
+                .append(')');
     }
 
     public String outputString(String indent) {
@@ -174,7 +178,7 @@ public class Target {
 
         @Override
         public Collection<String> outputValue() {
-            return Collections.singletonList(String.format(Locale.US, "'%s'", value));
+            return Collections.singletonList(String.format(Locale.US, "\"%s\"", value));
         }
     }
 
@@ -207,13 +211,13 @@ public class Target {
             }
             if (value.size() == 1) {
                 return Collections.singletonList(
-                        String.format(Locale.US, "['%s']", value.iterator().next()));
+                        String.format(Locale.US, "[\"%s\"]", value.iterator().next()));
             }
 
             final List<String> stringList =
                     value.stream()
                             .sorted()
-                            .map(str -> String.format(Locale.US, "'%s',", str))
+                            .map(str -> String.format(Locale.US, "\"%s\",", str))
                             .collect(Collectors.toList());
             stringList.add(0, "[");
             stringList.add("]");

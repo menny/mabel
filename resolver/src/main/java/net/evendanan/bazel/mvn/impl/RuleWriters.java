@@ -46,17 +46,25 @@ public class RuleWriters {
                         .append("# Loading a drop-in replacement for native.http_file")
                         .append(NEW_LINE);
                 fileWriter
-                        .append("load('@bazel_tools//tools/build_defs/repo:http.bzl', 'http_file')")
+                        .append("load(\"@bazel_tools//tools/build_defs/repo:http.bzl\", \"http_file\")")
                         .append(NEW_LINE);
                 fileWriter.append(NEW_LINE);
 
-                fileWriter.append("def ").append(macroName).append("():").append(NEW_LINE);
+                fileWriter.append("def ").append(macroName).append("(name = \"").append(macroName).append("\"):").append(NEW_LINE);
                 fileWriter.append(INDENT).append("\"\"\"").append(NEW_LINE);
                 fileWriter
                         .append(INDENT)
                         .append("Repository rules macro to be run in the WORKSPACE file.")
+                        .append(NEW_LINE)
                         .append(NEW_LINE);
-                fileWriter.append(INDENT).append("\"\"\"").append(NEW_LINE);
+                fileWriter.append(INDENT).append("Args:").append(NEW_LINE);
+                fileWriter
+                        .append(INDENT)
+                        .append(INDENT)
+                        .append("name: A unique name for this target. No need to specify.")
+                        .append(NEW_LINE);
+                fileWriter.append(INDENT).append("\"\"\"").append(NEW_LINE).append(NEW_LINE);
+
                 if (targets.isEmpty()) {
                     fileWriter.append(INDENT).append("pass");
                 } else {
@@ -66,10 +74,9 @@ public class RuleWriters {
                                 .append("# from ")
                                 .append(target.getMavenCoordinates())
                                 .append(NEW_LINE);
-                        fileWriter.append(target.outputString(INDENT)).append(NEW_LINE);
+                        fileWriter.append(target.outputString(INDENT)).append(NEW_LINE).append(NEW_LINE);
                     }
                 }
-                fileWriter.append(NEW_LINE);
             }
         }
     }
@@ -98,7 +105,7 @@ public class RuleWriters {
                         .append("def ")
                         .append(KOTLIN_LIB_MACRO_NAME)
                         .append(
-                                "(name, deps, exports, runtime_deps, jar, tags, java_import_impl, kt_jvm_import=None, kt_jvm_library=None, visibility = ['//visibility:public']):")
+                                "(name, deps, exports, runtime_deps, jar, tags, java_import_impl, kt_jvm_import = None, kt_jvm_library = None, visibility = [\"//visibility:public\"]):")
                         .append(NEW_LINE);
                 fileWriter.append(INDENT).append("\"\"\"").append(NEW_LINE);
                 fileWriter
@@ -120,7 +127,7 @@ public class RuleWriters {
                         .append(
                                 "not to provide those implementations we'll try to use java_* rules.")
                         .append(NEW_LINE);
-                fileWriter.append(INDENT).append(NEW_LINE);
+                fileWriter.append(NEW_LINE);
                 fileWriter.append(INDENT).append("Args:").append(NEW_LINE);
                 fileWriter
                         .append(INDENT)
@@ -178,7 +185,7 @@ public class RuleWriters {
                         .append(
                                 "tags: List of arbitrary text tags. Tags may be any valid string.")
                         .append(NEW_LINE);
-                fileWriter.append(INDENT).append("\"\"\"").append(NEW_LINE);
+                fileWriter.append(INDENT).append("\"\"\"").append(NEW_LINE).append(NEW_LINE);
                 fileWriter
                         .append(INDENT)
                         .append(
@@ -188,7 +195,13 @@ public class RuleWriters {
                 fileWriter
                         .append(INDENT)
                         .append(INDENT)
-                        .append("java_import_impl(name = name,")
+                        .append("java_import_impl(")
+                        .append(NEW_LINE);
+                fileWriter
+                        .append(INDENT)
+                        .append(INDENT)
+                        .append(INDENT)
+                        .append("name = name,")
                         .append(NEW_LINE);
                 fileWriter
                         .append(INDENT)
@@ -231,7 +244,13 @@ public class RuleWriters {
                 fileWriter
                         .append(INDENT)
                         .append(INDENT)
-                        .append("kt_jvm_import(name = '{}_kotlin_jar'.format(name),")
+                        .append("kt_jvm_import(")
+                        .append(NEW_LINE);
+                fileWriter
+                        .append(INDENT)
+                        .append(INDENT)
+                        .append(INDENT)
+                        .append("name = \"{}_kotlin_jar\".format(name),")
                         .append(NEW_LINE);
                 fileWriter
                         .append(INDENT)
@@ -255,19 +274,25 @@ public class RuleWriters {
                 fileWriter
                         .append(INDENT)
                         .append(INDENT)
-                        .append("kt_jvm_library(name = name,")
+                        .append("kt_jvm_library(")
                         .append(NEW_LINE);
                 fileWriter
                         .append(INDENT)
                         .append(INDENT)
                         .append(INDENT)
-                        .append("deps = deps + [':{}_kotlin_jar'.format(name)],")
+                        .append("name = name,")
                         .append(NEW_LINE);
                 fileWriter
                         .append(INDENT)
                         .append(INDENT)
                         .append(INDENT)
-                        .append("exports = exports + [':{}_kotlin_jar'.format(name)],")
+                        .append("deps = deps + [\":{}_kotlin_jar\".format(name)],")
+                        .append(NEW_LINE);
+                fileWriter
+                        .append(INDENT)
+                        .append(INDENT)
+                        .append(INDENT)
+                        .append("exports = exports + [\":{}_kotlin_jar\".format(name)],")
                         .append(NEW_LINE);
                 fileWriter
                         .append(INDENT)
@@ -294,7 +319,7 @@ public class RuleWriters {
                         .append("def ")
                         .append(macroName)
                         .append(
-                                "(java_import_impl=native.java_import, aar_import_impl=native.aar_import, kt_jvm_import=None, kt_jvm_library=None):")
+                                "(name = \"").append(macroName).append("\", java_library_impl = native.java_library, java_plugin_impl = native.java_plugin, java_import_impl = native.java_import, aar_import_impl = native.aar_import, kt_jvm_import = None, kt_jvm_library = None):")
                         .append(NEW_LINE);
                 fileWriter.append(INDENT).append("\"\"\"").append(NEW_LINE);
                 fileWriter
@@ -312,8 +337,23 @@ public class RuleWriters {
                         .append(
                                 "in cases where you need to shade (or jar_jar or jetify) your jars.")
                         .append(NEW_LINE);
-                fileWriter.append(INDENT).append(NEW_LINE);
+                fileWriter.append(NEW_LINE);
                 fileWriter.append(INDENT).append("Args:").append(NEW_LINE);
+                fileWriter
+                        .append(INDENT)
+                        .append(INDENT)
+                        .append("name: a unique name for this macro. Not needed to specify.")
+                        .append(NEW_LINE);
+                fileWriter
+                        .append(INDENT)
+                        .append(INDENT)
+                        .append("java_library_impl: rule implementation for java_library.")
+                        .append(NEW_LINE);
+                fileWriter
+                        .append(INDENT)
+                        .append(INDENT)
+                        .append("java_plugin_impl: rule implementation for java_plugin.")
+                        .append(NEW_LINE);
                 fileWriter
                         .append(INDENT)
                         .append(INDENT)
@@ -334,7 +374,7 @@ public class RuleWriters {
                         .append(INDENT)
                         .append("kt_jvm_library: rule implementation for kt_jvm_library.")
                         .append(NEW_LINE);
-                fileWriter.append(INDENT).append("\"\"\"").append(NEW_LINE);
+                fileWriter.append(INDENT).append("\"\"\"").append(NEW_LINE).append(NEW_LINE);
                 if (targets.isEmpty()) {
                     fileWriter.append(INDENT).append("pass");
                 } else {
@@ -349,10 +389,9 @@ public class RuleWriters {
                             target.addVariable("kt_jvm_import", "kt_jvm_import")
                                     .addVariable("kt_jvm_library", "kt_jvm_library");
                         }
-                        fileWriter.append(target.outputString(INDENT)).append(NEW_LINE);
+                        fileWriter.append(target.outputString(INDENT)).append(NEW_LINE).append(NEW_LINE);
                     }
                 }
-                fileWriter.append(NEW_LINE);
             }
         }
     }
@@ -413,13 +452,14 @@ public class RuleWriters {
                     fileWriter.append("\"\"\"").append(NEW_LINE);
                     fileWriter.append(NEW_LINE);
 
-                    for (final Target target : packageTargets) {
+                    for (int targetIndex = 0, packageTargetsSize = packageTargets.size(); targetIndex < packageTargetsSize; targetIndex++) {
+                        Target target = packageTargets.get(targetIndex);
                         fileWriter
                                 .append(
                                         new Target(
-                                                        target.getMavenCoordinates(),
-                                                        "alias",
-                                                        target.getNameSpacedTargetName())
+                                                target.getMavenCoordinates(),
+                                                "alias",
+                                                target.getNameSpacedTargetName())
                                                 .addString(
                                                         "actual",
                                                         String.format(
@@ -430,6 +470,10 @@ public class RuleWriters {
                                                 .setPublicVisibility()
                                                 .outputString(""))
                                 .append(NEW_LINE);
+
+                        if (targetIndex != packageTargetsSize - 1) {
+                            fileWriter.append(NEW_LINE);
+                        }
                     }
                 }
             }
