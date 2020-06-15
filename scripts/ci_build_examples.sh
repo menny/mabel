@@ -3,5 +3,5 @@ set -e
 
 EXAMPLE_NAME=${1}
 
-cd examples/${EXAMPLE_NAME}/
+cd "examples/${EXAMPLE_NAME}/"
 bazel build //...
