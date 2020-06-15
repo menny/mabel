@@ -104,7 +104,7 @@ public class RuleWriters {
                         .append("def ")
                         .append(KOTLIN_LIB_MACRO_NAME)
                         .append(
-                                "(name, deps, exports, runtime_deps, jar, tags, java_import_impl, kt_jvm_import = None, kt_jvm_library = None, visibility = [\"//visibility:public\"]):")
+                                "(name, deps, exports, runtime_deps, jar, tags, java_import_impl, kt_jvm_import = None, visibility = [\"//visibility:public\"]):")
                         .append(NEW_LINE);
                 fileWriter.append(INDENT).append("\"\"\"").append(NEW_LINE);
                 fileWriter
@@ -165,12 +165,6 @@ public class RuleWriters {
                         .append(INDENT)
                         .append(
                                 "kt_jvm_import: rule implementation for kt_jvm_import. Can be None.")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append(
-                                "kt_jvm_library: rule implementation for kt_jvm_library. Can be None.")
                         .append(NEW_LINE);
                 fileWriter
                         .append(INDENT)
@@ -249,49 +243,19 @@ public class RuleWriters {
                         .append(INDENT)
                         .append(INDENT)
                         .append(INDENT)
-                        .append("name = \"{}_kotlin_jar\".format(name),")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("jars = [jar],")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("tags = tags,")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("visibility = visibility,")
-                        .append(NEW_LINE);
-                fileWriter.append(INDENT).append(INDENT).append(")").append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("kt_jvm_library(")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append(INDENT)
                         .append("name = name,")
                         .append(NEW_LINE);
                 fileWriter
                         .append(INDENT)
                         .append(INDENT)
                         .append(INDENT)
-                        .append("deps = deps + [\":{}_kotlin_jar\".format(name)],")
+                        .append("jar = jar,")
                         .append(NEW_LINE);
                 fileWriter
                         .append(INDENT)
                         .append(INDENT)
                         .append(INDENT)
-                        .append("exports = exports + [\":{}_kotlin_jar\".format(name)],")
+                        .append("exports = exports,")
                         .append(NEW_LINE);
                 fileWriter
                         .append(INDENT)
@@ -303,13 +267,13 @@ public class RuleWriters {
                         .append(INDENT)
                         .append(INDENT)
                         .append(INDENT)
-                        .append("tags = tags,")
+                        .append("visibility = visibility,")
                         .append(NEW_LINE);
                 fileWriter
                         .append(INDENT)
                         .append(INDENT)
                         .append(INDENT)
-                        .append("visibility = visibility,")
+                        .append("tags = tags,")
                         .append(NEW_LINE);
                 fileWriter.append(INDENT).append(INDENT).append(")").append(NEW_LINE);
                 fileWriter.append(NEW_LINE);
@@ -318,7 +282,7 @@ public class RuleWriters {
                         .append("def ")
                         .append(macroName)
                         .append(
-                                "(name = \"").append(macroName).append("\", java_library_impl = native.java_library, java_plugin_impl = native.java_plugin, java_import_impl = native.java_import, aar_import_impl = native.aar_import, kt_jvm_import = None, kt_jvm_library = None):")
+                                "(name = \"").append(macroName).append("\", java_library_impl = native.java_library, java_plugin_impl = native.java_plugin, java_import_impl = native.java_import, aar_import_impl = native.aar_import, kt_jvm_import = None):")
                         .append(NEW_LINE);
                 fileWriter.append(INDENT).append("\"\"\"").append(NEW_LINE);
                 fileWriter
@@ -368,11 +332,6 @@ public class RuleWriters {
                         .append(INDENT)
                         .append("kt_jvm_import: rule implementation for kt_jvm_import.")
                         .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("kt_jvm_library: rule implementation for kt_jvm_library.")
-                        .append(NEW_LINE);
                 fileWriter.append(INDENT).append("\"\"\"").append(NEW_LINE).append(NEW_LINE);
                 if (targets.isEmpty()) {
                     fileWriter.append(INDENT).append("pass");
@@ -386,8 +345,7 @@ public class RuleWriters {
                                 .append(NEW_LINE);
 
                         if (target.getRuleName().equals(KOTLIN_LIB_MACRO_NAME)) {
-                            target.addVariable("kt_jvm_import", "kt_jvm_import")
-                                    .addVariable("kt_jvm_library", "kt_jvm_library");
+                            target.addVariable("kt_jvm_import", "kt_jvm_import");
                         }
                         fileWriter.append(target.outputString(INDENT)).append(NEW_LINE);
                         if (iterator.hasNext()) fileWriter.append(NEW_LINE);

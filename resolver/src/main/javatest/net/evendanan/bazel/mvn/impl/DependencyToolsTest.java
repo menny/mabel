@@ -135,6 +135,10 @@ public class DependencyToolsTest {
         Assert.assertEquals(
                 License.reciprocal, LicenseTools.fromLicenseName("Eclipse Public License 1.0"));
         Assert.assertEquals(
+                License.reciprocal, LicenseTools.fromLicenseName("Eclipse Public License v2.0"));
+        Assert.assertEquals(
+                License.reciprocal, LicenseTools.fromLicenseName("Eclipse Public License 2.0"));
+        Assert.assertEquals(
                 License.reciprocal, LicenseTools.fromLicenseName("Eclipse Public License v 1.0"));
         Assert.assertEquals(
                 License.reciprocal,

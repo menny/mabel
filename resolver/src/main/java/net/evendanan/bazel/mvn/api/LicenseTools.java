@@ -38,7 +38,7 @@ public final class LicenseTools {
 
     // reciprocal licenses
     private static Pattern ECLIPSE =
-            Pattern.compile(".*Eclipse\\s+Public\\s+License.*\\s+.*1.*", CASE_INSENSITIVE);
+            Pattern.compile(".*Eclipse\\s+Public\\s+License.*\\s+.*[12].*", CASE_INSENSITIVE);
     private static Pattern EPL = Pattern.compile(".*EPL\\s+.*1.*");
     private static Pattern MOZILLA_MPL = Pattern.compile(".*MPL.*1.1.*");
     private static Pattern MOZILLA = Pattern.compile(".*Mozilla.*License.*", CASE_INSENSITIVE);

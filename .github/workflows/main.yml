@@ -30,7 +30,7 @@ jobs:
     container: menny/android_bazel:1.13.8
     strategy:
       matrix:
-        example_name: [plain_java, java_plugin, android, kotlin, kotlin_with_kt_rules]
+        example_name: [plain_java, java_plugin, android, kotlin]
       fail-fast: false
     steps:
       - uses: actions/checkout@v1

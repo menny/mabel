@@ -367,7 +367,7 @@ def generate_workspace_rules(name = "generate_workspace_rules"):
         sha256 = "6cb127138f41b5a869f9ecdd061ad17799a0e3fe7204600797154eb0432eeb12",
     )
 
-def kotlin_jar_support(name, deps, exports, runtime_deps, jar, tags, java_import_impl, kt_jvm_import = None, kt_jvm_library = None, visibility = ["//visibility:public"]):
+def kotlin_jar_support(name, deps, exports, runtime_deps, jar, tags, java_import_impl, kt_jvm_import = None, visibility = ["//visibility:public"]):
     """
     This is a help macro to handle Kotlin rules.
 
@@ -383,7 +383,6 @@ def kotlin_jar_support(name, deps, exports, runtime_deps, jar, tags, java_import
         jar: The JAR file provided to Java targets that depend on this target.
         java_import_impl: rule implementation for java_import.
         kt_jvm_import: rule implementation for kt_jvm_import. Can be None.
-        kt_jvm_library: rule implementation for kt_jvm_library. Can be None.
         visibility: Target visibility to pass to actual targets.
         tags: List of arbitrary text tags. Tags may be any valid string.
     """
@@ -406,16 +405,8 @@ def kotlin_jar_support(name, deps, exports, runtime_deps, jar, tags, java_import
             tags = tags,
             visibility = visibility,
         )
-        kt_jvm_library(
-            name = name,
-            deps = deps + [":{}_kotlin_jar".format(name)],
-            exports = exports + [":{}_kotlin_jar".format(name)],
-            runtime_deps = runtime_deps,
-            tags = tags,
-            visibility = visibility,
-        )
 
-def generate_transitive_dependency_targets(name = "generate_transitive_dependency_targets", java_library_impl = native.java_library, java_plugin_impl = native.java_plugin, java_import_impl = native.java_import, aar_import_impl = native.aar_import, kt_jvm_import = None, kt_jvm_library = None):
+def generate_transitive_dependency_targets(name = "generate_transitive_dependency_targets", java_library_impl = native.java_library, java_plugin_impl = native.java_plugin, java_import_impl = native.java_import, aar_import_impl = native.aar_import, kt_jvm_import = None):
     """
     Macro to set up the transitive rules.
 
@@ -429,7 +420,6 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
         java_import_impl: rule implementation for java_import.
         aar_import_impl: rule implementation for aar_import.
         kt_jvm_import: rule implementation for kt_jvm_import.
-        kt_jvm_library: rule implementation for kt_jvm_library.
     """
 
     # from com.beust:jcommander:1.72

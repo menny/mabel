@@ -13,7 +13,7 @@ This WORKSPACE will provide `mabel_rule` rule and `artifact` macro which will au
 * Automatically detects which rule-type to create for a given dependency:
   * `aar_import` for Android artifacts.
   * `java_plugin` + `java_library` for annotation-processors. More about this [here](#annotation-processors).
-  * `kt_jvm_import` + `kt_jvm_library` or `java_import` for Kotlin modules. More about this [here](#kotlin).
+  * `kt_jvm_import` for Kotlin modules. If you do not use Kotlin, you can omit this argument.
   * `java_import` for anything else.
 * Allow implementation replacement for `java_import` and `aar_import`. Those can be replaced with another rule or macro. See `examples/android/program/BUILD.bazel` for an example.
 * Support custom Maven repo URLs and locking dependency for a Maven repository.
@@ -167,7 +167,6 @@ Attributes:
 ### Real Examples
 
 You can find a few examples under the `examples/` folder in this repo. These examples are built as part of the CI process, so they represent a working use-case.<br/>
-*NOTE* - There is an ongoing [issue](https://github.com/menny/mabel/issues/5) with `kt_jvm_import`. But, Kotlin still works with `java_import`.
 
 ## Detected rules
 
@@ -190,40 +189,3 @@ In the example above we included `com.google.auto.value:auto-value:1.6.3`, which
 Please, read the [Bazel docs](https://docs.bazel.build/versions/master/be/java.html#java_plugin.generates_api) about which variant you want.<br/>
 Also, since we are wrapping the `java_plugin` rules in a `java_library` rules, you should add them to the `deps` list of your rule and not to the `plugins` list, unless
 you are directly using the `X___processor_class_Y` variant in which case you should use it in the `plugins` field.
-
-### Kotlin
-
-__NOTE__ : I recommend not to provide kt rule-impl to the macro, and just use regular `java_import`. See [relevant issue](https://github.com/menny/mabel/issues/5).
-
-For [Kotlin](https://github.com/bazelbuild/rules_kotlin), we create a `kt_jvm_import` for each artifact, and then wrap it (along with its deps) in a `kt_jvm_library`. Your rule
-depends on the `kt_jvm_library`.<br/>
-
-If your dependencies contain Kotlin rules, you'll need to pass the kt rule-impl to the transitive rules generation macro (in the example above, it is `generate_migration_tools_transitive_dependency_rules`):
-
-```python
-load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_import", "kt_jvm_library")
-
-load("//resolver/main_deps:dependencies.bzl", main_generate_transitive_dependency_targets = "generate_transitive_dependency_targets")
-main_generate_transitive_dependency_targets(kt_jvm_import = kt_jvm_import, kt_jvm_library = kt_jvm_library)
-```
-<br/>
-
-_Note_: If you decide _not_ to provide `kt_*` implementations, we will try to use `java_import` instead. It should be okay.
-<br/>
-**NOTE:** Although the mechanism above exists, I could not make it work. Either, you know how to fix this, or just use the regular `java_import` (by not supplying `kt_jvm_*`).
-<br/>
-Another **NOTE**: There is a problem with this, at the moment: `kt_jvm_library` in _master_ does not allow no-source-libraries. So, until the [fix](https://github.com/bazelbuild/rules_kotlin/pull/170) is merged, you can use my branch of the rules:
-
-```python
-rules_kotlin_version = "no-src-support"
-http_archive(
-    name = "io_bazel_rules_kotlin",
-    urls = ["https://github.com/menny/rules_kotlin/archive/%s.zip" % rules_kotlin_version],
-    type = "zip",
-    strip_prefix = "rules_kotlin-%s" % rules_kotlin_version
-)
-
-load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kotlin_repositories", "kt_register_toolchains")
-kotlin_repositories()
-kt_register_toolchains()
-```
