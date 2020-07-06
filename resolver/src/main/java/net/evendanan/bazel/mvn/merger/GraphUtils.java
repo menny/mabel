@@ -45,18 +45,22 @@ public class GraphUtils {
                                 .forEach(dep -> mapper.put(dep.mavenCoordinate(), dep)));
 
         resolutions.forEach(
-                resolution -> DfsTraveller(resolution.rootDependency(), mapper::get, 1, visitor));
+                resolution -> DfsTraveller(resolution.rootDependency(), mapper::get, 1, visitor, new HashSet<MavenCoordinate>()));
     }
 
     private static void DfsTraveller(
             MavenCoordinate mavenCoordinate,
             Function<MavenCoordinate, Dependency> dependencyMap,
             int level,
-            BiConsumer<Dependency, Integer> visitor) {
+            BiConsumer<Dependency, Integer> visitor,
+            Set<MavenCoordinate> seenDependencies) {
         Dependency dependency =
                 Preconditions.checkNotNull(
                         dependencyMap.apply(mavenCoordinate),
                         "Can not find mapping for " + mavenCoordinate);
+        if (seenDependencies.contains(mavenCoordinate)) return;
+        seenDependencies.add(mavenCoordinate);
+
         visitor.accept(dependency, level);
 
         Stream.concat(
@@ -64,7 +68,9 @@ public class GraphUtils {
                                 dependency.dependencies().stream(), dependency.exports().stream()),
                         dependency.runtimeDependencies().stream())
                 .distinct()
-                .forEach(child -> DfsTraveller(child, dependencyMap, level + 1, visitor));
+                .forEach(child -> DfsTraveller(child, dependencyMap, level + 1, visitor, seenDependencies));
+
+        seenDependencies.remove(mavenCoordinate);
     }
 
     static void BfsTraveller(

@@ -400,10 +400,12 @@ def kotlin_jar_support(name, deps, exports, runtime_deps, jar, tags, java_import
         )
     else:
         kt_jvm_import(
-            name = "{}_kotlin_jar".format(name),
-            jars = [jar],
-            tags = tags,
+            name = name,
+            jar = jar,
+            exports = exports,
+            runtime_deps = runtime_deps,
             visibility = visibility,
+            tags = tags,
         )
 
 def generate_transitive_dependency_targets(name = "generate_transitive_dependency_targets", java_library_impl = native.java_library, java_plugin_impl = native.java_plugin, java_import_impl = native.java_import, aar_import_impl = native.aar_import, kt_jvm_import = None):
