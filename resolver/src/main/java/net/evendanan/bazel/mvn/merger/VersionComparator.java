@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class VersionComparator implements Comparator<String> {
-    private final Pattern mSubVersionPattern = Pattern.compile("(\\d*)[-]*(.*)");
+    private final Pattern mSubVersionPattern = Pattern.compile("(\\d+)[-]*(.*)");
 
     @Override
     public int compare(String version1, String version2) {
