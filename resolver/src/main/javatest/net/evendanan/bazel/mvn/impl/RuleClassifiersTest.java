@@ -114,6 +114,34 @@ public class RuleClassifiersTest {
     }
 
     @Test
+    public void testJarInspector_java_plugin_with_comments() throws Exception {
+        final Dependency dependency =
+                Dependency.builder().mavenCoordinate(mMavenCoordinate).build();
+        final Function<Dependency, URI> dependencyURIFunction =
+                dep -> {
+                    try {
+                        return RuleClassifiersTest.class
+                                .getClassLoader()
+                                .getResource("dataenum-processor-1.0.2-with-comments.jar")
+                                .toURI();
+                    } catch (URISyntaxException e) {
+                        throw new RuntimeException(e);
+                    }
+                };
+        final TargetsBuilder processorFormatter =
+                new RuleClassifiers.JarInspector(dependencyURIFunction)
+                        .classifyRule(dependency)
+                        .orElse(null);
+        Assert.assertNotNull(processorFormatter);
+        Assert.assertTrue(processorFormatter instanceof TargetsBuilders.JavaPluginFormatter);
+        List<String> processorClasses =
+                ((TargetsBuilders.JavaPluginFormatter) processorFormatter).getProcessorClasses();
+        Assert.assertEquals(1, processorClasses.size());
+        Assert.assertEquals(
+                "com.spotify.dataenum.processor.DataEnumProcessor", processorClasses.get(0));
+    }
+
+    @Test
     public void testJarInspector_java_plugin_native() throws Exception {
         final Dependency dependency =
                 Dependency.builder().mavenCoordinate(mMavenCoordinate).build();
