@@ -105,6 +105,7 @@ public class RuleClassifiers {
                 final List<String> processors =
                         Arrays.stream(processorContent.split("\n", -1))
                                 .filter(s -> s != null && s.length() > 0)
+                                .filter(s -> !s.startsWith("#"))
                                 .map(String::trim)
                                 .filter(s -> !s.isEmpty())
                                 .collect(Collectors.toList());
