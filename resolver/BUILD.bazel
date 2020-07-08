@@ -160,7 +160,6 @@ java_library(
         "src/main/java/net/evendanan/bazel/mvn/impl/dependencies-http-repo-rules.bzl.template",
         "src/main/java/net/evendanan/bazel/mvn/impl/dependencies-sub-folder-header.bzl.template",
         "src/main/java/net/evendanan/bazel/mvn/impl/dependencies-targets-macro.bzl.template",
-        "src/main/java/net/evendanan/bazel/mvn/impl/dependencies-targets-support-functions.bzl.template",
     ],
     runtime_deps = [],
     deps = [

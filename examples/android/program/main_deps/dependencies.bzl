@@ -246,60 +246,55 @@ def generate_workspace_rules(name = "generate_workspace_rules"):
         downloaded_file_path = "permissions-90e703256785b7baf9cd37370b62b1d7d3830406.aar",
     )
 
-def kotlin_jar_support(name, deps, exports, runtime_deps, jar, tags, java_import_impl, kt_jvm_import = None, visibility = ["//visibility:public"]):
+def _no_op_missing_aar_impl(name, **kwargs):
     """
-    This is a help macro to handle Kotlin rules.
+    This is a help macro for missing concrete rule implementation.
 
-    Transitive rules macro to be run in the BUILD.bazel file.
-    If you use kt_* rules, you MUST provide the correct rule implementation when call this macro, if you decide
-    not to provide those implementations we'll try to use java_* rules.
+    This will be used in cases when some dependencies require aar_import rule implementation.
 
     Args:
         name: A unique name for this target.
-        deps: The list of other libraries to be linked in to the target.
-        exports: Targets to make available to users of this rule.
-        runtime_deps: Libraries to make available to the final binary or test at runtime only.
-        jar: The JAR file provided to Java targets that depend on this target.
-        java_import_impl: rule implementation for java_import.
-        kt_jvm_import: rule implementation for kt_jvm_import. Can be None.
-        visibility: Target visibility to pass to actual targets.
-        tags: List of arbitrary text tags. Tags may be any valid string.
+        kwargs: Anything else. Not used.
     """
 
-    #In case the developer did not provide a kt_* impl, we'll try to use java_*, should work
-    if kt_jvm_import == None:
-        java_import_impl(
-            name = name,
-            jars = [jar],
-            deps = deps,
-            exports = exports,
-            runtime_deps = runtime_deps,
-            visibility = visibility,
-            tags = tags,
-        )
-    else:
-        kt_jvm_import(
-            name = name,
-            jar = jar,
-            exports = exports,
-            runtime_deps = runtime_deps,
-            visibility = visibility,
-            tags = tags,
-        )
+    fail("Unable to create target {} since it is a aar_import which was not provide. Add argument aar_import when calling generate_transitive_dependency_targets."
+        .format(name),
+    )
 
-def generate_transitive_dependency_targets(name = "generate_transitive_dependency_targets", java_library_impl = native.java_library, java_plugin_impl = native.java_plugin, java_import_impl = native.java_import, aar_import_impl = native.aar_import, kt_jvm_import = None):
+def _no_op_missing_kt_jvm_impl(name, **kwargs):
+    """
+    This is a help macro for missing concrete rule implementation.
+
+    This will be used in cases when some dependencies require Kotlin rule implementation.
+
+    Args:
+        name: A unique name for this target.
+        kwargs: Anything else. Not used.
+    """
+
+    fail("Unable to create target {} since it is a kt_jvm_import which was not provide. Add argument kt_jvm_import when calling generate_transitive_dependency_targets."
+        .format(name),
+    )
+
+def generate_transitive_dependency_targets(
+        name = "generate_transitive_dependency_targets",
+        java_library = native.java_library,
+        java_plugin = native.java_plugin,
+        java_import = native.java_import,
+        aar_import = _no_op_missing_aar_impl,
+        kt_jvm_import = _no_op_missing_kt_jvm_impl):
     """
     Macro to set up the transitive rules.
 
-    You can provide your own implementation of java_import and aar_import. This can be used
+    You can provide your own implementation of java_import, aar_import, etc. This can be used
     in cases where you need to shade (or jar_jar or jetify) your jars.
 
     Args:
         name: a unique name for this macro. Not needed to specify.
-        java_library_impl: rule implementation for java_library.
-        java_plugin_impl: rule implementation for java_plugin.
-        java_import_impl: rule implementation for java_import.
-        aar_import_impl: rule implementation for aar_import.
+        java_library: rule implementation for java_library.
+        java_plugin: rule implementation for java_plugin.
+        java_import: rule implementation for java_import.
+        aar_import: rule implementation for aar_import.
         kt_jvm_import: rule implementation for kt_jvm_import.
     """
 
@@ -311,7 +306,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.activity:activity:1.0.0-alpha02
-    aar_import_impl(
+    aar_import(
         name = "androidx_activity__activity__1_0_0_alpha02",
         aar = "@androidx_activity__activity__1_0_0_alpha02//file",
         tags = ["maven_coordinates=androidx.activity:activity:1.0.0-alpha02"],
@@ -337,7 +332,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.annotation:annotation:1.0.0
-    java_import_impl(
+    java_import(
         name = "androidx_annotation__annotation__1_0_0",
         jars = ["@androidx_annotation__annotation__1_0_0//file"],
         tags = ["maven_coordinates=androidx.annotation:annotation:1.0.0"],
@@ -355,7 +350,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.appcompat:appcompat:1.0.2
-    aar_import_impl(
+    aar_import(
         name = "androidx_appcompat__appcompat__1_0_2",
         aar = "@androidx_appcompat__appcompat__1_0_2//file",
         tags = ["maven_coordinates=androidx.appcompat:appcompat:1.0.2"],
@@ -389,7 +384,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.arch.core:core-common:2.0.0
-    java_import_impl(
+    java_import(
         name = "androidx_arch_core__core_common__2_0_0",
         jars = ["@androidx_arch_core__core_common__2_0_0//file"],
         tags = ["maven_coordinates=androidx.arch.core:core-common:2.0.0"],
@@ -407,7 +402,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.arch.core:core-runtime:2.0.0
-    aar_import_impl(
+    aar_import(
         name = "androidx_arch_core__core_runtime__2_0_0",
         aar = "@androidx_arch_core__core_runtime__2_0_0//file",
         tags = ["maven_coordinates=androidx.arch.core:core-runtime:2.0.0"],
@@ -429,7 +424,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.asynclayoutinflater:asynclayoutinflater:1.0.0
-    aar_import_impl(
+    aar_import(
         name = "androidx_asynclayoutinflater__asynclayoutinflater__1_0_0",
         aar = "@androidx_asynclayoutinflater__asynclayoutinflater__1_0_0//file",
         tags = ["maven_coordinates=androidx.asynclayoutinflater:asynclayoutinflater:1.0.0"],
@@ -451,7 +446,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.collection:collection:1.0.0
-    java_import_impl(
+    java_import(
         name = "androidx_collection__collection__1_0_0",
         jars = ["@androidx_collection__collection__1_0_0//file"],
         tags = ["maven_coordinates=androidx.collection:collection:1.0.0"],
@@ -469,7 +464,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.coordinatorlayout:coordinatorlayout:1.0.0
-    aar_import_impl(
+    aar_import(
         name = "androidx_coordinatorlayout__coordinatorlayout__1_0_0",
         aar = "@androidx_coordinatorlayout__coordinatorlayout__1_0_0//file",
         tags = ["maven_coordinates=androidx.coordinatorlayout:coordinatorlayout:1.0.0"],
@@ -493,7 +488,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.core:core:1.1.0-alpha01
-    aar_import_impl(
+    aar_import(
         name = "androidx_core__core__1_1_0_alpha01",
         aar = "@androidx_core__core__1_1_0_alpha01//file",
         tags = ["maven_coordinates=androidx.core:core:1.1.0-alpha01"],
@@ -519,7 +514,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.cursoradapter:cursoradapter:1.0.0
-    aar_import_impl(
+    aar_import(
         name = "androidx_cursoradapter__cursoradapter__1_0_0",
         aar = "@androidx_cursoradapter__cursoradapter__1_0_0//file",
         tags = ["maven_coordinates=androidx.cursoradapter:cursoradapter:1.0.0"],
@@ -535,7 +530,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.customview:customview:1.0.0
-    aar_import_impl(
+    aar_import(
         name = "androidx_customview__customview__1_0_0",
         aar = "@androidx_customview__customview__1_0_0//file",
         tags = ["maven_coordinates=androidx.customview:customview:1.0.0"],
@@ -557,7 +552,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.documentfile:documentfile:1.0.0
-    aar_import_impl(
+    aar_import(
         name = "androidx_documentfile__documentfile__1_0_0",
         aar = "@androidx_documentfile__documentfile__1_0_0//file",
         tags = ["maven_coordinates=androidx.documentfile:documentfile:1.0.0"],
@@ -573,7 +568,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.drawerlayout:drawerlayout:1.0.0
-    aar_import_impl(
+    aar_import(
         name = "androidx_drawerlayout__drawerlayout__1_0_0",
         aar = "@androidx_drawerlayout__drawerlayout__1_0_0//file",
         tags = ["maven_coordinates=androidx.drawerlayout:drawerlayout:1.0.0"],
@@ -597,7 +592,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.fragment:fragment:1.1.0-alpha02
-    aar_import_impl(
+    aar_import(
         name = "androidx_fragment__fragment__1_1_0_alpha02",
         aar = "@androidx_fragment__fragment__1_1_0_alpha02//file",
         tags = ["maven_coordinates=androidx.fragment:fragment:1.1.0-alpha02"],
@@ -627,7 +622,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.interpolator:interpolator:1.0.0
-    aar_import_impl(
+    aar_import(
         name = "androidx_interpolator__interpolator__1_0_0",
         aar = "@androidx_interpolator__interpolator__1_0_0//file",
         tags = ["maven_coordinates=androidx.interpolator:interpolator:1.0.0"],
@@ -643,7 +638,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.legacy:legacy-support-core-ui:1.0.0
-    aar_import_impl(
+    aar_import(
         name = "androidx_legacy__legacy_support_core_ui__1_0_0",
         aar = "@androidx_legacy__legacy_support_core_ui__1_0_0//file",
         tags = ["maven_coordinates=androidx.legacy:legacy-support-core-ui:1.0.0"],
@@ -685,7 +680,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.legacy:legacy-support-core-utils:1.0.0
-    aar_import_impl(
+    aar_import(
         name = "androidx_legacy__legacy_support_core_utils__1_0_0",
         aar = "@androidx_legacy__legacy_support_core_utils__1_0_0//file",
         tags = ["maven_coordinates=androidx.legacy:legacy-support-core-utils:1.0.0"],
@@ -715,7 +710,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.lifecycle:lifecycle-common:2.0.0
-    java_import_impl(
+    java_import(
         name = "androidx_lifecycle__lifecycle_common__2_0_0",
         jars = ["@androidx_lifecycle__lifecycle_common__2_0_0//file"],
         tags = ["maven_coordinates=androidx.lifecycle:lifecycle-common:2.0.0"],
@@ -733,7 +728,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.lifecycle:lifecycle-livedata-core:2.0.0
-    aar_import_impl(
+    aar_import(
         name = "androidx_lifecycle__lifecycle_livedata_core__2_0_0",
         aar = "@androidx_lifecycle__lifecycle_livedata_core__2_0_0//file",
         tags = ["maven_coordinates=androidx.lifecycle:lifecycle-livedata-core:2.0.0"],
@@ -757,7 +752,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.lifecycle:lifecycle-livedata:2.0.0
-    aar_import_impl(
+    aar_import(
         name = "androidx_lifecycle__lifecycle_livedata__2_0_0",
         aar = "@androidx_lifecycle__lifecycle_livedata__2_0_0//file",
         tags = ["maven_coordinates=androidx.lifecycle:lifecycle-livedata:2.0.0"],
@@ -781,7 +776,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.lifecycle:lifecycle-runtime:2.0.0
-    aar_import_impl(
+    aar_import(
         name = "androidx_lifecycle__lifecycle_runtime__2_0_0",
         aar = "@androidx_lifecycle__lifecycle_runtime__2_0_0//file",
         tags = ["maven_coordinates=androidx.lifecycle:lifecycle-runtime:2.0.0"],
@@ -805,7 +800,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.lifecycle:lifecycle-viewmodel:2.0.0
-    aar_import_impl(
+    aar_import(
         name = "androidx_lifecycle__lifecycle_viewmodel__2_0_0",
         aar = "@androidx_lifecycle__lifecycle_viewmodel__2_0_0//file",
         tags = ["maven_coordinates=androidx.lifecycle:lifecycle-viewmodel:2.0.0"],
@@ -821,7 +816,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.loader:loader:1.0.0
-    aar_import_impl(
+    aar_import(
         name = "androidx_loader__loader__1_0_0",
         aar = "@androidx_loader__loader__1_0_0//file",
         tags = ["maven_coordinates=androidx.loader:loader:1.0.0"],
@@ -847,7 +842,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.localbroadcastmanager:localbroadcastmanager:1.0.0
-    aar_import_impl(
+    aar_import(
         name = "androidx_localbroadcastmanager__localbroadcastmanager__1_0_0",
         aar = "@androidx_localbroadcastmanager__localbroadcastmanager__1_0_0//file",
         tags = ["maven_coordinates=androidx.localbroadcastmanager:localbroadcastmanager:1.0.0"],
@@ -863,7 +858,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.print:print:1.0.0
-    aar_import_impl(
+    aar_import(
         name = "androidx_print__print__1_0_0",
         aar = "@androidx_print__print__1_0_0//file",
         tags = ["maven_coordinates=androidx.print:print:1.0.0"],
@@ -879,7 +874,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.slidingpanelayout:slidingpanelayout:1.0.0
-    aar_import_impl(
+    aar_import(
         name = "androidx_slidingpanelayout__slidingpanelayout__1_0_0",
         aar = "@androidx_slidingpanelayout__slidingpanelayout__1_0_0//file",
         tags = ["maven_coordinates=androidx.slidingpanelayout:slidingpanelayout:1.0.0"],
@@ -903,7 +898,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.swiperefreshlayout:swiperefreshlayout:1.0.0
-    aar_import_impl(
+    aar_import(
         name = "androidx_swiperefreshlayout__swiperefreshlayout__1_0_0",
         aar = "@androidx_swiperefreshlayout__swiperefreshlayout__1_0_0//file",
         tags = ["maven_coordinates=androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"],
@@ -927,7 +922,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.vectordrawable:vectordrawable-animated:1.0.0
-    aar_import_impl(
+    aar_import(
         name = "androidx_vectordrawable__vectordrawable_animated__1_0_0",
         aar = "@androidx_vectordrawable__vectordrawable_animated__1_0_0//file",
         tags = ["maven_coordinates=androidx.vectordrawable:vectordrawable-animated:1.0.0"],
@@ -949,7 +944,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.vectordrawable:vectordrawable:1.0.1
-    aar_import_impl(
+    aar_import(
         name = "androidx_vectordrawable__vectordrawable__1_0_1",
         aar = "@androidx_vectordrawable__vectordrawable__1_0_1//file",
         tags = ["maven_coordinates=androidx.vectordrawable:vectordrawable:1.0.1"],
@@ -971,7 +966,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01
-    aar_import_impl(
+    aar_import(
         name = "androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01",
         aar = "@androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01//file",
         tags = ["maven_coordinates=androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01"],
@@ -993,7 +988,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from androidx.viewpager:viewpager:1.0.0
-    aar_import_impl(
+    aar_import(
         name = "androidx_viewpager__viewpager__1_0_0",
         aar = "@androidx_viewpager__viewpager__1_0_0//file",
         tags = ["maven_coordinates=androidx.viewpager:viewpager:1.0.0"],
@@ -1017,7 +1012,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406
-    aar_import_impl(
+    aar_import(
         name = "com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406",
         aar = "@com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406//file",
         tags = ["maven_coordinates=com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406"],
@@ -1037,7 +1032,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406
-    aar_import_impl(
+    aar_import(
         name = "com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406",
         aar = "@com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406//file",
         tags = ["maven_coordinates=com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406"],

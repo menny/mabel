@@ -39,7 +39,7 @@ public class TargetsBuilders {
         final Target target =
                 new Target(
                                 dependencyTools.mavenCoordinates(dependency),
-                                "java_import_impl",
+                                "java_import",
                                 dependencyTools.repositoryRuleName(dependency))
                         .addList(
                                 "jars",
@@ -240,12 +240,8 @@ public class TargetsBuilders {
             targets.add(
                     new Target(
                                     dependencyTools.mavenCoordinates(dependency),
-                                    "kotlin_jar_support",
+                                    "kt_jvm_import",
                                     dependencyTools.repositoryRuleName(dependency))
-                            .addList(
-                                    "deps",
-                                    convertRulesToStrings(
-                                            dependency.dependencies(), dependencyTools))
                             .addList(
                                     "exports",
                                     convertRulesToStrings(dependency.exports(), dependencyTools))
@@ -265,8 +261,7 @@ public class TargetsBuilders {
                                     String.format(
                                             Locale.US,
                                             "@%s//file",
-                                            dependencyTools.repositoryRuleName(dependency)))
-                            .addVariable("java_import_impl", "java_import_impl"));
+                                            dependencyTools.repositoryRuleName(dependency))));
 
             targets.add(
                     addAlias(
@@ -328,7 +323,7 @@ public class TargetsBuilders {
                 targets.add(
                         new Target(
                                         dependencyTools.mavenCoordinates(dependency),
-                                        "java_plugin_impl",
+                                        "java_plugin",
                                         noApiTargetName)
                                 .addString("processor_class", processorClass)
                                 .addInt("generates_api", 0)
@@ -347,7 +342,7 @@ public class TargetsBuilders {
                 targets.add(
                         new Target(
                                         dependencyTools.mavenCoordinates(dependency),
-                                        "java_plugin_impl",
+                                        "java_plugin",
                                         withApiTargetName)
                                 .addString("processor_class", processorClass)
                                 .addInt("generates_api", 1)
@@ -364,7 +359,7 @@ public class TargetsBuilders {
             targets.add(
                     new Target(
                                     dependencyTools.mavenCoordinates(dependency),
-                                    "java_library_impl",
+                                    "java_library",
                                     dependencyTools.repositoryRuleName(dependency)
                                             + PROCESSOR_CLASS_POST_FIX
                                             + "all")
@@ -379,7 +374,7 @@ public class TargetsBuilders {
             targets.add(
                     new Target(
                                     dependencyTools.mavenCoordinates(dependency),
-                                    "java_library_impl",
+                                    "java_library",
                                     dependencyTools.repositoryRuleName(dependency)
                                             + PROCESSOR_CLASS_POST_FIX_WITH_API
                                             + "all")
@@ -407,7 +402,7 @@ public class TargetsBuilders {
             targets.add(
                     new Target(
                                     dependencyTools.mavenCoordinates(dependency),
-                                    "aar_import_impl",
+                                    "aar_import",
                                     dependencyTools.repositoryRuleName(dependency))
                             .addString(
                                     "aar",

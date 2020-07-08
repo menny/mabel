@@ -92,8 +92,6 @@ public class RuleWriters {
     }
 
     public static class TransitiveRulesMacroWriter implements RuleWriter {
-
-        private static final String KOTLIN_LIB_MACRO_NAME = "kotlin_jar_support";
         private final File outputFile;
         private final String macroName;
 
@@ -106,9 +104,6 @@ public class RuleWriters {
         public void write(Collection<Target> targets) throws IOException {
             targets = SortTargetsByName.sort(targets);
 
-            StringBuilder supportFunctions = readTemplate(
-                    "dependencies-targets-support-functions.bzl.template",
-                    Collections.singletonMap("{{kotlin_jar_support}}", KOTLIN_LIB_MACRO_NAME));
             StringBuilder targetsMacro = readTemplate(
                     "dependencies-targets-macro.bzl.template",
                     Collections.singletonMap("{{generate_transitive_dependency_targets}}", macroName));
@@ -117,7 +112,6 @@ public class RuleWriters {
                     new OutputStreamWriter(
                             new FileOutputStream(outputFile, true), Charsets.UTF_8)) {
                 fileWriter.append(NEW_LINE);
-                fileWriter.append(supportFunctions.toString()).append(NEW_LINE);
                 fileWriter.append(targetsMacro.toString()).append(NEW_LINE);
 
                 if (targets.isEmpty()) {
@@ -130,10 +124,6 @@ public class RuleWriters {
                                 .append("# from ")
                                 .append(target.getMavenCoordinates())
                                 .append(NEW_LINE);
-
-                        if (target.getRuleName().equals(KOTLIN_LIB_MACRO_NAME)) {
-                            target.addVariable("kt_jvm_import", "kt_jvm_import");
-                        }
                         fileWriter.append(target.outputString(INDENT)).append(NEW_LINE);
                         if (iterator.hasNext()) fileWriter.append(NEW_LINE);
                     }

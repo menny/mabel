@@ -23,60 +23,55 @@ def generate_workspace_rules(name = "generate_workspace_rules"):
         sha256 = "36a666e3b71ae7f0f0dca23654b67e086e6c93d192f60ba5dfd5519db6c288c8",
     )
 
-def kotlin_jar_support(name, deps, exports, runtime_deps, jar, tags, java_import_impl, kt_jvm_import = None, visibility = ["//visibility:public"]):
+def _no_op_missing_aar_impl(name, **kwargs):
     """
-    This is a help macro to handle Kotlin rules.
+    This is a help macro for missing concrete rule implementation.
 
-    Transitive rules macro to be run in the BUILD.bazel file.
-    If you use kt_* rules, you MUST provide the correct rule implementation when call this macro, if you decide
-    not to provide those implementations we'll try to use java_* rules.
+    This will be used in cases when some dependencies require aar_import rule implementation.
 
     Args:
         name: A unique name for this target.
-        deps: The list of other libraries to be linked in to the target.
-        exports: Targets to make available to users of this rule.
-        runtime_deps: Libraries to make available to the final binary or test at runtime only.
-        jar: The JAR file provided to Java targets that depend on this target.
-        java_import_impl: rule implementation for java_import.
-        kt_jvm_import: rule implementation for kt_jvm_import. Can be None.
-        visibility: Target visibility to pass to actual targets.
-        tags: List of arbitrary text tags. Tags may be any valid string.
+        kwargs: Anything else. Not used.
     """
 
-    #In case the developer did not provide a kt_* impl, we'll try to use java_*, should work
-    if kt_jvm_import == None:
-        java_import_impl(
-            name = name,
-            jars = [jar],
-            deps = deps,
-            exports = exports,
-            runtime_deps = runtime_deps,
-            visibility = visibility,
-            tags = tags,
-        )
-    else:
-        kt_jvm_import(
-            name = name,
-            jar = jar,
-            exports = exports,
-            runtime_deps = runtime_deps,
-            visibility = visibility,
-            tags = tags,
-        )
+    fail("Unable to create target {} since it is a aar_import which was not provide. Add argument aar_import when calling generate_transitive_dependency_targets."
+        .format(name),
+    )
 
-def generate_transitive_dependency_targets(name = "generate_transitive_dependency_targets", java_library_impl = native.java_library, java_plugin_impl = native.java_plugin, java_import_impl = native.java_import, aar_import_impl = native.aar_import, kt_jvm_import = None):
+def _no_op_missing_kt_jvm_impl(name, **kwargs):
+    """
+    This is a help macro for missing concrete rule implementation.
+
+    This will be used in cases when some dependencies require Kotlin rule implementation.
+
+    Args:
+        name: A unique name for this target.
+        kwargs: Anything else. Not used.
+    """
+
+    fail("Unable to create target {} since it is a kt_jvm_import which was not provide. Add argument kt_jvm_import when calling generate_transitive_dependency_targets."
+        .format(name),
+    )
+
+def generate_transitive_dependency_targets(
+        name = "generate_transitive_dependency_targets",
+        java_library = native.java_library,
+        java_plugin = native.java_plugin,
+        java_import = native.java_import,
+        aar_import = _no_op_missing_aar_impl,
+        kt_jvm_import = _no_op_missing_kt_jvm_impl):
     """
     Macro to set up the transitive rules.
 
-    You can provide your own implementation of java_import and aar_import. This can be used
+    You can provide your own implementation of java_import, aar_import, etc. This can be used
     in cases where you need to shade (or jar_jar or jetify) your jars.
 
     Args:
         name: a unique name for this macro. Not needed to specify.
-        java_library_impl: rule implementation for java_library.
-        java_plugin_impl: rule implementation for java_plugin.
-        java_import_impl: rule implementation for java_import.
-        aar_import_impl: rule implementation for aar_import.
+        java_library: rule implementation for java_library.
+        java_plugin: rule implementation for java_plugin.
+        java_import: rule implementation for java_import.
+        aar_import: rule implementation for aar_import.
         kt_jvm_import: rule implementation for kt_jvm_import.
     """
 
@@ -88,7 +83,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.guava:guava:20.0
-    java_import_impl(
+    java_import(
         name = "com_google_guava__guava__20_0",
         jars = ["@com_google_guava__guava__20_0//file"],
         tags = ["maven_coordinates=com.google.guava:guava:20.0"],

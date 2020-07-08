@@ -1,52 +1,51 @@
-
 #here is an example of using a replacement implementation for aar_import
 load(":aar_import_replacement.bzl", "macro_instead_of_aar_import")
-
 load("//program/main_deps:dependencies.bzl", "generate_transitive_dependency_targets")
-generate_transitive_dependency_targets(aar_import_impl = macro_instead_of_aar_import)
 
-load("@mabel//rules/maven_deps:mabel.bzl", "mabel_rule", "artifact")
+generate_transitive_dependency_targets(aar_import = macro_instead_of_aar_import)
 
+load("@mabel//rules/maven_deps:mabel.bzl", "artifact", "mabel_rule")
 load(":g_artifact.bzl", "g_artifact")
 
-mabel_rule(name = 'main_deps',
+mabel_rule(
+    name = "main_deps",
+    calculate_sha = False,
     maven_deps = [
-        g_artifact('androidx.fragment:fragment:1.1.0-alpha02'),
-        g_artifact('androidx.appcompat:appcompat:1.0.2'),
-        g_artifact('androidx.annotation:annotation:1.0.0'),
-
-        artifact('com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406',
-                 repositories = [
-                                 'https://jitpack.io/',
-                                 'https://maven.google.com/',
-                                 'https://repo1.maven.org/maven2/',
-                             ],
-                     maven_exclude_deps = [
-                         'com.android.support'
-                     ])
+        g_artifact("androidx.fragment:fragment:1.1.0-alpha02"),
+        g_artifact("androidx.appcompat:appcompat:1.0.2"),
+        g_artifact("androidx.annotation:annotation:1.0.0"),
+        artifact(
+            "com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406",
+            maven_exclude_deps = [
+                "com.android.support",
+            ],
+            repositories = [
+                "https://jitpack.io/",
+                "https://maven.google.com/",
+                "https://repo1.maven.org/maven2/",
+            ],
+        ),
     ],
-    calculate_sha = False
 )
 
 android_binary(
     name = "app",
-    visibility = ["//visibility:public"],
-    manifest = "AndroidManifest.xml",
     srcs = ["HelloActivity.java"],
     custom_package = "net.evendanan.bazel.mvn.example",
+    manifest = "AndroidManifest.xml",
+    manifest_values = {
+        "versionCode": "1",
+        "versionName": "v0.0.1",
+        "minSdkVersion": "19",
+        "targetSdkVersion": "28",
+        "compileSdkVersion": "28",
+    },
     resource_files = glob(["res/**/*"]),
+    visibility = ["//visibility:public"],
     deps = [
-        "//program/main_deps/androidx/appcompat/appcompat",
-        "//program/main_deps/androidx/annotation/annotation",
         "//program:androidx_fragment__fragment",
-
+        "//program/main_deps/androidx/annotation/annotation",
+        "//program/main_deps/androidx/appcompat/appcompat",
         "//program/main_deps/com/github/menny/Chauffeur/permissions",
     ],
-    manifest_values = {
-        "versionCode" : "1",
-        "versionName" : "v0.0.1",
-        "minSdkVersion" : "19",
-        "targetSdkVersion" : "28",
-        "compileSdkVersion" : "28"
-    }
 )
