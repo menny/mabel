@@ -192,6 +192,29 @@ public class RuleClassifiersTest {
                         .orElse(null));
     }
 
+//    @Test
+//    public void testJarInspector_kotlin_android() throws Exception {
+//        final Dependency dependency =
+//                Dependency.builder().mavenCoordinate(mMavenCoordinate).build();
+//        final Function<Dependency, URI> dependencyURIFunction =
+//                dep -> {
+//                    try {
+//                        return RuleClassifiersTest.class
+//                                .getClassLoader()
+//                                .getResource("mockk-1.0-for-android.aar")
+//                                .toURI();
+//                    } catch (URISyntaxException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                };
+//
+//        Assert.assertSame(
+//                TargetsBuilders.KOTLIN_ANDROID_IMPORT,
+//                new RuleClassifiers.JarInspector(dependencyURIFunction)
+//                        .classifyRule(dependency)
+//                        .orElse(null));
+//    }
+
     @Test
     public void testPriority() {
         RuleClassifier classifier1 = Mockito.mock(RuleClassifier.class);

@@ -1,0 +1,10 @@
+# Loading a drop-in replacement for native.http_file
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
+
+def {{generate_workspace_rules}}(name = "{{generate_workspace_rules}}"):
+    """
+    Repository rules macro to be run in the WORKSPACE file.
+
+    Args:
+        name: A unique name for this target. No need to specify.
+    """
