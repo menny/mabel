@@ -1,6 +1,7 @@
 package net.evendanan.bazel.mvn.impl;
 
 import com.google.common.base.Charsets;
+
 import net.evendanan.bazel.mvn.api.RuleClassifier;
 import net.evendanan.bazel.mvn.api.TargetsBuilder;
 import net.evendanan.bazel.mvn.api.model.Dependency;
@@ -8,8 +9,10 @@ import net.evendanan.bazel.mvn.api.model.Dependency;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -63,7 +66,7 @@ public class RuleClassifiers {
         }
     }
 
-    public static class JarInspector implements RuleClassifier {
+    public static class JarInspector {
 
         private final Function<Dependency, URI> downloader;
 
@@ -71,8 +74,9 @@ public class RuleClassifiers {
             this.downloader = downloader;
         }
 
-        private static Optional<TargetsBuilder> performRemoteJarInspection(InputStream inputStream)
+        private static List<TargetsBuilder> performRemoteJarInspection(InputStream inputStream)
                 throws IOException {
+            final List<TargetsBuilder> detectedModules = new ArrayList<>();
             try (JarInputStream zipInputStream = new JarInputStream(inputStream, false)) {
                 JarEntry jarEntry = zipInputStream.getNextJarEntry();
                 while (jarEntry != null) {
@@ -86,17 +90,18 @@ public class RuleClassifiers {
                             contentBuilder.append(new String(buffer, 0, read, Charsets.UTF_8));
                         }
 
-                        return parseServicesProcessorFileContent(contentBuilder.toString());
+                        parseServicesProcessorFileContent(contentBuilder.toString())
+                                .ifPresent(detectedModules::add);
                     } else if (jarEntryName.startsWith("META-INF/")
                             && jarEntryName.endsWith(".kotlin_module")) {
-                        return Optional.of(TargetsBuilders.KOTLIN_IMPORT);
+                        detectedModules.add(TargetsBuilders.KOTLIN_IMPORT);
                     }
                     zipInputStream.closeEntry();
                     jarEntry = zipInputStream.getNextJarEntry();
                 }
             }
 
-            return Optional.empty();
+            return detectedModules;
         }
 
         private static Optional<TargetsBuilder> parseServicesProcessorFileContent(
@@ -117,14 +122,37 @@ public class RuleClassifiers {
             return Optional.empty();
         }
 
-        @Override
-        public Optional<TargetsBuilder> classifyRule(final Dependency dependency) {
+        public List<TargetsBuilder> findAllPossibleBuilders(final Dependency dependency) {
             try (InputStream networkInputStream =
-                    downloader.apply(dependency).toURL().openStream()) {
+                         downloader.apply(dependency).toURL().openStream()) {
                 return performRemoteJarInspection(networkInputStream);
             } catch (IOException e) {
                 e.printStackTrace();
-                return Optional.empty();
+                return Collections.emptyList();
+            }
+        }
+    }
+
+    public static class JarClassifier implements RuleClassifier {
+        private Function<Dependency, List<TargetsBuilder>> mJarInspector;
+
+        public JarClassifier(Function<Dependency, List<TargetsBuilder>> jarInspector) {
+            mJarInspector = jarInspector;
+        }
+
+        @Override
+        public Optional<TargetsBuilder> classifyRule(Dependency dependency) {
+            //TODO: in the future, we should use android import
+            //final boolean isAndroid = dependency.url().endsWith(".aar");
+            List<TargetsBuilder> possibleBuilders = mJarInspector.apply(dependency);
+            final Optional<TargetsBuilder> kotlinOptional = possibleBuilders.stream().filter(t -> t instanceof TargetsBuilders.KotlinImport).findFirst();
+            final Optional<TargetsBuilder> processorOptional = possibleBuilders.stream().filter(t -> t instanceof TargetsBuilders.JavaPluginFormatter).findFirst();
+
+            if (kotlinOptional.isPresent()) {
+                return kotlinOptional;
+            } else {
+                //either this is present - in which case we want to return it - or it's empty - in which case want to return empty.
+                return processorOptional;
             }
         }
     }

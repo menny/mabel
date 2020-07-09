@@ -274,6 +274,7 @@ java_test(
         "src/main/javatest/net/evendanan/bazel/mvn/resourses/dataenum-processor-1.0.2-with-comments.jar",
         "src/main/javatest/net/evendanan/bazel/mvn/resourses/mockk-1.0.jar",
         "src/main/javatest/net/evendanan/bazel/mvn/resourses/mockk-1.0-for-android.aar",
+        "src/main/javatest/net/evendanan/bazel/mvn/resourses/mockk-1.0-for-android.jar",
     ],
     test_class = "net.evendanan.bazel.mvn.impl.RuleClassifiersTest",
     deps = [

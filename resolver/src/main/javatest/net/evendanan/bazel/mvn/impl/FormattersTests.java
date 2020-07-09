@@ -5,6 +5,7 @@ import net.evendanan.bazel.mvn.api.Target;
 import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.model.License;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.net.URI;
@@ -294,24 +295,60 @@ public class FormattersTests {
                     + "        visibility = [\"//visibility:public\"],\n"
                     + "    )\n";
     private static final String NATIVE_KOTLIN_IMPORT_TEXT =
-            "    kt_jvm_import(\n"
-                    + "        name = \"kotlin__lib__\",\n"
-                    + "        exports = [\n"
-                    + "            \":safe_mvn__export1\",\n"
-                    + "            \":safe_mvn__export2\",\n"
-                    + "        ],\n"
-                    + "        runtime_deps = [\n"
-                    + "            \":safe_mvn__runtime1\",\n"
-                    + "            \":safe_mvn__runtime2\",\n"
-                    + "        ],\n"
-                    + "        tags = [\"maven_coordinates=kotlin:lib:\"],\n"
-                    + "        jar = \"@kotlin__lib__//file\",\n"
-                    + "    )\n"
-                    + "    native.alias(\n"
-                    + "        name = \"kotlin__lib\",\n"
-                    + "        actual = \":kotlin__lib__\",\n"
-                    + "        visibility = [\"//visibility:public\"],\n"
-                    + "    )\n";
+            "    kt_jvm_import(\n" +
+                    "        name = \"kotlin__lib__\",\n" +
+                    "        tags = [\"maven_coordinates=kotlin:lib:\"],\n" +
+                    "        exports = [\n" +
+                    "            \":safe_mvn__export1\",\n" +
+                    "            \":safe_mvn__export2\",\n" +
+                    "        ],\n" +
+                    "        runtime_deps = [\n" +
+                    "            \":safe_mvn__runtime1\",\n" +
+                    "            \":safe_mvn__runtime2\",\n" +
+                    "        ],\n" +
+                    "        jar = \"@kotlin__lib__//file\",\n" +
+                    "    )\n" +
+                    "    native.alias(\n" +
+                    "        name = \"kotlin__lib\",\n" +
+                    "        actual = \":kotlin__lib__\",\n" +
+                    "        visibility = [\"//visibility:public\"],\n" +
+                    "    )\n";
+    private static final String NATIVE_KOTLIN_ANDROID_IMPORT_TEXT =
+            "    kt_jvm_import(\n" +
+            "        name = \"kotlin__lib_____kt_library\",\n" +
+            "        tags = [\"maven_coordinates=kotlin:lib:\"],\n" +
+            "        exports = [\n" +
+            "            \":safe_mvn__export1\",\n" +
+            "            \":safe_mvn__export2\",\n" +
+            "        ],\n" +
+            "        runtime_deps = [\n" +
+            "            \":safe_mvn__runtime1\",\n" +
+            "            \":safe_mvn__runtime2\",\n" +
+            "        ],\n" +
+            "        jar = \"@kotlin__lib__//file\",\n" +
+            "    )\n" +
+            "    native.alias(\n" +
+            "        name = \"kotlin__lib\",\n" +
+            "        actual = \":kotlin__lib__\",\n" +
+            "        visibility = [\"//visibility:public\"],\n" +
+            "    )\n" +
+            "    kt_android_library(\n" +
+            "        name = \"kotlin__lib__\",\n" +
+            "        deps = [\n" +
+            "            \":safe_mvn__dep1\",\n" +
+            "            \":safe_mvn__dep2\",\n" +
+            "        ],\n" +
+            "        exports = [\n" +
+            "            \":kotlin__lib_____kt_library\",\n" +
+            "            \":safe_mvn__export1\",\n" +
+            "            \":safe_mvn__export2\",\n" +
+            "        ],\n" +
+            "        runtime_deps = [\n" +
+            "            \":safe_mvn__runtime1\",\n" +
+            "            \":safe_mvn__runtime2\",\n" +
+            "        ],\n" +
+            "        tags = [\"maven_coordinates=kotlin:lib:\"],\n" +
+            "    )\n";
 
     private static String targetsToString(String indent, List<Target> targets) {
         StringBuilder builder = new StringBuilder();
@@ -515,5 +552,23 @@ public class FormattersTests {
                                 DependencyTools.DEFAULT));
 
         Assert.assertEquals(NATIVE_KOTLIN_IMPORT_TEXT, ruleText);
+    }
+
+    @Test
+    @Ignore("until we figure out kotlin-android import")
+    public void testNativeKotlinAndroidImport() {
+        final String ruleText =
+                targetsToString(
+                        "    ",
+                        TargetsBuilders.KOTLIN_ANDROID_IMPORT.buildTargets(
+                                createDependency(
+                                        "kotlin:lib",
+                                        "https://some_url",
+                                        Arrays.asList("dep1", "dep2"),
+                                        Arrays.asList("export1", "export2"),
+                                        Arrays.asList("runtime1", "runtime2")),
+                                DependencyTools.DEFAULT));
+
+        Assert.assertEquals(NATIVE_KOTLIN_ANDROID_IMPORT_TEXT, ruleText);
     }
 }

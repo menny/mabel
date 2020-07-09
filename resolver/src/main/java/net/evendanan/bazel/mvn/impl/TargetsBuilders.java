@@ -32,6 +32,7 @@ public class TargetsBuilders {
                 return targets;
             };
     static final TargetsBuilder KOTLIN_IMPORT = new KotlinImport();
+    static final TargetsBuilder KOTLIN_ANDROID_IMPORT = new KotlinAndroidImport();
     @VisibleForTesting static final TargetsBuilder AAR_IMPORT = new AarImport();
 
     private static Target addJavaImportRule(
@@ -239,16 +240,9 @@ public class TargetsBuilders {
 
             targets.add(
                     new Target(
-                                    dependencyTools.mavenCoordinates(dependency),
+                            dependencyTools.mavenCoordinates(dependency),
                                     "kt_jvm_import",
-                                    dependencyTools.repositoryRuleName(dependency))
-                            .addList(
-                                    "exports",
-                                    convertRulesToStrings(dependency.exports(), dependencyTools))
-                            .addList(
-                                    "runtime_deps",
-                                    convertRulesToStrings(
-                                            dependency.runtimeDependencies(), dependencyTools))
+                            getKotlinJvmRepositoryRuleName(dependency, dependencyTools))
                             .addList(
                                     "tags",
                                     Collections.singletonList(
@@ -256,6 +250,13 @@ public class TargetsBuilders {
                                                     Locale.ROOT,
                                                     "maven_coordinates=%s",
                                                     dependencyTools.mavenCoordinates(dependency))))
+                            .addList(
+                                    "exports",
+                                    convertRulesToStrings(dependency.exports(), dependencyTools))
+                            .addList(
+                                    "runtime_deps",
+                                    convertRulesToStrings(
+                                            dependency.runtimeDependencies(), dependencyTools))
                             .addString(
                                     "jar",
                                     String.format(
@@ -269,6 +270,45 @@ public class TargetsBuilders {
                             dependency.mavenCoordinate().artifactId(),
                             "",
                             dependencyTools));
+
+            return targets;
+        }
+
+        protected String getKotlinJvmRepositoryRuleName(Dependency dependency, DependencyTools dependencyTools) {
+            return dependencyTools.repositoryRuleName(dependency);
+        }
+    }
+
+    public static class KotlinAndroidImport extends KotlinImport {
+
+        @Override
+        protected String getKotlinJvmRepositoryRuleName(Dependency dependency, DependencyTools dependencyTools) {
+            return super.getKotlinJvmRepositoryRuleName(dependency, dependencyTools) + "___kt_library";
+        }
+
+        @Override
+        public List<Target> buildTargets(
+                final Dependency dependency, DependencyTools dependencyTools) {
+            List<Target> targets = super.buildTargets(dependency,dependencyTools);;
+
+            targets.add(
+                    new Target(
+                            dependencyTools.mavenCoordinates(dependency),
+                            "kt_android_library",
+                            dependencyTools.repositoryRuleName(dependency))
+                            .addList(
+                                    "deps",
+                                    convertRulesToStrings(dependency.dependencies(), dependencyTools))
+                            .addList(
+                                    "exports",
+                                    addItem(convertRulesToStrings(dependency.exports(), dependencyTools), ":" + getKotlinJvmRepositoryRuleName(dependency, dependencyTools)))
+                            .addList(
+                                    "tags",
+                                    Collections.singletonList(
+                                            String.format(
+                                                    Locale.ROOT,
+                                                    "maven_coordinates=%s",
+                                                    dependencyTools.mavenCoordinates(dependency)))));
 
             return targets;
         }
@@ -431,5 +471,11 @@ public class TargetsBuilders {
 
             return targets;
         }
+    }
+
+    private static <T> Collection<T> addItem(Collection<T> list, T item) {
+        List<T> newList = new ArrayList<>(list);
+        newList.add(item);
+        return newList;
     }
 }
