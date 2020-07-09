@@ -47,61 +47,73 @@ def generate_workspace_rules(name = "generate_workspace_rules"):
         sha256 = "38dd8d4e1bbff75e67d16b78d6fde1d55a7720172f099ea95135f2ec7996b11f",
     )
 
-def kotlin_jar_support(name, deps, exports, runtime_deps, jar, tags, java_import_impl, kt_jvm_import = None, visibility = ["//visibility:public"]):
+def _no_op_missing_aar_impl(name, **kwargs):
     """
-    This is a help macro to handle Kotlin rules.
+    This is a help macro for missing concrete rule implementation.
 
-    Transitive rules macro to be run in the BUILD.bazel file.
-    If you use kt_* rules, you MUST provide the correct rule implementation when call this macro, if you decide
-    not to provide those implementations we'll try to use java_* rules.
+    This will be used in cases when some dependencies require aar_import rule implementation.
 
     Args:
         name: A unique name for this target.
-        deps: The list of other libraries to be linked in to the target.
-        exports: Targets to make available to users of this rule.
-        runtime_deps: Libraries to make available to the final binary or test at runtime only.
-        jar: The JAR file provided to Java targets that depend on this target.
-        java_import_impl: rule implementation for java_import.
-        kt_jvm_import: rule implementation for kt_jvm_import. Can be None.
-        visibility: Target visibility to pass to actual targets.
-        tags: List of arbitrary text tags. Tags may be any valid string.
+        kwargs: Anything else. Not used.
     """
 
-    #In case the developer did not provide a kt_* impl, we'll try to use java_*, should work
-    if kt_jvm_import == None:
-        java_import_impl(
-            name = name,
-            jars = [jar],
-            deps = deps,
-            exports = exports,
-            runtime_deps = runtime_deps,
-            visibility = visibility,
-            tags = tags,
-        )
-    else:
-        kt_jvm_import(
-            name = name,
-            jar = jar,
-            exports = exports,
-            runtime_deps = runtime_deps,
-            visibility = visibility,
-            tags = tags,
-        )
+    fail("Unable to create target {} since it is a aar_import which was not provide. Add argument aar_import when calling generate_transitive_dependency_targets."
+        .format(name),
+    )
 
-def generate_transitive_dependency_targets(name = "generate_transitive_dependency_targets", java_library_impl = native.java_library, java_plugin_impl = native.java_plugin, java_import_impl = native.java_import, aar_import_impl = native.aar_import, kt_jvm_import = None):
+def _no_op_missing_kt_jvm_impl(name, **kwargs):
+    """
+    This is a help macro for missing concrete rule implementation.
+
+    This will be used in cases when some dependencies require Kotlin rule implementation.
+
+    Args:
+        name: A unique name for this target.
+        kwargs: Anything else. Not used.
+    """
+
+    fail("Unable to create target {} since it is a kt_jvm_import which was not provide. Add argument kt_jvm_import when calling generate_transitive_dependency_targets."
+        .format(name),
+    )
+
+def _no_op_missing_kt_android_impl(name, **kwargs):
+    """
+    This is a help macro for missing concrete rule implementation.
+
+    This will be used in cases when some dependencies require Kotlin rule implementation.
+
+    Args:
+        name: A unique name for this target.
+        kwargs: Anything else. Not used.
+    """
+
+    fail("Unable to create target {} since it is a kt_android_library which was not provide. Add argument kt_android_library when calling generate_transitive_dependency_targets."
+        .format(name),
+    )
+
+def generate_transitive_dependency_targets(
+        name = "generate_transitive_dependency_targets",
+        java_library = native.java_library,
+        java_plugin = native.java_plugin,
+        java_import = native.java_import,
+        aar_import = _no_op_missing_aar_impl,
+        kt_jvm_import = _no_op_missing_kt_jvm_impl,
+        kt_android_library = _no_op_missing_kt_android_impl):
     """
     Macro to set up the transitive rules.
 
-    You can provide your own implementation of java_import and aar_import. This can be used
+    You can provide your own implementation of java_import, aar_import, etc. This can be used
     in cases where you need to shade (or jar_jar or jetify) your jars.
 
     Args:
         name: a unique name for this macro. Not needed to specify.
-        java_library_impl: rule implementation for java_library.
-        java_plugin_impl: rule implementation for java_plugin.
-        java_import_impl: rule implementation for java_import.
-        aar_import_impl: rule implementation for aar_import.
-        kt_jvm_import: rule implementation for kt_jvm_import.
+        java_library: rule implementation for java_library. Defaults to native.java_library.
+        java_plugin: rule implementation for java_plugin. Defaults to native.java_plugin.
+        java_import: rule implementation for java_import. Defaults to native.java_import.
+        aar_import: rule implementation for aar_import. Required only if you have Android dependencies.
+        kt_jvm_import: rule implementation for kt_jvm_import. Required only if you have Kotlin dependencies.
+        kt_android_library: rule implementation for kt_android_library. Required only if you have Android-Kotlin dependencies.
     """
 
     # from com.github.salomonbrys.kotson:kotson:2.5.0
@@ -112,21 +124,15 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.github.salomonbrys.kotson:kotson:2.5.0
-    kotlin_jar_support(
+    kt_jvm_import(
         name = "com_github_salomonbrys_kotson__kotson__2_5_0",
-        deps = [
-            ":com_google_code_gson__gson",
-            ":org_jetbrains_kotlin__kotlin_stdlib",
-        ],
+        tags = ["maven_coordinates=com.github.salomonbrys.kotson:kotson:2.5.0"],
         exports = [
             ":com_google_code_gson__gson",
             ":org_jetbrains_kotlin__kotlin_stdlib",
         ],
         runtime_deps = [],
-        tags = ["maven_coordinates=com.github.salomonbrys.kotson:kotson:2.5.0"],
         jar = "@com_github_salomonbrys_kotson__kotson__2_5_0//file",
-        java_import_impl = java_import_impl,
-        kt_jvm_import = kt_jvm_import,
     )
 
     # from com.google.code.gson:gson:2.8.0
@@ -137,7 +143,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.code.gson:gson:2.8.0
-    java_import_impl(
+    java_import(
         name = "com_google_code_gson__gson__2_8_0",
         jars = ["@com_google_code_gson__gson__2_8_0//file"],
         tags = ["maven_coordinates=com.google.code.gson:gson:2.8.0"],
@@ -155,15 +161,12 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.jetbrains.kotlin:kotlin-runtime:1.0.6
-    kotlin_jar_support(
+    kt_jvm_import(
         name = "org_jetbrains_kotlin__kotlin_runtime__1_0_6",
-        deps = [],
+        tags = ["maven_coordinates=org.jetbrains.kotlin:kotlin-runtime:1.0.6"],
         exports = [],
         runtime_deps = [],
-        tags = ["maven_coordinates=org.jetbrains.kotlin:kotlin-runtime:1.0.6"],
         jar = "@org_jetbrains_kotlin__kotlin_runtime__1_0_6//file",
-        java_import_impl = java_import_impl,
-        kt_jvm_import = kt_jvm_import,
     )
 
     # from org.jetbrains.kotlin:kotlin-stdlib:1.0.6
@@ -174,13 +177,10 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.jetbrains.kotlin:kotlin-stdlib:1.0.6
-    kotlin_jar_support(
+    kt_jvm_import(
         name = "org_jetbrains_kotlin__kotlin_stdlib__1_0_6",
-        deps = [":org_jetbrains_kotlin__kotlin_runtime"],
+        tags = ["maven_coordinates=org.jetbrains.kotlin:kotlin-stdlib:1.0.6"],
         exports = [":org_jetbrains_kotlin__kotlin_runtime"],
         runtime_deps = [],
-        tags = ["maven_coordinates=org.jetbrains.kotlin:kotlin-stdlib:1.0.6"],
         jar = "@org_jetbrains_kotlin__kotlin_stdlib__1_0_6//file",
-        java_import_impl = java_import_impl,
-        kt_jvm_import = kt_jvm_import,
     )

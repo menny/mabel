@@ -5,6 +5,7 @@ import net.evendanan.bazel.mvn.api.Target;
 import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.model.License;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.net.URI;
@@ -23,7 +24,7 @@ public class FormattersTests {
                     + "     downloaded_file_path = \"ss.aar\",\n"
                     + " )\n";
     private static final String JAVA_IMPORT_TEXT =
-            " java_import_impl(\n"
+            " java_import(\n"
                     + "     name = \"java__lib__\",\n"
                     + "     jars = [\"@java__lib__//file\"],\n"
                     + "     tags = [\"maven_coordinates=java:lib:\"],\n"
@@ -47,7 +48,7 @@ public class FormattersTests {
                     + "     visibility = [\"//visibility:public\"],\n"
                     + " )\n";
     private static final String JAVA_IMPORT_TEXT_WITH_SOURCES =
-            " java_import_impl(\n"
+            " java_import(\n"
                     + "     name = \"java__lib__\",\n"
                     + "     jars = [\"@java__lib__//file\"],\n"
                     + "     tags = [\"maven_coordinates=java:lib:\"],\n"
@@ -72,7 +73,7 @@ public class FormattersTests {
                     + "     visibility = [\"//visibility:public\"],\n"
                     + " )\n";
     private static final String POM_ONLY_NATIVE_IMPORT_TEXT =
-            " java_import_impl(\n"
+            " java_import(\n"
                     + "     name = \"parent__lib__\",\n"
                     + "     jars = [],\n"
                     + "     tags = [\"maven_coordinates=parent:lib:\"],\n"
@@ -96,7 +97,7 @@ public class FormattersTests {
                     + "     visibility = [\"//visibility:public\"],\n"
                     + " )\n";
     private static final String NATIVE_JAVA_IMPORT_TEXT =
-            "    java_import_impl(\n"
+            "    java_import(\n"
                     + "        name = \"java__lib__\",\n"
                     + "        jars = [\"@java__lib__//file\"],\n"
                     + "        tags = [\"maven_coordinates=java:lib:\"],\n"
@@ -120,7 +121,7 @@ public class FormattersTests {
                     + "        visibility = [\"//visibility:public\"],\n"
                     + "    )\n";
     private static final String NATIVE_JAVA_IMPORT_WITH_LICENSE_TEXT =
-            "    java_import_impl(\n"
+            "    java_import(\n"
                     + "        name = \"java__lib__\",\n"
                     + "        jars = [\"@java__lib__//file\"],\n"
                     + "        tags = [\"maven_coordinates=java:lib:\"],\n"
@@ -144,7 +145,7 @@ public class FormattersTests {
                     + "        visibility = [\"//visibility:public\"],\n"
                     + "    )\n";
     private static final String AAR_IMPORT_TEXT =
-            " aar_import_impl(\n"
+            " aar_import(\n"
                     + "     name = \"aar__lib__\",\n"
                     + "     aar = \"@aar__lib__//file\",\n"
                     + "     tags = [\"maven_coordinates=aar:lib:\"],\n"
@@ -165,7 +166,7 @@ public class FormattersTests {
                     + "     visibility = [\"//visibility:public\"],\n"
                     + " )\n";
     private static final String NATIVE_AAR_IMPORT_TEXT =
-            "    aar_import_impl(\n"
+            "    aar_import(\n"
                     + "        name = \"aar__lib__\",\n"
                     + "        aar = \"@aar__lib__//file\",\n"
                     + "        tags = [\"maven_coordinates=aar:lib:\"],\n"
@@ -186,7 +187,7 @@ public class FormattersTests {
                     + "        visibility = [\"//visibility:public\"],\n"
                     + "    )\n";
     private static final String NATIVE_JAVA_PLUGIN_TEXT =
-            "    java_import_impl(\n"
+            "    java_import(\n"
                     + "        name = \"aar__lib__\",\n"
                     + "        jars = [\"@aar__lib__//file\"],\n"
                     + "        tags = [\"maven_coordinates=aar:lib:\"],\n"
@@ -209,7 +210,7 @@ public class FormattersTests {
                     + "        actual = \":aar__lib__\",\n"
                     + "        visibility = [\"//visibility:public\"],\n"
                     + "    )\n"
-                    + "    java_plugin_impl(\n"
+                    + "    java_plugin(\n"
                     + "        name = \"aar__lib_____processor_class_0\",\n"
                     + "        processor_class = \"com.example.Processor\",\n"
                     + "        generates_api = 0,\n"
@@ -224,7 +225,7 @@ public class FormattersTests {
                     + "        actual = \":aar__lib_____processor_class_0\",\n"
                     + "        visibility = [\"//visibility:public\"],\n"
                     + "    )\n"
-                    + "    java_plugin_impl(\n"
+                    + "    java_plugin(\n"
                     + "        name = \"aar__lib_____generates_api___processor_class_0\",\n"
                     + "        processor_class = \"com.example.Processor\",\n"
                     + "        generates_api = 1,\n"
@@ -239,7 +240,7 @@ public class FormattersTests {
                     + "        actual = \":aar__lib_____generates_api___processor_class_0\",\n"
                     + "        visibility = [\"//visibility:public\"],\n"
                     + "    )\n"
-                    + "    java_plugin_impl(\n"
+                    + "    java_plugin(\n"
                     + "        name = \"aar__lib_____processor_class_1\",\n"
                     + "        processor_class = \"com.example.Processor2\",\n"
                     + "        generates_api = 0,\n"
@@ -254,7 +255,7 @@ public class FormattersTests {
                     + "        actual = \":aar__lib_____processor_class_1\",\n"
                     + "        visibility = [\"//visibility:public\"],\n"
                     + "    )\n"
-                    + "    java_plugin_impl(\n"
+                    + "    java_plugin(\n"
                     + "        name = \"aar__lib_____generates_api___processor_class_1\",\n"
                     + "        processor_class = \"com.example.Processor2\",\n"
                     + "        generates_api = 1,\n"
@@ -269,7 +270,7 @@ public class FormattersTests {
                     + "        actual = \":aar__lib_____generates_api___processor_class_1\",\n"
                     + "        visibility = [\"//visibility:public\"],\n"
                     + "    )\n"
-                    + "    java_library_impl(\n"
+                    + "    java_library(\n"
                     + "        name = \"aar__lib_____processor_class_all\",\n"
                     + "        exported_plugins = [\n"
                     + "            \":aar__lib_____processor_class_0\",\n"
@@ -281,7 +282,7 @@ public class FormattersTests {
                     + "        actual = \":aar__lib_____processor_class_all\",\n"
                     + "        visibility = [\"//visibility:public\"],\n"
                     + "    )\n"
-                    + "    java_library_impl(\n"
+                    + "    java_library(\n"
                     + "        name = \"aar__lib_____generates_api___processor_class_all\",\n"
                     + "        exported_plugins = [\n"
                     + "            \":aar__lib_____generates_api___processor_class_0\",\n"
@@ -294,29 +295,60 @@ public class FormattersTests {
                     + "        visibility = [\"//visibility:public\"],\n"
                     + "    )\n";
     private static final String NATIVE_KOTLIN_IMPORT_TEXT =
-            "    kotlin_jar_support(\n"
-                    + "        name = \"kotlin__lib__\",\n"
-                    + "        deps = [\n"
-                    + "            \":safe_mvn__dep1\",\n"
-                    + "            \":safe_mvn__dep2\",\n"
-                    + "        ],\n"
-                    + "        exports = [\n"
-                    + "            \":safe_mvn__export1\",\n"
-                    + "            \":safe_mvn__export2\",\n"
-                    + "        ],\n"
-                    + "        runtime_deps = [\n"
-                    + "            \":safe_mvn__runtime1\",\n"
-                    + "            \":safe_mvn__runtime2\",\n"
-                    + "        ],\n"
-                    + "        tags = [\"maven_coordinates=kotlin:lib:\"],\n"
-                    + "        jar = \"@kotlin__lib__//file\",\n"
-                    + "        java_import_impl = java_import_impl,\n"
-                    + "    )\n"
-                    + "    native.alias(\n"
-                    + "        name = \"kotlin__lib\",\n"
-                    + "        actual = \":kotlin__lib__\",\n"
-                    + "        visibility = [\"//visibility:public\"],\n"
-                    + "    )\n";
+            "    kt_jvm_import(\n" +
+                    "        name = \"kotlin__lib__\",\n" +
+                    "        tags = [\"maven_coordinates=kotlin:lib:\"],\n" +
+                    "        exports = [\n" +
+                    "            \":safe_mvn__export1\",\n" +
+                    "            \":safe_mvn__export2\",\n" +
+                    "        ],\n" +
+                    "        runtime_deps = [\n" +
+                    "            \":safe_mvn__runtime1\",\n" +
+                    "            \":safe_mvn__runtime2\",\n" +
+                    "        ],\n" +
+                    "        jar = \"@kotlin__lib__//file\",\n" +
+                    "    )\n" +
+                    "    native.alias(\n" +
+                    "        name = \"kotlin__lib\",\n" +
+                    "        actual = \":kotlin__lib__\",\n" +
+                    "        visibility = [\"//visibility:public\"],\n" +
+                    "    )\n";
+    private static final String NATIVE_KOTLIN_ANDROID_IMPORT_TEXT =
+            "    kt_jvm_import(\n" +
+            "        name = \"kotlin__lib_____kt_library\",\n" +
+            "        tags = [\"maven_coordinates=kotlin:lib:\"],\n" +
+            "        exports = [\n" +
+            "            \":safe_mvn__export1\",\n" +
+            "            \":safe_mvn__export2\",\n" +
+            "        ],\n" +
+            "        runtime_deps = [\n" +
+            "            \":safe_mvn__runtime1\",\n" +
+            "            \":safe_mvn__runtime2\",\n" +
+            "        ],\n" +
+            "        jar = \"@kotlin__lib__//file\",\n" +
+            "    )\n" +
+            "    native.alias(\n" +
+            "        name = \"kotlin__lib\",\n" +
+            "        actual = \":kotlin__lib__\",\n" +
+            "        visibility = [\"//visibility:public\"],\n" +
+            "    )\n" +
+            "    kt_android_library(\n" +
+            "        name = \"kotlin__lib__\",\n" +
+            "        deps = [\n" +
+            "            \":safe_mvn__dep1\",\n" +
+            "            \":safe_mvn__dep2\",\n" +
+            "        ],\n" +
+            "        exports = [\n" +
+            "            \":kotlin__lib_____kt_library\",\n" +
+            "            \":safe_mvn__export1\",\n" +
+            "            \":safe_mvn__export2\",\n" +
+            "        ],\n" +
+            "        runtime_deps = [\n" +
+            "            \":safe_mvn__runtime1\",\n" +
+            "            \":safe_mvn__runtime2\",\n" +
+            "        ],\n" +
+            "        tags = [\"maven_coordinates=kotlin:lib:\"],\n" +
+            "    )\n";
 
     private static String targetsToString(String indent, List<Target> targets) {
         StringBuilder builder = new StringBuilder();
@@ -520,5 +552,23 @@ public class FormattersTests {
                                 DependencyTools.DEFAULT));
 
         Assert.assertEquals(NATIVE_KOTLIN_IMPORT_TEXT, ruleText);
+    }
+
+    @Test
+    @Ignore("until we figure out kotlin-android import")
+    public void testNativeKotlinAndroidImport() {
+        final String ruleText =
+                targetsToString(
+                        "    ",
+                        TargetsBuilders.KOTLIN_ANDROID_IMPORT.buildTargets(
+                                createDependency(
+                                        "kotlin:lib",
+                                        "https://some_url",
+                                        Arrays.asList("dep1", "dep2"),
+                                        Arrays.asList("export1", "export2"),
+                                        Arrays.asList("runtime1", "runtime2")),
+                                DependencyTools.DEFAULT));
+
+        Assert.assertEquals(NATIVE_KOTLIN_ANDROID_IMPORT_TEXT, ruleText);
     }
 }

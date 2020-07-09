@@ -352,8 +352,8 @@ public class Merger {
                 RuleClassifiers.priorityRuleClassifier(
                         Arrays.asList(
                                 new RuleClassifiers.PomClassifier(),
-                                new RuleClassifiers.AarClassifier(),
-                                new RuleClassifiers.JarInspector(downloader)),
+                                new RuleClassifiers.JarClassifier(new RuleClassifiers.JarInspector(downloader)::findAllPossibleBuilders),
+                                new RuleClassifiers.AarClassifier()),
                         TargetsBuilders.JAVA_IMPORT,
                         dependency);
     }

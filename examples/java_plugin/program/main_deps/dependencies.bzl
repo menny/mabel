@@ -151,61 +151,73 @@ def generate_workspace_rules(name = "generate_workspace_rules"):
         sha256 = "2068320bd6bad744c3673ab048f67e30bef8f518996fa380033556600669905d",
     )
 
-def kotlin_jar_support(name, deps, exports, runtime_deps, jar, tags, java_import_impl, kt_jvm_import = None, visibility = ["//visibility:public"]):
+def _no_op_missing_aar_impl(name, **kwargs):
     """
-    This is a help macro to handle Kotlin rules.
+    This is a help macro for missing concrete rule implementation.
 
-    Transitive rules macro to be run in the BUILD.bazel file.
-    If you use kt_* rules, you MUST provide the correct rule implementation when call this macro, if you decide
-    not to provide those implementations we'll try to use java_* rules.
+    This will be used in cases when some dependencies require aar_import rule implementation.
 
     Args:
         name: A unique name for this target.
-        deps: The list of other libraries to be linked in to the target.
-        exports: Targets to make available to users of this rule.
-        runtime_deps: Libraries to make available to the final binary or test at runtime only.
-        jar: The JAR file provided to Java targets that depend on this target.
-        java_import_impl: rule implementation for java_import.
-        kt_jvm_import: rule implementation for kt_jvm_import. Can be None.
-        visibility: Target visibility to pass to actual targets.
-        tags: List of arbitrary text tags. Tags may be any valid string.
+        kwargs: Anything else. Not used.
     """
 
-    #In case the developer did not provide a kt_* impl, we'll try to use java_*, should work
-    if kt_jvm_import == None:
-        java_import_impl(
-            name = name,
-            jars = [jar],
-            deps = deps,
-            exports = exports,
-            runtime_deps = runtime_deps,
-            visibility = visibility,
-            tags = tags,
-        )
-    else:
-        kt_jvm_import(
-            name = name,
-            jar = jar,
-            exports = exports,
-            runtime_deps = runtime_deps,
-            visibility = visibility,
-            tags = tags,
-        )
+    fail("Unable to create target {} since it is a aar_import which was not provide. Add argument aar_import when calling generate_transitive_dependency_targets."
+        .format(name),
+    )
 
-def generate_transitive_dependency_targets(name = "generate_transitive_dependency_targets", java_library_impl = native.java_library, java_plugin_impl = native.java_plugin, java_import_impl = native.java_import, aar_import_impl = native.aar_import, kt_jvm_import = None):
+def _no_op_missing_kt_jvm_impl(name, **kwargs):
+    """
+    This is a help macro for missing concrete rule implementation.
+
+    This will be used in cases when some dependencies require Kotlin rule implementation.
+
+    Args:
+        name: A unique name for this target.
+        kwargs: Anything else. Not used.
+    """
+
+    fail("Unable to create target {} since it is a kt_jvm_import which was not provide. Add argument kt_jvm_import when calling generate_transitive_dependency_targets."
+        .format(name),
+    )
+
+def _no_op_missing_kt_android_impl(name, **kwargs):
+    """
+    This is a help macro for missing concrete rule implementation.
+
+    This will be used in cases when some dependencies require Kotlin rule implementation.
+
+    Args:
+        name: A unique name for this target.
+        kwargs: Anything else. Not used.
+    """
+
+    fail("Unable to create target {} since it is a kt_android_library which was not provide. Add argument kt_android_library when calling generate_transitive_dependency_targets."
+        .format(name),
+    )
+
+def generate_transitive_dependency_targets(
+        name = "generate_transitive_dependency_targets",
+        java_library = native.java_library,
+        java_plugin = native.java_plugin,
+        java_import = native.java_import,
+        aar_import = _no_op_missing_aar_impl,
+        kt_jvm_import = _no_op_missing_kt_jvm_impl,
+        kt_android_library = _no_op_missing_kt_android_impl):
     """
     Macro to set up the transitive rules.
 
-    You can provide your own implementation of java_import and aar_import. This can be used
+    You can provide your own implementation of java_import, aar_import, etc. This can be used
     in cases where you need to shade (or jar_jar or jetify) your jars.
 
     Args:
         name: a unique name for this macro. Not needed to specify.
-        java_library_impl: rule implementation for java_library.
-        java_plugin_impl: rule implementation for java_plugin.
-        java_import_impl: rule implementation for java_import.
-        aar_import_impl: rule implementation for aar_import.
-        kt_jvm_import: rule implementation for kt_jvm_import.
+        java_library: rule implementation for java_library. Defaults to native.java_library.
+        java_plugin: rule implementation for java_plugin. Defaults to native.java_plugin.
+        java_import: rule implementation for java_import. Defaults to native.java_import.
+        aar_import: rule implementation for aar_import. Required only if you have Android dependencies.
+        kt_jvm_import: rule implementation for kt_jvm_import. Required only if you have Kotlin dependencies.
+        kt_android_library: rule implementation for kt_android_library. Required only if you have Android-Kotlin dependencies.
     """
 
     # from com.google.auto.value:auto-value-annotations:1.6.3
@@ -216,7 +228,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value-annotations:1.6.3
-    java_import_impl(
+    java_import(
         name = "apt___com_google_auto_value__auto_value_annotations__1_6_3",
         jars = ["@apt___com_google_auto_value__auto_value_annotations__1_6_3//file"],
         tags = ["maven_coordinates=com.google.auto.value:auto-value-annotations:1.6.3"],
@@ -234,7 +246,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    java_import_impl(
+    java_import(
         name = "apt___com_google_auto_value__auto_value__1_6_3",
         jars = ["@apt___com_google_auto_value__auto_value__1_6_3//file"],
         tags = ["maven_coordinates=com.google.auto.value:auto-value:1.6.3"],
@@ -245,7 +257,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    java_plugin_impl(
+    java_plugin(
         name = "apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_0",
         processor_class = "com.google.auto.value.extension.memoized.processor.MemoizedValidator",
         generates_api = 1,
@@ -253,7 +265,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    java_plugin_impl(
+    java_plugin(
         name = "apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_1",
         processor_class = "com.google.auto.value.processor.AutoAnnotationProcessor",
         generates_api = 1,
@@ -261,7 +273,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    java_plugin_impl(
+    java_plugin(
         name = "apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_2",
         processor_class = "com.google.auto.value.processor.AutoOneOfProcessor",
         generates_api = 1,
@@ -269,7 +281,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    java_plugin_impl(
+    java_plugin(
         name = "apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_3",
         processor_class = "com.google.auto.value.processor.AutoValueBuilderProcessor",
         generates_api = 1,
@@ -277,7 +289,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    java_plugin_impl(
+    java_plugin(
         name = "apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_4",
         processor_class = "com.google.auto.value.processor.AutoValueProcessor",
         generates_api = 1,
@@ -285,7 +297,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    java_library_impl(
+    java_library(
         name = "apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_all",
         exported_plugins = [
             ":apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_0",
@@ -297,7 +309,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    java_plugin_impl(
+    java_plugin(
         name = "apt___com_google_auto_value__auto_value__1_6_3___processor_class_0",
         processor_class = "com.google.auto.value.extension.memoized.processor.MemoizedValidator",
         generates_api = 0,
@@ -305,7 +317,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    java_plugin_impl(
+    java_plugin(
         name = "apt___com_google_auto_value__auto_value__1_6_3___processor_class_1",
         processor_class = "com.google.auto.value.processor.AutoAnnotationProcessor",
         generates_api = 0,
@@ -313,7 +325,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    java_plugin_impl(
+    java_plugin(
         name = "apt___com_google_auto_value__auto_value__1_6_3___processor_class_2",
         processor_class = "com.google.auto.value.processor.AutoOneOfProcessor",
         generates_api = 0,
@@ -321,7 +333,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    java_plugin_impl(
+    java_plugin(
         name = "apt___com_google_auto_value__auto_value__1_6_3___processor_class_3",
         processor_class = "com.google.auto.value.processor.AutoValueBuilderProcessor",
         generates_api = 0,
@@ -329,7 +341,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    java_plugin_impl(
+    java_plugin(
         name = "apt___com_google_auto_value__auto_value__1_6_3___processor_class_4",
         processor_class = "com.google.auto.value.processor.AutoValueProcessor",
         generates_api = 0,
@@ -337,7 +349,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value:1.6.3
-    java_library_impl(
+    java_library(
         name = "apt___com_google_auto_value__auto_value__1_6_3___processor_class_all",
         exported_plugins = [
             ":apt___com_google_auto_value__auto_value__1_6_3___processor_class_0",
@@ -440,7 +452,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.code.findbugs:jsr305:1.3.9
-    java_import_impl(
+    java_import(
         name = "apt___com_google_code_findbugs__jsr305__1_3_9",
         jars = ["@apt___com_google_code_findbugs__jsr305__1_3_9//file"],
         tags = ["maven_coordinates=com.google.code.findbugs:jsr305:1.3.9"],
@@ -458,7 +470,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.dagger:dagger-compiler:2.19
-    java_import_impl(
+    java_import(
         name = "apt___com_google_dagger__dagger_compiler__2_19",
         jars = ["@apt___com_google_dagger__dagger_compiler__2_19//file"],
         tags = ["maven_coordinates=com.google.dagger:dagger-compiler:2.19"],
@@ -487,7 +499,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.dagger:dagger-compiler:2.19
-    java_plugin_impl(
+    java_plugin(
         name = "apt___com_google_dagger__dagger_compiler__2_19___generates_api___processor_class_0",
         processor_class = "dagger.internal.codegen.ComponentProcessor",
         generates_api = 1,
@@ -505,13 +517,13 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.dagger:dagger-compiler:2.19
-    java_library_impl(
+    java_library(
         name = "apt___com_google_dagger__dagger_compiler__2_19___generates_api___processor_class_all",
         exported_plugins = [":apt___com_google_dagger__dagger_compiler__2_19___generates_api___processor_class_0"],
     )
 
     # from com.google.dagger:dagger-compiler:2.19
-    java_plugin_impl(
+    java_plugin(
         name = "apt___com_google_dagger__dagger_compiler__2_19___processor_class_0",
         processor_class = "dagger.internal.codegen.ComponentProcessor",
         generates_api = 0,
@@ -529,7 +541,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.dagger:dagger-compiler:2.19
-    java_library_impl(
+    java_library(
         name = "apt___com_google_dagger__dagger_compiler__2_19___processor_class_all",
         exported_plugins = [":apt___com_google_dagger__dagger_compiler__2_19___processor_class_0"],
     )
@@ -570,7 +582,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.dagger:dagger-producers:2.19
-    java_import_impl(
+    java_import(
         name = "apt___com_google_dagger__dagger_producers__2_19",
         jars = ["@apt___com_google_dagger__dagger_producers__2_19//file"],
         tags = ["maven_coordinates=com.google.dagger:dagger-producers:2.19"],
@@ -598,7 +610,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.dagger:dagger-spi:2.19
-    java_import_impl(
+    java_import(
         name = "apt___com_google_dagger__dagger_spi__2_19",
         jars = ["@apt___com_google_dagger__dagger_spi__2_19//file"],
         tags = ["maven_coordinates=com.google.dagger:dagger-spi:2.19"],
@@ -626,7 +638,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.dagger:dagger:2.19
-    java_import_impl(
+    java_import(
         name = "apt___com_google_dagger__dagger__2_19",
         jars = ["@apt___com_google_dagger__dagger__2_19//file"],
         tags = ["maven_coordinates=com.google.dagger:dagger:2.19"],
@@ -644,7 +656,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.errorprone:error_prone_annotations:2.1.3
-    java_import_impl(
+    java_import(
         name = "apt___com_google_errorprone__error_prone_annotations__2_1_3",
         jars = ["@apt___com_google_errorprone__error_prone_annotations__2_1_3//file"],
         tags = ["maven_coordinates=com.google.errorprone:error_prone_annotations:2.1.3"],
@@ -662,7 +674,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.errorprone:javac-shaded:9-dev-r4023-3
-    java_import_impl(
+    java_import(
         name = "apt___com_google_errorprone__javac_shaded__9_dev_r4023_3",
         jars = ["@apt___com_google_errorprone__javac_shaded__9_dev_r4023_3//file"],
         tags = ["maven_coordinates=com.google.errorprone:javac-shaded:9-dev-r4023-3"],
@@ -680,7 +692,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.googlejavaformat:google-java-format:1.5
-    java_import_impl(
+    java_import(
         name = "apt___com_google_googlejavaformat__google_java_format__1_5",
         jars = ["@apt___com_google_googlejavaformat__google_java_format__1_5//file"],
         tags = ["maven_coordinates=com.google.googlejavaformat:google-java-format:1.5"],
@@ -704,7 +716,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.guava:guava:25.0-jre
-    java_import_impl(
+    java_import(
         name = "apt___com_google_guava__guava__25_0_jre",
         jars = ["@apt___com_google_guava__guava__25_0_jre//file"],
         tags = ["maven_coordinates=com.google.guava:guava:25.0-jre"],
@@ -734,7 +746,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.j2objc:j2objc-annotations:1.1
-    java_import_impl(
+    java_import(
         name = "apt___com_google_j2objc__j2objc_annotations__1_1",
         jars = ["@apt___com_google_j2objc__j2objc_annotations__1_1//file"],
         tags = ["maven_coordinates=com.google.j2objc:j2objc-annotations:1.1"],
@@ -752,7 +764,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.squareup:javapoet:1.11.1
-    java_import_impl(
+    java_import(
         name = "apt___com_squareup__javapoet__1_11_1",
         jars = ["@apt___com_squareup__javapoet__1_11_1//file"],
         tags = ["maven_coordinates=com.squareup:javapoet:1.11.1"],
@@ -770,7 +782,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from javax.annotation:jsr250-api:1.0
-    java_import_impl(
+    java_import(
         name = "apt___javax_annotation__jsr250_api__1_0",
         jars = ["@apt___javax_annotation__jsr250_api__1_0//file"],
         tags = ["maven_coordinates=javax.annotation:jsr250-api:1.0"],
@@ -788,7 +800,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from javax.inject:javax.inject:1
-    java_import_impl(
+    java_import(
         name = "apt___javax_inject__javax_inject__1",
         jars = ["@apt___javax_inject__javax_inject__1//file"],
         tags = ["maven_coordinates=javax.inject:javax.inject:1"],
@@ -806,7 +818,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.checkerframework:checker-compat-qual:2.5.3
-    java_import_impl(
+    java_import(
         name = "apt___org_checkerframework__checker_compat_qual__2_5_3",
         jars = ["@apt___org_checkerframework__checker_compat_qual__2_5_3//file"],
         tags = ["maven_coordinates=org.checkerframework:checker-compat-qual:2.5.3"],
@@ -827,7 +839,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.codehaus.mojo:animal-sniffer-annotations:1.14
-    java_import_impl(
+    java_import(
         name = "apt___org_codehaus_mojo__animal_sniffer_annotations__1_14",
         jars = ["@apt___org_codehaus_mojo__animal_sniffer_annotations__1_14//file"],
         tags = ["maven_coordinates=org.codehaus.mojo:animal-sniffer-annotations:1.14"],

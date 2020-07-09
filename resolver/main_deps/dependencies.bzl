@@ -367,61 +367,73 @@ def generate_workspace_rules(name = "generate_workspace_rules"):
         sha256 = "6cb127138f41b5a869f9ecdd061ad17799a0e3fe7204600797154eb0432eeb12",
     )
 
-def kotlin_jar_support(name, deps, exports, runtime_deps, jar, tags, java_import_impl, kt_jvm_import = None, visibility = ["//visibility:public"]):
+def _no_op_missing_aar_impl(name, **kwargs):
     """
-    This is a help macro to handle Kotlin rules.
+    This is a help macro for missing concrete rule implementation.
 
-    Transitive rules macro to be run in the BUILD.bazel file.
-    If you use kt_* rules, you MUST provide the correct rule implementation when call this macro, if you decide
-    not to provide those implementations we'll try to use java_* rules.
+    This will be used in cases when some dependencies require aar_import rule implementation.
 
     Args:
         name: A unique name for this target.
-        deps: The list of other libraries to be linked in to the target.
-        exports: Targets to make available to users of this rule.
-        runtime_deps: Libraries to make available to the final binary or test at runtime only.
-        jar: The JAR file provided to Java targets that depend on this target.
-        java_import_impl: rule implementation for java_import.
-        kt_jvm_import: rule implementation for kt_jvm_import. Can be None.
-        visibility: Target visibility to pass to actual targets.
-        tags: List of arbitrary text tags. Tags may be any valid string.
+        kwargs: Anything else. Not used.
     """
 
-    #In case the developer did not provide a kt_* impl, we'll try to use java_*, should work
-    if kt_jvm_import == None:
-        java_import_impl(
-            name = name,
-            jars = [jar],
-            deps = deps,
-            exports = exports,
-            runtime_deps = runtime_deps,
-            visibility = visibility,
-            tags = tags,
-        )
-    else:
-        kt_jvm_import(
-            name = name,
-            jar = jar,
-            exports = exports,
-            runtime_deps = runtime_deps,
-            visibility = visibility,
-            tags = tags,
-        )
+    fail("Unable to create target {} since it is a aar_import which was not provide. Add argument aar_import when calling generate_transitive_dependency_targets."
+        .format(name),
+    )
 
-def generate_transitive_dependency_targets(name = "generate_transitive_dependency_targets", java_library_impl = native.java_library, java_plugin_impl = native.java_plugin, java_import_impl = native.java_import, aar_import_impl = native.aar_import, kt_jvm_import = None):
+def _no_op_missing_kt_jvm_impl(name, **kwargs):
+    """
+    This is a help macro for missing concrete rule implementation.
+
+    This will be used in cases when some dependencies require Kotlin rule implementation.
+
+    Args:
+        name: A unique name for this target.
+        kwargs: Anything else. Not used.
+    """
+
+    fail("Unable to create target {} since it is a kt_jvm_import which was not provide. Add argument kt_jvm_import when calling generate_transitive_dependency_targets."
+        .format(name),
+    )
+
+def _no_op_missing_kt_android_impl(name, **kwargs):
+    """
+    This is a help macro for missing concrete rule implementation.
+
+    This will be used in cases when some dependencies require Kotlin rule implementation.
+
+    Args:
+        name: A unique name for this target.
+        kwargs: Anything else. Not used.
+    """
+
+    fail("Unable to create target {} since it is a kt_android_library which was not provide. Add argument kt_android_library when calling generate_transitive_dependency_targets."
+        .format(name),
+    )
+
+def generate_transitive_dependency_targets(
+        name = "generate_transitive_dependency_targets",
+        java_library = native.java_library,
+        java_plugin = native.java_plugin,
+        java_import = native.java_import,
+        aar_import = _no_op_missing_aar_impl,
+        kt_jvm_import = _no_op_missing_kt_jvm_impl,
+        kt_android_library = _no_op_missing_kt_android_impl):
     """
     Macro to set up the transitive rules.
 
-    You can provide your own implementation of java_import and aar_import. This can be used
+    You can provide your own implementation of java_import, aar_import, etc. This can be used
     in cases where you need to shade (or jar_jar or jetify) your jars.
 
     Args:
         name: a unique name for this macro. Not needed to specify.
-        java_library_impl: rule implementation for java_library.
-        java_plugin_impl: rule implementation for java_plugin.
-        java_import_impl: rule implementation for java_import.
-        aar_import_impl: rule implementation for aar_import.
-        kt_jvm_import: rule implementation for kt_jvm_import.
+        java_library: rule implementation for java_library. Defaults to native.java_library.
+        java_plugin: rule implementation for java_plugin. Defaults to native.java_plugin.
+        java_import: rule implementation for java_import. Defaults to native.java_import.
+        aar_import: rule implementation for aar_import. Required only if you have Android dependencies.
+        kt_jvm_import: rule implementation for kt_jvm_import. Required only if you have Kotlin dependencies.
+        kt_android_library: rule implementation for kt_android_library. Required only if you have Android-Kotlin dependencies.
     """
 
     # from com.beust:jcommander:1.72
@@ -432,7 +444,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.beust:jcommander:1.72
-    java_import_impl(
+    java_import(
         name = "com_beust__jcommander__1_72",
         jars = ["@com_beust__jcommander__1_72//file"],
         tags = ["maven_coordinates=com.beust:jcommander:1.72"],
@@ -451,7 +463,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value-annotations:1.7
-    java_import_impl(
+    java_import(
         name = "com_google_auto_value__auto_value_annotations__1_7",
         jars = ["@com_google_auto_value__auto_value_annotations__1_7//file"],
         tags = ["maven_coordinates=com.google.auto.value:auto-value-annotations:1.7"],
@@ -470,7 +482,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value:1.7
-    java_import_impl(
+    java_import(
         name = "com_google_auto_value__auto_value__1_7",
         jars = ["@com_google_auto_value__auto_value__1_7//file"],
         tags = ["maven_coordinates=com.google.auto.value:auto-value:1.7"],
@@ -482,7 +494,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value:1.7
-    java_plugin_impl(
+    java_plugin(
         name = "com_google_auto_value__auto_value__1_7___generates_api___processor_class_0",
         processor_class = "com.google.auto.value.extension.memoized.processor.MemoizedValidator",
         generates_api = 1,
@@ -491,7 +503,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value:1.7
-    java_plugin_impl(
+    java_plugin(
         name = "com_google_auto_value__auto_value__1_7___generates_api___processor_class_1",
         processor_class = "com.google.auto.value.processor.AutoAnnotationProcessor",
         generates_api = 1,
@@ -500,7 +512,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value:1.7
-    java_plugin_impl(
+    java_plugin(
         name = "com_google_auto_value__auto_value__1_7___generates_api___processor_class_2",
         processor_class = "com.google.auto.value.processor.AutoOneOfProcessor",
         generates_api = 1,
@@ -509,7 +521,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value:1.7
-    java_plugin_impl(
+    java_plugin(
         name = "com_google_auto_value__auto_value__1_7___generates_api___processor_class_3",
         processor_class = "com.google.auto.value.processor.AutoValueBuilderProcessor",
         generates_api = 1,
@@ -518,7 +530,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value:1.7
-    java_plugin_impl(
+    java_plugin(
         name = "com_google_auto_value__auto_value__1_7___generates_api___processor_class_4",
         processor_class = "com.google.auto.value.processor.AutoValueProcessor",
         generates_api = 1,
@@ -527,7 +539,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value:1.7
-    java_library_impl(
+    java_library(
         name = "com_google_auto_value__auto_value__1_7___generates_api___processor_class_all",
         exported_plugins = [
             ":com_google_auto_value__auto_value__1_7___generates_api___processor_class_0",
@@ -540,7 +552,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value:1.7
-    java_plugin_impl(
+    java_plugin(
         name = "com_google_auto_value__auto_value__1_7___processor_class_0",
         processor_class = "com.google.auto.value.extension.memoized.processor.MemoizedValidator",
         generates_api = 0,
@@ -549,7 +561,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value:1.7
-    java_plugin_impl(
+    java_plugin(
         name = "com_google_auto_value__auto_value__1_7___processor_class_1",
         processor_class = "com.google.auto.value.processor.AutoAnnotationProcessor",
         generates_api = 0,
@@ -558,7 +570,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value:1.7
-    java_plugin_impl(
+    java_plugin(
         name = "com_google_auto_value__auto_value__1_7___processor_class_2",
         processor_class = "com.google.auto.value.processor.AutoOneOfProcessor",
         generates_api = 0,
@@ -567,7 +579,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value:1.7
-    java_plugin_impl(
+    java_plugin(
         name = "com_google_auto_value__auto_value__1_7___processor_class_3",
         processor_class = "com.google.auto.value.processor.AutoValueBuilderProcessor",
         generates_api = 0,
@@ -576,7 +588,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value:1.7
-    java_plugin_impl(
+    java_plugin(
         name = "com_google_auto_value__auto_value__1_7___processor_class_4",
         processor_class = "com.google.auto.value.processor.AutoValueProcessor",
         generates_api = 0,
@@ -585,7 +597,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.auto.value:auto-value:1.7
-    java_library_impl(
+    java_library(
         name = "com_google_auto_value__auto_value__1_7___processor_class_all",
         exported_plugins = [
             ":com_google_auto_value__auto_value__1_7___processor_class_0",
@@ -689,7 +701,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.code.findbugs:jsr305:3.0.2
-    java_import_impl(
+    java_import(
         name = "com_google_code_findbugs__jsr305__3_0_2",
         jars = ["@com_google_code_findbugs__jsr305__3_0_2//file"],
         tags = ["maven_coordinates=com.google.code.findbugs:jsr305:3.0.2"],
@@ -708,7 +720,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.code.gson:gson:2.8.5
-    java_import_impl(
+    java_import(
         name = "com_google_code_gson__gson__2_8_5",
         jars = ["@com_google_code_gson__gson__2_8_5//file"],
         tags = ["maven_coordinates=com.google.code.gson:gson:2.8.5"],
@@ -727,7 +739,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.errorprone:error_prone_annotations:2.2.0
-    java_import_impl(
+    java_import(
         name = "com_google_errorprone__error_prone_annotations__2_2_0",
         jars = ["@com_google_errorprone__error_prone_annotations__2_2_0//file"],
         tags = ["maven_coordinates=com.google.errorprone:error_prone_annotations:2.2.0"],
@@ -746,7 +758,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.guava:failureaccess:1.0.1
-    java_import_impl(
+    java_import(
         name = "com_google_guava__failureaccess__1_0_1",
         jars = ["@com_google_guava__failureaccess__1_0_1//file"],
         tags = ["maven_coordinates=com.google.guava:failureaccess:1.0.1"],
@@ -765,7 +777,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.guava:guava:27.0.1-jre
-    java_import_impl(
+    java_import(
         name = "com_google_guava__guava__27_0_1_jre",
         jars = ["@com_google_guava__guava__27_0_1_jre//file"],
         tags = ["maven_coordinates=com.google.guava:guava:27.0.1-jre"],
@@ -800,7 +812,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
-    java_import_impl(
+    java_import(
         name = "com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava",
         jars = ["@com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava//file"],
         tags = ["maven_coordinates=com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava"],
@@ -819,7 +831,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from com.google.j2objc:j2objc-annotations:1.1
-    java_import_impl(
+    java_import(
         name = "com_google_j2objc__j2objc_annotations__1_1",
         jars = ["@com_google_j2objc__j2objc_annotations__1_1//file"],
         tags = ["maven_coordinates=com.google.j2objc:j2objc-annotations:1.1"],
@@ -838,7 +850,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from commons-codec:commons-codec:1.9
-    java_import_impl(
+    java_import(
         name = "commons_codec__commons_codec__1_9",
         jars = ["@commons_codec__commons_codec__1_9//file"],
         tags = ["maven_coordinates=commons-codec:commons-codec:1.9"],
@@ -857,7 +869,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from commons-logging:commons-logging:1.2
-    java_import_impl(
+    java_import(
         name = "commons_logging__commons_logging__1_2",
         jars = ["@commons_logging__commons_logging__1_2//file"],
         tags = ["maven_coordinates=commons-logging:commons-logging:1.2"],
@@ -876,7 +888,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from junit:junit:4.12
-    java_import_impl(
+    java_import(
         name = "junit__junit__4_12",
         jars = ["@junit__junit__4_12//file"],
         tags = ["maven_coordinates=junit:junit:4.12"],
@@ -895,7 +907,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from net.bytebuddy:byte-buddy-agent:1.9.3
-    java_import_impl(
+    java_import(
         name = "net_bytebuddy__byte_buddy_agent__1_9_3",
         jars = ["@net_bytebuddy__byte_buddy_agent__1_9_3//file"],
         tags = ["maven_coordinates=net.bytebuddy:byte-buddy-agent:1.9.3"],
@@ -914,7 +926,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from net.bytebuddy:byte-buddy:1.9.3
-    java_import_impl(
+    java_import(
         name = "net_bytebuddy__byte_buddy__1_9_3",
         jars = ["@net_bytebuddy__byte_buddy__1_9_3//file"],
         tags = ["maven_coordinates=net.bytebuddy:byte-buddy:1.9.3"],
@@ -933,7 +945,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.apache.commons:commons-lang3:3.8.1
-    java_import_impl(
+    java_import(
         name = "org_apache_commons__commons_lang3__3_8_1",
         jars = ["@org_apache_commons__commons_lang3__3_8_1//file"],
         tags = ["maven_coordinates=org.apache.commons:commons-lang3:3.8.1"],
@@ -952,7 +964,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.apache.httpcomponents:httpclient:4.5.3
-    java_import_impl(
+    java_import(
         name = "org_apache_httpcomponents__httpclient__4_5_3",
         jars = ["@org_apache_httpcomponents__httpclient__4_5_3//file"],
         tags = ["maven_coordinates=org.apache.httpcomponents:httpclient:4.5.3"],
@@ -979,7 +991,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.apache.httpcomponents:httpcore:4.4.6
-    java_import_impl(
+    java_import(
         name = "org_apache_httpcomponents__httpcore__4_4_6",
         jars = ["@org_apache_httpcomponents__httpcore__4_4_6//file"],
         tags = ["maven_coordinates=org.apache.httpcomponents:httpcore:4.4.6"],
@@ -998,7 +1010,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.apache.maven.wagon:wagon-provider-api:1.0
-    java_import_impl(
+    java_import(
         name = "org_apache_maven_wagon__wagon_provider_api__1_0",
         jars = ["@org_apache_maven_wagon__wagon_provider_api__1_0//file"],
         tags = ["maven_coordinates=org.apache.maven.wagon:wagon-provider-api:1.0"],
@@ -1017,7 +1029,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.apache.maven:maven-aether-provider:3.2.3
-    java_import_impl(
+    java_import(
         name = "org_apache_maven__maven_aether_provider__3_2_3",
         jars = ["@org_apache_maven__maven_aether_provider__3_2_3//file"],
         tags = ["maven_coordinates=org.apache.maven:maven-aether-provider:3.2.3"],
@@ -1056,7 +1068,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.apache.maven:maven-artifact:3.5.0
-    java_import_impl(
+    java_import(
         name = "org_apache_maven__maven_artifact__3_5_0",
         jars = ["@org_apache_maven__maven_artifact__3_5_0//file"],
         tags = ["maven_coordinates=org.apache.maven:maven-artifact:3.5.0"],
@@ -1081,7 +1093,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.apache.maven:maven-model-builder:3.2.3
-    java_import_impl(
+    java_import(
         name = "org_apache_maven__maven_model_builder__3_2_3",
         jars = ["@org_apache_maven__maven_model_builder__3_2_3//file"],
         tags = ["maven_coordinates=org.apache.maven:maven-model-builder:3.2.3"],
@@ -1110,7 +1122,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.apache.maven:maven-model:3.2.3
-    java_import_impl(
+    java_import(
         name = "org_apache_maven__maven_model__3_2_3",
         jars = ["@org_apache_maven__maven_model__3_2_3//file"],
         tags = ["maven_coordinates=org.apache.maven:maven-model:3.2.3"],
@@ -1129,7 +1141,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.apache.maven:maven-repository-metadata:3.2.3
-    java_import_impl(
+    java_import(
         name = "org_apache_maven__maven_repository_metadata__3_2_3",
         jars = ["@org_apache_maven__maven_repository_metadata__3_2_3//file"],
         tags = ["maven_coordinates=org.apache.maven:maven-repository-metadata:3.2.3"],
@@ -1148,7 +1160,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.checkerframework:checker-qual:2.5.2
-    java_import_impl(
+    java_import(
         name = "org_checkerframework__checker_qual__2_5_2",
         jars = ["@org_checkerframework__checker_qual__2_5_2//file"],
         tags = ["maven_coordinates=org.checkerframework:checker-qual:2.5.2"],
@@ -1167,7 +1179,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.codehaus.mojo:animal-sniffer-annotations:1.17
-    java_import_impl(
+    java_import(
         name = "org_codehaus_mojo__animal_sniffer_annotations__1_17",
         jars = ["@org_codehaus_mojo__animal_sniffer_annotations__1_17//file"],
         tags = ["maven_coordinates=org.codehaus.mojo:animal-sniffer-annotations:1.17"],
@@ -1186,7 +1198,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.codehaus.plexus:plexus-component-annotations:1.5.5
-    java_import_impl(
+    java_import(
         name = "org_codehaus_plexus__plexus_component_annotations__1_5_5",
         jars = ["@org_codehaus_plexus__plexus_component_annotations__1_5_5//file"],
         tags = ["maven_coordinates=org.codehaus.plexus:plexus-component-annotations:1.5.5"],
@@ -1205,7 +1217,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.codehaus.plexus:plexus-interpolation:1.24
-    java_import_impl(
+    java_import(
         name = "org_codehaus_plexus__plexus_interpolation__1_24",
         jars = ["@org_codehaus_plexus__plexus_interpolation__1_24//file"],
         tags = ["maven_coordinates=org.codehaus.plexus:plexus-interpolation:1.24"],
@@ -1224,7 +1236,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.codehaus.plexus:plexus-utils:3.0.24
-    java_import_impl(
+    java_import(
         name = "org_codehaus_plexus__plexus_utils__3_0_24",
         jars = ["@org_codehaus_plexus__plexus_utils__3_0_24//file"],
         tags = ["maven_coordinates=org.codehaus.plexus:plexus-utils:3.0.24"],
@@ -1243,7 +1255,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.eclipse.aether:aether-api:1.1.0
-    java_import_impl(
+    java_import(
         name = "org_eclipse_aether__aether_api__1_1_0",
         jars = ["@org_eclipse_aether__aether_api__1_1_0//file"],
         tags = ["maven_coordinates=org.eclipse.aether:aether-api:1.1.0"],
@@ -1262,7 +1274,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.eclipse.aether:aether-connector-basic:1.1.0
-    java_import_impl(
+    java_import(
         name = "org_eclipse_aether__aether_connector_basic__1_1_0",
         jars = ["@org_eclipse_aether__aether_connector_basic__1_1_0//file"],
         tags = ["maven_coordinates=org.eclipse.aether:aether-connector-basic:1.1.0"],
@@ -1289,7 +1301,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.eclipse.aether:aether-impl:1.1.0
-    java_import_impl(
+    java_import(
         name = "org_eclipse_aether__aether_impl__1_1_0",
         jars = ["@org_eclipse_aether__aether_impl__1_1_0//file"],
         tags = ["maven_coordinates=org.eclipse.aether:aether-impl:1.1.0"],
@@ -1316,7 +1328,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.eclipse.aether:aether-spi:1.1.0
-    java_import_impl(
+    java_import(
         name = "org_eclipse_aether__aether_spi__1_1_0",
         jars = ["@org_eclipse_aether__aether_spi__1_1_0//file"],
         tags = ["maven_coordinates=org.eclipse.aether:aether-spi:1.1.0"],
@@ -1335,7 +1347,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.eclipse.aether:aether-transport-classpath:1.1.0
-    java_import_impl(
+    java_import(
         name = "org_eclipse_aether__aether_transport_classpath__1_1_0",
         jars = ["@org_eclipse_aether__aether_transport_classpath__1_1_0//file"],
         tags = ["maven_coordinates=org.eclipse.aether:aether-transport-classpath:1.1.0"],
@@ -1362,7 +1374,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.eclipse.aether:aether-transport-file:1.1.0
-    java_import_impl(
+    java_import(
         name = "org_eclipse_aether__aether_transport_file__1_1_0",
         jars = ["@org_eclipse_aether__aether_transport_file__1_1_0//file"],
         tags = ["maven_coordinates=org.eclipse.aether:aether-transport-file:1.1.0"],
@@ -1389,7 +1401,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.eclipse.aether:aether-transport-http:1.1.0
-    java_import_impl(
+    java_import(
         name = "org_eclipse_aether__aether_transport_http__1_1_0",
         jars = ["@org_eclipse_aether__aether_transport_http__1_1_0//file"],
         tags = ["maven_coordinates=org.eclipse.aether:aether-transport-http:1.1.0"],
@@ -1420,7 +1432,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.eclipse.aether:aether-transport-wagon:1.1.0
-    java_import_impl(
+    java_import(
         name = "org_eclipse_aether__aether_transport_wagon__1_1_0",
         jars = ["@org_eclipse_aether__aether_transport_wagon__1_1_0//file"],
         tags = ["maven_coordinates=org.eclipse.aether:aether-transport-wagon:1.1.0"],
@@ -1449,7 +1461,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.eclipse.aether:aether-util:1.1.0
-    java_import_impl(
+    java_import(
         name = "org_eclipse_aether__aether_util__1_1_0",
         jars = ["@org_eclipse_aether__aether_util__1_1_0//file"],
         tags = ["maven_coordinates=org.eclipse.aether:aether-util:1.1.0"],
@@ -1468,7 +1480,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.hamcrest:hamcrest-core:1.3
-    java_import_impl(
+    java_import(
         name = "org_hamcrest__hamcrest_core__1_3",
         jars = ["@org_hamcrest__hamcrest_core__1_3//file"],
         tags = ["maven_coordinates=org.hamcrest:hamcrest-core:1.3"],
@@ -1487,7 +1499,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.mockito:mockito-core:2.23.4
-    java_import_impl(
+    java_import(
         name = "org_mockito__mockito_core__2_23_4",
         jars = ["@org_mockito__mockito_core__2_23_4//file"],
         tags = ["maven_coordinates=org.mockito:mockito-core:2.23.4"],
@@ -1514,7 +1526,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.objenesis:objenesis:2.6
-    java_import_impl(
+    java_import(
         name = "org_objenesis__objenesis__2_6",
         jars = ["@org_objenesis__objenesis__2_6//file"],
         tags = ["maven_coordinates=org.objenesis:objenesis:2.6"],
@@ -1533,7 +1545,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.slf4j:jcl-over-slf4j:1.6.2
-    java_import_impl(
+    java_import(
         name = "org_slf4j__jcl_over_slf4j__1_6_2",
         jars = ["@org_slf4j__jcl_over_slf4j__1_6_2//file"],
         tags = ["maven_coordinates=org.slf4j:jcl-over-slf4j:1.6.2"],
@@ -1552,7 +1564,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.slf4j:slf4j-api:1.7.25
-    java_import_impl(
+    java_import(
         name = "org_slf4j__slf4j_api__1_7_25",
         jars = ["@org_slf4j__slf4j_api__1_7_25//file"],
         tags = ["maven_coordinates=org.slf4j:slf4j-api:1.7.25"],
@@ -1571,7 +1583,7 @@ def generate_transitive_dependency_targets(name = "generate_transitive_dependenc
     )
 
     # from org.slf4j:slf4j-nop:1.7.25
-    java_import_impl(
+    java_import(
         name = "org_slf4j__slf4j_nop__1_7_25",
         jars = ["@org_slf4j__slf4j_nop__1_7_25//file"],
         tags = ["maven_coordinates=org.slf4j:slf4j-nop:1.7.25"],

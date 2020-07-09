@@ -2,6 +2,8 @@ package net.evendanan.bazel.mvn.impl;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
+
 import net.evendanan.bazel.mvn.api.RuleWriter;
 import net.evendanan.bazel.mvn.api.Target;
 
@@ -9,10 +11,36 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class RuleWriters {
+
+    private static StringBuilder readTemplate(String templateResourceName) throws IOException {
+        return readTemplate(templateResourceName, Collections.emptyMap());
+    }
+
+    private static StringBuilder readTemplate(String templateResourceName, Map<String, String> replacements) throws IOException {
+        final StringBuilder stringBuilder = new StringBuilder();
+        Resources.readLines(Resources.getResource(templateResourceName), Charsets.UTF_8)
+                .forEach(line -> stringBuilder.append(line).append(NEW_LINE));
+
+        replacements.forEach((placeholder, actual) -> {
+            int index = stringBuilder.indexOf(placeholder);
+            while (index != -1) {
+                stringBuilder.replace(index, index + placeholder.length(), actual);
+                index += actual.length();
+                index = stringBuilder.indexOf(placeholder, index);
+            }
+        });
+
+        return stringBuilder;
+    }
 
     private static final String INDENT = "    ";
     private static final String NEW_LINE = System.lineSeparator();
@@ -36,31 +64,14 @@ public class RuleWriters {
         public void write(Collection<Target> targets) throws IOException {
             targets = SortTargetsByName.sort(targets);
 
+            StringBuilder httpRulesText = readTemplate(
+                    "dependencies-http-repo-rules.bzl.template",
+                    Collections.singletonMap("{{generate_workspace_rules}}", macroName));
+
             try (final OutputStreamWriter fileWriter =
                     new OutputStreamWriter(
                             new FileOutputStream(outputFile, true), Charsets.UTF_8)) {
-                fileWriter
-                        .append("# Loading a drop-in replacement for native.http_file")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append("load(\"@bazel_tools//tools/build_defs/repo:http.bzl\", \"http_file\")")
-                        .append(NEW_LINE);
-                fileWriter.append(NEW_LINE);
-
-                fileWriter.append("def ").append(macroName).append("(name = \"").append(macroName).append("\"):").append(NEW_LINE);
-                fileWriter.append(INDENT).append("\"\"\"").append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append("Repository rules macro to be run in the WORKSPACE file.")
-                        .append(NEW_LINE)
-                        .append(NEW_LINE);
-                fileWriter.append(INDENT).append("Args:").append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("name: A unique name for this target. No need to specify.")
-                        .append(NEW_LINE);
-                fileWriter.append(INDENT).append("\"\"\"").append(NEW_LINE).append(NEW_LINE);
+                fileWriter.append(httpRulesText.toString()).append(NEW_LINE);
 
                 if (targets.isEmpty()) {
                     fileWriter.append(INDENT).append("pass");
@@ -81,8 +92,6 @@ public class RuleWriters {
     }
 
     public static class TransitiveRulesMacroWriter implements RuleWriter {
-
-        private static final String KOTLIN_LIB_MACRO_NAME = "kotlin_jar_support";
         private final File outputFile;
         private final String macroName;
 
@@ -95,244 +104,16 @@ public class RuleWriters {
         public void write(Collection<Target> targets) throws IOException {
             targets = SortTargetsByName.sort(targets);
 
+            StringBuilder targetsMacro = readTemplate(
+                    "dependencies-targets-macro.bzl.template",
+                    Collections.singletonMap("{{generate_transitive_dependency_targets}}", macroName));
+
             try (final OutputStreamWriter fileWriter =
                     new OutputStreamWriter(
                             new FileOutputStream(outputFile, true), Charsets.UTF_8)) {
                 fileWriter.append(NEW_LINE);
+                fileWriter.append(targetsMacro.toString()).append(NEW_LINE);
 
-                fileWriter
-                        .append("def ")
-                        .append(KOTLIN_LIB_MACRO_NAME)
-                        .append(
-                                "(name, deps, exports, runtime_deps, jar, tags, java_import_impl, kt_jvm_import = None, visibility = [\"//visibility:public\"]):")
-                        .append(NEW_LINE);
-                fileWriter.append(INDENT).append("\"\"\"").append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append("This is a help macro to handle Kotlin rules.")
-                        .append(NEW_LINE);
-                fileWriter.append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append("Transitive rules macro to be run in the BUILD.bazel file.")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(
-                                "If you use kt_* rules, you MUST provide the correct rule implementation when call this macro, if you decide")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(
-                                "not to provide those implementations we'll try to use java_* rules.")
-                        .append(NEW_LINE);
-                fileWriter.append(NEW_LINE);
-                fileWriter.append(INDENT).append("Args:").append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("name: A unique name for this target.")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("deps: The list of other libraries to be linked in to the target.")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("exports: Targets to make available to users of this rule.")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append(
-                                "runtime_deps: Libraries to make available to the final binary or test at runtime only.")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append(
-                                "jar: The JAR file provided to Java targets that depend on this target.")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("java_import_impl: rule implementation for java_import.")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append(
-                                "kt_jvm_import: rule implementation for kt_jvm_import. Can be None.")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append(
-                                "visibility: Target visibility to pass to actual targets.")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append(
-                                "tags: List of arbitrary text tags. Tags may be any valid string.")
-                        .append(NEW_LINE);
-                fileWriter.append(INDENT).append("\"\"\"").append(NEW_LINE).append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(
-                                "#In case the developer did not provide a kt_* impl, we'll try to use java_*, should work")
-                        .append(NEW_LINE);
-                fileWriter.append(INDENT).append("if kt_jvm_import == None:").append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("java_import_impl(")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("name = name,")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("jars = [jar],")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("deps = deps,")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("exports = exports,")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("runtime_deps = runtime_deps,")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("visibility = visibility,")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("tags = tags,")
-                        .append(NEW_LINE);
-                fileWriter.append(INDENT).append(INDENT).append(")").append(NEW_LINE);
-                fileWriter.append(INDENT).append("else:").append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("kt_jvm_import(")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("name = name,")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("jar = jar,")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("exports = exports,")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("runtime_deps = runtime_deps,")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("visibility = visibility,")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("tags = tags,")
-                        .append(NEW_LINE);
-                fileWriter.append(INDENT).append(INDENT).append(")").append(NEW_LINE);
-                fileWriter.append(NEW_LINE);
-
-                fileWriter
-                        .append("def ")
-                        .append(macroName)
-                        .append(
-                                "(name = \"").append(macroName).append("\", java_library_impl = native.java_library, java_plugin_impl = native.java_plugin, java_import_impl = native.java_import, aar_import_impl = native.aar_import, kt_jvm_import = None):")
-                        .append(NEW_LINE);
-                fileWriter.append(INDENT).append("\"\"\"").append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append("Macro to set up the transitive rules.")
-                        .append(NEW_LINE);
-                fileWriter.append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(
-                                "You can provide your own implementation of java_import and aar_import. This can be used")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(
-                                "in cases where you need to shade (or jar_jar or jetify) your jars.")
-                        .append(NEW_LINE);
-                fileWriter.append(NEW_LINE);
-                fileWriter.append(INDENT).append("Args:").append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("name: a unique name for this macro. Not needed to specify.")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("java_library_impl: rule implementation for java_library.")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("java_plugin_impl: rule implementation for java_plugin.")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("java_import_impl: rule implementation for java_import.")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("aar_import_impl: rule implementation for aar_import.")
-                        .append(NEW_LINE);
-                fileWriter
-                        .append(INDENT)
-                        .append(INDENT)
-                        .append("kt_jvm_import: rule implementation for kt_jvm_import.")
-                        .append(NEW_LINE);
-                fileWriter.append(INDENT).append("\"\"\"").append(NEW_LINE).append(NEW_LINE);
                 if (targets.isEmpty()) {
                     fileWriter.append(INDENT).append("pass");
                 } else {
@@ -343,10 +124,6 @@ public class RuleWriters {
                                 .append("# from ")
                                 .append(target.getMavenCoordinates())
                                 .append(NEW_LINE);
-
-                        if (target.getRuleName().equals(KOTLIN_LIB_MACRO_NAME)) {
-                            target.addVariable("kt_jvm_import", "kt_jvm_import");
-                        }
                         fileWriter.append(target.outputString(INDENT)).append(NEW_LINE);
                         if (iterator.hasNext()) fileWriter.append(NEW_LINE);
                     }
@@ -399,17 +176,8 @@ public class RuleWriters {
                                 new FileOutputStream(
                                         new File(buildFileFolder, "BUILD.bazel"), false),
                                 Charsets.UTF_8)) {
-                    fileWriter.append("\"\"\"").append(NEW_LINE);
-                    fileWriter
-                            .append("External Maven targets for artifact ")
-                            .append(key)
-                            .append(NEW_LINE);
-                    fileWriter.append(NEW_LINE);
-                    fileWriter
-                            .append("Auto-generated by https://github.com/menny/mabel")
-                            .append(NEW_LINE);
-                    fileWriter.append("\"\"\"").append(NEW_LINE);
-                    fileWriter.append(NEW_LINE);
+                    fileWriter.append(readTemplate("dependencies-sub-folder-header.bzl.template",
+                            Collections.singletonMap("{{MVN_COORDINATES}}", key))).append(NEW_LINE);
 
                     for (int targetIndex = 0, packageTargetsSize = packageTargets.size(); targetIndex < packageTargetsSize; targetIndex++) {
                         Target target = packageTargets.get(targetIndex);

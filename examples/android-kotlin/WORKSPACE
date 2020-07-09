@@ -1,0 +1,43 @@
+workspace(name="mabel_examples_android_kotlin")
+### http_archive
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "build_bazel_rules_android",
+    sha256 = "cd06d15dd8bb59926e4d65f9003bfc20f9da4b2519985c27e190cddc8b7a7806",
+    strip_prefix = "rules_android-0.1.1",
+    urls = ["https://github.com/bazelbuild/rules_android/archive/v0.1.1.zip"],
+)
+
+load("@build_bazel_rules_android//android:rules.bzl", "android_sdk_repository")
+
+android_sdk_repository(
+    name = "androidsdk",
+    api_level = 29,
+    build_tools_version = "29.0.2")
+
+### Kotlin rules
+http_archive(
+        name = "io_bazel_rules_kotlin",
+        sha256 = "da0e6e1543fcc79e93d4d93c3333378f3bd5d29e82c1bc2518de0dbe048e6598",
+        urls = ["https://github.com/bazelbuild/rules_kotlin/releases/download/legacy-1.4.0-rc3/rules_kotlin_release.tgz"],
+    )
+
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kotlin_repositories", "kt_register_toolchains")
+kotlin_repositories()
+kt_register_toolchains()
+
+# Of course, this `local_repository` should be `http_archive` in your project (read the README.md file at the root)
+local_repository(
+    name = "mabel",
+    path = "../../",
+)
+
+load("@mabel//:init_deps.bzl", "init_mabel_deps")
+init_mabel_deps()
+load("@mabel//:init_rules.bzl", "init_mabel_rules")
+init_mabel_rules()
+
+load("//program/main_deps:dependencies.bzl", generate_example_workspace_rules = "generate_workspace_rules")
+generate_example_workspace_rules()
+
