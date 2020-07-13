@@ -88,7 +88,7 @@ public class WritersTests {
                     "    \"\"\"\n" +
                     "\n" +
                     "    fail(\n" +
-                    "        \"Unable to create target {} since it is a aar_import which was not provide. Add argument aar_import when calling macro_name.\"\n" +
+                    "        \"Unable to create target {} since it is a aar_import which was not provided. Add argument aar_import when calling macro_name.\"\n" +
                     "            .format(name),\n" +
                     "    )\n" +
                     "\n" +
@@ -104,7 +104,7 @@ public class WritersTests {
                     "    \"\"\"\n" +
                     "\n" +
                     "    fail(\n" +
-                    "        \"Unable to create target {} since it is a kt_jvm_import which was not provide. Add argument kt_jvm_import when calling macro_name.\"\n" +
+                    "        \"Unable to create target {} since it is a kt_jvm_import which was not provided. Add argument kt_jvm_import when calling macro_name.\"\n" +
                     "            .format(name),\n" +
                     "    )\n" +
                     "\n" +
@@ -120,7 +120,7 @@ public class WritersTests {
                     "    \"\"\"\n" +
                     "\n" +
                     "    fail(\n" +
-                    "        \"Unable to create target {} since it is a kt_android_library which was not provide. Add argument kt_android_library when calling macro_name.\"\n" +
+                    "        \"Unable to create target {} since it is a kt_android_library which was not provided. Add argument kt_android_library when calling macro_name.\"\n" +
                     "            .format(name),\n" +
                     "    )\n" +
                     "\n" +
