@@ -1,11 +1,8 @@
-# Taken from https://raw.githubusercontent.com/bazelbuild/migration-tooling/
-# Includes many changes
+load("@rules_java//java:defs.bzl", "java_binary", "java_library", "java_test")
 load("//resolver/main_deps:dependencies.bzl", "generate_transitive_dependency_targets")
+load("//rules/maven_deps:mabel.bzl", "artifact", "mabel_rule")
 
 generate_transitive_dependency_targets()
-
-load("@rules_java//java:defs.bzl", "java_library")
-load("//rules/maven_deps:mabel.bzl", "artifact", "mabel_rule")
 
 mabel_rule(
     name = "main_deps",
@@ -184,7 +181,7 @@ java_library(
 
 java_binary(
     name = "resolver_bin",
-    srcs = glob(["src/main/java/net/evendanan/bazel/mvn/Resolver.java"]),
+    srcs = ["src/main/java/net/evendanan/bazel/mvn/Resolver.java"],
     main_class = "net.evendanan.bazel.mvn.Resolver",
     visibility = ["//visibility:public"],
     runtime_deps = ["//resolver/main_deps/org/slf4j/slf4j-nop"],

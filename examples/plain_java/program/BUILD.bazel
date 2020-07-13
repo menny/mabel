@@ -1,15 +1,18 @@
-
+load("@mabel//rules/maven_deps:mabel.bzl", "artifact", "mabel_rule")
+load("@rules_java//java:defs.bzl", "java_binary")
 load("//program/main_deps:dependencies.bzl", "generate_transitive_dependency_targets")
+
 generate_transitive_dependency_targets()
 
-load("@mabel//rules/maven_deps:mabel.bzl", "mabel_rule", "artifact")
-
-mabel_rule(name = 'main_deps',
+mabel_rule(
+    name = "main_deps",
+    generated_targets_prefix = "",
     maven_deps = [artifact("com.google.guava:guava:20.0")],
-    generated_targets_prefix = ""
-    )
+)
 
-java_binary(name = "plain_java",
-            srcs = ["HelloWorld.java"],
-            main_class = "examples.plain_java.program.HelloWorld",
-            deps = ["//program:com_google_guava__guava"])
+java_binary(
+    name = "plain_java",
+    srcs = ["HelloWorld.java"],
+    main_class = "examples.plain_java.program.HelloWorld",
+    deps = ["//program:com_google_guava__guava"],
+)

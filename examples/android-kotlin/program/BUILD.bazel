@@ -1,11 +1,15 @@
-load("//program/main_deps:dependencies.bzl", "generate_transitive_dependency_targets")
-load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_library", "kt_android_library", "kt_jvm_import")
 load("@build_bazel_rules_android//android:rules.bzl", "aar_import")
-
-generate_transitive_dependency_targets(aar_import = aar_import, kt_android_library=kt_android_library, kt_jvm_import=kt_jvm_import)
-
-load("@mabel//rules/maven_deps:mabel.bzl", "artifact", "mabel_rule")
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_android_library", "kt_jvm_import")
+load("@mabel//rules/maven_deps:mabel.bzl", "mabel_rule")
+load("@rules_android//android:rules.bzl", "android_binary")
+load("//program/main_deps:dependencies.bzl", "generate_transitive_dependency_targets")
 load(":g_artifact.bzl", "g_artifact")
+
+generate_transitive_dependency_targets(
+    aar_import = aar_import,
+    kt_android_library = kt_android_library,
+    kt_jvm_import = kt_jvm_import,
+)
 
 mabel_rule(
     name = "main_deps",
@@ -23,11 +27,11 @@ android_binary(
     custom_package = "net.evendanan.bazel.mvn.example",
     manifest = "AndroidManifest.xml",
     manifest_values = {
-        "versionCode": "1",
-        "versionName": "v0.0.1",
+        "compileSdkVersion": "28",
         "minSdkVersion": "19",
         "targetSdkVersion": "28",
-        "compileSdkVersion": "28",
+        "versionCode": "1",
+        "versionName": "v0.0.1",
     },
     resource_files = glob(["res/**/*"]),
     visibility = ["//visibility:public"],

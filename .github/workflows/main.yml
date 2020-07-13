@@ -20,6 +20,8 @@ jobs:
           fetch-depth: 1
       - name: build
         run: ./scripts/ci_build.sh
+      - name: buildifier
+        run: ./scripts/ci_buildifier.sh
       - name: test
         run: ./scripts/ci_test.sh
       - name: verify-rules-generation

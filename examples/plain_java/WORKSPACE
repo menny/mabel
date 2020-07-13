@@ -1,4 +1,4 @@
-workspace(name="mabel_examples_plain_java")
+workspace(name = "mabel_examples_plain_java")
 
 # Of course, this `local_repository` should be `http_archive` in your project (read the README.md file at the root)
 local_repository(
@@ -7,9 +7,13 @@ local_repository(
 )
 
 load("@mabel//:init_deps.bzl", "init_mabel_deps")
+
 init_mabel_deps()
+
 load("@mabel//:init_rules.bzl", "init_mabel_rules")
+
 init_mabel_rules()
 
 load("//program/main_deps:dependencies.bzl", generate_example_workspace_rules = "generate_workspace_rules")
+
 generate_example_workspace_rules()
