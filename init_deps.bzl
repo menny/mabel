@@ -1,3 +1,5 @@
+"""mabel init macro. Should be called after init_mabel_rules was called"""
+
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 def init_mabel_deps():

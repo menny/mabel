@@ -84,11 +84,12 @@ public class WritersTests {
                     "\n" +
                     "    Args:\n" +
                     "        name: A unique name for this target.\n" +
-                    "        kwargs: Anything else. Not used.\n" +
+                    "        **kwargs: Anything else. Not used.\n" +
                     "    \"\"\"\n" +
                     "\n" +
-                    "    fail(\"Unable to create target {} since it is a aar_import which was not provide. Add argument aar_import when calling macro_name.\"\n" +
-                    "        .format(name),\n" +
+                    "    fail(\n" +
+                    "        \"Unable to create target {} since it is a aar_import which was not provide. Add argument aar_import when calling macro_name.\"\n" +
+                    "            .format(name),\n" +
                     "    )\n" +
                     "\n" +
                     "def _no_op_missing_kt_jvm_impl(name, **kwargs):\n" +
@@ -99,11 +100,12 @@ public class WritersTests {
                     "\n" +
                     "    Args:\n" +
                     "        name: A unique name for this target.\n" +
-                    "        kwargs: Anything else. Not used.\n" +
+                    "        **kwargs: Anything else. Not used.\n" +
                     "    \"\"\"\n" +
                     "\n" +
-                    "    fail(\"Unable to create target {} since it is a kt_jvm_import which was not provide. Add argument kt_jvm_import when calling macro_name.\"\n" +
-                    "        .format(name),\n" +
+                    "    fail(\n" +
+                    "        \"Unable to create target {} since it is a kt_jvm_import which was not provide. Add argument kt_jvm_import when calling macro_name.\"\n" +
+                    "            .format(name),\n" +
                     "    )\n" +
                     "\n" +
                     "def _no_op_missing_kt_android_impl(name, **kwargs):\n" +
@@ -114,11 +116,12 @@ public class WritersTests {
                     "\n" +
                     "    Args:\n" +
                     "        name: A unique name for this target.\n" +
-                    "        kwargs: Anything else. Not used.\n" +
+                    "        **kwargs: Anything else. Not used.\n" +
                     "    \"\"\"\n" +
                     "\n" +
-                    "    fail(\"Unable to create target {} since it is a kt_android_library which was not provide. Add argument kt_android_library when calling macro_name.\"\n" +
-                    "        .format(name),\n" +
+                    "    fail(\n" +
+                    "        \"Unable to create target {} since it is a kt_android_library which was not provide. Add argument kt_android_library when calling macro_name.\"\n" +
+                    "            .format(name),\n" +
                     "    )\n" +
                     "\n" +
                     "def macro_name(\n" +
