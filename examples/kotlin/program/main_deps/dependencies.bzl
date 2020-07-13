@@ -59,7 +59,7 @@ def _no_op_missing_aar_impl(name, **kwargs):
     """
 
     fail(
-        "Unable to create target {} since it is a aar_import which was not provide. Add argument aar_import when calling generate_transitive_dependency_targets."
+        "Unable to create target {} since it is a aar_import which was not provided. Add argument aar_import when calling generate_transitive_dependency_targets."
             .format(name),
     )
 
@@ -75,7 +75,7 @@ def _no_op_missing_kt_jvm_impl(name, **kwargs):
     """
 
     fail(
-        "Unable to create target {} since it is a kt_jvm_import which was not provide. Add argument kt_jvm_import when calling generate_transitive_dependency_targets."
+        "Unable to create target {} since it is a kt_jvm_import which was not provided. Add argument kt_jvm_import when calling generate_transitive_dependency_targets."
             .format(name),
     )
 
@@ -91,7 +91,7 @@ def _no_op_missing_kt_android_impl(name, **kwargs):
     """
 
     fail(
-        "Unable to create target {} since it is a kt_android_library which was not provide. Add argument kt_android_library when calling generate_transitive_dependency_targets."
+        "Unable to create target {} since it is a kt_android_library which was not provided. Add argument kt_android_library when calling generate_transitive_dependency_targets."
             .format(name),
     )
 
