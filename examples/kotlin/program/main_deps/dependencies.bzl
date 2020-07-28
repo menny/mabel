@@ -39,12 +39,28 @@ def generate_workspace_rules(name = "generate_workspace_rules"):
         sha256 = "59dcf4c5fb74f95b7c9405330b5b7f9d74dfef012bc11a9d51d6e0415e639b51",
     )
 
-    # from org.jetbrains.kotlin:kotlin-stdlib:1.0.6
+    # from org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72
     http_file(
-        name = "org_jetbrains_kotlin__kotlin_stdlib__1_0_6",
-        urls = ["https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.0.6/kotlin-stdlib-1.0.6.jar"],
-        downloaded_file_path = "kotlin-stdlib-1.0.6.jar",
-        sha256 = "38dd8d4e1bbff75e67d16b78d6fde1d55a7720172f099ea95135f2ec7996b11f",
+        name = "org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72",
+        urls = ["https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-common/1.3.72/kotlin-stdlib-common-1.3.72.jar"],
+        downloaded_file_path = "kotlin-stdlib-common-1.3.72.jar",
+        sha256 = "5e7d1552863e480c1628b1cc39ce230ef829f5b7230106215a05acda5172203a",
+    )
+
+    # from org.jetbrains.kotlin:kotlin-stdlib:1.3.72
+    http_file(
+        name = "org_jetbrains_kotlin__kotlin_stdlib__1_3_72",
+        urls = ["https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.3.72/kotlin-stdlib-1.3.72.jar"],
+        downloaded_file_path = "kotlin-stdlib-1.3.72.jar",
+        sha256 = "3856a7349ebacd6d1be6802b2fed9c4dc2c5a564ea92b6b945ac988243d4b16b",
+    )
+
+    # from org.jetbrains:annotations:13.0
+    http_file(
+        name = "org_jetbrains__annotations__13_0",
+        urls = ["https://repo1.maven.org/maven2/org/jetbrains/annotations/13.0/annotations-13.0.jar"],
+        downloaded_file_path = "annotations-13.0.jar",
+        sha256 = "ace2a10dc8e2d5fd34925ecac03e4988b2c0f851650c94b8cef49ba1bd111478",
     )
 
 def _no_op_missing_aar_impl(name, **kwargs):
@@ -172,18 +188,55 @@ def generate_transitive_dependency_targets(
         jar = "@org_jetbrains_kotlin__kotlin_runtime__1_0_6//file",
     )
 
-    # from org.jetbrains.kotlin:kotlin-stdlib:1.0.6
+    # from org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72
     native.alias(
-        name = "org_jetbrains_kotlin__kotlin_stdlib",
-        actual = ":org_jetbrains_kotlin__kotlin_stdlib__1_0_6",
+        name = "org_jetbrains_kotlin__kotlin_stdlib_common",
+        actual = ":org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72",
         visibility = ["//visibility:public"],
     )
 
-    # from org.jetbrains.kotlin:kotlin-stdlib:1.0.6
+    # from org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72
     kt_jvm_import(
-        name = "org_jetbrains_kotlin__kotlin_stdlib__1_0_6",
-        tags = ["maven_coordinates=org.jetbrains.kotlin:kotlin-stdlib:1.0.6"],
-        exports = [":org_jetbrains_kotlin__kotlin_runtime"],
+        name = "org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72",
+        tags = ["maven_coordinates=org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72"],
+        exports = [],
         runtime_deps = [],
-        jar = "@org_jetbrains_kotlin__kotlin_stdlib__1_0_6//file",
+        jar = "@org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72//file",
+    )
+
+    # from org.jetbrains.kotlin:kotlin-stdlib:1.3.72
+    native.alias(
+        name = "org_jetbrains_kotlin__kotlin_stdlib",
+        actual = ":org_jetbrains_kotlin__kotlin_stdlib__1_3_72",
+        visibility = ["//visibility:public"],
+    )
+
+    # from org.jetbrains.kotlin:kotlin-stdlib:1.3.72
+    kt_jvm_import(
+        name = "org_jetbrains_kotlin__kotlin_stdlib__1_3_72",
+        tags = ["maven_coordinates=org.jetbrains.kotlin:kotlin-stdlib:1.3.72"],
+        exports = [
+            ":org_jetbrains__annotations",
+            ":org_jetbrains_kotlin__kotlin_stdlib_common",
+        ],
+        runtime_deps = [],
+        jar = "@org_jetbrains_kotlin__kotlin_stdlib__1_3_72//file",
+    )
+
+    # from org.jetbrains:annotations:13.0
+    native.alias(
+        name = "org_jetbrains__annotations",
+        actual = ":org_jetbrains__annotations__13_0",
+        visibility = ["//visibility:public"],
+    )
+
+    # from org.jetbrains:annotations:13.0
+    java_import(
+        name = "org_jetbrains__annotations__13_0",
+        jars = ["@org_jetbrains__annotations__13_0//file"],
+        tags = ["maven_coordinates=org.jetbrains:annotations:13.0"],
+        licenses = ["notice"],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
     )

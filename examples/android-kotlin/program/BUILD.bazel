@@ -1,7 +1,6 @@
-load("@build_bazel_rules_android//android:rules.bzl", "aar_import")
+load("@build_bazel_rules_android//android:rules.bzl", "aar_import", "android_binary")
 load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_android_library", "kt_jvm_import")
-load("@mabel//rules/maven_deps:mabel.bzl", "mabel_rule")
-load("@rules_android//android:rules.bzl", "android_binary")
+load("@mabel//rules/maven_deps:mabel.bzl", "artifact", "mabel_rule")
 load("//program/main_deps:dependencies.bzl", "generate_transitive_dependency_targets")
 load(":g_artifact.bzl", "g_artifact")
 
@@ -18,6 +17,15 @@ mabel_rule(
         g_artifact("androidx.fragment:fragment:1.1.0-alpha02"),
         g_artifact("androidx.appcompat:appcompat:1.0.2"),
         g_artifact("androidx.annotation:annotation:1.0.0"),
+        artifact("com.squareup.moshi:moshi-kotlin-codegen:1.9.2"),
+        artifact("org.jetbrains.kotlin:kotlin-stdlib:1.3.72"),
+        artifact(
+            "com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406",
+            maven_exclude_deps = [
+                "com.android.support",
+            ],
+            repositories = ["https://jitpack.io/"],
+        ),
     ],
 )
 
@@ -40,5 +48,7 @@ android_binary(
         "//program/main_deps/androidx/annotation/annotation",
         "//program/main_deps/androidx/appcompat/appcompat",
         "//program/main_deps/com/github/menny/Chauffeur/permissions",
+        "//program/main_deps/com/squareup/moshi/moshi",
+        "//program/main_deps/com/squareup/moshi/moshi-kotlin-codegen:processors_with_api",
     ],
 )

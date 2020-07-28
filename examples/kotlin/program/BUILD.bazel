@@ -6,7 +6,10 @@ generate_transitive_dependency_targets(kt_jvm_import = kt_jvm_import)
 
 mabel_rule(
     name = "main_deps",
-    maven_deps = [artifact("com.github.salomonbrys.kotson:kotson:2.5.0")],
+    maven_deps = [
+        artifact("com.github.salomonbrys.kotson:kotson:2.5.0"),
+        artifact("org.jetbrains.kotlin:kotlin-stdlib:1.3.72"),
+    ],
 )
 
 kt_jvm_binary(
