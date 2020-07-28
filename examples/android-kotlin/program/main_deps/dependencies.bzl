@@ -246,6 +246,69 @@ def generate_workspace_rules(name = "generate_workspace_rules"):
         downloaded_file_path = "permissions-90e703256785b7baf9cd37370b62b1d7d3830406.aar",
     )
 
+    # from com.squareup.moshi:moshi-kotlin-codegen:1.9.2
+    http_file(
+        name = "com_squareup_moshi__moshi_kotlin_codegen__1_9_2",
+        urls = ["https://repo1.maven.org/maven2/com/squareup/moshi/moshi-kotlin-codegen/1.9.2/moshi-kotlin-codegen-1.9.2.jar"],
+        downloaded_file_path = "moshi-kotlin-codegen-1.9.2.jar",
+    )
+
+    # from com.squareup.moshi:moshi:1.9.2
+    http_file(
+        name = "com_squareup_moshi__moshi__1_9_2",
+        urls = ["https://repo1.maven.org/maven2/com/squareup/moshi/moshi/1.9.2/moshi-1.9.2.jar"],
+        downloaded_file_path = "moshi-1.9.2.jar",
+    )
+
+    # from com.squareup.okio:okio:1.16.0
+    http_file(
+        name = "com_squareup_okio__okio__1_16_0",
+        urls = ["https://repo1.maven.org/maven2/com/squareup/okio/okio/1.16.0/okio-1.16.0.jar"],
+        downloaded_file_path = "okio-1.16.0.jar",
+    )
+
+    # from com.squareup:kotlinpoet:1.4.4
+    http_file(
+        name = "com_squareup__kotlinpoet__1_4_4",
+        urls = ["https://repo1.maven.org/maven2/com/squareup/kotlinpoet/1.4.4/kotlinpoet-1.4.4.jar"],
+        downloaded_file_path = "kotlinpoet-1.4.4.jar",
+    )
+
+    # from org.jetbrains.kotlin:kotlin-reflect:1.3.50
+    http_file(
+        name = "org_jetbrains_kotlin__kotlin_reflect__1_3_50",
+        urls = ["https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-reflect/1.3.50/kotlin-reflect-1.3.50.jar"],
+        downloaded_file_path = "kotlin-reflect-1.3.50.jar",
+    )
+
+    # from org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72
+    http_file(
+        name = "org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72",
+        urls = ["https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-common/1.3.72/kotlin-stdlib-common-1.3.72.jar"],
+        downloaded_file_path = "kotlin-stdlib-common-1.3.72.jar",
+    )
+
+    # from org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50
+    http_file(
+        name = "org_jetbrains_kotlin__kotlin_stdlib_jdk7__1_3_50",
+        urls = ["https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.3.50/kotlin-stdlib-jdk7-1.3.50.jar"],
+        downloaded_file_path = "kotlin-stdlib-jdk7-1.3.50.jar",
+    )
+
+    # from org.jetbrains.kotlin:kotlin-stdlib:1.3.72
+    http_file(
+        name = "org_jetbrains_kotlin__kotlin_stdlib__1_3_72",
+        urls = ["https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.3.72/kotlin-stdlib-1.3.72.jar"],
+        downloaded_file_path = "kotlin-stdlib-1.3.72.jar",
+    )
+
+    # from org.jetbrains:annotations:13.0
+    http_file(
+        name = "org_jetbrains__annotations__13_0",
+        urls = ["https://repo1.maven.org/maven2/org/jetbrains/annotations/13.0/annotations-13.0.jar"],
+        downloaded_file_path = "annotations-13.0.jar",
+    )
+
 def _no_op_missing_aar_impl(name, **kwargs):
     """
     This is a help macro for missing concrete rule implementation.
@@ -258,7 +321,8 @@ def _no_op_missing_aar_impl(name, **kwargs):
     """
 
     fail(
-        "Unable to create target {} since it is a aar_import which was not provide. Add argument aar_import when calling generate_transitive_dependency_targets.".format(name),
+        "Unable to create target {} since it is a aar_import which was not provided. Add argument aar_import when calling generate_transitive_dependency_targets."
+            .format(name),
     )
 
 def _no_op_missing_kt_jvm_impl(name, **kwargs):
@@ -273,7 +337,8 @@ def _no_op_missing_kt_jvm_impl(name, **kwargs):
     """
 
     fail(
-        "Unable to create target {} since it is a kt_jvm_import which was not provide. Add argument kt_jvm_import when calling generate_transitive_dependency_targets.".format(name),
+        "Unable to create target {} since it is a kt_jvm_import which was not provided. Add argument kt_jvm_import when calling generate_transitive_dependency_targets."
+            .format(name),
     )
 
 def _no_op_missing_kt_android_impl(name, **kwargs):
@@ -288,7 +353,8 @@ def _no_op_missing_kt_android_impl(name, **kwargs):
     """
 
     fail(
-        "Unable to create target {} since it is a kt_android_library which was not provide. Add argument kt_android_library when calling generate_transitive_dependency_targets.".format(name),
+        "Unable to create target {} since it is a kt_android_library which was not provided. Add argument kt_android_library when calling generate_transitive_dependency_targets."
+            .format(name),
     )
 
 def generate_transitive_dependency_targets(
@@ -1038,7 +1104,7 @@ def generate_transitive_dependency_targets(
             ":androidx_appcompat__appcompat",
             ":androidx_fragment__fragment",
         ],
-        exports = [":androidx_annotation__annotation"],
+        exports = [],
     )
 
     # from com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406
@@ -1059,8 +1125,228 @@ def generate_transitive_dependency_targets(
             ":androidx_fragment__fragment",
             ":com_github_menny_Chauffeur__lib",
         ],
+        exports = [":com_github_menny_Chauffeur__lib"],
+    )
+
+    # from com.squareup.moshi:moshi-kotlin-codegen:1.9.2
+    native.alias(
+        name = "com_squareup_moshi__moshi_kotlin_codegen",
+        actual = ":com_squareup_moshi__moshi_kotlin_codegen__1_9_2",
+        visibility = ["//visibility:public"],
+    )
+
+    # from com.squareup.moshi:moshi-kotlin-codegen:1.9.2
+    kt_jvm_import(
+        name = "com_squareup_moshi__moshi_kotlin_codegen__1_9_2",
+        tags = ["maven_coordinates=com.squareup.moshi:moshi-kotlin-codegen:1.9.2"],
         exports = [
-            ":androidx_annotation__annotation",
-            ":com_github_menny_Chauffeur__lib",
+            ":com_squareup__kotlinpoet",
+            ":com_squareup_moshi__moshi",
+            ":org_jetbrains_kotlin__kotlin_stdlib",
         ],
+        runtime_deps = [],
+        jar = "@com_squareup_moshi__moshi_kotlin_codegen__1_9_2//file",
+    )
+
+    # from com.squareup.moshi:moshi-kotlin-codegen:1.9.2
+    java_plugin(
+        name = "com_squareup_moshi__moshi_kotlin_codegen__1_9_2___generates_api___processor_class_0",
+        processor_class = "com.squareup.moshi.kotlin.codegen.JsonClassCodegenProcessor",
+        generates_api = 1,
+        deps = [
+            ":com_squareup__kotlinpoet",
+            ":com_squareup_moshi__moshi",
+            ":com_squareup_moshi__moshi_kotlin_codegen__1_9_2",
+            ":org_jetbrains_kotlin__kotlin_stdlib",
+        ],
+    )
+
+    # from com.squareup.moshi:moshi-kotlin-codegen:1.9.2
+    java_library(
+        name = "com_squareup_moshi__moshi_kotlin_codegen__1_9_2___generates_api___processor_class_all",
+        exported_plugins = [":com_squareup_moshi__moshi_kotlin_codegen__1_9_2___generates_api___processor_class_0"],
+    )
+
+    # from com.squareup.moshi:moshi-kotlin-codegen:1.9.2
+    java_plugin(
+        name = "com_squareup_moshi__moshi_kotlin_codegen__1_9_2___processor_class_0",
+        processor_class = "com.squareup.moshi.kotlin.codegen.JsonClassCodegenProcessor",
+        generates_api = 0,
+        deps = [
+            ":com_squareup__kotlinpoet",
+            ":com_squareup_moshi__moshi",
+            ":com_squareup_moshi__moshi_kotlin_codegen__1_9_2",
+            ":org_jetbrains_kotlin__kotlin_stdlib",
+        ],
+    )
+
+    # from com.squareup.moshi:moshi-kotlin-codegen:1.9.2
+    java_library(
+        name = "com_squareup_moshi__moshi_kotlin_codegen__1_9_2___processor_class_all",
+        exported_plugins = [":com_squareup_moshi__moshi_kotlin_codegen__1_9_2___processor_class_0"],
+    )
+
+    # from com.squareup.moshi:moshi-kotlin-codegen:1.9.2
+    native.alias(
+        name = "com_squareup_moshi__moshi_kotlin_codegen___generates_api___processor_class_0",
+        actual = ":com_squareup_moshi__moshi_kotlin_codegen__1_9_2___generates_api___processor_class_0",
+        visibility = ["//visibility:public"],
+    )
+
+    # from com.squareup.moshi:moshi-kotlin-codegen:1.9.2
+    native.alias(
+        name = "com_squareup_moshi__moshi_kotlin_codegen___generates_api___processor_class_all",
+        actual = ":com_squareup_moshi__moshi_kotlin_codegen__1_9_2___generates_api___processor_class_all",
+        visibility = ["//visibility:public"],
+    )
+
+    # from com.squareup.moshi:moshi-kotlin-codegen:1.9.2
+    native.alias(
+        name = "com_squareup_moshi__moshi_kotlin_codegen___processor_class_0",
+        actual = ":com_squareup_moshi__moshi_kotlin_codegen__1_9_2___processor_class_0",
+        visibility = ["//visibility:public"],
+    )
+
+    # from com.squareup.moshi:moshi-kotlin-codegen:1.9.2
+    native.alias(
+        name = "com_squareup_moshi__moshi_kotlin_codegen___processor_class_all",
+        actual = ":com_squareup_moshi__moshi_kotlin_codegen__1_9_2___processor_class_all",
+        visibility = ["//visibility:public"],
+    )
+
+    # from com.squareup.moshi:moshi:1.9.2
+    native.alias(
+        name = "com_squareup_moshi__moshi",
+        actual = ":com_squareup_moshi__moshi__1_9_2",
+        visibility = ["//visibility:public"],
+    )
+
+    # from com.squareup.moshi:moshi:1.9.2
+    java_import(
+        name = "com_squareup_moshi__moshi__1_9_2",
+        jars = ["@com_squareup_moshi__moshi__1_9_2//file"],
+        tags = ["maven_coordinates=com.squareup.moshi:moshi:1.9.2"],
+        licenses = ["notice"],
+        deps = [":com_squareup_okio__okio"],
+        exports = [":com_squareup_okio__okio"],
+        runtime_deps = [],
+    )
+
+    # from com.squareup.okio:okio:1.16.0
+    native.alias(
+        name = "com_squareup_okio__okio",
+        actual = ":com_squareup_okio__okio__1_16_0",
+        visibility = ["//visibility:public"],
+    )
+
+    # from com.squareup.okio:okio:1.16.0
+    java_import(
+        name = "com_squareup_okio__okio__1_16_0",
+        jars = ["@com_squareup_okio__okio__1_16_0//file"],
+        tags = ["maven_coordinates=com.squareup.okio:okio:1.16.0"],
+        licenses = ["notice"],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from com.squareup:kotlinpoet:1.4.4
+    native.alias(
+        name = "com_squareup__kotlinpoet",
+        actual = ":com_squareup__kotlinpoet__1_4_4",
+        visibility = ["//visibility:public"],
+    )
+
+    # from com.squareup:kotlinpoet:1.4.4
+    kt_jvm_import(
+        name = "com_squareup__kotlinpoet__1_4_4",
+        tags = ["maven_coordinates=com.squareup:kotlinpoet:1.4.4"],
+        exports = [":org_jetbrains_kotlin__kotlin_stdlib_jdk7"],
+        runtime_deps = [":org_jetbrains_kotlin__kotlin_reflect"],
+        jar = "@com_squareup__kotlinpoet__1_4_4//file",
+    )
+
+    # from org.jetbrains.kotlin:kotlin-reflect:1.3.50
+    native.alias(
+        name = "org_jetbrains_kotlin__kotlin_reflect",
+        actual = ":org_jetbrains_kotlin__kotlin_reflect__1_3_50",
+        visibility = ["//visibility:public"],
+    )
+
+    # from org.jetbrains.kotlin:kotlin-reflect:1.3.50
+    kt_jvm_import(
+        name = "org_jetbrains_kotlin__kotlin_reflect__1_3_50",
+        tags = ["maven_coordinates=org.jetbrains.kotlin:kotlin-reflect:1.3.50"],
+        exports = [":org_jetbrains_kotlin__kotlin_stdlib"],
+        runtime_deps = [],
+        jar = "@org_jetbrains_kotlin__kotlin_reflect__1_3_50//file",
+    )
+
+    # from org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72
+    native.alias(
+        name = "org_jetbrains_kotlin__kotlin_stdlib_common",
+        actual = ":org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72",
+        visibility = ["//visibility:public"],
+    )
+
+    # from org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72
+    kt_jvm_import(
+        name = "org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72",
+        tags = ["maven_coordinates=org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72"],
+        exports = [],
+        runtime_deps = [],
+        jar = "@org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72//file",
+    )
+
+    # from org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50
+    native.alias(
+        name = "org_jetbrains_kotlin__kotlin_stdlib_jdk7",
+        actual = ":org_jetbrains_kotlin__kotlin_stdlib_jdk7__1_3_50",
+        visibility = ["//visibility:public"],
+    )
+
+    # from org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50
+    kt_jvm_import(
+        name = "org_jetbrains_kotlin__kotlin_stdlib_jdk7__1_3_50",
+        tags = ["maven_coordinates=org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50"],
+        exports = [":org_jetbrains_kotlin__kotlin_stdlib"],
+        runtime_deps = [],
+        jar = "@org_jetbrains_kotlin__kotlin_stdlib_jdk7__1_3_50//file",
+    )
+
+    # from org.jetbrains.kotlin:kotlin-stdlib:1.3.72
+    native.alias(
+        name = "org_jetbrains_kotlin__kotlin_stdlib",
+        actual = ":org_jetbrains_kotlin__kotlin_stdlib__1_3_72",
+        visibility = ["//visibility:public"],
+    )
+
+    # from org.jetbrains.kotlin:kotlin-stdlib:1.3.72
+    kt_jvm_import(
+        name = "org_jetbrains_kotlin__kotlin_stdlib__1_3_72",
+        tags = ["maven_coordinates=org.jetbrains.kotlin:kotlin-stdlib:1.3.72"],
+        exports = [
+            ":org_jetbrains__annotations",
+            ":org_jetbrains_kotlin__kotlin_stdlib_common",
+        ],
+        runtime_deps = [],
+        jar = "@org_jetbrains_kotlin__kotlin_stdlib__1_3_72//file",
+    )
+
+    # from org.jetbrains:annotations:13.0
+    native.alias(
+        name = "org_jetbrains__annotations",
+        actual = ":org_jetbrains__annotations__13_0",
+        visibility = ["//visibility:public"],
+    )
+
+    # from org.jetbrains:annotations:13.0
+    java_import(
+        name = "org_jetbrains__annotations__13_0",
+        jars = ["@org_jetbrains__annotations__13_0//file"],
+        tags = ["maven_coordinates=org.jetbrains:annotations:13.0"],
+        licenses = ["notice"],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
     )

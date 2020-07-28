@@ -18,7 +18,6 @@ import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Function;
 
 public class RuleClassifiersTest {
@@ -38,19 +37,19 @@ public class RuleClassifiersTest {
                         .build();
         Assert.assertSame(
                 TargetsBuilders.AAR_IMPORT,
-                new RuleClassifiers.AarClassifier().classifyRule(dep).orElse(null));
+                new RuleClassifiers.AarClassifier().classifyRule(dep).get(0));
 
         dep =
                 Dependency.builder()
                         .mavenCoordinate(MavenCoordinate.create("", "", "", "jar"))
                         .build();
-        Assert.assertSame(Optional.empty(), new RuleClassifiers.AarClassifier().classifyRule(dep));
+        Assert.assertTrue(new RuleClassifiers.AarClassifier().classifyRule(dep).isEmpty());
 
         dep =
                 Dependency.builder()
                         .mavenCoordinate(MavenCoordinate.create("", "", "", "pom"))
                         .build();
-        Assert.assertSame(Optional.empty(), new RuleClassifiers.AarClassifier().classifyRule(dep));
+        Assert.assertTrue(new RuleClassifiers.AarClassifier().classifyRule(dep).isEmpty());
     }
 
     @Test
@@ -61,13 +60,13 @@ public class RuleClassifiersTest {
                         .build();
         Assert.assertSame(
                 TargetsBuilders.JAVA_IMPORT,
-                new RuleClassifiers.PomClassifier().classifyRule(dep).orElse(null));
+                new RuleClassifiers.PomClassifier().classifyRule(dep).get(0));
 
         dep =
                 Dependency.builder()
                         .mavenCoordinate(MavenCoordinate.create("", "", "", "jar"))
                         .build();
-        Assert.assertSame(Optional.empty(), new RuleClassifiers.PomClassifier().classifyRule(dep));
+        Assert.assertTrue(new RuleClassifiers.PomClassifier().classifyRule(dep).isEmpty());
     }
 
     @Test
@@ -247,15 +246,15 @@ public class RuleClassifiersTest {
     @Test
     public void testPriority() {
         RuleClassifier classifier1 = Mockito.mock(RuleClassifier.class);
-        Mockito.when(classifier1.classifyRule(Mockito.any())).thenReturn(Optional.empty());
+        Mockito.when(classifier1.classifyRule(Mockito.any())).thenReturn(Collections.emptyList());
         RuleClassifier classifier2 = Mockito.mock(RuleClassifier.class);
         TargetsBuilder targetsBuilder2 = Mockito.mock(TargetsBuilder.class);
         Mockito.when(classifier2.classifyRule(Mockito.any()))
-                .thenReturn(Optional.of(targetsBuilder2));
+                .thenReturn(Collections.singletonList(targetsBuilder2));
         RuleClassifier classifier3 = Mockito.mock(RuleClassifier.class);
         TargetsBuilder targetsBuilder3 = Mockito.mock(TargetsBuilder.class);
         Mockito.when(classifier3.classifyRule(Mockito.any()))
-                .thenReturn(Optional.of(targetsBuilder3));
+                .thenReturn(Collections.singletonList(targetsBuilder3));
 
         TargetsBuilder defaultTargetBuilder = Mockito.mock(TargetsBuilder.class);
         TargetsBuilder actualTargetBuilder =
@@ -266,17 +265,20 @@ public class RuleClassifiersTest {
                                 .mavenCoordinate(MavenCoordinate.create("g", "a", "1", ""))
                                 .build());
 
-        Assert.assertSame(targetsBuilder2, actualTargetBuilder);
+        Assert.assertTrue(actualTargetBuilder instanceof TargetsBuilders.CompositeBuilder);
+        TargetsBuilders.CompositeBuilder compositeBuilder = (TargetsBuilders.CompositeBuilder) actualTargetBuilder;
+        Assert.assertEquals(1, compositeBuilder.getTargetsBuilders().size());
+        Assert.assertTrue(compositeBuilder.getTargetsBuilders().contains(targetsBuilder2));
     }
 
     @Test
     public void testPriorityToDefault() {
         RuleClassifier classifier1 = Mockito.mock(RuleClassifier.class);
-        Mockito.when(classifier1.classifyRule(Mockito.any())).thenReturn(Optional.empty());
+        Mockito.when(classifier1.classifyRule(Mockito.any())).thenReturn(Collections.emptyList());
         RuleClassifier classifier2 = Mockito.mock(RuleClassifier.class);
-        Mockito.when(classifier2.classifyRule(Mockito.any())).thenReturn(Optional.empty());
+        Mockito.when(classifier2.classifyRule(Mockito.any())).thenReturn(Collections.emptyList());
         RuleClassifier classifier3 = Mockito.mock(RuleClassifier.class);
-        Mockito.when(classifier3.classifyRule(Mockito.any())).thenReturn(Optional.empty());
+        Mockito.when(classifier3.classifyRule(Mockito.any())).thenReturn(Collections.emptyList());
 
         TargetsBuilder defaultTargetBuilder = Mockito.mock(TargetsBuilder.class);
         TargetsBuilder actualTargetBuilder =
@@ -297,7 +299,7 @@ public class RuleClassifiersTest {
         final Dependency dependency =
                 Dependency.builder().mavenCoordinate(mMavenCoordinate).build();
 
-        Assert.assertFalse(classifier.classifyRule(dependency).isPresent());
+        Assert.assertTrue(classifier.classifyRule(dependency).isEmpty());
     }
 
     @Test
@@ -307,7 +309,9 @@ public class RuleClassifiersTest {
         final Dependency dependency =
                 Dependency.builder().mavenCoordinate(mMavenCoordinate).build();
 
-        Assert.assertFalse(classifier.classifyRule(dependency).isPresent());
+        //just passes that along
+        Assert.assertEquals(1, classifier.classifyRule(dependency).size());
+        Assert.assertSame(TargetsBuilders.AAR_IMPORT, classifier.classifyRule(dependency).get(0));
     }
 
     @Test
@@ -320,9 +324,31 @@ public class RuleClassifiersTest {
                         .url("https://example.com/artifact.jar")
                         .build();
 
-        Optional<TargetsBuilder> targetsBuilder = classifier.classifyRule(dependency);
-        Assert.assertTrue(targetsBuilder.isPresent());
-        Assert.assertSame(TargetsBuilders.KOTLIN_IMPORT, targetsBuilder.orElse(null));
+        List<TargetsBuilder> targetsBuilder = classifier.classifyRule(dependency);
+        Assert.assertEquals(1, targetsBuilder.size());
+        Assert.assertSame(TargetsBuilders.KOTLIN_IMPORT, targetsBuilder.get(0));
+    }
+
+    @Test
+    public void testJarClassifierMultipleKotlin() {
+        RuleClassifier classifier = new RuleClassifiers.JarClassifier(dependency -> Arrays.asList(
+                TargetsBuilders.KOTLIN_IMPORT,
+                TargetsBuilders.KOTLIN_IMPORT,
+                TargetsBuilders.KOTLIN_IMPORT,
+                TargetsBuilders.KOTLIN_IMPORT));
+
+        final Dependency dependency =
+                Dependency.builder()
+                        .mavenCoordinate(mMavenCoordinate)
+                        .url("https://example.com/artifact.jar")
+                        .build();
+
+        List<TargetsBuilder> targetsBuilder = classifier.classifyRule(dependency);
+        Assert.assertEquals(4, targetsBuilder.size());
+        Assert.assertSame(TargetsBuilders.KOTLIN_IMPORT, targetsBuilder.get(0));
+        Assert.assertSame(TargetsBuilders.KOTLIN_IMPORT, targetsBuilder.get(1));
+        Assert.assertSame(TargetsBuilders.KOTLIN_IMPORT, targetsBuilder.get(2));
+        Assert.assertSame(TargetsBuilders.KOTLIN_IMPORT, targetsBuilder.get(3));
     }
 
     @Test
@@ -337,9 +363,10 @@ public class RuleClassifiersTest {
                         .url("https://example.com/artifact.jar")
                         .build();
 
-        Optional<TargetsBuilder> targetsBuilder = classifier.classifyRule(dependency);
-        Assert.assertTrue(targetsBuilder.isPresent());
-        Assert.assertSame(TargetsBuilders.KOTLIN_IMPORT, targetsBuilder.orElse(null));
+        List<TargetsBuilder> targetsBuilder = classifier.classifyRule(dependency);
+        Assert.assertEquals(2, targetsBuilder.size());
+        Assert.assertSame(TargetsBuilders.KOTLIN_IMPORT, targetsBuilder.get(0));
+        Assert.assertSame(TargetsBuilders.JAVA_IMPORT, targetsBuilder.get(1));
     }
 
     @Test
@@ -353,27 +380,9 @@ public class RuleClassifiersTest {
                         .url("https://example.com/artifact.aar")
                         .build();
 
-        Optional<TargetsBuilder> targetsBuilder = classifier.classifyRule(dependency);
-        Assert.assertTrue(targetsBuilder.isPresent());
-        Assert.assertSame(TargetsBuilders.KOTLIN_ANDROID_IMPORT, targetsBuilder.orElse(null));
-    }
-
-    @Test
-    @Ignore("until we figure out kotlin-android import")
-    public void testJarClassifierKotlinAarAndUnknown() {
-        RuleClassifier classifier = new RuleClassifiers.JarClassifier(dependency -> Arrays.asList(
-                TargetsBuilders.KOTLIN_IMPORT,
-                TargetsBuilders.JAVA_IMPORT));
-
-        final Dependency dependency =
-                Dependency.builder()
-                        .mavenCoordinate(mMavenCoordinate)
-                        .url("https://example.com/artifact.aar")
-                        .build();
-
-        Optional<TargetsBuilder> targetsBuilder = classifier.classifyRule(dependency);
-        Assert.assertTrue(targetsBuilder.isPresent());
-        Assert.assertSame(TargetsBuilders.KOTLIN_ANDROID_IMPORT, targetsBuilder.orElse(null));
+        List<TargetsBuilder> targetsBuilder = classifier.classifyRule(dependency);
+        Assert.assertEquals(1, targetsBuilder.size());
+        Assert.assertSame(TargetsBuilders.KOTLIN_ANDROID_IMPORT, targetsBuilder.get(0));
     }
 
     @Test
@@ -390,14 +399,13 @@ public class RuleClassifiersTest {
                         .url("https://example.com/artifact.aar")
                         .build();
 
-        Optional<TargetsBuilder> targetsBuilder = classifier.classifyRule(dependency);
-        Assert.assertTrue(targetsBuilder.isPresent());
-        Assert.assertSame(TargetsBuilders.KOTLIN_ANDROID_IMPORT, targetsBuilder.orElse(null));
+        List<TargetsBuilder> targetsBuilder = classifier.classifyRule(dependency);
+        Assert.assertFalse(targetsBuilder.isEmpty());
+        Assert.assertSame(TargetsBuilders.KOTLIN_ANDROID_IMPORT, targetsBuilder.get(0));
     }
 
     @Test
     public void testJarClassifierKotlinJarAndPlugin() {
-        //TODO: at some point, this should return a kotlin compiler plugin
         RuleClassifier classifier = new RuleClassifiers.JarClassifier(dependency -> Arrays.asList(
                 TargetsBuilders.KOTLIN_IMPORT,
                 new TargetsBuilders.JavaPluginFormatter(Collections.singletonList("com.example.Processor"))));
@@ -408,8 +416,34 @@ public class RuleClassifiersTest {
                         .url("https://example.com/artifact.jar")
                         .build();
 
-        Optional<TargetsBuilder> targetsBuilder = classifier.classifyRule(dependency);
-        Assert.assertTrue(targetsBuilder.isPresent());
-        Assert.assertSame(TargetsBuilders.KOTLIN_IMPORT, targetsBuilder.orElse(null));
+        List<TargetsBuilder> targetsBuilder = classifier.classifyRule(dependency);
+        Assert.assertEquals(2, targetsBuilder.size());
+        Assert.assertSame(TargetsBuilders.KOTLIN_IMPORT, targetsBuilder.get(0));
+        Assert.assertTrue(targetsBuilder.get(1) instanceof TargetsBuilders.JavaPluginFormatter);
+        TargetsBuilders.JavaPluginFormatter plugin = (TargetsBuilders.JavaPluginFormatter) targetsBuilder.get(1);
+        Assert.assertEquals(1, plugin.getProcessorClasses().size());
+        Assert.assertEquals("com.example.Processor", plugin.getProcessorClasses().get(0));
+    }
+
+    @Test
+    public void testJarClassifierKotlinJarAndPluginReverseOrder() {
+        RuleClassifier classifier = new RuleClassifiers.JarClassifier(dependency -> Arrays.asList(
+                new TargetsBuilders.JavaPluginFormatter(Collections.singletonList("com.example.Processor")),
+                TargetsBuilders.KOTLIN_IMPORT));
+
+        final Dependency dependency =
+                Dependency.builder()
+                        .mavenCoordinate(mMavenCoordinate)
+                        .url("https://example.com/artifact.jar")
+                        .build();
+
+        List<TargetsBuilder> targetsBuilder = classifier.classifyRule(dependency);
+        Assert.assertEquals(2, targetsBuilder.size());
+        //kotlin first always!
+        Assert.assertSame(TargetsBuilders.KOTLIN_IMPORT, targetsBuilder.get(0));
+        Assert.assertTrue(targetsBuilder.get(1) instanceof TargetsBuilders.JavaPluginFormatter);
+        TargetsBuilders.JavaPluginFormatter plugin = (TargetsBuilders.JavaPluginFormatter) targetsBuilder.get(1);
+        Assert.assertEquals(1, plugin.getProcessorClasses().size());
+        Assert.assertEquals("com.example.Processor", plugin.getProcessorClasses().get(0));
     }
 }
