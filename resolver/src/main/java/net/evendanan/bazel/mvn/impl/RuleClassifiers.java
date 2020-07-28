@@ -28,9 +28,9 @@ public class RuleClassifiers {
             final Dependency dependency) {
         return classifiers.stream()
                 .map(classifier -> classifier.classifyRule(dependency))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
+                .filter(l -> !l.isEmpty())
                 .findFirst()
+                .<TargetsBuilder>map(TargetsBuilders.CompositeBuilder::new)
                 .orElse(defaultFormatter);
     }
 
@@ -45,11 +45,11 @@ public class RuleClassifiers {
         }
 
         @Override
-        public Optional<TargetsBuilder> classifyRule(final Dependency dependency) {
+        public List<TargetsBuilder> classifyRule(final Dependency dependency) {
             if (packaging.equals(dependency.mavenCoordinate().packaging())) {
-                return Optional.of(targetsBuilder);
+                return Collections.singletonList(targetsBuilder);
             } else {
-                return Optional.empty();
+                return Collections.emptyList();
             }
         }
     }
@@ -141,19 +141,20 @@ public class RuleClassifiers {
         }
 
         @Override
-        public Optional<TargetsBuilder> classifyRule(Dependency dependency) {
+        public List<TargetsBuilder> classifyRule(Dependency dependency) {
             //TODO: in the future, we should use android import
             //final boolean isAndroid = dependency.url().endsWith(".aar");
-            List<TargetsBuilder> possibleBuilders = mJarInspector.apply(dependency);
-            final Optional<TargetsBuilder> kotlinOptional = possibleBuilders.stream().filter(t -> t instanceof TargetsBuilders.KotlinImport).findFirst();
-            final Optional<TargetsBuilder> processorOptional = possibleBuilders.stream().filter(t -> t instanceof TargetsBuilders.JavaPluginFormatter).findFirst();
 
-            if (kotlinOptional.isPresent()) {
-                return kotlinOptional;
-            } else {
-                //either this is present - in which case we want to return it - or it's empty - in which case want to return empty.
-                return processorOptional;
-            }
+            //we need to make sure the targets are ordered correctly:
+            //  1) kotlin
+            //  2) anything else
+            List<TargetsBuilder> targetsBuilders = mJarInspector.apply(dependency);
+            targetsBuilders.sort((o1, o2) -> {
+                final boolean isKotlin1 = o1 instanceof TargetsBuilders.KotlinImport;
+                final boolean isKotlin2 = o2 instanceof TargetsBuilders.KotlinImport;
+                return isKotlin1 == isKotlin2 ? 0 : isKotlin1 ? -1 : 1;
+            });
+            return targetsBuilders;
         }
     }
 }
