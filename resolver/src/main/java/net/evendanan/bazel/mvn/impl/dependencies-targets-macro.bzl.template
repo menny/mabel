@@ -30,6 +30,22 @@ def _no_op_missing_kt_jvm_impl(name, **kwargs):
             .format(name),
     )
 
+def _no_op_missing_kt_jvm_lib_impl(name, **kwargs):
+    """
+    This is a help macro for missing concrete rule implementation.
+
+    This will be used in cases when some dependencies require Kotlin rule implementation.
+
+    Args:
+        name: A unique name for this target.
+        **kwargs: Anything else. Not used.
+    """
+
+    fail(
+        "Unable to create target {} since it is a kt_jvm_library which was not provided. Add argument kt_jvm_library when calling {{generate_transitive_dependency_targets}}."
+            .format(name),
+    )
+
 def _no_op_missing_kt_android_impl(name, **kwargs):
     """
     This is a help macro for missing concrete rule implementation.
@@ -53,6 +69,7 @@ def {{generate_transitive_dependency_targets}}(
         java_import = native.java_import,
         aar_import = _no_op_missing_aar_impl,
         kt_jvm_import = _no_op_missing_kt_jvm_impl,
+        kt_jvm_library = _no_op_missing_kt_jvm_lib_impl,
         kt_android_library = _no_op_missing_kt_android_impl):
     """
     Macro to set up the transitive rules.

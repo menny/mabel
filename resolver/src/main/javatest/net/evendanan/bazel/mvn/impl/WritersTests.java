@@ -108,6 +108,22 @@ public class WritersTests {
                     "            .format(name),\n" +
                     "    )\n" +
                     "\n" +
+                    "def _no_op_missing_kt_jvm_lib_impl(name, **kwargs):\n" +
+                    "    \"\"\"\n" +
+                    "    This is a help macro for missing concrete rule implementation.\n" +
+                    "\n" +
+                    "    This will be used in cases when some dependencies require Kotlin rule implementation.\n" +
+                    "\n" +
+                    "    Args:\n" +
+                    "        name: A unique name for this target.\n" +
+                    "        **kwargs: Anything else. Not used.\n" +
+                    "    \"\"\"\n" +
+                    "\n" +
+                    "    fail(\n" +
+                    "        \"Unable to create target {} since it is a kt_jvm_library which was not provided. Add argument kt_jvm_library when calling macro_name.\"\n" +
+                    "            .format(name),\n" +
+                    "    )\n" +
+                    "\n" +
                     "def _no_op_missing_kt_android_impl(name, **kwargs):\n" +
                     "    \"\"\"\n" +
                     "    This is a help macro for missing concrete rule implementation.\n" +
@@ -131,6 +147,7 @@ public class WritersTests {
                     "        java_import = native.java_import,\n" +
                     "        aar_import = _no_op_missing_aar_impl,\n" +
                     "        kt_jvm_import = _no_op_missing_kt_jvm_impl,\n" +
+                    "        kt_jvm_library = _no_op_missing_kt_jvm_lib_impl,\n" +
                     "        kt_android_library = _no_op_missing_kt_android_impl):\n" +
                     "    \"\"\"\n" +
                     "    Macro to set up the transitive rules.\n" +
