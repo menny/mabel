@@ -341,6 +341,22 @@ def _no_op_missing_kt_jvm_impl(name, **kwargs):
             .format(name),
     )
 
+def _no_op_missing_kt_jvm_lib_impl(name, **kwargs):
+    """
+    This is a help macro for missing concrete rule implementation.
+
+    This will be used in cases when some dependencies require Kotlin rule implementation.
+
+    Args:
+        name: A unique name for this target.
+        **kwargs: Anything else. Not used.
+    """
+
+    fail(
+        "Unable to create target {} since it is a kt_jvm_library which was not provided. Add argument kt_jvm_library when calling generate_transitive_dependency_targets."
+            .format(name),
+    )
+
 def _no_op_missing_kt_android_impl(name, **kwargs):
     """
     This is a help macro for missing concrete rule implementation.
@@ -364,6 +380,7 @@ def generate_transitive_dependency_targets(
         java_import = native.java_import,
         aar_import = _no_op_missing_aar_impl,
         kt_jvm_import = _no_op_missing_kt_jvm_impl,
+        kt_jvm_library = _no_op_missing_kt_jvm_lib_impl,
         kt_android_library = _no_op_missing_kt_android_impl):
     """
     Macro to set up the transitive rules.
@@ -378,6 +395,7 @@ def generate_transitive_dependency_targets(
         java_import: rule implementation for java_import. Defaults to native.java_import.
         aar_import: rule implementation for aar_import. Required only if you have Android dependencies.
         kt_jvm_import: rule implementation for kt_jvm_import. Required only if you have Kotlin dependencies.
+        kt_jvm_library: rule implementation for kt_jvm_library. Required only if you have Kotlin dependencies.
         kt_android_library: rule implementation for kt_android_library. Required only if you have Android-Kotlin dependencies.
     """
 
@@ -1136,16 +1154,16 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.squareup.moshi:moshi-kotlin-codegen:1.9.2
-    kt_jvm_import(
+    kt_jvm_library(
         name = "com_squareup_moshi__moshi_kotlin_codegen__1_9_2",
         tags = ["maven_coordinates=com.squareup.moshi:moshi-kotlin-codegen:1.9.2"],
         exports = [
             ":com_squareup__kotlinpoet",
             ":com_squareup_moshi__moshi",
+            ":com_squareup_moshi__moshi_kotlin_codegen__1_9_2_kt_jvm_import",
             ":org_jetbrains_kotlin__kotlin_stdlib",
         ],
         runtime_deps = [],
-        jar = "@com_squareup_moshi__moshi_kotlin_codegen__1_9_2//file",
     )
 
     # from com.squareup.moshi:moshi-kotlin-codegen:1.9.2
@@ -1184,6 +1202,13 @@ def generate_transitive_dependency_targets(
     java_library(
         name = "com_squareup_moshi__moshi_kotlin_codegen__1_9_2___processor_class_all",
         exported_plugins = [":com_squareup_moshi__moshi_kotlin_codegen__1_9_2___processor_class_0"],
+    )
+
+    # from com.squareup.moshi:moshi-kotlin-codegen:1.9.2
+    kt_jvm_import(
+        name = "com_squareup_moshi__moshi_kotlin_codegen__1_9_2_kt_jvm_import",
+        jar = "@com_squareup_moshi__moshi_kotlin_codegen__1_9_2//file",
+        visibility = ["//visibility:private"],
     )
 
     # from com.squareup.moshi:moshi-kotlin-codegen:1.9.2
@@ -1258,12 +1283,21 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.squareup:kotlinpoet:1.4.4
-    kt_jvm_import(
+    kt_jvm_library(
         name = "com_squareup__kotlinpoet__1_4_4",
         tags = ["maven_coordinates=com.squareup:kotlinpoet:1.4.4"],
-        exports = [":org_jetbrains_kotlin__kotlin_stdlib_jdk7"],
+        exports = [
+            ":com_squareup__kotlinpoet__1_4_4_kt_jvm_import",
+            ":org_jetbrains_kotlin__kotlin_stdlib_jdk7",
+        ],
         runtime_deps = [":org_jetbrains_kotlin__kotlin_reflect"],
+    )
+
+    # from com.squareup:kotlinpoet:1.4.4
+    kt_jvm_import(
+        name = "com_squareup__kotlinpoet__1_4_4_kt_jvm_import",
         jar = "@com_squareup__kotlinpoet__1_4_4//file",
+        visibility = ["//visibility:private"],
     )
 
     # from org.jetbrains.kotlin:kotlin-reflect:1.3.50
@@ -1274,12 +1308,21 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.jetbrains.kotlin:kotlin-reflect:1.3.50
-    kt_jvm_import(
+    kt_jvm_library(
         name = "org_jetbrains_kotlin__kotlin_reflect__1_3_50",
         tags = ["maven_coordinates=org.jetbrains.kotlin:kotlin-reflect:1.3.50"],
-        exports = [":org_jetbrains_kotlin__kotlin_stdlib"],
+        exports = [
+            ":org_jetbrains_kotlin__kotlin_reflect__1_3_50_kt_jvm_import",
+            ":org_jetbrains_kotlin__kotlin_stdlib",
+        ],
         runtime_deps = [],
+    )
+
+    # from org.jetbrains.kotlin:kotlin-reflect:1.3.50
+    kt_jvm_import(
+        name = "org_jetbrains_kotlin__kotlin_reflect__1_3_50_kt_jvm_import",
         jar = "@org_jetbrains_kotlin__kotlin_reflect__1_3_50//file",
+        visibility = ["//visibility:private"],
     )
 
     # from org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72
@@ -1290,12 +1333,18 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72
-    kt_jvm_import(
+    kt_jvm_library(
         name = "org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72",
         tags = ["maven_coordinates=org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72"],
-        exports = [],
+        exports = [":org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72_kt_jvm_import"],
         runtime_deps = [],
+    )
+
+    # from org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72
+    kt_jvm_import(
+        name = "org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72_kt_jvm_import",
         jar = "@org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72//file",
+        visibility = ["//visibility:private"],
     )
 
     # from org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50
@@ -1306,12 +1355,21 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50
-    kt_jvm_import(
+    kt_jvm_library(
         name = "org_jetbrains_kotlin__kotlin_stdlib_jdk7__1_3_50",
         tags = ["maven_coordinates=org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50"],
-        exports = [":org_jetbrains_kotlin__kotlin_stdlib"],
+        exports = [
+            ":org_jetbrains_kotlin__kotlin_stdlib",
+            ":org_jetbrains_kotlin__kotlin_stdlib_jdk7__1_3_50_kt_jvm_import",
+        ],
         runtime_deps = [],
+    )
+
+    # from org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50
+    kt_jvm_import(
+        name = "org_jetbrains_kotlin__kotlin_stdlib_jdk7__1_3_50_kt_jvm_import",
         jar = "@org_jetbrains_kotlin__kotlin_stdlib_jdk7__1_3_50//file",
+        visibility = ["//visibility:private"],
     )
 
     # from org.jetbrains.kotlin:kotlin-stdlib:1.3.72
@@ -1322,15 +1380,22 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.jetbrains.kotlin:kotlin-stdlib:1.3.72
-    kt_jvm_import(
+    kt_jvm_library(
         name = "org_jetbrains_kotlin__kotlin_stdlib__1_3_72",
         tags = ["maven_coordinates=org.jetbrains.kotlin:kotlin-stdlib:1.3.72"],
         exports = [
             ":org_jetbrains__annotations",
+            ":org_jetbrains_kotlin__kotlin_stdlib__1_3_72_kt_jvm_import",
             ":org_jetbrains_kotlin__kotlin_stdlib_common",
         ],
         runtime_deps = [],
+    )
+
+    # from org.jetbrains.kotlin:kotlin-stdlib:1.3.72
+    kt_jvm_import(
+        name = "org_jetbrains_kotlin__kotlin_stdlib__1_3_72_kt_jvm_import",
         jar = "@org_jetbrains_kotlin__kotlin_stdlib__1_3_72//file",
+        visibility = ["//visibility:private"],
     )
 
     # from org.jetbrains:annotations:13.0
