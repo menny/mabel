@@ -84,5 +84,6 @@ def {{generate_transitive_dependency_targets}}(
         java_import: rule implementation for java_import. Defaults to native.java_import.
         aar_import: rule implementation for aar_import. Required only if you have Android dependencies.
         kt_jvm_import: rule implementation for kt_jvm_import. Required only if you have Kotlin dependencies.
+        kt_jvm_library: rule implementation for kt_jvm_library. Required only if you have Kotlin dependencies.
         kt_android_library: rule implementation for kt_android_library. Required only if you have Android-Kotlin dependencies.
     """

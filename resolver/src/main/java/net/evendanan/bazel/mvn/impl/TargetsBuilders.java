@@ -2,6 +2,7 @@ package net.evendanan.bazel.mvn.impl;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
+
 import net.evendanan.bazel.mvn.api.DependencyTools;
 import net.evendanan.bazel.mvn.api.Target;
 import net.evendanan.bazel.mvn.api.TargetsBuilder;
@@ -252,11 +253,28 @@ public class TargetsBuilders {
                 final Dependency dependency, DependencyTools dependencyTools) {
             List<Target> targets = new ArrayList<>();
 
+            //will create a kt_import for the jar
+            //and another kt_library for the jar+deps
+            //the kt_library is the visible one
+            final String ktTargetName = getKotlinJvmRepositoryRuleName(dependency, dependencyTools);
+            final String ktTargetImportName = ktTargetName + "_kt_jvm_import";
             targets.add(
                     new Target(
                             dependencyTools.mavenCoordinates(dependency),
-                                    "kt_jvm_import",
-                            getKotlinJvmRepositoryRuleName(dependency, dependencyTools))
+                            "kt_jvm_import",
+                            ktTargetImportName)
+                            .addString(
+                                    "jar",
+                                    String.format(
+                                            Locale.US,
+                                            "@%s//file",
+                                            dependencyTools.repositoryRuleName(dependency)))
+                            .setPrivateVisibility());
+            targets.add(
+                    new Target(
+                            dependencyTools.mavenCoordinates(dependency),
+                            "kt_jvm_library",
+                            ktTargetName)
                             .addList(
                                     "tags",
                                     Collections.singletonList(
@@ -266,17 +284,11 @@ public class TargetsBuilders {
                                                     dependencyTools.mavenCoordinates(dependency))))
                             .addList(
                                     "exports",
-                                    convertRulesToStrings(dependency.exports(), dependencyTools))
+                                    addItem(convertRulesToStrings(dependency.exports(), dependencyTools), ":" + ktTargetImportName))
                             .addList(
                                     "runtime_deps",
                                     convertRulesToStrings(
-                                            dependency.runtimeDependencies(), dependencyTools))
-                            .addString(
-                                    "jar",
-                                    String.format(
-                                            Locale.US,
-                                            "@%s//file",
-                                            dependencyTools.repositoryRuleName(dependency))));
+                                            dependency.runtimeDependencies(), dependencyTools)));
 
             targets.add(
                     addAlias(

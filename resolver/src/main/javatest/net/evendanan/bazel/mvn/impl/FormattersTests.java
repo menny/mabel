@@ -296,23 +296,28 @@ public class FormattersTests {
                     + "    )\n";
     private static final String NATIVE_KOTLIN_IMPORT_TEXT =
             "    kt_jvm_import(\n" +
-                    "        name = \"kotlin__lib__\",\n" +
-                    "        tags = [\"maven_coordinates=kotlin:lib:\"],\n" +
-                    "        exports = [\n" +
-                    "            \":safe_mvn__export1\",\n" +
-                    "            \":safe_mvn__export2\",\n" +
-                    "        ],\n" +
-                    "        runtime_deps = [\n" +
-                    "            \":safe_mvn__runtime1\",\n" +
-                    "            \":safe_mvn__runtime2\",\n" +
-                    "        ],\n" +
-                    "        jar = \"@kotlin__lib__//file\",\n" +
-                    "    )\n" +
-                    "    native.alias(\n" +
-                    "        name = \"kotlin__lib\",\n" +
-                    "        actual = \":kotlin__lib__\",\n" +
-                    "        visibility = [\"//visibility:public\"],\n" +
-                    "    )\n";
+            "        name = \"kotlin__lib___kt_jvm_import\",\n" +
+            "        jar = \"@kotlin__lib__//file\",\n" +
+            "        visibility = [\"//visibility:private\"],\n" +
+            "    )\n" +
+            "    kt_jvm_library(\n" +
+            "        name = \"kotlin__lib__\",\n" +
+            "        tags = [\"maven_coordinates=kotlin:lib:\"],\n" +
+            "        exports = [\n" +
+            "            \":kotlin__lib___kt_jvm_import\",\n" +
+            "            \":safe_mvn__export1\",\n" +
+            "            \":safe_mvn__export2\",\n" +
+            "        ],\n" +
+            "        runtime_deps = [\n" +
+            "            \":safe_mvn__runtime1\",\n" +
+            "            \":safe_mvn__runtime2\",\n" +
+            "        ],\n" +
+            "    )\n" +
+            "    native.alias(\n" +
+            "        name = \"kotlin__lib\",\n" +
+            "        actual = \":kotlin__lib__\",\n" +
+            "        visibility = [\"//visibility:public\"],\n" +
+            "    )\n";
     private static final String NATIVE_KOTLIN_ANDROID_IMPORT_TEXT =
             "    kt_jvm_import(\n" +
             "        name = \"kotlin__lib_____kt_library\",\n" +

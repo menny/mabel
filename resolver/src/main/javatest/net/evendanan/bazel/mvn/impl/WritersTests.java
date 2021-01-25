@@ -162,6 +162,7 @@ public class WritersTests {
                     "        java_import: rule implementation for java_import. Defaults to native.java_import.\n" +
                     "        aar_import: rule implementation for aar_import. Required only if you have Android dependencies.\n" +
                     "        kt_jvm_import: rule implementation for kt_jvm_import. Required only if you have Kotlin dependencies.\n" +
+                    "        kt_jvm_library: rule implementation for kt_jvm_library. Required only if you have Kotlin dependencies.\n" +
                     "        kt_android_library: rule implementation for kt_android_library. Required only if you have Android-Kotlin dependencies.\n" +
                     "    \"\"\"\n" +
                     "\n" +
