@@ -242,6 +242,7 @@ def generate_transitive_dependency_targets(
     """
 
     # from com.google.auto.value:auto-value-annotations:1.6.3
+    # This is a root requested Maven artifact.
     native.alias(
         name = "apt___com_google_auto_value__auto_value_annotations",
         actual = ":apt___com_google_auto_value__auto_value_annotations__1_6_3",
@@ -249,6 +250,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value-annotations:1.6.3
+    # This is a root requested Maven artifact.
     java_import(
         name = "apt___com_google_auto_value__auto_value_annotations__1_6_3",
         jars = ["@apt___com_google_auto_value__auto_value_annotations__1_6_3//file"],
@@ -260,6 +262,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.6.3
+    # This is a root requested Maven artifact.
     native.alias(
         name = "apt___com_google_auto_value__auto_value",
         actual = ":apt___com_google_auto_value__auto_value__1_6_3",
@@ -267,6 +270,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.6.3
+    # This is a root requested Maven artifact.
     java_import(
         name = "apt___com_google_auto_value__auto_value__1_6_3",
         jars = ["@apt___com_google_auto_value__auto_value__1_6_3//file"],
@@ -278,6 +282,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.6.3
+    # This is a root requested Maven artifact.
     java_plugin(
         name = "apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_0",
         processor_class = "com.google.auto.value.extension.memoized.processor.MemoizedValidator",
@@ -286,6 +291,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.6.3
+    # This is a root requested Maven artifact.
     java_plugin(
         name = "apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_1",
         processor_class = "com.google.auto.value.processor.AutoAnnotationProcessor",
@@ -294,6 +300,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.6.3
+    # This is a root requested Maven artifact.
     java_plugin(
         name = "apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_2",
         processor_class = "com.google.auto.value.processor.AutoOneOfProcessor",
@@ -302,6 +309,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.6.3
+    # This is a root requested Maven artifact.
     java_plugin(
         name = "apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_3",
         processor_class = "com.google.auto.value.processor.AutoValueBuilderProcessor",
@@ -310,6 +318,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.6.3
+    # This is a root requested Maven artifact.
     java_plugin(
         name = "apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_4",
         processor_class = "com.google.auto.value.processor.AutoValueProcessor",
@@ -318,6 +327,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.6.3
+    # This is a root requested Maven artifact.
     java_library(
         name = "apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_all",
         exported_plugins = [
@@ -330,6 +340,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.6.3
+    # This is a root requested Maven artifact.
     java_plugin(
         name = "apt___com_google_auto_value__auto_value__1_6_3___processor_class_0",
         processor_class = "com.google.auto.value.extension.memoized.processor.MemoizedValidator",
@@ -338,6 +349,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.6.3
+    # This is a root requested Maven artifact.
     java_plugin(
         name = "apt___com_google_auto_value__auto_value__1_6_3___processor_class_1",
         processor_class = "com.google.auto.value.processor.AutoAnnotationProcessor",
@@ -346,6 +358,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.6.3
+    # This is a root requested Maven artifact.
     java_plugin(
         name = "apt___com_google_auto_value__auto_value__1_6_3___processor_class_2",
         processor_class = "com.google.auto.value.processor.AutoOneOfProcessor",
@@ -354,6 +367,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.6.3
+    # This is a root requested Maven artifact.
     java_plugin(
         name = "apt___com_google_auto_value__auto_value__1_6_3___processor_class_3",
         processor_class = "com.google.auto.value.processor.AutoValueBuilderProcessor",
@@ -362,6 +376,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.6.3
+    # This is a root requested Maven artifact.
     java_plugin(
         name = "apt___com_google_auto_value__auto_value__1_6_3___processor_class_4",
         processor_class = "com.google.auto.value.processor.AutoValueProcessor",
@@ -370,6 +385,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.6.3
+    # This is a root requested Maven artifact.
     java_library(
         name = "apt___com_google_auto_value__auto_value__1_6_3___processor_class_all",
         exported_plugins = [
@@ -382,6 +398,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.6.3
+    # This is a root requested Maven artifact.
     native.alias(
         name = "apt___com_google_auto_value__auto_value___generates_api___processor_class_0",
         actual = ":apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_0",
@@ -389,6 +406,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.6.3
+    # This is a root requested Maven artifact.
     native.alias(
         name = "apt___com_google_auto_value__auto_value___generates_api___processor_class_1",
         actual = ":apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_1",
@@ -396,6 +414,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.6.3
+    # This is a root requested Maven artifact.
     native.alias(
         name = "apt___com_google_auto_value__auto_value___generates_api___processor_class_2",
         actual = ":apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_2",
@@ -403,6 +422,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.6.3
+    # This is a root requested Maven artifact.
     native.alias(
         name = "apt___com_google_auto_value__auto_value___generates_api___processor_class_3",
         actual = ":apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_3",
@@ -410,6 +430,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.6.3
+    # This is a root requested Maven artifact.
     native.alias(
         name = "apt___com_google_auto_value__auto_value___generates_api___processor_class_4",
         actual = ":apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_4",
@@ -417,6 +438,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.6.3
+    # This is a root requested Maven artifact.
     native.alias(
         name = "apt___com_google_auto_value__auto_value___generates_api___processor_class_all",
         actual = ":apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_all",
@@ -424,6 +446,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.6.3
+    # This is a root requested Maven artifact.
     native.alias(
         name = "apt___com_google_auto_value__auto_value___processor_class_0",
         actual = ":apt___com_google_auto_value__auto_value__1_6_3___processor_class_0",
@@ -431,6 +454,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.6.3
+    # This is a root requested Maven artifact.
     native.alias(
         name = "apt___com_google_auto_value__auto_value___processor_class_1",
         actual = ":apt___com_google_auto_value__auto_value__1_6_3___processor_class_1",
@@ -438,6 +462,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.6.3
+    # This is a root requested Maven artifact.
     native.alias(
         name = "apt___com_google_auto_value__auto_value___processor_class_2",
         actual = ":apt___com_google_auto_value__auto_value__1_6_3___processor_class_2",
@@ -445,6 +470,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.6.3
+    # This is a root requested Maven artifact.
     native.alias(
         name = "apt___com_google_auto_value__auto_value___processor_class_3",
         actual = ":apt___com_google_auto_value__auto_value__1_6_3___processor_class_3",
@@ -452,6 +478,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.6.3
+    # This is a root requested Maven artifact.
     native.alias(
         name = "apt___com_google_auto_value__auto_value___processor_class_4",
         actual = ":apt___com_google_auto_value__auto_value__1_6_3___processor_class_4",
@@ -459,6 +486,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.6.3
+    # This is a root requested Maven artifact.
     native.alias(
         name = "apt___com_google_auto_value__auto_value___processor_class_all",
         actual = ":apt___com_google_auto_value__auto_value__1_6_3___processor_class_all",
@@ -466,6 +494,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.code.findbugs:jsr305:1.3.9
+    # This is a dependency of 'com.google.guava:guava:25.0-jre'.
     native.alias(
         name = "apt___com_google_code_findbugs__jsr305",
         actual = ":apt___com_google_code_findbugs__jsr305__1_3_9",
@@ -473,6 +502,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.code.findbugs:jsr305:1.3.9
+    # This is a dependency of 'com.google.guava:guava:25.0-jre'.
     java_import(
         name = "apt___com_google_code_findbugs__jsr305__1_3_9",
         jars = ["@apt___com_google_code_findbugs__jsr305__1_3_9//file"],
@@ -484,6 +514,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.dagger:dagger-compiler:2.19
+    # This is a root requested Maven artifact.
     native.alias(
         name = "apt___com_google_dagger__dagger_compiler",
         actual = ":apt___com_google_dagger__dagger_compiler__2_19",
@@ -491,6 +522,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.dagger:dagger-compiler:2.19
+    # This is a root requested Maven artifact.
     java_import(
         name = "apt___com_google_dagger__dagger_compiler__2_19",
         jars = ["@apt___com_google_dagger__dagger_compiler__2_19//file"],
@@ -520,6 +552,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.dagger:dagger-compiler:2.19
+    # This is a root requested Maven artifact.
     java_plugin(
         name = "apt___com_google_dagger__dagger_compiler__2_19___generates_api___processor_class_0",
         processor_class = "dagger.internal.codegen.ComponentProcessor",
@@ -538,12 +571,14 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.dagger:dagger-compiler:2.19
+    # This is a root requested Maven artifact.
     java_library(
         name = "apt___com_google_dagger__dagger_compiler__2_19___generates_api___processor_class_all",
         exported_plugins = [":apt___com_google_dagger__dagger_compiler__2_19___generates_api___processor_class_0"],
     )
 
     # from com.google.dagger:dagger-compiler:2.19
+    # This is a root requested Maven artifact.
     java_plugin(
         name = "apt___com_google_dagger__dagger_compiler__2_19___processor_class_0",
         processor_class = "dagger.internal.codegen.ComponentProcessor",
@@ -562,12 +597,14 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.dagger:dagger-compiler:2.19
+    # This is a root requested Maven artifact.
     java_library(
         name = "apt___com_google_dagger__dagger_compiler__2_19___processor_class_all",
         exported_plugins = [":apt___com_google_dagger__dagger_compiler__2_19___processor_class_0"],
     )
 
     # from com.google.dagger:dagger-compiler:2.19
+    # This is a root requested Maven artifact.
     native.alias(
         name = "apt___com_google_dagger__dagger_compiler___generates_api___processor_class_0",
         actual = ":apt___com_google_dagger__dagger_compiler__2_19___generates_api___processor_class_0",
@@ -575,6 +612,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.dagger:dagger-compiler:2.19
+    # This is a root requested Maven artifact.
     native.alias(
         name = "apt___com_google_dagger__dagger_compiler___generates_api___processor_class_all",
         actual = ":apt___com_google_dagger__dagger_compiler__2_19___generates_api___processor_class_all",
@@ -582,6 +620,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.dagger:dagger-compiler:2.19
+    # This is a root requested Maven artifact.
     native.alias(
         name = "apt___com_google_dagger__dagger_compiler___processor_class_0",
         actual = ":apt___com_google_dagger__dagger_compiler__2_19___processor_class_0",
@@ -589,6 +628,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.dagger:dagger-compiler:2.19
+    # This is a root requested Maven artifact.
     native.alias(
         name = "apt___com_google_dagger__dagger_compiler___processor_class_all",
         actual = ":apt___com_google_dagger__dagger_compiler__2_19___processor_class_all",
@@ -596,6 +636,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.dagger:dagger-producers:2.19
+    # This is a dependency of 'com.google.dagger:dagger-spi:2.19'.
+    # This is a dependency of 'com.google.dagger:dagger-compiler:2.19'.
     native.alias(
         name = "apt___com_google_dagger__dagger_producers",
         actual = ":apt___com_google_dagger__dagger_producers__2_19",
@@ -603,6 +645,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.dagger:dagger-producers:2.19
+    # This is a dependency of 'com.google.dagger:dagger-spi:2.19'.
+    # This is a dependency of 'com.google.dagger:dagger-compiler:2.19'.
     java_import(
         name = "apt___com_google_dagger__dagger_producers__2_19",
         jars = ["@apt___com_google_dagger__dagger_producers__2_19//file"],
@@ -624,6 +668,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.dagger:dagger-spi:2.19
+    # This is a dependency of 'com.google.dagger:dagger-compiler:2.19'.
     native.alias(
         name = "apt___com_google_dagger__dagger_spi",
         actual = ":apt___com_google_dagger__dagger_spi__2_19",
@@ -631,6 +676,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.dagger:dagger-spi:2.19
+    # This is a dependency of 'com.google.dagger:dagger-compiler:2.19'.
     java_import(
         name = "apt___com_google_dagger__dagger_spi__2_19",
         jars = ["@apt___com_google_dagger__dagger_spi__2_19//file"],
@@ -652,6 +698,10 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.dagger:dagger:2.19
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'com.google.dagger:dagger-spi:2.19'.
+    # This is a dependency of 'com.google.dagger:dagger-producers:2.19'.
+    # This is a dependency of 'com.google.dagger:dagger-compiler:2.19'.
     native.alias(
         name = "apt___com_google_dagger__dagger",
         actual = ":apt___com_google_dagger__dagger__2_19",
@@ -659,6 +709,10 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.dagger:dagger:2.19
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'com.google.dagger:dagger-spi:2.19'.
+    # This is a dependency of 'com.google.dagger:dagger-producers:2.19'.
+    # This is a dependency of 'com.google.dagger:dagger-compiler:2.19'.
     java_import(
         name = "apt___com_google_dagger__dagger__2_19",
         jars = ["@apt___com_google_dagger__dagger__2_19//file"],
@@ -670,6 +724,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.errorprone:error_prone_annotations:2.1.3
+    # This is a dependency of 'com.google.guava:guava:25.0-jre'.
     native.alias(
         name = "apt___com_google_errorprone__error_prone_annotations",
         actual = ":apt___com_google_errorprone__error_prone_annotations__2_1_3",
@@ -677,6 +732,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.errorprone:error_prone_annotations:2.1.3
+    # This is a dependency of 'com.google.guava:guava:25.0-jre'.
     java_import(
         name = "apt___com_google_errorprone__error_prone_annotations__2_1_3",
         jars = ["@apt___com_google_errorprone__error_prone_annotations__2_1_3//file"],
@@ -688,6 +744,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.errorprone:javac-shaded:9-dev-r4023-3
+    # This is a dependency of 'com.google.googlejavaformat:google-java-format:1.5'.
     native.alias(
         name = "apt___com_google_errorprone__javac_shaded",
         actual = ":apt___com_google_errorprone__javac_shaded__9_dev_r4023_3",
@@ -695,6 +752,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.errorprone:javac-shaded:9-dev-r4023-3
+    # This is a dependency of 'com.google.googlejavaformat:google-java-format:1.5'.
     java_import(
         name = "apt___com_google_errorprone__javac_shaded__9_dev_r4023_3",
         jars = ["@apt___com_google_errorprone__javac_shaded__9_dev_r4023_3//file"],
@@ -706,6 +764,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.googlejavaformat:google-java-format:1.5
+    # This is a dependency of 'com.google.dagger:dagger-compiler:2.19'.
     native.alias(
         name = "apt___com_google_googlejavaformat__google_java_format",
         actual = ":apt___com_google_googlejavaformat__google_java_format__1_5",
@@ -713,6 +772,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.googlejavaformat:google-java-format:1.5
+    # This is a dependency of 'com.google.dagger:dagger-compiler:2.19'.
     java_import(
         name = "apt___com_google_googlejavaformat__google_java_format__1_5",
         jars = ["@apt___com_google_googlejavaformat__google_java_format__1_5//file"],
@@ -730,6 +790,10 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.guava:guava:25.0-jre
+    # This is a dependency of 'com.google.dagger:dagger-spi:2.19'.
+    # This is a dependency of 'com.google.dagger:dagger-producers:2.19'.
+    # This is a dependency of 'com.google.googlejavaformat:google-java-format:1.5'.
+    # This is a dependency of 'com.google.dagger:dagger-compiler:2.19'.
     native.alias(
         name = "apt___com_google_guava__guava",
         actual = ":apt___com_google_guava__guava__25_0_jre",
@@ -737,6 +801,10 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.guava:guava:25.0-jre
+    # This is a dependency of 'com.google.dagger:dagger-spi:2.19'.
+    # This is a dependency of 'com.google.dagger:dagger-producers:2.19'.
+    # This is a dependency of 'com.google.googlejavaformat:google-java-format:1.5'.
+    # This is a dependency of 'com.google.dagger:dagger-compiler:2.19'.
     java_import(
         name = "apt___com_google_guava__guava__25_0_jre",
         jars = ["@apt___com_google_guava__guava__25_0_jre//file"],
@@ -760,6 +828,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.j2objc:j2objc-annotations:1.1
+    # This is a dependency of 'com.google.guava:guava:25.0-jre'.
     native.alias(
         name = "apt___com_google_j2objc__j2objc_annotations",
         actual = ":apt___com_google_j2objc__j2objc_annotations__1_1",
@@ -767,6 +836,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.j2objc:j2objc-annotations:1.1
+    # This is a dependency of 'com.google.guava:guava:25.0-jre'.
     java_import(
         name = "apt___com_google_j2objc__j2objc_annotations__1_1",
         jars = ["@apt___com_google_j2objc__j2objc_annotations__1_1//file"],
@@ -778,6 +848,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.squareup:javapoet:1.11.1
+    # This is a dependency of 'com.google.dagger:dagger-compiler:2.19'.
     native.alias(
         name = "apt___com_squareup__javapoet",
         actual = ":apt___com_squareup__javapoet__1_11_1",
@@ -785,6 +856,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.squareup:javapoet:1.11.1
+    # This is a dependency of 'com.google.dagger:dagger-compiler:2.19'.
     java_import(
         name = "apt___com_squareup__javapoet__1_11_1",
         jars = ["@apt___com_squareup__javapoet__1_11_1//file"],
@@ -796,6 +868,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from javax.annotation:jsr250-api:1.0
+    # This is a dependency of 'com.google.dagger:dagger-compiler:2.19'.
     native.alias(
         name = "apt___javax_annotation__jsr250_api",
         actual = ":apt___javax_annotation__jsr250_api__1_0",
@@ -803,6 +876,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from javax.annotation:jsr250-api:1.0
+    # This is a dependency of 'com.google.dagger:dagger-compiler:2.19'.
     java_import(
         name = "apt___javax_annotation__jsr250_api__1_0",
         jars = ["@apt___javax_annotation__jsr250_api__1_0//file"],
@@ -814,6 +888,10 @@ def generate_transitive_dependency_targets(
     )
 
     # from javax.inject:javax.inject:1
+    # This is a dependency of 'com.google.dagger:dagger:2.19'.
+    # This is a dependency of 'com.google.dagger:dagger-spi:2.19'.
+    # This is a dependency of 'com.google.dagger:dagger-producers:2.19'.
+    # This is a dependency of 'com.google.dagger:dagger-compiler:2.19'.
     native.alias(
         name = "apt___javax_inject__javax_inject",
         actual = ":apt___javax_inject__javax_inject__1",
@@ -821,6 +899,10 @@ def generate_transitive_dependency_targets(
     )
 
     # from javax.inject:javax.inject:1
+    # This is a dependency of 'com.google.dagger:dagger:2.19'.
+    # This is a dependency of 'com.google.dagger:dagger-spi:2.19'.
+    # This is a dependency of 'com.google.dagger:dagger-producers:2.19'.
+    # This is a dependency of 'com.google.dagger:dagger-compiler:2.19'.
     java_import(
         name = "apt___javax_inject__javax_inject__1",
         jars = ["@apt___javax_inject__javax_inject__1//file"],
@@ -832,6 +914,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.checkerframework:checker-compat-qual:2.5.3
+    # This is a dependency of 'com.google.guava:guava:25.0-jre'.
+    # This is a dependency of 'com.google.dagger:dagger-producers:2.19'.
     native.alias(
         name = "apt___org_checkerframework__checker_compat_qual",
         actual = ":apt___org_checkerframework__checker_compat_qual__2_5_3",
@@ -839,6 +923,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.checkerframework:checker-compat-qual:2.5.3
+    # This is a dependency of 'com.google.guava:guava:25.0-jre'.
+    # This is a dependency of 'com.google.dagger:dagger-producers:2.19'.
     java_import(
         name = "apt___org_checkerframework__checker_compat_qual__2_5_3",
         jars = ["@apt___org_checkerframework__checker_compat_qual__2_5_3//file"],
@@ -853,6 +939,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.codehaus.mojo:animal-sniffer-annotations:1.14
+    # This is a dependency of 'com.google.guava:guava:25.0-jre'.
     native.alias(
         name = "apt___org_codehaus_mojo__animal_sniffer_annotations",
         actual = ":apt___org_codehaus_mojo__animal_sniffer_annotations__1_14",
@@ -860,6 +947,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.codehaus.mojo:animal-sniffer-annotations:1.14
+    # This is a dependency of 'com.google.guava:guava:25.0-jre'.
     java_import(
         name = "apt___org_codehaus_mojo__animal_sniffer_annotations__1_14",
         jars = ["@apt___org_codehaus_mojo__animal_sniffer_annotations__1_14//file"],

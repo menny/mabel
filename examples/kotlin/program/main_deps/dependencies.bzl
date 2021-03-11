@@ -154,6 +154,7 @@ def generate_transitive_dependency_targets(
     """
 
     # from com.github.salomonbrys.kotson:kotson:2.5.0
+    # This is a root requested Maven artifact.
     native.alias(
         name = "com_github_salomonbrys_kotson__kotson",
         actual = ":com_github_salomonbrys_kotson__kotson__2_5_0",
@@ -161,6 +162,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.github.salomonbrys.kotson:kotson:2.5.0
+    # This is a root requested Maven artifact.
     kt_jvm_library(
         name = "com_github_salomonbrys_kotson__kotson__2_5_0",
         tags = ["maven_coordinates=com.github.salomonbrys.kotson:kotson:2.5.0"],
@@ -173,6 +175,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.github.salomonbrys.kotson:kotson:2.5.0
+    # This is a root requested Maven artifact.
     kt_jvm_import(
         name = "com_github_salomonbrys_kotson__kotson__2_5_0_kt_jvm_import",
         jar = "@com_github_salomonbrys_kotson__kotson__2_5_0//file",
@@ -180,6 +183,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.code.gson:gson:2.8.0
+    # This is a dependency of 'com.github.salomonbrys.kotson:kotson:2.5.0'.
     native.alias(
         name = "com_google_code_gson__gson",
         actual = ":com_google_code_gson__gson__2_8_0",
@@ -187,6 +191,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.code.gson:gson:2.8.0
+    # This is a dependency of 'com.github.salomonbrys.kotson:kotson:2.5.0'.
     java_import(
         name = "com_google_code_gson__gson__2_8_0",
         jars = ["@com_google_code_gson__gson__2_8_0//file"],
@@ -220,6 +225,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72
+    # This is a dependency of 'org.jetbrains.kotlin:kotlin-stdlib:1.3.72'.
     native.alias(
         name = "org_jetbrains_kotlin__kotlin_stdlib_common",
         actual = ":org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72",
@@ -227,6 +233,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72
+    # This is a dependency of 'org.jetbrains.kotlin:kotlin-stdlib:1.3.72'.
     kt_jvm_library(
         name = "org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72",
         tags = ["maven_coordinates=org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72"],
@@ -235,6 +242,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72
+    # This is a dependency of 'org.jetbrains.kotlin:kotlin-stdlib:1.3.72'.
     kt_jvm_import(
         name = "org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72_kt_jvm_import",
         jar = "@org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72//file",
@@ -242,6 +250,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.jetbrains.kotlin:kotlin-stdlib:1.3.72
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'com.github.salomonbrys.kotson:kotson:2.5.0'.
     native.alias(
         name = "org_jetbrains_kotlin__kotlin_stdlib",
         actual = ":org_jetbrains_kotlin__kotlin_stdlib__1_3_72",
@@ -249,6 +259,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.jetbrains.kotlin:kotlin-stdlib:1.3.72
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'com.github.salomonbrys.kotson:kotson:2.5.0'.
     kt_jvm_library(
         name = "org_jetbrains_kotlin__kotlin_stdlib__1_3_72",
         tags = ["maven_coordinates=org.jetbrains.kotlin:kotlin-stdlib:1.3.72"],
@@ -261,6 +273,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.jetbrains.kotlin:kotlin-stdlib:1.3.72
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'com.github.salomonbrys.kotson:kotson:2.5.0'.
     kt_jvm_import(
         name = "org_jetbrains_kotlin__kotlin_stdlib__1_3_72_kt_jvm_import",
         jar = "@org_jetbrains_kotlin__kotlin_stdlib__1_3_72//file",
@@ -268,6 +282,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.jetbrains:annotations:13.0
+    # This is a dependency of 'org.jetbrains.kotlin:kotlin-stdlib:1.3.72'.
     native.alias(
         name = "org_jetbrains__annotations",
         actual = ":org_jetbrains__annotations__13_0",
@@ -275,6 +290,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.jetbrains:annotations:13.0
+    # This is a dependency of 'org.jetbrains.kotlin:kotlin-stdlib:1.3.72'.
     java_import(
         name = "org_jetbrains__annotations__13_0",
         jars = ["@org_jetbrains__annotations__13_0//file"],
