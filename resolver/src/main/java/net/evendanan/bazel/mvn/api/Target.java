@@ -16,6 +16,7 @@ public class Target {
     private static final String EXTRA_INDENT = "    ";
 
     private final String mavenCoordinates;
+    private final List<String> comments;
     private final String ruleName;
     private final String targetName;
     private final String nameSpacedTargetName;
@@ -25,11 +26,13 @@ public class Target {
             final String maven,
             final String rule,
             final String targetName,
+
             final String nameSpacedTargetName) {
         this.mavenCoordinates = maven;
         this.ruleName = rule;
         this.targetName = targetName;
         this.nameSpacedTargetName = nameSpacedTargetName;
+        comments = new ArrayList<>();
     }
 
     public Target(final String maven, final String rule, final String targetName) {
@@ -38,6 +41,14 @@ public class Target {
 
     public String getMavenCoordinates() {
         return mavenCoordinates;
+    }
+
+    public Collection<String> getComments() {
+        return Collections.unmodifiableCollection(comments);
+    }
+
+    public void addComment(String comment) {
+        comments.add(comment);
     }
 
     public String getRuleName() {
