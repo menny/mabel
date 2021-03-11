@@ -21,10 +21,6 @@ import java.util.stream.Collectors;
 
 public class RuleWriters {
 
-    private static StringBuilder readTemplate(String templateResourceName) throws IOException {
-        return readTemplate(templateResourceName, Collections.emptyMap());
-    }
-
     private static StringBuilder readTemplate(String templateResourceName, Map<String, String> replacements) throws IOException {
         final StringBuilder stringBuilder = new StringBuilder();
         Resources.readLines(Resources.getResource(templateResourceName), Charsets.UTF_8)
@@ -119,11 +115,12 @@ public class RuleWriters {
                 } else {
                     for (Iterator<Target> iterator = targets.iterator(); iterator.hasNext(); ) {
                         Target target = iterator.next();
-                        fileWriter
-                                .append(INDENT)
-                                .append("# from ")
-                                .append(target.getMavenCoordinates())
-                                .append(NEW_LINE);
+                        fileWriter.append(INDENT).append("# from ").append(target.getMavenCoordinates()).append(NEW_LINE);
+                        //comments
+                        for (String comment : target.getComments()) {
+                            fileWriter.append(INDENT).append("# ").append(comment).append(NEW_LINE);
+                        }
+
                         fileWriter.append(target.outputString(INDENT)).append(NEW_LINE);
                         if (iterator.hasNext()) fileWriter.append(NEW_LINE);
                     }
