@@ -469,3 +469,17 @@ java_test(
         "//resolver/main_deps/org/mockito/mockito-core",
     ],
 )
+
+java_test(
+    name = "general_commenter_test",
+    size = "small",
+    srcs = ["src/main/javatest/net/evendanan/bazel/mvn/merger/TargetCommenterTest.java"],
+    test_class = "net.evendanan.bazel.mvn.merger.TargetCommenterTest",
+    deps = [
+        ":api_lib",
+        ":merger",
+        "//resolver/main_deps/com/google/guava/guava",
+        "//resolver/main_deps/junit/junit",
+        "//resolver/main_deps/org/mockito/mockito-core",
+    ],
+)

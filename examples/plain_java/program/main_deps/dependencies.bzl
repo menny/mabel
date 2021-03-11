@@ -114,6 +114,7 @@ def generate_transitive_dependency_targets(
     """
 
     # from com.google.guava:guava:20.0
+    # This is a root requested Maven artifact.
     native.alias(
         name = "com_google_guava__guava",
         actual = ":com_google_guava__guava__20_0",
@@ -121,6 +122,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.guava:guava:20.0
+    # This is a root requested Maven artifact.
     java_import(
         name = "com_google_guava__guava__20_0",
         jars = ["@com_google_guava__guava__20_0//file"],

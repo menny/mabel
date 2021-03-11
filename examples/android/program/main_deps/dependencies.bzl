@@ -337,6 +337,7 @@ def generate_transitive_dependency_targets(
     """
 
     # from androidx.activity:activity:1.0.0-alpha02
+    # This is a dependency of 'androidx.fragment:fragment:1.1.0-alpha02'.
     native.alias(
         name = "androidx_activity__activity",
         actual = ":androidx_activity__activity__1_0_0_alpha02",
@@ -344,6 +345,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.activity:activity:1.0.0-alpha02
+    # This is a dependency of 'androidx.fragment:fragment:1.1.0-alpha02'.
     aar_import(
         name = "androidx_activity__activity__1_0_0_alpha02",
         aar = "@androidx_activity__activity__1_0_0_alpha02//file",
@@ -363,6 +365,36 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.annotation:annotation:1.0.0
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'androidx.fragment:fragment:1.1.0-alpha02'.
+    # This is a dependency of 'androidx.slidingpanelayout:slidingpanelayout:1.0.0'.
+    # This is a dependency of 'com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406'.
+    # This is a dependency of 'androidx.appcompat:appcompat:1.0.2'.
+    # This is a dependency of 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'.
+    # This is a dependency of 'androidx.customview:customview:1.0.0'.
+    # This is a dependency of 'androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01'.
+    # This is a dependency of 'androidx.interpolator:interpolator:1.0.0'.
+    # This is a dependency of 'androidx.loader:loader:1.0.0'.
+    # This is a dependency of 'androidx.drawerlayout:drawerlayout:1.0.0'.
+    # This is a dependency of 'androidx.viewpager:viewpager:1.0.0'.
+    # This is a dependency of 'androidx.activity:activity:1.0.0-alpha02'.
+    # This is a dependency of 'androidx.collection:collection:1.0.0'.
+    # This is a dependency of 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'.
+    # This is a dependency of 'androidx.lifecycle:lifecycle-common:2.0.0'.
+    # This is a dependency of 'androidx.arch.core:core-common:2.0.0'.
+    # This is a dependency of 'com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406'.
+    # This is a dependency of 'androidx.legacy:legacy-support-core-ui:1.0.0'.
+    # This is a dependency of 'androidx.lifecycle:lifecycle-viewmodel:2.0.0'.
+    # This is a dependency of 'androidx.arch.core:core-runtime:2.0.0'.
+    # This is a dependency of 'androidx.legacy:legacy-support-core-utils:1.0.0'.
+    # This is a dependency of 'androidx.documentfile:documentfile:1.0.0'.
+    # This is a dependency of 'androidx.cursoradapter:cursoradapter:1.0.0'.
+    # This is a dependency of 'androidx.core:core:1.1.0-alpha01'.
+    # This is a dependency of 'androidx.asynclayoutinflater:asynclayoutinflater:1.0.0'.
+    # This is a dependency of 'androidx.vectordrawable:vectordrawable:1.0.1'.
+    # This is a dependency of 'androidx.coordinatorlayout:coordinatorlayout:1.0.0'.
+    # This is a dependency of 'androidx.lifecycle:lifecycle-runtime:2.0.0'.
+    # This is a dependency of 'androidx.print:print:1.0.0'.
     native.alias(
         name = "androidx_annotation__annotation",
         actual = ":androidx_annotation__annotation__1_0_0",
@@ -370,6 +402,36 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.annotation:annotation:1.0.0
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'androidx.fragment:fragment:1.1.0-alpha02'.
+    # This is a dependency of 'androidx.slidingpanelayout:slidingpanelayout:1.0.0'.
+    # This is a dependency of 'com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406'.
+    # This is a dependency of 'androidx.appcompat:appcompat:1.0.2'.
+    # This is a dependency of 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'.
+    # This is a dependency of 'androidx.customview:customview:1.0.0'.
+    # This is a dependency of 'androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01'.
+    # This is a dependency of 'androidx.interpolator:interpolator:1.0.0'.
+    # This is a dependency of 'androidx.loader:loader:1.0.0'.
+    # This is a dependency of 'androidx.drawerlayout:drawerlayout:1.0.0'.
+    # This is a dependency of 'androidx.viewpager:viewpager:1.0.0'.
+    # This is a dependency of 'androidx.activity:activity:1.0.0-alpha02'.
+    # This is a dependency of 'androidx.collection:collection:1.0.0'.
+    # This is a dependency of 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'.
+    # This is a dependency of 'androidx.lifecycle:lifecycle-common:2.0.0'.
+    # This is a dependency of 'androidx.arch.core:core-common:2.0.0'.
+    # This is a dependency of 'com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406'.
+    # This is a dependency of 'androidx.legacy:legacy-support-core-ui:1.0.0'.
+    # This is a dependency of 'androidx.lifecycle:lifecycle-viewmodel:2.0.0'.
+    # This is a dependency of 'androidx.arch.core:core-runtime:2.0.0'.
+    # This is a dependency of 'androidx.legacy:legacy-support-core-utils:1.0.0'.
+    # This is a dependency of 'androidx.documentfile:documentfile:1.0.0'.
+    # This is a dependency of 'androidx.cursoradapter:cursoradapter:1.0.0'.
+    # This is a dependency of 'androidx.core:core:1.1.0-alpha01'.
+    # This is a dependency of 'androidx.asynclayoutinflater:asynclayoutinflater:1.0.0'.
+    # This is a dependency of 'androidx.vectordrawable:vectordrawable:1.0.1'.
+    # This is a dependency of 'androidx.coordinatorlayout:coordinatorlayout:1.0.0'.
+    # This is a dependency of 'androidx.lifecycle:lifecycle-runtime:2.0.0'.
+    # This is a dependency of 'androidx.print:print:1.0.0'.
     java_import(
         name = "androidx_annotation__annotation__1_0_0",
         jars = ["@androidx_annotation__annotation__1_0_0//file"],
@@ -381,6 +443,9 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.appcompat:appcompat:1.0.2
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406'.
+    # This is a dependency of 'com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406'.
     native.alias(
         name = "androidx_appcompat__appcompat",
         actual = ":androidx_appcompat__appcompat__1_0_2",
@@ -388,6 +453,9 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.appcompat:appcompat:1.0.2
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406'.
+    # This is a dependency of 'com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406'.
     aar_import(
         name = "androidx_appcompat__appcompat__1_0_2",
         aar = "@androidx_appcompat__appcompat__1_0_2//file",
@@ -415,6 +483,10 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.arch.core:core-common:2.0.0
+    # This is a dependency of 'androidx.lifecycle:lifecycle-livedata-core:2.0.0'.
+    # This is a dependency of 'androidx.arch.core:core-runtime:2.0.0'.
+    # This is a dependency of 'androidx.lifecycle:lifecycle-livedata:2.0.0'.
+    # This is a dependency of 'androidx.lifecycle:lifecycle-runtime:2.0.0'.
     native.alias(
         name = "androidx_arch_core__core_common",
         actual = ":androidx_arch_core__core_common__2_0_0",
@@ -422,6 +494,10 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.arch.core:core-common:2.0.0
+    # This is a dependency of 'androidx.lifecycle:lifecycle-livedata-core:2.0.0'.
+    # This is a dependency of 'androidx.arch.core:core-runtime:2.0.0'.
+    # This is a dependency of 'androidx.lifecycle:lifecycle-livedata:2.0.0'.
+    # This is a dependency of 'androidx.lifecycle:lifecycle-runtime:2.0.0'.
     java_import(
         name = "androidx_arch_core__core_common__2_0_0",
         jars = ["@androidx_arch_core__core_common__2_0_0//file"],
@@ -433,6 +509,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.arch.core:core-runtime:2.0.0
+    # This is a dependency of 'androidx.lifecycle:lifecycle-livedata-core:2.0.0'.
+    # This is a dependency of 'androidx.lifecycle:lifecycle-livedata:2.0.0'.
     native.alias(
         name = "androidx_arch_core__core_runtime",
         actual = ":androidx_arch_core__core_runtime__2_0_0",
@@ -440,6 +518,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.arch.core:core-runtime:2.0.0
+    # This is a dependency of 'androidx.lifecycle:lifecycle-livedata-core:2.0.0'.
+    # This is a dependency of 'androidx.lifecycle:lifecycle-livedata:2.0.0'.
     aar_import(
         name = "androidx_arch_core__core_runtime__2_0_0",
         aar = "@androidx_arch_core__core_runtime__2_0_0//file",
@@ -455,6 +535,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.asynclayoutinflater:asynclayoutinflater:1.0.0
+    # This is a dependency of 'androidx.legacy:legacy-support-core-ui:1.0.0'.
     native.alias(
         name = "androidx_asynclayoutinflater__asynclayoutinflater",
         actual = ":androidx_asynclayoutinflater__asynclayoutinflater__1_0_0",
@@ -462,6 +543,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.asynclayoutinflater:asynclayoutinflater:1.0.0
+    # This is a dependency of 'androidx.legacy:legacy-support-core-ui:1.0.0'.
     aar_import(
         name = "androidx_asynclayoutinflater__asynclayoutinflater__1_0_0",
         aar = "@androidx_asynclayoutinflater__asynclayoutinflater__1_0_0//file",
@@ -477,6 +559,9 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.collection:collection:1.0.0
+    # This is a dependency of 'androidx.appcompat:appcompat:1.0.2'.
+    # This is a dependency of 'androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01'.
+    # This is a dependency of 'androidx.core:core:1.1.0-alpha01'.
     native.alias(
         name = "androidx_collection__collection",
         actual = ":androidx_collection__collection__1_0_0",
@@ -484,6 +569,9 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.collection:collection:1.0.0
+    # This is a dependency of 'androidx.appcompat:appcompat:1.0.2'.
+    # This is a dependency of 'androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01'.
+    # This is a dependency of 'androidx.core:core:1.1.0-alpha01'.
     java_import(
         name = "androidx_collection__collection__1_0_0",
         jars = ["@androidx_collection__collection__1_0_0//file"],
@@ -495,6 +583,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.coordinatorlayout:coordinatorlayout:1.0.0
+    # This is a dependency of 'androidx.legacy:legacy-support-core-ui:1.0.0'.
     native.alias(
         name = "androidx_coordinatorlayout__coordinatorlayout",
         actual = ":androidx_coordinatorlayout__coordinatorlayout__1_0_0",
@@ -502,6 +591,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.coordinatorlayout:coordinatorlayout:1.0.0
+    # This is a dependency of 'androidx.legacy:legacy-support-core-ui:1.0.0'.
     aar_import(
         name = "androidx_coordinatorlayout__coordinatorlayout__1_0_0",
         aar = "@androidx_coordinatorlayout__coordinatorlayout__1_0_0//file",
@@ -519,6 +609,20 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.core:core:1.1.0-alpha01
+    # This is a dependency of 'androidx.fragment:fragment:1.1.0-alpha02'.
+    # This is a dependency of 'androidx.slidingpanelayout:slidingpanelayout:1.0.0'.
+    # This is a dependency of 'androidx.appcompat:appcompat:1.0.2'.
+    # This is a dependency of 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'.
+    # This is a dependency of 'androidx.legacy:legacy-support-core-ui:1.0.0'.
+    # This is a dependency of 'androidx.customview:customview:1.0.0'.
+    # This is a dependency of 'androidx.loader:loader:1.0.0'.
+    # This is a dependency of 'androidx.drawerlayout:drawerlayout:1.0.0'.
+    # This is a dependency of 'androidx.viewpager:viewpager:1.0.0'.
+    # This is a dependency of 'androidx.activity:activity:1.0.0-alpha02'.
+    # This is a dependency of 'androidx.legacy:legacy-support-core-utils:1.0.0'.
+    # This is a dependency of 'androidx.asynclayoutinflater:asynclayoutinflater:1.0.0'.
+    # This is a dependency of 'androidx.vectordrawable:vectordrawable:1.0.1'.
+    # This is a dependency of 'androidx.coordinatorlayout:coordinatorlayout:1.0.0'.
     native.alias(
         name = "androidx_core__core",
         actual = ":androidx_core__core__1_1_0_alpha01",
@@ -526,6 +630,20 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.core:core:1.1.0-alpha01
+    # This is a dependency of 'androidx.fragment:fragment:1.1.0-alpha02'.
+    # This is a dependency of 'androidx.slidingpanelayout:slidingpanelayout:1.0.0'.
+    # This is a dependency of 'androidx.appcompat:appcompat:1.0.2'.
+    # This is a dependency of 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'.
+    # This is a dependency of 'androidx.legacy:legacy-support-core-ui:1.0.0'.
+    # This is a dependency of 'androidx.customview:customview:1.0.0'.
+    # This is a dependency of 'androidx.loader:loader:1.0.0'.
+    # This is a dependency of 'androidx.drawerlayout:drawerlayout:1.0.0'.
+    # This is a dependency of 'androidx.viewpager:viewpager:1.0.0'.
+    # This is a dependency of 'androidx.activity:activity:1.0.0-alpha02'.
+    # This is a dependency of 'androidx.legacy:legacy-support-core-utils:1.0.0'.
+    # This is a dependency of 'androidx.asynclayoutinflater:asynclayoutinflater:1.0.0'.
+    # This is a dependency of 'androidx.vectordrawable:vectordrawable:1.0.1'.
+    # This is a dependency of 'androidx.coordinatorlayout:coordinatorlayout:1.0.0'.
     aar_import(
         name = "androidx_core__core__1_1_0_alpha01",
         aar = "@androidx_core__core__1_1_0_alpha01//file",
@@ -545,6 +663,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.cursoradapter:cursoradapter:1.0.0
+    # This is a dependency of 'androidx.appcompat:appcompat:1.0.2'.
+    # This is a dependency of 'androidx.legacy:legacy-support-core-ui:1.0.0'.
     native.alias(
         name = "androidx_cursoradapter__cursoradapter",
         actual = ":androidx_cursoradapter__cursoradapter__1_0_0",
@@ -552,6 +672,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.cursoradapter:cursoradapter:1.0.0
+    # This is a dependency of 'androidx.appcompat:appcompat:1.0.2'.
+    # This is a dependency of 'androidx.legacy:legacy-support-core-ui:1.0.0'.
     aar_import(
         name = "androidx_cursoradapter__cursoradapter__1_0_0",
         aar = "@androidx_cursoradapter__cursoradapter__1_0_0//file",
@@ -561,6 +683,11 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.customview:customview:1.0.0
+    # This is a dependency of 'androidx.drawerlayout:drawerlayout:1.0.0'.
+    # This is a dependency of 'androidx.viewpager:viewpager:1.0.0'.
+    # This is a dependency of 'androidx.slidingpanelayout:slidingpanelayout:1.0.0'.
+    # This is a dependency of 'androidx.legacy:legacy-support-core-ui:1.0.0'.
+    # This is a dependency of 'androidx.coordinatorlayout:coordinatorlayout:1.0.0'.
     native.alias(
         name = "androidx_customview__customview",
         actual = ":androidx_customview__customview__1_0_0",
@@ -568,6 +695,11 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.customview:customview:1.0.0
+    # This is a dependency of 'androidx.drawerlayout:drawerlayout:1.0.0'.
+    # This is a dependency of 'androidx.viewpager:viewpager:1.0.0'.
+    # This is a dependency of 'androidx.slidingpanelayout:slidingpanelayout:1.0.0'.
+    # This is a dependency of 'androidx.legacy:legacy-support-core-ui:1.0.0'.
+    # This is a dependency of 'androidx.coordinatorlayout:coordinatorlayout:1.0.0'.
     aar_import(
         name = "androidx_customview__customview__1_0_0",
         aar = "@androidx_customview__customview__1_0_0//file",
@@ -583,6 +715,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.documentfile:documentfile:1.0.0
+    # This is a dependency of 'androidx.legacy:legacy-support-core-utils:1.0.0'.
     native.alias(
         name = "androidx_documentfile__documentfile",
         actual = ":androidx_documentfile__documentfile__1_0_0",
@@ -590,6 +723,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.documentfile:documentfile:1.0.0
+    # This is a dependency of 'androidx.legacy:legacy-support-core-utils:1.0.0'.
     aar_import(
         name = "androidx_documentfile__documentfile__1_0_0",
         aar = "@androidx_documentfile__documentfile__1_0_0//file",
@@ -599,6 +733,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.drawerlayout:drawerlayout:1.0.0
+    # This is a dependency of 'androidx.legacy:legacy-support-core-ui:1.0.0'.
     native.alias(
         name = "androidx_drawerlayout__drawerlayout",
         actual = ":androidx_drawerlayout__drawerlayout__1_0_0",
@@ -606,6 +741,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.drawerlayout:drawerlayout:1.0.0
+    # This is a dependency of 'androidx.legacy:legacy-support-core-ui:1.0.0'.
     aar_import(
         name = "androidx_drawerlayout__drawerlayout__1_0_0",
         aar = "@androidx_drawerlayout__drawerlayout__1_0_0//file",
@@ -623,6 +759,10 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.fragment:fragment:1.1.0-alpha02
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406'.
+    # This is a dependency of 'androidx.appcompat:appcompat:1.0.2'.
+    # This is a dependency of 'com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406'.
     native.alias(
         name = "androidx_fragment__fragment",
         actual = ":androidx_fragment__fragment__1_1_0_alpha02",
@@ -630,6 +770,10 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.fragment:fragment:1.1.0-alpha02
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406'.
+    # This is a dependency of 'androidx.appcompat:appcompat:1.0.2'.
+    # This is a dependency of 'com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406'.
     aar_import(
         name = "androidx_fragment__fragment__1_1_0_alpha02",
         aar = "@androidx_fragment__fragment__1_1_0_alpha02//file",
@@ -653,6 +797,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.interpolator:interpolator:1.0.0
+    # This is a dependency of 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'.
+    # This is a dependency of 'androidx.legacy:legacy-support-core-ui:1.0.0'.
     native.alias(
         name = "androidx_interpolator__interpolator",
         actual = ":androidx_interpolator__interpolator__1_0_0",
@@ -660,6 +806,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.interpolator:interpolator:1.0.0
+    # This is a dependency of 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'.
+    # This is a dependency of 'androidx.legacy:legacy-support-core-ui:1.0.0'.
     aar_import(
         name = "androidx_interpolator__interpolator__1_0_0",
         aar = "@androidx_interpolator__interpolator__1_0_0//file",
@@ -669,6 +817,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.legacy:legacy-support-core-ui:1.0.0
+    # This is a dependency of 'androidx.vectordrawable:vectordrawable-animated:1.0.0'.
     native.alias(
         name = "androidx_legacy__legacy_support_core_ui",
         actual = ":androidx_legacy__legacy_support_core_ui__1_0_0",
@@ -676,6 +825,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.legacy:legacy-support-core-ui:1.0.0
+    # This is a dependency of 'androidx.vectordrawable:vectordrawable-animated:1.0.0'.
     aar_import(
         name = "androidx_legacy__legacy_support_core_ui__1_0_0",
         aar = "@androidx_legacy__legacy_support_core_ui__1_0_0//file",
@@ -711,6 +861,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.legacy:legacy-support-core-utils:1.0.0
+    # This is a dependency of 'androidx.appcompat:appcompat:1.0.2'.
+    # This is a dependency of 'androidx.legacy:legacy-support-core-ui:1.0.0'.
     native.alias(
         name = "androidx_legacy__legacy_support_core_utils",
         actual = ":androidx_legacy__legacy_support_core_utils__1_0_0",
@@ -718,6 +870,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.legacy:legacy-support-core-utils:1.0.0
+    # This is a dependency of 'androidx.appcompat:appcompat:1.0.2'.
+    # This is a dependency of 'androidx.legacy:legacy-support-core-ui:1.0.0'.
     aar_import(
         name = "androidx_legacy__legacy_support_core_utils__1_0_0",
         aar = "@androidx_legacy__legacy_support_core_utils__1_0_0//file",
@@ -741,6 +895,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.lifecycle:lifecycle-common:2.0.0
+    # This is a dependency of 'androidx.lifecycle:lifecycle-livedata-core:2.0.0'.
+    # This is a dependency of 'androidx.lifecycle:lifecycle-runtime:2.0.0'.
     native.alias(
         name = "androidx_lifecycle__lifecycle_common",
         actual = ":androidx_lifecycle__lifecycle_common__2_0_0",
@@ -748,6 +904,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.lifecycle:lifecycle-common:2.0.0
+    # This is a dependency of 'androidx.lifecycle:lifecycle-livedata-core:2.0.0'.
+    # This is a dependency of 'androidx.lifecycle:lifecycle-runtime:2.0.0'.
     java_import(
         name = "androidx_lifecycle__lifecycle_common__2_0_0",
         jars = ["@androidx_lifecycle__lifecycle_common__2_0_0//file"],
@@ -759,6 +917,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.lifecycle:lifecycle-livedata-core:2.0.0
+    # This is a dependency of 'androidx.lifecycle:lifecycle-livedata:2.0.0'.
     native.alias(
         name = "androidx_lifecycle__lifecycle_livedata_core",
         actual = ":androidx_lifecycle__lifecycle_livedata_core__2_0_0",
@@ -766,6 +925,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.lifecycle:lifecycle-livedata-core:2.0.0
+    # This is a dependency of 'androidx.lifecycle:lifecycle-livedata:2.0.0'.
     aar_import(
         name = "androidx_lifecycle__lifecycle_livedata_core__2_0_0",
         aar = "@androidx_lifecycle__lifecycle_livedata_core__2_0_0//file",
@@ -783,6 +943,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.lifecycle:lifecycle-livedata:2.0.0
+    # This is a dependency of 'androidx.loader:loader:1.0.0'.
     native.alias(
         name = "androidx_lifecycle__lifecycle_livedata",
         actual = ":androidx_lifecycle__lifecycle_livedata__2_0_0",
@@ -790,6 +951,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.lifecycle:lifecycle-livedata:2.0.0
+    # This is a dependency of 'androidx.loader:loader:1.0.0'.
     aar_import(
         name = "androidx_lifecycle__lifecycle_livedata__2_0_0",
         aar = "@androidx_lifecycle__lifecycle_livedata__2_0_0//file",
@@ -807,6 +969,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.lifecycle:lifecycle-runtime:2.0.0
+    # This is a dependency of 'androidx.activity:activity:1.0.0-alpha02'.
+    # This is a dependency of 'androidx.core:core:1.1.0-alpha01'.
     native.alias(
         name = "androidx_lifecycle__lifecycle_runtime",
         actual = ":androidx_lifecycle__lifecycle_runtime__2_0_0",
@@ -814,6 +978,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.lifecycle:lifecycle-runtime:2.0.0
+    # This is a dependency of 'androidx.activity:activity:1.0.0-alpha02'.
+    # This is a dependency of 'androidx.core:core:1.1.0-alpha01'.
     aar_import(
         name = "androidx_lifecycle__lifecycle_runtime__2_0_0",
         aar = "@androidx_lifecycle__lifecycle_runtime__2_0_0//file",
@@ -831,6 +997,9 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.lifecycle:lifecycle-viewmodel:2.0.0
+    # This is a dependency of 'androidx.loader:loader:1.0.0'.
+    # This is a dependency of 'androidx.fragment:fragment:1.1.0-alpha02'.
+    # This is a dependency of 'androidx.activity:activity:1.0.0-alpha02'.
     native.alias(
         name = "androidx_lifecycle__lifecycle_viewmodel",
         actual = ":androidx_lifecycle__lifecycle_viewmodel__2_0_0",
@@ -838,6 +1007,9 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.lifecycle:lifecycle-viewmodel:2.0.0
+    # This is a dependency of 'androidx.loader:loader:1.0.0'.
+    # This is a dependency of 'androidx.fragment:fragment:1.1.0-alpha02'.
+    # This is a dependency of 'androidx.activity:activity:1.0.0-alpha02'.
     aar_import(
         name = "androidx_lifecycle__lifecycle_viewmodel__2_0_0",
         aar = "@androidx_lifecycle__lifecycle_viewmodel__2_0_0//file",
@@ -847,6 +1019,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.loader:loader:1.0.0
+    # This is a dependency of 'androidx.fragment:fragment:1.1.0-alpha02'.
+    # This is a dependency of 'androidx.legacy:legacy-support-core-utils:1.0.0'.
     native.alias(
         name = "androidx_loader__loader",
         actual = ":androidx_loader__loader__1_0_0",
@@ -854,6 +1028,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.loader:loader:1.0.0
+    # This is a dependency of 'androidx.fragment:fragment:1.1.0-alpha02'.
+    # This is a dependency of 'androidx.legacy:legacy-support-core-utils:1.0.0'.
     aar_import(
         name = "androidx_loader__loader__1_0_0",
         aar = "@androidx_loader__loader__1_0_0//file",
@@ -873,6 +1049,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.localbroadcastmanager:localbroadcastmanager:1.0.0
+    # This is a dependency of 'androidx.legacy:legacy-support-core-utils:1.0.0'.
     native.alias(
         name = "androidx_localbroadcastmanager__localbroadcastmanager",
         actual = ":androidx_localbroadcastmanager__localbroadcastmanager__1_0_0",
@@ -880,6 +1057,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.localbroadcastmanager:localbroadcastmanager:1.0.0
+    # This is a dependency of 'androidx.legacy:legacy-support-core-utils:1.0.0'.
     aar_import(
         name = "androidx_localbroadcastmanager__localbroadcastmanager__1_0_0",
         aar = "@androidx_localbroadcastmanager__localbroadcastmanager__1_0_0//file",
@@ -889,6 +1067,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.print:print:1.0.0
+    # This is a dependency of 'androidx.legacy:legacy-support-core-utils:1.0.0'.
     native.alias(
         name = "androidx_print__print",
         actual = ":androidx_print__print__1_0_0",
@@ -896,6 +1075,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.print:print:1.0.0
+    # This is a dependency of 'androidx.legacy:legacy-support-core-utils:1.0.0'.
     aar_import(
         name = "androidx_print__print__1_0_0",
         aar = "@androidx_print__print__1_0_0//file",
@@ -905,6 +1085,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.slidingpanelayout:slidingpanelayout:1.0.0
+    # This is a dependency of 'androidx.legacy:legacy-support-core-ui:1.0.0'.
     native.alias(
         name = "androidx_slidingpanelayout__slidingpanelayout",
         actual = ":androidx_slidingpanelayout__slidingpanelayout__1_0_0",
@@ -912,6 +1093,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.slidingpanelayout:slidingpanelayout:1.0.0
+    # This is a dependency of 'androidx.legacy:legacy-support-core-ui:1.0.0'.
     aar_import(
         name = "androidx_slidingpanelayout__slidingpanelayout__1_0_0",
         aar = "@androidx_slidingpanelayout__slidingpanelayout__1_0_0//file",
@@ -929,6 +1111,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.swiperefreshlayout:swiperefreshlayout:1.0.0
+    # This is a dependency of 'androidx.legacy:legacy-support-core-ui:1.0.0'.
     native.alias(
         name = "androidx_swiperefreshlayout__swiperefreshlayout",
         actual = ":androidx_swiperefreshlayout__swiperefreshlayout__1_0_0",
@@ -936,6 +1119,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.swiperefreshlayout:swiperefreshlayout:1.0.0
+    # This is a dependency of 'androidx.legacy:legacy-support-core-ui:1.0.0'.
     aar_import(
         name = "androidx_swiperefreshlayout__swiperefreshlayout__1_0_0",
         aar = "@androidx_swiperefreshlayout__swiperefreshlayout__1_0_0//file",
@@ -953,6 +1137,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.vectordrawable:vectordrawable-animated:1.0.0
+    # This is a dependency of 'androidx.appcompat:appcompat:1.0.2'.
     native.alias(
         name = "androidx_vectordrawable__vectordrawable_animated",
         actual = ":androidx_vectordrawable__vectordrawable_animated__1_0_0",
@@ -960,6 +1145,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.vectordrawable:vectordrawable-animated:1.0.0
+    # This is a dependency of 'androidx.appcompat:appcompat:1.0.2'.
     aar_import(
         name = "androidx_vectordrawable__vectordrawable_animated__1_0_0",
         aar = "@androidx_vectordrawable__vectordrawable_animated__1_0_0//file",
@@ -975,6 +1161,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.vectordrawable:vectordrawable:1.0.1
+    # This is a dependency of 'androidx.appcompat:appcompat:1.0.2'.
+    # This is a dependency of 'androidx.vectordrawable:vectordrawable-animated:1.0.0'.
     native.alias(
         name = "androidx_vectordrawable__vectordrawable",
         actual = ":androidx_vectordrawable__vectordrawable__1_0_1",
@@ -982,6 +1170,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.vectordrawable:vectordrawable:1.0.1
+    # This is a dependency of 'androidx.appcompat:appcompat:1.0.2'.
+    # This is a dependency of 'androidx.vectordrawable:vectordrawable-animated:1.0.0'.
     aar_import(
         name = "androidx_vectordrawable__vectordrawable__1_0_1",
         aar = "@androidx_vectordrawable__vectordrawable__1_0_1//file",
@@ -997,6 +1187,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01
+    # This is a dependency of 'androidx.core:core:1.1.0-alpha01'.
     native.alias(
         name = "androidx_versionedparcelable__versionedparcelable",
         actual = ":androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01",
@@ -1004,6 +1195,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01
+    # This is a dependency of 'androidx.core:core:1.1.0-alpha01'.
     aar_import(
         name = "androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01",
         aar = "@androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01//file",
@@ -1019,6 +1211,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.viewpager:viewpager:1.0.0
+    # This is a dependency of 'androidx.fragment:fragment:1.1.0-alpha02'.
+    # This is a dependency of 'androidx.legacy:legacy-support-core-ui:1.0.0'.
     native.alias(
         name = "androidx_viewpager__viewpager",
         actual = ":androidx_viewpager__viewpager__1_0_0",
@@ -1026,6 +1220,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from androidx.viewpager:viewpager:1.0.0
+    # This is a dependency of 'androidx.fragment:fragment:1.1.0-alpha02'.
+    # This is a dependency of 'androidx.legacy:legacy-support-core-ui:1.0.0'.
     aar_import(
         name = "androidx_viewpager__viewpager__1_0_0",
         aar = "@androidx_viewpager__viewpager__1_0_0//file",
@@ -1043,6 +1239,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406
+    # This is a dependency of 'com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406'.
     native.alias(
         name = "com_github_menny_Chauffeur__lib",
         actual = ":com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406",
@@ -1050,6 +1247,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406
+    # This is a dependency of 'com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406'.
     aar_import(
         name = "com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406",
         aar = "@com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406//file",
@@ -1063,6 +1261,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406
+    # This is a root requested Maven artifact.
     native.alias(
         name = "com_github_menny_Chauffeur__permissions",
         actual = ":com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406",
@@ -1070,6 +1269,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406
+    # This is a root requested Maven artifact.
     aar_import(
         name = "com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406",
         aar = "@com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406//file",

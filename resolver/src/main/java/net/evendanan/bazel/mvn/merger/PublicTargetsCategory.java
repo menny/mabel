@@ -12,7 +12,7 @@ public class PublicTargetsCategory {
 
     public static Function<Target, Target> create(
             Type type,
-            Collection<MavenCoordinate> rootDependencies,
+            Set<MavenCoordinate> rootDependencies,
             Collection<Dependency> resolvedDependencies) {
         switch (type) {
             case all:

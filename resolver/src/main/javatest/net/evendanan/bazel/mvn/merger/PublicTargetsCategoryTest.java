@@ -13,22 +13,22 @@ import java.util.stream.Collectors;
 
 public class PublicTargetsCategoryTest {
 
-    private List<MavenCoordinate> mRootDependencies;
+    private Set<MavenCoordinate> mRootDependenciesAsSet;
     private List<Dependency> mResolvedDependencies;
     private List<Target> mAllTargets;
 
     @Before
     public void setup() {
-        mRootDependencies =
-                Arrays.asList(
-                        MavenCoordinate.create("a.b.c", "d", "1.1.1", "jar"),
-                        MavenCoordinate.create("b.c.d", "e", "2.1.1", "jar"),
-                        MavenCoordinate.create("c.d.e", "f", "3.1.1", "jar"));
+        List<MavenCoordinate> rootDependencies = Arrays.asList(
+                MavenCoordinate.create("a.b.c", "d", "1.1.1", "jar"),
+                MavenCoordinate.create("b.c.d", "e", "2.1.1", "jar"),
+                MavenCoordinate.create("c.d.e", "f", "3.1.1", "jar"));
+        mRootDependenciesAsSet = new HashSet<>(rootDependencies);
 
         mResolvedDependencies =
                 Arrays.asList(
                         Dependency.builder()
-                                .mavenCoordinate(mRootDependencies.get(0))
+                                .mavenCoordinate(rootDependencies.get(0))
                                 .dependencies(
                                         Arrays.asList(
                                                 MavenCoordinate.create(
@@ -37,15 +37,15 @@ public class PublicTargetsCategoryTest {
                                                         "a.b.c.2", "d", "1.1.1", "jar")))
                                 .build(),
                         Dependency.builder()
-                                .mavenCoordinate(mRootDependencies.get(1))
+                                .mavenCoordinate(rootDependencies.get(1))
                                 .dependencies(
                                         Arrays.asList(
                                                 MavenCoordinate.create(
                                                         "b.c.d.1", "e", "2.1.1", "jar"),
-                                                mRootDependencies.get(1)))
+                                                rootDependencies.get(1)))
                                 .build(),
                         Dependency.builder()
-                                .mavenCoordinate(mRootDependencies.get(2))
+                                .mavenCoordinate(rootDependencies.get(2))
                                 .dependencies(
                                         Arrays.asList(
                                                 MavenCoordinate.create(
@@ -158,7 +158,7 @@ public class PublicTargetsCategoryTest {
     public void teatAllCategoriesExist() {
         for (PublicTargetsCategory.Type value : PublicTargetsCategory.Type.values()) {
             Assert.assertNotNull(
-                    PublicTargetsCategory.create(value, mRootDependencies, mResolvedDependencies));
+                    PublicTargetsCategory.create(value, mRootDependenciesAsSet, mResolvedDependencies));
         }
     }
 
@@ -166,7 +166,7 @@ public class PublicTargetsCategoryTest {
     public void testCategoryAll() {
         Function<Target, Target> underTest =
                 PublicTargetsCategory.create(
-                        PublicTargetsCategory.Type.all, mRootDependencies, mResolvedDependencies);
+                        PublicTargetsCategory.Type.all, mRootDependenciesAsSet, mResolvedDependencies);
 
         // stays the same
         for (Target target : mAllTargets) {
@@ -182,11 +182,11 @@ public class PublicTargetsCategoryTest {
         Function<Target, Target> underTest =
                 PublicTargetsCategory.create(
                         PublicTargetsCategory.Type.requested_deps,
-                        mRootDependencies,
+                        mRootDependenciesAsSet,
                         mResolvedDependencies);
 
         final Set<String> rootMavens =
-                mRootDependencies.stream()
+                mRootDependenciesAsSet.stream()
                         .map(MavenCoordinate::toMavenString)
                         .collect(Collectors.toSet());
         // stays the same
@@ -208,11 +208,11 @@ public class PublicTargetsCategoryTest {
         Function<Target, Target> underTest =
                 PublicTargetsCategory.create(
                         PublicTargetsCategory.Type.recursive_exports,
-                        mRootDependencies,
+                        mRootDependenciesAsSet,
                         mResolvedDependencies);
 
         final Set<String> rootMavens =
-                mRootDependencies.stream()
+                mRootDependenciesAsSet.stream()
                         .map(MavenCoordinate::toMavenString)
                         .collect(Collectors.toSet());
 
