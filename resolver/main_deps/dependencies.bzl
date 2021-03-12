@@ -1303,8 +1303,8 @@ def generate_transitive_dependency_targets(
 
     # from org.apache.maven:maven-model:3.2.3
     # This is a root requested Maven artifact.
-    # This is a dependency of 'org.apache.maven:maven-model-builder:3.2.3'.
     # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.2.3'.
     native.alias(
         name = "org_apache_maven__maven_model",
         actual = ":org_apache_maven__maven_model__3_2_3",
@@ -1313,8 +1313,8 @@ def generate_transitive_dependency_targets(
 
     # from org.apache.maven:maven-model:3.2.3
     # This is a root requested Maven artifact.
-    # This is a dependency of 'org.apache.maven:maven-model-builder:3.2.3'.
     # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.2.3'.
     java_import(
         name = "org_apache_maven__maven_model__3_2_3",
         jars = ["@org_apache_maven__maven_model__3_2_3//file"],
@@ -1408,8 +1408,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.codehaus.plexus:plexus-component-annotations:1.5.5
-    # This is a dependency of 'org.apache.maven:maven-model-builder:3.2.3'.
     # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.2.3'.
     native.alias(
         name = "org_codehaus_plexus__plexus_component_annotations",
         actual = ":org_codehaus_plexus__plexus_component_annotations__1_5_5",
@@ -1417,8 +1417,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.codehaus.plexus:plexus-component-annotations:1.5.5
-    # This is a dependency of 'org.apache.maven:maven-model-builder:3.2.3'.
     # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.2.3'.
     java_import(
         name = "org_codehaus_plexus__plexus_component_annotations__1_5_5",
         jars = ["@org_codehaus_plexus__plexus_component_annotations__1_5_5//file"],
@@ -1463,12 +1463,12 @@ def generate_transitive_dependency_targets(
 
     # from org.codehaus.plexus:plexus-utils:3.0.24
     # This is a root requested Maven artifact.
+    # This is a dependency of 'org.apache.maven.wagon:wagon-provider-api:1.0'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-artifact:3.5.0'.
     # This is a dependency of 'org.apache.maven:maven-model-builder:3.2.3'.
     # This is a dependency of 'org.apache.maven:maven-model:3.2.3'.
-    # This is a dependency of 'org.apache.maven:maven-artifact:3.5.0'.
     # This is a dependency of 'org.apache.maven:maven-repository-metadata:3.2.3'.
-    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
-    # This is a dependency of 'org.apache.maven.wagon:wagon-provider-api:1.0'.
     native.alias(
         name = "org_codehaus_plexus__plexus_utils",
         actual = ":org_codehaus_plexus__plexus_utils__3_0_24",
@@ -1477,12 +1477,12 @@ def generate_transitive_dependency_targets(
 
     # from org.codehaus.plexus:plexus-utils:3.0.24
     # This is a root requested Maven artifact.
+    # This is a dependency of 'org.apache.maven.wagon:wagon-provider-api:1.0'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-artifact:3.5.0'.
     # This is a dependency of 'org.apache.maven:maven-model-builder:3.2.3'.
     # This is a dependency of 'org.apache.maven:maven-model:3.2.3'.
-    # This is a dependency of 'org.apache.maven:maven-artifact:3.5.0'.
     # This is a dependency of 'org.apache.maven:maven-repository-metadata:3.2.3'.
-    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
-    # This is a dependency of 'org.apache.maven.wagon:wagon-provider-api:1.0'.
     java_import(
         name = "org_codehaus_plexus__plexus_utils__3_0_24",
         jars = ["@org_codehaus_plexus__plexus_utils__3_0_24//file"],
@@ -1500,15 +1500,15 @@ def generate_transitive_dependency_targets(
 
     # from org.eclipse.aether:aether-api:1.1.0
     # This is a root requested Maven artifact.
-    # This is a dependency of 'org.eclipse.aether:aether-transport-http:1.1.0'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.eclipse.aether:aether-connector-basic:1.1.0'.
     # This is a dependency of 'org.eclipse.aether:aether-impl:1.1.0'.
     # This is a dependency of 'org.eclipse.aether:aether-spi:1.1.0'.
-    # This is a dependency of 'org.eclipse.aether:aether-transport-wagon:1.1.0'.
-    # This is a dependency of 'org.eclipse.aether:aether-connector-basic:1.1.0'.
-    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
-    # This is a dependency of 'org.eclipse.aether:aether-util:1.1.0'.
-    # This is a dependency of 'org.eclipse.aether:aether-transport-file:1.1.0'.
     # This is a dependency of 'org.eclipse.aether:aether-transport-classpath:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-file:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-http:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-wagon:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-util:1.1.0'.
     native.alias(
         name = "org_eclipse_aether__aether_api",
         actual = ":org_eclipse_aether__aether_api__1_1_0",
@@ -1517,15 +1517,15 @@ def generate_transitive_dependency_targets(
 
     # from org.eclipse.aether:aether-api:1.1.0
     # This is a root requested Maven artifact.
-    # This is a dependency of 'org.eclipse.aether:aether-transport-http:1.1.0'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.eclipse.aether:aether-connector-basic:1.1.0'.
     # This is a dependency of 'org.eclipse.aether:aether-impl:1.1.0'.
     # This is a dependency of 'org.eclipse.aether:aether-spi:1.1.0'.
-    # This is a dependency of 'org.eclipse.aether:aether-transport-wagon:1.1.0'.
-    # This is a dependency of 'org.eclipse.aether:aether-connector-basic:1.1.0'.
-    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
-    # This is a dependency of 'org.eclipse.aether:aether-util:1.1.0'.
-    # This is a dependency of 'org.eclipse.aether:aether-transport-file:1.1.0'.
     # This is a dependency of 'org.eclipse.aether:aether-transport-classpath:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-file:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-http:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-wagon:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-util:1.1.0'.
     java_import(
         name = "org_eclipse_aether__aether_api__1_1_0",
         jars = ["@org_eclipse_aether__aether_api__1_1_0//file"],
@@ -1611,13 +1611,13 @@ def generate_transitive_dependency_targets(
 
     # from org.eclipse.aether:aether-spi:1.1.0
     # This is a root requested Maven artifact.
-    # This is a dependency of 'org.eclipse.aether:aether-transport-http:1.1.0'.
-    # This is a dependency of 'org.eclipse.aether:aether-impl:1.1.0'.
-    # This is a dependency of 'org.eclipse.aether:aether-transport-wagon:1.1.0'.
-    # This is a dependency of 'org.eclipse.aether:aether-connector-basic:1.1.0'.
     # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
-    # This is a dependency of 'org.eclipse.aether:aether-transport-file:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-connector-basic:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-impl:1.1.0'.
     # This is a dependency of 'org.eclipse.aether:aether-transport-classpath:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-file:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-http:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-wagon:1.1.0'.
     native.alias(
         name = "org_eclipse_aether__aether_spi",
         actual = ":org_eclipse_aether__aether_spi__1_1_0",
@@ -1626,13 +1626,13 @@ def generate_transitive_dependency_targets(
 
     # from org.eclipse.aether:aether-spi:1.1.0
     # This is a root requested Maven artifact.
-    # This is a dependency of 'org.eclipse.aether:aether-transport-http:1.1.0'.
-    # This is a dependency of 'org.eclipse.aether:aether-impl:1.1.0'.
-    # This is a dependency of 'org.eclipse.aether:aether-transport-wagon:1.1.0'.
-    # This is a dependency of 'org.eclipse.aether:aether-connector-basic:1.1.0'.
     # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
-    # This is a dependency of 'org.eclipse.aether:aether-transport-file:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-connector-basic:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-impl:1.1.0'.
     # This is a dependency of 'org.eclipse.aether:aether-transport-classpath:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-file:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-http:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-wagon:1.1.0'.
     java_import(
         name = "org_eclipse_aether__aether_spi__1_1_0",
         jars = ["@org_eclipse_aether__aether_spi__1_1_0//file"],
@@ -1788,13 +1788,13 @@ def generate_transitive_dependency_targets(
 
     # from org.eclipse.aether:aether-util:1.1.0
     # This is a root requested Maven artifact.
-    # This is a dependency of 'org.eclipse.aether:aether-transport-http:1.1.0'.
-    # This is a dependency of 'org.eclipse.aether:aether-impl:1.1.0'.
-    # This is a dependency of 'org.eclipse.aether:aether-transport-wagon:1.1.0'.
-    # This is a dependency of 'org.eclipse.aether:aether-connector-basic:1.1.0'.
     # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
-    # This is a dependency of 'org.eclipse.aether:aether-transport-file:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-connector-basic:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-impl:1.1.0'.
     # This is a dependency of 'org.eclipse.aether:aether-transport-classpath:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-file:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-http:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-wagon:1.1.0'.
     native.alias(
         name = "org_eclipse_aether__aether_util",
         actual = ":org_eclipse_aether__aether_util__1_1_0",
@@ -1803,13 +1803,13 @@ def generate_transitive_dependency_targets(
 
     # from org.eclipse.aether:aether-util:1.1.0
     # This is a root requested Maven artifact.
-    # This is a dependency of 'org.eclipse.aether:aether-transport-http:1.1.0'.
-    # This is a dependency of 'org.eclipse.aether:aether-impl:1.1.0'.
-    # This is a dependency of 'org.eclipse.aether:aether-transport-wagon:1.1.0'.
-    # This is a dependency of 'org.eclipse.aether:aether-connector-basic:1.1.0'.
     # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
-    # This is a dependency of 'org.eclipse.aether:aether-transport-file:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-connector-basic:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-impl:1.1.0'.
     # This is a dependency of 'org.eclipse.aether:aether-transport-classpath:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-file:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-http:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-wagon:1.1.0'.
     java_import(
         name = "org_eclipse_aether__aether_util__1_1_0",
         jars = ["@org_eclipse_aether__aether_util__1_1_0//file"],

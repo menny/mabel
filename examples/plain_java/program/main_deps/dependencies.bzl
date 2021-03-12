@@ -126,7 +126,11 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "com_google_guava__guava__20_0",
         jars = ["@com_google_guava__guava__20_0//file"],
-        tags = ["maven_coordinates=com.google.guava:guava:20.0"],
+        tags = [
+            "mabel_license_name=The Apache Software License, Version 2.0",
+            "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
+            "maven_coordinates=com.google.guava:guava:20.0",
+        ],
         licenses = ["notice"],
         deps = [],
         exports = [],
