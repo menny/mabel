@@ -1,6 +1,7 @@
 package net.evendanan.bazel.mvn.api.serialization;
 
 import net.evendanan.bazel.mvn.api.model.Dependency;
+import net.evendanan.bazel.mvn.api.model.License;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import net.evendanan.bazel.mvn.api.model.Resolution;
 import org.junit.Assert;
@@ -39,6 +40,7 @@ public class SerializationTest {
                                                 MavenCoordinate.create(
                                                         "net.evendanan", "inner1", "0.1", ""))
                                         .url("http://example.com/artifact2.jar")
+                                        .licenses(Collections.singletonList(License.create("Apache-2", "http://example.com")))
                                         .dependencies(
                                                 Arrays.asList(
                                                         MavenCoordinate.create(
@@ -58,11 +60,15 @@ public class SerializationTest {
                                                         "net.evendanan", "inner-inner1", "0.1", ""))
                                         .url("http://example.com/artifact3.jar")
                                         .javadocUrl("http://example.com/artifact3-javadoc.jar")
+                                        .licenses(Collections.singletonList(License.create("Apache-2", "")))
                                         .build(),
                                 Dependency.builder()
                                         .mavenCoordinate(
                                                 MavenCoordinate.create(
                                                         "net.evendanan", "inner-inner2", "0.1", ""))
+                                        .licenses(Arrays.asList(
+                                                License.create("Weird", ""),
+                                                License.create("BSD \"NEW\"", "http://example.com/bsd.html")))
                                         .url("http://example.com/artifact4.jar")
                                         .sourcesUrl("http://example.com/artifact4-src.jar")
                                         .build()));

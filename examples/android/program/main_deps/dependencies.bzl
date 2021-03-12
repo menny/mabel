@@ -436,6 +436,7 @@ def generate_transitive_dependency_targets(
         name = "androidx_annotation__annotation__1_0_0",
         jars = ["@androidx_annotation__annotation__1_0_0//file"],
         tags = [
+            "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
             "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
             "maven_coordinates=androidx.annotation:annotation:1.0.0",
@@ -506,6 +507,7 @@ def generate_transitive_dependency_targets(
         name = "androidx_arch_core__core_common__2_0_0",
         jars = ["@androidx_arch_core__core_common__2_0_0//file"],
         tags = [
+            "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
             "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
             "maven_coordinates=androidx.arch.core:core-common:2.0.0",
@@ -584,6 +586,7 @@ def generate_transitive_dependency_targets(
         name = "androidx_collection__collection__1_0_0",
         jars = ["@androidx_collection__collection__1_0_0//file"],
         tags = [
+            "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
             "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
             "maven_coordinates=androidx.collection:collection:1.0.0",
@@ -922,6 +925,7 @@ def generate_transitive_dependency_targets(
         name = "androidx_lifecycle__lifecycle_common__2_0_0",
         jars = ["@androidx_lifecycle__lifecycle_common__2_0_0//file"],
         tags = [
+            "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
             "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
             "maven_coordinates=androidx.lifecycle:lifecycle-common:2.0.0",

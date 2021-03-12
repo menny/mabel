@@ -70,7 +70,7 @@ public class TargetsBuilders {
                                 "licenses",
                                 dependency.licenses().stream()
                                         .map(License::name)
-                                        .map(LicenseTools::fromLicenseName)
+                                        .map(LicenseTools::classFromLicenseName)
                                         .filter(Objects::nonNull)
                                         .map(Object::toString)
                                         .collect(Collectors.toList()))
@@ -105,6 +105,7 @@ public class TargetsBuilders {
         dependency.licenses().forEach(l -> {
             if (!StringUtils.isBlank(l.name())) {
                 tags.add(String.format(Locale.ROOT, "mabel_license_name=%s", escapeText(l.name())));
+                tags.add(String.format(Locale.ROOT, "mabel_license_detected_type=%s", LicenseTools.typeFromLicenseName(l.name())));
                 if (!StringUtils.isBlank(l.url())) {
                     tags.add(String.format(Locale.ROOT, "mabel_license_url=%s", l.url()));
                 }
