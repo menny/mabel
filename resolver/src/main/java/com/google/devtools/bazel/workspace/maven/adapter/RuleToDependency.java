@@ -1,13 +1,12 @@
 package com.google.devtools.bazel.workspace.maven.adapter;
 
 import com.google.devtools.bazel.workspace.maven.Rule;
-import net.evendanan.bazel.mvn.api.LicenseTools;
 import net.evendanan.bazel.mvn.api.model.Dependency;
+import net.evendanan.bazel.mvn.api.model.License;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import net.evendanan.bazel.mvn.api.model.Resolution;
 
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class RuleToDependency {
@@ -59,9 +58,7 @@ public class RuleToDependency {
                         .url(rule.isValid() ? rule.getUrl() : "")
                         .licenses(
                                 rule.getLicenses().stream()
-                                        .map(org.apache.maven.model.License::getName)
-                                        .map(LicenseTools::fromLicenseName)
-                                        .filter(Objects::nonNull)
+                                        .map(l -> License.create(l.getName(), l.getUrl()))
                                         .collect(Collectors.toList()))
                         .build();
 
