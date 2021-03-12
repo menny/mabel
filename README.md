@@ -17,7 +17,10 @@ This WORKSPACE will provide `mabel_rule` rule and `artifact` macro which will au
   * `java_import` for anything else.
 * Allow implementation replacement for `java_import` and `aar_import`. Those can be replaced with another rule or macro. See `examples/android/program/BUILD.bazel` for an example.
 * Support custom Maven repo URLs and locking dependency for a Maven repository.
-* Adds `licenses` data to `java_import` rules, if license is declared in the artifact's POM file.
+* Adds `licenses` data to `java_import` rules, if license is declared in the artifact's POM file. Also, adds license metadata to the targets' `tags` attribute:
+  * `mabel_license_name` - The name of the license, as appears in the `pom.xml` file.
+  * `mabel_license_url` - The URL to the license's file, as appears in the `pom.xml` file.
+  * `mabel_license_detected_type` - The type of the license (`Apache`, `MIT`, `GPL`, etc.) as detected by `mabel`. 
 * Adds `srcjar` if sources available in the Maven repository.
 * Handle POM options:
   * Profiles and placeholders.
@@ -39,7 +42,7 @@ There are several attempts to solve this problem (such as [sync-deps](https://gi
 ### WORKSPACE file
 Add this repository to your WORKSPACE (set `bazel_mvn_deps_version` to the latest [release](https://github.com/menny/mabel/releases) or, if you are adventurous, [commit](https://github.com/menny/mabel/commits/master)):
 ```python
-mabel_version = "0.15.0"
+mabel_version = "0.16.0"
 http_archive(
     name = "mabel",
     urls = ["https://github.com/menny/mabel/archive/%s.zip" % mabel_version],
