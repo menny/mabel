@@ -108,6 +108,7 @@ public class Merger {
         System.out.print("Verifying resolved artifacts graphs...");
         resolutions.forEach(
                 resolution -> {
+                    GraphVerifications.checkResolutionSuccess(resolution);
                     GraphVerifications.checkAllGraphDependenciesAreResolved(resolution);
                     GraphVerifications.checkGraphDoesNotHaveDanglingDependencies(resolution);
                 });
