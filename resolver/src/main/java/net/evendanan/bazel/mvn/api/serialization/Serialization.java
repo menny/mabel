@@ -28,6 +28,8 @@ public class Serialization {
                                 MavenCoordinate.class, new Adapters.MavenCoordinateDeserializer())
                         .registerTypeAdapter(License.class, new Adapters.LicenseSerializer())
                         .registerTypeAdapter(License.class, new Adapters.LicenseDeserializer())
+                        .registerTypeAdapter(License.Type.class, new Adapters.LicenseTypeSerializer())
+                        .registerTypeAdapter(License.Type.class, new Adapters.LicenseTypeDeserializer())
                         .create();
     }
 

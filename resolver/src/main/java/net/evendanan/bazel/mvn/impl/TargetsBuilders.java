@@ -4,11 +4,14 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
 
 import net.evendanan.bazel.mvn.api.DependencyTools;
+import net.evendanan.bazel.mvn.api.LicenseTools;
 import net.evendanan.bazel.mvn.api.Target;
 import net.evendanan.bazel.mvn.api.TargetsBuilder;
 import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.model.License;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.InputStream;
 import java.net.URI;
@@ -20,6 +23,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -41,36 +45,34 @@ public class TargetsBuilders {
             };
     static final TargetsBuilder KOTLIN_IMPORT = new KotlinImport();
     static final TargetsBuilder KOTLIN_ANDROID_IMPORT = new KotlinAndroidImport();
-    @VisibleForTesting static final TargetsBuilder AAR_IMPORT = new AarImport();
+    @VisibleForTesting
+    static final TargetsBuilder AAR_IMPORT = new AarImport();
 
     private static Target addJavaImportRule(
             Dependency dependency, DependencyTools dependencyTools) {
         final Target target =
                 new Target(
-                                dependencyTools.mavenCoordinates(dependency),
-                                "java_import",
-                                dependencyTools.repositoryRuleName(dependency))
+                        dependencyTools.mavenCoordinates(dependency),
+                        "java_import",
+                        dependencyTools.repositoryRuleName(dependency))
                         .addList(
                                 "jars",
                                 "pom".equalsIgnoreCase(dependency.mavenCoordinate().packaging())
                                         ? Collections.emptyList()
                                         : Collections.singletonList(
-                                                String.format(
-                                                        Locale.ROOT,
-                                                        "@%s//file",
-                                                        dependencyTools.repositoryRuleName(
-                                                                dependency))))
-                        .addList(
-                                "tags",
-                                Collections.singletonList(
                                         String.format(
                                                 Locale.ROOT,
-                                                "maven_coordinates=%s",
-                                                dependencyTools.mavenCoordinates(dependency))))
+                                                "@%s//file",
+                                                dependencyTools.repositoryRuleName(
+                                                        dependency))))
+                        .addList("tags", dependencyTagsList(dependency, dependencyTools))
                         .addList(
                                 "licenses",
                                 dependency.licenses().stream()
-                                        .map(License::toString)
+                                        .map(License::name)
+                                        .map(LicenseTools::fromLicenseName)
+                                        .filter(Objects::nonNull)
+                                        .map(Object::toString)
                                         .collect(Collectors.toList()))
                         .addList(
                                 "deps",
@@ -91,6 +93,32 @@ public class TargetsBuilders {
                             dependencyTools.repositoryRuleName(dependency)));
         }
         return target;
+    }
+
+    private static Collection<String> dependencyTagsList(Dependency dependency, DependencyTools dependencyTools) {
+        List<String> tags = new ArrayList<>();
+        tags.add(String.format(
+                Locale.ROOT,
+                "maven_coordinates=%s",
+                dependencyTools.mavenCoordinates(dependency)));
+
+        dependency.licenses().forEach(l -> {
+            if (!StringUtils.isBlank(l.name())) {
+                tags.add(String.format(Locale.ROOT, "mabel_license_name=%s", escapeText(l.name())));
+                if (!StringUtils.isBlank(l.url())) {
+                    tags.add(String.format(Locale.ROOT, "mabel_license_url=%s", l.url()));
+                }
+            }
+        });
+
+        return tags;
+    }
+
+    private static String escapeText(String text) {
+        return text
+                .replace("\"", "\\\"")
+                .replace('\r', ' ')
+                .replace('\n', ' ');
     }
 
     private static String getFilenameFromUrl(String url) {
@@ -131,14 +159,14 @@ public class TargetsBuilders {
             String postFix,
             DependencyTools dependencyTools) {
         return new Target(
-                        dependencyTools.mavenCoordinates(dependency),
-                        "native.alias",
-                        String.format(
-                                Locale.ROOT,
-                                "%s%s",
-                                dependencyTools.targetName(dependency),
-                                postFix),
-                        nameSpaced)
+                dependencyTools.mavenCoordinates(dependency),
+                "native.alias",
+                String.format(
+                        Locale.ROOT,
+                        "%s%s",
+                        dependencyTools.targetName(dependency),
+                        postFix),
+                nameSpaced)
                 .addString(
                         "actual",
                         String.format(
@@ -147,6 +175,12 @@ public class TargetsBuilders {
                                 dependencyTools.repositoryRuleName(dependency),
                                 postFix))
                 .setPublicVisibility();
+    }
+
+    private static <T> Collection<T> addItem(Collection<T> list, T item) {
+        List<T> newList = new ArrayList<>(list);
+        newList.add(item);
+        return newList;
     }
 
     public static class HttpTargetsBuilder implements TargetsBuilder {
@@ -169,9 +203,9 @@ public class TargetsBuilders {
 
             final Target jarTarget =
                     new Target(
-                                    dependencyTools.mavenCoordinates(dependency),
-                                    "http_file",
-                                    dependencyTools.repositoryRuleName(dependency))
+                            dependencyTools.mavenCoordinates(dependency),
+                            "http_file",
+                            dependencyTools.repositoryRuleName(dependency))
                             .addList("urls", Collections.singleton(dependency.url()))
                             .addString(
                                     "downloaded_file_path", getFilenameFromUrl(dependency.url()));
@@ -188,8 +222,8 @@ public class TargetsBuilders {
                     byte[] digestBytes = digest.digest();
                     char[] hexChars = new char[digestBytes.length * 2];
                     for (int digestByteIndex = 0;
-                            digestByteIndex < digestBytes.length;
-                            digestByteIndex++) {
+                         digestByteIndex < digestBytes.length;
+                         digestByteIndex++) {
                         int v = digestBytes[digestByteIndex] & 0xFF;
                         hexChars[digestByteIndex * 2] = hexArray[v >>> 4];
                         hexChars[digestByteIndex * 2 + 1] = hexArray[v & 0x0F];
@@ -205,10 +239,10 @@ public class TargetsBuilders {
             } else {
                 final Target sourceTarget =
                         new Target(
-                                        dependencyTools.mavenCoordinates(dependency),
-                                        "http_file",
-                                        dependencyTools.repositoryRuleName(dependency)
-                                                + "__sources")
+                                dependencyTools.mavenCoordinates(dependency),
+                                "http_file",
+                                dependencyTools.repositoryRuleName(dependency)
+                                        + "__sources")
                                 .addList("urls", Collections.singleton(dependency.sourcesUrl()))
                                 .addString(
                                         "downloaded_file_path",
@@ -315,7 +349,7 @@ public class TargetsBuilders {
         @Override
         public List<Target> buildTargets(
                 final Dependency dependency, DependencyTools dependencyTools) {
-            List<Target> targets = super.buildTargets(dependency,dependencyTools);;
+            List<Target> targets = super.buildTargets(dependency, dependencyTools);
 
             targets.add(
                     new Target(
@@ -377,8 +411,8 @@ public class TargetsBuilders {
             List<String> noApiPlugins = new ArrayList<>();
             List<String> withApiPlugins = new ArrayList<>();
             for (int processorClassIndex = 0;
-                    processorClassIndex < processorClasses.size();
-                    processorClassIndex++) {
+                 processorClassIndex < processorClasses.size();
+                 processorClassIndex++) {
                 final String processorClass = processorClasses.get(processorClassIndex);
 
                 final String noApiTargetName =
@@ -388,9 +422,9 @@ public class TargetsBuilders {
                 noApiPlugins.add(":" + noApiTargetName);
                 targets.add(
                         new Target(
-                                        dependencyTools.mavenCoordinates(dependency),
-                                        "java_plugin",
-                                        noApiTargetName)
+                                dependencyTools.mavenCoordinates(dependency),
+                                "java_plugin",
+                                noApiTargetName)
                                 .addString("processor_class", processorClass)
                                 .addInt("generates_api", 0)
                                 .addList("deps", deps));
@@ -407,9 +441,9 @@ public class TargetsBuilders {
                 withApiPlugins.add(":" + withApiTargetName);
                 targets.add(
                         new Target(
-                                        dependencyTools.mavenCoordinates(dependency),
-                                        "java_plugin",
-                                        withApiTargetName)
+                                dependencyTools.mavenCoordinates(dependency),
+                                "java_plugin",
+                                withApiTargetName)
                                 .addString("processor_class", processorClass)
                                 .addInt("generates_api", 1)
                                 .addList("deps", deps));
@@ -424,11 +458,11 @@ public class TargetsBuilders {
             // If using those, then do not add them to the `plugins` list, but rather to the `deps`.
             targets.add(
                     new Target(
-                                    dependencyTools.mavenCoordinates(dependency),
-                                    "java_library",
-                                    dependencyTools.repositoryRuleName(dependency)
-                                            + PROCESSOR_CLASS_POST_FIX
-                                            + "all")
+                            dependencyTools.mavenCoordinates(dependency),
+                            "java_library",
+                            dependencyTools.repositoryRuleName(dependency)
+                                    + PROCESSOR_CLASS_POST_FIX
+                                    + "all")
                             .addList("exported_plugins", noApiPlugins));
             targets.add(
                     addAlias(
@@ -439,11 +473,11 @@ public class TargetsBuilders {
 
             targets.add(
                     new Target(
-                                    dependencyTools.mavenCoordinates(dependency),
-                                    "java_library",
-                                    dependencyTools.repositoryRuleName(dependency)
-                                            + PROCESSOR_CLASS_POST_FIX_WITH_API
-                                            + "all")
+                            dependencyTools.mavenCoordinates(dependency),
+                            "java_library",
+                            dependencyTools.repositoryRuleName(dependency)
+                                    + PROCESSOR_CLASS_POST_FIX_WITH_API
+                                    + "all")
                             .addList("exported_plugins", withApiPlugins));
             targets.add(
                     addAlias(
@@ -467,9 +501,9 @@ public class TargetsBuilders {
 
             targets.add(
                     new Target(
-                                    dependencyTools.mavenCoordinates(dependency),
-                                    "aar_import",
-                                    dependencyTools.repositoryRuleName(dependency))
+                            dependencyTools.mavenCoordinates(dependency),
+                            "aar_import",
+                            dependencyTools.repositoryRuleName(dependency))
                             .addString(
                                     "aar",
                                     String.format(
@@ -497,11 +531,5 @@ public class TargetsBuilders {
 
             return targets;
         }
-    }
-
-    private static <T> Collection<T> addItem(Collection<T> list, T item) {
-        List<T> newList = new ArrayList<>(list);
-        newList.add(item);
-        return newList;
     }
 }

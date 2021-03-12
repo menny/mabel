@@ -16,46 +16,46 @@ import static java.util.regex.Pattern.CASE_INSENSITIVE;
  */
 public final class LicenseTools {
     // notice licenses
-    private static Pattern APACHE = Pattern.compile(".*Apache.*", CASE_INSENSITIVE);
-    private static Pattern APACHE_ASF_LICENSE = Pattern.compile(".*ASF.*License.*");
-    private static Pattern APACHE_ASF = Pattern.compile(".*ASF.*2.*");
-    private static Pattern MIT = Pattern.compile(".*MIT.*");
-    private static Pattern BSD = Pattern.compile(".*BSD.*");
-    private static Pattern FACEBOOK = Pattern.compile(".*Facebook.*License.*");
-    private static Pattern JSON = Pattern.compile(".*JSON.*License.*");
-    private static Pattern BOUNCY_CASTLE = Pattern.compile(".*Bouncy.*Castle.*");
-    private static Pattern CDDL = Pattern.compile(".*CDDL.*");
-    private static Pattern COMMON_PUBLIC =
+    private static final Pattern APACHE = Pattern.compile(".*Apache.*", CASE_INSENSITIVE);
+    private static final Pattern APACHE_ASF_LICENSE = Pattern.compile(".*ASF.*License.*");
+    private static final Pattern APACHE_ASF = Pattern.compile(".*ASF.*2.*");
+    private static final Pattern MIT = Pattern.compile(".*MIT.*");
+    private static final Pattern BSD = Pattern.compile(".*BSD.*");
+    private static final Pattern FACEBOOK = Pattern.compile(".*Facebook.*License.*");
+    private static final Pattern JSON = Pattern.compile(".*JSON.*License.*");
+    private static final Pattern BOUNCY_CASTLE = Pattern.compile(".*Bouncy.*Castle.*");
+    private static final Pattern CDDL = Pattern.compile(".*CDDL.*");
+    private static final Pattern COMMON_PUBLIC =
             Pattern.compile(".*Common.+Public.+License.*", CASE_INSENSITIVE);
-    private static Pattern CDDL_FULL =
+    private static final Pattern CDDL_FULL =
             Pattern.compile(
                     ".*COMMON.+DEVELOPMENT.+AND.+DISTRIBUTION.+LICENSE.*", CASE_INSENSITIVE);
-    private static Pattern GOOGLE_CLOUD =
+    private static final Pattern GOOGLE_CLOUD =
             Pattern.compile("Google Cloud Software License", CASE_INSENSITIVE);
-    private static Pattern INDIANA_U =
+    private static final Pattern INDIANA_U =
             Pattern.compile(".*Indiana.+University.+License.*", CASE_INSENSITIVE);
-    private static Pattern ICU = Pattern.compile(".*ICU.+License.*");
+    private static final Pattern ICU = Pattern.compile(".*ICU.+License.*");
 
     // reciprocal licenses
-    private static Pattern ECLIPSE =
+    private static final Pattern ECLIPSE =
             Pattern.compile(".*Eclipse\\s+Public\\s+License.*\\s+.*[12].*", CASE_INSENSITIVE);
-    private static Pattern EPL = Pattern.compile(".*EPL\\s+.*1.*");
-    private static Pattern MOZILLA_MPL = Pattern.compile(".*MPL.*1.1.*");
-    private static Pattern MOZILLA = Pattern.compile(".*Mozilla.*License.*", CASE_INSENSITIVE);
+    private static final Pattern EPL = Pattern.compile(".*EPL\\s+.*1.*");
+    private static final Pattern MOZILLA_MPL = Pattern.compile(".*MPL.*1.1.*");
+    private static final Pattern MOZILLA = Pattern.compile(".*Mozilla.*License.*", CASE_INSENSITIVE);
 
     // restricted licenses
-    private static Pattern GNU = Pattern.compile(".*GNU.*");
-    private static Pattern LGPL_GPL = Pattern.compile(".*GPL.*");
+    private static final Pattern GNU = Pattern.compile(".*GNU.*");
+    private static final Pattern LGPL_GPL = Pattern.compile(".*GPL.*");
 
     // unencumbered licenses
-    private static Pattern CC0 = Pattern.compile(".*CC0.*");
-    private static Pattern PUBLIC_DOMAIN = Pattern.compile(".*Public.*Domain.*", CASE_INSENSITIVE);
-    private static Pattern ANDROID_SDK = Pattern.compile(".*Android.*License.*", CASE_INSENSITIVE);
-    private static Pattern NO_WARRANTY =
+    private static final Pattern CC0 = Pattern.compile(".*CC0.*");
+    private static final Pattern PUBLIC_DOMAIN = Pattern.compile(".*Public.*Domain.*", CASE_INSENSITIVE);
+    private static final Pattern ANDROID_SDK = Pattern.compile(".*Android.*License.*", CASE_INSENSITIVE);
+    private static final Pattern NO_WARRANTY =
             Pattern.compile(".*provided.*without.*support.*or.*warranty.*", CASE_INSENSITIVE);
 
     // permissive
-    private static Pattern WTFPL = Pattern.compile(".*WTFPL.*");
+    private static final Pattern WTFPL = Pattern.compile(".*WTFPL.*");
 
     /**
      * Mapping between a license and its type. Data taken from
@@ -63,11 +63,11 @@ public final class LicenseTools {
      * the licenses themselves. Or from https://source.bazel.build/search?q=licenses%20f:BUILD
      */
     @Nullable
-    public static License fromLicenseName(final String licenseName) {
+    public static License.Type fromLicenseName(final String licenseName) {
         if (Strings.isNullOrEmpty(licenseName)) return null;
 
         return ifAnyMatch(
-                        License.notice,
+                        License.Type.notice,
                         licenseName,
                         APACHE,
                         APACHE_ASF,
@@ -86,7 +86,7 @@ public final class LicenseTools {
                 .orElseGet(
                         () ->
                                 ifAnyMatch(
-                                                License.reciprocal,
+                                                License.Type.reciprocal,
                                                 licenseName,
                                                 ECLIPSE,
                                                 EPL,
@@ -95,7 +95,7 @@ public final class LicenseTools {
                                         .orElseGet(
                                                 () ->
                                                         ifAnyMatch(
-                                                                        License.restricted,
+                                                                        License.Type.restricted,
                                                                         licenseName,
                                                                         GNU,
                                                                         LGPL_GPL)
@@ -103,7 +103,7 @@ public final class LicenseTools {
                                                                         () ->
                                                                                 ifAnyMatch(
                                                                                                 License
-                                                                                                        .unencumbered,
+                                                                                                        .Type.unencumbered,
                                                                                                 licenseName,
                                                                                                 CC0,
                                                                                                 PUBLIC_DOMAIN,
@@ -113,7 +113,7 @@ public final class LicenseTools {
                                                                                                 () ->
                                                                                                         ifAnyMatch(
                                                                                                                         License
-                                                                                                                                .permissive,
+                                                                                                                                .Type.permissive,
                                                                                                                         licenseName,
                                                                                                                         WTFPL)
                                                                                                                 .orElseGet(
@@ -131,8 +131,8 @@ public final class LicenseTools {
                                                                                                                         })))));
     }
 
-    private static Optional<License> ifAnyMatch(
-            @Nonnull final License license,
+    private static Optional<License.Type> ifAnyMatch(
+            @Nonnull final License.Type license,
             @Nonnull final String text,
             @Nonnull Pattern... patterns) {
         for (final Pattern pattern : patterns) {
