@@ -6,6 +6,8 @@ import net.evendanan.bazel.mvn.api.DependencyTools;
 import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import net.evendanan.bazel.mvn.api.model.Resolution;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.*;
@@ -108,6 +110,15 @@ public final class GraphVerifications {
                                 "NoRepeatingDependencies", resolved.mavenCoordinate());
                     }
                 });
+    }
+
+    public static void checkResolutionSuccess(Resolution resolution) {
+        resolution.allResolvedDependencies()
+                .stream()
+                .filter(d -> d.mavenCoordinate().equals(resolution.rootDependency()))
+                .filter(d -> !StringUtils.isBlank(d.url()))
+                .findFirst()
+                .orElseThrow(() -> new InvalidGraphException("Failed to resolve requested coordinate", resolution.rootDependency()));
     }
 
     public static class InvalidGraphException extends RuntimeException {
