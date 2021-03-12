@@ -458,6 +458,7 @@ def generate_transitive_dependency_targets(
     """
 
     # from com.beust:jcommander:1.72
+    # This is a root requested Maven artifact.
     native.alias(
         name = "com_beust__jcommander",
         actual = ":com_beust__jcommander__1_72",
@@ -465,6 +466,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.beust:jcommander:1.72
+    # This is a root requested Maven artifact.
     java_import(
         name = "com_beust__jcommander__1_72",
         jars = ["@com_beust__jcommander__1_72//file"],
@@ -477,6 +479,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value-annotations:1.7
+    # This is a root requested Maven artifact.
     native.alias(
         name = "com_google_auto_value__auto_value_annotations",
         actual = ":com_google_auto_value__auto_value_annotations__1_7",
@@ -484,6 +487,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value-annotations:1.7
+    # This is a root requested Maven artifact.
     java_import(
         name = "com_google_auto_value__auto_value_annotations__1_7",
         jars = ["@com_google_auto_value__auto_value_annotations__1_7//file"],
@@ -496,6 +500,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.7
+    # This is a root requested Maven artifact.
     native.alias(
         name = "com_google_auto_value__auto_value",
         actual = ":com_google_auto_value__auto_value__1_7",
@@ -503,6 +508,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.7
+    # This is a root requested Maven artifact.
     java_import(
         name = "com_google_auto_value__auto_value__1_7",
         jars = ["@com_google_auto_value__auto_value__1_7//file"],
@@ -515,6 +521,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.7
+    # This is a root requested Maven artifact.
     java_plugin(
         name = "com_google_auto_value__auto_value__1_7___generates_api___processor_class_0",
         processor_class = "com.google.auto.value.extension.memoized.processor.MemoizedValidator",
@@ -524,6 +531,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.7
+    # This is a root requested Maven artifact.
     java_plugin(
         name = "com_google_auto_value__auto_value__1_7___generates_api___processor_class_1",
         processor_class = "com.google.auto.value.processor.AutoAnnotationProcessor",
@@ -533,6 +541,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.7
+    # This is a root requested Maven artifact.
     java_plugin(
         name = "com_google_auto_value__auto_value__1_7___generates_api___processor_class_2",
         processor_class = "com.google.auto.value.processor.AutoOneOfProcessor",
@@ -542,6 +551,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.7
+    # This is a root requested Maven artifact.
     java_plugin(
         name = "com_google_auto_value__auto_value__1_7___generates_api___processor_class_3",
         processor_class = "com.google.auto.value.processor.AutoValueBuilderProcessor",
@@ -551,6 +561,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.7
+    # This is a root requested Maven artifact.
     java_plugin(
         name = "com_google_auto_value__auto_value__1_7___generates_api___processor_class_4",
         processor_class = "com.google.auto.value.processor.AutoValueProcessor",
@@ -560,6 +571,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.7
+    # This is a root requested Maven artifact.
     java_library(
         name = "com_google_auto_value__auto_value__1_7___generates_api___processor_class_all",
         exported_plugins = [
@@ -573,6 +585,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.7
+    # This is a root requested Maven artifact.
     java_plugin(
         name = "com_google_auto_value__auto_value__1_7___processor_class_0",
         processor_class = "com.google.auto.value.extension.memoized.processor.MemoizedValidator",
@@ -582,6 +595,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.7
+    # This is a root requested Maven artifact.
     java_plugin(
         name = "com_google_auto_value__auto_value__1_7___processor_class_1",
         processor_class = "com.google.auto.value.processor.AutoAnnotationProcessor",
@@ -591,6 +605,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.7
+    # This is a root requested Maven artifact.
     java_plugin(
         name = "com_google_auto_value__auto_value__1_7___processor_class_2",
         processor_class = "com.google.auto.value.processor.AutoOneOfProcessor",
@@ -600,6 +615,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.7
+    # This is a root requested Maven artifact.
     java_plugin(
         name = "com_google_auto_value__auto_value__1_7___processor_class_3",
         processor_class = "com.google.auto.value.processor.AutoValueBuilderProcessor",
@@ -609,6 +625,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.7
+    # This is a root requested Maven artifact.
     java_plugin(
         name = "com_google_auto_value__auto_value__1_7___processor_class_4",
         processor_class = "com.google.auto.value.processor.AutoValueProcessor",
@@ -618,6 +635,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.7
+    # This is a root requested Maven artifact.
     java_library(
         name = "com_google_auto_value__auto_value__1_7___processor_class_all",
         exported_plugins = [
@@ -631,6 +649,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.7
+    # This is a root requested Maven artifact.
     native.alias(
         name = "com_google_auto_value__auto_value___generates_api___processor_class_0",
         actual = ":com_google_auto_value__auto_value__1_7___generates_api___processor_class_0",
@@ -638,6 +657,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.7
+    # This is a root requested Maven artifact.
     native.alias(
         name = "com_google_auto_value__auto_value___generates_api___processor_class_1",
         actual = ":com_google_auto_value__auto_value__1_7___generates_api___processor_class_1",
@@ -645,6 +665,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.7
+    # This is a root requested Maven artifact.
     native.alias(
         name = "com_google_auto_value__auto_value___generates_api___processor_class_2",
         actual = ":com_google_auto_value__auto_value__1_7___generates_api___processor_class_2",
@@ -652,6 +673,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.7
+    # This is a root requested Maven artifact.
     native.alias(
         name = "com_google_auto_value__auto_value___generates_api___processor_class_3",
         actual = ":com_google_auto_value__auto_value__1_7___generates_api___processor_class_3",
@@ -659,6 +681,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.7
+    # This is a root requested Maven artifact.
     native.alias(
         name = "com_google_auto_value__auto_value___generates_api___processor_class_4",
         actual = ":com_google_auto_value__auto_value__1_7___generates_api___processor_class_4",
@@ -666,6 +689,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.7
+    # This is a root requested Maven artifact.
     native.alias(
         name = "com_google_auto_value__auto_value___generates_api___processor_class_all",
         actual = ":com_google_auto_value__auto_value__1_7___generates_api___processor_class_all",
@@ -673,6 +697,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.7
+    # This is a root requested Maven artifact.
     native.alias(
         name = "com_google_auto_value__auto_value___processor_class_0",
         actual = ":com_google_auto_value__auto_value__1_7___processor_class_0",
@@ -680,6 +705,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.7
+    # This is a root requested Maven artifact.
     native.alias(
         name = "com_google_auto_value__auto_value___processor_class_1",
         actual = ":com_google_auto_value__auto_value__1_7___processor_class_1",
@@ -687,6 +713,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.7
+    # This is a root requested Maven artifact.
     native.alias(
         name = "com_google_auto_value__auto_value___processor_class_2",
         actual = ":com_google_auto_value__auto_value__1_7___processor_class_2",
@@ -694,6 +721,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.7
+    # This is a root requested Maven artifact.
     native.alias(
         name = "com_google_auto_value__auto_value___processor_class_3",
         actual = ":com_google_auto_value__auto_value__1_7___processor_class_3",
@@ -701,6 +729,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.7
+    # This is a root requested Maven artifact.
     native.alias(
         name = "com_google_auto_value__auto_value___processor_class_4",
         actual = ":com_google_auto_value__auto_value__1_7___processor_class_4",
@@ -708,6 +737,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.auto.value:auto-value:1.7
+    # This is a root requested Maven artifact.
     native.alias(
         name = "com_google_auto_value__auto_value___processor_class_all",
         actual = ":com_google_auto_value__auto_value__1_7___processor_class_all",
@@ -715,6 +745,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.code.findbugs:jsr305:3.0.2
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'com.google.guava:guava:27.0.1-jre'.
     native.alias(
         name = "com_google_code_findbugs__jsr305",
         actual = ":com_google_code_findbugs__jsr305__3_0_2",
@@ -722,6 +754,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.code.findbugs:jsr305:3.0.2
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'com.google.guava:guava:27.0.1-jre'.
     java_import(
         name = "com_google_code_findbugs__jsr305__3_0_2",
         jars = ["@com_google_code_findbugs__jsr305__3_0_2//file"],
@@ -734,6 +768,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.code.gson:gson:2.8.5
+    # This is a root requested Maven artifact.
     native.alias(
         name = "com_google_code_gson__gson",
         actual = ":com_google_code_gson__gson__2_8_5",
@@ -741,6 +776,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.code.gson:gson:2.8.5
+    # This is a root requested Maven artifact.
     java_import(
         name = "com_google_code_gson__gson__2_8_5",
         jars = ["@com_google_code_gson__gson__2_8_5//file"],
@@ -753,6 +789,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.errorprone:error_prone_annotations:2.2.0
+    # This is a dependency of 'com.google.guava:guava:27.0.1-jre'.
     native.alias(
         name = "com_google_errorprone__error_prone_annotations",
         actual = ":com_google_errorprone__error_prone_annotations__2_2_0",
@@ -760,6 +797,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.errorprone:error_prone_annotations:2.2.0
+    # This is a dependency of 'com.google.guava:guava:27.0.1-jre'.
     java_import(
         name = "com_google_errorprone__error_prone_annotations__2_2_0",
         jars = ["@com_google_errorprone__error_prone_annotations__2_2_0//file"],
@@ -772,6 +810,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.guava:failureaccess:1.0.1
+    # This is a dependency of 'com.google.guava:guava:27.0.1-jre'.
     native.alias(
         name = "com_google_guava__failureaccess",
         actual = ":com_google_guava__failureaccess__1_0_1",
@@ -779,6 +818,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.guava:failureaccess:1.0.1
+    # This is a dependency of 'com.google.guava:guava:27.0.1-jre'.
     java_import(
         name = "com_google_guava__failureaccess__1_0_1",
         jars = ["@com_google_guava__failureaccess__1_0_1//file"],
@@ -791,6 +831,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.guava:guava:27.0.1-jre
+    # This is a root requested Maven artifact.
     native.alias(
         name = "com_google_guava__guava",
         actual = ":com_google_guava__guava__27_0_1_jre",
@@ -798,6 +839,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.guava:guava:27.0.1-jre
+    # This is a root requested Maven artifact.
     java_import(
         name = "com_google_guava__guava__27_0_1_jre",
         jars = ["@com_google_guava__guava__27_0_1_jre//file"],
@@ -826,6 +868,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
+    # This is a dependency of 'com.google.guava:guava:27.0.1-jre'.
     native.alias(
         name = "com_google_guava__listenablefuture",
         actual = ":com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava",
@@ -833,6 +876,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
+    # This is a dependency of 'com.google.guava:guava:27.0.1-jre'.
     java_import(
         name = "com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava",
         jars = ["@com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava//file"],
@@ -845,6 +889,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.j2objc:j2objc-annotations:1.1
+    # This is a dependency of 'com.google.guava:guava:27.0.1-jre'.
     native.alias(
         name = "com_google_j2objc__j2objc_annotations",
         actual = ":com_google_j2objc__j2objc_annotations__1_1",
@@ -852,6 +897,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.j2objc:j2objc-annotations:1.1
+    # This is a dependency of 'com.google.guava:guava:27.0.1-jre'.
     java_import(
         name = "com_google_j2objc__j2objc_annotations__1_1",
         jars = ["@com_google_j2objc__j2objc_annotations__1_1//file"],
@@ -864,6 +910,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from commons-codec:commons-codec:1.9
+    # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.3'.
     native.alias(
         name = "commons_codec__commons_codec",
         actual = ":commons_codec__commons_codec__1_9",
@@ -871,6 +918,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from commons-codec:commons-codec:1.9
+    # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.3'.
     java_import(
         name = "commons_codec__commons_codec__1_9",
         jars = ["@commons_codec__commons_codec__1_9//file"],
@@ -883,6 +931,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from commons-logging:commons-logging:1.2
+    # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.3'.
     native.alias(
         name = "commons_logging__commons_logging",
         actual = ":commons_logging__commons_logging__1_2",
@@ -890,6 +939,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from commons-logging:commons-logging:1.2
+    # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.3'.
     java_import(
         name = "commons_logging__commons_logging__1_2",
         jars = ["@commons_logging__commons_logging__1_2//file"],
@@ -902,6 +952,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from junit:junit:4.12
+    # This is a root requested Maven artifact.
     native.alias(
         name = "junit__junit",
         actual = ":junit__junit__4_12",
@@ -909,6 +960,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from junit:junit:4.12
+    # This is a root requested Maven artifact.
     java_import(
         name = "junit__junit__4_12",
         jars = ["@junit__junit__4_12//file"],
@@ -921,6 +973,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from net.bytebuddy:byte-buddy-agent:1.9.3
+    # This is a dependency of 'org.mockito:mockito-core:2.23.4'.
     native.alias(
         name = "net_bytebuddy__byte_buddy_agent",
         actual = ":net_bytebuddy__byte_buddy_agent__1_9_3",
@@ -928,6 +981,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from net.bytebuddy:byte-buddy-agent:1.9.3
+    # This is a dependency of 'org.mockito:mockito-core:2.23.4'.
     java_import(
         name = "net_bytebuddy__byte_buddy_agent__1_9_3",
         jars = ["@net_bytebuddy__byte_buddy_agent__1_9_3//file"],
@@ -940,6 +994,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from net.bytebuddy:byte-buddy:1.9.3
+    # This is a dependency of 'org.mockito:mockito-core:2.23.4'.
     native.alias(
         name = "net_bytebuddy__byte_buddy",
         actual = ":net_bytebuddy__byte_buddy__1_9_3",
@@ -947,6 +1002,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from net.bytebuddy:byte-buddy:1.9.3
+    # This is a dependency of 'org.mockito:mockito-core:2.23.4'.
     java_import(
         name = "net_bytebuddy__byte_buddy__1_9_3",
         jars = ["@net_bytebuddy__byte_buddy__1_9_3//file"],
@@ -959,6 +1015,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.apache.commons:commons-lang3:3.8.1
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'org.apache.maven:maven-artifact:3.5.0'.
     native.alias(
         name = "org_apache_commons__commons_lang3",
         actual = ":org_apache_commons__commons_lang3__3_8_1",
@@ -966,6 +1024,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.apache.commons:commons-lang3:3.8.1
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'org.apache.maven:maven-artifact:3.5.0'.
     java_import(
         name = "org_apache_commons__commons_lang3__3_8_1",
         jars = ["@org_apache_commons__commons_lang3__3_8_1//file"],
@@ -978,6 +1038,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.apache.httpcomponents:httpclient:4.5.3
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-http:1.1.0'.
     native.alias(
         name = "org_apache_httpcomponents__httpclient",
         actual = ":org_apache_httpcomponents__httpclient__4_5_3",
@@ -985,6 +1047,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.apache.httpcomponents:httpclient:4.5.3
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-http:1.1.0'.
     java_import(
         name = "org_apache_httpcomponents__httpclient__4_5_3",
         jars = ["@org_apache_httpcomponents__httpclient__4_5_3//file"],
@@ -1005,6 +1069,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.apache.httpcomponents:httpcore:4.4.6
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.3'.
     native.alias(
         name = "org_apache_httpcomponents__httpcore",
         actual = ":org_apache_httpcomponents__httpcore__4_4_6",
@@ -1012,6 +1078,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.apache.httpcomponents:httpcore:4.4.6
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.3'.
     java_import(
         name = "org_apache_httpcomponents__httpcore__4_4_6",
         jars = ["@org_apache_httpcomponents__httpcore__4_4_6//file"],
@@ -1024,6 +1092,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.apache.maven.wagon:wagon-provider-api:1.0
+    # This is a dependency of 'org.eclipse.aether:aether-transport-wagon:1.1.0'.
     native.alias(
         name = "org_apache_maven_wagon__wagon_provider_api",
         actual = ":org_apache_maven_wagon__wagon_provider_api__1_0",
@@ -1031,6 +1100,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.apache.maven.wagon:wagon-provider-api:1.0
+    # This is a dependency of 'org.eclipse.aether:aether-transport-wagon:1.1.0'.
     java_import(
         name = "org_apache_maven_wagon__wagon_provider_api__1_0",
         jars = ["@org_apache_maven_wagon__wagon_provider_api__1_0//file"],
@@ -1043,6 +1113,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.apache.maven:maven-aether-provider:3.2.3
+    # This is a root requested Maven artifact.
     native.alias(
         name = "org_apache_maven__maven_aether_provider",
         actual = ":org_apache_maven__maven_aether_provider__3_2_3",
@@ -1050,6 +1121,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.apache.maven:maven-aether-provider:3.2.3
+    # This is a root requested Maven artifact.
     java_import(
         name = "org_apache_maven__maven_aether_provider__3_2_3",
         jars = ["@org_apache_maven__maven_aether_provider__3_2_3//file"],
@@ -1082,6 +1154,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.apache.maven:maven-artifact:3.5.0
+    # This is a root requested Maven artifact.
     native.alias(
         name = "org_apache_maven__maven_artifact",
         actual = ":org_apache_maven__maven_artifact__3_5_0",
@@ -1089,6 +1162,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.apache.maven:maven-artifact:3.5.0
+    # This is a root requested Maven artifact.
     java_import(
         name = "org_apache_maven__maven_artifact__3_5_0",
         jars = ["@org_apache_maven__maven_artifact__3_5_0//file"],
@@ -1107,6 +1181,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.apache.maven:maven-model-builder:3.2.3
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
     native.alias(
         name = "org_apache_maven__maven_model_builder",
         actual = ":org_apache_maven__maven_model_builder__3_2_3",
@@ -1114,6 +1190,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.apache.maven:maven-model-builder:3.2.3
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
     java_import(
         name = "org_apache_maven__maven_model_builder__3_2_3",
         jars = ["@org_apache_maven__maven_model_builder__3_2_3//file"],
@@ -1136,6 +1214,9 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.apache.maven:maven-model:3.2.3
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
     native.alias(
         name = "org_apache_maven__maven_model",
         actual = ":org_apache_maven__maven_model__3_2_3",
@@ -1143,6 +1224,9 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.apache.maven:maven-model:3.2.3
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
     java_import(
         name = "org_apache_maven__maven_model__3_2_3",
         jars = ["@org_apache_maven__maven_model__3_2_3//file"],
@@ -1155,6 +1239,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.apache.maven:maven-repository-metadata:3.2.3
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
     native.alias(
         name = "org_apache_maven__maven_repository_metadata",
         actual = ":org_apache_maven__maven_repository_metadata__3_2_3",
@@ -1162,6 +1248,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.apache.maven:maven-repository-metadata:3.2.3
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
     java_import(
         name = "org_apache_maven__maven_repository_metadata__3_2_3",
         jars = ["@org_apache_maven__maven_repository_metadata__3_2_3//file"],
@@ -1174,6 +1262,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.checkerframework:checker-qual:2.5.2
+    # This is a dependency of 'com.google.guava:guava:27.0.1-jre'.
     native.alias(
         name = "org_checkerframework__checker_qual",
         actual = ":org_checkerframework__checker_qual__2_5_2",
@@ -1181,6 +1270,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.checkerframework:checker-qual:2.5.2
+    # This is a dependency of 'com.google.guava:guava:27.0.1-jre'.
     java_import(
         name = "org_checkerframework__checker_qual__2_5_2",
         jars = ["@org_checkerframework__checker_qual__2_5_2//file"],
@@ -1193,6 +1283,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.codehaus.mojo:animal-sniffer-annotations:1.17
+    # This is a dependency of 'com.google.guava:guava:27.0.1-jre'.
     native.alias(
         name = "org_codehaus_mojo__animal_sniffer_annotations",
         actual = ":org_codehaus_mojo__animal_sniffer_annotations__1_17",
@@ -1200,6 +1291,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.codehaus.mojo:animal-sniffer-annotations:1.17
+    # This is a dependency of 'com.google.guava:guava:27.0.1-jre'.
     java_import(
         name = "org_codehaus_mojo__animal_sniffer_annotations__1_17",
         jars = ["@org_codehaus_mojo__animal_sniffer_annotations__1_17//file"],
@@ -1212,6 +1304,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.codehaus.plexus:plexus-component-annotations:1.5.5
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
     native.alias(
         name = "org_codehaus_plexus__plexus_component_annotations",
         actual = ":org_codehaus_plexus__plexus_component_annotations__1_5_5",
@@ -1219,6 +1313,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.codehaus.plexus:plexus-component-annotations:1.5.5
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
     java_import(
         name = "org_codehaus_plexus__plexus_component_annotations__1_5_5",
         jars = ["@org_codehaus_plexus__plexus_component_annotations__1_5_5//file"],
@@ -1231,6 +1327,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.codehaus.plexus:plexus-interpolation:1.24
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.2.3'.
     native.alias(
         name = "org_codehaus_plexus__plexus_interpolation",
         actual = ":org_codehaus_plexus__plexus_interpolation__1_24",
@@ -1238,6 +1336,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.codehaus.plexus:plexus-interpolation:1.24
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.2.3'.
     java_import(
         name = "org_codehaus_plexus__plexus_interpolation__1_24",
         jars = ["@org_codehaus_plexus__plexus_interpolation__1_24//file"],
@@ -1250,6 +1350,13 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.codehaus.plexus:plexus-utils:3.0.24
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-model:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-artifact:3.5.0'.
+    # This is a dependency of 'org.apache.maven:maven-repository-metadata:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.apache.maven.wagon:wagon-provider-api:1.0'.
     native.alias(
         name = "org_codehaus_plexus__plexus_utils",
         actual = ":org_codehaus_plexus__plexus_utils__3_0_24",
@@ -1257,6 +1364,13 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.codehaus.plexus:plexus-utils:3.0.24
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-model:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-artifact:3.5.0'.
+    # This is a dependency of 'org.apache.maven:maven-repository-metadata:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.apache.maven.wagon:wagon-provider-api:1.0'.
     java_import(
         name = "org_codehaus_plexus__plexus_utils__3_0_24",
         jars = ["@org_codehaus_plexus__plexus_utils__3_0_24//file"],
@@ -1269,6 +1383,16 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.eclipse.aether:aether-api:1.1.0
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-http:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-impl:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-spi:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-wagon:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-connector-basic:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-util:1.1.0'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-file:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-classpath:1.1.0'.
     native.alias(
         name = "org_eclipse_aether__aether_api",
         actual = ":org_eclipse_aether__aether_api__1_1_0",
@@ -1276,6 +1400,16 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.eclipse.aether:aether-api:1.1.0
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-http:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-impl:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-spi:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-wagon:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-connector-basic:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-util:1.1.0'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-file:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-classpath:1.1.0'.
     java_import(
         name = "org_eclipse_aether__aether_api__1_1_0",
         jars = ["@org_eclipse_aether__aether_api__1_1_0//file"],
@@ -1288,6 +1422,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.eclipse.aether:aether-connector-basic:1.1.0
+    # This is a root requested Maven artifact.
     native.alias(
         name = "org_eclipse_aether__aether_connector_basic",
         actual = ":org_eclipse_aether__aether_connector_basic__1_1_0",
@@ -1295,6 +1430,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.eclipse.aether:aether-connector-basic:1.1.0
+    # This is a root requested Maven artifact.
     java_import(
         name = "org_eclipse_aether__aether_connector_basic__1_1_0",
         jars = ["@org_eclipse_aether__aether_connector_basic__1_1_0//file"],
@@ -1315,6 +1451,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.eclipse.aether:aether-impl:1.1.0
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
     native.alias(
         name = "org_eclipse_aether__aether_impl",
         actual = ":org_eclipse_aether__aether_impl__1_1_0",
@@ -1322,6 +1460,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.eclipse.aether:aether-impl:1.1.0
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
     java_import(
         name = "org_eclipse_aether__aether_impl__1_1_0",
         jars = ["@org_eclipse_aether__aether_impl__1_1_0//file"],
@@ -1342,6 +1482,14 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.eclipse.aether:aether-spi:1.1.0
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-http:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-impl:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-wagon:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-connector-basic:1.1.0'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-file:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-classpath:1.1.0'.
     native.alias(
         name = "org_eclipse_aether__aether_spi",
         actual = ":org_eclipse_aether__aether_spi__1_1_0",
@@ -1349,6 +1497,14 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.eclipse.aether:aether-spi:1.1.0
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-http:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-impl:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-wagon:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-connector-basic:1.1.0'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-file:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-classpath:1.1.0'.
     java_import(
         name = "org_eclipse_aether__aether_spi__1_1_0",
         jars = ["@org_eclipse_aether__aether_spi__1_1_0//file"],
@@ -1361,6 +1517,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.eclipse.aether:aether-transport-classpath:1.1.0
+    # This is a root requested Maven artifact.
     native.alias(
         name = "org_eclipse_aether__aether_transport_classpath",
         actual = ":org_eclipse_aether__aether_transport_classpath__1_1_0",
@@ -1368,6 +1525,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.eclipse.aether:aether-transport-classpath:1.1.0
+    # This is a root requested Maven artifact.
     java_import(
         name = "org_eclipse_aether__aether_transport_classpath__1_1_0",
         jars = ["@org_eclipse_aether__aether_transport_classpath__1_1_0//file"],
@@ -1388,6 +1546,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.eclipse.aether:aether-transport-file:1.1.0
+    # This is a root requested Maven artifact.
     native.alias(
         name = "org_eclipse_aether__aether_transport_file",
         actual = ":org_eclipse_aether__aether_transport_file__1_1_0",
@@ -1395,6 +1554,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.eclipse.aether:aether-transport-file:1.1.0
+    # This is a root requested Maven artifact.
     java_import(
         name = "org_eclipse_aether__aether_transport_file__1_1_0",
         jars = ["@org_eclipse_aether__aether_transport_file__1_1_0//file"],
@@ -1415,6 +1575,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.eclipse.aether:aether-transport-http:1.1.0
+    # This is a root requested Maven artifact.
     native.alias(
         name = "org_eclipse_aether__aether_transport_http",
         actual = ":org_eclipse_aether__aether_transport_http__1_1_0",
@@ -1422,6 +1583,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.eclipse.aether:aether-transport-http:1.1.0
+    # This is a root requested Maven artifact.
     java_import(
         name = "org_eclipse_aether__aether_transport_http__1_1_0",
         jars = ["@org_eclipse_aether__aether_transport_http__1_1_0//file"],
@@ -1446,6 +1608,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.eclipse.aether:aether-transport-wagon:1.1.0
+    # This is a root requested Maven artifact.
     native.alias(
         name = "org_eclipse_aether__aether_transport_wagon",
         actual = ":org_eclipse_aether__aether_transport_wagon__1_1_0",
@@ -1453,6 +1616,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.eclipse.aether:aether-transport-wagon:1.1.0
+    # This is a root requested Maven artifact.
     java_import(
         name = "org_eclipse_aether__aether_transport_wagon__1_1_0",
         jars = ["@org_eclipse_aether__aether_transport_wagon__1_1_0//file"],
@@ -1475,6 +1639,14 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.eclipse.aether:aether-util:1.1.0
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-http:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-impl:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-wagon:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-connector-basic:1.1.0'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-file:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-classpath:1.1.0'.
     native.alias(
         name = "org_eclipse_aether__aether_util",
         actual = ":org_eclipse_aether__aether_util__1_1_0",
@@ -1482,6 +1654,14 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.eclipse.aether:aether-util:1.1.0
+    # This is a root requested Maven artifact.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-http:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-impl:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-wagon:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-connector-basic:1.1.0'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-file:1.1.0'.
+    # This is a dependency of 'org.eclipse.aether:aether-transport-classpath:1.1.0'.
     java_import(
         name = "org_eclipse_aether__aether_util__1_1_0",
         jars = ["@org_eclipse_aether__aether_util__1_1_0//file"],
@@ -1494,6 +1674,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.hamcrest:hamcrest-core:1.3
+    # This is a dependency of 'junit:junit:4.12'.
     native.alias(
         name = "org_hamcrest__hamcrest_core",
         actual = ":org_hamcrest__hamcrest_core__1_3",
@@ -1501,6 +1682,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.hamcrest:hamcrest-core:1.3
+    # This is a dependency of 'junit:junit:4.12'.
     java_import(
         name = "org_hamcrest__hamcrest_core__1_3",
         jars = ["@org_hamcrest__hamcrest_core__1_3//file"],
@@ -1513,6 +1695,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.mockito:mockito-core:2.23.4
+    # This is a root requested Maven artifact.
     native.alias(
         name = "org_mockito__mockito_core",
         actual = ":org_mockito__mockito_core__2_23_4",
@@ -1520,6 +1703,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.mockito:mockito-core:2.23.4
+    # This is a root requested Maven artifact.
     java_import(
         name = "org_mockito__mockito_core__2_23_4",
         jars = ["@org_mockito__mockito_core__2_23_4//file"],
@@ -1540,6 +1724,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.objenesis:objenesis:2.6
+    # This is a dependency of 'org.mockito:mockito-core:2.23.4'.
     native.alias(
         name = "org_objenesis__objenesis",
         actual = ":org_objenesis__objenesis__2_6",
@@ -1547,6 +1732,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.objenesis:objenesis:2.6
+    # This is a dependency of 'org.mockito:mockito-core:2.23.4'.
     java_import(
         name = "org_objenesis__objenesis__2_6",
         jars = ["@org_objenesis__objenesis__2_6//file"],
@@ -1559,6 +1745,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.slf4j:jcl-over-slf4j:1.6.2
+    # This is a dependency of 'org.eclipse.aether:aether-transport-http:1.1.0'.
     native.alias(
         name = "org_slf4j__jcl_over_slf4j",
         actual = ":org_slf4j__jcl_over_slf4j__1_6_2",
@@ -1566,6 +1753,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.slf4j:jcl-over-slf4j:1.6.2
+    # This is a dependency of 'org.eclipse.aether:aether-transport-http:1.1.0'.
     java_import(
         name = "org_slf4j__jcl_over_slf4j__1_6_2",
         jars = ["@org_slf4j__jcl_over_slf4j__1_6_2//file"],
@@ -1578,6 +1766,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.slf4j:slf4j-api:1.7.25
+    # This is a dependency of 'org.slf4j:jcl-over-slf4j:1.6.2'.
+    # This is a dependency of 'org.slf4j:slf4j-nop:1.7.25'.
     native.alias(
         name = "org_slf4j__slf4j_api",
         actual = ":org_slf4j__slf4j_api__1_7_25",
@@ -1585,6 +1775,8 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.slf4j:slf4j-api:1.7.25
+    # This is a dependency of 'org.slf4j:jcl-over-slf4j:1.6.2'.
+    # This is a dependency of 'org.slf4j:slf4j-nop:1.7.25'.
     java_import(
         name = "org_slf4j__slf4j_api__1_7_25",
         jars = ["@org_slf4j__slf4j_api__1_7_25//file"],
@@ -1597,6 +1789,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.slf4j:slf4j-nop:1.7.25
+    # This is a root requested Maven artifact.
     native.alias(
         name = "org_slf4j__slf4j_nop",
         actual = ":org_slf4j__slf4j_nop__1_7_25",
@@ -1604,6 +1797,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.slf4j:slf4j-nop:1.7.25
+    # This is a root requested Maven artifact.
     java_import(
         name = "org_slf4j__slf4j_nop__1_7_25",
         jars = ["@org_slf4j__slf4j_nop__1_7_25//file"],

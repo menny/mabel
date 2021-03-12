@@ -3,23 +3,42 @@ package net.evendanan.bazel.mvn;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 import com.google.common.base.Charsets;
-import net.evendanan.bazel.mvn.api.*;
+
+import net.evendanan.bazel.mvn.api.DependencyTools;
+import net.evendanan.bazel.mvn.api.GraphMerger;
+import net.evendanan.bazel.mvn.api.RuleWriter;
+import net.evendanan.bazel.mvn.api.Target;
+import net.evendanan.bazel.mvn.api.TargetsBuilder;
 import net.evendanan.bazel.mvn.api.model.Dependency;
+import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import net.evendanan.bazel.mvn.api.model.Resolution;
 import net.evendanan.bazel.mvn.api.serialization.Serialization;
 import net.evendanan.bazel.mvn.impl.RuleClassifiers;
 import net.evendanan.bazel.mvn.impl.RuleWriters;
 import net.evendanan.bazel.mvn.impl.TargetsBuilders;
-import net.evendanan.bazel.mvn.merger.*;
+import net.evendanan.bazel.mvn.merger.ArtifactDownloader;
+import net.evendanan.bazel.mvn.merger.ClearSrcJarAttribute;
+import net.evendanan.bazel.mvn.merger.DefaultMerger;
+import net.evendanan.bazel.mvn.merger.DependencyToolsWithPrefix;
+import net.evendanan.bazel.mvn.merger.GraphVerifications;
+import net.evendanan.bazel.mvn.merger.PublicTargetsCategory;
+import net.evendanan.bazel.mvn.merger.SourcesJarLocator;
+import net.evendanan.bazel.mvn.merger.TargetCommenter;
 import net.evendanan.timing.ProgressTimer;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.URI;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -124,14 +143,18 @@ public class Merger {
         if (options.fetch_srcjar) {
             System.out.print("Locating sources JARs for resolved dependencies...");
             dependencies = new SourcesJarLocator().fillSourcesAttribute(dependencies);
-            System.out.println("✓");
         } else {
             System.out.print("Clearing srcjar...");
             dependencies = ClearSrcJarAttribute.clearSrcJar(dependencies);
-            System.out.println("✓");
         }
+        System.out.println("✓");
 
-        driver.writeResults(resolutions, dependencies, downloader, options, dependencyTools);
+        driver.writeResults(
+                resolutions.stream().map(Resolution::rootDependency).collect(Collectors.toSet()),
+                dependencies,
+                downloader,
+                options,
+                dependencyTools);
 
         if (!options.output_pretty_dep_graph_filename.isEmpty()) {
             File prettyOutput =
@@ -182,11 +205,10 @@ public class Merger {
                             }
                         });
 
-                System.out.println(
-                        String.format(
-                                Locale.ROOT,
-                                "Stored textual dependencies graph at %s",
-                                prettyOutput.getAbsolutePath()));
+                System.out.printf(
+                        Locale.ROOT,
+                        "Stored textual dependencies graph at %s%n",
+                        prettyOutput.getAbsolutePath());
             }
         }
     }
@@ -217,7 +239,7 @@ public class Merger {
     }
 
     private Collection<Resolution> readResolutions(CommandLineOptions options) {
-        System.out.print(String.format("Reading %s root artifacts...", options.artifacts.size()));
+        System.out.printf(Locale.ROOT, "Reading %s root artifacts...", options.artifacts.size());
 
         final Serialization serialization = new Serialization();
         final List<Resolution> resolutions =
@@ -239,14 +261,14 @@ public class Merger {
     }
 
     private Collection<Dependency> mergeResolutions(Collection<Resolution> resolutions) {
-        System.out.print(String.format("Merging %s root dependencies...", resolutions.size()));
+        System.out.printf(Locale.ROOT, "Merging %s root dependencies...", resolutions.size());
         final Collection<Dependency> merged = merger.mergeGraphs(resolutions);
         System.out.println("✓");
         return merged;
     }
 
     private void writeResults(
-            Collection<Resolution> resolutions,
+            Set<MavenCoordinate> rootDependencies,
             Collection<Dependency> resolvedDependencies,
             final Function<Dependency, URI> downloader,
             final CommandLineOptions options,
@@ -291,10 +313,9 @@ public class Merger {
             fileWriter.append(NEW_LINE);
         }
 
-        System.out.println(
-                String.format("Processing %s targets rules...", resolvedDependencies.size()));
+        System.out.printf(Locale.ROOT, "Processing %d targets rules...%n", resolvedDependencies.size());
 
-        final Function<Dependency, TargetsBuilder> ruleMapper = buildRuleMapper(downloader);
+        final Function<Dependency, TargetsBuilder> ruleMapper = buildRuleMapper(downloader, rootDependencies, resolvedDependencies);
         final TargetsBuilder fileImporter =
                 new TargetsBuilders.HttpTargetsBuilder(options.calculate_sha, downloader);
         ProgressTimer timer =
@@ -327,9 +348,7 @@ public class Merger {
         final Function<Target, Target> visibilityFixer =
                 PublicTargetsCategory.create(
                         options.public_targets_category,
-                        resolutions.stream()
-                                .map(Resolution::rootDependency)
-                                .collect(Collectors.toList()),
+                        rootDependencies,
                         resolvedDependencies);
 
         List<Target> targets =
@@ -347,15 +366,19 @@ public class Merger {
     }
 
     private Function<Dependency, TargetsBuilder> buildRuleMapper(
-            final Function<Dependency, URI> downloader) {
+            final Function<Dependency, URI> downloader,
+            Set<MavenCoordinate> rootCoordinates,
+            Collection<Dependency> resolvedDependencies) {
+        TargetCommenter commenter = new TargetCommenter(rootCoordinates, resolvedDependencies);
         return dependency ->
-                RuleClassifiers.priorityRuleClassifier(
+                commenter.createTargetBuilder(
+                        RuleClassifiers.priorityRuleClassifier(
                         Arrays.asList(
                                 new RuleClassifiers.PomClassifier(),
                                 new RuleClassifiers.JarClassifier(new RuleClassifiers.JarInspector(downloader)::findAllPossibleBuilders),
                                 new RuleClassifiers.AarClassifier()),
                         TargetsBuilders.JAVA_IMPORT,
-                        dependency);
+                        dependency));
     }
 
     private static class TargetsToWrite {

@@ -153,7 +153,6 @@ java_library(
     srcs = glob(["src/main/java/net/evendanan/bazel/mvn/impl/*.java"]),
     resource_strip_prefix = "resolver/src/main/java/net/evendanan/bazel/mvn/impl",
     resources = [
-        "src/main/java/net/evendanan/bazel/mvn/impl/dependencies-header.bzl.template",
         "src/main/java/net/evendanan/bazel/mvn/impl/dependencies-http-repo-rules.bzl.template",
         "src/main/java/net/evendanan/bazel/mvn/impl/dependencies-sub-folder-header.bzl.template",
         "src/main/java/net/evendanan/bazel/mvn/impl/dependencies-targets-macro.bzl.template",
@@ -462,6 +461,20 @@ java_test(
     size = "small",
     srcs = ["src/main/javatest/net/evendanan/bazel/mvn/merger/SourcesLocatorTest.java"],
     test_class = "net.evendanan.bazel.mvn.merger.SourcesLocatorTest",
+    deps = [
+        ":api_lib",
+        ":merger",
+        "//resolver/main_deps/com/google/guava/guava",
+        "//resolver/main_deps/junit/junit",
+        "//resolver/main_deps/org/mockito/mockito-core",
+    ],
+)
+
+java_test(
+    name = "general_commenter_test",
+    size = "small",
+    srcs = ["src/main/javatest/net/evendanan/bazel/mvn/merger/TargetCommenterTest.java"],
+    test_class = "net.evendanan.bazel.mvn.merger.TargetCommenterTest",
     deps = [
         ":api_lib",
         ":merger",

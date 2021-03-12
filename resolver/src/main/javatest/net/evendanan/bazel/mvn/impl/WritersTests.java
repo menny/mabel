@@ -167,6 +167,8 @@ public class WritersTests {
                     "    \"\"\"\n" +
                     "\n" +
                     "    # from net.evendanan.dep1:artifact:1.2.3\n" +
+                    "    # comment one\n" +
+                    "    # comment two\n" +
                     "    rule(\n" +
                     "        name = \"name_name_1\",\n" +
                     "    )\n" +
@@ -527,10 +529,11 @@ public class WritersTests {
         File outputFile = File.createTempFile("testRepositoryRulesMacroWriter", ".bzl");
         RuleWriters.TransitiveRulesMacroWriter writer =
                 new RuleWriters.TransitiveRulesMacroWriter(outputFile, "macro_name");
-        writer.write(
-                Arrays.asList(
-                        new Target("net.evendanan.dep1:artifact:1.2.3", "rule", "name_name_1"),
-                        new Target("net.evendanan.dep2:artifact:2.0", "rule", "name_name_2")));
+        Target targetWithComment = new Target("net.evendanan.dep1:artifact:1.2.3", "rule", "name_name_1");
+        targetWithComment.addComment("comment one");
+        targetWithComment.addComment("comment two");
+        Target targetWithoutComment = new Target("net.evendanan.dep2:artifact:2.0", "rule", "name_name_2");
+        writer.write(Arrays.asList(targetWithComment, targetWithoutComment));
 
         Assert.assertEquals(TRANSITIVE_TARGETS_MACRO_OUTPUT, readFileContents(outputFile));
     }
