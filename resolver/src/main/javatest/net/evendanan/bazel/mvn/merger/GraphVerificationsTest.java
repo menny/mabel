@@ -23,6 +23,7 @@ public class GraphVerificationsTest {
                                         .mavenCoordinate(
                                                 MavenCoordinate.create(
                                                         "net.evendanan", "dep1", "0.1", ""))
+                                        .url("https://example.com/dep1.jar")
                                         .dependencies(
                                                 Collections.singleton(
                                                         MavenCoordinate.create(
@@ -47,16 +48,19 @@ public class GraphVerificationsTest {
                                                                 "inner-inner2",
                                                                 "0.1",
                                                                 "")))
+                                        .url("https://example.com/dep1.jar")
                                         .build(),
                                 Dependency.builder()
                                         .mavenCoordinate(
                                                 MavenCoordinate.create(
                                                         "net.evendanan", "inner-inner1", "0.1", ""))
+                                        .url("https://example.com/dep1.jar")
                                         .build(),
                                 Dependency.builder()
                                         .mavenCoordinate(
                                                 MavenCoordinate.create(
                                                         "net.evendanan", "inner-inner2", "0.1", ""))
+                                        .url("https://example.com/dep1.jar")
                                         .build()));
     }
 
@@ -321,4 +325,23 @@ public class GraphVerificationsTest {
                                                 "net.evendanan", "inner-inner2", "0.1", ""))
                                 .build()));
     }
+
+    @Test
+    public void testRootResolved_HappyPath() {
+        GraphVerifications.checkResolutionSuccess(mBasicResolution);
+    }
+
+    @Test(expected = GraphVerifications.InvalidGraphException.class)
+    public void testRootResolved_MissingUrl() {
+        final MavenCoordinate root = MavenCoordinate.create("net.evendanan", "dep1", "0.1", "");
+        Resolution resolution =
+                Resolution.create(
+                        root,
+                        Collections.singletonList(
+                                Dependency.builder()
+                                        .mavenCoordinate(root)
+                                        .build()));
+        GraphVerifications.checkResolutionSuccess(resolution);
+    }
+
 }

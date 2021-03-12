@@ -147,7 +147,12 @@ class Adapters {
                 final Type type,
                 final JsonDeserializationContext context)
                 throws JsonParseException {
-            return License.valueOf(License.class, jsonElement.getAsString());
+            JsonObject jsonObject = jsonElement.getAsJsonObject();
+
+            final String name = jsonObject.get("n").getAsString();
+            final String url = jsonObject.get("u").getAsString();
+
+            return License.create(name, url);
         }
     }
 
@@ -158,7 +163,11 @@ class Adapters {
                 final License license,
                 final Type type,
                 final JsonSerializationContext jsonSerializationContext) {
-            return new JsonPrimitive(license.name());
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("n", license.name());
+            jsonObject.addProperty("u", license.url());
+
+            return jsonObject;
         }
     }
 }

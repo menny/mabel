@@ -1,13 +1,16 @@
 package net.evendanan.bazel.mvn.api;
 
-import com.google.common.base.Strings;
 import net.evendanan.bazel.mvn.api.model.License;
+
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.regex.Pattern;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.regex.Pattern;
 
 import static java.util.regex.Pattern.CASE_INSENSITIVE;
 
@@ -15,132 +18,84 @@ import static java.util.regex.Pattern.CASE_INSENSITIVE;
  * Types of licenses. Taken from https://docs.bazel.build/versions/master/be/functions.html#licenses
  */
 public final class LicenseTools {
-    // notice licenses
-    private static Pattern APACHE = Pattern.compile(".*Apache.*", CASE_INSENSITIVE);
-    private static Pattern APACHE_ASF_LICENSE = Pattern.compile(".*ASF.*License.*");
-    private static Pattern APACHE_ASF = Pattern.compile(".*ASF.*2.*");
-    private static Pattern MIT = Pattern.compile(".*MIT.*");
-    private static Pattern BSD = Pattern.compile(".*BSD.*");
-    private static Pattern FACEBOOK = Pattern.compile(".*Facebook.*License.*");
-    private static Pattern JSON = Pattern.compile(".*JSON.*License.*");
-    private static Pattern BOUNCY_CASTLE = Pattern.compile(".*Bouncy.*Castle.*");
-    private static Pattern CDDL = Pattern.compile(".*CDDL.*");
-    private static Pattern COMMON_PUBLIC =
-            Pattern.compile(".*Common.+Public.+License.*", CASE_INSENSITIVE);
-    private static Pattern CDDL_FULL =
-            Pattern.compile(
-                    ".*COMMON.+DEVELOPMENT.+AND.+DISTRIBUTION.+LICENSE.*", CASE_INSENSITIVE);
-    private static Pattern GOOGLE_CLOUD =
-            Pattern.compile("Google Cloud Software License", CASE_INSENSITIVE);
-    private static Pattern INDIANA_U =
-            Pattern.compile(".*Indiana.+University.+License.*", CASE_INSENSITIVE);
-    private static Pattern ICU = Pattern.compile(".*ICU.+License.*");
+    private static final List<LicenseClassType> msKnownLicenses = Arrays.asList(
+            // notice licenses
+            type(Pattern.compile(".*Apache.*", CASE_INSENSITIVE), "Apache", License.Class.notice),
+            type(Pattern.compile(".*ASF.*License.*", CASE_INSENSITIVE), "Apache", License.Class.notice),
+            type(Pattern.compile(".*ASF.*2.*", CASE_INSENSITIVE), "Apache", License.Class.notice),
+            type(Pattern.compile(".*MIT.*"), "MIT", License.Class.notice),
+            type(Pattern.compile(".*BSD.*"), "BSD", License.Class.notice),
+            type(Pattern.compile(".*Facebook.*License.*", CASE_INSENSITIVE), "Facebook", License.Class.notice),
+            type(Pattern.compile(".*JSON.*License.*", CASE_INSENSITIVE), "JSON", License.Class.notice),
+            type(Pattern.compile(".*Bouncy.*Castle.*", CASE_INSENSITIVE), "Bouncy Castle", License.Class.notice),
+            type(Pattern.compile(".*CDDL.*"), "CDDL", License.Class.notice),
+            type(Pattern.compile(".*COMMON.+DEVELOPMENT.+AND.+DISTRIBUTION.+LICENSE.*", CASE_INSENSITIVE), "CDDL", License.Class.notice),
+            type(Pattern.compile(".*Common.+Public.+License.*", CASE_INSENSITIVE), "Common-Public", License.Class.notice),
+            type(Pattern.compile("Google Cloud Software License", CASE_INSENSITIVE), "Google Cloud", License.Class.notice),
+            type(Pattern.compile(".*Indiana.+University.+License.*", CASE_INSENSITIVE), "Indiana University", License.Class.notice),
+            type(Pattern.compile(".*ICU.+License.*", CASE_INSENSITIVE), "ICU", License.Class.notice),
+            // reciprocal licenses
+            type(Pattern.compile(".*Eclipse\\s+Public\\s+License.*\\s+.*[12].*", CASE_INSENSITIVE), "Eclipse", License.Class.reciprocal),
+            type(Pattern.compile(".*EPL\\s+.*1.*"), "Eclipse", License.Class.reciprocal),
+            type(Pattern.compile(".*Mozilla.*License.*", CASE_INSENSITIVE), "Mozilla", License.Class.reciprocal),
+            type(Pattern.compile(".*MPL.*1.1.*"), "Mozilla", License.Class.reciprocal),
 
-    // reciprocal licenses
-    private static Pattern ECLIPSE =
-            Pattern.compile(".*Eclipse\\s+Public\\s+License.*\\s+.*[12].*", CASE_INSENSITIVE);
-    private static Pattern EPL = Pattern.compile(".*EPL\\s+.*1.*");
-    private static Pattern MOZILLA_MPL = Pattern.compile(".*MPL.*1.1.*");
-    private static Pattern MOZILLA = Pattern.compile(".*Mozilla.*License.*", CASE_INSENSITIVE);
+            // restricted licenses
+            type(Pattern.compile(".*GNU.*"), "GPL", License.Class.restricted),
+            type(Pattern.compile(".*GPL.*"), "GPL", License.Class.restricted),
 
-    // restricted licenses
-    private static Pattern GNU = Pattern.compile(".*GNU.*");
-    private static Pattern LGPL_GPL = Pattern.compile(".*GPL.*");
+            // unencumbered licenses
+            type(Pattern.compile(".*CC0.*"), "CC0", License.Class.unencumbered),
+            type(Pattern.compile(".*Public.*Domain.*", CASE_INSENSITIVE), "Public-Domain", License.Class.unencumbered),
+            type(Pattern.compile(".*Android.*License.*", CASE_INSENSITIVE), "AOSP", License.Class.unencumbered),
+            type(Pattern.compile(".*provided.*without.*support.*or.*warranty.*", CASE_INSENSITIVE), "NO-WARRANTY", License.Class.unencumbered),
 
-    // unencumbered licenses
-    private static Pattern CC0 = Pattern.compile(".*CC0.*");
-    private static Pattern PUBLIC_DOMAIN = Pattern.compile(".*Public.*Domain.*", CASE_INSENSITIVE);
-    private static Pattern ANDROID_SDK = Pattern.compile(".*Android.*License.*", CASE_INSENSITIVE);
-    private static Pattern NO_WARRANTY =
-            Pattern.compile(".*provided.*without.*support.*or.*warranty.*", CASE_INSENSITIVE);
+            // permissive
+            type(Pattern.compile(".*WTFPL.*"), "WTFPL", License.Class.permissive)
+    );
 
-    // permissive
-    private static Pattern WTFPL = Pattern.compile(".*WTFPL.*");
+    private static LicenseClassType type(Pattern licenseNameRegex, String licenseType, License.Class licenseClass) {
+        return new LicenseClassType(licenseNameRegex, licenseType, licenseClass);
+    }
+
+    @Nonnull
+    public static String typeFromLicenseName(@Nullable final String licenseName) {
+        final String unknownType = "UNKNOWN";
+        if (StringUtils.isBlank(licenseName)) return unknownType;
+
+        return msKnownLicenses
+                .stream()
+                .filter(l -> l.licenseNameRegex.matcher(licenseName).find())
+                .findFirst()
+                .map(l -> l.licenseType)
+                .orElse(unknownType);
+    }
 
     /**
-     * Mapping between a license and its type. Data taken from
+     * Mapping between a license and its class. Data taken from
      * https://en.wikipedia.org/wiki/Comparison_of_free_and_open-source_software_licenses Or from
      * the licenses themselves. Or from https://source.bazel.build/search?q=licenses%20f:BUILD
      */
     @Nullable
-    public static License fromLicenseName(final String licenseName) {
-        if (Strings.isNullOrEmpty(licenseName)) return null;
-
-        return ifAnyMatch(
-                        License.notice,
-                        licenseName,
-                        APACHE,
-                        APACHE_ASF,
-                        APACHE_ASF_LICENSE,
-                        MIT,
-                        BSD,
-                        FACEBOOK,
-                        JSON,
-                        BOUNCY_CASTLE,
-                        COMMON_PUBLIC,
-                        CDDL,
-                        CDDL_FULL,
-                        GOOGLE_CLOUD,
-                        INDIANA_U,
-                        ICU)
-                .orElseGet(
-                        () ->
-                                ifAnyMatch(
-                                                License.reciprocal,
-                                                licenseName,
-                                                ECLIPSE,
-                                                EPL,
-                                                MOZILLA_MPL,
-                                                MOZILLA)
-                                        .orElseGet(
-                                                () ->
-                                                        ifAnyMatch(
-                                                                        License.restricted,
-                                                                        licenseName,
-                                                                        GNU,
-                                                                        LGPL_GPL)
-                                                                .orElseGet(
-                                                                        () ->
-                                                                                ifAnyMatch(
-                                                                                                License
-                                                                                                        .unencumbered,
-                                                                                                licenseName,
-                                                                                                CC0,
-                                                                                                PUBLIC_DOMAIN,
-                                                                                                ANDROID_SDK,
-                                                                                                NO_WARRANTY)
-                                                                                        .orElseGet(
-                                                                                                () ->
-                                                                                                        ifAnyMatch(
-                                                                                                                        License
-                                                                                                                                .permissive,
-                                                                                                                        licenseName,
-                                                                                                                        WTFPL)
-                                                                                                                .orElseGet(
-                                                                                                                        () -> {
-                                                                                                                            System
-                                                                                                                                    .out
-                                                                                                                                    .println(
-                                                                                                                                            String
-                                                                                                                                                    .format(
-                                                                                                                                                            Locale
-                                                                                                                                                                    .ROOT,
-                                                                                                                                                            "License with name '%s' is unrecognized.",
-                                                                                                                                                            licenseName));
-                                                                                                                            return null;
-                                                                                                                        })))));
+    public static License.Class classFromLicenseName(@Nullable final String licenseName) {
+        if (StringUtils.isBlank(licenseName)) return null;
+        return msKnownLicenses
+                .stream()
+                .filter(l -> l.licenseNameRegex.matcher(licenseName).find())
+                .findFirst()
+                .map(l -> l.licenseClass)
+                .orElse(null);
     }
 
-    private static Optional<License> ifAnyMatch(
-            @Nonnull final License license,
-            @Nonnull final String text,
-            @Nonnull Pattern... patterns) {
-        for (final Pattern pattern : patterns) {
-            if (pattern.matcher(text).find()) {
-                return Optional.of(license);
-            }
-        }
+    private static class LicenseClassType {
+        public final License.Class licenseClass;
+        public final String licenseType;
+        public final Pattern licenseNameRegex;
 
-        return Optional.empty();
+        private LicenseClassType(Pattern licenseNameRegex, String licenseType, License.Class licenseClass) {
+            this.licenseNameRegex = licenseNameRegex;
+            this.licenseType = licenseType;
+            this.licenseClass = licenseClass;
+        }
     }
 }

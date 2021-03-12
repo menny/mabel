@@ -5,6 +5,7 @@ import net.evendanan.bazel.mvn.api.TargetsBuilder;
 import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,21 +16,29 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class TargetCommenter {
-    private final Set<String> rootCoordinatesAsString;
-    private final Map<String, Set<String>> reverseDependencies;
+    private final List<String> rootCoordinatesAsString;
+    private final Map<String, List<String>> reverseDependencies;
 
     public TargetCommenter(Set<MavenCoordinate> rootCoordinates, Collection<Dependency> resolvedDependencies) {
         this.rootCoordinatesAsString = rootCoordinates
                 .stream()
                 .map(MavenCoordinate::toMavenString)
-                .collect(Collectors.toSet());
-        reverseDependencies = new HashMap<>();
+                .distinct()
+                .sorted()
+                .collect(Collectors.toList());
+        final Map<String, Set<String>> reverseDependenciesSet = new HashMap<>();
         resolvedDependencies.forEach(dependency -> {
             final String requesterMavenCoordinate = dependency.mavenCoordinate().toMavenString();
-            collectReverseDependencies(requesterMavenCoordinate, dependency.dependencies(), reverseDependencies);
-            collectReverseDependencies(requesterMavenCoordinate, dependency.exports(), reverseDependencies);
-            collectReverseDependencies(requesterMavenCoordinate, dependency.runtimeDependencies(), reverseDependencies);
+            collectReverseDependencies(requesterMavenCoordinate, dependency.dependencies(), reverseDependenciesSet);
+            collectReverseDependencies(requesterMavenCoordinate, dependency.exports(), reverseDependenciesSet);
+            collectReverseDependencies(requesterMavenCoordinate, dependency.runtimeDependencies(), reverseDependenciesSet);
         });
+
+        reverseDependencies = reverseDependenciesSet
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, v -> new ArrayList<>(v.getValue())));
+        reverseDependencies.entrySet().forEach(e -> e.getValue().sort(String::compareTo));
     }
 
     private static void collectReverseDependencies(String ownerKey, Collection<MavenCoordinate> deps, Map<String, Set<String>> reverseDependencies) {
@@ -54,7 +63,7 @@ public class TargetCommenter {
     }
 
     private void addRequiredByComment(Target target) {
-        final Set<String> requesters = reverseDependencies.get(target.getMavenCoordinates());
+        final List<String> requesters = reverseDependencies.get(target.getMavenCoordinates());
         if (requesters != null) {
             requesters.forEach(requester -> target.addComment(String.format(Locale.ROOT, "This is a dependency of '%s'.", requester)));
         }

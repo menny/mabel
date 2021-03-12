@@ -78,94 +78,150 @@ public class DependencyToolsTest {
     }
 
     @Test
-    public void testLicenseParsing() {
-        Assert.assertNull(LicenseTools.fromLicenseName(""));
-        Assert.assertNull(LicenseTools.fromLicenseName(null));
-        Assert.assertNull(LicenseTools.fromLicenseName("some-unknown-license"));
+    public void testLicenseTypeParsing() {
+        Assert.assertEquals("UNKNOWN", LicenseTools.typeFromLicenseName(""));
+        Assert.assertEquals("UNKNOWN", LicenseTools.typeFromLicenseName(null));
+        Assert.assertEquals("UNKNOWN", LicenseTools.typeFromLicenseName("some-unknown-license"));
 
-        Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("Apache 2.0"));
-        Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("Apache 2"));
-        Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("APACHE-2"));
-        Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("Apache License"));
+        Assert.assertEquals("Apache", LicenseTools.typeFromLicenseName("Apache 2.0"));
+        Assert.assertEquals("Apache", LicenseTools.typeFromLicenseName("Apache 2"));
+        Assert.assertEquals("Apache", LicenseTools.typeFromLicenseName("APACHE-2"));
+        Assert.assertEquals("Apache", LicenseTools.typeFromLicenseName("Apache License"));
+        Assert.assertEquals("Apache", LicenseTools.typeFromLicenseName("Similar to Apache License but with the acknowledgment clause removed"));
+        Assert.assertEquals("Apache", LicenseTools.typeFromLicenseName("ASF 2.0"));
+        Assert.assertEquals("Apache", LicenseTools.typeFromLicenseName("Apache License, Version 2.0"));
+        Assert.assertEquals("Apache", LicenseTools.typeFromLicenseName("The Apache Software License, Version 2.0"));
+        Assert.assertEquals("MIT", LicenseTools.typeFromLicenseName("The MIT License"));
+        Assert.assertEquals("MIT", LicenseTools.typeFromLicenseName("MIT License"));
+        Assert.assertEquals("MIT", LicenseTools.typeFromLicenseName("MIT"));
+        Assert.assertEquals("Bouncy Castle", LicenseTools.typeFromLicenseName("Bouncy Castle Licence"));
+        Assert.assertEquals("BSD", LicenseTools.typeFromLicenseName("New BSD License"));
+        Assert.assertEquals("BSD", LicenseTools.typeFromLicenseName("BSD 2-Clause License"));
+        Assert.assertEquals("BSD", LicenseTools.typeFromLicenseName("BSD License"));
+        Assert.assertEquals("Facebook", LicenseTools.typeFromLicenseName("Facebook Platform License"));
+        Assert.assertEquals("JSON", LicenseTools.typeFromLicenseName("The JSON License"));
+        Assert.assertEquals("Common-Public", LicenseTools.typeFromLicenseName("Common Public License Version 1.0"));
+        Assert.assertEquals("CDDL", LicenseTools.typeFromLicenseName("CDDL + GPLv2 with classpath exception"));
+        Assert.assertEquals("CDDL", LicenseTools.typeFromLicenseName("CDDL/GPLv2+CE"));
+        Assert.assertEquals("CDDL", LicenseTools.typeFromLicenseName("COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0"));
+        Assert.assertEquals("Google Cloud", LicenseTools.typeFromLicenseName("Google Cloud Software License"));
+        Assert.assertEquals("Indiana University", LicenseTools.typeFromLicenseName("Indiana University Extreme! Lab Software License, version 1.1.1"));
+        Assert.assertEquals("Indiana University", LicenseTools.typeFromLicenseName("Indiana University Extreme! Lab Software License, version 1.2"));
+        Assert.assertEquals("Indiana University", LicenseTools.typeFromLicenseName("Indiana University Extreme! Lab Software License"));
+        Assert.assertEquals("ICU", LicenseTools.typeFromLicenseName("ICU License"));
+
+        Assert.assertEquals("Eclipse", LicenseTools.typeFromLicenseName("Eclipse Public License 1.0"));
+        Assert.assertEquals("Eclipse", LicenseTools.typeFromLicenseName("Eclipse Public License v2.0"));
+        Assert.assertEquals("Eclipse", LicenseTools.typeFromLicenseName("Eclipse Public License 2.0"));
+        Assert.assertEquals("Eclipse", LicenseTools.typeFromLicenseName("Eclipse Public License v 1.0"));
+        Assert.assertEquals("Eclipse",LicenseTools.typeFromLicenseName("Eclipse Public License, Version 1.0"));
+        Assert.assertEquals("Eclipse", LicenseTools.typeFromLicenseName("EPL 1"));
+        Assert.assertEquals("Mozilla", LicenseTools.typeFromLicenseName("MPL 1.1"));
+        Assert.assertEquals("Mozilla", LicenseTools.typeFromLicenseName("Mozilla License"));
+
+        Assert.assertEquals("GPL", LicenseTools.typeFromLicenseName("GNU GPL v2"));
+        Assert.assertEquals("GPL", LicenseTools.typeFromLicenseName("GPL 3.0"));
+        Assert.assertEquals("GPL",LicenseTools.typeFromLicenseName("GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1"));
+        Assert.assertEquals("GPL", LicenseTools.typeFromLicenseName("GNU Lesser Public License"));
+        Assert.assertEquals("GPL", LicenseTools.typeFromLicenseName("LGPL"));
+
+        Assert.assertEquals("CC0", LicenseTools.typeFromLicenseName("CC0 1.0 Universal License"));
+        Assert.assertEquals("Public-Domain", LicenseTools.typeFromLicenseName("Public Domain"));
+        Assert.assertEquals("AOSP", LicenseTools.typeFromLicenseName("Android Software Development Kit License"));
+        Assert.assertEquals("NO-WARRANTY", LicenseTools.typeFromLicenseName("provided without support or warranty"));
+
+        Assert.assertEquals("WTFPL", LicenseTools.typeFromLicenseName("WTFPL"));
+    }
+
+    @Test
+    public void testLicenseClassParsing() {
+        Assert.assertNull(LicenseTools.classFromLicenseName(""));
+        Assert.assertNull(LicenseTools.classFromLicenseName(null));
+        Assert.assertNull(LicenseTools.classFromLicenseName("some-unknown-license"));
+
+        Assert.assertEquals(License.Class.notice, LicenseTools.classFromLicenseName("Apache 2.0"));
+        Assert.assertEquals(License.Class.notice, LicenseTools.classFromLicenseName("Apache 2"));
+        Assert.assertEquals(License.Class.notice, LicenseTools.classFromLicenseName("APACHE-2"));
+        Assert.assertEquals(License.Class.notice, LicenseTools.classFromLicenseName("Apache License"));
         Assert.assertEquals(
-                License.notice,
-                LicenseTools.fromLicenseName(
+                License.Class.notice,
+                LicenseTools.classFromLicenseName(
                         "Similar to Apache License but with the acknowledgment clause removed"));
-        Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("ASF 2.0"));
+        Assert.assertEquals(License.Class.notice, LicenseTools.classFromLicenseName("ASF 2.0"));
         Assert.assertEquals(
-                License.notice, LicenseTools.fromLicenseName("Apache License, Version 2.0"));
+                License.Class.notice, LicenseTools.classFromLicenseName("Apache License, Version 2.0"));
         Assert.assertEquals(
-                License.notice,
-                LicenseTools.fromLicenseName("The Apache Software License, Version 2.0"));
-        Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("The MIT License"));
-        Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("MIT License"));
-        Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("MIT"));
-        Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("Bouncy Castle Licence"));
-        Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("New BSD License"));
-        Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("BSD 2-Clause License"));
-        Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("BSD License"));
+                License.Class.notice,
+                LicenseTools.classFromLicenseName("The Apache Software License, Version 2.0"));
+        Assert.assertEquals(License.Class.notice, LicenseTools.classFromLicenseName("The MIT License"));
+        Assert.assertEquals(License.Class.notice, LicenseTools.classFromLicenseName("MIT License"));
+        Assert.assertEquals(License.Class.notice, LicenseTools.classFromLicenseName("MIT"));
+        Assert.assertEquals(License.Class.notice, LicenseTools.classFromLicenseName("Bouncy Castle Licence"));
+        Assert.assertEquals(License.Class.notice, LicenseTools.classFromLicenseName("New BSD License"));
+        Assert.assertEquals(License.Class.notice, LicenseTools.classFromLicenseName("BSD 2-Clause License"));
+        Assert.assertEquals(License.Class.notice, LicenseTools.classFromLicenseName("BSD License"));
         Assert.assertEquals(
-                License.notice, LicenseTools.fromLicenseName("Facebook Platform License"));
-        Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("The JSON License"));
+                License.Class.notice, LicenseTools.classFromLicenseName("Facebook Platform License"));
+        Assert.assertEquals(License.Class.notice, LicenseTools.classFromLicenseName("The JSON License"));
         Assert.assertEquals(
-                License.notice, LicenseTools.fromLicenseName("Common Public License Version 1.0"));
+                License.Class.notice, LicenseTools.classFromLicenseName("Common Public License Version 1.0"));
         Assert.assertEquals(
-                License.notice,
-                LicenseTools.fromLicenseName("CDDL + GPLv2 with classpath exception"));
-        Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("CDDL/GPLv2+CE"));
+                License.Class.notice,
+                LicenseTools.classFromLicenseName("CDDL + GPLv2 with classpath exception"));
+        Assert.assertEquals(License.Class.notice, LicenseTools.classFromLicenseName("CDDL/GPLv2+CE"));
         Assert.assertEquals(
-                License.notice,
-                LicenseTools.fromLicenseName(
+                License.Class.notice,
+                LicenseTools.classFromLicenseName(
                         "COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0"));
         Assert.assertEquals(
-                License.notice, LicenseTools.fromLicenseName("Google Cloud Software License"));
+                License.Class.notice, LicenseTools.classFromLicenseName("Google Cloud Software License"));
         Assert.assertEquals(
-                License.notice,
-                LicenseTools.fromLicenseName(
+                License.Class.notice,
+                LicenseTools.classFromLicenseName(
                         "Indiana University Extreme! Lab Software License, version 1.1.1"));
         Assert.assertEquals(
-                License.notice,
-                LicenseTools.fromLicenseName(
+                License.Class.notice,
+                LicenseTools.classFromLicenseName(
                         "Indiana University Extreme! Lab Software License, version 1.2"));
         Assert.assertEquals(
-                License.notice,
-                LicenseTools.fromLicenseName("Indiana University Extreme! Lab Software License"));
-        Assert.assertEquals(License.notice, LicenseTools.fromLicenseName("ICU License"));
+                License.Class.notice,
+                LicenseTools.classFromLicenseName("Indiana University Extreme! Lab Software License"));
+        Assert.assertEquals(License.Class.notice, LicenseTools.classFromLicenseName("ICU License"));
 
         Assert.assertEquals(
-                License.reciprocal, LicenseTools.fromLicenseName("Eclipse Public License 1.0"));
+                License.Class.reciprocal, LicenseTools.classFromLicenseName("Eclipse Public License 1.0"));
         Assert.assertEquals(
-                License.reciprocal, LicenseTools.fromLicenseName("Eclipse Public License v2.0"));
+                License.Class.reciprocal, LicenseTools.classFromLicenseName("Eclipse Public License v2.0"));
         Assert.assertEquals(
-                License.reciprocal, LicenseTools.fromLicenseName("Eclipse Public License 2.0"));
+                License.Class.reciprocal, LicenseTools.classFromLicenseName("Eclipse Public License 2.0"));
         Assert.assertEquals(
-                License.reciprocal, LicenseTools.fromLicenseName("Eclipse Public License v 1.0"));
+                License.Class.reciprocal, LicenseTools.classFromLicenseName("Eclipse Public License v 1.0"));
         Assert.assertEquals(
-                License.reciprocal,
-                LicenseTools.fromLicenseName("Eclipse Public License, Version 1.0"));
-        Assert.assertEquals(License.reciprocal, LicenseTools.fromLicenseName("EPL 1"));
-        Assert.assertEquals(License.reciprocal, LicenseTools.fromLicenseName("MPL 1.1"));
-        Assert.assertEquals(License.reciprocal, LicenseTools.fromLicenseName("Mozilla License"));
+                License.Class.reciprocal,
+                LicenseTools.classFromLicenseName("Eclipse Public License, Version 1.0"));
+        Assert.assertEquals(License.Class.reciprocal, LicenseTools.classFromLicenseName("EPL 1"));
+        Assert.assertEquals(License.Class.reciprocal, LicenseTools.classFromLicenseName("MPL 1.1"));
+        Assert.assertEquals(License.Class.reciprocal, LicenseTools.classFromLicenseName("Mozilla License"));
 
-        Assert.assertEquals(License.restricted, LicenseTools.fromLicenseName("GNU GPL v2"));
-        Assert.assertEquals(License.restricted, LicenseTools.fromLicenseName("GPL 3.0"));
+        Assert.assertEquals(License.Class.restricted, LicenseTools.classFromLicenseName("GNU GPL v2"));
+        Assert.assertEquals(License.Class.restricted, LicenseTools.classFromLicenseName("GPL 3.0"));
         Assert.assertEquals(
-                License.restricted,
-                LicenseTools.fromLicenseName("GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1"));
+                License.Class.restricted,
+                LicenseTools.classFromLicenseName("GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1"));
         Assert.assertEquals(
-                License.restricted, LicenseTools.fromLicenseName("GNU Lesser Public License"));
-        Assert.assertEquals(License.restricted, LicenseTools.fromLicenseName("LGPL"));
+                License.Class.restricted, LicenseTools.classFromLicenseName("GNU Lesser Public License"));
+        Assert.assertEquals(License.Class.restricted, LicenseTools.classFromLicenseName("LGPL"));
 
         Assert.assertEquals(
-                License.unencumbered, LicenseTools.fromLicenseName("CC0 1.0 Universal License"));
-        Assert.assertEquals(License.unencumbered, LicenseTools.fromLicenseName("Public Domain"));
+                License.Class.unencumbered, LicenseTools.classFromLicenseName("CC0 1.0 Universal License"));
+        Assert.assertEquals(License.Class.unencumbered, LicenseTools.classFromLicenseName("Public Domain"));
         Assert.assertEquals(
-                License.unencumbered,
-                LicenseTools.fromLicenseName("Android Software Development Kit License"));
+                License.Class.unencumbered,
+                LicenseTools.classFromLicenseName("Android Software Development Kit License"));
         Assert.assertEquals(
-                License.unencumbered,
-                LicenseTools.fromLicenseName("provided without support or warranty"));
+                License.Class.unencumbered,
+                LicenseTools.classFromLicenseName("provided without support or warranty"));
 
-        Assert.assertEquals(License.permissive, LicenseTools.fromLicenseName("WTFPL"));
+        Assert.assertEquals(License.Class.permissive, LicenseTools.classFromLicenseName("WTFPL"));
     }
 }

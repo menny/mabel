@@ -179,8 +179,9 @@ public class TargetCommenterTest {
                 .buildTargets(mResolvedDependencies.get(0), mDependencyTools);
         Assert.assertEquals(2, target.getComments().size());
         List<String> comments = new ArrayList<>(target.getComments());
-        Assert.assertEquals("This is a dependency of 'c.d.e:f:3.1.1'.", comments.get(0));
-        Assert.assertEquals("This is a dependency of 'a.b.c:d:1.1.1'.", comments.get(1));
+        //note, this is sorted, too
+        Assert.assertEquals("This is a dependency of 'a.b.c:d:1.1.1'.", comments.get(0));
+        Assert.assertEquals("This is a dependency of 'c.d.e:f:3.1.1'.", comments.get(1));
     }
 
     @Test

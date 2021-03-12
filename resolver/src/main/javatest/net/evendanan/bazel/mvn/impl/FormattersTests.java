@@ -124,7 +124,12 @@ public class FormattersTests {
             "    java_import(\n"
                     + "        name = \"java__lib__\",\n"
                     + "        jars = [\"@java__lib__//file\"],\n"
-                    + "        tags = [\"maven_coordinates=java:lib:\"],\n"
+                    + "        tags = [\n"
+                    + "            \"mabel_license_detected_type=Apache\",\n"
+                    + "            \"mabel_license_name=Apache-2\",\n"
+                    + "            \"mabel_license_url=http://some.com/url/to/license\",\n"
+                    + "            \"maven_coordinates=java:lib:\",\n"
+                    + "        ],\n"
                     + "        licenses = [\"notice\"],\n"
                     + "        deps = [\n"
                     + "            \":safe_mvn__dep1\",\n"
@@ -138,6 +143,83 @@ public class FormattersTests {
                     + "            \":safe_mvn__runtime1\",\n"
                     + "            \":safe_mvn__runtime2\",\n"
                     + "        ],\n"
+                    + "    )\n"
+                    + "    native.alias(\n"
+                    + "        name = \"java__lib\",\n"
+                    + "        actual = \":java__lib__\",\n"
+                    + "        visibility = [\"//visibility:public\"],\n"
+                    + "    )\n";
+    private static final String NATIVE_JAVA_IMPORT_WITH_LICENSE_TEXT_NO_URL =
+            "    java_import(\n"
+                    + "        name = \"java__lib__\",\n"
+                    + "        jars = [\"@java__lib__//file\"],\n"
+                    + "        tags = [\n"
+                    + "            \"mabel_license_detected_type=Apache\",\n"
+                    + "            \"mabel_license_name=Apache-2\",\n"
+                    + "            \"maven_coordinates=java:lib:\",\n"
+                    + "        ],\n"
+                    + "        licenses = [\"notice\"],\n"
+                    + "        deps = [],\n"
+                    + "        exports = [],\n"
+                    + "        runtime_deps = [],\n"
+                    + "    )\n"
+                    + "    native.alias(\n"
+                    + "        name = \"java__lib\",\n"
+                    + "        actual = \":java__lib__\",\n"
+                    + "        visibility = [\"//visibility:public\"],\n"
+                    + "    )\n";
+    private static final String NATIVE_JAVA_IMPORT_WITH_LICENSE_TEXT_WITH_QUOTES =
+            "    java_import(\n"
+                    + "        name = \"java__lib__\",\n"
+                    + "        jars = [\"@java__lib__//file\"],\n"
+                    + "        tags = [\n"
+                    + "            \"mabel_license_detected_type=Apache\",\n"
+                    + "            \"mabel_license_name=Apache-2 \\\"NEW\\\" for example\",\n"
+                    + "            \"maven_coordinates=java:lib:\",\n"
+                    + "        ],\n"
+                    + "        licenses = [\"notice\"],\n"
+                    + "        deps = [],\n"
+                    + "        exports = [],\n"
+                    + "        runtime_deps = [],\n"
+                    + "    )\n"
+                    + "    native.alias(\n"
+                    + "        name = \"java__lib\",\n"
+                    + "        actual = \":java__lib__\",\n"
+                    + "        visibility = [\"//visibility:public\"],\n"
+                    + "    )\n";
+    private static final String NATIVE_JAVA_IMPORT_WITH_LICENSE_TEXT_WITH_NEW_LINE =
+            "    java_import(\n"
+                    + "        name = \"java__lib__\",\n"
+                    + "        jars = [\"@java__lib__//file\"],\n"
+                    + "        tags = [\n"
+                    + "            \"mabel_license_detected_type=Apache\",\n"
+                    + "            \"mabel_license_name=Apache-2 New line\",\n"
+                    + "            \"maven_coordinates=java:lib:\",\n"
+                    + "        ],\n"
+                    + "        licenses = [\"notice\"],\n"
+                    + "        deps = [],\n"
+                    + "        exports = [],\n"
+                    + "        runtime_deps = [],\n"
+                    + "    )\n"
+                    + "    native.alias(\n"
+                    + "        name = \"java__lib\",\n"
+                    + "        actual = \":java__lib__\",\n"
+                    + "        visibility = [\"//visibility:public\"],\n"
+                    + "    )\n";
+    private static final String NATIVE_JAVA_IMPORT_WITH_LICENSE_TEXT_UNKNOWN_LICENSE =
+            "    java_import(\n"
+                    + "        name = \"java__lib__\",\n"
+                    + "        jars = [\"@java__lib__//file\"],\n"
+                    + "        tags = [\n"
+                    + "            \"mabel_license_detected_type=UNKNOWN\",\n"
+                    + "            \"mabel_license_name=SomeReallyWeirdOne\",\n"
+                    + "            \"mabel_license_url=http://example.com/license\",\n"
+                    + "            \"maven_coordinates=java:lib:\",\n"
+                    + "        ],\n"
+                    + "        licenses = [],\n"
+                    + "        deps = [],\n"
+                    + "        exports = [],\n"
+                    + "        runtime_deps = [],\n"
                     + "    )\n"
                     + "    native.alias(\n"
                     + "        name = \"java__lib\",\n"
@@ -510,7 +592,7 @@ public class FormattersTests {
                                         Arrays.asList("dep1", "dep2"),
                                         Arrays.asList("export1", "export2"),
                                         Arrays.asList("runtime1", "runtime2")))
-                        .licenses(Collections.singleton(License.notice))
+                        .licenses(Collections.singleton(License.create("Apache-2", "http://some.com/url/to/license")))
                         .build();
 
         final String ruleText =
@@ -520,6 +602,94 @@ public class FormattersTests {
                                 dependency, DependencyTools.DEFAULT));
 
         Assert.assertEquals(NATIVE_JAVA_IMPORT_WITH_LICENSE_TEXT, ruleText);
+    }
+
+    @Test
+    public void testNativeJavaImportWithLicensesNoUrl() {
+        Dependency dependency =
+                Dependency.builder(
+                        createDependency(
+                                "java:lib",
+                                "https://some_url",
+                                Collections.emptyList(),
+                                Collections.emptyList(),
+                                Collections.emptyList()))
+                        .licenses(Collections.singleton(License.create("Apache-2", "")))
+                        .build();
+
+        final String ruleText =
+                targetsToString(
+                        "    ",
+                        TargetsBuilders.JAVA_IMPORT.buildTargets(
+                                dependency, DependencyTools.DEFAULT));
+
+        Assert.assertEquals(NATIVE_JAVA_IMPORT_WITH_LICENSE_TEXT_NO_URL, ruleText);
+    }
+
+    @Test
+    public void testNativeJavaImportWithLicensesWithQuotes() {
+        Dependency dependency =
+                Dependency.builder(
+                        createDependency(
+                                "java:lib",
+                                "https://some_url",
+                                Collections.emptyList(),
+                                Collections.emptyList(),
+                                Collections.emptyList()))
+                        .licenses(Collections.singleton(License.create("Apache-2 \"NEW\" for example", "")))
+                        .build();
+
+        final String ruleText =
+                targetsToString(
+                        "    ",
+                        TargetsBuilders.JAVA_IMPORT.buildTargets(
+                                dependency, DependencyTools.DEFAULT));
+
+        Assert.assertEquals(NATIVE_JAVA_IMPORT_WITH_LICENSE_TEXT_WITH_QUOTES, ruleText);
+    }
+
+    @Test
+    public void testNativeJavaImportWithLicensesWithNewLine() {
+        Dependency dependency =
+                Dependency.builder(
+                        createDependency(
+                                "java:lib",
+                                "https://some_url",
+                                Collections.emptyList(),
+                                Collections.emptyList(),
+                                Collections.emptyList()))
+                        .licenses(Collections.singleton(License.create("Apache-2\nNew line", "")))
+                        .build();
+
+        final String ruleText =
+                targetsToString(
+                        "    ",
+                        TargetsBuilders.JAVA_IMPORT.buildTargets(
+                                dependency, DependencyTools.DEFAULT));
+
+        Assert.assertEquals(NATIVE_JAVA_IMPORT_WITH_LICENSE_TEXT_WITH_NEW_LINE, ruleText);
+    }
+
+    @Test
+    public void testNativeJavaImportWithUnknownLicenses() {
+        Dependency dependency =
+                Dependency.builder(
+                        createDependency(
+                                "java:lib",
+                                "https://some_url",
+                                Collections.emptyList(),
+                                Collections.emptyList(),
+                                Collections.emptyList()))
+                        .licenses(Collections.singleton(License.create("SomeReallyWeirdOne", "http://example.com/license")))
+                        .build();
+
+        final String ruleText =
+                targetsToString(
+                        "    ",
+                        TargetsBuilders.JAVA_IMPORT.buildTargets(
+                                dependency, DependencyTools.DEFAULT));
+
+        Assert.assertEquals(NATIVE_JAVA_IMPORT_WITH_LICENSE_TEXT_UNKNOWN_LICENSE, ruleText);
     }
 
     @Test
