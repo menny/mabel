@@ -255,6 +255,7 @@ def generate_transitive_dependency_targets(
         name = "apt___com_google_auto_value__auto_value_annotations__1_6_3",
         jars = ["@apt___com_google_auto_value__auto_value_annotations__1_6_3//file"],
         tags = [
+            "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache 2.0",
             "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
             "maven_coordinates=com.google.auto.value:auto-value-annotations:1.6.3",
@@ -279,6 +280,7 @@ def generate_transitive_dependency_targets(
         name = "apt___com_google_auto_value__auto_value__1_6_3",
         jars = ["@apt___com_google_auto_value__auto_value__1_6_3//file"],
         tags = [
+            "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache 2.0",
             "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
             "maven_coordinates=com.google.auto.value:auto-value:1.6.3",
@@ -515,6 +517,7 @@ def generate_transitive_dependency_targets(
         name = "apt___com_google_code_findbugs__jsr305__1_3_9",
         jars = ["@apt___com_google_code_findbugs__jsr305__1_3_9//file"],
         tags = [
+            "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
             "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
             "maven_coordinates=com.google.code.findbugs:jsr305:1.3.9",
@@ -539,6 +542,7 @@ def generate_transitive_dependency_targets(
         name = "apt___com_google_dagger__dagger_compiler__2_19",
         jars = ["@apt___com_google_dagger__dagger_compiler__2_19//file"],
         tags = [
+            "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache 2.0",
             "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
             "maven_coordinates=com.google.dagger:dagger-compiler:2.19",
@@ -667,6 +671,7 @@ def generate_transitive_dependency_targets(
         name = "apt___com_google_dagger__dagger_producers__2_19",
         jars = ["@apt___com_google_dagger__dagger_producers__2_19//file"],
         tags = [
+            "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache 2.0",
             "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
             "maven_coordinates=com.google.dagger:dagger-producers:2.19",
@@ -701,6 +706,7 @@ def generate_transitive_dependency_targets(
         name = "apt___com_google_dagger__dagger_spi__2_19",
         jars = ["@apt___com_google_dagger__dagger_spi__2_19//file"],
         tags = [
+            "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache 2.0",
             "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
             "maven_coordinates=com.google.dagger:dagger-spi:2.19",
@@ -741,6 +747,7 @@ def generate_transitive_dependency_targets(
         name = "apt___com_google_dagger__dagger__2_19",
         jars = ["@apt___com_google_dagger__dagger__2_19//file"],
         tags = [
+            "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache 2.0",
             "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
             "maven_coordinates=com.google.dagger:dagger:2.19",
@@ -765,6 +772,7 @@ def generate_transitive_dependency_targets(
         name = "apt___com_google_errorprone__error_prone_annotations__2_1_3",
         jars = ["@apt___com_google_errorprone__error_prone_annotations__2_1_3//file"],
         tags = [
+            "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache 2.0",
             "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
             "maven_coordinates=com.google.errorprone:error_prone_annotations:2.1.3",
@@ -789,6 +797,7 @@ def generate_transitive_dependency_targets(
         name = "apt___com_google_errorprone__javac_shaded__9_dev_r4023_3",
         jars = ["@apt___com_google_errorprone__javac_shaded__9_dev_r4023_3//file"],
         tags = [
+            "mabel_license_detected_type=GPL",
             "mabel_license_name=GNU General Public License, version 2, with the Classpath Exception",
             "mabel_license_url=http://openjdk.java.net/legal/gplv2+ce.html",
             "maven_coordinates=com.google.errorprone:javac-shaded:9-dev-r4023-3",
@@ -813,6 +822,7 @@ def generate_transitive_dependency_targets(
         name = "apt___com_google_googlejavaformat__google_java_format__1_5",
         jars = ["@apt___com_google_googlejavaformat__google_java_format__1_5//file"],
         tags = [
+            "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
             "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
             "maven_coordinates=com.google.googlejavaformat:google-java-format:1.5",
@@ -849,6 +859,7 @@ def generate_transitive_dependency_targets(
         name = "apt___com_google_guava__guava__25_0_jre",
         jars = ["@apt___com_google_guava__guava__25_0_jre//file"],
         tags = [
+            "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
             "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
             "maven_coordinates=com.google.guava:guava:25.0-jre",
@@ -885,6 +896,7 @@ def generate_transitive_dependency_targets(
         name = "apt___com_google_j2objc__j2objc_annotations__1_1",
         jars = ["@apt___com_google_j2objc__j2objc_annotations__1_1//file"],
         tags = [
+            "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
             "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
             "maven_coordinates=com.google.j2objc:j2objc-annotations:1.1",
@@ -909,6 +921,7 @@ def generate_transitive_dependency_targets(
         name = "apt___com_squareup__javapoet__1_11_1",
         jars = ["@apt___com_squareup__javapoet__1_11_1//file"],
         tags = [
+            "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache 2.0",
             "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
             "maven_coordinates=com.squareup:javapoet:1.11.1",
@@ -933,6 +946,7 @@ def generate_transitive_dependency_targets(
         name = "apt___javax_annotation__jsr250_api__1_0",
         jars = ["@apt___javax_annotation__jsr250_api__1_0//file"],
         tags = [
+            "mabel_license_detected_type=CDDL",
             "mabel_license_name=COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0",
             "mabel_license_url=https://glassfish.dev.java.net/public/CDDLv1.0.html",
             "maven_coordinates=javax.annotation:jsr250-api:1.0",
@@ -963,6 +977,7 @@ def generate_transitive_dependency_targets(
         name = "apt___javax_inject__javax_inject__1",
         jars = ["@apt___javax_inject__javax_inject__1//file"],
         tags = [
+            "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
             "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
             "maven_coordinates=javax.inject:javax.inject:1",
@@ -989,6 +1004,8 @@ def generate_transitive_dependency_targets(
         name = "apt___org_checkerframework__checker_compat_qual__2_5_3",
         jars = ["@apt___org_checkerframework__checker_compat_qual__2_5_3//file"],
         tags = [
+            "mabel_license_detected_type=GPL",
+            "mabel_license_detected_type=MIT",
             "mabel_license_name=GNU General Public License, version 2 (GPL2), with the classpath exception",
             "mabel_license_name=The MIT License",
             "mabel_license_url=http://opensource.org/licenses/MIT",
@@ -1018,6 +1035,7 @@ def generate_transitive_dependency_targets(
         name = "apt___org_codehaus_mojo__animal_sniffer_annotations__1_14",
         jars = ["@apt___org_codehaus_mojo__animal_sniffer_annotations__1_14//file"],
         tags = [
+            "mabel_license_detected_type=MIT",
             "mabel_license_name=MIT license",
             "mabel_license_url=http://www.opensource.org/licenses/mit-license.php",
             "maven_coordinates=org.codehaus.mojo:animal-sniffer-annotations:1.14",

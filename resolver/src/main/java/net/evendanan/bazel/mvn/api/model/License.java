@@ -4,7 +4,7 @@ import com.google.auto.value.AutoValue;
 
 @AutoValue
 public abstract class License {
-    public enum Type {
+    public enum Class {
         restricted,
         reciprocal,
         notice,

@@ -170,26 +170,4 @@ class Adapters {
             return jsonObject;
         }
     }
-
-    static class LicenseTypeDeserializer implements JsonDeserializer<License.Type> {
-        @Override
-        public License.Type deserialize(
-                final JsonElement jsonElement,
-                final Type type,
-                final JsonDeserializationContext context)
-                throws JsonParseException {
-            return License.Type.valueOf(License.Type.class, jsonElement.getAsString());
-        }
-    }
-
-    static class LicenseTypeSerializer implements JsonSerializer<License.Type> {
-
-        @Override
-        public JsonElement serialize(
-                final License.Type license,
-                final Type type,
-                final JsonSerializationContext jsonSerializationContext) {
-            return new JsonPrimitive(license.name());
-        }
-    }
 }
