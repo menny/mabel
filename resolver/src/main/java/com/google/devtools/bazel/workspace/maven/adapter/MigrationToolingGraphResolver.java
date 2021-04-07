@@ -17,9 +17,11 @@ import java.util.List;
 public class MigrationToolingGraphResolver implements GraphResolver {
 
     private final boolean debugLogs;
+    private final String jdkHome;
 
-    public MigrationToolingGraphResolver(boolean debugLogs) {
+    public MigrationToolingGraphResolver(boolean debugLogs, String jdkHome) {
         this.debugLogs = debugLogs;
+        this.jdkHome = jdkHome;
     }
 
     private static List<Repository> buildRepositories(Collection<String> repositories) {
@@ -50,7 +52,7 @@ public class MigrationToolingGraphResolver implements GraphResolver {
         MigrationToolingMavenResolver resolver =
                 new MigrationToolingMavenResolver(
                         repositories,
-                        new DefaultModelResolver(repositories, versionResolver),
+                        new DefaultModelResolver(repositories, versionResolver, jdkHome),
                         versionResolver,
                         excludes,
                         debugLogs);

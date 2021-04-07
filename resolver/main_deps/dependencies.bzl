@@ -95,12 +95,12 @@ def generate_workspace_rules(name = "generate_workspace_rules"):
         sha256 = "2994a7eb78f2710bd3d3bfb639b2c94e219cedac0d4d084d516e78c16dddecf6",
     )
 
-    # from commons-codec:commons-codec:1.9
+    # from commons-codec:commons-codec:1.11
     http_file(
-        name = "commons_codec__commons_codec__1_9",
-        urls = ["https://repo1.maven.org/maven2/commons-codec/commons-codec/1.9/commons-codec-1.9.jar"],
-        downloaded_file_path = "commons-codec-1.9.jar",
-        sha256 = "ad19d2601c3abf0b946b5c3a4113e226a8c1e3305e395b90013b78dd94a723ce",
+        name = "commons_codec__commons_codec__1_11",
+        urls = ["https://repo1.maven.org/maven2/commons-codec/commons-codec/1.11/commons-codec-1.11.jar"],
+        downloaded_file_path = "commons-codec-1.11.jar",
+        sha256 = "e599d5318e97aa48f42136a2927e6dfa4e8881dff0e6c8e3109ddbbff51d7b7d",
     )
 
     # from commons-logging:commons-logging:1.2
@@ -109,6 +109,14 @@ def generate_workspace_rules(name = "generate_workspace_rules"):
         urls = ["https://repo1.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2.jar"],
         downloaded_file_path = "commons-logging-1.2.jar",
         sha256 = "daddea1ea0be0f56978ab3006b8ac92834afeefbd9b7e4e6316fca57df0fa636",
+    )
+
+    # from javax.inject:javax.inject:1
+    http_file(
+        name = "javax_inject__javax_inject__1",
+        urls = ["https://repo1.maven.org/maven2/javax/inject/javax.inject/1/javax.inject-1.jar"],
+        downloaded_file_path = "javax.inject-1.jar",
+        sha256 = "91c77044a50c481636c32d916fd89c9118a72195390452c81065080f957de7ff",
     )
 
     # from junit:junit:4.12
@@ -143,20 +151,20 @@ def generate_workspace_rules(name = "generate_workspace_rules"):
         sha256 = "dac807f65b07698ff39b1b07bfef3d87ae3fd46d91bbf8a2bc02b2a831616f68",
     )
 
-    # from org.apache.httpcomponents:httpclient:4.5.3
+    # from org.apache.httpcomponents:httpclient:4.5.13
     http_file(
-        name = "org_apache_httpcomponents__httpclient__4_5_3",
-        urls = ["https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.5.3/httpclient-4.5.3.jar"],
-        downloaded_file_path = "httpclient-4.5.3.jar",
-        sha256 = "db3d1b6c2d6a5e5ad47577ad61854e2f0e0936199b8e05eb541ed52349263135",
+        name = "org_apache_httpcomponents__httpclient__4_5_13",
+        urls = ["https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.5.13/httpclient-4.5.13.jar"],
+        downloaded_file_path = "httpclient-4.5.13.jar",
+        sha256 = "6fe9026a566c6a5001608cf3fc32196641f6c1e5e1986d1037ccdbd5f31ef743",
     )
 
-    # from org.apache.httpcomponents:httpcore:4.4.6
+    # from org.apache.httpcomponents:httpcore:4.4.13
     http_file(
-        name = "org_apache_httpcomponents__httpcore__4_4_6",
-        urls = ["https://repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/4.4.6/httpcore-4.4.6.jar"],
-        downloaded_file_path = "httpcore-4.4.6.jar",
-        sha256 = "d7f853dee87680b07293d30855b39b9eb56c1297bd16ff1cd6f19ddb8fa745fb",
+        name = "org_apache_httpcomponents__httpcore__4_4_13",
+        urls = ["https://repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/4.4.13/httpcore-4.4.13.jar"],
+        downloaded_file_path = "httpcore-4.4.13.jar",
+        sha256 = "e06e89d40943245fcfa39ec537cdbfce3762aecde8f9c597780d2b00c2b43424",
     )
 
     # from org.apache.maven.wagon:wagon-provider-api:1.0
@@ -167,44 +175,52 @@ def generate_workspace_rules(name = "generate_workspace_rules"):
         sha256 = "b28dd1302ac34433d8d1b45fb254e093cd7b47277441af2018c8a3a4d8c1a60d",
     )
 
-    # from org.apache.maven:maven-aether-provider:3.2.3
+    # from org.apache.maven:maven-aether-provider:3.3.9
     http_file(
-        name = "org_apache_maven__maven_aether_provider__3_2_3",
-        urls = ["https://repo1.maven.org/maven2/org/apache/maven/maven-aether-provider/3.2.3/maven-aether-provider-3.2.3.jar"],
-        downloaded_file_path = "maven-aether-provider-3.2.3.jar",
-        sha256 = "611084b253db750a790ba5a785c60022bab725c8caebeee488e778910e398b14",
+        name = "org_apache_maven__maven_aether_provider__3_3_9",
+        urls = ["https://repo1.maven.org/maven2/org/apache/maven/maven-aether-provider/3.3.9/maven-aether-provider-3.3.9.jar"],
+        downloaded_file_path = "maven-aether-provider-3.3.9.jar",
+        sha256 = "f46962583d812cd4459a4cc963113b9c52f1f9b169172354693bc9efa0b3e3cb",
     )
 
-    # from org.apache.maven:maven-artifact:3.5.0
+    # from org.apache.maven:maven-artifact:3.8.1
     http_file(
-        name = "org_apache_maven__maven_artifact__3_5_0",
-        urls = ["https://repo1.maven.org/maven2/org/apache/maven/maven-artifact/3.5.0/maven-artifact-3.5.0.jar"],
-        downloaded_file_path = "maven-artifact-3.5.0.jar",
-        sha256 = "4eeea2bb80b5e922a138acd01ebbba65f0aa29030806123eae19fc75802805ea",
+        name = "org_apache_maven__maven_artifact__3_8_1",
+        urls = ["https://repo1.maven.org/maven2/org/apache/maven/maven-artifact/3.8.1/maven-artifact-3.8.1.jar"],
+        downloaded_file_path = "maven-artifact-3.8.1.jar",
+        sha256 = "9dbd3db15ac4816471e72981cb06ef90f3ffa8be6628dddf7135f7bd69bee0c0",
     )
 
-    # from org.apache.maven:maven-model-builder:3.2.3
+    # from org.apache.maven:maven-builder-support:3.8.1
     http_file(
-        name = "org_apache_maven__maven_model_builder__3_2_3",
-        urls = ["https://repo1.maven.org/maven2/org/apache/maven/maven-model-builder/3.2.3/maven-model-builder-3.2.3.jar"],
-        downloaded_file_path = "maven-model-builder-3.2.3.jar",
-        sha256 = "dcd202710eff66a481a8cae12c860c325e60ba92a14cd760d951fe5601779008",
+        name = "org_apache_maven__maven_builder_support__3_8_1",
+        urls = ["https://repo1.maven.org/maven2/org/apache/maven/maven-builder-support/3.8.1/maven-builder-support-3.8.1.jar"],
+        downloaded_file_path = "maven-builder-support-3.8.1.jar",
+        sha256 = "04ca8710b375c30bdb78964c24d665b866bc0f096cc2a93c82aa43f9e331c36b",
     )
 
-    # from org.apache.maven:maven-model:3.2.3
+    # from org.apache.maven:maven-model-builder:3.8.1
     http_file(
-        name = "org_apache_maven__maven_model__3_2_3",
-        urls = ["https://repo1.maven.org/maven2/org/apache/maven/maven-model/3.2.3/maven-model-3.2.3.jar"],
-        downloaded_file_path = "maven-model-3.2.3.jar",
-        sha256 = "8df3d56ffd4f3cf6fd13414bc46accd6919f13e008bec04b7e435da0b0183bee",
+        name = "org_apache_maven__maven_model_builder__3_8_1",
+        urls = ["https://repo1.maven.org/maven2/org/apache/maven/maven-model-builder/3.8.1/maven-model-builder-3.8.1.jar"],
+        downloaded_file_path = "maven-model-builder-3.8.1.jar",
+        sha256 = "60efee1229626229c13febb6d6c1949120c6ab55ced0e9ce16cd167a0056b8e1",
     )
 
-    # from org.apache.maven:maven-repository-metadata:3.2.3
+    # from org.apache.maven:maven-model:3.8.1
     http_file(
-        name = "org_apache_maven__maven_repository_metadata__3_2_3",
-        urls = ["https://repo1.maven.org/maven2/org/apache/maven/maven-repository-metadata/3.2.3/maven-repository-metadata-3.2.3.jar"],
-        downloaded_file_path = "maven-repository-metadata-3.2.3.jar",
-        sha256 = "f118bd17d788a85bfea868f586ad4bc8b646ae2bea3513eb3075d7d5c934c6db",
+        name = "org_apache_maven__maven_model__3_8_1",
+        urls = ["https://repo1.maven.org/maven2/org/apache/maven/maven-model/3.8.1/maven-model-3.8.1.jar"],
+        downloaded_file_path = "maven-model-3.8.1.jar",
+        sha256 = "9e008629cefa5ddc9e5e2628adb467416ced250591e30dea7103f37f513b3b13",
+    )
+
+    # from org.apache.maven:maven-repository-metadata:3.8.1
+    http_file(
+        name = "org_apache_maven__maven_repository_metadata__3_8_1",
+        urls = ["https://repo1.maven.org/maven2/org/apache/maven/maven-repository-metadata/3.8.1/maven-repository-metadata-3.8.1.jar"],
+        downloaded_file_path = "maven-repository-metadata-3.8.1.jar",
+        sha256 = "ed400ae8d4782e8b865571637c5244e3b79fea4829b8a0870c714c1094f2dda5",
     )
 
     # from org.checkerframework:checker-qual:2.5.2
@@ -223,28 +239,28 @@ def generate_workspace_rules(name = "generate_workspace_rules"):
         sha256 = "92654f493ecfec52082e76354f0ebf87648dc3d5cec2e3c3cdb947c016747a53",
     )
 
-    # from org.codehaus.plexus:plexus-component-annotations:1.5.5
+    # from org.codehaus.plexus:plexus-component-annotations:1.6
     http_file(
-        name = "org_codehaus_plexus__plexus_component_annotations__1_5_5",
-        urls = ["https://repo1.maven.org/maven2/org/codehaus/plexus/plexus-component-annotations/1.5.5/plexus-component-annotations-1.5.5.jar"],
-        downloaded_file_path = "plexus-component-annotations-1.5.5.jar",
-        sha256 = "4df7a6a7be64b35bbccf60b5c115697f9ea3421d22674ae67135dde375fcca1f",
+        name = "org_codehaus_plexus__plexus_component_annotations__1_6",
+        urls = ["https://repo1.maven.org/maven2/org/codehaus/plexus/plexus-component-annotations/1.6/plexus-component-annotations-1.6.jar"],
+        downloaded_file_path = "plexus-component-annotations-1.6.jar",
+        sha256 = "2b3a6ca5f19a9ad490bc233f45e68d3093c8c01b4acc3c1d14bad4ca7c7ff438",
     )
 
-    # from org.codehaus.plexus:plexus-interpolation:1.24
+    # from org.codehaus.plexus:plexus-interpolation:1.26
     http_file(
-        name = "org_codehaus_plexus__plexus_interpolation__1_24",
-        urls = ["https://repo1.maven.org/maven2/org/codehaus/plexus/plexus-interpolation/1.24/plexus-interpolation-1.24.jar"],
-        downloaded_file_path = "plexus-interpolation-1.24.jar",
-        sha256 = "8fe2be04b067a75d02fb8a1a9caf6c1c8615f0d5577cced02e90b520763d2f77",
+        name = "org_codehaus_plexus__plexus_interpolation__1_26",
+        urls = ["https://repo1.maven.org/maven2/org/codehaus/plexus/plexus-interpolation/1.26/plexus-interpolation-1.26.jar"],
+        downloaded_file_path = "plexus-interpolation-1.26.jar",
+        sha256 = "b3b5412ce17889103ea564bcdfcf9fb3dfa540344ffeac6b538a73c9d7182662",
     )
 
-    # from org.codehaus.plexus:plexus-utils:3.0.24
+    # from org.codehaus.plexus:plexus-utils:3.3.0
     http_file(
-        name = "org_codehaus_plexus__plexus_utils__3_0_24",
-        urls = ["https://repo1.maven.org/maven2/org/codehaus/plexus/plexus-utils/3.0.24/plexus-utils-3.0.24.jar"],
-        downloaded_file_path = "plexus-utils-3.0.24.jar",
-        sha256 = "83ee748b12d06afb0ad4050a591132b3e8025fbb1990f1ed002e8b73293e69b4",
+        name = "org_codehaus_plexus__plexus_utils__3_3_0",
+        urls = ["https://repo1.maven.org/maven2/org/codehaus/plexus/plexus-utils/3.3.0/plexus-utils-3.3.0.jar"],
+        downloaded_file_path = "plexus-utils-3.3.0.jar",
+        sha256 = "76d174792540e2775af94d03d10fb2d3c776e2cd0ac0ebf427d3e570072bb9ce",
     )
 
     # from org.eclipse.aether:aether-api:1.1.0
@@ -317,6 +333,14 @@ def generate_workspace_rules(name = "generate_workspace_rules"):
         urls = ["https://repo1.maven.org/maven2/org/eclipse/aether/aether-util/1.1.0/aether-util-1.1.0.jar"],
         downloaded_file_path = "aether-util-1.1.0.jar",
         sha256 = "556f083dd35fe7f430ac4a7705784191e39df6df89abc31b30cb538f53828d62",
+    )
+
+    # from org.eclipse.sisu:org.eclipse.sisu.inject:0.3.4
+    http_file(
+        name = "org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4",
+        urls = ["https://repo1.maven.org/maven2/org/eclipse/sisu/org.eclipse.sisu.inject/0.3.4/org.eclipse.sisu.inject-0.3.4.jar"],
+        downloaded_file_path = "org.eclipse.sisu.inject-0.3.4.jar",
+        sha256 = "8c0e6aa7f35593016f2c5e78b604b57f023cdaca3561fe2fe36f2b5dbbae1d16",
     )
 
     # from org.hamcrest:hamcrest-core:1.3
@@ -959,24 +983,24 @@ def generate_transitive_dependency_targets(
         visibility = ["//visibility:private"],
     )
 
-    # from commons-codec:commons-codec:1.9
-    # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.3'.
+    # from commons-codec:commons-codec:1.11
+    # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.13'.
     native.alias(
         name = "commons_codec__commons_codec",
-        actual = ":commons_codec__commons_codec__1_9",
+        actual = ":commons_codec__commons_codec__1_11",
         visibility = ["//visibility:private"],
     )
 
-    # from commons-codec:commons-codec:1.9
-    # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.3'.
+    # from commons-codec:commons-codec:1.11
+    # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.13'.
     java_import(
-        name = "commons_codec__commons_codec__1_9",
-        jars = ["@commons_codec__commons_codec__1_9//file"],
+        name = "commons_codec__commons_codec__1_11",
+        jars = ["@commons_codec__commons_codec__1_11//file"],
         tags = [
             "mabel_license_detected_type=Apache",
-            "mabel_license_name=The Apache Software License, Version 2.0",
-            "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
-            "maven_coordinates=commons-codec:commons-codec:1.9",
+            "mabel_license_name=Apache License, Version 2.0",
+            "mabel_license_url=https://www.apache.org/licenses/LICENSE-2.0.txt",
+            "maven_coordinates=commons-codec:commons-codec:1.11",
         ],
         licenses = ["notice"],
         deps = [],
@@ -986,7 +1010,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from commons-logging:commons-logging:1.2
-    # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.3'.
+    # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.13'.
     native.alias(
         name = "commons_logging__commons_logging",
         actual = ":commons_logging__commons_logging__1_2",
@@ -994,7 +1018,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from commons-logging:commons-logging:1.2
-    # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.3'.
+    # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.13'.
     java_import(
         name = "commons_logging__commons_logging__1_2",
         jars = ["@commons_logging__commons_logging__1_2//file"],
@@ -1003,6 +1027,32 @@ def generate_transitive_dependency_targets(
             "mabel_license_name=The Apache Software License, Version 2.0",
             "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
             "maven_coordinates=commons-logging:commons-logging:1.2",
+        ],
+        licenses = ["notice"],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+        visibility = ["//visibility:private"],
+    )
+
+    # from javax.inject:javax.inject:1
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
+    native.alias(
+        name = "javax_inject__javax_inject",
+        actual = ":javax_inject__javax_inject__1",
+        visibility = ["//visibility:private"],
+    )
+
+    # from javax.inject:javax.inject:1
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
+    java_import(
+        name = "javax_inject__javax_inject__1",
+        jars = ["@javax_inject__javax_inject__1//file"],
+        tags = [
+            "mabel_license_detected_type=Apache",
+            "mabel_license_name=The Apache Software License, Version 2.0",
+            "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
+            "maven_coordinates=javax.inject:javax.inject:1",
         ],
         licenses = ["notice"],
         deps = [],
@@ -1091,7 +1141,8 @@ def generate_transitive_dependency_targets(
 
     # from org.apache.commons:commons-lang3:3.8.1
     # This is a root requested Maven artifact.
-    # This is a dependency of 'org.apache.maven:maven-artifact:3.5.0'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.3.9'.
+    # This is a dependency of 'org.apache.maven:maven-artifact:3.8.1'.
     native.alias(
         name = "org_apache_commons__commons_lang3",
         actual = ":org_apache_commons__commons_lang3__3_8_1",
@@ -1100,7 +1151,8 @@ def generate_transitive_dependency_targets(
 
     # from org.apache.commons:commons-lang3:3.8.1
     # This is a root requested Maven artifact.
-    # This is a dependency of 'org.apache.maven:maven-artifact:3.5.0'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.3.9'.
+    # This is a dependency of 'org.apache.maven:maven-artifact:3.8.1'.
     java_import(
         name = "org_apache_commons__commons_lang3__3_8_1",
         jars = ["@org_apache_commons__commons_lang3__3_8_1//file"],
@@ -1117,26 +1169,26 @@ def generate_transitive_dependency_targets(
         visibility = ["//visibility:private"],
     )
 
-    # from org.apache.httpcomponents:httpclient:4.5.3
+    # from org.apache.httpcomponents:httpclient:4.5.13
     # This is a root requested Maven artifact.
     # This is a dependency of 'org.eclipse.aether:aether-transport-http:1.1.0'.
     native.alias(
         name = "org_apache_httpcomponents__httpclient",
-        actual = ":org_apache_httpcomponents__httpclient__4_5_3",
+        actual = ":org_apache_httpcomponents__httpclient__4_5_13",
         visibility = ["//visibility:public"],
     )
 
-    # from org.apache.httpcomponents:httpclient:4.5.3
+    # from org.apache.httpcomponents:httpclient:4.5.13
     # This is a root requested Maven artifact.
     # This is a dependency of 'org.eclipse.aether:aether-transport-http:1.1.0'.
     java_import(
-        name = "org_apache_httpcomponents__httpclient__4_5_3",
-        jars = ["@org_apache_httpcomponents__httpclient__4_5_3//file"],
+        name = "org_apache_httpcomponents__httpclient__4_5_13",
+        jars = ["@org_apache_httpcomponents__httpclient__4_5_13//file"],
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache License, Version 2.0",
             "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
-            "maven_coordinates=org.apache.httpcomponents:httpclient:4.5.3",
+            "maven_coordinates=org.apache.httpcomponents:httpclient:4.5.13",
         ],
         licenses = ["notice"],
         deps = [
@@ -1153,26 +1205,24 @@ def generate_transitive_dependency_targets(
         visibility = ["//visibility:private"],
     )
 
-    # from org.apache.httpcomponents:httpcore:4.4.6
-    # This is a root requested Maven artifact.
-    # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.3'.
+    # from org.apache.httpcomponents:httpcore:4.4.13
+    # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.13'.
     native.alias(
         name = "org_apache_httpcomponents__httpcore",
-        actual = ":org_apache_httpcomponents__httpcore__4_4_6",
-        visibility = ["//visibility:public"],
+        actual = ":org_apache_httpcomponents__httpcore__4_4_13",
+        visibility = ["//visibility:private"],
     )
 
-    # from org.apache.httpcomponents:httpcore:4.4.6
-    # This is a root requested Maven artifact.
-    # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.3'.
+    # from org.apache.httpcomponents:httpcore:4.4.13
+    # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.13'.
     java_import(
-        name = "org_apache_httpcomponents__httpcore__4_4_6",
-        jars = ["@org_apache_httpcomponents__httpcore__4_4_6//file"],
+        name = "org_apache_httpcomponents__httpcore__4_4_13",
+        jars = ["@org_apache_httpcomponents__httpcore__4_4_13//file"],
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache License, Version 2.0",
             "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
-            "maven_coordinates=org.apache.httpcomponents:httpcore:4.4.6",
+            "maven_coordinates=org.apache.httpcomponents:httpcore:4.4.13",
         ],
         licenses = ["notice"],
         deps = [],
@@ -1207,27 +1257,28 @@ def generate_transitive_dependency_targets(
         visibility = ["//visibility:private"],
     )
 
-    # from org.apache.maven:maven-aether-provider:3.2.3
+    # from org.apache.maven:maven-aether-provider:3.3.9
     # This is a root requested Maven artifact.
     native.alias(
         name = "org_apache_maven__maven_aether_provider",
-        actual = ":org_apache_maven__maven_aether_provider__3_2_3",
+        actual = ":org_apache_maven__maven_aether_provider__3_3_9",
         visibility = ["//visibility:public"],
     )
 
-    # from org.apache.maven:maven-aether-provider:3.2.3
+    # from org.apache.maven:maven-aether-provider:3.3.9
     # This is a root requested Maven artifact.
     java_import(
-        name = "org_apache_maven__maven_aether_provider__3_2_3",
-        jars = ["@org_apache_maven__maven_aether_provider__3_2_3//file"],
+        name = "org_apache_maven__maven_aether_provider__3_3_9",
+        jars = ["@org_apache_maven__maven_aether_provider__3_3_9//file"],
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache License, Version 2.0",
             "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
-            "maven_coordinates=org.apache.maven:maven-aether-provider:3.2.3",
+            "maven_coordinates=org.apache.maven:maven-aether-provider:3.3.9",
         ],
         licenses = ["notice"],
         deps = [
+            ":org_apache_commons__commons_lang3",
             ":org_apache_maven__maven_model",
             ":org_apache_maven__maven_model_builder",
             ":org_apache_maven__maven_repository_metadata",
@@ -1239,6 +1290,7 @@ def generate_transitive_dependency_targets(
             ":org_eclipse_aether__aether_util",
         ],
         exports = [
+            ":org_apache_commons__commons_lang3",
             ":org_apache_maven__maven_model",
             ":org_apache_maven__maven_model_builder",
             ":org_apache_maven__maven_repository_metadata",
@@ -1253,24 +1305,26 @@ def generate_transitive_dependency_targets(
         visibility = ["//visibility:private"],
     )
 
-    # from org.apache.maven:maven-artifact:3.5.0
+    # from org.apache.maven:maven-artifact:3.8.1
     # This is a root requested Maven artifact.
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
     native.alias(
         name = "org_apache_maven__maven_artifact",
-        actual = ":org_apache_maven__maven_artifact__3_5_0",
+        actual = ":org_apache_maven__maven_artifact__3_8_1",
         visibility = ["//visibility:public"],
     )
 
-    # from org.apache.maven:maven-artifact:3.5.0
+    # from org.apache.maven:maven-artifact:3.8.1
     # This is a root requested Maven artifact.
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
     java_import(
-        name = "org_apache_maven__maven_artifact__3_5_0",
-        jars = ["@org_apache_maven__maven_artifact__3_5_0//file"],
+        name = "org_apache_maven__maven_artifact__3_8_1",
+        jars = ["@org_apache_maven__maven_artifact__3_8_1//file"],
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache License, Version 2.0",
-            "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
-            "maven_coordinates=org.apache.maven:maven-artifact:3.5.0",
+            "mabel_license_url=https://www.apache.org/licenses/LICENSE-2.0.txt",
+            "maven_coordinates=org.apache.maven:maven-artifact:3.8.1",
         ],
         licenses = ["notice"],
         deps = [
@@ -1285,66 +1339,98 @@ def generate_transitive_dependency_targets(
         visibility = ["//visibility:private"],
     )
 
-    # from org.apache.maven:maven-model-builder:3.2.3
+    # from org.apache.maven:maven-builder-support:3.8.1
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
+    native.alias(
+        name = "org_apache_maven__maven_builder_support",
+        actual = ":org_apache_maven__maven_builder_support__3_8_1",
+        visibility = ["//visibility:private"],
+    )
+
+    # from org.apache.maven:maven-builder-support:3.8.1
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
+    java_import(
+        name = "org_apache_maven__maven_builder_support__3_8_1",
+        jars = ["@org_apache_maven__maven_builder_support__3_8_1//file"],
+        tags = [
+            "mabel_license_detected_type=Apache",
+            "mabel_license_name=Apache License, Version 2.0",
+            "mabel_license_url=https://www.apache.org/licenses/LICENSE-2.0.txt",
+            "maven_coordinates=org.apache.maven:maven-builder-support:3.8.1",
+        ],
+        licenses = ["notice"],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+        visibility = ["//visibility:private"],
+    )
+
+    # from org.apache.maven:maven-model-builder:3.8.1
     # This is a root requested Maven artifact.
-    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.3.9'.
     native.alias(
         name = "org_apache_maven__maven_model_builder",
-        actual = ":org_apache_maven__maven_model_builder__3_2_3",
+        actual = ":org_apache_maven__maven_model_builder__3_8_1",
         visibility = ["//visibility:public"],
     )
 
-    # from org.apache.maven:maven-model-builder:3.2.3
+    # from org.apache.maven:maven-model-builder:3.8.1
     # This is a root requested Maven artifact.
-    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.3.9'.
     java_import(
-        name = "org_apache_maven__maven_model_builder__3_2_3",
-        jars = ["@org_apache_maven__maven_model_builder__3_2_3//file"],
+        name = "org_apache_maven__maven_model_builder__3_8_1",
+        jars = ["@org_apache_maven__maven_model_builder__3_8_1//file"],
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache License, Version 2.0",
-            "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
-            "maven_coordinates=org.apache.maven:maven-model-builder:3.2.3",
+            "mabel_license_url=https://www.apache.org/licenses/LICENSE-2.0.txt",
+            "maven_coordinates=org.apache.maven:maven-model-builder:3.8.1",
         ],
         licenses = ["notice"],
         deps = [
+            ":javax_inject__javax_inject",
+            ":org_apache_maven__maven_artifact",
+            ":org_apache_maven__maven_builder_support",
             ":org_apache_maven__maven_model",
-            ":org_codehaus_plexus__plexus_component_annotations",
             ":org_codehaus_plexus__plexus_interpolation",
             ":org_codehaus_plexus__plexus_utils",
+            ":org_eclipse_sisu__org_eclipse_sisu_inject",
         ],
         exports = [
+            ":javax_inject__javax_inject",
+            ":org_apache_maven__maven_artifact",
+            ":org_apache_maven__maven_builder_support",
             ":org_apache_maven__maven_model",
-            ":org_codehaus_plexus__plexus_component_annotations",
             ":org_codehaus_plexus__plexus_interpolation",
             ":org_codehaus_plexus__plexus_utils",
+            ":org_eclipse_sisu__org_eclipse_sisu_inject",
         ],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
 
-    # from org.apache.maven:maven-model:3.2.3
+    # from org.apache.maven:maven-model:3.8.1
     # This is a root requested Maven artifact.
-    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
-    # This is a dependency of 'org.apache.maven:maven-model-builder:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.3.9'.
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
     native.alias(
         name = "org_apache_maven__maven_model",
-        actual = ":org_apache_maven__maven_model__3_2_3",
+        actual = ":org_apache_maven__maven_model__3_8_1",
         visibility = ["//visibility:public"],
     )
 
-    # from org.apache.maven:maven-model:3.2.3
+    # from org.apache.maven:maven-model:3.8.1
     # This is a root requested Maven artifact.
-    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
-    # This is a dependency of 'org.apache.maven:maven-model-builder:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.3.9'.
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
     java_import(
-        name = "org_apache_maven__maven_model__3_2_3",
-        jars = ["@org_apache_maven__maven_model__3_2_3//file"],
+        name = "org_apache_maven__maven_model__3_8_1",
+        jars = ["@org_apache_maven__maven_model__3_8_1//file"],
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache License, Version 2.0",
-            "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
-            "maven_coordinates=org.apache.maven:maven-model:3.2.3",
+            "mabel_license_url=https://www.apache.org/licenses/LICENSE-2.0.txt",
+            "maven_coordinates=org.apache.maven:maven-model:3.8.1",
         ],
         licenses = ["notice"],
         deps = [":org_codehaus_plexus__plexus_utils"],
@@ -1353,26 +1439,26 @@ def generate_transitive_dependency_targets(
         visibility = ["//visibility:private"],
     )
 
-    # from org.apache.maven:maven-repository-metadata:3.2.3
+    # from org.apache.maven:maven-repository-metadata:3.8.1
     # This is a root requested Maven artifact.
-    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.3.9'.
     native.alias(
         name = "org_apache_maven__maven_repository_metadata",
-        actual = ":org_apache_maven__maven_repository_metadata__3_2_3",
+        actual = ":org_apache_maven__maven_repository_metadata__3_8_1",
         visibility = ["//visibility:public"],
     )
 
-    # from org.apache.maven:maven-repository-metadata:3.2.3
+    # from org.apache.maven:maven-repository-metadata:3.8.1
     # This is a root requested Maven artifact.
-    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.3.9'.
     java_import(
-        name = "org_apache_maven__maven_repository_metadata__3_2_3",
-        jars = ["@org_apache_maven__maven_repository_metadata__3_2_3//file"],
+        name = "org_apache_maven__maven_repository_metadata__3_8_1",
+        jars = ["@org_apache_maven__maven_repository_metadata__3_8_1//file"],
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache License, Version 2.0",
-            "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
-            "maven_coordinates=org.apache.maven:maven-repository-metadata:3.2.3",
+            "mabel_license_url=https://www.apache.org/licenses/LICENSE-2.0.txt",
+            "maven_coordinates=org.apache.maven:maven-repository-metadata:3.8.1",
         ],
         licenses = ["notice"],
         deps = [":org_codehaus_plexus__plexus_utils"],
@@ -1433,26 +1519,24 @@ def generate_transitive_dependency_targets(
         visibility = ["//visibility:private"],
     )
 
-    # from org.codehaus.plexus:plexus-component-annotations:1.5.5
-    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
-    # This is a dependency of 'org.apache.maven:maven-model-builder:3.2.3'.
+    # from org.codehaus.plexus:plexus-component-annotations:1.6
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.3.9'.
     native.alias(
         name = "org_codehaus_plexus__plexus_component_annotations",
-        actual = ":org_codehaus_plexus__plexus_component_annotations__1_5_5",
+        actual = ":org_codehaus_plexus__plexus_component_annotations__1_6",
         visibility = ["//visibility:private"],
     )
 
-    # from org.codehaus.plexus:plexus-component-annotations:1.5.5
-    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
-    # This is a dependency of 'org.apache.maven:maven-model-builder:3.2.3'.
+    # from org.codehaus.plexus:plexus-component-annotations:1.6
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.3.9'.
     java_import(
-        name = "org_codehaus_plexus__plexus_component_annotations__1_5_5",
-        jars = ["@org_codehaus_plexus__plexus_component_annotations__1_5_5//file"],
+        name = "org_codehaus_plexus__plexus_component_annotations__1_6",
+        jars = ["@org_codehaus_plexus__plexus_component_annotations__1_6//file"],
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
             "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
-            "maven_coordinates=org.codehaus.plexus:plexus-component-annotations:1.5.5",
+            "maven_coordinates=org.codehaus.plexus:plexus-component-annotations:1.6",
         ],
         licenses = ["notice"],
         deps = [],
@@ -1461,26 +1545,26 @@ def generate_transitive_dependency_targets(
         visibility = ["//visibility:private"],
     )
 
-    # from org.codehaus.plexus:plexus-interpolation:1.24
+    # from org.codehaus.plexus:plexus-interpolation:1.26
     # This is a root requested Maven artifact.
-    # This is a dependency of 'org.apache.maven:maven-model-builder:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
     native.alias(
         name = "org_codehaus_plexus__plexus_interpolation",
-        actual = ":org_codehaus_plexus__plexus_interpolation__1_24",
+        actual = ":org_codehaus_plexus__plexus_interpolation__1_26",
         visibility = ["//visibility:public"],
     )
 
-    # from org.codehaus.plexus:plexus-interpolation:1.24
+    # from org.codehaus.plexus:plexus-interpolation:1.26
     # This is a root requested Maven artifact.
-    # This is a dependency of 'org.apache.maven:maven-model-builder:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
     java_import(
-        name = "org_codehaus_plexus__plexus_interpolation__1_24",
-        jars = ["@org_codehaus_plexus__plexus_interpolation__1_24//file"],
+        name = "org_codehaus_plexus__plexus_interpolation__1_26",
+        jars = ["@org_codehaus_plexus__plexus_interpolation__1_26//file"],
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache License, Version 2.0",
             "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
-            "maven_coordinates=org.codehaus.plexus:plexus-interpolation:1.24",
+            "maven_coordinates=org.codehaus.plexus:plexus-interpolation:1.26",
         ],
         licenses = ["notice"],
         deps = [],
@@ -1489,36 +1573,36 @@ def generate_transitive_dependency_targets(
         visibility = ["//visibility:private"],
     )
 
-    # from org.codehaus.plexus:plexus-utils:3.0.24
+    # from org.codehaus.plexus:plexus-utils:3.3.0
     # This is a root requested Maven artifact.
     # This is a dependency of 'org.apache.maven.wagon:wagon-provider-api:1.0'.
-    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
-    # This is a dependency of 'org.apache.maven:maven-artifact:3.5.0'.
-    # This is a dependency of 'org.apache.maven:maven-model-builder:3.2.3'.
-    # This is a dependency of 'org.apache.maven:maven-model:3.2.3'.
-    # This is a dependency of 'org.apache.maven:maven-repository-metadata:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.3.9'.
+    # This is a dependency of 'org.apache.maven:maven-artifact:3.8.1'.
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
+    # This is a dependency of 'org.apache.maven:maven-model:3.8.1'.
+    # This is a dependency of 'org.apache.maven:maven-repository-metadata:3.8.1'.
     native.alias(
         name = "org_codehaus_plexus__plexus_utils",
-        actual = ":org_codehaus_plexus__plexus_utils__3_0_24",
+        actual = ":org_codehaus_plexus__plexus_utils__3_3_0",
         visibility = ["//visibility:public"],
     )
 
-    # from org.codehaus.plexus:plexus-utils:3.0.24
+    # from org.codehaus.plexus:plexus-utils:3.3.0
     # This is a root requested Maven artifact.
     # This is a dependency of 'org.apache.maven.wagon:wagon-provider-api:1.0'.
-    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
-    # This is a dependency of 'org.apache.maven:maven-artifact:3.5.0'.
-    # This is a dependency of 'org.apache.maven:maven-model-builder:3.2.3'.
-    # This is a dependency of 'org.apache.maven:maven-model:3.2.3'.
-    # This is a dependency of 'org.apache.maven:maven-repository-metadata:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.3.9'.
+    # This is a dependency of 'org.apache.maven:maven-artifact:3.8.1'.
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
+    # This is a dependency of 'org.apache.maven:maven-model:3.8.1'.
+    # This is a dependency of 'org.apache.maven:maven-repository-metadata:3.8.1'.
     java_import(
-        name = "org_codehaus_plexus__plexus_utils__3_0_24",
-        jars = ["@org_codehaus_plexus__plexus_utils__3_0_24//file"],
+        name = "org_codehaus_plexus__plexus_utils__3_3_0",
+        jars = ["@org_codehaus_plexus__plexus_utils__3_3_0//file"],
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache License, Version 2.0",
             "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
-            "maven_coordinates=org.codehaus.plexus:plexus-utils:3.0.24",
+            "maven_coordinates=org.codehaus.plexus:plexus-utils:3.3.0",
         ],
         licenses = ["notice"],
         deps = [],
@@ -1529,7 +1613,7 @@ def generate_transitive_dependency_targets(
 
     # from org.eclipse.aether:aether-api:1.1.0
     # This is a root requested Maven artifact.
-    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.3.9'.
     # This is a dependency of 'org.eclipse.aether:aether-connector-basic:1.1.0'.
     # This is a dependency of 'org.eclipse.aether:aether-impl:1.1.0'.
     # This is a dependency of 'org.eclipse.aether:aether-spi:1.1.0'.
@@ -1546,7 +1630,7 @@ def generate_transitive_dependency_targets(
 
     # from org.eclipse.aether:aether-api:1.1.0
     # This is a root requested Maven artifact.
-    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.3.9'.
     # This is a dependency of 'org.eclipse.aether:aether-connector-basic:1.1.0'.
     # This is a dependency of 'org.eclipse.aether:aether-impl:1.1.0'.
     # This is a dependency of 'org.eclipse.aether:aether-spi:1.1.0'.
@@ -1607,7 +1691,7 @@ def generate_transitive_dependency_targets(
 
     # from org.eclipse.aether:aether-impl:1.1.0
     # This is a root requested Maven artifact.
-    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.3.9'.
     native.alias(
         name = "org_eclipse_aether__aether_impl",
         actual = ":org_eclipse_aether__aether_impl__1_1_0",
@@ -1616,7 +1700,7 @@ def generate_transitive_dependency_targets(
 
     # from org.eclipse.aether:aether-impl:1.1.0
     # This is a root requested Maven artifact.
-    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.3.9'.
     java_import(
         name = "org_eclipse_aether__aether_impl__1_1_0",
         jars = ["@org_eclipse_aether__aether_impl__1_1_0//file"],
@@ -1643,7 +1727,7 @@ def generate_transitive_dependency_targets(
 
     # from org.eclipse.aether:aether-spi:1.1.0
     # This is a root requested Maven artifact.
-    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.3.9'.
     # This is a dependency of 'org.eclipse.aether:aether-connector-basic:1.1.0'.
     # This is a dependency of 'org.eclipse.aether:aether-impl:1.1.0'.
     # This is a dependency of 'org.eclipse.aether:aether-transport-classpath:1.1.0'.
@@ -1658,7 +1742,7 @@ def generate_transitive_dependency_targets(
 
     # from org.eclipse.aether:aether-spi:1.1.0
     # This is a root requested Maven artifact.
-    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.3.9'.
     # This is a dependency of 'org.eclipse.aether:aether-connector-basic:1.1.0'.
     # This is a dependency of 'org.eclipse.aether:aether-impl:1.1.0'.
     # This is a dependency of 'org.eclipse.aether:aether-transport-classpath:1.1.0'.
@@ -1825,7 +1909,7 @@ def generate_transitive_dependency_targets(
 
     # from org.eclipse.aether:aether-util:1.1.0
     # This is a root requested Maven artifact.
-    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.3.9'.
     # This is a dependency of 'org.eclipse.aether:aether-connector-basic:1.1.0'.
     # This is a dependency of 'org.eclipse.aether:aether-impl:1.1.0'.
     # This is a dependency of 'org.eclipse.aether:aether-transport-classpath:1.1.0'.
@@ -1840,7 +1924,7 @@ def generate_transitive_dependency_targets(
 
     # from org.eclipse.aether:aether-util:1.1.0
     # This is a root requested Maven artifact.
-    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.2.3'.
+    # This is a dependency of 'org.apache.maven:maven-aether-provider:3.3.9'.
     # This is a dependency of 'org.eclipse.aether:aether-connector-basic:1.1.0'.
     # This is a dependency of 'org.eclipse.aether:aether-impl:1.1.0'.
     # This is a dependency of 'org.eclipse.aether:aether-transport-classpath:1.1.0'.
@@ -1860,6 +1944,100 @@ def generate_transitive_dependency_targets(
         deps = [":org_eclipse_aether__aether_api"],
         exports = [":org_eclipse_aether__aether_api"],
         runtime_deps = [],
+        visibility = ["//visibility:private"],
+    )
+
+    # from org.eclipse.sisu:org.eclipse.sisu.inject:0.3.4
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
+    native.alias(
+        name = "org_eclipse_sisu__org_eclipse_sisu_inject",
+        actual = ":org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4",
+        visibility = ["//visibility:private"],
+    )
+
+    # from org.eclipse.sisu:org.eclipse.sisu.inject:0.3.4
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
+    java_import(
+        name = "org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4",
+        jars = ["@org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4//file"],
+        tags = [
+            "mabel_license_detected_type=Eclipse",
+            "mabel_license_name=Eclipse Public License, Version 1.0",
+            "mabel_license_url=http://www.eclipse.org/legal/epl-v10.html",
+            "maven_coordinates=org.eclipse.sisu:org.eclipse.sisu.inject:0.3.4",
+        ],
+        licenses = ["reciprocal"],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+        visibility = ["//visibility:private"],
+    )
+
+    # from org.eclipse.sisu:org.eclipse.sisu.inject:0.3.4
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
+    java_plugin(
+        name = "org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4___generates_api___processor_class_0",
+        processor_class = "org.eclipse.sisu.space.SisuIndexAPT6",
+        generates_api = 1,
+        deps = [":org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4"],
+        visibility = ["//visibility:private"],
+    )
+
+    # from org.eclipse.sisu:org.eclipse.sisu.inject:0.3.4
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
+    java_library(
+        name = "org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4___generates_api___processor_class_all",
+        exported_plugins = [":org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4___generates_api___processor_class_0"],
+        visibility = ["//visibility:private"],
+    )
+
+    # from org.eclipse.sisu:org.eclipse.sisu.inject:0.3.4
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
+    java_plugin(
+        name = "org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4___processor_class_0",
+        processor_class = "org.eclipse.sisu.space.SisuIndexAPT6",
+        generates_api = 0,
+        deps = [":org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4"],
+        visibility = ["//visibility:private"],
+    )
+
+    # from org.eclipse.sisu:org.eclipse.sisu.inject:0.3.4
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
+    java_library(
+        name = "org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4___processor_class_all",
+        exported_plugins = [":org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4___processor_class_0"],
+        visibility = ["//visibility:private"],
+    )
+
+    # from org.eclipse.sisu:org.eclipse.sisu.inject:0.3.4
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
+    native.alias(
+        name = "org_eclipse_sisu__org_eclipse_sisu_inject___generates_api___processor_class_0",
+        actual = ":org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4___generates_api___processor_class_0",
+        visibility = ["//visibility:private"],
+    )
+
+    # from org.eclipse.sisu:org.eclipse.sisu.inject:0.3.4
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
+    native.alias(
+        name = "org_eclipse_sisu__org_eclipse_sisu_inject___generates_api___processor_class_all",
+        actual = ":org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4___generates_api___processor_class_all",
+        visibility = ["//visibility:private"],
+    )
+
+    # from org.eclipse.sisu:org.eclipse.sisu.inject:0.3.4
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
+    native.alias(
+        name = "org_eclipse_sisu__org_eclipse_sisu_inject___processor_class_0",
+        actual = ":org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4___processor_class_0",
+        visibility = ["//visibility:private"],
+    )
+
+    # from org.eclipse.sisu:org.eclipse.sisu.inject:0.3.4
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
+    native.alias(
+        name = "org_eclipse_sisu__org_eclipse_sisu_inject___processor_class_all",
+        actual = ":org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4___processor_class_all",
         visibility = ["//visibility:private"],
     )
 

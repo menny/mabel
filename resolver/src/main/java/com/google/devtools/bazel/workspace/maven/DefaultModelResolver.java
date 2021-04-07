@@ -16,11 +16,19 @@ package com.google.devtools.bazel.workspace.maven;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
+
+import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Parent;
 import org.apache.maven.model.Repository;
-import org.apache.maven.model.building.*;
+import org.apache.maven.model.building.DefaultModelBuilder;
+import org.apache.maven.model.building.DefaultModelBuilderFactory;
+import org.apache.maven.model.building.DefaultModelBuildingRequest;
+import org.apache.maven.model.building.ModelBuildingRequest;
+import org.apache.maven.model.building.ModelSource;
+import org.apache.maven.model.building.ModelSource2;
 import org.apache.maven.model.profile.DefaultProfileSelector;
+import org.apache.maven.model.profile.activation.PropertyProfileActivator;
 import org.apache.maven.model.resolution.ModelResolver;
 import org.apache.maven.model.resolution.UnresolvableModelException;
 
@@ -34,7 +42,6 @@ import java.util.List;
 import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
-import static org.apache.maven.model.building.ModelBuildingRequest.VALIDATION_LEVEL_MINIMAL;
 
 /**
  * MigrationToolingMavenResolver to find the repository a given Maven artifact should be fetched
@@ -46,27 +53,32 @@ public class DefaultModelResolver implements ModelResolver {
     private final Map<String, RepoModelSource> ruleNameToModelSource;
     private final DefaultModelBuilder modelBuilder;
     private final VersionResolver versionResolver;
+    private final String jdkHome;
 
     public DefaultModelResolver(
-            Collection<Repository> repositories, VersionResolver versionResolver) {
+            Collection<Repository> repositories, VersionResolver versionResolver, String jdkHome) {
         this(
                 repositories,
                 Maps.newHashMap(),
                 new DefaultModelBuilderFactory()
                         .newInstance()
-                        .setProfileSelector(new DefaultProfileSelector()),
-                versionResolver);
+                        .setProfileSelector(new DefaultProfileSelector()
+                                .addProfileActivator(new PropertyProfileActivator())),
+                versionResolver,
+                jdkHome);
     }
 
     private DefaultModelResolver(
             Collection<Repository> repositories,
             Map<String, RepoModelSource> ruleNameToModelSource,
             DefaultModelBuilder modelBuilder,
-            VersionResolver versionResolver) {
+            VersionResolver versionResolver,
+            String jdkHome) {
         this.repositories = repositories;
         this.ruleNameToModelSource = ruleNameToModelSource;
         this.modelBuilder = modelBuilder;
         this.versionResolver = versionResolver;
+        this.jdkHome = jdkHome;
     }
 
     static boolean remoteFileExists(URL url) {
@@ -133,7 +145,7 @@ public class DefaultModelResolver implements ModelResolver {
         }
 
         for (Repository repository : repositories) {
-            UrlModelSource modelSource =
+            ModelSource2 modelSource =
                     getModelSource(repository.getUrl(), groupId, artifactId, classifier, version);
             if (modelSource != null) {
                 final RepoModelSource repoModelSource =
@@ -163,8 +175,8 @@ public class DefaultModelResolver implements ModelResolver {
     }
 
     // TODO(kchodorow): make this work with local repositories.
-    private UrlModelSource getModelSource(
-            String url, String groupId, String artifactId, String classifier, String version) {
+    private ModelSource2 getModelSource(
+            String repoUrl, String groupId, String artifactId, String classifier, String version) {
         try {
             version = versionResolver.resolveVersion(groupId, artifactId, classifier, version);
         } catch (ArtifactBuilder.InvalidArtifactCoordinateException e) {
@@ -174,9 +186,9 @@ public class DefaultModelResolver implements ModelResolver {
                             groupId, artifactId, version, e.getMessage()),
                     e);
         }
-        URL pomUrl = getUrlForArtifact(url, groupId, artifactId, classifier, version, "pom");
+        URL pomUrl = getUrlForArtifact(repoUrl, groupId, artifactId, classifier, version, "pom");
         if (remoteFileExists(pomUrl)) {
-            return new UrlModelSource(pomUrl);
+            return new UrlModelSource2(pomUrl);
         }
         return null;
     }
@@ -186,6 +198,11 @@ public class DefaultModelResolver implements ModelResolver {
     public ModelSource resolveModel(Parent parent) throws UnresolvableModelException {
         return resolveModel(parent.getGroupId(), parent.getArtifactId(), "", parent.getVersion())
                 .modelSource;
+    }
+
+    @Override
+    public ModelSource resolveModel(Dependency dependency) throws UnresolvableModelException {
+        return resolveModel(dependency.getGroupId(), dependency.getArtifactId(), dependency.getClassifier(), dependency.getVersion()).modelSource;
     }
 
     @Override
@@ -205,53 +222,36 @@ public class DefaultModelResolver implements ModelResolver {
     @Override
     public ModelResolver newCopy() {
         return new DefaultModelResolver(
-                repositories, ruleNameToModelSource, modelBuilder, versionResolver);
+                repositories, ruleNameToModelSource, modelBuilder, versionResolver, jdkHome);
     }
 
-    public Model getEffectiveModel(ModelSource modelSource) {
+    public Model getEffectiveModel(ModelSource2 modelSource) {
         DefaultModelBuildingRequest request = new DefaultModelBuildingRequest();
         request.setModelResolver(this);
-        request.setValidationLevel(VALIDATION_LEVEL_MINIMAL);
+        request.getSystemProperties().setProperty("java.home", jdkHome);//required for tools.jar resolve
+        request.setValidationLevel(ModelBuildingRequest.VALIDATION_LEVEL_MINIMAL);
+        request.setProcessPlugins(false);
         request.setModelSource(modelSource);
-        Model model;
-
-        ModelBuildingResult result;
-        try {
-            result = modelBuilder.build(request);
-        } catch (ModelBuildingException e) {
-            // IllegalArg can be thrown if the parent POM cannot be resolved.
-            System.out.println(
-                    "Unable to build Maven model from "
-                            + modelSource.getLocation()
-                            + ": "
-                            + e.getMessage());
-            return null;
-        }
 
         try {
-            model = result.getEffectiveModel();
+            return modelBuilder
+                    .build(request)
+                    .getEffectiveModel();
         } catch (Exception e) {
-            System.out.println(
-                    "Unable to resolve effective Maven model from "
-                            + modelSource.getLocation()
-                            + ": "
-                            + e.getMessage());
-            return null;
+            throw new RuntimeException("Failed to resolve effective model for " + modelSource.getLocationURI(), e);
         }
-
-        return model;
     }
 
     public static class RepoModelSource {
-        private final ModelSource modelSource;
+        private final ModelSource2 modelSource;
         private final Repository repository;
 
-        private RepoModelSource(final ModelSource modelSource, final Repository repository) {
+        private RepoModelSource(final ModelSource2 modelSource, final Repository repository) {
             this.modelSource = modelSource;
             this.repository = repository;
         }
 
-        public ModelSource getModelSource() {
+        public ModelSource2 getModelSource() {
             return modelSource;
         }
 
