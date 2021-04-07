@@ -3,6 +3,8 @@ TransitiveDataInfo = provider(fields = ["graph_file"])
 
 def _impl_resolver(ctx):
     output_file = ctx.outputs.out
+    java_runtime = ctx.attr._jdk[java_common.JavaRuntimeInfo]
+    java_home = java_runtime.java_home_runfiles_path
 
     arguments = ["--repository={}".format(repository) for repository in ctx.attr.repositories] + \
                 ["--blacklist={}".format(exclude_artifact_list) for exclude_artifact_list in ctx.attr.maven_exclude_deps] + \
@@ -10,6 +12,7 @@ def _impl_resolver(ctx):
                     "--artifact={}".format(ctx.attr.coordinate),
                     "--output_file={}".format(output_file.path),
                     "--debug_logs={}".format(ctx.attr.debug_logs).lower(),
+                    "--jdk_home={}".format(java_home),
                 ]
 
     ctx.actions.run(
@@ -31,6 +34,7 @@ _mabel_maven_dependency_graph_resolving_rule = rule(
         "debug_logs": attr.bool(default = False, doc = "If set to True, will print out debug logs while resolving dependencies. Default is False.", mandatory = False),
         "maven_exclude_deps": attr.string_list(allow_empty = True, default = [], doc = "List of Maven dependencies which should not be resolved. You can omit the `version` or both `artifact-id:version`."),
         "repositories": attr.string_list(allow_empty = False, default = DEFAULT_MAVEN_SERVERS, doc = "List of URLs that point to Maven servers. Defaut is Maven-Central."),
+        "_jdk": attr.label(default = Label("@bazel_tools//tools/jdk:remote_jdk11"), providers = [java_common.JavaRuntimeInfo]),
         "_resolver": attr.label(executable = True, allow_files = True, cfg = "host", default = Label("//resolver:resolver_bin")),
     },
     outputs = {"out": "%{name}-transitive-graph.data"},

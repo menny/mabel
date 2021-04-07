@@ -4,6 +4,9 @@ load("//rules/maven_deps:mabel.bzl", "artifact", "mabel_rule")
 
 generate_transitive_dependency_targets()
 
+_AETHER_VERSION = "1.1.0"
+_APACHE_MAVEN_VERSION="3.8.1"
+
 mabel_rule(
     name = "main_deps",
     maven_deps = [
@@ -15,24 +18,23 @@ mabel_rule(
         artifact("com.beust:jcommander:1.72"),
 
         #POM management
-        artifact("org.eclipse.aether:aether-api:1.1.0"),
-        artifact("org.eclipse.aether:aether-spi:1.1.0"),
-        artifact("org.eclipse.aether:aether-impl:1.1.0"),
-        artifact("org.eclipse.aether:aether-util:1.1.0"),
-        artifact("org.eclipse.aether:aether-transport-http:1.1.0"),
-        artifact("org.eclipse.aether:aether-transport-classpath:1.1.0"),
-        artifact("org.eclipse.aether:aether-transport-wagon:1.1.0"),
-        artifact("org.eclipse.aether:aether-transport-file:1.1.0"),
-        artifact("org.eclipse.aether:aether-connector-basic:1.1.0"),
-        artifact("org.apache.maven:maven-aether-provider:3.2.3"),
-        artifact("org.apache.maven:maven-model:3.2.3"),
-        artifact("org.apache.maven:maven-model-builder:3.2.3"),
-        artifact("org.apache.maven:maven-repository-metadata:3.2.3"),
-        artifact("org.apache.maven:maven-artifact:3.5.0"),
-        artifact("org.codehaus.plexus:plexus-interpolation:1.24"),
-        artifact("org.codehaus.plexus:plexus-utils:3.0.24"),
-        artifact("org.apache.httpcomponents:httpcore:4.4.6"),
-        artifact("org.apache.httpcomponents:httpclient:4.5.3"),
+        artifact("org.eclipse.aether:aether-api:" + _AETHER_VERSION),
+        artifact("org.eclipse.aether:aether-spi:" + _AETHER_VERSION),
+        artifact("org.eclipse.aether:aether-impl:" + _AETHER_VERSION),
+        artifact("org.eclipse.aether:aether-util:" + _AETHER_VERSION),
+        artifact("org.eclipse.aether:aether-transport-http:" + _AETHER_VERSION),
+        artifact("org.eclipse.aether:aether-transport-classpath:" + _AETHER_VERSION),
+        artifact("org.eclipse.aether:aether-transport-wagon:" + _AETHER_VERSION),
+        artifact("org.eclipse.aether:aether-transport-file:" + _AETHER_VERSION),
+        artifact("org.eclipse.aether:aether-connector-basic:" + _AETHER_VERSION),
+        artifact("org.apache.maven:maven-aether-provider:3.3.9"),
+        artifact("org.apache.maven:maven-model:" + _APACHE_MAVEN_VERSION),
+        artifact("org.apache.maven:maven-model-builder:" + _APACHE_MAVEN_VERSION),
+        artifact("org.apache.maven:maven-repository-metadata:" + _APACHE_MAVEN_VERSION),
+        artifact("org.apache.maven:maven-artifact:" + _APACHE_MAVEN_VERSION),
+        artifact("org.apache.httpcomponents:httpclient:4.5.13"),
+        artifact("org.codehaus.plexus:plexus-interpolation:1.26"),
+        artifact("org.codehaus.plexus:plexus-utils:3.3.0"),
 
         #model classes
         artifact("com.google.auto.value:auto-value-annotations:1.7"),
@@ -94,7 +96,6 @@ java_library(
         "//resolver/main_deps/com/google/guava/guava",
         "//resolver/main_deps/org/apache/commons/commons-lang3",
         "//resolver/main_deps/org/apache/httpcomponents/httpclient",
-        "//resolver/main_deps/org/apache/httpcomponents/httpcore",
         "//resolver/main_deps/org/apache/maven/maven-aether-provider",
         "//resolver/main_deps/org/apache/maven/maven-artifact",
         "//resolver/main_deps/org/apache/maven/maven-model",

@@ -1,5 +1,6 @@
 package com.google.devtools.bazel.workspace.maven;
 
+import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Profile;
 import org.junit.Assert;
@@ -7,12 +8,18 @@ import org.junit.Test;
 
 public class ArtifactBuilderTest {
 
+    private static Dependency createDepWithVersion(String version) {
+        final Dependency dependency = new Dependency();
+        dependency.setVersion(version);
+        return dependency;
+
+    }
     @Test
     public void testNoProfilesNoPlaceholders() {
         Assert.assertEquals(
                 "something",
                 ArtifactBuilder.ProfilePlaceholderUtil.replacePlaceholders(
-                        new Model(), "something"));
+                        new Model(), createDepWithVersion("something")));
     }
 
     @Test
@@ -24,7 +31,7 @@ public class ArtifactBuilderTest {
 
         Assert.assertEquals(
                 "something",
-                ArtifactBuilder.ProfilePlaceholderUtil.replacePlaceholders(model, "something"));
+                ArtifactBuilder.ProfilePlaceholderUtil.replacePlaceholders(model, createDepWithVersion("something")));
     }
 
     @Test
@@ -36,7 +43,7 @@ public class ArtifactBuilderTest {
 
         Assert.assertEquals(
                 "${not.found}",
-                ArtifactBuilder.ProfilePlaceholderUtil.replacePlaceholders(model, "${not.found}"));
+                ArtifactBuilder.ProfilePlaceholderUtil.replacePlaceholders(model, createDepWithVersion("${not.found}")));
     }
 
     @Test
@@ -52,7 +59,7 @@ public class ArtifactBuilderTest {
         Assert.assertEquals(
                 "car is vehicle",
                 ArtifactBuilder.ProfilePlaceholderUtil.replacePlaceholders(
-                        model, "${something} is ${key2}"));
+                        model, createDepWithVersion("${something} is ${key2}")));
     }
 
     @Test
@@ -68,6 +75,20 @@ public class ArtifactBuilderTest {
         Assert.assertEquals(
                 "car is object",
                 ArtifactBuilder.ProfilePlaceholderUtil.replacePlaceholders(
-                        model, "${something} is ${key}"));
+                        model, createDepWithVersion("${something} is ${key}")));
+    }
+
+    @Test
+    public void testFailsWhenVersionIsNull() {
+        NullPointerException caught = null;
+        try {
+            ArtifactBuilder.ProfilePlaceholderUtil.replacePlaceholders(
+                    new Model(), createDepWithVersion(null));
+        } catch (NullPointerException e) {
+            caught = e;
+        }
+
+        Assert.assertNotNull(caught);
+        Assert.assertTrue(caught.getMessage().endsWith("has no version!"));
     }
 }

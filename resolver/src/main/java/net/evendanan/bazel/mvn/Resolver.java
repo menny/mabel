@@ -23,8 +23,8 @@ public class Resolver {
 
     private final GraphResolver resolver;
 
-    private Resolver(boolean debugLogs) {
-        this.resolver = new MigrationToolingGraphResolver(debugLogs);
+    private Resolver(boolean debugLogs, String jdkHome) {
+        this.resolver = new MigrationToolingGraphResolver(debugLogs, jdkHome);
     }
 
     public static void main(String[] args) throws Exception {
@@ -48,7 +48,7 @@ public class Resolver {
             return;
         }
 
-        Resolver driver = new Resolver(options.debug_logs);
+        Resolver driver = new Resolver(options.debug_logs, new File(options.jdk_home).getAbsoluteFile().getCanonicalFile().toPath().toString());
         driver.writeResults(options, driver.generateFromArtifacts(options));
     }
 
@@ -98,6 +98,12 @@ public class Resolver {
                 description = "Path to output graph json file",
                 required = true)
         String output_file = "";
+
+        @Parameter(
+                names = {"--jdk_home"},
+                description = "Path to the local JDK",
+                required = true)
+        String jdk_home = "";
 
         @Parameter(
                 names = {"--debug_logs"},
