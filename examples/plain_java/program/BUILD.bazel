@@ -6,11 +6,11 @@ generate_transitive_dependency_targets()
 
 mabel_rule(
     name = "main_deps",
-    generated_targets_prefix = "",
     debug_logs = True,
+    generated_targets_prefix = "",
     maven_deps = [
         artifact("com.google.guava:guava:20.0"),
-        artifact("com.smartling.api:smartling-api-sdk:0.18.0")
+        artifact("org.jboss.resteasy:resteasy-client:3.13.1.Final"),
     ],
 )
 
