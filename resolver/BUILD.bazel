@@ -5,7 +5,8 @@ load("//rules/maven_deps:mabel.bzl", "artifact", "mabel_rule")
 generate_transitive_dependency_targets()
 
 _AETHER_VERSION = "1.1.0"
-_APACHE_MAVEN_VERSION="3.8.1"
+
+_APACHE_MAVEN_VERSION = "3.8.1"
 
 mabel_rule(
     name = "main_deps",

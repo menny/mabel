@@ -15,12 +15,132 @@ def generate_workspace_rules(name = "generate_workspace_rules"):
         name: A unique name for this target. No need to specify.
     """
 
+    # from com.github.stephenc.jcip:jcip-annotations:1.0-1
+    http_file(
+        name = "com_github_stephenc_jcip__jcip_annotations__1_0_1",
+        urls = ["https://repo1.maven.org/maven2/com/github/stephenc/jcip/jcip-annotations/1.0-1/jcip-annotations-1.0-1.jar"],
+        downloaded_file_path = "jcip-annotations-1.0-1.jar",
+        sha256 = "4fccff8382aafc589962c4edb262f6aa595e34f1e11e61057d1c6a96e8fc7323",
+    )
+
     # from com.google.guava:guava:20.0
     http_file(
         name = "com_google_guava__guava__20_0",
         urls = ["https://repo1.maven.org/maven2/com/google/guava/guava/20.0/guava-20.0.jar"],
         downloaded_file_path = "guava-20.0.jar",
         sha256 = "36a666e3b71ae7f0f0dca23654b67e086e6c93d192f60ba5dfd5519db6c288c8",
+    )
+
+    # from com.sun.activation:jakarta.activation:1.2.1
+    http_file(
+        name = "com_sun_activation__jakarta_activation__1_2_1",
+        urls = ["https://repo1.maven.org/maven2/com/sun/activation/jakarta.activation/1.2.1/jakarta.activation-1.2.1.jar"],
+        downloaded_file_path = "jakarta.activation-1.2.1.jar",
+        sha256 = "d84d4ba8b55cdb7fdcbb885e6939386367433f56f5ab8cfdc302a7c3587fa92b",
+    )
+
+    # from commons-codec:commons-codec:1.13
+    http_file(
+        name = "commons_codec__commons_codec__1_13",
+        urls = ["https://repo1.maven.org/maven2/commons-codec/commons-codec/1.13/commons-codec-1.13.jar"],
+        downloaded_file_path = "commons-codec-1.13.jar",
+        sha256 = "61f7a3079e92b9fdd605238d0295af5fd11ac411a0a0af48deace1f6c5ffa072",
+    )
+
+    # from commons-io:commons-io:2.5
+    http_file(
+        name = "commons_io__commons_io__2_5",
+        urls = ["https://repo1.maven.org/maven2/commons-io/commons-io/2.5/commons-io-2.5.jar"],
+        downloaded_file_path = "commons-io-2.5.jar",
+        sha256 = "a10418348d234968600ccb1d988efcbbd08716e1d96936ccc1880e7d22513474",
+    )
+
+    # from commons-logging:commons-logging:1.2
+    http_file(
+        name = "commons_logging__commons_logging__1_2",
+        urls = ["https://repo1.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2.jar"],
+        downloaded_file_path = "commons-logging-1.2.jar",
+        sha256 = "daddea1ea0be0f56978ab3006b8ac92834afeefbd9b7e4e6316fca57df0fa636",
+    )
+
+    # from jakarta.validation:jakarta.validation-api:2.0.2
+    http_file(
+        name = "jakarta_validation__jakarta_validation_api__2_0_2",
+        urls = ["https://repo1.maven.org/maven2/jakarta/validation/jakarta.validation-api/2.0.2/jakarta.validation-api-2.0.2.jar"],
+        downloaded_file_path = "jakarta.validation-api-2.0.2.jar",
+        sha256 = "b42d42428f3d922c892a909fa043287d577c0c5b165ad9b7d568cebf87fc9ea4",
+    )
+
+    # from org.apache.httpcomponents:httpclient:4.5.12
+    http_file(
+        name = "org_apache_httpcomponents__httpclient__4_5_12",
+        urls = ["https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.5.12/httpclient-4.5.12.jar"],
+        downloaded_file_path = "httpclient-4.5.12.jar",
+        sha256 = "bc5f065aba5dd815ee559dd24d9bcb797fb102ff9cfa036f5091ebc529bd3b93",
+    )
+
+    # from org.apache.httpcomponents:httpcore:4.4.13
+    http_file(
+        name = "org_apache_httpcomponents__httpcore__4_4_13",
+        urls = ["https://repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/4.4.13/httpcore-4.4.13.jar"],
+        downloaded_file_path = "httpcore-4.4.13.jar",
+        sha256 = "e06e89d40943245fcfa39ec537cdbfce3762aecde8f9c597780d2b00c2b43424",
+    )
+
+    # from org.jboss.logging:jboss-logging:3.3.2.Final
+    http_file(
+        name = "org_jboss_logging__jboss_logging__3_3_2_Final",
+        urls = ["https://repo1.maven.org/maven2/org/jboss/logging/jboss-logging/3.3.2.Final/jboss-logging-3.3.2.Final.jar"],
+        downloaded_file_path = "jboss-logging-3.3.2.Final.jar",
+        sha256 = "cb914bfe888da7d9162e965ac8b0d6f28f2f32eca944a00fbbf6dd3cf1aacc13",
+    )
+
+    # from org.jboss.resteasy:resteasy-client:3.13.1.Final
+    http_file(
+        name = "org_jboss_resteasy__resteasy_client__3_13_1_Final",
+        urls = ["https://repo1.maven.org/maven2/org/jboss/resteasy/resteasy-client/3.13.1.Final/resteasy-client-3.13.1.Final.jar"],
+        downloaded_file_path = "resteasy-client-3.13.1.Final.jar",
+        sha256 = "b12177a17bedb2db3efc38ceec1dc3b7e2aa052e0b392a5a9e6a1379b5347926",
+    )
+
+    # from org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final
+    http_file(
+        name = "org_jboss_resteasy__resteasy_jaxrs__3_13_1_Final",
+        urls = ["https://repo1.maven.org/maven2/org/jboss/resteasy/resteasy-jaxrs/3.13.1.Final/resteasy-jaxrs-3.13.1.Final.jar"],
+        downloaded_file_path = "resteasy-jaxrs-3.13.1.Final.jar",
+        sha256 = "115adedd56f985c33f037590af7e497142172f69731086f5a455c355fcdc1da8",
+    )
+
+    # from org.jboss.spec.javax.annotation:jboss-annotations-api_1.3_spec:2.0.1.Final
+    http_file(
+        name = "org_jboss_spec_javax_annotation__jboss_annotations_api_1_3_spec__2_0_1_Final",
+        urls = ["https://repo1.maven.org/maven2/org/jboss/spec/javax/annotation/jboss-annotations-api_1.3_spec/2.0.1.Final/jboss-annotations-api_1.3_spec-2.0.1.Final.jar"],
+        downloaded_file_path = "jboss-annotations-api_1.3_spec-2.0.1.Final.jar",
+        sha256 = "afc4e3b8701119c9a2ceb8cebe3fd1869a269de768d7d56e7b5051827a132368",
+    )
+
+    # from org.jboss.spec.javax.ws.rs:jboss-jaxrs-api_2.1_spec:2.0.1.Final
+    http_file(
+        name = "org_jboss_spec_javax_ws_rs__jboss_jaxrs_api_2_1_spec__2_0_1_Final",
+        urls = ["https://repo1.maven.org/maven2/org/jboss/spec/javax/ws/rs/jboss-jaxrs-api_2.1_spec/2.0.1.Final/jboss-jaxrs-api_2.1_spec-2.0.1.Final.jar"],
+        downloaded_file_path = "jboss-jaxrs-api_2.1_spec-2.0.1.Final.jar",
+        sha256 = "3518db0a3980aacfdae916f0eb081d0fcefaa2076d2ba603edc779a601d2d1a4",
+    )
+
+    # from org.jboss.spec.javax.xml.bind:jboss-jaxb-api_2.3_spec:2.0.0.Final
+    http_file(
+        name = "org_jboss_spec_javax_xml_bind__jboss_jaxb_api_2_3_spec__2_0_0_Final",
+        urls = ["https://repo1.maven.org/maven2/org/jboss/spec/javax/xml/bind/jboss-jaxb-api_2.3_spec/2.0.0.Final/jboss-jaxb-api_2.3_spec-2.0.0.Final.jar"],
+        downloaded_file_path = "jboss-jaxb-api_2.3_spec-2.0.0.Final.jar",
+        sha256 = "f73f5832acef810d4d72da3b04378b6a70b72e955fdb0315591f0115c3ee701b",
+    )
+
+    # from org.reactivestreams:reactive-streams:1.0.3
+    http_file(
+        name = "org_reactivestreams__reactive_streams__1_0_3",
+        urls = ["https://repo1.maven.org/maven2/org/reactivestreams/reactive-streams/1.0.3/reactive-streams-1.0.3.jar"],
+        downloaded_file_path = "reactive-streams-1.0.3.jar",
+        sha256 = "1dee0481072d19c929b623e155e14d2f6085dc011529a0a0dbefc84cf571d865",
     )
 
 def _no_op_missing_aar_impl(name, **kwargs):
@@ -113,6 +233,31 @@ def generate_transitive_dependency_targets(
         kt_android_library: rule implementation for kt_android_library. Required only if you have Android-Kotlin dependencies.
     """
 
+    # from com.github.stephenc.jcip:jcip-annotations:1.0-1
+    # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
+    native.alias(
+        name = "com_github_stephenc_jcip__jcip_annotations",
+        actual = ":com_github_stephenc_jcip__jcip_annotations__1_0_1",
+        visibility = ["//visibility:public"],
+    )
+
+    # from com.github.stephenc.jcip:jcip-annotations:1.0-1
+    # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
+    java_import(
+        name = "com_github_stephenc_jcip__jcip_annotations__1_0_1",
+        jars = ["@com_github_stephenc_jcip__jcip_annotations__1_0_1//file"],
+        tags = [
+            "mabel_license_detected_type=Apache",
+            "mabel_license_name=Apache License, Version 2.0",
+            "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
+            "maven_coordinates=com.github.stephenc.jcip:jcip-annotations:1.0-1",
+        ],
+        licenses = ["notice"],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
     # from com.google.guava:guava:20.0
     # This is a root requested Maven artifact.
     native.alias(
@@ -133,6 +278,416 @@ def generate_transitive_dependency_targets(
             "maven_coordinates=com.google.guava:guava:20.0",
         ],
         licenses = ["notice"],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from com.sun.activation:jakarta.activation:1.2.1
+    # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
+    native.alias(
+        name = "com_sun_activation__jakarta_activation",
+        actual = ":com_sun_activation__jakarta_activation__1_2_1",
+        visibility = ["//visibility:public"],
+    )
+
+    # from com.sun.activation:jakarta.activation:1.2.1
+    # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
+    java_import(
+        name = "com_sun_activation__jakarta_activation__1_2_1",
+        jars = ["@com_sun_activation__jakarta_activation__1_2_1//file"],
+        tags = [
+            "mabel_license_detected_type=UNKNOWN",
+            "mabel_license_name=EDL 1.0",
+            "mabel_license_url=http://www.eclipse.org/org/documents/edl-v10.php",
+            "maven_coordinates=com.sun.activation:jakarta.activation:1.2.1",
+        ],
+        licenses = [],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from commons-codec:commons-codec:1.13
+    # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.12'.
+    # This is a dependency of 'org.jboss.resteasy:resteasy-client:3.13.1.Final'.
+    native.alias(
+        name = "commons_codec__commons_codec",
+        actual = ":commons_codec__commons_codec__1_13",
+        visibility = ["//visibility:public"],
+    )
+
+    # from commons-codec:commons-codec:1.13
+    # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.12'.
+    # This is a dependency of 'org.jboss.resteasy:resteasy-client:3.13.1.Final'.
+    java_import(
+        name = "commons_codec__commons_codec__1_13",
+        jars = ["@commons_codec__commons_codec__1_13//file"],
+        tags = [
+            "mabel_license_detected_type=Apache",
+            "mabel_license_name=Apache License, Version 2.0",
+            "mabel_license_url=https://www.apache.org/licenses/LICENSE-2.0.txt",
+            "maven_coordinates=commons-codec:commons-codec:1.13",
+        ],
+        licenses = ["notice"],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from commons-io:commons-io:2.5
+    # This is a dependency of 'org.jboss.resteasy:resteasy-client:3.13.1.Final'.
+    # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
+    native.alias(
+        name = "commons_io__commons_io",
+        actual = ":commons_io__commons_io__2_5",
+        visibility = ["//visibility:public"],
+    )
+
+    # from commons-io:commons-io:2.5
+    # This is a dependency of 'org.jboss.resteasy:resteasy-client:3.13.1.Final'.
+    # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
+    java_import(
+        name = "commons_io__commons_io__2_5",
+        jars = ["@commons_io__commons_io__2_5//file"],
+        tags = [
+            "mabel_license_detected_type=Apache",
+            "mabel_license_name=Apache License, Version 2.0",
+            "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
+            "maven_coordinates=commons-io:commons-io:2.5",
+        ],
+        licenses = ["notice"],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from commons-logging:commons-logging:1.2
+    # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.12'.
+    native.alias(
+        name = "commons_logging__commons_logging",
+        actual = ":commons_logging__commons_logging__1_2",
+        visibility = ["//visibility:public"],
+    )
+
+    # from commons-logging:commons-logging:1.2
+    # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.12'.
+    java_import(
+        name = "commons_logging__commons_logging__1_2",
+        jars = ["@commons_logging__commons_logging__1_2//file"],
+        tags = [
+            "mabel_license_detected_type=Apache",
+            "mabel_license_name=The Apache Software License, Version 2.0",
+            "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
+            "maven_coordinates=commons-logging:commons-logging:1.2",
+        ],
+        licenses = ["notice"],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from jakarta.validation:jakarta.validation-api:2.0.2
+    # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
+    native.alias(
+        name = "jakarta_validation__jakarta_validation_api",
+        actual = ":jakarta_validation__jakarta_validation_api__2_0_2",
+        visibility = ["//visibility:public"],
+    )
+
+    # from jakarta.validation:jakarta.validation-api:2.0.2
+    # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
+    java_import(
+        name = "jakarta_validation__jakarta_validation_api__2_0_2",
+        jars = ["@jakarta_validation__jakarta_validation_api__2_0_2//file"],
+        tags = [
+            "mabel_license_detected_type=Apache",
+            "mabel_license_name=Apache License 2.0",
+            "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
+            "maven_coordinates=jakarta.validation:jakarta.validation-api:2.0.2",
+        ],
+        licenses = ["notice"],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from org.apache.httpcomponents:httpclient:4.5.12
+    # This is a dependency of 'org.jboss.resteasy:resteasy-client:3.13.1.Final'.
+    # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
+    native.alias(
+        name = "org_apache_httpcomponents__httpclient",
+        actual = ":org_apache_httpcomponents__httpclient__4_5_12",
+        visibility = ["//visibility:public"],
+    )
+
+    # from org.apache.httpcomponents:httpclient:4.5.12
+    # This is a dependency of 'org.jboss.resteasy:resteasy-client:3.13.1.Final'.
+    # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
+    java_import(
+        name = "org_apache_httpcomponents__httpclient__4_5_12",
+        jars = ["@org_apache_httpcomponents__httpclient__4_5_12//file"],
+        tags = [
+            "mabel_license_detected_type=Apache",
+            "mabel_license_name=Apache License, Version 2.0",
+            "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
+            "maven_coordinates=org.apache.httpcomponents:httpclient:4.5.12",
+        ],
+        licenses = ["notice"],
+        deps = [
+            ":commons_codec__commons_codec",
+            ":commons_logging__commons_logging",
+            ":org_apache_httpcomponents__httpcore",
+        ],
+        exports = [
+            ":commons_codec__commons_codec",
+            ":commons_logging__commons_logging",
+            ":org_apache_httpcomponents__httpcore",
+        ],
+        runtime_deps = [],
+    )
+
+    # from org.apache.httpcomponents:httpcore:4.4.13
+    # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.12'.
+    native.alias(
+        name = "org_apache_httpcomponents__httpcore",
+        actual = ":org_apache_httpcomponents__httpcore__4_4_13",
+        visibility = ["//visibility:public"],
+    )
+
+    # from org.apache.httpcomponents:httpcore:4.4.13
+    # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.12'.
+    java_import(
+        name = "org_apache_httpcomponents__httpcore__4_4_13",
+        jars = ["@org_apache_httpcomponents__httpcore__4_4_13//file"],
+        tags = [
+            "mabel_license_detected_type=Apache",
+            "mabel_license_name=Apache License, Version 2.0",
+            "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
+            "maven_coordinates=org.apache.httpcomponents:httpcore:4.4.13",
+        ],
+        licenses = ["notice"],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from org.jboss.logging:jboss-logging:3.3.2.Final
+    # This is a dependency of 'org.jboss.resteasy:resteasy-client:3.13.1.Final'.
+    # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
+    native.alias(
+        name = "org_jboss_logging__jboss_logging",
+        actual = ":org_jboss_logging__jboss_logging__3_3_2_Final",
+        visibility = ["//visibility:public"],
+    )
+
+    # from org.jboss.logging:jboss-logging:3.3.2.Final
+    # This is a dependency of 'org.jboss.resteasy:resteasy-client:3.13.1.Final'.
+    # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
+    java_import(
+        name = "org_jboss_logging__jboss_logging__3_3_2_Final",
+        jars = ["@org_jboss_logging__jboss_logging__3_3_2_Final//file"],
+        tags = [
+            "mabel_license_detected_type=Apache",
+            "mabel_license_name=Apache License, version 2.0",
+            "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
+            "maven_coordinates=org.jboss.logging:jboss-logging:3.3.2.Final",
+        ],
+        licenses = ["notice"],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from org.jboss.resteasy:resteasy-client:3.13.1.Final
+    # This is a root requested Maven artifact.
+    native.alias(
+        name = "org_jboss_resteasy__resteasy_client",
+        actual = ":org_jboss_resteasy__resteasy_client__3_13_1_Final",
+        visibility = ["//visibility:public"],
+    )
+
+    # from org.jboss.resteasy:resteasy-client:3.13.1.Final
+    # This is a root requested Maven artifact.
+    java_import(
+        name = "org_jboss_resteasy__resteasy_client__3_13_1_Final",
+        jars = ["@org_jboss_resteasy__resteasy_client__3_13_1_Final//file"],
+        tags = [
+            "mabel_license_detected_type=Apache",
+            "mabel_license_name=Apache License 2.0",
+            "mabel_license_url=https://repository.jboss.org/licenses/apache-2.0.txt",
+            "maven_coordinates=org.jboss.resteasy:resteasy-client:3.13.1.Final",
+        ],
+        licenses = ["notice"],
+        deps = [
+            ":commons_codec__commons_codec",
+            ":commons_io__commons_io",
+            ":org_apache_httpcomponents__httpclient",
+            ":org_jboss_logging__jboss_logging",
+            ":org_jboss_resteasy__resteasy_jaxrs",
+            ":org_jboss_spec_javax_ws_rs__jboss_jaxrs_api_2_1_spec",
+        ],
+        exports = [
+            ":commons_codec__commons_codec",
+            ":commons_io__commons_io",
+            ":org_apache_httpcomponents__httpclient",
+            ":org_jboss_logging__jboss_logging",
+            ":org_jboss_resteasy__resteasy_jaxrs",
+            ":org_jboss_spec_javax_ws_rs__jboss_jaxrs_api_2_1_spec",
+        ],
+        runtime_deps = [],
+    )
+
+    # from org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final
+    # This is a dependency of 'org.jboss.resteasy:resteasy-client:3.13.1.Final'.
+    native.alias(
+        name = "org_jboss_resteasy__resteasy_jaxrs",
+        actual = ":org_jboss_resteasy__resteasy_jaxrs__3_13_1_Final",
+        visibility = ["//visibility:public"],
+    )
+
+    # from org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final
+    # This is a dependency of 'org.jboss.resteasy:resteasy-client:3.13.1.Final'.
+    java_import(
+        name = "org_jboss_resteasy__resteasy_jaxrs__3_13_1_Final",
+        jars = ["@org_jboss_resteasy__resteasy_jaxrs__3_13_1_Final//file"],
+        tags = [
+            "mabel_license_detected_type=Apache",
+            "mabel_license_name=Apache License 2.0",
+            "mabel_license_url=https://repository.jboss.org/licenses/apache-2.0.txt",
+            "maven_coordinates=org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final",
+        ],
+        licenses = ["notice"],
+        deps = [
+            ":com_github_stephenc_jcip__jcip_annotations",
+            ":com_sun_activation__jakarta_activation",
+            ":commons_io__commons_io",
+            ":jakarta_validation__jakarta_validation_api",
+            ":org_apache_httpcomponents__httpclient",
+            ":org_jboss_logging__jboss_logging",
+            ":org_jboss_spec_javax_annotation__jboss_annotations_api_1_3_spec",
+            ":org_jboss_spec_javax_ws_rs__jboss_jaxrs_api_2_1_spec",
+            ":org_jboss_spec_javax_xml_bind__jboss_jaxb_api_2_3_spec",
+            ":org_reactivestreams__reactive_streams",
+        ],
+        exports = [
+            ":com_github_stephenc_jcip__jcip_annotations",
+            ":com_sun_activation__jakarta_activation",
+            ":commons_io__commons_io",
+            ":jakarta_validation__jakarta_validation_api",
+            ":org_apache_httpcomponents__httpclient",
+            ":org_jboss_logging__jboss_logging",
+            ":org_jboss_spec_javax_annotation__jboss_annotations_api_1_3_spec",
+            ":org_jboss_spec_javax_ws_rs__jboss_jaxrs_api_2_1_spec",
+            ":org_jboss_spec_javax_xml_bind__jboss_jaxb_api_2_3_spec",
+            ":org_reactivestreams__reactive_streams",
+        ],
+        runtime_deps = [],
+    )
+
+    # from org.jboss.spec.javax.annotation:jboss-annotations-api_1.3_spec:2.0.1.Final
+    # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
+    native.alias(
+        name = "org_jboss_spec_javax_annotation__jboss_annotations_api_1_3_spec",
+        actual = ":org_jboss_spec_javax_annotation__jboss_annotations_api_1_3_spec__2_0_1_Final",
+        visibility = ["//visibility:public"],
+    )
+
+    # from org.jboss.spec.javax.annotation:jboss-annotations-api_1.3_spec:2.0.1.Final
+    # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
+    java_import(
+        name = "org_jboss_spec_javax_annotation__jboss_annotations_api_1_3_spec__2_0_1_Final",
+        jars = ["@org_jboss_spec_javax_annotation__jboss_annotations_api_1_3_spec__2_0_1_Final//file"],
+        tags = [
+            "mabel_license_detected_type=GPL",
+            "mabel_license_detected_type=UNKNOWN",
+            "mabel_license_name=EPL 2.0",
+            "mabel_license_name=GPL2 w/ CPE",
+            "mabel_license_url=http://www.eclipse.org/legal/epl-2.0",
+            "mabel_license_url=https://www.gnu.org/software/classpath/license.html",
+            "maven_coordinates=org.jboss.spec.javax.annotation:jboss-annotations-api_1.3_spec:2.0.1.Final",
+        ],
+        licenses = ["restricted"],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from org.jboss.spec.javax.ws.rs:jboss-jaxrs-api_2.1_spec:2.0.1.Final
+    # This is a dependency of 'org.jboss.resteasy:resteasy-client:3.13.1.Final'.
+    # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
+    native.alias(
+        name = "org_jboss_spec_javax_ws_rs__jboss_jaxrs_api_2_1_spec",
+        actual = ":org_jboss_spec_javax_ws_rs__jboss_jaxrs_api_2_1_spec__2_0_1_Final",
+        visibility = ["//visibility:public"],
+    )
+
+    # from org.jboss.spec.javax.ws.rs:jboss-jaxrs-api_2.1_spec:2.0.1.Final
+    # This is a dependency of 'org.jboss.resteasy:resteasy-client:3.13.1.Final'.
+    # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
+    java_import(
+        name = "org_jboss_spec_javax_ws_rs__jboss_jaxrs_api_2_1_spec__2_0_1_Final",
+        jars = ["@org_jboss_spec_javax_ws_rs__jboss_jaxrs_api_2_1_spec__2_0_1_Final//file"],
+        tags = [
+            "mabel_license_detected_type=GPL",
+            "mabel_license_detected_type=UNKNOWN",
+            "mabel_license_name=EPL 2.0",
+            "mabel_license_name=GPL2 w/ CPE",
+            "mabel_license_url=http://www.eclipse.org/legal/epl-2.0",
+            "mabel_license_url=https://www.gnu.org/software/classpath/license.html",
+            "maven_coordinates=org.jboss.spec.javax.ws.rs:jboss-jaxrs-api_2.1_spec:2.0.1.Final",
+        ],
+        licenses = ["restricted"],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from org.jboss.spec.javax.xml.bind:jboss-jaxb-api_2.3_spec:2.0.0.Final
+    # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
+    native.alias(
+        name = "org_jboss_spec_javax_xml_bind__jboss_jaxb_api_2_3_spec",
+        actual = ":org_jboss_spec_javax_xml_bind__jboss_jaxb_api_2_3_spec__2_0_0_Final",
+        visibility = ["//visibility:public"],
+    )
+
+    # from org.jboss.spec.javax.xml.bind:jboss-jaxb-api_2.3_spec:2.0.0.Final
+    # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
+    java_import(
+        name = "org_jboss_spec_javax_xml_bind__jboss_jaxb_api_2_3_spec__2_0_0_Final",
+        jars = ["@org_jboss_spec_javax_xml_bind__jboss_jaxb_api_2_3_spec__2_0_0_Final//file"],
+        tags = [
+            "mabel_license_detected_type=UNKNOWN",
+            "mabel_license_name=Eclipse Distribution License - v 1.0",
+            "mabel_license_url=http://www.eclipse.org/org/documents/edl-v10.php",
+            "maven_coordinates=org.jboss.spec.javax.xml.bind:jboss-jaxb-api_2.3_spec:2.0.0.Final",
+        ],
+        licenses = [],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from org.reactivestreams:reactive-streams:1.0.3
+    # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
+    native.alias(
+        name = "org_reactivestreams__reactive_streams",
+        actual = ":org_reactivestreams__reactive_streams__1_0_3",
+        visibility = ["//visibility:public"],
+    )
+
+    # from org.reactivestreams:reactive-streams:1.0.3
+    # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
+    java_import(
+        name = "org_reactivestreams__reactive_streams__1_0_3",
+        jars = ["@org_reactivestreams__reactive_streams__1_0_3//file"],
+        tags = [
+            "mabel_license_detected_type=CC0",
+            "mabel_license_name=CC0",
+            "mabel_license_url=http://creativecommons.org/publicdomain/zero/1.0/",
+            "maven_coordinates=org.reactivestreams:reactive-streams:1.0.3",
+        ],
+        licenses = ["unencumbered"],
         deps = [],
         exports = [],
         runtime_deps = [],
