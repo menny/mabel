@@ -16,6 +16,7 @@ package com.google.devtools.bazel.workspace.maven;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+
 import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Exclusion;
 import org.apache.maven.model.Model;
@@ -25,11 +26,19 @@ import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.util.artifact.JavaScopes;
 
 import java.net.URL;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 import static com.google.devtools.bazel.workspace.maven.ArtifactBuilder.InvalidArtifactCoordinateException;
 
-/** Resolves Maven dependencies. */
+/**
+ * Resolves Maven dependencies.
+ */
 public class MigrationToolingMavenResolver {
 
     /**
@@ -89,7 +98,9 @@ public class MigrationToolingMavenResolver {
         }
     }
 
-    /** Resolves an artifact as a root of a dependency graph. */
+    /**
+     * Resolves an artifact as a root of a dependency graph.
+     */
     public Rule resolveRuleArtifacts(String mavenCoordinates) {
         final Rule rule = createRuleForCoordinates(mavenCoordinates);
         traverseRuleAndFill(rule, Sets.newHashSet(), Sets.newHashSet());

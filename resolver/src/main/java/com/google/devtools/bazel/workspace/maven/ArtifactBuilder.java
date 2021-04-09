@@ -54,7 +54,7 @@ public class ArtifactBuilder {
         final String classifier = dep.getClassifier() == null ? "" : dep.getClassifier();
 
         final String versionWithModelProperties =
-                ProfilePlaceholderUtil.replacePlaceholders(model, dep.getVersion());
+                ProfilePlaceholderUtil.replacePlaceholders(model, dep);
         final String version =
                 versionResolver.resolveVersion(
                         dep.getGroupId(),
@@ -71,7 +71,12 @@ public class ArtifactBuilder {
 
         private static final Pattern PROPERTY_PLACEHOLDER = Pattern.compile("(\\$\\{([\\w.]+)})");
 
-        static String replacePlaceholders(final Model model, String text) {
+        @VisibleForTesting
+        static String replacePlaceholders(final Model model, Dependency dep) {
+            String text = dep.getVersion();
+            if (text == null) {
+                throw new NullPointerException("model " + model.getId() + ", dep " + dep.toString() + " has no version!");
+            }
             final Matcher matcher = PROPERTY_PLACEHOLDER.matcher(text);
             // using while, since there could be multiple placeholders
             while (matcher.find()) {
