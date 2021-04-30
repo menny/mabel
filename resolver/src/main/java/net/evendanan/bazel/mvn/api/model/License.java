@@ -16,6 +16,11 @@ public abstract class License {
     public abstract String url();
 
     public static License create(String name, String url) {
-        return new AutoValue_License(name, url);
+        return new AutoValue_License(nullToEmpty(name), nullToEmpty(url));
+    }
+
+    private static String nullToEmpty(String str) {
+        if (str == null) return "";
+        else return str;
     }
 }

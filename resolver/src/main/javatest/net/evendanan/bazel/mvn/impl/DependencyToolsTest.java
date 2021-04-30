@@ -224,4 +224,19 @@ public class DependencyToolsTest {
 
         Assert.assertEquals(License.Class.permissive, LicenseTools.classFromLicenseName("WTFPL"));
     }
+
+    @Test
+    public void testAutoValueLicenseCreate() {
+        Assert.assertEquals("License", License.create("License", "https://example.com/license.txt").name());
+        Assert.assertEquals("https://example.com/license.txt", License.create("License", "https://example.com/license.txt").url());
+
+
+        Assert.assertEquals("", License.create("", "whatever").name());
+        Assert.assertEquals("", License.create(null, "whatever").name());
+
+        Assert.assertEquals("", License.create("License", "").url());
+        Assert.assertEquals("", License.create("License", null).url());
+
+        Assert.assertEquals("", License.create(null, null).name());
+    }
 }
