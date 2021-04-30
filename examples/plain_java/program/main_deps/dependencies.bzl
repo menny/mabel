@@ -15,6 +15,14 @@ def generate_workspace_rules(name = "generate_workspace_rules"):
         name: A unique name for this target. No need to specify.
     """
 
+    # from aopalliance:aopalliance:1.0
+    http_file(
+        name = "aopalliance__aopalliance__1_0",
+        urls = ["https://repo1.maven.org/maven2/aopalliance/aopalliance/1.0/aopalliance-1.0.jar"],
+        downloaded_file_path = "aopalliance-1.0.jar",
+        sha256 = "0addec670fedcd3f113c5c8091d783280d23f75e3acb841b61a9cdb079376a08",
+    )
+
     # from com.github.stephenc.jcip:jcip-annotations:1.0-1
     http_file(
         name = "com_github_stephenc_jcip__jcip_annotations__1_0_1",
@@ -23,12 +31,60 @@ def generate_workspace_rules(name = "generate_workspace_rules"):
         sha256 = "4fccff8382aafc589962c4edb262f6aa595e34f1e11e61057d1c6a96e8fc7323",
     )
 
+    # from com.google.code.findbugs:jsr305:3.0.2
+    http_file(
+        name = "com_google_code_findbugs__jsr305__3_0_2",
+        urls = ["https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar"],
+        downloaded_file_path = "jsr305-3.0.2.jar",
+        sha256 = "766ad2a0783f2687962c8ad74ceecc38a28b9f72a2d085ee438b7813e928d0c7",
+    )
+
+    # from com.google.errorprone:error_prone_annotations:2.2.0
+    http_file(
+        name = "com_google_errorprone__error_prone_annotations__2_2_0",
+        urls = ["https://repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.2.0/error_prone_annotations-2.2.0.jar"],
+        downloaded_file_path = "error_prone_annotations-2.2.0.jar",
+        sha256 = "6ebd22ca1b9d8ec06d41de8d64e0596981d9607b42035f9ed374f9de271a481a",
+    )
+
+    # from com.google.guava:failureaccess:1.0.1
+    http_file(
+        name = "com_google_guava__failureaccess__1_0_1",
+        urls = ["https://repo1.maven.org/maven2/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar"],
+        downloaded_file_path = "failureaccess-1.0.1.jar",
+        sha256 = "a171ee4c734dd2da837e4b16be9df4661afab72a41adaf31eb84dfdaf936ca26",
+    )
+
     # from com.google.guava:guava:20.0
     http_file(
         name = "com_google_guava__guava__20_0",
         urls = ["https://repo1.maven.org/maven2/com/google/guava/guava/20.0/guava-20.0.jar"],
         downloaded_file_path = "guava-20.0.jar",
         sha256 = "36a666e3b71ae7f0f0dca23654b67e086e6c93d192f60ba5dfd5519db6c288c8",
+    )
+
+    # from com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
+    http_file(
+        name = "com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava",
+        urls = ["https://repo1.maven.org/maven2/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar"],
+        downloaded_file_path = "listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar",
+        sha256 = "b372a037d4230aa57fbeffdef30fd6123f9c0c2db85d0aced00c91b974f33f99",
+    )
+
+    # from com.google.inject:guice:4.2.3
+    http_file(
+        name = "com_google_inject__guice__4_2_3",
+        urls = ["https://repo1.maven.org/maven2/com/google/inject/guice/4.2.3/guice-4.2.3.jar"],
+        downloaded_file_path = "guice-4.2.3.jar",
+        sha256 = "a21e50ffbb67e7adc5b46cf7b9e1a480f1e0f04fd4201ddb1c65da91290601af",
+    )
+
+    # from com.google.j2objc:j2objc-annotations:1.1
+    http_file(
+        name = "com_google_j2objc__j2objc_annotations__1_1",
+        urls = ["https://repo1.maven.org/maven2/com/google/j2objc/j2objc-annotations/1.1/j2objc-annotations-1.1.jar"],
+        downloaded_file_path = "j2objc-annotations-1.1.jar",
+        sha256 = "2994a7eb78f2710bd3d3bfb639b2c94e219cedac0d4d084d516e78c16dddecf6",
     )
 
     # from com.sun.activation:jakarta.activation:1.2.1
@@ -71,6 +127,14 @@ def generate_workspace_rules(name = "generate_workspace_rules"):
         sha256 = "b42d42428f3d922c892a909fa043287d577c0c5b165ad9b7d568cebf87fc9ea4",
     )
 
+    # from javax.inject:javax.inject:1
+    http_file(
+        name = "javax_inject__javax_inject__1",
+        urls = ["https://repo1.maven.org/maven2/javax/inject/javax.inject/1/javax.inject-1.jar"],
+        downloaded_file_path = "javax.inject-1.jar",
+        sha256 = "91c77044a50c481636c32d916fd89c9118a72195390452c81065080f957de7ff",
+    )
+
     # from org.apache.httpcomponents:httpclient:4.5.12
     http_file(
         name = "org_apache_httpcomponents__httpclient__4_5_12",
@@ -85,6 +149,22 @@ def generate_workspace_rules(name = "generate_workspace_rules"):
         urls = ["https://repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/4.4.13/httpcore-4.4.13.jar"],
         downloaded_file_path = "httpcore-4.4.13.jar",
         sha256 = "e06e89d40943245fcfa39ec537cdbfce3762aecde8f9c597780d2b00c2b43424",
+    )
+
+    # from org.checkerframework:checker-qual:2.5.2
+    http_file(
+        name = "org_checkerframework__checker_qual__2_5_2",
+        urls = ["https://repo1.maven.org/maven2/org/checkerframework/checker-qual/2.5.2/checker-qual-2.5.2.jar"],
+        downloaded_file_path = "checker-qual-2.5.2.jar",
+        sha256 = "64b02691c8b9d4e7700f8ee2e742dce7ea2c6e81e662b7522c9ee3bf568c040a",
+    )
+
+    # from org.codehaus.mojo:animal-sniffer-annotations:1.17
+    http_file(
+        name = "org_codehaus_mojo__animal_sniffer_annotations__1_17",
+        urls = ["https://repo1.maven.org/maven2/org/codehaus/mojo/animal-sniffer-annotations/1.17/animal-sniffer-annotations-1.17.jar"],
+        downloaded_file_path = "animal-sniffer-annotations-1.17.jar",
+        sha256 = "92654f493ecfec52082e76354f0ebf87648dc3d5cec2e3c3cdb947c016747a53",
     )
 
     # from org.jboss.logging:jboss-logging:3.3.2.Final
@@ -233,6 +313,30 @@ def generate_transitive_dependency_targets(
         kt_android_library: rule implementation for kt_android_library. Required only if you have Android-Kotlin dependencies.
     """
 
+    # from aopalliance:aopalliance:1.0
+    # This is a dependency of 'com.google.inject:guice:4.2.3'.
+    native.alias(
+        name = "aopalliance__aopalliance",
+        actual = ":aopalliance__aopalliance__1_0",
+        visibility = ["//visibility:public"],
+    )
+
+    # from aopalliance:aopalliance:1.0
+    # This is a dependency of 'com.google.inject:guice:4.2.3'.
+    java_import(
+        name = "aopalliance__aopalliance__1_0",
+        jars = ["@aopalliance__aopalliance__1_0//file"],
+        tags = [
+            "mabel_license_detected_type=Public-Domain",
+            "mabel_license_name=Public Domain",
+            "maven_coordinates=aopalliance:aopalliance:1.0",
+        ],
+        licenses = ["unencumbered"],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
     # from com.github.stephenc.jcip:jcip-annotations:1.0-1
     # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
     native.alias(
@@ -258,8 +362,78 @@ def generate_transitive_dependency_targets(
         runtime_deps = [],
     )
 
+    # from com.google.code.findbugs:jsr305:3.0.2
+    native.alias(
+        name = "com_google_code_findbugs__jsr305",
+        actual = ":com_google_code_findbugs__jsr305__3_0_2",
+        visibility = ["//visibility:public"],
+    )
+
+    # from com.google.code.findbugs:jsr305:3.0.2
+    java_import(
+        name = "com_google_code_findbugs__jsr305__3_0_2",
+        jars = ["@com_google_code_findbugs__jsr305__3_0_2//file"],
+        tags = [
+            "mabel_license_detected_type=Apache",
+            "mabel_license_name=The Apache Software License, Version 2.0",
+            "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
+            "maven_coordinates=com.google.code.findbugs:jsr305:3.0.2",
+        ],
+        licenses = ["notice"],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from com.google.errorprone:error_prone_annotations:2.2.0
+    native.alias(
+        name = "com_google_errorprone__error_prone_annotations",
+        actual = ":com_google_errorprone__error_prone_annotations__2_2_0",
+        visibility = ["//visibility:public"],
+    )
+
+    # from com.google.errorprone:error_prone_annotations:2.2.0
+    java_import(
+        name = "com_google_errorprone__error_prone_annotations__2_2_0",
+        jars = ["@com_google_errorprone__error_prone_annotations__2_2_0//file"],
+        tags = [
+            "mabel_license_detected_type=Apache",
+            "mabel_license_name=Apache 2.0",
+            "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
+            "maven_coordinates=com.google.errorprone:error_prone_annotations:2.2.0",
+        ],
+        licenses = ["notice"],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from com.google.guava:failureaccess:1.0.1
+    native.alias(
+        name = "com_google_guava__failureaccess",
+        actual = ":com_google_guava__failureaccess__1_0_1",
+        visibility = ["//visibility:public"],
+    )
+
+    # from com.google.guava:failureaccess:1.0.1
+    java_import(
+        name = "com_google_guava__failureaccess__1_0_1",
+        jars = ["@com_google_guava__failureaccess__1_0_1//file"],
+        tags = [
+            "mabel_license_detected_type=Apache",
+            "mabel_license_name=The Apache Software License, Version 2.0",
+            "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
+            "maven_coordinates=com.google.guava:failureaccess:1.0.1",
+        ],
+        licenses = ["notice"],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
     # from com.google.guava:guava:20.0
     # This is a root requested Maven artifact.
+    # This is a dependency of 'com.google.inject:guice:4.2.3'.
     native.alias(
         name = "com_google_guava__guava",
         actual = ":com_google_guava__guava__20_0",
@@ -268,6 +442,7 @@ def generate_transitive_dependency_targets(
 
     # from com.google.guava:guava:20.0
     # This is a root requested Maven artifact.
+    # This is a dependency of 'com.google.inject:guice:4.2.3'.
     java_import(
         name = "com_google_guava__guava__20_0",
         jars = ["@com_google_guava__guava__20_0//file"],
@@ -276,6 +451,85 @@ def generate_transitive_dependency_targets(
             "mabel_license_name=The Apache Software License, Version 2.0",
             "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
             "maven_coordinates=com.google.guava:guava:20.0",
+        ],
+        licenses = ["notice"],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
+    native.alias(
+        name = "com_google_guava__listenablefuture",
+        actual = ":com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava",
+        visibility = ["//visibility:public"],
+    )
+
+    # from com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
+    java_import(
+        name = "com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava",
+        jars = ["@com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava//file"],
+        tags = [
+            "mabel_license_detected_type=Apache",
+            "mabel_license_name=The Apache Software License, Version 2.0",
+            "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
+            "maven_coordinates=com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava",
+        ],
+        licenses = ["notice"],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from com.google.inject:guice:4.2.3
+    # This is a root requested Maven artifact.
+    native.alias(
+        name = "com_google_inject__guice",
+        actual = ":com_google_inject__guice__4_2_3",
+        visibility = ["//visibility:public"],
+    )
+
+    # from com.google.inject:guice:4.2.3
+    # This is a root requested Maven artifact.
+    java_import(
+        name = "com_google_inject__guice__4_2_3",
+        jars = ["@com_google_inject__guice__4_2_3//file"],
+        tags = [
+            "mabel_license_detected_type=Apache",
+            "mabel_license_name=The Apache Software License, Version 2.0",
+            "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
+            "maven_coordinates=com.google.inject:guice:4.2.3",
+        ],
+        licenses = ["notice"],
+        deps = [
+            ":aopalliance__aopalliance",
+            ":com_google_guava__guava",
+            ":javax_inject__javax_inject",
+        ],
+        exports = [
+            ":aopalliance__aopalliance",
+            ":com_google_guava__guava",
+            ":javax_inject__javax_inject",
+        ],
+        runtime_deps = [],
+    )
+
+    # from com.google.j2objc:j2objc-annotations:1.1
+    native.alias(
+        name = "com_google_j2objc__j2objc_annotations",
+        actual = ":com_google_j2objc__j2objc_annotations__1_1",
+        visibility = ["//visibility:public"],
+    )
+
+    # from com.google.j2objc:j2objc-annotations:1.1
+    java_import(
+        name = "com_google_j2objc__j2objc_annotations__1_1",
+        jars = ["@com_google_j2objc__j2objc_annotations__1_1//file"],
+        tags = [
+            "mabel_license_detected_type=Apache",
+            "mabel_license_name=The Apache Software License, Version 2.0",
+            "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
+            "maven_coordinates=com.google.j2objc:j2objc-annotations:1.1",
         ],
         licenses = ["notice"],
         deps = [],
@@ -412,6 +666,31 @@ def generate_transitive_dependency_targets(
         runtime_deps = [],
     )
 
+    # from javax.inject:javax.inject:1
+    # This is a dependency of 'com.google.inject:guice:4.2.3'.
+    native.alias(
+        name = "javax_inject__javax_inject",
+        actual = ":javax_inject__javax_inject__1",
+        visibility = ["//visibility:public"],
+    )
+
+    # from javax.inject:javax.inject:1
+    # This is a dependency of 'com.google.inject:guice:4.2.3'.
+    java_import(
+        name = "javax_inject__javax_inject__1",
+        jars = ["@javax_inject__javax_inject__1//file"],
+        tags = [
+            "mabel_license_detected_type=Apache",
+            "mabel_license_name=The Apache Software License, Version 2.0",
+            "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
+            "maven_coordinates=javax.inject:javax.inject:1",
+        ],
+        licenses = ["notice"],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
     # from org.apache.httpcomponents:httpclient:4.5.12
     # This is a dependency of 'org.jboss.resteasy:resteasy-client:3.13.1.Final'.
     # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
@@ -465,6 +744,52 @@ def generate_transitive_dependency_targets(
             "mabel_license_name=Apache License, Version 2.0",
             "mabel_license_url=http://www.apache.org/licenses/LICENSE-2.0.txt",
             "maven_coordinates=org.apache.httpcomponents:httpcore:4.4.13",
+        ],
+        licenses = ["notice"],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from org.checkerframework:checker-qual:2.5.2
+    native.alias(
+        name = "org_checkerframework__checker_qual",
+        actual = ":org_checkerframework__checker_qual__2_5_2",
+        visibility = ["//visibility:public"],
+    )
+
+    # from org.checkerframework:checker-qual:2.5.2
+    java_import(
+        name = "org_checkerframework__checker_qual__2_5_2",
+        jars = ["@org_checkerframework__checker_qual__2_5_2//file"],
+        tags = [
+            "mabel_license_detected_type=MIT",
+            "mabel_license_name=The MIT License",
+            "mabel_license_url=http://opensource.org/licenses/MIT",
+            "maven_coordinates=org.checkerframework:checker-qual:2.5.2",
+        ],
+        licenses = ["notice"],
+        deps = [],
+        exports = [],
+        runtime_deps = [],
+    )
+
+    # from org.codehaus.mojo:animal-sniffer-annotations:1.17
+    native.alias(
+        name = "org_codehaus_mojo__animal_sniffer_annotations",
+        actual = ":org_codehaus_mojo__animal_sniffer_annotations__1_17",
+        visibility = ["//visibility:public"],
+    )
+
+    # from org.codehaus.mojo:animal-sniffer-annotations:1.17
+    java_import(
+        name = "org_codehaus_mojo__animal_sniffer_annotations__1_17",
+        jars = ["@org_codehaus_mojo__animal_sniffer_annotations__1_17//file"],
+        tags = [
+            "mabel_license_detected_type=MIT",
+            "mabel_license_name=MIT license",
+            "mabel_license_url=http://www.opensource.org/licenses/mit-license.php",
+            "maven_coordinates=org.codehaus.mojo:animal-sniffer-annotations:1.17",
         ],
         licenses = ["notice"],
         deps = [],
