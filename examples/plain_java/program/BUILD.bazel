@@ -11,6 +11,7 @@ mabel_rule(
     maven_deps = [
         artifact("com.google.guava:guava:20.0"),
         artifact("org.jboss.resteasy:resteasy-client:3.13.1.Final"),
+        artifact("com.google.inject:guice:4.2.3"),
     ],
 )
 
