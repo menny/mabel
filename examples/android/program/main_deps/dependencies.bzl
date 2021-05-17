@@ -232,20 +232,6 @@ def generate_workspace_rules(name = "generate_workspace_rules"):
         downloaded_file_path = "viewpager-1.0.0.aar",
     )
 
-    # from com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406
-    http_file(
-        name = "com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406",
-        urls = ["https://jitpack.io/com/github/menny/Chauffeur/lib/90e703256785b7baf9cd37370b62b1d7d3830406/lib-90e703256785b7baf9cd37370b62b1d7d3830406.aar"],
-        downloaded_file_path = "lib-90e703256785b7baf9cd37370b62b1d7d3830406.aar",
-    )
-
-    # from com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406
-    http_file(
-        name = "com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406",
-        urls = ["https://jitpack.io/com/github/menny/Chauffeur/permissions/90e703256785b7baf9cd37370b62b1d7d3830406/permissions-90e703256785b7baf9cd37370b62b1d7d3830406.aar"],
-        downloaded_file_path = "permissions-90e703256785b7baf9cd37370b62b1d7d3830406.aar",
-    )
-
 def _no_op_missing_aar_impl(name, **kwargs):
     """
     This is a help macro for missing concrete rule implementation.
@@ -393,8 +379,6 @@ def generate_transitive_dependency_targets(
     # This is a dependency of 'androidx.vectordrawable:vectordrawable:1.0.1'.
     # This is a dependency of 'androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01'.
     # This is a dependency of 'androidx.viewpager:viewpager:1.0.0'.
-    # This is a dependency of 'com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406'.
-    # This is a dependency of 'com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406'.
     native.alias(
         name = "androidx_annotation__annotation",
         actual = ":androidx_annotation__annotation__1_0_0",
@@ -430,8 +414,6 @@ def generate_transitive_dependency_targets(
     # This is a dependency of 'androidx.vectordrawable:vectordrawable:1.0.1'.
     # This is a dependency of 'androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01'.
     # This is a dependency of 'androidx.viewpager:viewpager:1.0.0'.
-    # This is a dependency of 'com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406'.
-    # This is a dependency of 'com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406'.
     java_import(
         name = "androidx_annotation__annotation__1_0_0",
         jars = ["@androidx_annotation__annotation__1_0_0//file"],
@@ -449,8 +431,6 @@ def generate_transitive_dependency_targets(
 
     # from androidx.appcompat:appcompat:1.0.2
     # This is a root requested Maven artifact.
-    # This is a dependency of 'com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406'.
-    # This is a dependency of 'com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406'.
     native.alias(
         name = "androidx_appcompat__appcompat",
         actual = ":androidx_appcompat__appcompat__1_0_2",
@@ -459,8 +439,6 @@ def generate_transitive_dependency_targets(
 
     # from androidx.appcompat:appcompat:1.0.2
     # This is a root requested Maven artifact.
-    # This is a dependency of 'com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406'.
-    # This is a dependency of 'com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406'.
     aar_import(
         name = "androidx_appcompat__appcompat__1_0_2",
         aar = "@androidx_appcompat__appcompat__1_0_2//file",
@@ -776,8 +754,6 @@ def generate_transitive_dependency_targets(
     # from androidx.fragment:fragment:1.1.0-alpha02
     # This is a root requested Maven artifact.
     # This is a dependency of 'androidx.appcompat:appcompat:1.0.2'.
-    # This is a dependency of 'com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406'.
-    # This is a dependency of 'com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406'.
     native.alias(
         name = "androidx_fragment__fragment",
         actual = ":androidx_fragment__fragment__1_1_0_alpha02",
@@ -787,8 +763,6 @@ def generate_transitive_dependency_targets(
     # from androidx.fragment:fragment:1.1.0-alpha02
     # This is a root requested Maven artifact.
     # This is a dependency of 'androidx.appcompat:appcompat:1.0.2'.
-    # This is a dependency of 'com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406'.
-    # This is a dependency of 'com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406'.
     aar_import(
         name = "androidx_fragment__fragment__1_1_0_alpha02",
         aar = "@androidx_fragment__fragment__1_1_0_alpha02//file",
@@ -1255,53 +1229,5 @@ def generate_transitive_dependency_targets(
             ":androidx_annotation__annotation",
             ":androidx_core__core",
             ":androidx_customview__customview",
-        ],
-    )
-
-    # from com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406
-    # This is a dependency of 'com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406'.
-    native.alias(
-        name = "com_github_menny_Chauffeur__lib",
-        actual = ":com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406",
-        visibility = ["//visibility:public"],
-    )
-
-    # from com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406
-    # This is a dependency of 'com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406'.
-    aar_import(
-        name = "com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406",
-        aar = "@com_github_menny_Chauffeur__lib__90e703256785b7baf9cd37370b62b1d7d3830406//file",
-        tags = ["maven_coordinates=com.github.menny.Chauffeur:lib:90e703256785b7baf9cd37370b62b1d7d3830406"],
-        deps = [
-            ":androidx_annotation__annotation",
-            ":androidx_appcompat__appcompat",
-            ":androidx_fragment__fragment",
-        ],
-        exports = [":androidx_annotation__annotation"],
-    )
-
-    # from com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406
-    # This is a root requested Maven artifact.
-    native.alias(
-        name = "com_github_menny_Chauffeur__permissions",
-        actual = ":com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406",
-        visibility = ["//visibility:public"],
-    )
-
-    # from com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406
-    # This is a root requested Maven artifact.
-    aar_import(
-        name = "com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406",
-        aar = "@com_github_menny_Chauffeur__permissions__90e703256785b7baf9cd37370b62b1d7d3830406//file",
-        tags = ["maven_coordinates=com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406"],
-        deps = [
-            ":androidx_annotation__annotation",
-            ":androidx_appcompat__appcompat",
-            ":androidx_fragment__fragment",
-            ":com_github_menny_Chauffeur__lib",
-        ],
-        exports = [
-            ":androidx_annotation__annotation",
-            ":com_github_menny_Chauffeur__lib",
         ],
     )

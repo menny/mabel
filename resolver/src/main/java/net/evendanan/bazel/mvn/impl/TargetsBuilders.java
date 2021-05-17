@@ -407,6 +407,8 @@ public class TargetsBuilders {
 
             Collection<String> deps =
                     convertRulesToStrings(dependency.dependencies(), dependencyTools);
+            //runtime-deps should be a dep for the java-plugin
+            deps.addAll(convertRulesToStrings(dependency.runtimeDependencies(), dependencyTools));
             deps.add(":" + dependencyTools.repositoryRuleName(dependency));
             // as java_plugins
             List<String> noApiPlugins = new ArrayList<>();
