@@ -1,5 +1,5 @@
 load("@build_bazel_rules_android//android:rules.bzl", "android_binary")
-load("@mabel//rules/maven_deps:mabel.bzl", "artifact", "mabel_rule")
+load("@mabel//rules/maven_deps:mabel.bzl", "mabel_rule")
 load("//program/main_deps:dependencies.bzl", "generate_transitive_dependency_targets")
 
 #here is an example of using a replacement implementation for aar_import
@@ -15,17 +15,6 @@ mabel_rule(
         g_artifact("androidx.fragment:fragment:1.1.0-alpha02"),
         g_artifact("androidx.appcompat:appcompat:1.0.2"),
         g_artifact("androidx.annotation:annotation:1.0.0"),
-        artifact(
-            "com.github.menny.Chauffeur:permissions:90e703256785b7baf9cd37370b62b1d7d3830406",
-            maven_exclude_deps = [
-                "com.android.support",
-            ],
-            repositories = [
-                "https://jitpack.io/",
-                "https://maven.google.com/",
-                "https://repo1.maven.org/maven2/",
-            ],
-        ),
     ],
 )
 
@@ -47,6 +36,5 @@ android_binary(
         "//program:androidx_fragment__fragment",
         "//program/main_deps/androidx/annotation/annotation",
         "//program/main_deps/androidx/appcompat/appcompat",
-        "//program/main_deps/com/github/menny/Chauffeur/permissions",
     ],
 )
