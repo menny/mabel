@@ -3,6 +3,8 @@ package net.evendanan.bazel.mvn.merger;
 import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import net.evendanan.bazel.mvn.api.model.Resolution;
+import net.evendanan.bazel.mvn.api.model.TargetType;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,6 +26,7 @@ public class LatestVersionMergerTest {
     public void testHappyPath() throws Exception {
         Resolution root1 =
                 Resolution.create(
+                        TargetType.auto,
                         MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
                         Arrays.asList(
                                 Dependency.builder()
@@ -47,6 +50,7 @@ public class LatestVersionMergerTest {
                                         .build()));
         Resolution root2 =
                 Resolution.create(
+                        TargetType.auto,
                         MavenCoordinate.create("net.evendanan", "dep2", "0.1", ""),
                         Arrays.asList(
                                 Dependency.builder()
@@ -102,6 +106,7 @@ public class LatestVersionMergerTest {
     public void testPinRootVersion() throws Exception {
         Resolution root1 =
                 Resolution.create(
+                        TargetType.auto,
                         MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
                         Arrays.asList(
                                 Dependency.builder()
@@ -125,6 +130,7 @@ public class LatestVersionMergerTest {
                                         .build()));
         Resolution root2 =
                 Resolution.create(
+                        TargetType.auto,
                         MavenCoordinate.create("net.evendanan", "dep2", "0.1", ""),
                         Arrays.asList(
                                 Dependency.builder()
@@ -148,6 +154,7 @@ public class LatestVersionMergerTest {
                                         .build()));
         Resolution root3 =
                 Resolution.create(
+                        TargetType.auto,
                         MavenCoordinate.create("net.evendanan", "inner1", "0.1", ""),
                         Collections.singletonList(
                                 Dependency.builder()

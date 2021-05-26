@@ -5,6 +5,7 @@ import com.google.common.base.Charsets;
 import net.evendanan.bazel.mvn.api.RuleClassifier;
 import net.evendanan.bazel.mvn.api.TargetsBuilder;
 import net.evendanan.bazel.mvn.api.model.Dependency;
+import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,6 +20,7 @@ import java.util.function.Function;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class RuleClassifiers {
 
@@ -32,6 +34,18 @@ public class RuleClassifiers {
                 .findFirst()
                 .<TargetsBuilder>map(TargetsBuilders.CompositeBuilder::new)
                 .orElse(defaultFormatter);
+    }
+
+    private static boolean isNaivelyKotlin(Dependency dependency) {
+        final Stream<MavenCoordinate> mvnStream =
+                Stream.concat(
+                        Stream.of(dependency.mavenCoordinate()),
+                        dependency.dependencies().stream()
+                );
+
+        return mvnStream.anyMatch(m ->
+                m.groupId().contains("jetbrains.kotlin") &&
+                        (m.artifactId().contains("kotlin-stdlib") || m.artifactId().contains("kotlin-runtime")));
     }
 
     private static class PackagingClassifier implements RuleClassifier {
@@ -57,6 +71,30 @@ public class RuleClassifiers {
     public static class AarClassifier extends PackagingClassifier {
         public AarClassifier() {
             super("aar", TargetsBuilders.AAR_IMPORT);
+        }
+    }
+
+    public static class NaiveKotlinClassifier implements RuleClassifier {
+        @Override
+        public List<TargetsBuilder> classifyRule(Dependency dependency) {
+            if (isNaivelyKotlin(dependency)) {
+                return Collections.singletonList(TargetsBuilders.KOTLIN_IMPORT);
+            }
+            return Collections.emptyList();
+        }
+    }
+
+    public static class NaiveKotlinAarClassifier extends PackagingClassifier {
+        public NaiveKotlinAarClassifier() {
+            super("aar", TargetsBuilders.KOTLIN_ANDROID_IMPORT);
+        }
+
+        @Override
+        public List<TargetsBuilder> classifyRule(Dependency dependency) {
+            if (isNaivelyKotlin(dependency)) {
+                return super.classifyRule(dependency);
+            }
+            return Collections.emptyList();
         }
     }
 
@@ -134,7 +172,7 @@ public class RuleClassifiers {
     }
 
     public static class JarClassifier implements RuleClassifier {
-        private Function<Dependency, List<TargetsBuilder>> mJarInspector;
+        private final Function<Dependency, List<TargetsBuilder>> mJarInspector;
 
         public JarClassifier(Function<Dependency, List<TargetsBuilder>> jarInspector) {
             mJarInspector = jarInspector;

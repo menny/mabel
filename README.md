@@ -164,6 +164,7 @@ This rule declares a Maven dependency to be resolved and import into your WORKSP
 Attributes:
 
 * `coordinate`: Maven coordinate in the form of `group-id:artifact-id:version`.
+* `type`: What is the type of target(s) to create for this artifact. Default `auto`. Can be `jar`, `aar`, `kotlin`, `kotlin_aar`, `naive`, `processor`, `auto`. For more details, see [here](resolver/src/main/java/net/evendanan/bazel/mvn/api/model/TargetType.java).
 * `maven_exclude_deps`: List of Maven dependencies which should not be resolved. You can omit the `version` or both `artifact-id:version`.
 * `repositories`: List of URLs that point to Maven servers. The default list includes Maven-Central.
 

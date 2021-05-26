@@ -11,44 +11,125 @@ _APACHE_MAVEN_VERSION = "3.8.1"
 mabel_rule(
     name = "main_deps",
     maven_deps = [
-        artifact("com.google.guava:guava:27.0.1-jre"),
-        artifact("org.apache.commons:commons-lang3:jar:3.8.1"),
-        artifact("com.google.code.findbugs:jsr305:3.0.2"),
+        artifact(
+            "com.google.guava:guava:27.0.1-jre",
+            type = "jar",
+        ),
+        artifact(
+            "org.apache.commons:commons-lang3:jar:3.8.1",
+            type = "jar",
+        ),
+        artifact(
+            "com.google.code.findbugs:jsr305:3.0.2",
+            type = "jar",
+        ),
 
         #command-line arguments parsing
-        artifact("com.beust:jcommander:1.72"),
+        artifact(
+            "com.beust:jcommander:1.72",
+            type = "jar",
+        ),
 
         #POM management
-        artifact("org.eclipse.aether:aether-api:" + _AETHER_VERSION),
-        artifact("org.eclipse.aether:aether-spi:" + _AETHER_VERSION),
-        artifact("org.eclipse.aether:aether-impl:" + _AETHER_VERSION),
-        artifact("org.eclipse.aether:aether-util:" + _AETHER_VERSION),
-        artifact("org.eclipse.aether:aether-transport-http:" + _AETHER_VERSION),
-        artifact("org.eclipse.aether:aether-transport-classpath:" + _AETHER_VERSION),
-        artifact("org.eclipse.aether:aether-transport-wagon:" + _AETHER_VERSION),
-        artifact("org.eclipse.aether:aether-transport-file:" + _AETHER_VERSION),
-        artifact("org.eclipse.aether:aether-connector-basic:" + _AETHER_VERSION),
-        artifact("org.apache.maven:maven-aether-provider:3.3.9"),
-        artifact("org.apache.maven:maven-model:" + _APACHE_MAVEN_VERSION),
-        artifact("org.apache.maven:maven-model-builder:" + _APACHE_MAVEN_VERSION),
-        artifact("org.apache.maven:maven-repository-metadata:" + _APACHE_MAVEN_VERSION),
-        artifact("org.apache.maven:maven-artifact:" + _APACHE_MAVEN_VERSION),
-        artifact("org.apache.httpcomponents:httpclient:4.5.13"),
-        artifact("org.codehaus.plexus:plexus-interpolation:1.26"),
-        artifact("org.codehaus.plexus:plexus-utils:3.3.0"),
+        artifact(
+            "org.eclipse.aether:aether-api:" + _AETHER_VERSION,
+            type = "jar",
+        ),
+        artifact(
+            "org.eclipse.aether:aether-spi:" + _AETHER_VERSION,
+            type = "jar",
+        ),
+        artifact(
+            "org.eclipse.aether:aether-impl:" + _AETHER_VERSION,
+            type = "jar",
+        ),
+        artifact(
+            "org.eclipse.aether:aether-util:" + _AETHER_VERSION,
+            type = "jar",
+        ),
+        artifact(
+            "org.eclipse.aether:aether-transport-http:" + _AETHER_VERSION,
+            type = "jar",
+        ),
+        artifact(
+            "org.eclipse.aether:aether-transport-classpath:" + _AETHER_VERSION,
+            type = "jar",
+        ),
+        artifact(
+            "org.eclipse.aether:aether-transport-wagon:" + _AETHER_VERSION,
+            type = "jar",
+        ),
+        artifact(
+            "org.eclipse.aether:aether-transport-file:" + _AETHER_VERSION,
+            type = "jar",
+        ),
+        artifact(
+            "org.eclipse.aether:aether-connector-basic:" + _AETHER_VERSION,
+            type = "jar",
+        ),
+        artifact(
+            "org.apache.maven:maven-aether-provider:3.3.9",
+            type = "jar",
+        ),
+        artifact(
+            "org.apache.maven:maven-model:" + _APACHE_MAVEN_VERSION,
+            type = "jar",
+        ),
+        artifact(
+            "org.apache.maven:maven-model-builder:" + _APACHE_MAVEN_VERSION,
+            type = "jar",
+        ),
+        artifact(
+            "org.apache.maven:maven-repository-metadata:" + _APACHE_MAVEN_VERSION,
+            type = "jar",
+        ),
+        artifact(
+            "org.apache.maven:maven-artifact:" + _APACHE_MAVEN_VERSION,
+            type = "jar",
+        ),
+        artifact(
+            "org.apache.httpcomponents:httpclient:4.5.13",
+            type = "jar",
+        ),
+        artifact(
+            "org.codehaus.plexus:plexus-interpolation:1.26",
+            type = "jar",
+        ),
+        artifact(
+            "org.codehaus.plexus:plexus-utils:3.3.0",
+            type = "jar",
+        ),
 
         #model classes
-        artifact("com.google.auto.value:auto-value-annotations:1.7"),
-        artifact("com.google.auto.value:auto-value:1.7"),
+        artifact(
+            "com.google.auto.value:auto-value-annotations:1.7",
+            type = "jar",
+        ),
+        artifact(
+            "com.google.auto.value:auto-value:1.7",
+            type = "processor",
+        ),
         #for creating and reading json
-        artifact("com.google.code.gson:gson:2.8.5"),
+        artifact(
+            "com.google.code.gson:gson:2.8.5",
+            type = "jar",
+        ),
 
         #logging - nop
-        artifact("org.slf4j:slf4j-nop:1.7.25"),
+        artifact(
+            "org.slf4j:slf4j-nop:1.7.25",
+            type = "jar",
+        ),
 
         #testing
-        artifact("junit:junit:4.12"),
-        artifact("org.mockito:mockito-core:2.23.4"),
+        artifact(
+            "junit:junit:4.12",
+            type = "jar",
+        ),
+        artifact(
+            "org.mockito:mockito-core:2.23.4",
+            type = "jar",
+        ),
     ],
     public_targets_category = "requested_deps",
 )
@@ -480,6 +561,20 @@ java_test(
     deps = [
         ":api_lib",
         ":merger",
+        "//resolver/main_deps/com/google/guava/guava",
+        "//resolver/main_deps/junit/junit",
+        "//resolver/main_deps/org/mockito/mockito-core",
+    ],
+)
+
+java_test(
+    name = "target_type_test",
+    size = "small",
+    srcs = ["src/main/javatest/net/evendanan/bazel/mvn/impl/TargetsBuilderForTypeTest.java"],
+    test_class = "net.evendanan.bazel.mvn.impl.TargetsBuilderForTypeTest",
+    deps = [
+        ":api_lib",
+        ":impl_lib",
         "//resolver/main_deps/com/google/guava/guava",
         "//resolver/main_deps/junit/junit",
         "//resolver/main_deps/org/mockito/mockito-core",
