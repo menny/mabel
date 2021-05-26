@@ -3,6 +3,7 @@ package net.evendanan.bazel.mvn.merger;
 import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import net.evendanan.bazel.mvn.api.model.Resolution;
+import net.evendanan.bazel.mvn.api.model.TargetType;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -25,6 +26,7 @@ public class GraphUtilsTest {
 
         Resolution resolution =
                 Resolution.create(
+                        TargetType.auto,
                         MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
                         Arrays.asList(
                                 Dependency.builder()
@@ -76,6 +78,7 @@ public class GraphUtilsTest {
     public void testDoesNotTravelCircle() {
         Resolution resolution =
                 Resolution.create(
+                        TargetType.auto,
                         MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
                         Arrays.asList(
                                 Dependency.builder()

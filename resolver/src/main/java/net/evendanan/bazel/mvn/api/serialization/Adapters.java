@@ -6,6 +6,7 @@ import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.model.License;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import net.evendanan.bazel.mvn.api.model.Resolution;
+import net.evendanan.bazel.mvn.api.model.TargetType;
 
 import java.lang.reflect.Type;
 import java.util.Collection;
@@ -29,6 +30,7 @@ class Adapters {
             JsonObject jsonObject = jsonElement.getAsJsonObject();
 
             return Resolution.create(
+                    context.deserialize(jsonObject.get("t"), TargetType.class),
                     context.deserialize(jsonObject.get("c"), MavenCoordinate.class),
                     context.deserialize(jsonObject.get("d"), DEPENDENCIES_LIST_TYPE));
         }
@@ -43,6 +45,8 @@ class Adapters {
                 final JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
 
+            jsonObject.add(
+                    "t", context.serialize(resolution.targetType(), TargetType.class));
             jsonObject.add(
                     "c", context.serialize(resolution.rootDependency(), MavenCoordinate.class));
             jsonObject.add(
