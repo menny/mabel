@@ -70,6 +70,61 @@ public class RuleClassifiersTest {
     }
 
     @Test
+    public void testNaiveKotlin() {
+        Dependency dep =
+                Dependency.builder()
+                        .mavenCoordinate(MavenCoordinate.create("", "", "", "jar"))
+                        .dependencies(
+                                Collections.singletonList(
+                                        MavenCoordinate.create("org.jetbrains.kotlin", "kotlin-stdlib", "1.4.31", "jar")
+                                )
+                        )
+                        .build();
+        Assert.assertSame(
+                TargetsBuilders.KOTLIN_IMPORT,
+                new RuleClassifiers.NaiveKotlinClassifier().classifyRule(dep).get(0));
+
+        dep =
+                Dependency.builder()
+                        .mavenCoordinate(MavenCoordinate.create("", "", "", "jar"))
+                        .build();
+        Assert.assertTrue(new RuleClassifiers.NaiveKotlinClassifier().classifyRule(dep).isEmpty());
+    }
+
+    @Test
+    public void testNaiveAndroidKotlin() {
+        Dependency dep =
+                Dependency.builder()
+                        .mavenCoordinate(MavenCoordinate.create("", "", "", "aar"))
+                        .dependencies(
+                                Collections.singletonList(
+                                        MavenCoordinate.create("org.jetbrains.kotlin", "kotlin-stdlib", "1.4.31", "jar")
+                                )
+                        )
+                        .build();
+        Assert.assertSame(
+                TargetsBuilders.KOTLIN_ANDROID_IMPORT,
+                new RuleClassifiers.NaiveKotlinAarClassifier().classifyRule(dep).get(0));
+
+        dep =
+                Dependency.builder()
+                        .mavenCoordinate(MavenCoordinate.create("", "", "", "jar"))
+                        .dependencies(
+                                Collections.singletonList(
+                                        MavenCoordinate.create("org.jetbrains.kotlin", "kotlin-stdlib", "1.4.31", "jar")
+                                )
+                        )
+                        .build();
+        Assert.assertTrue(new RuleClassifiers.NaiveKotlinAarClassifier().classifyRule(dep).isEmpty());
+
+        dep =
+                Dependency.builder()
+                        .mavenCoordinate(MavenCoordinate.create("", "", "", "aar"))
+                        .build();
+        Assert.assertTrue(new RuleClassifiers.NaiveKotlinAarClassifier().classifyRule(dep).isEmpty());
+    }
+
+    @Test
     public void testJarInspector_unknown() throws Exception {
         final Dependency dependency =
                 Dependency.builder().mavenCoordinate(mMavenCoordinate).build();
