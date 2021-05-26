@@ -45,7 +45,6 @@ public class TargetsBuilders {
             };
     static final TargetsBuilder KOTLIN_IMPORT = new KotlinImport();
     static final TargetsBuilder KOTLIN_ANDROID_IMPORT = new KotlinAndroidImport();
-    @VisibleForTesting
     static final TargetsBuilder AAR_IMPORT = new AarImport();
 
     private static Target addJavaImportRule(
