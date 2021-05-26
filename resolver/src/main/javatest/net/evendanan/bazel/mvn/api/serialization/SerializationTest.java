@@ -4,6 +4,8 @@ import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.model.License;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import net.evendanan.bazel.mvn.api.model.Resolution;
+import net.evendanan.bazel.mvn.api.model.TargetType;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -19,6 +21,7 @@ public class SerializationTest {
     public void testHappyPath() {
         Resolution resolution =
                 Resolution.create(
+                        TargetType.auto,
                         MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
                         Arrays.asList(
                                 Dependency.builder()

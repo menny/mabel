@@ -10,6 +10,7 @@ import com.google.common.base.Strings;
 import com.google.devtools.bazel.workspace.maven.adapter.MigrationToolingGraphResolver;
 import net.evendanan.bazel.mvn.api.GraphResolver;
 import net.evendanan.bazel.mvn.api.model.Resolution;
+import net.evendanan.bazel.mvn.api.model.TargetType;
 import net.evendanan.bazel.mvn.api.serialization.Serialization;
 
 import java.io.File;
@@ -53,7 +54,7 @@ public class Resolver {
     }
 
     private Resolution generateFromArtifacts(Options options) {
-        return resolver.resolve(options.artifact, options.repositories, options.blacklist);
+        return resolver.resolve(options.type, options.artifact, options.repositories, options.blacklist);
     }
 
     private void writeResults(Options options, Resolution resolution) throws Exception {
@@ -78,6 +79,13 @@ public class Resolver {
                 description = "Maven artifact coordinate (e.g. groupId:artifactId:version).",
                 required = true)
         String artifact;
+
+        @Parameter(
+                names = {"--type"},
+                splitter = NoSplitter.class,
+                description = "Type of artifact: jar, aar, naive, auto, processor.",
+                required = true)
+        TargetType type;
 
         @Parameter(
                 names = {"--blacklist", "-b"},

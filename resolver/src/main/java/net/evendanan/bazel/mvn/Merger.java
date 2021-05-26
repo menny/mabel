@@ -12,6 +12,7 @@ import net.evendanan.bazel.mvn.api.TargetsBuilder;
 import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import net.evendanan.bazel.mvn.api.model.Resolution;
+import net.evendanan.bazel.mvn.api.model.TargetType;
 import net.evendanan.bazel.mvn.api.serialization.Serialization;
 import net.evendanan.bazel.mvn.impl.RuleClassifiers;
 import net.evendanan.bazel.mvn.impl.RuleWriters;
@@ -178,6 +179,7 @@ public class Merger {
                                 .map(
                                         old ->
                                                 Resolution.create(
+                                                        TargetType.auto,
                                                         old.rootDependency(), dependenciesToPrint))
                                 .collect(Collectors.toList());
 

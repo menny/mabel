@@ -10,6 +10,7 @@ def _impl_resolver(ctx):
                 ["--blacklist={}".format(exclude_artifact_list) for exclude_artifact_list in ctx.attr.maven_exclude_deps] + \
                 [
                     "--artifact={}".format(ctx.attr.coordinate),
+                    "--type={}".format(ctx.attr.type),
                     "--output_file={}".format(output_file.path),
                     "--debug_logs={}".format(ctx.attr.debug_logs).lower(),
                     "--jdk_home={}".format(java_home),
@@ -34,6 +35,7 @@ _mabel_maven_dependency_graph_resolving_rule = rule(
         "debug_logs": attr.bool(default = False, doc = "If set to True, will print out debug logs while resolving dependencies. Default is False.", mandatory = False),
         "maven_exclude_deps": attr.string_list(allow_empty = True, default = [], doc = "List of Maven dependencies which should not be resolved. You can omit the `version` or both `artifact-id:version`."),
         "repositories": attr.string_list(allow_empty = False, default = DEFAULT_MAVEN_SERVERS, doc = "List of URLs that point to Maven servers. Defaut is Maven-Central."),
+        "type": attr.string(mandatory = True, default = "auto", values = ["jar", "aar", "naive", "processor", "auto"], doc = "The type of artifact targets to generate."),
         "_jdk": attr.label(default = Label("@bazel_tools//tools/jdk:remote_jdk11"), providers = [java_common.JavaRuntimeInfo]),
         "_resolver": attr.label(executable = True, allow_files = True, cfg = "host", default = Label("//resolver:resolver_bin")),
     },
@@ -41,7 +43,7 @@ _mabel_maven_dependency_graph_resolving_rule = rule(
 )
 
 # buildifier: disable=unnamed-macro
-def artifact(coordinate, maven_exclude_deps = [], repositories = DEFAULT_MAVEN_SERVERS, debug_logs = False):
+def artifact(coordinate, maven_exclude_deps = [], repositories = DEFAULT_MAVEN_SERVERS, debug_logs = False, type = "auto"):
     rule_name = "_mabel_maven_dependency_graph_resolving_{}".format(coordinate.replace(":", "__").replace("-", "_").replace(".", "_"))
 
     # different targets may use the same artifact
@@ -49,6 +51,7 @@ def artifact(coordinate, maven_exclude_deps = [], repositories = DEFAULT_MAVEN_S
         _mabel_maven_dependency_graph_resolving_rule(
             name = rule_name,
             coordinate = coordinate,
+            type = type,
             maven_exclude_deps = maven_exclude_deps,
             repositories = repositories,
             debug_logs = debug_logs,
