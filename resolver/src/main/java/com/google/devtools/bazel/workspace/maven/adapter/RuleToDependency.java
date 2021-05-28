@@ -1,11 +1,11 @@
 package com.google.devtools.bazel.workspace.maven.adapter;
 
 import com.google.devtools.bazel.workspace.maven.Rule;
+
 import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.model.License;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import net.evendanan.bazel.mvn.api.model.Resolution;
-import net.evendanan.bazel.mvn.api.model.TargetType;
 
 import java.util.HashMap;
 import java.util.stream.Collectors;
@@ -23,11 +23,11 @@ public class RuleToDependency {
                 rule.groupId(), rule.artifactId(), rule.version(), rule.packaging());
     }
 
-    public Resolution from(TargetType type, Rule rule) {
+    public Resolution from(Rule rule) {
         HashMap<String, Dependency> cache = new HashMap<>();
         Dependency rootDependency = from(rule, cache);
 
-        return Resolution.create(type, rootDependency.mavenCoordinate(), cache.values());
+        return Resolution.create(rootDependency.mavenCoordinate(), cache.values());
     }
 
     public Dependency from(Rule rule, HashMap<String, Dependency> cache) {

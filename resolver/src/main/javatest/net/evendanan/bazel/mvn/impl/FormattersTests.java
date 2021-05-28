@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static net.evendanan.bazel.mvn.TestUtils.createDependency;
+import static net.evendanan.bazel.mvn.TestUtils.markAsTestOnly;
 
 public class FormattersTests {
 
@@ -27,6 +28,7 @@ public class FormattersTests {
             " java_import(\n"
                     + "     name = \"java__lib__\",\n"
                     + "     jars = [\"@java__lib__//file\"],\n"
+                    + "     testonly = False,\n"
                     + "     tags = [\"maven_coordinates=java:lib:\"],\n"
                     + "     licenses = [],\n"
                     + "     deps = [\n"
@@ -51,6 +53,7 @@ public class FormattersTests {
             " java_import(\n"
                     + "     name = \"java__lib__\",\n"
                     + "     jars = [\"@java__lib__//file\"],\n"
+                    + "     testonly = False,\n"
                     + "     tags = [\"maven_coordinates=java:lib:\"],\n"
                     + "     licenses = [],\n"
                     + "     deps = [\n"
@@ -76,6 +79,7 @@ public class FormattersTests {
             " java_import(\n"
                     + "     name = \"parent__lib__\",\n"
                     + "     jars = [],\n"
+                    + "     testonly = False,\n"
                     + "     tags = [\"maven_coordinates=parent:lib:\"],\n"
                     + "     licenses = [],\n"
                     + "     deps = [\n"
@@ -100,6 +104,32 @@ public class FormattersTests {
             "    java_import(\n"
                     + "        name = \"java__lib__\",\n"
                     + "        jars = [\"@java__lib__//file\"],\n"
+                    + "        testonly = False,\n"
+                    + "        tags = [\"maven_coordinates=java:lib:\"],\n"
+                    + "        licenses = [],\n"
+                    + "        deps = [\n"
+                    + "            \":safe_mvn__dep1\",\n"
+                    + "            \":safe_mvn__dep2\",\n"
+                    + "        ],\n"
+                    + "        exports = [\n"
+                    + "            \":safe_mvn__export1\",\n"
+                    + "            \":safe_mvn__export2\",\n"
+                    + "        ],\n"
+                    + "        runtime_deps = [\n"
+                    + "            \":safe_mvn__runtime1\",\n"
+                    + "            \":safe_mvn__runtime2\",\n"
+                    + "        ],\n"
+                    + "    )\n"
+                    + "    native.alias(\n"
+                    + "        name = \"java__lib\",\n"
+                    + "        actual = \":java__lib__\",\n"
+                    + "        visibility = [\"//visibility:public\"],\n"
+                    + "    )\n";
+    private static final String NATIVE_JAVA_IMPORT_TEXT_WITH_TEST_ONLY =
+            "    java_import(\n"
+                    + "        name = \"java__lib__\",\n"
+                    + "        jars = [\"@java__lib__//file\"],\n"
+                    + "        testonly = True,\n"
                     + "        tags = [\"maven_coordinates=java:lib:\"],\n"
                     + "        licenses = [],\n"
                     + "        deps = [\n"
@@ -124,6 +154,7 @@ public class FormattersTests {
             "    java_import(\n"
                     + "        name = \"java__lib__\",\n"
                     + "        jars = [\"@java__lib__//file\"],\n"
+                    + "        testonly = False,\n"
                     + "        tags = [\n"
                     + "            \"mabel_license_detected_type=Apache\",\n"
                     + "            \"mabel_license_name=Apache-2\",\n"
@@ -153,6 +184,7 @@ public class FormattersTests {
             "    java_import(\n"
                     + "        name = \"java__lib__\",\n"
                     + "        jars = [\"@java__lib__//file\"],\n"
+                    + "        testonly = False,\n"
                     + "        tags = [\n"
                     + "            \"mabel_license_detected_type=Apache\",\n"
                     + "            \"mabel_license_name=Apache-2\",\n"
@@ -172,6 +204,7 @@ public class FormattersTests {
             "    java_import(\n"
                     + "        name = \"java__lib__\",\n"
                     + "        jars = [\"@java__lib__//file\"],\n"
+                    + "        testonly = False,\n"
                     + "        tags = [\n"
                     + "            \"mabel_license_detected_type=Apache\",\n"
                     + "            \"mabel_license_name=Apache-2 \\\"NEW\\\" for example\",\n"
@@ -191,6 +224,7 @@ public class FormattersTests {
             "    java_import(\n"
                     + "        name = \"java__lib__\",\n"
                     + "        jars = [\"@java__lib__//file\"],\n"
+                    + "        testonly = False,\n"
                     + "        tags = [\n"
                     + "            \"mabel_license_detected_type=Apache\",\n"
                     + "            \"mabel_license_name=Apache-2 New line\",\n"
@@ -210,6 +244,7 @@ public class FormattersTests {
             "    java_import(\n"
                     + "        name = \"java__lib__\",\n"
                     + "        jars = [\"@java__lib__//file\"],\n"
+                    + "        testonly = False,\n"
                     + "        tags = [\n"
                     + "            \"mabel_license_detected_type=UNKNOWN\",\n"
                     + "            \"mabel_license_name=SomeReallyWeirdOne\",\n"
@@ -230,6 +265,7 @@ public class FormattersTests {
             " aar_import(\n"
                     + "     name = \"aar__lib__\",\n"
                     + "     aar = \"@aar__lib__//file\",\n"
+                    + "     testonly = False,\n"
                     + "     tags = [\"maven_coordinates=aar:lib:\"],\n"
                     + "     deps = [\n"
                     + "         \":safe_mvn__dep1\",\n"
@@ -247,31 +283,11 @@ public class FormattersTests {
                     + "     actual = \":aar__lib__\",\n"
                     + "     visibility = [\"//visibility:public\"],\n"
                     + " )\n";
-    private static final String NATIVE_AAR_IMPORT_TEXT =
-            "    aar_import(\n"
-                    + "        name = \"aar__lib__\",\n"
-                    + "        aar = \"@aar__lib__//file\",\n"
-                    + "        tags = [\"maven_coordinates=aar:lib:\"],\n"
-                    + "        deps = [\n"
-                    + "            \":safe_mvn__dep1\",\n"
-                    + "            \":safe_mvn__dep2\",\n"
-                    + "            \":safe_mvn__runtime1\",\n"
-                    + "            \":safe_mvn__runtime2\",\n"
-                    + "        ],\n"
-                    + "        exports = [\n"
-                    + "            \":safe_mvn__export1\",\n"
-                    + "            \":safe_mvn__export2\",\n"
-                    + "        ],\n"
-                    + "    )\n"
-                    + "    native.alias(\n"
-                    + "        name = \"aar__lib\",\n"
-                    + "        actual = \":aar__lib__\",\n"
-                    + "        visibility = [\"//visibility:public\"],\n"
-                    + "    )\n";
     private static final String NATIVE_JAVA_PLUGIN_TEXT =
             "    java_import(\n"
                     + "        name = \"aar__lib__\",\n"
                     + "        jars = [\"@aar__lib__//file\"],\n"
+                    + "        testonly = False,\n"
                     + "        tags = [\"maven_coordinates=aar:lib:\"],\n"
                     + "        licenses = [],\n"
                     + "        deps = [\n"
@@ -296,6 +312,7 @@ public class FormattersTests {
                     + "        name = \"aar__lib_____processor_class_0\",\n"
                     + "        processor_class = \"com.example.Processor\",\n"
                     + "        generates_api = 0,\n"
+                    + "        testonly = False,\n"
                     + "        deps = [\n"
                     + "            \":aar__lib__\",\n"
                     + "            \":safe_mvn__dep1\",\n"
@@ -313,6 +330,7 @@ public class FormattersTests {
                     + "        name = \"aar__lib_____generates_api___processor_class_0\",\n"
                     + "        processor_class = \"com.example.Processor\",\n"
                     + "        generates_api = 1,\n"
+                    + "        testonly = False,\n"
                     + "        deps = [\n"
                     + "            \":aar__lib__\",\n"
                     + "            \":safe_mvn__dep1\",\n"
@@ -330,6 +348,7 @@ public class FormattersTests {
                     + "        name = \"aar__lib_____processor_class_1\",\n"
                     + "        processor_class = \"com.example.Processor2\",\n"
                     + "        generates_api = 0,\n"
+                    + "        testonly = False,\n"
                     + "        deps = [\n"
                     + "            \":aar__lib__\",\n"
                     + "            \":safe_mvn__dep1\",\n"
@@ -347,6 +366,7 @@ public class FormattersTests {
                     + "        name = \"aar__lib_____generates_api___processor_class_1\",\n"
                     + "        processor_class = \"com.example.Processor2\",\n"
                     + "        generates_api = 1,\n"
+                    + "        testonly = False,\n"
                     + "        deps = [\n"
                     + "            \":aar__lib__\",\n"
                     + "            \":safe_mvn__dep1\",\n"
@@ -362,6 +382,7 @@ public class FormattersTests {
                     + "    )\n"
                     + "    java_library(\n"
                     + "        name = \"aar__lib_____processor_class_all\",\n"
+                    + "        testonly = False,\n"
                     + "        exported_plugins = [\n"
                     + "            \":aar__lib_____processor_class_0\",\n"
                     + "            \":aar__lib_____processor_class_1\",\n"
@@ -374,6 +395,7 @@ public class FormattersTests {
                     + "    )\n"
                     + "    java_library(\n"
                     + "        name = \"aar__lib_____generates_api___processor_class_all\",\n"
+                    + "        testonly = False,\n"
                     + "        exported_plugins = [\n"
                     + "            \":aar__lib_____generates_api___processor_class_0\",\n"
                     + "            \":aar__lib_____generates_api___processor_class_1\",\n"
@@ -487,23 +509,6 @@ public class FormattersTests {
     }
 
     @Test
-    public void testAarFormatter() {
-        final String ruleText =
-                targetsToString(
-                        " ",
-                        TargetsBuilders.AAR_IMPORT.buildTargets(
-                                createDependency(
-                                        "aar:lib",
-                                        "some_url",
-                                        Arrays.asList("dep1", "dep2"),
-                                        Arrays.asList("export1", "export2"),
-                                        Arrays.asList("runtime1", "runtime2")),
-                                DependencyTools.DEFAULT));
-
-        Assert.assertEquals(AAR_IMPORT_TEXT, ruleText);
-    }
-
-    @Test
     public void testHttpFormatter() {
         final String ruleText =
                 targetsToString(
@@ -557,10 +562,10 @@ public class FormattersTests {
     }
 
     @Test
-    public void testNativeAarFormatter() {
+    public void testAarFormatter() {
         final String ruleText =
                 targetsToString(
-                        "    ",
+                        " ",
                         TargetsBuilders.AAR_IMPORT.buildTargets(
                                 createDependency(
                                         "aar:lib",
@@ -570,7 +575,7 @@ public class FormattersTests {
                                         Arrays.asList("runtime1", "runtime2")),
                                 DependencyTools.DEFAULT));
 
-        Assert.assertEquals(NATIVE_AAR_IMPORT_TEXT, ruleText);
+        Assert.assertEquals(AAR_IMPORT_TEXT, ruleText);
     }
 
     @Test
@@ -588,6 +593,22 @@ public class FormattersTests {
                                 DependencyTools.DEFAULT));
 
         Assert.assertEquals(NATIVE_JAVA_IMPORT_TEXT, ruleText);
+    }
+    @Test
+    public void testNativeJavaImportForTestOnly() {
+        final String ruleText =
+                targetsToString(
+                        "    ",
+                        TargetsBuilders.JAVA_IMPORT.buildTargets(
+                                markAsTestOnly(createDependency(
+                                        "java:lib",
+                                        "https://some_url",
+                                        Arrays.asList("dep1", "dep2"),
+                                        Arrays.asList("export1", "export2"),
+                                        Arrays.asList("runtime1", "runtime2"))),
+                                DependencyTools.DEFAULT));
+
+        Assert.assertEquals(NATIVE_JAVA_IMPORT_TEXT_WITH_TEST_ONLY, ruleText);
     }
 
     @Test

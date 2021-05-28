@@ -10,6 +10,7 @@ import com.google.common.base.Strings;
 import com.google.devtools.bazel.workspace.maven.adapter.MigrationToolingGraphResolver;
 import net.evendanan.bazel.mvn.api.GraphResolver;
 import net.evendanan.bazel.mvn.api.model.Resolution;
+import net.evendanan.bazel.mvn.api.model.ResolutionOutput;
 import net.evendanan.bazel.mvn.api.model.TargetType;
 import net.evendanan.bazel.mvn.api.serialization.Serialization;
 
@@ -54,7 +55,7 @@ public class Resolver {
     }
 
     private Resolution generateFromArtifacts(Options options) {
-        return resolver.resolve(options.type, options.artifact, options.repositories, options.blacklist);
+        return resolver.resolve(options.artifact, options.repositories, options.blacklist);
     }
 
     private void writeResults(Options options, Resolution resolution) throws Exception {
@@ -66,7 +67,7 @@ public class Resolver {
         }
 
         try (final FileWriter writer = new FileWriter(outputFile, Charsets.UTF_8, false)) {
-            new Serialization().serialize(resolution, writer);
+            new Serialization().serialize(ResolutionOutput.create(options.type, options.test_only, resolution), writer);
         }
     }
 
@@ -86,6 +87,12 @@ public class Resolver {
                 description = "Type of artifact: jar, aar, naive, auto, processor.",
                 required = true)
         TargetType type;
+
+        @Parameter(
+                names = {"--test_only"},
+                description = "Request test-only resolution",
+                arity = 1)
+        boolean test_only = false;
 
         @Parameter(
                 names = {"--blacklist", "-b"},

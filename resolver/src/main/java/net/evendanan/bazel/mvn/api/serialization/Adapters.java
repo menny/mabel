@@ -1,11 +1,19 @@
 package net.evendanan.bazel.mvn.api.serialization;
 
-import com.google.gson.*;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
+
 import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.model.License;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import net.evendanan.bazel.mvn.api.model.Resolution;
+import net.evendanan.bazel.mvn.api.model.ResolutionOutput;
 import net.evendanan.bazel.mvn.api.model.TargetType;
 
 import java.lang.reflect.Type;
@@ -13,11 +21,53 @@ import java.util.Collection;
 
 class Adapters {
     private static final Type DEPENDENCIES_LIST_TYPE =
-            new TypeToken<Collection<Dependency>>() {}.getType();
+            new TypeToken<Collection<Dependency>>() {
+            }.getType();
     private static final Type MAVEN_LIST_TYPE =
-            new TypeToken<Collection<MavenCoordinate>>() {}.getType();
+            new TypeToken<Collection<MavenCoordinate>>() {
+            }.getType();
     private static final Type LICENSES_LIST_TYPE =
-            new TypeToken<Collection<License>>() {}.getType();
+            new TypeToken<Collection<License>>() {
+            }.getType();
+
+    static class ResolutionOutputDeserializer implements JsonDeserializer<ResolutionOutput> {
+
+        @Override
+        public ResolutionOutput deserialize(
+                final JsonElement jsonElement,
+                final Type type,
+                final JsonDeserializationContext context)
+                throws JsonParseException {
+            JsonObject jsonObject = jsonElement.getAsJsonObject();
+
+            return ResolutionOutput.create(
+                    context.deserialize(jsonObject.get("t"), TargetType.class),
+                    context.deserialize(jsonObject.get("to"), boolean.class),
+                    context.deserialize(jsonObject.get("r"), Resolution.class));
+        }
+    }
+
+    static class ResolutionOutputSerializer implements JsonSerializer<ResolutionOutput> {
+
+        @Override
+        public JsonElement serialize(
+                final ResolutionOutput resolution,
+                final Type type,
+                final JsonSerializationContext context) {
+            JsonObject jsonObject = new JsonObject();
+
+            jsonObject.add(
+                    "t", context.serialize(resolution.targetType(), TargetType.class));
+            jsonObject.add(
+                    "to", context.serialize(resolution.testOnly(), boolean.class));
+            jsonObject.add(
+                    "r",
+                    context.serialize(
+                            resolution.resolution(), Resolution.class));
+
+            return jsonObject;
+        }
+    }
 
     static class ResolutionDeserializer implements JsonDeserializer<Resolution> {
 
@@ -30,7 +80,6 @@ class Adapters {
             JsonObject jsonObject = jsonElement.getAsJsonObject();
 
             return Resolution.create(
-                    context.deserialize(jsonObject.get("t"), TargetType.class),
                     context.deserialize(jsonObject.get("c"), MavenCoordinate.class),
                     context.deserialize(jsonObject.get("d"), DEPENDENCIES_LIST_TYPE));
         }
@@ -45,8 +94,6 @@ class Adapters {
                 final JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
 
-            jsonObject.add(
-                    "t", context.serialize(resolution.targetType(), TargetType.class));
             jsonObject.add(
                     "c", context.serialize(resolution.rootDependency(), MavenCoordinate.class));
             jsonObject.add(

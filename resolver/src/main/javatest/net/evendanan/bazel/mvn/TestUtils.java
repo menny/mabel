@@ -34,6 +34,10 @@ public class TestUtils {
                 .build();
     }
 
+    public static Dependency markAsTestOnly(Dependency dependency) {
+        return Dependency.builder(dependency).testOnly(true).build();
+    }
+
     public static Dependency createDependency(
             String mavenDep,
             String url,
