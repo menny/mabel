@@ -64,6 +64,7 @@ public class TargetsBuilders {
                                                 "@%s//file",
                                                 dependencyTools.repositoryRuleName(
                                                         dependency))))
+                        .addBoolean("testonly", dependency.testOnly())
                         .addList("tags", dependencyTagsList(dependency, dependencyTools))
                         .addList(
                                 "licenses",
@@ -138,10 +139,6 @@ public class TargetsBuilders {
                 .map(dependencyTools::targetName)
                 .map(name -> String.format(Locale.US, ":%s", name))
                 .collect(Collectors.toList());
-    }
-
-    private static Target addAlias(Dependency dependency, DependencyTools dependencyTools) {
-        return addAlias(dependency, "", dependencyTools);
     }
 
     private static Target addAlias(
@@ -429,6 +426,7 @@ public class TargetsBuilders {
                                 noApiTargetName)
                                 .addString("processor_class", processorClass)
                                 .addInt("generates_api", 0)
+                                .addBoolean("testonly", dependency.testOnly())
                                 .addList("deps", deps));
                 targets.add(
                         addAlias(
@@ -448,6 +446,7 @@ public class TargetsBuilders {
                                 withApiTargetName)
                                 .addString("processor_class", processorClass)
                                 .addInt("generates_api", 1)
+                                .addBoolean("testonly", dependency.testOnly())
                                 .addList("deps", deps));
                 targets.add(
                         addAlias(
@@ -465,6 +464,7 @@ public class TargetsBuilders {
                             dependencyTools.repositoryRuleName(dependency)
                                     + PROCESSOR_CLASS_POST_FIX
                                     + "all")
+                            .addBoolean("testonly", dependency.testOnly())
                             .addList("exported_plugins", noApiPlugins));
             targets.add(
                     addAlias(
@@ -480,6 +480,7 @@ public class TargetsBuilders {
                             dependencyTools.repositoryRuleName(dependency)
                                     + PROCESSOR_CLASS_POST_FIX_WITH_API
                                     + "all")
+                            .addBoolean("testonly", dependency.testOnly())
                             .addList("exported_plugins", withApiPlugins));
             targets.add(
                     addAlias(
@@ -512,6 +513,7 @@ public class TargetsBuilders {
                                             Locale.US,
                                             "@%s//file",
                                             dependencyTools.repositoryRuleName(dependency)))
+                            .addBoolean("testonly", dependency.testOnly())
                             .addList(
                                     "tags",
                                     Collections.singletonList(

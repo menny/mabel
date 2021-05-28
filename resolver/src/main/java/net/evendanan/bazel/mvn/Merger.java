@@ -12,6 +12,7 @@ import net.evendanan.bazel.mvn.api.TargetsBuilder;
 import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import net.evendanan.bazel.mvn.api.model.Resolution;
+import net.evendanan.bazel.mvn.api.model.ResolutionOutput;
 import net.evendanan.bazel.mvn.api.model.TargetType;
 import net.evendanan.bazel.mvn.api.serialization.Serialization;
 import net.evendanan.bazel.mvn.impl.RuleWriters;
@@ -105,7 +106,8 @@ public class Merger {
         }
 
         Merger driver = new Merger(options);
-        Collection<Resolution> resolutions = driver.readResolutions(options);
+        Collection<ResolutionOutput> resolutionOutputs = driver.readResolutions(options);
+        Collection<Resolution> resolutions = resolutionOutputs.stream().map(ResolutionOutput::resolution).collect(Collectors.toList());
 
         System.out.print("Verifying resolved artifacts graphs...");
         resolutions.forEach(
@@ -153,7 +155,7 @@ public class Merger {
         System.out.println("✓");
 
         driver.writeResults(
-                resolutions,
+                resolutionOutputs,
                 dependencies,
                 downloader,
                 options,
@@ -180,7 +182,6 @@ public class Merger {
                                 .map(
                                         old ->
                                                 Resolution.create(
-                                                        old.targetType(),
                                                         old.rootDependency(),
                                                         dependenciesToPrint))
                                 .collect(Collectors.toList());
@@ -243,11 +244,11 @@ public class Merger {
         return ret && path.delete();
     }
 
-    private Collection<Resolution> readResolutions(CommandLineOptions options) {
+    private Collection<ResolutionOutput> readResolutions(CommandLineOptions options) {
         System.out.printf(Locale.ROOT, "Reading %s root artifacts...", options.artifacts.size());
 
         final Serialization serialization = new Serialization();
-        final List<Resolution> resolutions =
+        final List<ResolutionOutput> resolutions =
                 options.artifacts.stream()
                         .map(
                                 inputFile -> {
@@ -273,7 +274,7 @@ public class Merger {
     }
 
     private void writeResults(
-            Collection<Resolution> resolutions,
+            Collection<ResolutionOutput> resolutions,
             Collection<Dependency> resolvedDependencies,
             final Function<Dependency, URI> downloader,
             final CommandLineOptions options,
@@ -320,10 +321,13 @@ public class Merger {
 
         System.out.printf(Locale.ROOT, "Processing %d targets rules...%n", resolvedDependencies.size());
 
-        final Set<MavenCoordinate> rootDependencies = resolutions.stream().map(Resolution::rootDependency).collect(Collectors.toSet());
+        final Set<MavenCoordinate> rootDependencies = resolutions.stream().map(r -> r.resolution().rootDependency()).collect(Collectors.toSet());
         final Map<MavenCoordinate, TargetType> targetTypeMap = resolutions
                 .stream()
-                .collect(Collectors.toMap(Resolution::rootDependency, Resolution::targetType));
+                .collect(Collectors.toMap(r -> r.resolution().rootDependency(), ResolutionOutput::targetType));
+        final Map<MavenCoordinate, Boolean> testOnlyMap = resolutions
+                .stream()
+                .collect(Collectors.toMap(r -> r.resolution().rootDependency(), ResolutionOutput::testOnly));
         final Function<Dependency, TargetsBuilder> ruleMapper = buildRuleMapper(
                 downloader,
                 dep -> targetTypeMap.getOrDefault(dep, TargetType.naive),
@@ -339,14 +343,13 @@ public class Merger {
         List<TargetsToWrite> targetsToWritePairs =
                 resolvedDependencies.stream()
                         .peek(d -> timer.taskDone(dependencyTools.mavenCoordinates(d)))
-                        .map(
-                                dependency ->
-                                        new TargetsToWrite(
-                                                fileImporter.buildTargets(
-                                                        dependency, dependencyTools),
-                                                ruleMapper
-                                                        .apply(dependency)
-                                                        .buildTargets(dependency, dependencyTools)))
+                        .map(dependency -> Dependency.builder(dependency)
+                                .testOnly(testOnlyMap.getOrDefault(dependency.mavenCoordinate(), false))
+                                .build())
+                        .map(dependency -> new TargetsToWrite(
+                                fileImporter.buildTargets(dependency, dependencyTools),
+                                ruleMapper.apply(dependency)
+                                        .buildTargets(dependency, dependencyTools)))
                         .collect(Collectors.toList());
 
         timer.finish();

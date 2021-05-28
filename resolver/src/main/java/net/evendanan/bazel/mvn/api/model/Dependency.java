@@ -9,6 +9,7 @@ import java.util.Collections;
 public abstract class Dependency {
     public static Builder builder() {
         return new AutoValue_Dependency.Builder()
+                .testOnly(false)
                 .dependencies(Collections.emptyList())
                 .exports(Collections.emptyList())
                 .runtimeDependencies(Collections.emptyList())
@@ -21,6 +22,7 @@ public abstract class Dependency {
     public static Builder builder(Dependency original) {
         return new AutoValue_Dependency.Builder()
                 .mavenCoordinate(original.mavenCoordinate())
+                .testOnly(original.testOnly())
                 .dependencies(original.dependencies())
                 .exports(original.exports())
                 .runtimeDependencies(original.runtimeDependencies())
@@ -31,6 +33,8 @@ public abstract class Dependency {
     }
 
     public abstract MavenCoordinate mavenCoordinate();
+
+    public abstract boolean testOnly();
 
     public abstract Collection<MavenCoordinate> dependencies();
 
@@ -49,6 +53,8 @@ public abstract class Dependency {
     @AutoValue.Builder
     public abstract static class Builder {
         public abstract Builder mavenCoordinate(MavenCoordinate mavenCoordinate);
+
+        public abstract Builder testOnly(boolean testOnly);
 
         public abstract Builder dependencies(Collection<MavenCoordinate> dependencies);
 

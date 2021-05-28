@@ -3,7 +3,6 @@ package net.evendanan.bazel.mvn.merger;
 import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import net.evendanan.bazel.mvn.api.model.Resolution;
-import net.evendanan.bazel.mvn.api.model.TargetType;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +18,6 @@ public class GraphVerificationsTest {
     public void setup() {
         mBasicResolution =
                 Resolution.create(
-                        TargetType.auto,
                         MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
                         Arrays.asList(
                                 Dependency.builder()
@@ -106,7 +104,6 @@ public class GraphVerificationsTest {
     public void checkAllGraphDependenciesAreResolved_FailRootMissing() {
         GraphVerifications.checkAllGraphDependenciesAreResolved(
                 Resolution.create(
-                        TargetType.auto,
                         MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
                         Arrays.asList(
                                 Dependency.builder()
@@ -142,7 +139,6 @@ public class GraphVerificationsTest {
     public void checkAllGraphDependenciesAreResolved_FailDependencyMissing() {
         GraphVerifications.checkAllGraphDependenciesAreResolved(
                 Resolution.create(
-                        TargetType.auto,
                         MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
                         Arrays.asList(
                                 Dependency.builder()
@@ -190,7 +186,6 @@ public class GraphVerificationsTest {
     public void checkGraphDoesNotHaveDanglingDependencies_Fail() {
         GraphVerifications.checkGraphDoesNotHaveDanglingDependencies(
                 Resolution.create(
-                        TargetType.auto,
                         MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
                         Arrays.asList(
                                 Dependency.builder()
@@ -342,7 +337,6 @@ public class GraphVerificationsTest {
         final MavenCoordinate root = MavenCoordinate.create("net.evendanan", "dep1", "0.1", "");
         Resolution resolution =
                 Resolution.create(
-                        TargetType.auto,
                         root,
                         Collections.singletonList(
                                 Dependency.builder()
