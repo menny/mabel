@@ -335,6 +335,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_activity__activity__1_0_0_alpha02",
         aar = "@androidx_activity__activity__1_0_0_alpha02//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.activity:activity:1.0.0-alpha02"],
         deps = [
             ":androidx_annotation__annotation",
@@ -417,6 +418,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "androidx_annotation__annotation__1_0_0",
         jars = ["@androidx_annotation__annotation__1_0_0//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
@@ -442,6 +444,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_appcompat__appcompat__1_0_2",
         aar = "@androidx_appcompat__appcompat__1_0_2//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.appcompat:appcompat:1.0.2"],
         deps = [
             ":androidx_annotation__annotation",
@@ -484,6 +487,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "androidx_arch_core__core_common__2_0_0",
         jars = ["@androidx_arch_core__core_common__2_0_0//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
@@ -511,6 +515,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_arch_core__core_runtime__2_0_0",
         aar = "@androidx_arch_core__core_runtime__2_0_0//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.arch.core:core-runtime:2.0.0"],
         deps = [
             ":androidx_annotation__annotation",
@@ -535,6 +540,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_asynclayoutinflater__asynclayoutinflater__1_0_0",
         aar = "@androidx_asynclayoutinflater__asynclayoutinflater__1_0_0//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.asynclayoutinflater:asynclayoutinflater:1.0.0"],
         deps = [
             ":androidx_annotation__annotation",
@@ -563,6 +569,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "androidx_collection__collection__1_0_0",
         jars = ["@androidx_collection__collection__1_0_0//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
@@ -588,6 +595,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_coordinatorlayout__coordinatorlayout__1_0_0",
         aar = "@androidx_coordinatorlayout__coordinatorlayout__1_0_0//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.coordinatorlayout:coordinatorlayout:1.0.0"],
         deps = [
             ":androidx_annotation__annotation",
@@ -640,6 +648,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_core__core__1_1_0_alpha01",
         aar = "@androidx_core__core__1_1_0_alpha01//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.core:core:1.1.0-alpha01"],
         deps = [
             ":androidx_annotation__annotation",
@@ -670,6 +679,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_cursoradapter__cursoradapter__1_0_0",
         aar = "@androidx_cursoradapter__cursoradapter__1_0_0//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.cursoradapter:cursoradapter:1.0.0"],
         deps = [":androidx_annotation__annotation"],
         exports = [":androidx_annotation__annotation"],
@@ -696,6 +706,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_customview__customview__1_0_0",
         aar = "@androidx_customview__customview__1_0_0//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.customview:customview:1.0.0"],
         deps = [
             ":androidx_annotation__annotation",
@@ -720,6 +731,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_documentfile__documentfile__1_0_0",
         aar = "@androidx_documentfile__documentfile__1_0_0//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.documentfile:documentfile:1.0.0"],
         deps = [":androidx_annotation__annotation"],
         exports = [":androidx_annotation__annotation"],
@@ -738,6 +750,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_drawerlayout__drawerlayout__1_0_0",
         aar = "@androidx_drawerlayout__drawerlayout__1_0_0//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.drawerlayout:drawerlayout:1.0.0"],
         deps = [
             ":androidx_annotation__annotation",
@@ -766,6 +779,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_fragment__fragment__1_1_0_alpha02",
         aar = "@androidx_fragment__fragment__1_1_0_alpha02//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.fragment:fragment:1.1.0-alpha02"],
         deps = [
             ":androidx_activity__activity",
@@ -800,6 +814,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_interpolator__interpolator__1_0_0",
         aar = "@androidx_interpolator__interpolator__1_0_0//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.interpolator:interpolator:1.0.0"],
         deps = [":androidx_annotation__annotation"],
         exports = [":androidx_annotation__annotation"],
@@ -818,6 +833,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_legacy__legacy_support_core_ui__1_0_0",
         aar = "@androidx_legacy__legacy_support_core_ui__1_0_0//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.legacy:legacy-support-core-ui:1.0.0"],
         deps = [
             ":androidx_annotation__annotation",
@@ -864,6 +880,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_legacy__legacy_support_core_utils__1_0_0",
         aar = "@androidx_legacy__legacy_support_core_utils__1_0_0//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.legacy:legacy-support-core-utils:1.0.0"],
         deps = [
             ":androidx_annotation__annotation",
@@ -898,6 +915,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "androidx_lifecycle__lifecycle_common__2_0_0",
         jars = ["@androidx_lifecycle__lifecycle_common__2_0_0//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
@@ -923,6 +941,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_lifecycle__lifecycle_livedata_core__2_0_0",
         aar = "@androidx_lifecycle__lifecycle_livedata_core__2_0_0//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.lifecycle:lifecycle-livedata-core:2.0.0"],
         deps = [
             ":androidx_arch_core__core_common",
@@ -949,6 +968,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_lifecycle__lifecycle_livedata__2_0_0",
         aar = "@androidx_lifecycle__lifecycle_livedata__2_0_0//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.lifecycle:lifecycle-livedata:2.0.0"],
         deps = [
             ":androidx_arch_core__core_common",
@@ -977,6 +997,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_lifecycle__lifecycle_runtime__2_0_0",
         aar = "@androidx_lifecycle__lifecycle_runtime__2_0_0//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.lifecycle:lifecycle-runtime:2.0.0"],
         deps = [
             ":androidx_annotation__annotation",
@@ -1007,6 +1028,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_lifecycle__lifecycle_viewmodel__2_0_0",
         aar = "@androidx_lifecycle__lifecycle_viewmodel__2_0_0//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.lifecycle:lifecycle-viewmodel:2.0.0"],
         deps = [":androidx_annotation__annotation"],
         exports = [":androidx_annotation__annotation"],
@@ -1027,6 +1049,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_loader__loader__1_0_0",
         aar = "@androidx_loader__loader__1_0_0//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.loader:loader:1.0.0"],
         deps = [
             ":androidx_annotation__annotation",
@@ -1055,6 +1078,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_localbroadcastmanager__localbroadcastmanager__1_0_0",
         aar = "@androidx_localbroadcastmanager__localbroadcastmanager__1_0_0//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.localbroadcastmanager:localbroadcastmanager:1.0.0"],
         deps = [":androidx_annotation__annotation"],
         exports = [":androidx_annotation__annotation"],
@@ -1073,6 +1097,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_print__print__1_0_0",
         aar = "@androidx_print__print__1_0_0//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.print:print:1.0.0"],
         deps = [":androidx_annotation__annotation"],
         exports = [":androidx_annotation__annotation"],
@@ -1091,6 +1116,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_slidingpanelayout__slidingpanelayout__1_0_0",
         aar = "@androidx_slidingpanelayout__slidingpanelayout__1_0_0//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.slidingpanelayout:slidingpanelayout:1.0.0"],
         deps = [
             ":androidx_annotation__annotation",
@@ -1117,6 +1143,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_swiperefreshlayout__swiperefreshlayout__1_0_0",
         aar = "@androidx_swiperefreshlayout__swiperefreshlayout__1_0_0//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"],
         deps = [
             ":androidx_annotation__annotation",
@@ -1143,6 +1170,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_vectordrawable__vectordrawable_animated__1_0_0",
         aar = "@androidx_vectordrawable__vectordrawable_animated__1_0_0//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.vectordrawable:vectordrawable-animated:1.0.0"],
         deps = [
             ":androidx_legacy__legacy_support_core_ui",
@@ -1169,6 +1197,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_vectordrawable__vectordrawable__1_0_1",
         aar = "@androidx_vectordrawable__vectordrawable__1_0_1//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.vectordrawable:vectordrawable:1.0.1"],
         deps = [
             ":androidx_annotation__annotation",
@@ -1193,6 +1222,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01",
         aar = "@androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01"],
         deps = [
             ":androidx_annotation__annotation",
@@ -1219,6 +1249,7 @@ def generate_transitive_dependency_targets(
     aar_import(
         name = "androidx_viewpager__viewpager__1_0_0",
         aar = "@androidx_viewpager__viewpager__1_0_0//file",
+        testonly = False,
         tags = ["maven_coordinates=androidx.viewpager:viewpager:1.0.0"],
         deps = [
             ":androidx_annotation__annotation",

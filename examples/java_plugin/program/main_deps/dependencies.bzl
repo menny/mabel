@@ -254,6 +254,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "apt___com_google_auto_value__auto_value_annotations__1_6_3",
         jars = ["@apt___com_google_auto_value__auto_value_annotations__1_6_3//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache 2.0",
@@ -279,6 +280,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "apt___com_google_auto_value__auto_value__1_6_3",
         jars = ["@apt___com_google_auto_value__auto_value__1_6_3//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache 2.0",
@@ -297,6 +299,7 @@ def generate_transitive_dependency_targets(
         name = "apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_0",
         processor_class = "com.google.auto.value.extension.memoized.processor.MemoizedValidator",
         generates_api = 1,
+        testonly = False,
         deps = [":apt___com_google_auto_value__auto_value__1_6_3"],
     )
 
@@ -306,6 +309,7 @@ def generate_transitive_dependency_targets(
         name = "apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_1",
         processor_class = "com.google.auto.value.processor.AutoAnnotationProcessor",
         generates_api = 1,
+        testonly = False,
         deps = [":apt___com_google_auto_value__auto_value__1_6_3"],
     )
 
@@ -315,6 +319,7 @@ def generate_transitive_dependency_targets(
         name = "apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_2",
         processor_class = "com.google.auto.value.processor.AutoOneOfProcessor",
         generates_api = 1,
+        testonly = False,
         deps = [":apt___com_google_auto_value__auto_value__1_6_3"],
     )
 
@@ -324,6 +329,7 @@ def generate_transitive_dependency_targets(
         name = "apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_3",
         processor_class = "com.google.auto.value.processor.AutoValueBuilderProcessor",
         generates_api = 1,
+        testonly = False,
         deps = [":apt___com_google_auto_value__auto_value__1_6_3"],
     )
 
@@ -333,6 +339,7 @@ def generate_transitive_dependency_targets(
         name = "apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_4",
         processor_class = "com.google.auto.value.processor.AutoValueProcessor",
         generates_api = 1,
+        testonly = False,
         deps = [":apt___com_google_auto_value__auto_value__1_6_3"],
     )
 
@@ -340,6 +347,7 @@ def generate_transitive_dependency_targets(
     # This is a root requested Maven artifact.
     java_library(
         name = "apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_all",
+        testonly = False,
         exported_plugins = [
             ":apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_0",
             ":apt___com_google_auto_value__auto_value__1_6_3___generates_api___processor_class_1",
@@ -355,6 +363,7 @@ def generate_transitive_dependency_targets(
         name = "apt___com_google_auto_value__auto_value__1_6_3___processor_class_0",
         processor_class = "com.google.auto.value.extension.memoized.processor.MemoizedValidator",
         generates_api = 0,
+        testonly = False,
         deps = [":apt___com_google_auto_value__auto_value__1_6_3"],
     )
 
@@ -364,6 +373,7 @@ def generate_transitive_dependency_targets(
         name = "apt___com_google_auto_value__auto_value__1_6_3___processor_class_1",
         processor_class = "com.google.auto.value.processor.AutoAnnotationProcessor",
         generates_api = 0,
+        testonly = False,
         deps = [":apt___com_google_auto_value__auto_value__1_6_3"],
     )
 
@@ -373,6 +383,7 @@ def generate_transitive_dependency_targets(
         name = "apt___com_google_auto_value__auto_value__1_6_3___processor_class_2",
         processor_class = "com.google.auto.value.processor.AutoOneOfProcessor",
         generates_api = 0,
+        testonly = False,
         deps = [":apt___com_google_auto_value__auto_value__1_6_3"],
     )
 
@@ -382,6 +393,7 @@ def generate_transitive_dependency_targets(
         name = "apt___com_google_auto_value__auto_value__1_6_3___processor_class_3",
         processor_class = "com.google.auto.value.processor.AutoValueBuilderProcessor",
         generates_api = 0,
+        testonly = False,
         deps = [":apt___com_google_auto_value__auto_value__1_6_3"],
     )
 
@@ -391,6 +403,7 @@ def generate_transitive_dependency_targets(
         name = "apt___com_google_auto_value__auto_value__1_6_3___processor_class_4",
         processor_class = "com.google.auto.value.processor.AutoValueProcessor",
         generates_api = 0,
+        testonly = False,
         deps = [":apt___com_google_auto_value__auto_value__1_6_3"],
     )
 
@@ -398,6 +411,7 @@ def generate_transitive_dependency_targets(
     # This is a root requested Maven artifact.
     java_library(
         name = "apt___com_google_auto_value__auto_value__1_6_3___processor_class_all",
+        testonly = False,
         exported_plugins = [
             ":apt___com_google_auto_value__auto_value__1_6_3___processor_class_0",
             ":apt___com_google_auto_value__auto_value__1_6_3___processor_class_1",
@@ -516,6 +530,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "apt___com_google_code_findbugs__jsr305__1_3_9",
         jars = ["@apt___com_google_code_findbugs__jsr305__1_3_9//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
@@ -541,6 +556,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "apt___com_google_dagger__dagger_compiler__2_19",
         jars = ["@apt___com_google_dagger__dagger_compiler__2_19//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache 2.0",
@@ -577,6 +593,7 @@ def generate_transitive_dependency_targets(
         name = "apt___com_google_dagger__dagger_compiler__2_19___generates_api___processor_class_0",
         processor_class = "dagger.internal.codegen.ComponentProcessor",
         generates_api = 1,
+        testonly = False,
         deps = [
             ":apt___com_google_dagger__dagger",
             ":apt___com_google_dagger__dagger_compiler__2_19",
@@ -594,6 +611,7 @@ def generate_transitive_dependency_targets(
     # This is a root requested Maven artifact.
     java_library(
         name = "apt___com_google_dagger__dagger_compiler__2_19___generates_api___processor_class_all",
+        testonly = False,
         exported_plugins = [":apt___com_google_dagger__dagger_compiler__2_19___generates_api___processor_class_0"],
     )
 
@@ -603,6 +621,7 @@ def generate_transitive_dependency_targets(
         name = "apt___com_google_dagger__dagger_compiler__2_19___processor_class_0",
         processor_class = "dagger.internal.codegen.ComponentProcessor",
         generates_api = 0,
+        testonly = False,
         deps = [
             ":apt___com_google_dagger__dagger",
             ":apt___com_google_dagger__dagger_compiler__2_19",
@@ -620,6 +639,7 @@ def generate_transitive_dependency_targets(
     # This is a root requested Maven artifact.
     java_library(
         name = "apt___com_google_dagger__dagger_compiler__2_19___processor_class_all",
+        testonly = False,
         exported_plugins = [":apt___com_google_dagger__dagger_compiler__2_19___processor_class_0"],
     )
 
@@ -670,6 +690,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "apt___com_google_dagger__dagger_producers__2_19",
         jars = ["@apt___com_google_dagger__dagger_producers__2_19//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache 2.0",
@@ -705,6 +726,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "apt___com_google_dagger__dagger_spi__2_19",
         jars = ["@apt___com_google_dagger__dagger_spi__2_19//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache 2.0",
@@ -746,6 +768,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "apt___com_google_dagger__dagger__2_19",
         jars = ["@apt___com_google_dagger__dagger__2_19//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache 2.0",
@@ -771,6 +794,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "apt___com_google_errorprone__error_prone_annotations__2_1_3",
         jars = ["@apt___com_google_errorprone__error_prone_annotations__2_1_3//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache 2.0",
@@ -796,6 +820,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "apt___com_google_errorprone__javac_shaded__9_dev_r4023_3",
         jars = ["@apt___com_google_errorprone__javac_shaded__9_dev_r4023_3//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=GPL",
             "mabel_license_name=GNU General Public License, version 2, with the Classpath Exception",
@@ -821,6 +846,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "apt___com_google_googlejavaformat__google_java_format__1_5",
         jars = ["@apt___com_google_googlejavaformat__google_java_format__1_5//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
@@ -858,6 +884,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "apt___com_google_guava__guava__25_0_jre",
         jars = ["@apt___com_google_guava__guava__25_0_jre//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
@@ -895,6 +922,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "apt___com_google_j2objc__j2objc_annotations__1_1",
         jars = ["@apt___com_google_j2objc__j2objc_annotations__1_1//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
@@ -920,6 +948,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "apt___com_squareup__javapoet__1_11_1",
         jars = ["@apt___com_squareup__javapoet__1_11_1//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache 2.0",
@@ -945,6 +974,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "apt___javax_annotation__jsr250_api__1_0",
         jars = ["@apt___javax_annotation__jsr250_api__1_0//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=CDDL",
             "mabel_license_name=COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0",
@@ -976,6 +1006,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "apt___javax_inject__javax_inject__1",
         jars = ["@apt___javax_inject__javax_inject__1//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
@@ -1003,6 +1034,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "apt___org_checkerframework__checker_compat_qual__2_5_3",
         jars = ["@apt___org_checkerframework__checker_compat_qual__2_5_3//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=GPL",
             "mabel_license_detected_type=MIT",
@@ -1034,6 +1066,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "apt___org_codehaus_mojo__animal_sniffer_annotations__1_14",
         jars = ["@apt___org_codehaus_mojo__animal_sniffer_annotations__1_14//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=MIT",
             "mabel_license_name=MIT license",

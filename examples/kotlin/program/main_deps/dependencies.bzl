@@ -195,6 +195,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "com_google_code_gson__gson__2_8_0",
         jars = ["@com_google_code_gson__gson__2_8_0//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache 2.0",
@@ -299,6 +300,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "org_jetbrains__annotations__13_0",
         jars = ["@org_jetbrains__annotations__13_0//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
