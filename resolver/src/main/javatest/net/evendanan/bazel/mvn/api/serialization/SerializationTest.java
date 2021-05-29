@@ -4,6 +4,7 @@ import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.model.License;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import net.evendanan.bazel.mvn.api.model.Resolution;
+import net.evendanan.bazel.mvn.api.model.ResolutionOutput;
 import net.evendanan.bazel.mvn.api.model.TargetType;
 
 import org.junit.Assert;
@@ -19,69 +20,76 @@ public class SerializationTest {
 
     @Test
     public void testHappyPath() {
-        Resolution resolution =
-                Resolution.create(
+        final Resolution resolution = Resolution.create(
+                MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
+                Arrays.asList(
+                        Dependency.builder()
+                                .mavenCoordinate(
+                                        MavenCoordinate.create(
+                                                "net.evendanan", "dep1", "0.1", ""))
+                                .dependencies(
+                                        Collections.singleton(
+                                                MavenCoordinate.create(
+                                                        "net.evendanan",
+                                                        "inner1",
+                                                        "0.1",
+                                                        "")))
+                                .url("http://example.com/artifact1.jar")
+                                .sourcesUrl("http://example.com/artifact1-src.jar")
+                                .build(),
+                        Dependency.builder()
+                                .mavenCoordinate(
+                                        MavenCoordinate.create(
+                                                "net.evendanan", "inner1", "0.1", ""))
+                                .url("http://example.com/artifact2.jar")
+                                .licenses(Collections.singletonList(License.create("Apache-2", "http://example.com")))
+                                .dependencies(
+                                        Arrays.asList(
+                                                MavenCoordinate.create(
+                                                        "net.evendanan",
+                                                        "inner-inner1",
+                                                        "0.1",
+                                                        ""),
+                                                MavenCoordinate.create(
+                                                        "net.evendanan",
+                                                        "inner-inner2",
+                                                        "0.1",
+                                                        "")))
+                                .build(),
+                        Dependency.builder()
+                                .mavenCoordinate(
+                                        MavenCoordinate.create(
+                                                "net.evendanan", "inner-inner1", "0.1", ""))
+                                .url("http://example.com/artifact3.jar")
+                                .javadocUrl("http://example.com/artifact3-javadoc.jar")
+                                .licenses(Collections.singletonList(License.create("Apache-2", "")))
+                                .build(),
+                        Dependency.builder()
+                                .mavenCoordinate(
+                                        MavenCoordinate.create(
+                                                "net.evendanan", "inner-inner2", "0.1", ""))
+                                .licenses(Arrays.asList(
+                                        License.create("Weird", ""),
+                                        License.create("BSD \"NEW\"", "http://example.com/bsd.html")))
+                                .url("http://example.com/artifact4.jar")
+                                .sourcesUrl("http://example.com/artifact4-src.jar")
+                                .build()));
+        final ResolutionOutput resolutionOutput =
+                ResolutionOutput.create(
                         TargetType.auto,
-                        MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
-                        Arrays.asList(
-                                Dependency.builder()
-                                        .mavenCoordinate(
-                                                MavenCoordinate.create(
-                                                        "net.evendanan", "dep1", "0.1", ""))
-                                        .dependencies(
-                                                Collections.singleton(
-                                                        MavenCoordinate.create(
-                                                                "net.evendanan",
-                                                                "inner1",
-                                                                "0.1",
-                                                                "")))
-                                        .url("http://example.com/artifact1.jar")
-                                        .sourcesUrl("http://example.com/artifact1-src.jar")
-                                        .build(),
-                                Dependency.builder()
-                                        .mavenCoordinate(
-                                                MavenCoordinate.create(
-                                                        "net.evendanan", "inner1", "0.1", ""))
-                                        .url("http://example.com/artifact2.jar")
-                                        .licenses(Collections.singletonList(License.create("Apache-2", "http://example.com")))
-                                        .dependencies(
-                                                Arrays.asList(
-                                                        MavenCoordinate.create(
-                                                                "net.evendanan",
-                                                                "inner-inner1",
-                                                                "0.1",
-                                                                ""),
-                                                        MavenCoordinate.create(
-                                                                "net.evendanan",
-                                                                "inner-inner2",
-                                                                "0.1",
-                                                                "")))
-                                        .build(),
-                                Dependency.builder()
-                                        .mavenCoordinate(
-                                                MavenCoordinate.create(
-                                                        "net.evendanan", "inner-inner1", "0.1", ""))
-                                        .url("http://example.com/artifact3.jar")
-                                        .javadocUrl("http://example.com/artifact3-javadoc.jar")
-                                        .licenses(Collections.singletonList(License.create("Apache-2", "")))
-                                        .build(),
-                                Dependency.builder()
-                                        .mavenCoordinate(
-                                                MavenCoordinate.create(
-                                                        "net.evendanan", "inner-inner2", "0.1", ""))
-                                        .licenses(Arrays.asList(
-                                                License.create("Weird", ""),
-                                                License.create("BSD \"NEW\"", "http://example.com/bsd.html")))
-                                        .url("http://example.com/artifact4.jar")
-                                        .sourcesUrl("http://example.com/artifact4-src.jar")
-                                        .build()));
+                        false,
+                        resolution);
 
         Serialization serialization = new Serialization();
 
         StringBuilder builder = new StringBuilder();
-        serialization.serialize(resolution, builder);
+        serialization.serialize(resolutionOutput, builder);
 
-        final Resolution actual = serialization.deserialize(new StringReader(builder.toString()));
+        final ResolutionOutput actualOutput = serialization.deserialize(new StringReader(builder.toString()));
+        Assert.assertEquals(resolutionOutput.targetType(), actualOutput.targetType());
+        Assert.assertEquals(resolutionOutput.testOnly(), actualOutput.testOnly());
+
+        final Resolution actual = actualOutput.resolution();
         Assert.assertEquals(resolution.rootDependency(), actual.rootDependency());
         Assert.assertEquals(
                 resolution.allResolvedDependencies().size(),

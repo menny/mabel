@@ -326,6 +326,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "aopalliance__aopalliance__1_0",
         jars = ["@aopalliance__aopalliance__1_0//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Public-Domain",
             "mabel_license_name=Public Domain",
@@ -350,6 +351,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "com_github_stephenc_jcip__jcip_annotations__1_0_1",
         jars = ["@com_github_stephenc_jcip__jcip_annotations__1_0_1//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache License, Version 2.0",
@@ -373,6 +375,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "com_google_code_findbugs__jsr305__3_0_2",
         jars = ["@com_google_code_findbugs__jsr305__3_0_2//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
@@ -396,6 +399,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "com_google_errorprone__error_prone_annotations__2_2_0",
         jars = ["@com_google_errorprone__error_prone_annotations__2_2_0//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache 2.0",
@@ -419,6 +423,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "com_google_guava__failureaccess__1_0_1",
         jars = ["@com_google_guava__failureaccess__1_0_1//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
@@ -446,6 +451,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "com_google_guava__guava__20_0",
         jars = ["@com_google_guava__guava__20_0//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
@@ -469,6 +475,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava",
         jars = ["@com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
@@ -494,6 +501,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "com_google_inject__guice__4_2_3",
         jars = ["@com_google_inject__guice__4_2_3//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
@@ -525,6 +533,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "com_google_j2objc__j2objc_annotations__1_1",
         jars = ["@com_google_j2objc__j2objc_annotations__1_1//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
@@ -550,6 +559,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "com_sun_activation__jakarta_activation__1_2_1",
         jars = ["@com_sun_activation__jakarta_activation__1_2_1//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=UNKNOWN",
             "mabel_license_name=EDL 1.0",
@@ -577,6 +587,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "commons_codec__commons_codec__1_13",
         jars = ["@commons_codec__commons_codec__1_13//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache License, Version 2.0",
@@ -604,6 +615,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "commons_io__commons_io__2_5",
         jars = ["@commons_io__commons_io__2_5//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache License, Version 2.0",
@@ -629,6 +641,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "commons_logging__commons_logging__1_2",
         jars = ["@commons_logging__commons_logging__1_2//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
@@ -654,6 +667,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "jakarta_validation__jakarta_validation_api__2_0_2",
         jars = ["@jakarta_validation__jakarta_validation_api__2_0_2//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache License 2.0",
@@ -679,6 +693,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "javax_inject__javax_inject__1",
         jars = ["@javax_inject__javax_inject__1//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=The Apache Software License, Version 2.0",
@@ -706,6 +721,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "org_apache_httpcomponents__httpclient__4_5_12",
         jars = ["@org_apache_httpcomponents__httpclient__4_5_12//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache License, Version 2.0",
@@ -739,6 +755,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "org_apache_httpcomponents__httpcore__4_4_13",
         jars = ["@org_apache_httpcomponents__httpcore__4_4_13//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache License, Version 2.0",
@@ -762,6 +779,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "org_checkerframework__checker_qual__2_5_2",
         jars = ["@org_checkerframework__checker_qual__2_5_2//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=MIT",
             "mabel_license_name=The MIT License",
@@ -785,6 +803,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "org_codehaus_mojo__animal_sniffer_annotations__1_17",
         jars = ["@org_codehaus_mojo__animal_sniffer_annotations__1_17//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=MIT",
             "mabel_license_name=MIT license",
@@ -812,6 +831,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "org_jboss_logging__jboss_logging__3_3_2_Final",
         jars = ["@org_jboss_logging__jboss_logging__3_3_2_Final//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache License, version 2.0",
@@ -837,6 +857,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "org_jboss_resteasy__resteasy_client__3_13_1_Final",
         jars = ["@org_jboss_resteasy__resteasy_client__3_13_1_Final//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache License 2.0",
@@ -876,6 +897,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "org_jboss_resteasy__resteasy_jaxrs__3_13_1_Final",
         jars = ["@org_jboss_resteasy__resteasy_jaxrs__3_13_1_Final//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=Apache",
             "mabel_license_name=Apache License 2.0",
@@ -923,6 +945,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "org_jboss_spec_javax_annotation__jboss_annotations_api_1_3_spec__2_0_1_Final",
         jars = ["@org_jboss_spec_javax_annotation__jboss_annotations_api_1_3_spec__2_0_1_Final//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=GPL",
             "mabel_license_detected_type=UNKNOWN",
@@ -953,6 +976,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "org_jboss_spec_javax_ws_rs__jboss_jaxrs_api_2_1_spec__2_0_1_Final",
         jars = ["@org_jboss_spec_javax_ws_rs__jboss_jaxrs_api_2_1_spec__2_0_1_Final//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=GPL",
             "mabel_license_detected_type=UNKNOWN",
@@ -981,6 +1005,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "org_jboss_spec_javax_xml_bind__jboss_jaxb_api_2_3_spec__2_0_0_Final",
         jars = ["@org_jboss_spec_javax_xml_bind__jboss_jaxb_api_2_3_spec__2_0_0_Final//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=UNKNOWN",
             "mabel_license_name=Eclipse Distribution License - v 1.0",
@@ -1006,6 +1031,7 @@ def generate_transitive_dependency_targets(
     java_import(
         name = "org_reactivestreams__reactive_streams__1_0_3",
         jars = ["@org_reactivestreams__reactive_streams__1_0_3//file"],
+        testonly = False,
         tags = [
             "mabel_license_detected_type=CC0",
             "mabel_license_name=CC0",

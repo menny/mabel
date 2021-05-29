@@ -2,10 +2,12 @@ package net.evendanan.bazel.mvn.api.serialization;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.model.License;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import net.evendanan.bazel.mvn.api.model.Resolution;
+import net.evendanan.bazel.mvn.api.model.ResolutionOutput;
 
 import java.io.Reader;
 
@@ -16,6 +18,9 @@ public class Serialization {
     public Serialization() {
         mGson =
                 new GsonBuilder()
+                        .registerTypeAdapter(ResolutionOutput.class, new Adapters.ResolutionOutputSerializer())
+                        .registerTypeAdapter(
+                                ResolutionOutput.class, new Adapters.ResolutionOutputDeserializer())
                         .registerTypeAdapter(Resolution.class, new Adapters.ResolutionSerializer())
                         .registerTypeAdapter(
                                 Resolution.class, new Adapters.ResolutionDeserializer())
@@ -31,11 +36,11 @@ public class Serialization {
                         .create();
     }
 
-    public Resolution deserialize(Reader jsonInput) {
-        return mGson.fromJson(jsonInput, Resolution.class);
+    public ResolutionOutput deserialize(Reader jsonInput) {
+        return mGson.fromJson(jsonInput, ResolutionOutput.class);
     }
 
-    public void serialize(Resolution resolution, Appendable writer) {
-        mGson.toJson(resolution, Resolution.class, writer);
+    public void serialize(ResolutionOutput resolution, Appendable writer) {
+        mGson.toJson(resolution, ResolutionOutput.class, writer);
     }
 }

@@ -3,13 +3,17 @@ package net.evendanan.bazel.mvn.merger;
 import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import net.evendanan.bazel.mvn.api.model.Resolution;
-import net.evendanan.bazel.mvn.api.model.TargetType;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 public class DefaultMergerTest {
 
@@ -28,8 +32,8 @@ public class DefaultMergerTest {
                                         && listEquals(dep.dependencies(), dependency.dependencies())
                                         && listEquals(dep.exports(), dependency.exports())
                                         && listEquals(
-                                                dep.runtimeDependencies(),
-                                                dependency.runtimeDependencies()));
+                                        dep.runtimeDependencies(),
+                                        dependency.runtimeDependencies()));
     }
 
     private static <T> boolean listEquals(Collection<T> l1, Collection<T> l2) {
@@ -40,7 +44,6 @@ public class DefaultMergerTest {
     public void setup() {
         mBasicResolution =
                 Resolution.create(
-                        TargetType.auto,
                         MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
                         Arrays.asList(
                                 Dependency.builder()
@@ -105,8 +108,7 @@ public class DefaultMergerTest {
         Assert.assertEquals(
                 mBasicResolutionGraph,
                 GraphUtils.printGraph(
-                        Resolution.create(
-                                TargetType.auto,mBasicResolution.rootDependency(), actual)));
+                        Resolution.create(mBasicResolution.rootDependency(), actual)));
     }
 
     @Test
@@ -129,8 +131,7 @@ public class DefaultMergerTest {
         Assert.assertEquals(
                 mBasicResolutionGraph,
                 GraphUtils.printGraph(
-                        Resolution.create(
-                                TargetType.auto, mBasicResolution.rootDependency(), actual)));
+                        Resolution.create(mBasicResolution.rootDependency(), actual)));
     }
 
     @Test
@@ -155,8 +156,7 @@ public class DefaultMergerTest {
                         + "    net.evendanan:inner1:0.1\n"
                         + "      net.evendanan:inner-inner1:0.1\n",
                 GraphUtils.printGraph(
-                        Resolution.create(
-                                TargetType.auto, mBasicResolution.rootDependency(), actual)));
+                        Resolution.create(mBasicResolution.rootDependency(), actual)));
     }
 
     @Test
@@ -169,15 +169,13 @@ public class DefaultMergerTest {
         Assert.assertEquals(
                 "  net.evendanan:dep1:0.1\n",
                 GraphUtils.printGraph(
-                        Resolution.create(
-                                TargetType.auto, mBasicResolution.rootDependency(), actual)));
+                        Resolution.create(mBasicResolution.rootDependency(), actual)));
     }
 
     @Test
     public void testReturnsUnChangedCopyWhenDependenciesDoNotAffectEachOther() {
         Resolution secondResolution =
                 Resolution.create(
-                        TargetType.auto,
                         MavenCoordinate.create("com.evendanan", "dep1", "0.1", ""),
                         Arrays.asList(
                                 Dependency.builder()
@@ -213,14 +211,13 @@ public class DefaultMergerTest {
                         Assert.assertTrue(
                                 containsDependency(mBasicResolution.allResolvedDependencies(), dep)
                                         || containsDependency(
-                                                secondResolution.allResolvedDependencies(), dep)));
+                                        secondResolution.allResolvedDependencies(), dep)));
     }
 
     @Test
     public void testPinsTopLevelVersion() {
         Resolution secondResolution =
                 Resolution.create(
-                        TargetType.auto,
                         MavenCoordinate.create("com.evendanan", "dep1", "0.1", ""),
                         Arrays.asList(
                                 Dependency.builder()
@@ -266,15 +263,13 @@ public class DefaultMergerTest {
                         + "      net.evendanan:inner-inner1:0.1\n"
                         + "      net.evendanan:inner-inner2:0.1\n",
                 GraphUtils.printGraph(
-                        Resolution.create(
-                                TargetType.auto,secondResolution.rootDependency(), actual)));
+                        Resolution.create(secondResolution.rootDependency(), actual)));
     }
 
     @Test
     public void testUseEmptyUrlDepIfNoOther() {
         Resolution resolution =
                 Resolution.create(
-                        TargetType.auto,
                         MavenCoordinate.create("com.evendanan", "dep1", "0.1", ""),
                         Arrays.asList(
                                 Dependency.builder()
@@ -314,7 +309,6 @@ public class DefaultMergerTest {
     public void testDiscardEmptyUrlDependency() {
         Resolution resolution =
                 Resolution.create(
-                        TargetType.auto,
                         MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
                         Arrays.asList(
                                 Dependency.builder()
@@ -420,8 +414,7 @@ public class DefaultMergerTest {
         Assert.assertEquals(
                 mBasicResolutionGraph,
                 GraphUtils.printGraph(
-                        Resolution.create(
-                                TargetType.auto, mBasicResolution.rootDependency(), actual)));
+                        Resolution.create(mBasicResolution.rootDependency(), actual)));
     }
 
     @Test
@@ -441,15 +434,13 @@ public class DefaultMergerTest {
         Assert.assertEquals(
                 mBasicResolutionGraph,
                 GraphUtils.printGraph(
-                        Resolution.create(
-                                TargetType.auto, mBasicResolution.rootDependency(), actual)));
+                        Resolution.create(mBasicResolution.rootDependency(), actual)));
     }
 
     @Test
     public void testReturnsDeDupDuplicateDependencyDownstreamDependencies() {
         Resolution resolution =
                 Resolution.create(
-                        TargetType.auto,
                         MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
                         Arrays.asList(
                                 Dependency.builder()
@@ -515,8 +506,7 @@ public class DefaultMergerTest {
         Assert.assertEquals(
                 mBasicResolutionGraph,
                 GraphUtils.printGraph(
-                        Resolution.create(
-                                TargetType.auto,mBasicResolution.rootDependency(), actual)));
+                        Resolution.create(mBasicResolution.rootDependency(), actual)));
     }
 
     @Test
@@ -548,7 +538,6 @@ public class DefaultMergerTest {
     public void testClearSrcJar() {
         Resolution resolution =
                 Resolution.create(
-                        TargetType.auto,
                         MavenCoordinate.create("net.evendanan", "dep1", "0.1", ""),
                         Arrays.asList(
                                 Dependency.builder()
