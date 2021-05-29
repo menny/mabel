@@ -10,6 +10,7 @@ This WORKSPACE will provide `mabel_rule` rule and `artifact` macro which will au
 * Transitively resolves all dependencies from a given list of Maven dependencies, and manages version conflicts - ensuring that only one version of each artifact is available in the dependencies graph.
 * Generates repository-rules for all remote artifacts.
 * Generates required Java rule (with transitive dependencies).
+* Allows to mark dependencies as `test_only`.
 * Automatically detects which rule-type to create for a given dependency:
   * `aar_import` for Android artifacts.
   * `java_plugin` + `java_library` for annotation-processors. More about this [here](#annotation-processors).
@@ -165,6 +166,7 @@ Attributes:
 
 * `coordinate`: Maven coordinate in the form of `group-id:artifact-id:version`.
 * `type`: What is the type of target(s) to create for this artifact. Default `auto`. Can be `jar`, `aar`, `kotlin`, `kotlin_aar`, `naive`, `processor`, `auto`. For more details, see [here](resolver/src/main/java/net/evendanan/bazel/mvn/api/model/TargetType.java).
+* `test_only`: Mark this dependency to be used in tests only.
 * `maven_exclude_deps`: List of Maven dependencies which should not be resolved. You can omit the `version` or both `artifact-id:version`.
 * `repositories`: List of URLs that point to Maven servers. The default list includes Maven-Central.
 
