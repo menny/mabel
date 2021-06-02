@@ -442,6 +442,21 @@ java_test(
 )
 
 java_test(
+    name = "test_only_merger_test",
+    size = "small",
+    srcs = [
+        "src/main/javatest/net/evendanan/bazel/mvn/merger/TestOnlyMarkerTest.java",
+    ],
+    test_class = "net.evendanan.bazel.mvn.merger.TestOnlyMarkerTest",
+    deps = [
+        ":api_lib",
+        ":merger",
+        "//resolver/main_deps/junit/junit",
+        "//resolver/main_deps/org/mockito/mockito-core",
+    ],
+)
+
+java_test(
     name = "downloader_tests",
     size = "small",
     srcs = ["src/main/javatest/net/evendanan/bazel/mvn/merger/ArtifactDownloaderTest.java"],
