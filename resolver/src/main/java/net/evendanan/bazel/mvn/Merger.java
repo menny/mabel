@@ -26,6 +26,7 @@ import net.evendanan.bazel.mvn.merger.GraphVerifications;
 import net.evendanan.bazel.mvn.merger.PublicTargetsCategory;
 import net.evendanan.bazel.mvn.merger.SourcesJarLocator;
 import net.evendanan.bazel.mvn.merger.TargetCommenter;
+import net.evendanan.bazel.mvn.merger.TestOnlyMarker;
 import net.evendanan.timing.ProgressTimer;
 
 import java.io.File;
@@ -42,6 +43,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
@@ -154,9 +156,20 @@ public class Merger {
         }
         System.out.println("✓");
 
+        System.out.print("Marking dependencies as test-only...");
+        final Predicate<MavenCoordinate> testOnlyDeps = TestOnlyMarker.mark(
+                resolutions,
+                resolutionOutputs
+                        .stream()
+                        .filter(ResolutionOutput::testOnly)
+                        .map(r -> r.resolution().rootDependency())
+                        .collect(Collectors.toSet()));
+        System.out.println("✓");
+
         driver.writeResults(
                 resolutionOutputs,
                 dependencies,
+                testOnlyDeps,
                 downloader,
                 options,
                 dependencyTools);
@@ -250,16 +263,15 @@ public class Merger {
         final Serialization serialization = new Serialization();
         final List<ResolutionOutput> resolutions =
                 options.artifacts.stream()
-                        .map(
-                                inputFile -> {
-                                    System.out.print('.');
-                                    try (final FileReader reader =
-                                                 new FileReader(inputFile, Charsets.UTF_8)) {
-                                        return serialization.deserialize(reader);
-                                    } catch (Exception e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                })
+                        .map(inputFile -> {
+                            System.out.print('.');
+                            try (final FileReader reader =
+                                         new FileReader(inputFile, Charsets.UTF_8)) {
+                                return serialization.deserialize(reader);
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            }
+                        })
                         .collect(Collectors.toList());
         System.out.println();
 
@@ -276,6 +288,7 @@ public class Merger {
     private void writeResults(
             Collection<ResolutionOutput> resolutions,
             Collection<Dependency> resolvedDependencies,
+            final Predicate<MavenCoordinate> testOnlyDeps,
             final Function<Dependency, URI> downloader,
             final CommandLineOptions options,
             DependencyTools dependencyTools)
@@ -325,9 +338,6 @@ public class Merger {
         final Map<MavenCoordinate, TargetType> targetTypeMap = resolutions
                 .stream()
                 .collect(Collectors.toMap(r -> r.resolution().rootDependency(), ResolutionOutput::targetType));
-        final Map<MavenCoordinate, Boolean> testOnlyMap = resolutions
-                .stream()
-                .collect(Collectors.toMap(r -> r.resolution().rootDependency(), ResolutionOutput::testOnly));
         final Function<Dependency, TargetsBuilder> ruleMapper = buildRuleMapper(
                 downloader,
                 dep -> targetTypeMap.getOrDefault(dep, TargetType.naive),
@@ -344,7 +354,7 @@ public class Merger {
                 resolvedDependencies.stream()
                         .peek(d -> timer.taskDone(dependencyTools.mavenCoordinates(d)))
                         .map(dependency -> Dependency.builder(dependency)
-                                .testOnly(testOnlyMap.getOrDefault(dependency.mavenCoordinate(), false))
+                                .testOnly(testOnlyDeps.test(dependency.mavenCoordinate()))
                                 .build())
                         .map(dependency -> new TargetsToWrite(
                                 fileImporter.buildTargets(dependency, dependencyTools),
