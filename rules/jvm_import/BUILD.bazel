@@ -1,0 +1,35 @@
+load(":stamp_manifest.bzl", "stamp_manifest")
+
+package(
+    default_visibility = ["//visibility:public"],
+)
+
+exports_files([
+    "stamp_manifest.bzl",
+    "jvm_import.bzl",
+])
+
+stamp_manifest(
+    name = "stamp_manifest",
+    build_setting_default = False,
+)
+
+java_library(
+    name = "byte-streams",
+    srcs = ["ByteStreams.java"],
+)
+
+java_binary(
+    name = "AddJarManifestEntry",
+    srcs = ["AddJarManifestEntry.java"],
+    javacopts = [
+        "-source",
+        "8",
+        "-target",
+        "8",
+    ],
+    main_class = "rules.jvm.external.jar.AddJarManifestEntry",
+    deps = [
+        ":byte-streams",
+    ],
+)

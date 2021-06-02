@@ -66,7 +66,7 @@ def {{generate_transitive_dependency_targets}}(
         name = "{{generate_transitive_dependency_targets}}",
         java_library = native.java_library,
         java_plugin = native.java_plugin,
-        java_import = native.java_import,
+        java_import = jvm_import,
         aar_import = _no_op_missing_aar_impl,
         kt_jvm_import = _no_op_missing_kt_jvm_impl,
         kt_jvm_library = _no_op_missing_kt_jvm_lib_impl,

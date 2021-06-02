@@ -25,6 +25,7 @@ public class WritersTests {
     private static final String REPO_RULES_MACRO_OUTPUT_WITH_SOURCES =
             "# Loading a drop-in replacement for native.http_file\n"
                     + "load(\"@bazel_tools//tools/build_defs/repo:http.bzl\", \"http_file\")\n"
+                    + "load(\"@mabel//rules/jvm_import:jvm_import.bzl\", \"jvm_import\")\n"
                     + "\n"
                     + "def macro_name(name = \"macro_name\"):\n"
                     + "    \"\"\"\n"
@@ -51,6 +52,7 @@ public class WritersTests {
     private static final String REPO_RULES_MACRO_OUTPUT =
             "# Loading a drop-in replacement for native.http_file\n"
                     + "load(\"@bazel_tools//tools/build_defs/repo:http.bzl\", \"http_file\")\n"
+                    + "load(\"@mabel//rules/jvm_import:jvm_import.bzl\", \"jvm_import\")\n"
                     + "\n"
                     + "def macro_name(name = \"macro_name\"):\n"
                     + "    \"\"\"\n"
@@ -144,7 +146,7 @@ public class WritersTests {
                     "        name = \"macro_name\",\n" +
                     "        java_library = native.java_library,\n" +
                     "        java_plugin = native.java_plugin,\n" +
-                    "        java_import = native.java_import,\n" +
+                    "        java_import = jvm_import,\n" +
                     "        aar_import = _no_op_missing_aar_impl,\n" +
                     "        kt_jvm_import = _no_op_missing_kt_jvm_impl,\n" +
                     "        kt_jvm_library = _no_op_missing_kt_jvm_lib_impl,\n" +
