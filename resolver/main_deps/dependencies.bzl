@@ -503,7 +503,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -530,7 +529,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -557,7 +555,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -822,7 +819,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -849,7 +845,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -876,7 +871,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -903,7 +897,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -938,15 +931,6 @@ def generate_transitive_dependency_targets(
             ":org_checkerframework__checker_qual",
             ":org_codehaus_mojo__animal_sniffer_annotations",
         ],
-        exports = [
-            ":com_google_code_findbugs__jsr305",
-            ":com_google_errorprone__error_prone_annotations",
-            ":com_google_guava__failureaccess",
-            ":com_google_guava__listenablefuture",
-            ":com_google_j2objc__j2objc_annotations",
-            ":org_checkerframework__checker_qual",
-            ":org_codehaus_mojo__animal_sniffer_annotations",
-        ],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -973,7 +957,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -1000,7 +983,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -1027,7 +1009,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -1054,7 +1035,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -1081,7 +1061,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -1108,7 +1087,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["reciprocal"],
         deps = [":org_hamcrest__hamcrest_core"],
-        exports = [":org_hamcrest__hamcrest_core"],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -1135,7 +1113,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -1162,7 +1139,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -1193,7 +1169,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -1226,11 +1201,6 @@ def generate_transitive_dependency_targets(
             ":commons_logging__commons_logging",
             ":org_apache_httpcomponents__httpcore",
         ],
-        exports = [
-            ":commons_codec__commons_codec",
-            ":commons_logging__commons_logging",
-            ":org_apache_httpcomponents__httpcore",
-        ],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -1257,7 +1227,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -1284,7 +1253,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [":org_codehaus_plexus__plexus_utils"],
-        exports = [":org_codehaus_plexus__plexus_utils"],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -1311,18 +1279,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [
-            ":org_apache_commons__commons_lang3",
-            ":org_apache_maven__maven_model",
-            ":org_apache_maven__maven_model_builder",
-            ":org_apache_maven__maven_repository_metadata",
-            ":org_codehaus_plexus__plexus_component_annotations",
-            ":org_codehaus_plexus__plexus_utils",
-            ":org_eclipse_aether__aether_api",
-            ":org_eclipse_aether__aether_impl",
-            ":org_eclipse_aether__aether_spi",
-            ":org_eclipse_aether__aether_util",
-        ],
-        exports = [
             ":org_apache_commons__commons_lang3",
             ":org_apache_maven__maven_model",
             ":org_apache_maven__maven_model_builder",
@@ -1365,10 +1321,6 @@ def generate_transitive_dependency_targets(
             ":org_apache_commons__commons_lang3",
             ":org_codehaus_plexus__plexus_utils",
         ],
-        exports = [
-            ":org_apache_commons__commons_lang3",
-            ":org_codehaus_plexus__plexus_utils",
-        ],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -1395,7 +1347,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -1424,15 +1375,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [
-            ":javax_inject__javax_inject",
-            ":org_apache_maven__maven_artifact",
-            ":org_apache_maven__maven_builder_support",
-            ":org_apache_maven__maven_model",
-            ":org_codehaus_plexus__plexus_interpolation",
-            ":org_codehaus_plexus__plexus_utils",
-            ":org_eclipse_sisu__org_eclipse_sisu_inject",
-        ],
-        exports = [
             ":javax_inject__javax_inject",
             ":org_apache_maven__maven_artifact",
             ":org_apache_maven__maven_builder_support",
@@ -1471,7 +1413,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [":org_codehaus_plexus__plexus_utils"],
-        exports = [":org_codehaus_plexus__plexus_utils"],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -1500,7 +1441,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [":org_codehaus_plexus__plexus_utils"],
-        exports = [":org_codehaus_plexus__plexus_utils"],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -1527,7 +1467,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -1554,7 +1493,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -1581,7 +1519,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -1610,7 +1547,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -1649,7 +1585,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -1694,7 +1629,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["reciprocal"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -1721,11 +1655,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["reciprocal"],
         deps = [
-            ":org_eclipse_aether__aether_api",
-            ":org_eclipse_aether__aether_spi",
-            ":org_eclipse_aether__aether_util",
-        ],
-        exports = [
             ":org_eclipse_aether__aether_api",
             ":org_eclipse_aether__aether_spi",
             ":org_eclipse_aether__aether_util",
@@ -1758,11 +1687,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["reciprocal"],
         deps = [
-            ":org_eclipse_aether__aether_api",
-            ":org_eclipse_aether__aether_spi",
-            ":org_eclipse_aether__aether_util",
-        ],
-        exports = [
             ":org_eclipse_aether__aether_api",
             ":org_eclipse_aether__aether_spi",
             ":org_eclipse_aether__aether_util",
@@ -1807,7 +1731,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["reciprocal"],
         deps = [":org_eclipse_aether__aether_api"],
-        exports = [":org_eclipse_aether__aether_api"],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -1838,11 +1761,6 @@ def generate_transitive_dependency_targets(
             ":org_eclipse_aether__aether_spi",
             ":org_eclipse_aether__aether_util",
         ],
-        exports = [
-            ":org_eclipse_aether__aether_api",
-            ":org_eclipse_aether__aether_spi",
-            ":org_eclipse_aether__aether_util",
-        ],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -1869,11 +1787,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["reciprocal"],
         deps = [
-            ":org_eclipse_aether__aether_api",
-            ":org_eclipse_aether__aether_spi",
-            ":org_eclipse_aether__aether_util",
-        ],
-        exports = [
             ":org_eclipse_aether__aether_api",
             ":org_eclipse_aether__aether_spi",
             ":org_eclipse_aether__aether_util",
@@ -1910,13 +1823,6 @@ def generate_transitive_dependency_targets(
             ":org_eclipse_aether__aether_util",
             ":org_slf4j__jcl_over_slf4j",
         ],
-        exports = [
-            ":org_apache_httpcomponents__httpclient",
-            ":org_eclipse_aether__aether_api",
-            ":org_eclipse_aether__aether_spi",
-            ":org_eclipse_aether__aether_util",
-            ":org_slf4j__jcl_over_slf4j",
-        ],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -1943,12 +1849,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["reciprocal"],
         deps = [
-            ":org_apache_maven_wagon__wagon_provider_api",
-            ":org_eclipse_aether__aether_api",
-            ":org_eclipse_aether__aether_spi",
-            ":org_eclipse_aether__aether_util",
-        ],
-        exports = [
             ":org_apache_maven_wagon__wagon_provider_api",
             ":org_eclipse_aether__aether_api",
             ":org_eclipse_aether__aether_spi",
@@ -1994,7 +1894,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["reciprocal"],
         deps = [":org_eclipse_aether__aether_api"],
-        exports = [":org_eclipse_aether__aether_api"],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -2021,7 +1920,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["reciprocal"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -2048,7 +1946,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -2079,11 +1976,6 @@ def generate_transitive_dependency_targets(
             ":net_bytebuddy__byte_buddy_agent",
             ":org_objenesis__objenesis",
         ],
-        exports = [
-            ":net_bytebuddy__byte_buddy",
-            ":net_bytebuddy__byte_buddy_agent",
-            ":org_objenesis__objenesis",
-        ],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -2110,7 +2002,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -2137,7 +2028,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [":org_slf4j__slf4j_api"],
-        exports = [":org_slf4j__slf4j_api"],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -2166,7 +2056,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -2193,7 +2082,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [":org_slf4j__slf4j_api"],
-        exports = [":org_slf4j__slf4j_api"],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )

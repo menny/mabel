@@ -48,10 +48,6 @@ public class RuleToDependency {
                                 rule.getDeps().stream()
                                         .map(RuleToDependency::ruleToMavenCoordinate)
                                         .collect(Collectors.toList()))
-                        .exports(
-                                rule.getExportDeps().stream()
-                                        .map(RuleToDependency::ruleToMavenCoordinate)
-                                        .collect(Collectors.toList()))
                         .runtimeDependencies(
                                 rule.getRuntimeDeps().stream()
                                         .map(RuleToDependency::ruleToMavenCoordinate)
@@ -69,7 +65,6 @@ public class RuleToDependency {
         cache.put(rule.mavenCoordinates(), mapped);
 
         rule.getDeps().forEach(dep -> cache.put(dep.mavenCoordinates(), from(dep, cache)));
-        rule.getExportDeps().forEach(dep -> cache.put(dep.mavenCoordinates(), from(dep, cache)));
         rule.getRuntimeDeps().forEach(dep -> cache.put(dep.mavenCoordinates(), from(dep, cache)));
 
         return mapped;

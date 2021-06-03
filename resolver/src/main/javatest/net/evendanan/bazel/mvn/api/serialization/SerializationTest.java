@@ -113,8 +113,6 @@ public class SerializationTest {
             Assert.assertArrayEquals(
                     expectedDep.dependencies().toArray(), actualDep.dependencies().toArray());
             Assert.assertArrayEquals(
-                    expectedDep.exports().toArray(), actualDep.exports().toArray());
-            Assert.assertArrayEquals(
                     expectedDep.runtimeDependencies().toArray(),
                     actualDep.runtimeDependencies().toArray());
         }

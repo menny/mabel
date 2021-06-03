@@ -3,6 +3,7 @@ package net.evendanan.bazel.mvn.merger;
 import net.evendanan.bazel.mvn.api.Target;
 import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,12 +53,6 @@ public class PublicTargetsCategoryTest {
                                                         "c.d.e.1", "f", "3.1.1", "jar"),
                                                 MavenCoordinate.create(
                                                         "c.d.e.2", "f", "3.1.1", "jar")))
-                                .exports(
-                                        Arrays.asList(
-                                                MavenCoordinate.create(
-                                                        "c.d.e.1", "f", "3.1.1", "jar"),
-                                                MavenCoordinate.create(
-                                                        "c.d.e.2", "f", "3.1.1", "jar")))
                                 .build(),
                         Dependency.builder()
                                 .mavenCoordinate(
@@ -67,10 +62,6 @@ public class PublicTargetsCategoryTest {
                                 .mavenCoordinate(
                                         MavenCoordinate.create("a.b.c.2", "d", "1.1.1", "jar"))
                                 .dependencies(
-                                        Collections.singleton(
-                                                MavenCoordinate.create(
-                                                        "a.b.c.2.1", "d", "1.1.1", "jar")))
-                                .exports(
                                         Collections.singleton(
                                                 MavenCoordinate.create(
                                                         "a.b.c.2.1", "d", "1.1.1", "jar")))
@@ -92,10 +83,6 @@ public class PublicTargetsCategoryTest {
                                                         "c.d.e.2.1", "f", "3.1.1", "jar"),
                                                 MavenCoordinate.create(
                                                         "c.d.e.2.2", "f", "3.1.1", "jar")))
-                                .exports(
-                                        Collections.singletonList(
-                                                MavenCoordinate.create(
-                                                        "c.d.e.2.1", "f", "3.1.1", "jar")))
                                 .build(),
                         Dependency.builder()
                                 .mavenCoordinate(
@@ -124,33 +111,33 @@ public class PublicTargetsCategoryTest {
 
     private Target createAliasTarget(Dependency dependency) {
         return new Target(
-                        dependency.mavenCoordinate().toMavenString(),
-                        "alias",
-                        String.format(
-                                Locale.ROOT,
-                                "%s_%s",
-                                dependency.mavenCoordinate().artifactId(),
-                                dependency.mavenCoordinate().groupId()))
+                dependency.mavenCoordinate().toMavenString(),
+                "alias",
+                String.format(
+                        Locale.ROOT,
+                        "%s_%s",
+                        dependency.mavenCoordinate().artifactId(),
+                        dependency.mavenCoordinate().groupId()))
                 .setPublicVisibility();
     }
 
     private Target createSecondaryTarget(Dependency dependency) {
         return new Target(
-                        dependency.mavenCoordinate().toMavenString(),
-                        "second_rule",
-                        String.format(
-                                Locale.ROOT,
-                                "%s_%s_second",
-                                dependency.mavenCoordinate().artifactId(),
-                                dependency.mavenCoordinate().groupId()))
+                dependency.mavenCoordinate().toMavenString(),
+                "second_rule",
+                String.format(
+                        Locale.ROOT,
+                        "%s_%s_second",
+                        dependency.mavenCoordinate().artifactId(),
+                        dependency.mavenCoordinate().groupId()))
                 .setPrivateVisibility();
     }
 
     private Target createMainTarget(Dependency dependency) {
         return new Target(
-                        dependency.mavenCoordinate().toMavenString(),
-                        "main_rule",
-                        dependency.mavenCoordinate().toMavenString().replace(':', '_'))
+                dependency.mavenCoordinate().toMavenString(),
+                "main_rule",
+                dependency.mavenCoordinate().toMavenString().replace(':', '_'))
                 .setPublicVisibility();
     }
 
@@ -199,46 +186,6 @@ public class PublicTargetsCategoryTest {
                 Assert.assertFalse(fixedTarget.isPublic());
             } else {
                 Assert.assertEquals(isRootDependency, fixedTarget.isPublic());
-            }
-        }
-    }
-
-    @Test
-    public void testCategoryRecursiveExports() {
-        Function<Target, Target> underTest =
-                PublicTargetsCategory.create(
-                        PublicTargetsCategory.Type.recursive_exports,
-                        mRootDependenciesAsSet,
-                        mResolvedDependencies);
-
-        final Set<String> rootMavens =
-                mRootDependenciesAsSet.stream()
-                        .map(MavenCoordinate::toMavenString)
-                        .collect(Collectors.toSet());
-
-        Set<String> knownRecursiveExports =
-                Arrays.stream(new String[] {"c.d.e.1:f:3.1.1", "c.d.e.2:f:3.1.1", "c.d.e.2.1:f:3.1.1"})
-                        .collect(Collectors.toSet());
-        // stays the same
-        for (Target target : mAllTargets) {
-            final boolean isPublic = target.isPublic();
-            final boolean isRootDependency = rootMavens.contains(target.getMavenCoordinates());
-            final boolean isKnownExport =
-                    knownRecursiveExports.contains(target.getMavenCoordinates());
-            Target fixedTarget = underTest.apply(target);
-            Assert.assertSame(fixedTarget, target);
-            if (!isPublic) {
-                Assert.assertFalse(fixedTarget.isPublic());
-            } else {
-                Assert.assertEquals(
-                        "Target "
-                                + fixedTarget.getTargetName()
-                                + " should be isRootDependency "
-                                + isRootDependency
-                                + " and isKnownExport "
-                                + isKnownExport,
-                        isRootDependency || isKnownExport,
-                        fixedTarget.isPublic());
             }
         }
     }

@@ -85,7 +85,7 @@ public class CommandLineOptions {
     @Parameter(
             names = {"--public_targets_category"},
             description =
-                    "Set public visibility of resolved targets. Default is 'all'. Can be: 'requested_deps', 'exports', 'recursive_exports', 'all'.",
+                    "Set public visibility of resolved targets. Default is 'all'. Can be: 'requested_deps', 'all'.",
             required = true)
     PublicTargetsCategory.Type public_targets_category = PublicTargetsCategory.Type.all;
 

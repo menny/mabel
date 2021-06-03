@@ -53,7 +53,6 @@ public abstract class PinVersionMergerBase implements GraphMerger {
                                 Dependency.builder(original)
                                         .dependencies(
                                                 convertDependencies.apply(original.dependencies()))
-                                        .exports(convertDependencies.apply(original.exports()))
                                         .runtimeDependencies(
                                                 convertDependencies.apply(
                                                         original.runtimeDependencies()))

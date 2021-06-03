@@ -34,7 +34,6 @@ public class FilterDuplicateDependenciesEntries {
                             original.dependencies().stream()
                                     .distinct()
                                     .collect(Collectors.toList()))
-                    .exports(original.exports().stream().distinct().collect(Collectors.toList()))
                     .runtimeDependencies(
                             original.runtimeDependencies().stream()
                                     .distinct()

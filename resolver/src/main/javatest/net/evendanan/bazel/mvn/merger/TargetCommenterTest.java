@@ -67,12 +67,6 @@ public class TargetCommenterTest {
                                                         "a.b.c.2", "d", "1.1.1", "jar"),
                                                 MavenCoordinate.create(
                                                         "c.d.e.2", "f", "3.1.1", "jar")))
-                                .exports(
-                                        Arrays.asList(
-                                                MavenCoordinate.create(
-                                                        "c.d.e.1", "f", "3.1.1", "jar"),
-                                                MavenCoordinate.create(
-                                                        "c.d.e.2", "f", "3.1.1", "jar")))
                                 .build(),
                         Dependency.builder()
                                 .mavenCoordinate(
@@ -82,10 +76,6 @@ public class TargetCommenterTest {
                                 .mavenCoordinate(
                                         MavenCoordinate.create("a.b.c.2", "d", "1.1.1", "jar"))
                                 .dependencies(
-                                        Collections.singleton(
-                                                MavenCoordinate.create(
-                                                        "a.b.c.2.1", "d", "1.1.1", "jar")))
-                                .exports(
                                         Collections.singleton(
                                                 MavenCoordinate.create(
                                                         "a.b.c.2.1", "d", "1.1.1", "jar")))
@@ -109,10 +99,6 @@ public class TargetCommenterTest {
                                                         "c.d.e.2.2", "f", "3.1.1", "jar"),
                                                 MavenCoordinate.create(
                                                         "c.d.e.2.2", "f", "3.1.1", "jar")))
-                                .exports(
-                                        Collections.singletonList(
-                                                MavenCoordinate.create(
-                                                        "c.d.e.2.1", "f", "3.1.1", "jar")))
                                 .build(),
                         Dependency.builder()
                                 .mavenCoordinate(

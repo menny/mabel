@@ -2,12 +2,14 @@ package net.evendanan.bazel.mvn.merger;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+
 import net.evendanan.bazel.mvn.api.DependencyTools;
 import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import net.evendanan.bazel.mvn.api.model.Resolution;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.*;
@@ -15,7 +17,8 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 public final class GraphVerifications {
-    private GraphVerifications() {}
+    private GraphVerifications() {
+    }
 
     public static void checkNoConflictingVersions(final Collection<Dependency> dependencies) {
         final Function<Dependency, String> dependencyKey =
@@ -79,17 +82,13 @@ public final class GraphVerifications {
 
         Optional<MavenCoordinate> first =
                 dependencies.stream()
-                        .map(
-                                dependency ->
-                                        Triple.of(
-                                                dependency.dependencies().stream(),
-                                                dependency.exports().stream(),
-                                                dependency.runtimeDependencies().stream()))
+                        .map(dependency ->
+                                Pair.of(
+                                        dependency.dependencies().stream(),
+                                        dependency.runtimeDependencies().stream()))
                         .flatMap(
-                                triple ->
-                                        Stream.concat(
-                                                Stream.concat(triple.getLeft(), triple.getMiddle()),
-                                                triple.getRight()))
+                                pair ->
+                                        Stream.concat(pair.getLeft(), pair.getRight()))
                         .filter(mvn -> !resolved.contains(mvn))
                         .findFirst();
 

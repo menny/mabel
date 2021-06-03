@@ -26,9 +26,6 @@ public class ExcludesFilter {
                                         .dependencies(
                                                 filterMavenDependencies(
                                                         dependency.dependencies(), excludes))
-                                        .exports(
-                                                filterMavenDependencies(
-                                                        dependency.exports(), excludes))
                                         .runtimeDependencies(
                                                 filterMavenDependencies(
                                                         dependency.runtimeDependencies(), excludes))

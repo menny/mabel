@@ -30,7 +30,6 @@ public class TargetCommenter {
         resolvedDependencies.forEach(dependency -> {
             final String requesterMavenCoordinate = dependency.mavenCoordinate().toMavenString();
             collectReverseDependencies(requesterMavenCoordinate, dependency.dependencies(), reverseDependenciesSet);
-            collectReverseDependencies(requesterMavenCoordinate, dependency.exports(), reverseDependenciesSet);
             collectReverseDependencies(requesterMavenCoordinate, dependency.runtimeDependencies(), reverseDependenciesSet);
         });
 

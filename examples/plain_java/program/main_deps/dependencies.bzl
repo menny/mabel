@@ -334,7 +334,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["unencumbered"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -360,7 +359,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -384,7 +382,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -408,7 +405,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -432,7 +428,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -460,7 +455,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -484,7 +478,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -514,11 +507,6 @@ def generate_transitive_dependency_targets(
             ":com_google_guava__guava",
             ":javax_inject__javax_inject",
         ],
-        exports = [
-            ":aopalliance__aopalliance",
-            ":com_google_guava__guava",
-            ":javax_inject__javax_inject",
-        ],
         runtime_deps = [],
     )
 
@@ -542,7 +530,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -568,7 +555,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = [],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -596,7 +582,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -624,7 +609,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -650,7 +634,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -676,7 +659,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -702,7 +684,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -734,11 +715,6 @@ def generate_transitive_dependency_targets(
             ":commons_logging__commons_logging",
             ":org_apache_httpcomponents__httpcore",
         ],
-        exports = [
-            ":commons_codec__commons_codec",
-            ":commons_logging__commons_logging",
-            ":org_apache_httpcomponents__httpcore",
-        ],
         runtime_deps = [],
     )
 
@@ -764,7 +740,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -788,7 +763,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -812,7 +786,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -840,7 +813,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -866,14 +838,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [
-            ":commons_codec__commons_codec",
-            ":commons_io__commons_io",
-            ":org_apache_httpcomponents__httpclient",
-            ":org_jboss_logging__jboss_logging",
-            ":org_jboss_resteasy__resteasy_jaxrs",
-            ":org_jboss_spec_javax_ws_rs__jboss_jaxrs_api_2_1_spec",
-        ],
-        exports = [
             ":commons_codec__commons_codec",
             ":commons_io__commons_io",
             ":org_apache_httpcomponents__httpclient",
@@ -917,18 +881,6 @@ def generate_transitive_dependency_targets(
             ":org_jboss_spec_javax_xml_bind__jboss_jaxb_api_2_3_spec",
             ":org_reactivestreams__reactive_streams",
         ],
-        exports = [
-            ":com_github_stephenc_jcip__jcip_annotations",
-            ":com_sun_activation__jakarta_activation",
-            ":commons_io__commons_io",
-            ":jakarta_validation__jakarta_validation_api",
-            ":org_apache_httpcomponents__httpclient",
-            ":org_jboss_logging__jboss_logging",
-            ":org_jboss_spec_javax_annotation__jboss_annotations_api_1_3_spec",
-            ":org_jboss_spec_javax_ws_rs__jboss_jaxrs_api_2_1_spec",
-            ":org_jboss_spec_javax_xml_bind__jboss_jaxb_api_2_3_spec",
-            ":org_reactivestreams__reactive_streams",
-        ],
         runtime_deps = [],
     )
 
@@ -957,7 +909,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["restricted"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -988,7 +939,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["restricted"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -1014,7 +964,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = [],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -1040,6 +989,5 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["unencumbered"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )

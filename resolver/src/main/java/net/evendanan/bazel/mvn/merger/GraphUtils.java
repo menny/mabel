@@ -1,6 +1,7 @@
 package net.evendanan.bazel.mvn.merger;
 
 import com.google.common.base.Preconditions;
+
 import net.evendanan.bazel.mvn.api.DependencyTools;
 import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
@@ -63,10 +64,7 @@ public class GraphUtils {
 
         visitor.accept(dependency, level);
 
-        Stream.concat(
-                        Stream.concat(
-                                dependency.dependencies().stream(), dependency.exports().stream()),
-                        dependency.runtimeDependencies().stream())
+        Stream.concat(dependency.dependencies().stream(), dependency.runtimeDependencies().stream())
                 .distinct()
                 .forEach(child -> DfsTraveller(child, dependencyMap, level + 1, visitor, seenDependencies));
 
@@ -91,11 +89,8 @@ public class GraphUtils {
                             mapper.get(queue.remove()), "Can not find mapping for " + queue.peek());
             visitor.accept(dependency, queue.size());
 
-            Stream.concat(
-                            Stream.concat(
-                                    dependency.dependencies().stream(),
-                                    dependency.exports().stream()),
-                            dependency.runtimeDependencies().stream())
+            Stream.concat(dependency.dependencies().stream(),
+                    dependency.runtimeDependencies().stream())
                     .distinct()
                     .forEach(queue::add);
         }

@@ -263,7 +263,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -289,7 +288,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -539,7 +537,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -565,16 +562,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [
-            ":apt___com_google_dagger__dagger",
-            ":apt___com_google_dagger__dagger_producers",
-            ":apt___com_google_dagger__dagger_spi",
-            ":apt___com_google_googlejavaformat__google_java_format",
-            ":apt___com_google_guava__guava",
-            ":apt___com_squareup__javapoet",
-            ":apt___javax_annotation__jsr250_api",
-            ":apt___javax_inject__javax_inject",
-        ],
-        exports = [
             ":apt___com_google_dagger__dagger",
             ":apt___com_google_dagger__dagger_producers",
             ":apt___com_google_dagger__dagger_spi",
@@ -704,12 +691,6 @@ def generate_transitive_dependency_targets(
             ":apt___javax_inject__javax_inject",
             ":apt___org_checkerframework__checker_compat_qual",
         ],
-        exports = [
-            ":apt___com_google_dagger__dagger",
-            ":apt___com_google_guava__guava",
-            ":apt___javax_inject__javax_inject",
-            ":apt___org_checkerframework__checker_compat_qual",
-        ],
         runtime_deps = [],
     )
 
@@ -735,12 +716,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [
-            ":apt___com_google_dagger__dagger",
-            ":apt___com_google_dagger__dagger_producers",
-            ":apt___com_google_guava__guava",
-            ":apt___javax_inject__javax_inject",
-        ],
-        exports = [
             ":apt___com_google_dagger__dagger",
             ":apt___com_google_dagger__dagger_producers",
             ":apt___com_google_guava__guava",
@@ -777,7 +752,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [":apt___javax_inject__javax_inject"],
-        exports = [":apt___javax_inject__javax_inject"],
         runtime_deps = [],
     )
 
@@ -803,7 +777,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -829,7 +802,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["restricted"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -855,10 +827,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [
-            ":apt___com_google_errorprone__javac_shaded",
-            ":apt___com_google_guava__guava",
-        ],
-        exports = [
             ":apt___com_google_errorprone__javac_shaded",
             ":apt___com_google_guava__guava",
         ],
@@ -899,13 +867,6 @@ def generate_transitive_dependency_targets(
             ":apt___org_checkerframework__checker_compat_qual",
             ":apt___org_codehaus_mojo__animal_sniffer_annotations",
         ],
-        exports = [
-            ":apt___com_google_code_findbugs__jsr305",
-            ":apt___com_google_errorprone__error_prone_annotations",
-            ":apt___com_google_j2objc__j2objc_annotations",
-            ":apt___org_checkerframework__checker_compat_qual",
-            ":apt___org_codehaus_mojo__animal_sniffer_annotations",
-        ],
         runtime_deps = [],
     )
 
@@ -931,7 +892,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -957,7 +917,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -983,7 +942,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -1015,7 +973,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -1049,7 +1006,6 @@ def generate_transitive_dependency_targets(
             "restricted",
         ],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -1075,6 +1031,5 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )

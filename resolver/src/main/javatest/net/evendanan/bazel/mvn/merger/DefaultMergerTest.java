@@ -30,7 +30,6 @@ public class DefaultMergerTest {
                                         && dep.javadocUrl().equals(dependency.javadocUrl())
                                         && listEquals(dep.licenses(), dependency.licenses())
                                         && listEquals(dep.dependencies(), dependency.dependencies())
-                                        && listEquals(dep.exports(), dependency.exports())
                                         && listEquals(
                                         dep.runtimeDependencies(),
                                         dependency.runtimeDependencies()));

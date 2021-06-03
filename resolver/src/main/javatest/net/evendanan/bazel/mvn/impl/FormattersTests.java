@@ -35,10 +35,6 @@ public class FormattersTests {
                     + "         \":safe_mvn__dep1\",\n"
                     + "         \":safe_mvn__dep2\",\n"
                     + "     ],\n"
-                    + "     exports = [\n"
-                    + "         \":safe_mvn__export1\",\n"
-                    + "         \":safe_mvn__export2\",\n"
-                    + "     ],\n"
                     + "     runtime_deps = [\n"
                     + "         \":safe_mvn__runtime1\",\n"
                     + "         \":safe_mvn__runtime2\",\n"
@@ -59,10 +55,6 @@ public class FormattersTests {
                     + "     deps = [\n"
                     + "         \":safe_mvn__dep1\",\n"
                     + "         \":safe_mvn__dep2\",\n"
-                    + "     ],\n"
-                    + "     exports = [\n"
-                    + "         \":safe_mvn__export1\",\n"
-                    + "         \":safe_mvn__export2\",\n"
                     + "     ],\n"
                     + "     runtime_deps = [\n"
                     + "         \":safe_mvn__runtime1\",\n"
@@ -86,10 +78,6 @@ public class FormattersTests {
                     + "         \":safe_mvn__dep1\",\n"
                     + "         \":safe_mvn__dep2\",\n"
                     + "     ],\n"
-                    + "     exports = [\n"
-                    + "         \":safe_mvn__export1\",\n"
-                    + "         \":safe_mvn__export2\",\n"
-                    + "     ],\n"
                     + "     runtime_deps = [\n"
                     + "         \":safe_mvn__runtime1\",\n"
                     + "         \":safe_mvn__runtime2\",\n"
@@ -111,10 +99,6 @@ public class FormattersTests {
                     + "            \":safe_mvn__dep1\",\n"
                     + "            \":safe_mvn__dep2\",\n"
                     + "        ],\n"
-                    + "        exports = [\n"
-                    + "            \":safe_mvn__export1\",\n"
-                    + "            \":safe_mvn__export2\",\n"
-                    + "        ],\n"
                     + "        runtime_deps = [\n"
                     + "            \":safe_mvn__runtime1\",\n"
                     + "            \":safe_mvn__runtime2\",\n"
@@ -135,10 +119,6 @@ public class FormattersTests {
                     + "        deps = [\n"
                     + "            \":safe_mvn__dep1\",\n"
                     + "            \":safe_mvn__dep2\",\n"
-                    + "        ],\n"
-                    + "        exports = [\n"
-                    + "            \":safe_mvn__export1\",\n"
-                    + "            \":safe_mvn__export2\",\n"
                     + "        ],\n"
                     + "        runtime_deps = [\n"
                     + "            \":safe_mvn__runtime1\",\n"
@@ -166,10 +146,6 @@ public class FormattersTests {
                     + "            \":safe_mvn__dep1\",\n"
                     + "            \":safe_mvn__dep2\",\n"
                     + "        ],\n"
-                    + "        exports = [\n"
-                    + "            \":safe_mvn__export1\",\n"
-                    + "            \":safe_mvn__export2\",\n"
-                    + "        ],\n"
                     + "        runtime_deps = [\n"
                     + "            \":safe_mvn__runtime1\",\n"
                     + "            \":safe_mvn__runtime2\",\n"
@@ -192,7 +168,6 @@ public class FormattersTests {
                     + "        ],\n"
                     + "        licenses = [\"notice\"],\n"
                     + "        deps = [],\n"
-                    + "        exports = [],\n"
                     + "        runtime_deps = [],\n"
                     + "    )\n"
                     + "    native.alias(\n"
@@ -212,7 +187,6 @@ public class FormattersTests {
                     + "        ],\n"
                     + "        licenses = [\"notice\"],\n"
                     + "        deps = [],\n"
-                    + "        exports = [],\n"
                     + "        runtime_deps = [],\n"
                     + "    )\n"
                     + "    native.alias(\n"
@@ -232,7 +206,6 @@ public class FormattersTests {
                     + "        ],\n"
                     + "        licenses = [\"notice\"],\n"
                     + "        deps = [],\n"
-                    + "        exports = [],\n"
                     + "        runtime_deps = [],\n"
                     + "    )\n"
                     + "    native.alias(\n"
@@ -253,7 +226,6 @@ public class FormattersTests {
                     + "        ],\n"
                     + "        licenses = [],\n"
                     + "        deps = [],\n"
-                    + "        exports = [],\n"
                     + "        runtime_deps = [],\n"
                     + "    )\n"
                     + "    native.alias(\n"
@@ -273,10 +245,6 @@ public class FormattersTests {
                     + "         \":safe_mvn__runtime1\",\n"
                     + "         \":safe_mvn__runtime2\",\n"
                     + "     ],\n"
-                    + "     exports = [\n"
-                    + "         \":safe_mvn__export1\",\n"
-                    + "         \":safe_mvn__export2\",\n"
-                    + "     ],\n"
                     + " )\n"
                     + " native.alias(\n"
                     + "     name = \"aar__lib\",\n"
@@ -293,10 +261,6 @@ public class FormattersTests {
                     + "        deps = [\n"
                     + "            \":safe_mvn__dep1\",\n"
                     + "            \":safe_mvn__dep2\",\n"
-                    + "        ],\n"
-                    + "        exports = [\n"
-                    + "            \":safe_mvn__export1\",\n"
-                    + "            \":safe_mvn__export2\",\n"
                     + "        ],\n"
                     + "        runtime_deps = [\n"
                     + "            \":safe_mvn__runtime1\",\n"
@@ -417,8 +381,8 @@ public class FormattersTests {
             "        tags = [\"maven_coordinates=kotlin:lib:\"],\n" +
             "        exports = [\n" +
             "            \":kotlin__lib___kt_jvm_import\",\n" +
-            "            \":safe_mvn__export1\",\n" +
-            "            \":safe_mvn__export2\",\n" +
+            "            \":safe_mvn__dep1\",\n" +
+            "            \":safe_mvn__dep2\",\n" +
             "        ],\n" +
             "        runtime_deps = [\n" +
             "            \":safe_mvn__runtime1\",\n" +
@@ -434,10 +398,6 @@ public class FormattersTests {
             "    kt_jvm_import(\n" +
             "        name = \"kotlin__lib_____kt_library\",\n" +
             "        tags = [\"maven_coordinates=kotlin:lib:\"],\n" +
-            "        exports = [\n" +
-            "            \":safe_mvn__export1\",\n" +
-            "            \":safe_mvn__export2\",\n" +
-            "        ],\n" +
             "        runtime_deps = [\n" +
             "            \":safe_mvn__runtime1\",\n" +
             "            \":safe_mvn__runtime2\",\n" +
@@ -454,11 +414,6 @@ public class FormattersTests {
             "        deps = [\n" +
             "            \":safe_mvn__dep1\",\n" +
             "            \":safe_mvn__dep2\",\n" +
-            "        ],\n" +
-            "        exports = [\n" +
-            "            \":kotlin__lib_____kt_library\",\n" +
-            "            \":safe_mvn__export1\",\n" +
-            "            \":safe_mvn__export2\",\n" +
             "        ],\n" +
             "        runtime_deps = [\n" +
             "            \":safe_mvn__runtime1\",\n" +

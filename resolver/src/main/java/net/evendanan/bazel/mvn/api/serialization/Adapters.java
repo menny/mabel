@@ -122,7 +122,6 @@ class Adapters {
                     .mavenCoordinate(
                             context.deserialize(jsonObject.get("c"), MavenCoordinate.class))
                     .dependencies(context.deserialize(jsonObject.get("d"), MAVEN_LIST_TYPE))
-                    .exports(context.deserialize(jsonObject.get("e"), MAVEN_LIST_TYPE))
                     .runtimeDependencies(context.deserialize(jsonObject.get("r"), MAVEN_LIST_TYPE))
                     .licenses(context.deserialize(jsonObject.get("l"), LICENSES_LIST_TYPE))
                     .build();
@@ -146,7 +145,6 @@ class Adapters {
                     "c", context.serialize(dependency.mavenCoordinate(), MavenCoordinate.class));
 
             jsonObject.add("d", context.serialize(dependency.dependencies(), MAVEN_LIST_TYPE));
-            jsonObject.add("e", context.serialize(dependency.exports(), MAVEN_LIST_TYPE));
             jsonObject.add(
                     "r", context.serialize(dependency.runtimeDependencies(), MAVEN_LIST_TYPE));
 

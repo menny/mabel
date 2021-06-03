@@ -78,9 +78,6 @@ public class TargetsBuilders {
                                 "deps",
                                 convertRulesToStrings(dependency.dependencies(), dependencyTools))
                         .addList(
-                                "exports",
-                                convertRulesToStrings(dependency.exports(), dependencyTools))
-                        .addList(
                                 "runtime_deps",
                                 convertRulesToStrings(
                                         dependency.runtimeDependencies(), dependencyTools));
@@ -315,7 +312,7 @@ public class TargetsBuilders {
                                                     dependencyTools.mavenCoordinates(dependency))))
                             .addList(
                                     "exports",
-                                    addItem(convertRulesToStrings(dependency.exports(), dependencyTools), ":" + ktTargetImportName))
+                                    addItem(convertRulesToStrings(dependency.dependencies(), dependencyTools), ":" + ktTargetImportName))
                             .addList(
                                     "runtime_deps",
                                     convertRulesToStrings(
@@ -357,8 +354,7 @@ public class TargetsBuilders {
                                     "deps",
                                     convertRulesToStrings(dependency.dependencies(), dependencyTools))
                             .addList(
-                                    "exports",
-                                    addItem(convertRulesToStrings(dependency.exports(), dependencyTools), ":" + getKotlinJvmRepositoryRuleName(dependency, dependencyTools)))
+                                    "exports", Collections.singleton( ":" + getKotlinJvmRepositoryRuleName(dependency, dependencyTools)))
                             .addList(
                                     "tags",
                                     Collections.singletonList(
@@ -521,10 +517,7 @@ public class TargetsBuilders {
                                                     Locale.ROOT,
                                                     "maven_coordinates=%s",
                                                     dependencyTools.mavenCoordinates(dependency))))
-                            .addList("deps", convertRulesToStrings(deps, dependencyTools))
-                            .addList(
-                                    "exports",
-                                    convertRulesToStrings(dependency.exports(), dependencyTools)));
+                            .addList("deps", convertRulesToStrings(deps, dependencyTools)));
 
             targets.add(
                     addAlias(

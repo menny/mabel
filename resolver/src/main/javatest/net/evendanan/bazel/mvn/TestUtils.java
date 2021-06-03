@@ -26,7 +26,6 @@ public class TestUtils {
                                 depsPart.length > 2 ? depsPart[2] : "",
                                 url.substring(url.length() - 3)))
                 .dependencies(generateDeps(depsLabels))
-                .exports(generateDeps(exportsLabels))
                 .runtimeDependencies(generateDeps(runtimeLabels))
                 .url(url)
                 .sourcesUrl(sourcesUrl)

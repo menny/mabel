@@ -204,7 +204,6 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )
 
@@ -309,6 +308,5 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [],
-        exports = [],
         runtime_deps = [],
     )

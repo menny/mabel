@@ -11,7 +11,6 @@ public abstract class Dependency {
         return new AutoValue_Dependency.Builder()
                 .testOnly(false)
                 .dependencies(Collections.emptyList())
-                .exports(Collections.emptyList())
                 .runtimeDependencies(Collections.emptyList())
                 .url("")
                 .sourcesUrl("")
@@ -24,7 +23,6 @@ public abstract class Dependency {
                 .mavenCoordinate(original.mavenCoordinate())
                 .testOnly(original.testOnly())
                 .dependencies(original.dependencies())
-                .exports(original.exports())
                 .runtimeDependencies(original.runtimeDependencies())
                 .url(original.url())
                 .sourcesUrl(original.sourcesUrl())
@@ -37,8 +35,6 @@ public abstract class Dependency {
     public abstract boolean testOnly();
 
     public abstract Collection<MavenCoordinate> dependencies();
-
-    public abstract Collection<MavenCoordinate> exports();
 
     public abstract Collection<MavenCoordinate> runtimeDependencies();
 
@@ -57,8 +53,6 @@ public abstract class Dependency {
         public abstract Builder testOnly(boolean testOnly);
 
         public abstract Builder dependencies(Collection<MavenCoordinate> dependencies);
-
-        public abstract Builder exports(Collection<MavenCoordinate> exports);
 
         public abstract Builder runtimeDependencies(
                 Collection<MavenCoordinate> runtimeDependencies);
