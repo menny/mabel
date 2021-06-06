@@ -30,9 +30,9 @@ go_register_toolchains()
 
 http_archive(
     name = "com_google_protobuf",
-    sha256 = "e8c7601439dbd4489fe5069c33d374804990a56c2f710e00227ee5d8fd650e67",
-    strip_prefix = "protobuf-3.11.2",
-    url = "https://github.com/protocolbuffers/protobuf/archive/v3.11.2.tar.gz",
+    sha256 = "36f81e03a0702f8f935fffd5a486dac1c0fc6d4bae1cd02c7a32448ad6e63bcb",
+    strip_prefix = "protobuf-3.17.2",
+    url = "https://github.com/protocolbuffers/protobuf/archive/v3.17.2.tar.gz",
 )
 
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
@@ -41,7 +41,7 @@ protobuf_deps()
 
 http_archive(
     name = "com_github_bazelbuild_buildtools",
-    sha256 = "f11fc80da0681a6d64632a850346ed2d4e5cbb0908306d9a2a2915f707048a10",
-    strip_prefix = "buildtools-3.3.0",
-    url = "https://github.com/bazelbuild/buildtools/archive/3.3.0.tar.gz",
+    sha256 = "c28eef4d30ba1a195c6837acf6c75a4034981f5b4002dda3c5aa6e48ce023cf1",
+    strip_prefix = "buildtools-4.0.1",
+    url = "https://github.com/bazelbuild/buildtools/archive/4.0.1.tar.gz",
 )

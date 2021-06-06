@@ -1284,7 +1284,7 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [":org_codehaus_plexus__plexus_utils"],
-        exports = [":org_codehaus_plexus__plexus_utils"],
+        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )
@@ -2026,6 +2026,78 @@ def generate_transitive_dependency_targets(
         visibility = ["//visibility:private"],
     )
 
+    # from org.eclipse.sisu:org.eclipse.sisu.inject:0.3.4
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
+    java_plugin(
+        name = "org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4___generates_api___processor_class_0",
+        processor_class = "org.eclipse.sisu.space.SisuIndexAPT6",
+        generates_api = 1,
+        testonly = False,
+        deps = [":org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4"],
+        visibility = ["//visibility:private"],
+    )
+
+    # from org.eclipse.sisu:org.eclipse.sisu.inject:0.3.4
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
+    java_library(
+        name = "org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4___generates_api___processor_class_all",
+        testonly = False,
+        exported_plugins = [":org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4___generates_api___processor_class_0"],
+        visibility = ["//visibility:private"],
+    )
+
+    # from org.eclipse.sisu:org.eclipse.sisu.inject:0.3.4
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
+    java_plugin(
+        name = "org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4___processor_class_0",
+        processor_class = "org.eclipse.sisu.space.SisuIndexAPT6",
+        generates_api = 0,
+        testonly = False,
+        deps = [":org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4"],
+        visibility = ["//visibility:private"],
+    )
+
+    # from org.eclipse.sisu:org.eclipse.sisu.inject:0.3.4
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
+    java_library(
+        name = "org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4___processor_class_all",
+        testonly = False,
+        exported_plugins = [":org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4___processor_class_0"],
+        visibility = ["//visibility:private"],
+    )
+
+    # from org.eclipse.sisu:org.eclipse.sisu.inject:0.3.4
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
+    native.alias(
+        name = "org_eclipse_sisu__org_eclipse_sisu_inject___generates_api___processor_class_0",
+        actual = ":org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4___generates_api___processor_class_0",
+        visibility = ["//visibility:private"],
+    )
+
+    # from org.eclipse.sisu:org.eclipse.sisu.inject:0.3.4
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
+    native.alias(
+        name = "org_eclipse_sisu__org_eclipse_sisu_inject___generates_api___processor_class_all",
+        actual = ":org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4___generates_api___processor_class_all",
+        visibility = ["//visibility:private"],
+    )
+
+    # from org.eclipse.sisu:org.eclipse.sisu.inject:0.3.4
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
+    native.alias(
+        name = "org_eclipse_sisu__org_eclipse_sisu_inject___processor_class_0",
+        actual = ":org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4___processor_class_0",
+        visibility = ["//visibility:private"],
+    )
+
+    # from org.eclipse.sisu:org.eclipse.sisu.inject:0.3.4
+    # This is a dependency of 'org.apache.maven:maven-model-builder:3.8.1'.
+    native.alias(
+        name = "org_eclipse_sisu__org_eclipse_sisu_inject___processor_class_all",
+        actual = ":org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4___processor_class_all",
+        visibility = ["//visibility:private"],
+    )
+
     # from org.hamcrest:hamcrest-core:1.3
     # This is a dependency of 'junit:junit:4.12'.
     native.alias(
@@ -2137,7 +2209,7 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [":org_slf4j__slf4j_api"],
-        exports = [":org_slf4j__slf4j_api"],
+        exports = [],
         runtime_deps = [],
         visibility = ["//visibility:private"],
     )

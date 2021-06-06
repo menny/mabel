@@ -48,10 +48,6 @@ public class RuleToDependency {
                                 rule.getDeps().stream()
                                         .map(RuleToDependency::ruleToMavenCoordinate)
                                         .collect(Collectors.toList()))
-                        .exports(
-                                rule.getExportDeps().stream()
-                                        .map(RuleToDependency::ruleToMavenCoordinate)
-                                        .collect(Collectors.toList()))
                         .runtimeDependencies(
                                 rule.getRuntimeDeps().stream()
                                         .map(RuleToDependency::ruleToMavenCoordinate)

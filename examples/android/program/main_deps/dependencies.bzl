@@ -343,12 +343,7 @@ def generate_transitive_dependency_targets(
             ":androidx_lifecycle__lifecycle_runtime",
             ":androidx_lifecycle__lifecycle_viewmodel",
         ],
-        exports = [
-            ":androidx_annotation__annotation",
-            ":androidx_core__core",
-            ":androidx_lifecycle__lifecycle_runtime",
-            ":androidx_lifecycle__lifecycle_viewmodel",
-        ],
+        exports = [],
     )
 
     # from androidx.annotation:annotation:1.0.0
@@ -496,7 +491,7 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [":androidx_annotation__annotation"],
-        exports = [":androidx_annotation__annotation"],
+        exports = [],
         runtime_deps = [],
     )
 
@@ -521,10 +516,7 @@ def generate_transitive_dependency_targets(
             ":androidx_annotation__annotation",
             ":androidx_arch_core__core_common",
         ],
-        exports = [
-            ":androidx_annotation__annotation",
-            ":androidx_arch_core__core_common",
-        ],
+        exports = [],
     )
 
     # from androidx.asynclayoutinflater:asynclayoutinflater:1.0.0
@@ -546,10 +538,7 @@ def generate_transitive_dependency_targets(
             ":androidx_annotation__annotation",
             ":androidx_core__core",
         ],
-        exports = [
-            ":androidx_annotation__annotation",
-            ":androidx_core__core",
-        ],
+        exports = [],
     )
 
     # from androidx.collection:collection:1.0.0
@@ -578,7 +567,7 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [":androidx_annotation__annotation"],
-        exports = [":androidx_annotation__annotation"],
+        exports = [],
         runtime_deps = [],
     )
 
@@ -602,11 +591,7 @@ def generate_transitive_dependency_targets(
             ":androidx_core__core",
             ":androidx_customview__customview",
         ],
-        exports = [
-            ":androidx_annotation__annotation",
-            ":androidx_core__core",
-            ":androidx_customview__customview",
-        ],
+        exports = [],
     )
 
     # from androidx.core:core:1.1.0-alpha01
@@ -656,12 +641,7 @@ def generate_transitive_dependency_targets(
             ":androidx_lifecycle__lifecycle_runtime",
             ":androidx_versionedparcelable__versionedparcelable",
         ],
-        exports = [
-            ":androidx_annotation__annotation",
-            ":androidx_collection__collection",
-            ":androidx_lifecycle__lifecycle_runtime",
-            ":androidx_versionedparcelable__versionedparcelable",
-        ],
+        exports = [],
     )
 
     # from androidx.cursoradapter:cursoradapter:1.0.0
@@ -682,7 +662,7 @@ def generate_transitive_dependency_targets(
         testonly = False,
         tags = ["maven_coordinates=androidx.cursoradapter:cursoradapter:1.0.0"],
         deps = [":androidx_annotation__annotation"],
-        exports = [":androidx_annotation__annotation"],
+        exports = [],
     )
 
     # from androidx.customview:customview:1.0.0
@@ -712,10 +692,7 @@ def generate_transitive_dependency_targets(
             ":androidx_annotation__annotation",
             ":androidx_core__core",
         ],
-        exports = [
-            ":androidx_annotation__annotation",
-            ":androidx_core__core",
-        ],
+        exports = [],
     )
 
     # from androidx.documentfile:documentfile:1.0.0
@@ -734,7 +711,7 @@ def generate_transitive_dependency_targets(
         testonly = False,
         tags = ["maven_coordinates=androidx.documentfile:documentfile:1.0.0"],
         deps = [":androidx_annotation__annotation"],
-        exports = [":androidx_annotation__annotation"],
+        exports = [],
     )
 
     # from androidx.drawerlayout:drawerlayout:1.0.0
@@ -757,11 +734,7 @@ def generate_transitive_dependency_targets(
             ":androidx_core__core",
             ":androidx_customview__customview",
         ],
-        exports = [
-            ":androidx_annotation__annotation",
-            ":androidx_core__core",
-            ":androidx_customview__customview",
-        ],
+        exports = [],
     )
 
     # from androidx.fragment:fragment:1.1.0-alpha02
@@ -817,7 +790,7 @@ def generate_transitive_dependency_targets(
         testonly = False,
         tags = ["maven_coordinates=androidx.interpolator:interpolator:1.0.0"],
         deps = [":androidx_annotation__annotation"],
-        exports = [":androidx_annotation__annotation"],
+        exports = [],
     )
 
     # from androidx.legacy:legacy-support-core-ui:1.0.0
@@ -849,20 +822,7 @@ def generate_transitive_dependency_targets(
             ":androidx_swiperefreshlayout__swiperefreshlayout",
             ":androidx_viewpager__viewpager",
         ],
-        exports = [
-            ":androidx_annotation__annotation",
-            ":androidx_asynclayoutinflater__asynclayoutinflater",
-            ":androidx_coordinatorlayout__coordinatorlayout",
-            ":androidx_core__core",
-            ":androidx_cursoradapter__cursoradapter",
-            ":androidx_customview__customview",
-            ":androidx_drawerlayout__drawerlayout",
-            ":androidx_interpolator__interpolator",
-            ":androidx_legacy__legacy_support_core_utils",
-            ":androidx_slidingpanelayout__slidingpanelayout",
-            ":androidx_swiperefreshlayout__swiperefreshlayout",
-            ":androidx_viewpager__viewpager",
-        ],
+        exports = [],
     )
 
     # from androidx.legacy:legacy-support-core-utils:1.0.0
@@ -890,14 +850,7 @@ def generate_transitive_dependency_targets(
             ":androidx_localbroadcastmanager__localbroadcastmanager",
             ":androidx_print__print",
         ],
-        exports = [
-            ":androidx_annotation__annotation",
-            ":androidx_core__core",
-            ":androidx_documentfile__documentfile",
-            ":androidx_loader__loader",
-            ":androidx_localbroadcastmanager__localbroadcastmanager",
-            ":androidx_print__print",
-        ],
+        exports = [],
     )
 
     # from androidx.lifecycle:lifecycle-common:2.0.0
@@ -924,7 +877,7 @@ def generate_transitive_dependency_targets(
         ],
         licenses = ["notice"],
         deps = [":androidx_annotation__annotation"],
-        exports = [":androidx_annotation__annotation"],
+        exports = [],
         runtime_deps = [],
     )
 
@@ -948,11 +901,7 @@ def generate_transitive_dependency_targets(
             ":androidx_arch_core__core_runtime",
             ":androidx_lifecycle__lifecycle_common",
         ],
-        exports = [
-            ":androidx_arch_core__core_common",
-            ":androidx_arch_core__core_runtime",
-            ":androidx_lifecycle__lifecycle_common",
-        ],
+        exports = [],
     )
 
     # from androidx.lifecycle:lifecycle-livedata:2.0.0
@@ -975,11 +924,7 @@ def generate_transitive_dependency_targets(
             ":androidx_arch_core__core_runtime",
             ":androidx_lifecycle__lifecycle_livedata_core",
         ],
-        exports = [
-            ":androidx_arch_core__core_common",
-            ":androidx_arch_core__core_runtime",
-            ":androidx_lifecycle__lifecycle_livedata_core",
-        ],
+        exports = [],
     )
 
     # from androidx.lifecycle:lifecycle-runtime:2.0.0
@@ -1004,11 +949,7 @@ def generate_transitive_dependency_targets(
             ":androidx_arch_core__core_common",
             ":androidx_lifecycle__lifecycle_common",
         ],
-        exports = [
-            ":androidx_annotation__annotation",
-            ":androidx_arch_core__core_common",
-            ":androidx_lifecycle__lifecycle_common",
-        ],
+        exports = [],
     )
 
     # from androidx.lifecycle:lifecycle-viewmodel:2.0.0
@@ -1031,7 +972,7 @@ def generate_transitive_dependency_targets(
         testonly = False,
         tags = ["maven_coordinates=androidx.lifecycle:lifecycle-viewmodel:2.0.0"],
         deps = [":androidx_annotation__annotation"],
-        exports = [":androidx_annotation__annotation"],
+        exports = [],
     )
 
     # from androidx.loader:loader:1.0.0
@@ -1057,12 +998,7 @@ def generate_transitive_dependency_targets(
             ":androidx_lifecycle__lifecycle_livedata",
             ":androidx_lifecycle__lifecycle_viewmodel",
         ],
-        exports = [
-            ":androidx_annotation__annotation",
-            ":androidx_core__core",
-            ":androidx_lifecycle__lifecycle_livedata",
-            ":androidx_lifecycle__lifecycle_viewmodel",
-        ],
+        exports = [],
     )
 
     # from androidx.localbroadcastmanager:localbroadcastmanager:1.0.0
@@ -1081,7 +1017,7 @@ def generate_transitive_dependency_targets(
         testonly = False,
         tags = ["maven_coordinates=androidx.localbroadcastmanager:localbroadcastmanager:1.0.0"],
         deps = [":androidx_annotation__annotation"],
-        exports = [":androidx_annotation__annotation"],
+        exports = [],
     )
 
     # from androidx.print:print:1.0.0
@@ -1100,7 +1036,7 @@ def generate_transitive_dependency_targets(
         testonly = False,
         tags = ["maven_coordinates=androidx.print:print:1.0.0"],
         deps = [":androidx_annotation__annotation"],
-        exports = [":androidx_annotation__annotation"],
+        exports = [],
     )
 
     # from androidx.slidingpanelayout:slidingpanelayout:1.0.0
@@ -1123,11 +1059,7 @@ def generate_transitive_dependency_targets(
             ":androidx_core__core",
             ":androidx_customview__customview",
         ],
-        exports = [
-            ":androidx_annotation__annotation",
-            ":androidx_core__core",
-            ":androidx_customview__customview",
-        ],
+        exports = [],
     )
 
     # from androidx.swiperefreshlayout:swiperefreshlayout:1.0.0
@@ -1150,11 +1082,7 @@ def generate_transitive_dependency_targets(
             ":androidx_core__core",
             ":androidx_interpolator__interpolator",
         ],
-        exports = [
-            ":androidx_annotation__annotation",
-            ":androidx_core__core",
-            ":androidx_interpolator__interpolator",
-        ],
+        exports = [],
     )
 
     # from androidx.vectordrawable:vectordrawable-animated:1.0.0
@@ -1176,10 +1104,7 @@ def generate_transitive_dependency_targets(
             ":androidx_legacy__legacy_support_core_ui",
             ":androidx_vectordrawable__vectordrawable",
         ],
-        exports = [
-            ":androidx_legacy__legacy_support_core_ui",
-            ":androidx_vectordrawable__vectordrawable",
-        ],
+        exports = [],
     )
 
     # from androidx.vectordrawable:vectordrawable:1.0.1
@@ -1203,10 +1128,7 @@ def generate_transitive_dependency_targets(
             ":androidx_annotation__annotation",
             ":androidx_core__core",
         ],
-        exports = [
-            ":androidx_annotation__annotation",
-            ":androidx_core__core",
-        ],
+        exports = [],
     )
 
     # from androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01
@@ -1228,10 +1150,7 @@ def generate_transitive_dependency_targets(
             ":androidx_annotation__annotation",
             ":androidx_collection__collection",
         ],
-        exports = [
-            ":androidx_annotation__annotation",
-            ":androidx_collection__collection",
-        ],
+        exports = [],
     )
 
     # from androidx.viewpager:viewpager:1.0.0
@@ -1256,9 +1175,5 @@ def generate_transitive_dependency_targets(
             ":androidx_core__core",
             ":androidx_customview__customview",
         ],
-        exports = [
-            ":androidx_annotation__annotation",
-            ":androidx_core__core",
-            ":androidx_customview__customview",
-        ],
+        exports = [],
     )

@@ -84,9 +84,10 @@ public class Resolver {
         @Parameter(
                 names = {"--type"},
                 splitter = NoSplitter.class,
-                description = "Type of artifact: jar, aar, naive, auto, processor.",
+                description = "Type of artifact: inherit, jar, aar, naive, auto, processor.",
                 required = true)
         TargetType type;
+
 
         @Parameter(
                 names = {"--test_only"},
