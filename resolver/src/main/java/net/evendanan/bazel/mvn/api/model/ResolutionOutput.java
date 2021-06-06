@@ -8,12 +8,15 @@ import java.util.Collection;
 public abstract class ResolutionOutput {
     public static ResolutionOutput create(
             TargetType type,
+            ExportsGenerationType exportsGenerationType,
             boolean testOnly,
             Resolution resolution) {
-        return new AutoValue_ResolutionOutput(type, testOnly, resolution);
+        return new AutoValue_ResolutionOutput(type, exportsGenerationType, testOnly, resolution);
     }
 
     public abstract TargetType targetType();
+
+    public abstract ExportsGenerationType exportsGenerationType();
 
     public abstract boolean testOnly();
 

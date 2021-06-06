@@ -11,6 +11,7 @@ def _impl_resolver(ctx):
                 [
                     "--artifact={}".format(ctx.attr.coordinate),
                     "--type={}".format(ctx.attr.type),
+                    "--exports_generation={}".format(ctx.attr.exports_generation_type),
                     "--output_file={}".format(output_file.path),
                     "--debug_logs={}".format(ctx.attr.debug_logs).lower(),
                     "--test_only={}".format(ctx.attr.test_only).lower(),
@@ -34,6 +35,7 @@ _mabel_maven_dependency_graph_resolving_rule = rule(
     attrs = {
         "coordinate": attr.string(mandatory = True, doc = "Maven coordinate in the form of `group-id:artifact-id:version`."),
         "debug_logs": attr.bool(default = False, doc = "If set to True, will print out debug logs while resolving dependencies. Default is False.", mandatory = False),
+        "exports_generation_type": attr.string(mandatory = True, default = "inherit", values = ["inherit", "all", "requested_deps", "none"], doc = "For which targets should we generate exports attribute."),
         "maven_exclude_deps": attr.string_list(allow_empty = True, default = [], doc = "List of Maven dependencies which should not be resolved. You can omit the `version` or both `artifact-id:version`."),
         "repositories": attr.string_list(allow_empty = False, default = DEFAULT_MAVEN_SERVERS, doc = "List of URLs that point to Maven servers. Defaut is Maven-Central."),
         "test_only": attr.bool(default = False, doc = "Should this artifact be marked as test_only. Default is False.", mandatory = False),
@@ -45,7 +47,7 @@ _mabel_maven_dependency_graph_resolving_rule = rule(
 )
 
 # buildifier: disable=unnamed-macro
-def artifact(coordinate, maven_exclude_deps = [], repositories = DEFAULT_MAVEN_SERVERS, debug_logs = False, type = "inherit", exports_generation = "inherit", test_only = False):
+def artifact(coordinate, maven_exclude_deps = [], repositories = DEFAULT_MAVEN_SERVERS, debug_logs = False, type = "inherit", exports_generation_type = "inherit", test_only = False):
     rule_name = "_mabel_maven_dependency_graph_resolving_{}".format(coordinate.replace(":", "__").replace("-", "_").replace(".", "_"))
 
     # different targets may use the same artifact
@@ -57,6 +59,7 @@ def artifact(coordinate, maven_exclude_deps = [], repositories = DEFAULT_MAVEN_S
             maven_exclude_deps = maven_exclude_deps,
             repositories = repositories,
             test_only = test_only,
+            exports_generation_type = exports_generation_type,
             debug_logs = debug_logs,
             visibility = ["//visibility:private"],
         )

@@ -110,7 +110,7 @@ public class CommandLineOptions {
     @Parameter(
             names = {"--exports_generation"},
             splitter = NoSplitter.class,
-            description = "Where to generate exports: inherit, all, requested_deps, none.",
+            description = "Where to generate exports: all, requested_deps, none. Note: Can not be inherit for this call.",
             required = true)
     ExportsGenerationType exports_generation;
 
