@@ -43,6 +43,7 @@ class Adapters {
 
             return ResolutionOutput.create(
                     context.deserialize(jsonObject.get("t"), TargetType.class),
+                    context.deserialize(jsonObject.get("e"), ExportsGenerationType.class),
                     context.deserialize(jsonObject.get("to"), boolean.class),
                     context.deserialize(jsonObject.get("r"), Resolution.class));
         }
@@ -59,6 +60,8 @@ class Adapters {
 
             jsonObject.add(
                     "t", context.serialize(resolution.targetType(), TargetType.class));
+            jsonObject.add(
+                    "e", context.serialize(resolution.exportsGenerationType(), ExportsGenerationType.class));
             jsonObject.add(
                     "to", context.serialize(resolution.testOnly(), boolean.class));
             jsonObject.add(

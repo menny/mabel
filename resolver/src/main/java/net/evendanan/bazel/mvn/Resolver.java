@@ -9,6 +9,7 @@ import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
 import com.google.devtools.bazel.workspace.maven.adapter.MigrationToolingGraphResolver;
 import net.evendanan.bazel.mvn.api.GraphResolver;
+import net.evendanan.bazel.mvn.api.model.ExportsGenerationType;
 import net.evendanan.bazel.mvn.api.model.Resolution;
 import net.evendanan.bazel.mvn.api.model.ResolutionOutput;
 import net.evendanan.bazel.mvn.api.model.TargetType;
@@ -67,7 +68,7 @@ public class Resolver {
         }
 
         try (final FileWriter writer = new FileWriter(outputFile, Charsets.UTF_8, false)) {
-            new Serialization().serialize(ResolutionOutput.create(options.type, options.test_only, resolution), writer);
+            new Serialization().serialize(ResolutionOutput.create(options.type, options.exportsGenerationType, options.test_only, resolution), writer);
         }
     }
 
@@ -88,6 +89,12 @@ public class Resolver {
                 required = true)
         TargetType type;
 
+        @Parameter(
+                names = {"--exports_generation"},
+                splitter = NoSplitter.class,
+                description = "Type of exports generation: inherit, all, requested_deps, none.",
+                required = true)
+        ExportsGenerationType exportsGenerationType;
 
         @Parameter(
                 names = {"--test_only"},

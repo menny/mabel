@@ -10,6 +10,7 @@ import net.evendanan.bazel.mvn.api.RuleWriter;
 import net.evendanan.bazel.mvn.api.Target;
 import net.evendanan.bazel.mvn.api.TargetsBuilder;
 import net.evendanan.bazel.mvn.api.model.Dependency;
+import net.evendanan.bazel.mvn.api.model.ExportsGenerationType;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import net.evendanan.bazel.mvn.api.model.Resolution;
 import net.evendanan.bazel.mvn.api.model.ResolutionOutput;
@@ -28,6 +29,8 @@ import net.evendanan.bazel.mvn.merger.SourcesJarLocator;
 import net.evendanan.bazel.mvn.merger.TargetCommenter;
 import net.evendanan.bazel.mvn.merger.TestOnlyMarker;
 import net.evendanan.timing.ProgressTimer;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -97,6 +100,10 @@ public class Merger {
             return;
         }
         if (options.artifacts.isEmpty()) {
+            optionParser.usage();
+            return;
+        }
+        if (options.exports_generation.equals(ExportsGenerationType.inherit)) {
             optionParser.usage();
             return;
         }
@@ -297,19 +304,24 @@ public class Merger {
         final Set<MavenCoordinate> rootDependencies = resolutions.stream().map(r -> r.resolution().rootDependency()).collect(Collectors.toSet());
 
         final Set<MavenCoordinate> exportsForDependency =
-                resolvedDependencies.stream()
-                        .filter(d -> {
-                            switch (options.exports_generation) {
-                                case all:
-                                    return true;
-                                case requested_deps:
-                                    return rootDependencies.contains(d.mavenCoordinate());
-                                default:
-                                    return false;
-                            }
-                        })
-                        .map(Dependency::mavenCoordinate)
-                        .collect(Collectors.toSet());
+                resolutions.stream()
+                .map(r -> Pair.of(r.exportsGenerationType(), r.resolution().allResolvedDependencies()))
+                .flatMap(p -> p.getRight().stream().map(d -> Pair.of(d.mavenCoordinate(), p.getKey())))
+                .map(p -> Pair.of(p.getLeft(), p.getRight().equals(ExportsGenerationType.inherit)? options.exports_generation : p.getRight()))
+                .collect(Collectors.toMap(Pair::getKey, Pair::getValue, ExportsGenerationType::prioritizeType))
+                .entrySet().stream()
+                .filter(p -> {
+                    switch (p.getValue()) {
+                        case all:
+                            return true;
+                        case requested_deps:
+                            return rootDependencies.contains(p.getKey());
+                        default:
+                            return false;
+                    }
+                })
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toSet());
 
         resolvedDependencies =
                 resolvedDependencies.stream()
