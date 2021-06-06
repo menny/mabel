@@ -10,6 +10,8 @@ _APACHE_MAVEN_VERSION = "3.8.1"
 
 mabel_rule(
     name = "main_deps",
+    default_exports_generation = "requested_deps",
+    default_target_type = "naive",
     maven_deps = [
         artifact(
             "com.google.guava:guava:27.0.1-jre",
@@ -17,93 +19,72 @@ mabel_rule(
         ),
         artifact(
             "org.apache.commons:commons-lang3:jar:3.8.1",
-            type = "jar",
         ),
         artifact(
             "com.google.code.findbugs:jsr305:3.0.2",
-            type = "jar",
         ),
 
         #command-line arguments parsing
         artifact(
             "com.beust:jcommander:1.72",
-            type = "jar",
         ),
 
         #POM management
         artifact(
             "org.eclipse.aether:aether-api:" + _AETHER_VERSION,
-            type = "jar",
         ),
         artifact(
             "org.eclipse.aether:aether-spi:" + _AETHER_VERSION,
-            type = "jar",
         ),
         artifact(
             "org.eclipse.aether:aether-impl:" + _AETHER_VERSION,
-            type = "jar",
         ),
         artifact(
             "org.eclipse.aether:aether-util:" + _AETHER_VERSION,
-            type = "jar",
         ),
         artifact(
             "org.eclipse.aether:aether-transport-http:" + _AETHER_VERSION,
-            type = "jar",
         ),
         artifact(
             "org.eclipse.aether:aether-transport-classpath:" + _AETHER_VERSION,
-            type = "jar",
         ),
         artifact(
             "org.eclipse.aether:aether-transport-wagon:" + _AETHER_VERSION,
-            type = "jar",
         ),
         artifact(
             "org.eclipse.aether:aether-transport-file:" + _AETHER_VERSION,
-            type = "jar",
         ),
         artifact(
             "org.eclipse.aether:aether-connector-basic:" + _AETHER_VERSION,
-            type = "jar",
         ),
         artifact(
             "org.apache.maven:maven-aether-provider:3.3.9",
-            type = "jar",
         ),
         artifact(
             "org.apache.maven:maven-model:" + _APACHE_MAVEN_VERSION,
-            type = "jar",
         ),
         artifact(
             "org.apache.maven:maven-model-builder:" + _APACHE_MAVEN_VERSION,
-            type = "jar",
         ),
         artifact(
             "org.apache.maven:maven-repository-metadata:" + _APACHE_MAVEN_VERSION,
-            type = "jar",
         ),
         artifact(
             "org.apache.maven:maven-artifact:" + _APACHE_MAVEN_VERSION,
-            type = "jar",
         ),
         artifact(
             "org.apache.httpcomponents:httpclient:4.5.13",
-            type = "jar",
         ),
         artifact(
             "org.codehaus.plexus:plexus-interpolation:1.26",
-            type = "jar",
         ),
         artifact(
             "org.codehaus.plexus:plexus-utils:3.3.0",
-            type = "jar",
         ),
 
         #model classes
         artifact(
             "com.google.auto.value:auto-value-annotations:1.7",
-            type = "jar",
         ),
         artifact(
             "com.google.auto.value:auto-value:1.7",
@@ -112,25 +93,21 @@ mabel_rule(
         #for creating and reading json
         artifact(
             "com.google.code.gson:gson:2.8.5",
-            type = "jar",
         ),
 
         #logging - nop
         artifact(
             "org.slf4j:slf4j-nop:1.7.25",
-            type = "jar",
         ),
 
         #testing
         artifact(
             "junit:junit:4.12",
             test_only = True,
-            type = "jar",
         ),
         artifact(
             "org.mockito:mockito-core:2.23.4",
             test_only = True,
-            type = "jar",
         ),
     ],
     public_targets_category = "requested_deps",

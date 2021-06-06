@@ -3,6 +3,9 @@ package net.evendanan.bazel.mvn;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 import com.beust.jcommander.converters.IParameterSplitter;
+
+import net.evendanan.bazel.mvn.api.model.ExportsGenerationType;
+import net.evendanan.bazel.mvn.api.model.TargetType;
 import net.evendanan.bazel.mvn.merger.PublicTargetsCategory;
 import net.evendanan.bazel.mvn.merger.VersionConflictResolution;
 
@@ -95,6 +98,21 @@ public class CommandLineOptions {
                     "Which version-conflict resolution strategy to use. Default is 'latest_version'. Can be: 'latest_version', 'breadth_first', 'depth_first'.",
             required = true)
     VersionConflictResolution version_conflict_resolver = VersionConflictResolution.latest_version;
+
+    @Parameter(
+            names = {"--type"},
+            splitter = NoSplitter.class,
+            description = "Type of artifact: inherit, jar, aar, naive, auto, processor.",
+            required = true)
+    TargetType type;
+
+
+    @Parameter(
+            names = {"--exports_generation"},
+            splitter = NoSplitter.class,
+            description = "Where to generate exports: inherit, all, requested_deps, none.",
+            required = true)
+    ExportsGenerationType exports_generation;
 
     /**
      * Jcommander defaults to splitting each parameter by comma. For example,

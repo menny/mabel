@@ -29,5 +29,7 @@ bazel-testlogs
 bazel-bin
 
 #idea
+.idea
 .ijwb
 .aswb
+*.iml

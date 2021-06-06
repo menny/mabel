@@ -2,6 +2,11 @@ package net.evendanan.bazel.mvn.api.model;
 
 public enum TargetType {
     /**
+     * Use default value.
+     */
+    inherit,
+
+    /**
      * Plain java target.
      */
     jar,

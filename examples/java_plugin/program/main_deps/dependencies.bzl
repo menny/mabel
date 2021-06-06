@@ -704,12 +704,7 @@ def generate_transitive_dependency_targets(
             ":apt___javax_inject__javax_inject",
             ":apt___org_checkerframework__checker_compat_qual",
         ],
-        exports = [
-            ":apt___com_google_dagger__dagger",
-            ":apt___com_google_guava__guava",
-            ":apt___javax_inject__javax_inject",
-            ":apt___org_checkerframework__checker_compat_qual",
-        ],
+        exports = [],
         runtime_deps = [],
     )
 
@@ -740,12 +735,7 @@ def generate_transitive_dependency_targets(
             ":apt___com_google_guava__guava",
             ":apt___javax_inject__javax_inject",
         ],
-        exports = [
-            ":apt___com_google_dagger__dagger",
-            ":apt___com_google_dagger__dagger_producers",
-            ":apt___com_google_guava__guava",
-            ":apt___javax_inject__javax_inject",
-        ],
+        exports = [],
         runtime_deps = [],
     )
 
@@ -858,10 +848,7 @@ def generate_transitive_dependency_targets(
             ":apt___com_google_errorprone__javac_shaded",
             ":apt___com_google_guava__guava",
         ],
-        exports = [
-            ":apt___com_google_errorprone__javac_shaded",
-            ":apt___com_google_guava__guava",
-        ],
+        exports = [],
         runtime_deps = [],
     )
 
@@ -899,13 +886,7 @@ def generate_transitive_dependency_targets(
             ":apt___org_checkerframework__checker_compat_qual",
             ":apt___org_codehaus_mojo__animal_sniffer_annotations",
         ],
-        exports = [
-            ":apt___com_google_code_findbugs__jsr305",
-            ":apt___com_google_errorprone__error_prone_annotations",
-            ":apt___com_google_j2objc__j2objc_annotations",
-            ":apt___org_checkerframework__checker_compat_qual",
-            ":apt___org_codehaus_mojo__animal_sniffer_annotations",
-        ],
+        exports = [],
         runtime_deps = [],
     )
 

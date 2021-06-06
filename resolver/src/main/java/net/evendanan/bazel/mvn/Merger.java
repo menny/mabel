@@ -38,6 +38,7 @@ import java.io.OutputStreamWriter;
 import java.net.URI;
 import java.nio.file.Files;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -293,9 +294,33 @@ public class Merger {
             final CommandLineOptions options,
             DependencyTools dependencyTools)
             throws Exception {
+        final Set<MavenCoordinate> rootDependencies = resolutions.stream().map(r -> r.resolution().rootDependency()).collect(Collectors.toSet());
+
+        final Set<MavenCoordinate> exportsForDependency =
+                resolvedDependencies.stream()
+                        .filter(d -> {
+                            switch (options.exports_generation) {
+                                case all:
+                                    return true;
+                                case requested_deps:
+                                    return rootDependencies.contains(d.mavenCoordinate());
+                                default:
+                                    return false;
+                            }
+                        })
+                        .map(Dependency::mavenCoordinate)
+                        .collect(Collectors.toSet());
+
         resolvedDependencies =
                 resolvedDependencies.stream()
                         .filter(dependency -> !dependency.url().isEmpty())
+                        .map(d -> {
+                            if (exportsForDependency.contains(d.mavenCoordinate())) {
+                                return Dependency.builder(d).exports(d.dependencies()).build();
+                            } else {
+                                return Dependency.builder(d).exports(Collections.emptyList()).build();
+                            }
+                        })
                         .collect(Collectors.toList());
 
         System.out.println();
@@ -334,13 +359,12 @@ public class Merger {
 
         System.out.printf(Locale.ROOT, "Processing %d targets rules...%n", resolvedDependencies.size());
 
-        final Set<MavenCoordinate> rootDependencies = resolutions.stream().map(r -> r.resolution().rootDependency()).collect(Collectors.toSet());
         final Map<MavenCoordinate, TargetType> targetTypeMap = resolutions
                 .stream()
-                .collect(Collectors.toMap(r -> r.resolution().rootDependency(), ResolutionOutput::targetType));
+                .collect(Collectors.toMap(r -> r.resolution().rootDependency(), r -> r.targetType().equals(TargetType.inherit) ? options.type : r.targetType()));
         final Function<Dependency, TargetsBuilder> ruleMapper = buildRuleMapper(
                 downloader,
-                dep -> targetTypeMap.getOrDefault(dep, TargetType.naive),
+                dep -> targetTypeMap.getOrDefault(dep, TargetType.auto /*once we move to jvm_import, this should be changed to naive*/),
                 rootDependencies,
                 resolvedDependencies);
         final TargetsBuilder fileImporter =

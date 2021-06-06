@@ -1,5 +1,5 @@
 """Defining mabel bazel rules."""
-TransitiveDataInfo = provider(fields = ["graph_file"])
+TransitiveDataInfo = provider(doc = "Internal provider for connectin resolving and merging.", fields = ["graph_file", "type"])
 
 def _impl_resolver(ctx):
     output_file = ctx.outputs.out
@@ -24,7 +24,7 @@ def _impl_resolver(ctx):
         mnemonic = "MabelMavenTransitiveDependencyResolve",
     )
 
-    return [TransitiveDataInfo(graph_file = output_file)]
+    return [TransitiveDataInfo(graph_file = output_file, type = ctx.attr.type)]
 
 DEFAULT_MAVEN_SERVERS = ["https://repo1.maven.org/maven2/"]
 
@@ -37,7 +37,7 @@ _mabel_maven_dependency_graph_resolving_rule = rule(
         "maven_exclude_deps": attr.string_list(allow_empty = True, default = [], doc = "List of Maven dependencies which should not be resolved. You can omit the `version` or both `artifact-id:version`."),
         "repositories": attr.string_list(allow_empty = False, default = DEFAULT_MAVEN_SERVERS, doc = "List of URLs that point to Maven servers. Defaut is Maven-Central."),
         "test_only": attr.bool(default = False, doc = "Should this artifact be marked as test_only. Default is False.", mandatory = False),
-        "type": attr.string(mandatory = True, default = "auto", values = ["jar", "aar", "kotlin", "kotlin_aar", "naive", "processor", "auto"], doc = "The type of artifact targets to generate."),
+        "type": attr.string(mandatory = True, default = "inherit", values = ["inherit", "jar", "aar", "kotlin", "kotlin_aar", "naive", "processor", "auto"], doc = "The type of artifact targets to generate."),
         "_jdk": attr.label(default = Label("@bazel_tools//tools/jdk:remote_jdk11"), providers = [java_common.JavaRuntimeInfo]),
         "_resolver": attr.label(executable = True, allow_files = True, cfg = "host", default = Label("//resolver:resolver_bin")),
     },
@@ -45,7 +45,7 @@ _mabel_maven_dependency_graph_resolving_rule = rule(
 )
 
 # buildifier: disable=unnamed-macro
-def artifact(coordinate, maven_exclude_deps = [], repositories = DEFAULT_MAVEN_SERVERS, debug_logs = False, type = "auto", test_only = False):
+def artifact(coordinate, maven_exclude_deps = [], repositories = DEFAULT_MAVEN_SERVERS, debug_logs = False, type = "inherit", exports_generation = "inherit", test_only = False):
     rule_name = "_mabel_maven_dependency_graph_resolving_{}".format(coordinate.replace(":", "__").replace("-", "_").replace(".", "_"))
 
     # different targets may use the same artifact
@@ -78,6 +78,8 @@ script_merger_template = """
     --artifacts_path={artifacts_path} \
     --public_targets_category={public_targets_category} \
     --version_conflict_resolver={version_conflict_resolver} \
+    --type={default_target_type} \
+    --exports_generation={default_exports_generation} \
     --keep_output_folder={keep_output_folder}
 
 echo "Stored resolved dependencies graph (rules) at ${{BUILD_WORKING_DIRECTORY}}/{output_target_build_files_base_path}{output_filename}"
@@ -109,6 +111,8 @@ def _impl_merger(ctx):
         public_targets_category = ctx.attr.public_targets_category,
         version_conflict_resolver = ctx.attr.version_conflict_resolver,
         keep_output_folder = "{}".format(ctx.attr.keep_output_folder).lower(),
+        default_exports_generation = ctx.attr.default_exports_generation,
+        default_target_type = ctx.attr.default_target_type,
     )
 
     ctx.actions.write(script, script_content, is_executable = True)
@@ -131,6 +135,8 @@ mabel_rule = rule(
         "artifacts_path": attr.string(default = "", doc = "Cache location to download artifacts into. Empty means `[user-home-folder]/.mabel/artifacts/`", mandatory = False),
         "calculate_sha": attr.bool(default = True, doc = "Will also calculate SHA256 of the artifact. Default True", mandatory = False),
         "debug_logs": attr.bool(default = False, doc = "If set to True, will print out debug logs while resolving dependencies. Default is False.", mandatory = False),
+        "default_exports_generation": attr.string(default = "requested_deps", values = ["all", "requested_deps", "none"], doc = "For which targets should we generate exports attribute."),
+        "default_target_type": attr.string(default = "auto", values = ["jar", "aar", "kotlin", "kotlin_aar", "naive", "processor", "auto"], doc = "The type of artifact targets to generate."),
         "fetch_srcjar": attr.bool(default = False, doc = "Will also try to locate srcjar for the dependency. Default False", mandatory = False),
         "generate_deps_sub_folder": attr.bool(default = True, doc = "If set to True (the default), will create sub-folders with BUILD.bazel file for each dependency.", mandatory = False),
         "generated_targets_prefix": attr.string(default = "", doc = "A prefix to add to all generated targets. Default is an empty string, meaning no prefix.", mandatory = False),
