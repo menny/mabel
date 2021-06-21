@@ -70,7 +70,7 @@ public class RuleClassifiers {
 
     public static class AarClassifier extends PackagingClassifier {
         public AarClassifier() {
-            super("aar", TargetsBuilders.AAR_IMPORT);
+            super("aar", TargetsBuilders.AAR_IMPORT_WITHOUT_EXPORTS);
         }
     }
 

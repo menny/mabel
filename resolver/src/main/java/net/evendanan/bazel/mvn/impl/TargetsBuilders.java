@@ -45,7 +45,9 @@ public class TargetsBuilders {
             };
     static final TargetsBuilder KOTLIN_IMPORT = new KotlinImport();
     static final TargetsBuilder KOTLIN_ANDROID_IMPORT = new KotlinAndroidImport();
-    static final TargetsBuilder AAR_IMPORT = new AarImport();
+    static final TargetsBuilder AAR_IMPORT = new AarImport(true);
+    //due to https://github.com/bazelbuild/bazel/issues/13567
+    static final TargetsBuilder AAR_IMPORT_WITHOUT_EXPORTS = new AarImport(false);
 
     private static Target addJavaImportRule(
             Dependency dependency, DependencyTools dependencyTools) {
@@ -494,6 +496,11 @@ public class TargetsBuilders {
     }
 
     static class AarImport implements TargetsBuilder {
+        private final boolean mWriteExports;
+
+        AarImport(boolean writeExports) {
+            mWriteExports = writeExports;
+        }
 
         @Override
         public List<Target> buildTargets(
@@ -524,7 +531,9 @@ public class TargetsBuilders {
                             .addList("deps", convertRulesToStrings(deps, dependencyTools))
                             .addList(
                                     "exports",
-                                    convertRulesToStrings(dependency.exports(), dependencyTools)));
+                                    mWriteExports ?
+                                            convertRulesToStrings(dependency.exports(), dependencyTools)
+                                            : Collections.emptyList()));
 
             targets.add(
                     addAlias(

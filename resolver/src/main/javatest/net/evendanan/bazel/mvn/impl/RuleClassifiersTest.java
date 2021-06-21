@@ -36,7 +36,7 @@ public class RuleClassifiersTest {
                         .mavenCoordinate(MavenCoordinate.create("", "", "", "aar"))
                         .build();
         Assert.assertSame(
-                TargetsBuilders.AAR_IMPORT,
+                TargetsBuilders.AAR_IMPORT_WITHOUT_EXPORTS,
                 new RuleClassifiers.AarClassifier().classifyRule(dep).get(0));
 
         dep =

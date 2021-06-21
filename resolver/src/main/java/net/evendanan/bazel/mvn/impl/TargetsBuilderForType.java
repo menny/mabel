@@ -30,7 +30,7 @@ public class TargetsBuilderForType {
             case jar:
                 return TargetsBuilders.JAVA_IMPORT;
             case aar:
-                return TargetsBuilders.AAR_IMPORT;
+                return TargetsBuilders.AAR_IMPORT_WITHOUT_EXPORTS;
             case kotlin:
                 return TargetsBuilders.KOTLIN_IMPORT;
             case kotlin_aar:

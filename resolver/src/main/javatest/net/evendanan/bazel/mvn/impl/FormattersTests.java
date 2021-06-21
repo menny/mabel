@@ -283,6 +283,25 @@ public class FormattersTests {
                     + "     actual = \":aar__lib__\",\n"
                     + "     visibility = [\"//visibility:public\"],\n"
                     + " )\n";
+    private static final String AAR_IMPORT_TEXT_WITHOUT_EXPORTS =
+            " aar_import(\n"
+                    + "     name = \"aar__lib__\",\n"
+                    + "     aar = \"@aar__lib__//file\",\n"
+                    + "     testonly = False,\n"
+                    + "     tags = [\"maven_coordinates=aar:lib:\"],\n"
+                    + "     deps = [\n"
+                    + "         \":safe_mvn__dep1\",\n"
+                    + "         \":safe_mvn__dep2\",\n"
+                    + "         \":safe_mvn__runtime1\",\n"
+                    + "         \":safe_mvn__runtime2\",\n"
+                    + "     ],\n"
+                    + "     exports = [],\n"
+                    + " )\n"
+                    + " native.alias(\n"
+                    + "     name = \"aar__lib\",\n"
+                    + "     actual = \":aar__lib__\",\n"
+                    + "     visibility = [\"//visibility:public\"],\n"
+                    + " )\n";
     private static final String NATIVE_JAVA_PLUGIN_TEXT =
             "    java_import(\n"
                     + "        name = \"aar__lib__\",\n"
@@ -576,6 +595,23 @@ public class FormattersTests {
                                 DependencyTools.DEFAULT));
 
         Assert.assertEquals(AAR_IMPORT_TEXT, ruleText);
+    }
+
+    @Test
+    public void testAarFormatterWithoutExports() {
+        final String ruleText =
+                targetsToString(
+                        " ",
+                        TargetsBuilders.AAR_IMPORT_WITHOUT_EXPORTS.buildTargets(
+                                createDependency(
+                                        "aar:lib",
+                                        "some_url",
+                                        Arrays.asList("dep1", "dep2"),
+                                        Arrays.asList("export1", "export2"),
+                                        Arrays.asList("runtime1", "runtime2")),
+                                DependencyTools.DEFAULT));
+
+        Assert.assertEquals(AAR_IMPORT_TEXT_WITHOUT_EXPORTS, ruleText);
     }
 
     @Test
