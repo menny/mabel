@@ -58,7 +58,7 @@ public class RuleClassifiersTest {
                         .mavenCoordinate(MavenCoordinate.create("", "", "", "pom"))
                         .build();
         Assert.assertSame(
-                TargetsBuilders.JAVA_IMPORT,
+                TargetsBuilders.POM_IMPORT,
                 new RuleClassifiers.PomClassifier().classifyRule(dep).get(0));
 
         dep =

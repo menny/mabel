@@ -172,19 +172,19 @@ def generate_transitive_dependency_targets(
         name = "generate_transitive_dependency_targets",
         java_library = native.java_library,
         java_plugin = native.java_plugin,
-        java_import = jvm_import,
+        jvm_import = jvm_import,
         aar_import = _no_op_missing_aar_impl):
     """
     Macro to set up the transitive rules.
 
-    You can provide your own implementation of java_import, aar_import, etc. This can be used
+    You can provide your own implementation of jvm_import, aar_import, etc. This can be used
     in cases where you need to shade (or jar_jar or jetify) your jars.
 
     Args:
         name: a unique name for this macro. Not needed to specify.
         java_library: rule implementation for java_library. Defaults to native.java_library.
         java_plugin: rule implementation for java_plugin. Defaults to native.java_plugin.
-        java_import: rule implementation for java_import. Defaults to native.java_import.
+        jvm_import: rule implementation for jvm_import. Defaults to jvm_import.
         aar_import: rule implementation for aar_import. Required only if you have Android dependencies.
     """
 
@@ -198,7 +198,7 @@ def generate_transitive_dependency_targets(
 
     # from com.google.auto.value:auto-value-annotations:1.6.3
     # This is a root requested Maven artifact.
-    java_import(
+    jvm_import(
         name = "apt___com_google_auto_value__auto_value_annotations__1_6_3",
         jars = ["@apt___com_google_auto_value__auto_value_annotations__1_6_3//file"],
         testonly = False,
@@ -224,7 +224,7 @@ def generate_transitive_dependency_targets(
 
     # from com.google.auto.value:auto-value:1.6.3
     # This is a root requested Maven artifact.
-    java_import(
+    jvm_import(
         name = "apt___com_google_auto_value__auto_value__1_6_3",
         jars = ["@apt___com_google_auto_value__auto_value__1_6_3//file"],
         testonly = False,
@@ -474,7 +474,7 @@ def generate_transitive_dependency_targets(
 
     # from com.google.code.findbugs:jsr305:1.3.9
     # This is a dependency of 'com.google.guava:guava:25.0-jre'.
-    java_import(
+    jvm_import(
         name = "apt___com_google_code_findbugs__jsr305__1_3_9",
         jars = ["@apt___com_google_code_findbugs__jsr305__1_3_9//file"],
         testonly = False,
@@ -500,7 +500,7 @@ def generate_transitive_dependency_targets(
 
     # from com.google.dagger:dagger-compiler:2.19
     # This is a root requested Maven artifact.
-    java_import(
+    jvm_import(
         name = "apt___com_google_dagger__dagger_compiler__2_19",
         jars = ["@apt___com_google_dagger__dagger_compiler__2_19//file"],
         testonly = False,
@@ -634,7 +634,7 @@ def generate_transitive_dependency_targets(
     # from com.google.dagger:dagger-producers:2.19
     # This is a dependency of 'com.google.dagger:dagger-compiler:2.19'.
     # This is a dependency of 'com.google.dagger:dagger-spi:2.19'.
-    java_import(
+    jvm_import(
         name = "apt___com_google_dagger__dagger_producers__2_19",
         jars = ["@apt___com_google_dagger__dagger_producers__2_19//file"],
         testonly = False,
@@ -665,7 +665,7 @@ def generate_transitive_dependency_targets(
 
     # from com.google.dagger:dagger-spi:2.19
     # This is a dependency of 'com.google.dagger:dagger-compiler:2.19'.
-    java_import(
+    jvm_import(
         name = "apt___com_google_dagger__dagger_spi__2_19",
         jars = ["@apt___com_google_dagger__dagger_spi__2_19//file"],
         testonly = False,
@@ -702,7 +702,7 @@ def generate_transitive_dependency_targets(
     # This is a dependency of 'com.google.dagger:dagger-compiler:2.19'.
     # This is a dependency of 'com.google.dagger:dagger-producers:2.19'.
     # This is a dependency of 'com.google.dagger:dagger-spi:2.19'.
-    java_import(
+    jvm_import(
         name = "apt___com_google_dagger__dagger__2_19",
         jars = ["@apt___com_google_dagger__dagger__2_19//file"],
         testonly = False,
@@ -728,7 +728,7 @@ def generate_transitive_dependency_targets(
 
     # from com.google.errorprone:error_prone_annotations:2.1.3
     # This is a dependency of 'com.google.guava:guava:25.0-jre'.
-    java_import(
+    jvm_import(
         name = "apt___com_google_errorprone__error_prone_annotations__2_1_3",
         jars = ["@apt___com_google_errorprone__error_prone_annotations__2_1_3//file"],
         testonly = False,
@@ -754,7 +754,7 @@ def generate_transitive_dependency_targets(
 
     # from com.google.errorprone:javac-shaded:9-dev-r4023-3
     # This is a dependency of 'com.google.googlejavaformat:google-java-format:1.5'.
-    java_import(
+    jvm_import(
         name = "apt___com_google_errorprone__javac_shaded__9_dev_r4023_3",
         jars = ["@apt___com_google_errorprone__javac_shaded__9_dev_r4023_3//file"],
         testonly = False,
@@ -780,7 +780,7 @@ def generate_transitive_dependency_targets(
 
     # from com.google.googlejavaformat:google-java-format:1.5
     # This is a dependency of 'com.google.dagger:dagger-compiler:2.19'.
-    java_import(
+    jvm_import(
         name = "apt___com_google_googlejavaformat__google_java_format__1_5",
         jars = ["@apt___com_google_googlejavaformat__google_java_format__1_5//file"],
         testonly = False,
@@ -815,7 +815,7 @@ def generate_transitive_dependency_targets(
     # This is a dependency of 'com.google.dagger:dagger-producers:2.19'.
     # This is a dependency of 'com.google.dagger:dagger-spi:2.19'.
     # This is a dependency of 'com.google.googlejavaformat:google-java-format:1.5'.
-    java_import(
+    jvm_import(
         name = "apt___com_google_guava__guava__25_0_jre",
         jars = ["@apt___com_google_guava__guava__25_0_jre//file"],
         testonly = False,
@@ -847,7 +847,7 @@ def generate_transitive_dependency_targets(
 
     # from com.google.j2objc:j2objc-annotations:1.1
     # This is a dependency of 'com.google.guava:guava:25.0-jre'.
-    java_import(
+    jvm_import(
         name = "apt___com_google_j2objc__j2objc_annotations__1_1",
         jars = ["@apt___com_google_j2objc__j2objc_annotations__1_1//file"],
         testonly = False,
@@ -873,7 +873,7 @@ def generate_transitive_dependency_targets(
 
     # from com.squareup:javapoet:1.11.1
     # This is a dependency of 'com.google.dagger:dagger-compiler:2.19'.
-    java_import(
+    jvm_import(
         name = "apt___com_squareup__javapoet__1_11_1",
         jars = ["@apt___com_squareup__javapoet__1_11_1//file"],
         testonly = False,
@@ -899,7 +899,7 @@ def generate_transitive_dependency_targets(
 
     # from javax.annotation:jsr250-api:1.0
     # This is a dependency of 'com.google.dagger:dagger-compiler:2.19'.
-    java_import(
+    jvm_import(
         name = "apt___javax_annotation__jsr250_api__1_0",
         jars = ["@apt___javax_annotation__jsr250_api__1_0//file"],
         testonly = False,
@@ -931,7 +931,7 @@ def generate_transitive_dependency_targets(
     # This is a dependency of 'com.google.dagger:dagger-producers:2.19'.
     # This is a dependency of 'com.google.dagger:dagger-spi:2.19'.
     # This is a dependency of 'com.google.dagger:dagger:2.19'.
-    java_import(
+    jvm_import(
         name = "apt___javax_inject__javax_inject__1",
         jars = ["@apt___javax_inject__javax_inject__1//file"],
         testonly = False,
@@ -959,7 +959,7 @@ def generate_transitive_dependency_targets(
     # from org.checkerframework:checker-compat-qual:2.5.3
     # This is a dependency of 'com.google.dagger:dagger-producers:2.19'.
     # This is a dependency of 'com.google.guava:guava:25.0-jre'.
-    java_import(
+    jvm_import(
         name = "apt___org_checkerframework__checker_compat_qual__2_5_3",
         jars = ["@apt___org_checkerframework__checker_compat_qual__2_5_3//file"],
         testonly = False,
@@ -991,7 +991,7 @@ def generate_transitive_dependency_targets(
 
     # from org.codehaus.mojo:animal-sniffer-annotations:1.14
     # This is a dependency of 'com.google.guava:guava:25.0-jre'.
-    java_import(
+    jvm_import(
         name = "apt___org_codehaus_mojo__animal_sniffer_annotations__1_14",
         jars = ["@apt___org_codehaus_mojo__animal_sniffer_annotations__1_14//file"],
         testonly = False,

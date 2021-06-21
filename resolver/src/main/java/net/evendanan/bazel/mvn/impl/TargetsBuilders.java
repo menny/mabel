@@ -30,6 +30,40 @@ import java.util.stream.Collectors;
 
 public class TargetsBuilders {
 
+    public static final TargetsBuilder POM_IMPORT =
+            (dependency, dependencyTools) -> {
+                List<Target> targets = new ArrayList<>();
+                targets.add(new Target(
+                        dependencyTools.mavenCoordinates(dependency),
+                        "java_library",
+                        dependencyTools.repositoryRuleName(dependency))
+                        .addBoolean("testonly", dependency.testOnly())
+                        .addList("tags", dependencyTagsList(dependency, dependencyTools))
+                        .addList(
+                                "licenses",
+                                dependency.licenses().stream()
+                                        .map(License::name)
+                                        .map(LicenseTools::classFromLicenseName)
+                                        .filter(Objects::nonNull)
+                                        .map(Object::toString)
+                                        .collect(Collectors.toList()))
+                        .addList(
+                                "exports",
+                                convertRulesToStrings(dependency.dependencies(), dependencyTools))
+                        .addList(
+                                "runtime_deps",
+                                convertRulesToStrings(
+                                        dependency.runtimeDependencies(), dependencyTools)));
+                targets.add(
+                        addAlias(
+                                dependency,
+                                dependency.mavenCoordinate().artifactId(),
+                                "",
+                                dependencyTools));
+
+                return targets;
+            };
+
     public static final TargetsBuilder JAVA_IMPORT =
             (dependency, dependencyTools) -> {
                 List<Target> targets = new ArrayList<>();
@@ -52,13 +86,11 @@ public class TargetsBuilders {
         final Target target =
                 new Target(
                         dependencyTools.mavenCoordinates(dependency),
-                        "java_import",
+                        "jvm_import",
                         dependencyTools.repositoryRuleName(dependency))
                         .addList(
                                 "jars",
-                                "pom".equalsIgnoreCase(dependency.mavenCoordinate().packaging())
-                                        ? Collections.emptyList()
-                                        : Collections.singletonList(
+                                Collections.singletonList(
                                         String.format(
                                                 Locale.ROOT,
                                                 "@%s//file",
@@ -172,12 +204,6 @@ public class TargetsBuilders {
                                 dependencyTools.repositoryRuleName(dependency),
                                 postFix))
                 .setPublicVisibility();
-    }
-
-    private static <T> Collection<T> addItem(Collection<T> list, T item) {
-        List<T> newList = new ArrayList<>(list);
-        newList.add(item);
-        return newList;
     }
 
     public static class HttpTargetsBuilder implements TargetsBuilder {

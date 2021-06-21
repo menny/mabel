@@ -7,6 +7,11 @@ public enum TargetType {
     inherit,
 
     /**
+     * POM file import (when there is no jar, just dependencies definitions).
+     */
+    pom,
+
+    /**
      * Plain java target.
      */
     jar,

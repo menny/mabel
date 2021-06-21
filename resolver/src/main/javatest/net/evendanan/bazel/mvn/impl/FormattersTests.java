@@ -25,7 +25,7 @@ public class FormattersTests {
                     + "     downloaded_file_path = \"ss.aar\",\n"
                     + " )\n";
     private static final String JAVA_IMPORT_TEXT =
-            " java_import(\n"
+            " jvm_import(\n"
                     + "     name = \"java__lib__\",\n"
                     + "     jars = [\"@java__lib__//file\"],\n"
                     + "     testonly = False,\n"
@@ -50,7 +50,7 @@ public class FormattersTests {
                     + "     visibility = [\"//visibility:public\"],\n"
                     + " )\n";
     private static final String JAVA_IMPORT_TEXT_WITH_SOURCES =
-            " java_import(\n"
+            " jvm_import(\n"
                     + "     name = \"java__lib__\",\n"
                     + "     jars = [\"@java__lib__//file\"],\n"
                     + "     testonly = False,\n"
@@ -76,19 +76,14 @@ public class FormattersTests {
                     + "     visibility = [\"//visibility:public\"],\n"
                     + " )\n";
     private static final String POM_ONLY_NATIVE_IMPORT_TEXT =
-            " java_import(\n"
+            " java_library(\n"
                     + "     name = \"parent__lib__\",\n"
-                    + "     jars = [],\n"
                     + "     testonly = False,\n"
                     + "     tags = [\"maven_coordinates=parent:lib:\"],\n"
                     + "     licenses = [],\n"
-                    + "     deps = [\n"
+                    + "     exports = [\n"
                     + "         \":safe_mvn__dep1\",\n"
                     + "         \":safe_mvn__dep2\",\n"
-                    + "     ],\n"
-                    + "     exports = [\n"
-                    + "         \":safe_mvn__export1\",\n"
-                    + "         \":safe_mvn__export2\",\n"
                     + "     ],\n"
                     + "     runtime_deps = [\n"
                     + "         \":safe_mvn__runtime1\",\n"
@@ -101,7 +96,7 @@ public class FormattersTests {
                     + "     visibility = [\"//visibility:public\"],\n"
                     + " )\n";
     private static final String NATIVE_JAVA_IMPORT_TEXT =
-            "    java_import(\n"
+            "    jvm_import(\n"
                     + "        name = \"java__lib__\",\n"
                     + "        jars = [\"@java__lib__//file\"],\n"
                     + "        testonly = False,\n"
@@ -126,7 +121,7 @@ public class FormattersTests {
                     + "        visibility = [\"//visibility:public\"],\n"
                     + "    )\n";
     private static final String NATIVE_JAVA_IMPORT_TEXT_WITH_TEST_ONLY =
-            "    java_import(\n"
+            "    jvm_import(\n"
                     + "        name = \"java__lib__\",\n"
                     + "        jars = [\"@java__lib__//file\"],\n"
                     + "        testonly = True,\n"
@@ -151,7 +146,7 @@ public class FormattersTests {
                     + "        visibility = [\"//visibility:public\"],\n"
                     + "    )\n";
     private static final String NATIVE_JAVA_IMPORT_WITH_LICENSE_TEXT =
-            "    java_import(\n"
+            "    jvm_import(\n"
                     + "        name = \"java__lib__\",\n"
                     + "        jars = [\"@java__lib__//file\"],\n"
                     + "        testonly = False,\n"
@@ -181,7 +176,7 @@ public class FormattersTests {
                     + "        visibility = [\"//visibility:public\"],\n"
                     + "    )\n";
     private static final String NATIVE_JAVA_IMPORT_WITH_LICENSE_TEXT_NO_URL =
-            "    java_import(\n"
+            "    jvm_import(\n"
                     + "        name = \"java__lib__\",\n"
                     + "        jars = [\"@java__lib__//file\"],\n"
                     + "        testonly = False,\n"
@@ -201,7 +196,7 @@ public class FormattersTests {
                     + "        visibility = [\"//visibility:public\"],\n"
                     + "    )\n";
     private static final String NATIVE_JAVA_IMPORT_WITH_LICENSE_TEXT_WITH_QUOTES =
-            "    java_import(\n"
+            "    jvm_import(\n"
                     + "        name = \"java__lib__\",\n"
                     + "        jars = [\"@java__lib__//file\"],\n"
                     + "        testonly = False,\n"
@@ -221,7 +216,7 @@ public class FormattersTests {
                     + "        visibility = [\"//visibility:public\"],\n"
                     + "    )\n";
     private static final String NATIVE_JAVA_IMPORT_WITH_LICENSE_TEXT_WITH_NEW_LINE =
-            "    java_import(\n"
+            "    jvm_import(\n"
                     + "        name = \"java__lib__\",\n"
                     + "        jars = [\"@java__lib__//file\"],\n"
                     + "        testonly = False,\n"
@@ -241,7 +236,7 @@ public class FormattersTests {
                     + "        visibility = [\"//visibility:public\"],\n"
                     + "    )\n";
     private static final String NATIVE_JAVA_IMPORT_WITH_LICENSE_TEXT_UNKNOWN_LICENSE =
-            "    java_import(\n"
+            "    jvm_import(\n"
                     + "        name = \"java__lib__\",\n"
                     + "        jars = [\"@java__lib__//file\"],\n"
                     + "        testonly = False,\n"
@@ -303,7 +298,7 @@ public class FormattersTests {
                     + "     visibility = [\"//visibility:public\"],\n"
                     + " )\n";
     private static final String NATIVE_JAVA_PLUGIN_TEXT =
-            "    java_import(\n"
+            "    jvm_import(\n"
                     + "        name = \"aar__lib__\",\n"
                     + "        jars = [\"@aar__lib__//file\"],\n"
                     + "        testonly = False,\n"
@@ -440,7 +435,7 @@ public class FormattersTests {
         final String ruleText =
                 targetsToString(
                         " ",
-                        TargetsBuilders.JAVA_IMPORT.buildTargets(
+                        TargetsBuilders.POM_IMPORT.buildTargets(
                                 createDependency(
                                         "parent:lib",
                                         "some_url.pom",

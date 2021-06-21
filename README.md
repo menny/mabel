@@ -15,9 +15,9 @@ This WORKSPACE will provide `mabel_rule` rule and `artifact` macro which will au
   * `aar_import` for Android artifacts.
   * `java_plugin` + `java_library` for annotation-processors. More about this [here](#annotation-processors).
   * [`jvm_import`](rules/jvm_import/jvm_import.bzl) for anything else.
-* Allow implementation replacement for `java_import` and `aar_import`. Those can be replaced with another rule or macro. See `examples/android/program/BUILD.bazel` for an example.
+* Allow implementation replacement for `jvm_import` and `aar_import`. Those can be replaced with another rule or macro. See `examples/android/program/BUILD.bazel` for an example.
 * Support custom Maven repo URLs and locking dependency for a Maven repository.
-* Adds `licenses` data to `java_import` rules, if license is declared in the artifact's POM file. Also, adds license metadata to the targets' `tags` attribute:
+* Adds `licenses` data to `jvm_import` rules, if license is declared in the artifact's POM file. Also, adds license metadata to the targets' `tags` attribute:
   * `mabel_license_name` - The name of the license, as appears in the `pom.xml` file.
   * `mabel_license_url` - The URL to the license's file, as appears in the `pom.xml` file.
   * `mabel_license_detected_type` - The type of the license (`Apache`, `MIT`, `GPL`, etc.) as detected by `mabel`. 
@@ -26,7 +26,7 @@ This WORKSPACE will provide `mabel_rule` rule and `artifact` macro which will au
   * Profiles and placeholders.
   * Version-specification.
   * Dependencies that do not have POM.
-  * Exports the Maven coordinate as a tag in the `java_import` rule. This can help with Bazel's [pom_file](https://github.com/google/bazel-common/blob/master/tools/maven/pom_file.bzl) rule.
+  * Exports the Maven coordinate as a tag in the `jvm_import` rule. This can help with Bazel's [pom_file](https://github.com/google/bazel-common/blob/master/tools/maven/pom_file.bzl) rule.
 * Calculates `sha256` for each remote artifact.
 * Produces a _lock_ file that describes the dependency graph. This file should be checked into your repo.
 

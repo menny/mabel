@@ -64,7 +64,7 @@ public class RuleClassifiers {
 
     public static class PomClassifier extends PackagingClassifier {
         public PomClassifier() {
-            super("pom", TargetsBuilders.JAVA_IMPORT);
+            super("pom", TargetsBuilders.POM_IMPORT);
         }
     }
 

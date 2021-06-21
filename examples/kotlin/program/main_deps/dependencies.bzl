@@ -84,19 +84,19 @@ def generate_transitive_dependency_targets(
         name = "generate_transitive_dependency_targets",
         java_library = native.java_library,
         java_plugin = native.java_plugin,
-        java_import = jvm_import,
+        jvm_import = jvm_import,
         aar_import = _no_op_missing_aar_impl):
     """
     Macro to set up the transitive rules.
 
-    You can provide your own implementation of java_import, aar_import, etc. This can be used
+    You can provide your own implementation of jvm_import, aar_import, etc. This can be used
     in cases where you need to shade (or jar_jar or jetify) your jars.
 
     Args:
         name: a unique name for this macro. Not needed to specify.
         java_library: rule implementation for java_library. Defaults to native.java_library.
         java_plugin: rule implementation for java_plugin. Defaults to native.java_plugin.
-        java_import: rule implementation for java_import. Defaults to native.java_import.
+        jvm_import: rule implementation for jvm_import. Defaults to jvm_import.
         aar_import: rule implementation for aar_import. Required only if you have Android dependencies.
     """
 
@@ -110,7 +110,7 @@ def generate_transitive_dependency_targets(
 
     # from com.github.salomonbrys.kotson:kotson:2.5.0
     # This is a root requested Maven artifact.
-    java_import(
+    jvm_import(
         name = "com_github_salomonbrys_kotson__kotson__2_5_0",
         jars = ["@com_github_salomonbrys_kotson__kotson__2_5_0//file"],
         testonly = False,
@@ -142,7 +142,7 @@ def generate_transitive_dependency_targets(
 
     # from com.google.code.gson:gson:2.8.0
     # This is a dependency of 'com.github.salomonbrys.kotson:kotson:2.5.0'.
-    java_import(
+    jvm_import(
         name = "com_google_code_gson__gson__2_8_0",
         jars = ["@com_google_code_gson__gson__2_8_0//file"],
         testonly = False,
@@ -166,7 +166,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.jetbrains.kotlin:kotlin-runtime:1.0.6
-    java_import(
+    jvm_import(
         name = "org_jetbrains_kotlin__kotlin_runtime__1_0_6",
         jars = ["@org_jetbrains_kotlin__kotlin_runtime__1_0_6//file"],
         testonly = False,
@@ -192,7 +192,7 @@ def generate_transitive_dependency_targets(
 
     # from org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72
     # This is a dependency of 'org.jetbrains.kotlin:kotlin-stdlib:1.3.72'.
-    java_import(
+    jvm_import(
         name = "org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72",
         jars = ["@org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72//file"],
         testonly = False,
@@ -220,7 +220,7 @@ def generate_transitive_dependency_targets(
     # from org.jetbrains.kotlin:kotlin-stdlib:1.3.72
     # This is a root requested Maven artifact.
     # This is a dependency of 'com.github.salomonbrys.kotson:kotson:2.5.0'.
-    java_import(
+    jvm_import(
         name = "org_jetbrains_kotlin__kotlin_stdlib__1_3_72",
         jars = ["@org_jetbrains_kotlin__kotlin_stdlib__1_3_72//file"],
         testonly = False,
@@ -252,7 +252,7 @@ def generate_transitive_dependency_targets(
 
     # from org.jetbrains:annotations:13.0
     # This is a dependency of 'org.jetbrains.kotlin:kotlin-stdlib:1.3.72'.
-    java_import(
+    jvm_import(
         name = "org_jetbrains__annotations__13_0",
         jars = ["@org_jetbrains__annotations__13_0//file"],
         testonly = False,

@@ -244,19 +244,19 @@ def generate_transitive_dependency_targets(
         name = "generate_transitive_dependency_targets",
         java_library = native.java_library,
         java_plugin = native.java_plugin,
-        java_import = jvm_import,
+        jvm_import = jvm_import,
         aar_import = _no_op_missing_aar_impl):
     """
     Macro to set up the transitive rules.
 
-    You can provide your own implementation of java_import, aar_import, etc. This can be used
+    You can provide your own implementation of jvm_import, aar_import, etc. This can be used
     in cases where you need to shade (or jar_jar or jetify) your jars.
 
     Args:
         name: a unique name for this macro. Not needed to specify.
         java_library: rule implementation for java_library. Defaults to native.java_library.
         java_plugin: rule implementation for java_plugin. Defaults to native.java_plugin.
-        java_import: rule implementation for java_import. Defaults to native.java_import.
+        jvm_import: rule implementation for jvm_import. Defaults to jvm_import.
         aar_import: rule implementation for aar_import. Required only if you have Android dependencies.
     """
 
@@ -270,7 +270,7 @@ def generate_transitive_dependency_targets(
 
     # from aopalliance:aopalliance:1.0
     # This is a dependency of 'com.google.inject:guice:4.2.3'.
-    java_import(
+    jvm_import(
         name = "aopalliance__aopalliance__1_0",
         jars = ["@aopalliance__aopalliance__1_0//file"],
         testonly = False,
@@ -295,7 +295,7 @@ def generate_transitive_dependency_targets(
 
     # from com.github.stephenc.jcip:jcip-annotations:1.0-1
     # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
-    java_import(
+    jvm_import(
         name = "com_github_stephenc_jcip__jcip_annotations__1_0_1",
         jars = ["@com_github_stephenc_jcip__jcip_annotations__1_0_1//file"],
         testonly = False,
@@ -319,7 +319,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.code.findbugs:jsr305:3.0.2
-    java_import(
+    jvm_import(
         name = "com_google_code_findbugs__jsr305__3_0_2",
         jars = ["@com_google_code_findbugs__jsr305__3_0_2//file"],
         testonly = False,
@@ -343,7 +343,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.errorprone:error_prone_annotations:2.2.0
-    java_import(
+    jvm_import(
         name = "com_google_errorprone__error_prone_annotations__2_2_0",
         jars = ["@com_google_errorprone__error_prone_annotations__2_2_0//file"],
         testonly = False,
@@ -367,7 +367,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.guava:failureaccess:1.0.1
-    java_import(
+    jvm_import(
         name = "com_google_guava__failureaccess__1_0_1",
         jars = ["@com_google_guava__failureaccess__1_0_1//file"],
         testonly = False,
@@ -395,7 +395,7 @@ def generate_transitive_dependency_targets(
     # from com.google.guava:guava:20.0
     # This is a root requested Maven artifact.
     # This is a dependency of 'com.google.inject:guice:4.2.3'.
-    java_import(
+    jvm_import(
         name = "com_google_guava__guava__20_0",
         jars = ["@com_google_guava__guava__20_0//file"],
         testonly = False,
@@ -419,7 +419,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
-    java_import(
+    jvm_import(
         name = "com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava",
         jars = ["@com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava//file"],
         testonly = False,
@@ -445,7 +445,7 @@ def generate_transitive_dependency_targets(
 
     # from com.google.inject:guice:4.2.3
     # This is a root requested Maven artifact.
-    java_import(
+    jvm_import(
         name = "com_google_inject__guice__4_2_3",
         jars = ["@com_google_inject__guice__4_2_3//file"],
         testonly = False,
@@ -477,7 +477,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from com.google.j2objc:j2objc-annotations:1.1
-    java_import(
+    jvm_import(
         name = "com_google_j2objc__j2objc_annotations__1_1",
         jars = ["@com_google_j2objc__j2objc_annotations__1_1//file"],
         testonly = False,
@@ -503,7 +503,7 @@ def generate_transitive_dependency_targets(
 
     # from com.sun.activation:jakarta.activation:1.2.1
     # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
-    java_import(
+    jvm_import(
         name = "com_sun_activation__jakarta_activation__1_2_1",
         jars = ["@com_sun_activation__jakarta_activation__1_2_1//file"],
         testonly = False,
@@ -531,7 +531,7 @@ def generate_transitive_dependency_targets(
     # from commons-codec:commons-codec:1.13
     # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.12'.
     # This is a dependency of 'org.jboss.resteasy:resteasy-client:3.13.1.Final'.
-    java_import(
+    jvm_import(
         name = "commons_codec__commons_codec__1_13",
         jars = ["@commons_codec__commons_codec__1_13//file"],
         testonly = False,
@@ -559,7 +559,7 @@ def generate_transitive_dependency_targets(
     # from commons-io:commons-io:2.5
     # This is a dependency of 'org.jboss.resteasy:resteasy-client:3.13.1.Final'.
     # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
-    java_import(
+    jvm_import(
         name = "commons_io__commons_io__2_5",
         jars = ["@commons_io__commons_io__2_5//file"],
         testonly = False,
@@ -585,7 +585,7 @@ def generate_transitive_dependency_targets(
 
     # from commons-logging:commons-logging:1.2
     # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.12'.
-    java_import(
+    jvm_import(
         name = "commons_logging__commons_logging__1_2",
         jars = ["@commons_logging__commons_logging__1_2//file"],
         testonly = False,
@@ -611,7 +611,7 @@ def generate_transitive_dependency_targets(
 
     # from jakarta.validation:jakarta.validation-api:2.0.2
     # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
-    java_import(
+    jvm_import(
         name = "jakarta_validation__jakarta_validation_api__2_0_2",
         jars = ["@jakarta_validation__jakarta_validation_api__2_0_2//file"],
         testonly = False,
@@ -637,7 +637,7 @@ def generate_transitive_dependency_targets(
 
     # from javax.inject:javax.inject:1
     # This is a dependency of 'com.google.inject:guice:4.2.3'.
-    java_import(
+    jvm_import(
         name = "javax_inject__javax_inject__1",
         jars = ["@javax_inject__javax_inject__1//file"],
         testonly = False,
@@ -665,7 +665,7 @@ def generate_transitive_dependency_targets(
     # from org.apache.httpcomponents:httpclient:4.5.12
     # This is a dependency of 'org.jboss.resteasy:resteasy-client:3.13.1.Final'.
     # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
-    java_import(
+    jvm_import(
         name = "org_apache_httpcomponents__httpclient__4_5_12",
         jars = ["@org_apache_httpcomponents__httpclient__4_5_12//file"],
         testonly = False,
@@ -695,7 +695,7 @@ def generate_transitive_dependency_targets(
 
     # from org.apache.httpcomponents:httpcore:4.4.13
     # This is a dependency of 'org.apache.httpcomponents:httpclient:4.5.12'.
-    java_import(
+    jvm_import(
         name = "org_apache_httpcomponents__httpcore__4_4_13",
         jars = ["@org_apache_httpcomponents__httpcore__4_4_13//file"],
         testonly = False,
@@ -719,7 +719,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.checkerframework:checker-qual:2.5.2
-    java_import(
+    jvm_import(
         name = "org_checkerframework__checker_qual__2_5_2",
         jars = ["@org_checkerframework__checker_qual__2_5_2//file"],
         testonly = False,
@@ -743,7 +743,7 @@ def generate_transitive_dependency_targets(
     )
 
     # from org.codehaus.mojo:animal-sniffer-annotations:1.17
-    java_import(
+    jvm_import(
         name = "org_codehaus_mojo__animal_sniffer_annotations__1_17",
         jars = ["@org_codehaus_mojo__animal_sniffer_annotations__1_17//file"],
         testonly = False,
@@ -771,7 +771,7 @@ def generate_transitive_dependency_targets(
     # from org.jboss.logging:jboss-logging:3.3.2.Final
     # This is a dependency of 'org.jboss.resteasy:resteasy-client:3.13.1.Final'.
     # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
-    java_import(
+    jvm_import(
         name = "org_jboss_logging__jboss_logging__3_3_2_Final",
         jars = ["@org_jboss_logging__jboss_logging__3_3_2_Final//file"],
         testonly = False,
@@ -797,7 +797,7 @@ def generate_transitive_dependency_targets(
 
     # from org.jboss.resteasy:resteasy-client:3.13.1.Final
     # This is a root requested Maven artifact.
-    java_import(
+    jvm_import(
         name = "org_jboss_resteasy__resteasy_client__3_13_1_Final",
         jars = ["@org_jboss_resteasy__resteasy_client__3_13_1_Final//file"],
         testonly = False,
@@ -837,7 +837,7 @@ def generate_transitive_dependency_targets(
 
     # from org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final
     # This is a dependency of 'org.jboss.resteasy:resteasy-client:3.13.1.Final'.
-    java_import(
+    jvm_import(
         name = "org_jboss_resteasy__resteasy_jaxrs__3_13_1_Final",
         jars = ["@org_jboss_resteasy__resteasy_jaxrs__3_13_1_Final//file"],
         testonly = False,
@@ -874,7 +874,7 @@ def generate_transitive_dependency_targets(
 
     # from org.jboss.spec.javax.annotation:jboss-annotations-api_1.3_spec:2.0.1.Final
     # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
-    java_import(
+    jvm_import(
         name = "org_jboss_spec_javax_annotation__jboss_annotations_api_1_3_spec__2_0_1_Final",
         jars = ["@org_jboss_spec_javax_annotation__jboss_annotations_api_1_3_spec__2_0_1_Final//file"],
         testonly = False,
@@ -905,7 +905,7 @@ def generate_transitive_dependency_targets(
     # from org.jboss.spec.javax.ws.rs:jboss-jaxrs-api_2.1_spec:2.0.1.Final
     # This is a dependency of 'org.jboss.resteasy:resteasy-client:3.13.1.Final'.
     # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
-    java_import(
+    jvm_import(
         name = "org_jboss_spec_javax_ws_rs__jboss_jaxrs_api_2_1_spec__2_0_1_Final",
         jars = ["@org_jboss_spec_javax_ws_rs__jboss_jaxrs_api_2_1_spec__2_0_1_Final//file"],
         testonly = False,
@@ -934,7 +934,7 @@ def generate_transitive_dependency_targets(
 
     # from org.jboss.spec.javax.xml.bind:jboss-jaxb-api_2.3_spec:2.0.0.Final
     # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
-    java_import(
+    jvm_import(
         name = "org_jboss_spec_javax_xml_bind__jboss_jaxb_api_2_3_spec__2_0_0_Final",
         jars = ["@org_jboss_spec_javax_xml_bind__jboss_jaxb_api_2_3_spec__2_0_0_Final//file"],
         testonly = False,
@@ -960,7 +960,7 @@ def generate_transitive_dependency_targets(
 
     # from org.reactivestreams:reactive-streams:1.0.3
     # This is a dependency of 'org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final'.
-    java_import(
+    jvm_import(
         name = "org_reactivestreams__reactive_streams__1_0_3",
         jars = ["@org_reactivestreams__reactive_streams__1_0_3//file"],
         testonly = False,

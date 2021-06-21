@@ -18,18 +18,18 @@ def {{generate_transitive_dependency_targets}}(
         name = "{{generate_transitive_dependency_targets}}",
         java_library = native.java_library,
         java_plugin = native.java_plugin,
-        java_import = jvm_import,
+        jvm_import = jvm_import,
         aar_import = _no_op_missing_aar_impl):
     """
     Macro to set up the transitive rules.
 
-    You can provide your own implementation of java_import, aar_import, etc. This can be used
+    You can provide your own implementation of jvm_import, aar_import, etc. This can be used
     in cases where you need to shade (or jar_jar or jetify) your jars.
 
     Args:
         name: a unique name for this macro. Not needed to specify.
         java_library: rule implementation for java_library. Defaults to native.java_library.
         java_plugin: rule implementation for java_plugin. Defaults to native.java_plugin.
-        java_import: rule implementation for java_import. Defaults to native.java_import.
+        jvm_import: rule implementation for jvm_import. Defaults to jvm_import.
         aar_import: rule implementation for aar_import. Required only if you have Android dependencies.
     """

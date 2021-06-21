@@ -253,19 +253,19 @@ def generate_transitive_dependency_targets(
         name = "generate_transitive_dependency_targets",
         java_library = native.java_library,
         java_plugin = native.java_plugin,
-        java_import = jvm_import,
+        jvm_import = jvm_import,
         aar_import = _no_op_missing_aar_impl):
     """
     Macro to set up the transitive rules.
 
-    You can provide your own implementation of java_import, aar_import, etc. This can be used
+    You can provide your own implementation of jvm_import, aar_import, etc. This can be used
     in cases where you need to shade (or jar_jar or jetify) your jars.
 
     Args:
         name: a unique name for this macro. Not needed to specify.
         java_library: rule implementation for java_library. Defaults to native.java_library.
         java_plugin: rule implementation for java_plugin. Defaults to native.java_plugin.
-        java_import: rule implementation for java_import. Defaults to native.java_import.
+        jvm_import: rule implementation for jvm_import. Defaults to jvm_import.
         aar_import: rule implementation for aar_import. Required only if you have Android dependencies.
     """
 
@@ -357,7 +357,7 @@ def generate_transitive_dependency_targets(
     # This is a dependency of 'androidx.vectordrawable:vectordrawable:1.0.1'.
     # This is a dependency of 'androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01'.
     # This is a dependency of 'androidx.viewpager:viewpager:1.0.0'.
-    java_import(
+    jvm_import(
         name = "androidx_annotation__annotation__1_0_0",
         jars = ["@androidx_annotation__annotation__1_0_0//file"],
         testonly = False,
@@ -417,7 +417,7 @@ def generate_transitive_dependency_targets(
     # This is a dependency of 'androidx.lifecycle:lifecycle-livedata-core:2.0.0'.
     # This is a dependency of 'androidx.lifecycle:lifecycle-livedata:2.0.0'.
     # This is a dependency of 'androidx.lifecycle:lifecycle-runtime:2.0.0'.
-    java_import(
+    jvm_import(
         name = "androidx_arch_core__core_common__2_0_0",
         jars = ["@androidx_arch_core__core_common__2_0_0//file"],
         testonly = False,
@@ -493,7 +493,7 @@ def generate_transitive_dependency_targets(
     # This is a dependency of 'androidx.appcompat:appcompat:1.0.2'.
     # This is a dependency of 'androidx.core:core:1.1.0-alpha01'.
     # This is a dependency of 'androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01'.
-    java_import(
+    jvm_import(
         name = "androidx_collection__collection__1_0_0",
         jars = ["@androidx_collection__collection__1_0_0//file"],
         testonly = False,
@@ -796,7 +796,7 @@ def generate_transitive_dependency_targets(
     # from androidx.lifecycle:lifecycle-common:2.0.0
     # This is a dependency of 'androidx.lifecycle:lifecycle-livedata-core:2.0.0'.
     # This is a dependency of 'androidx.lifecycle:lifecycle-runtime:2.0.0'.
-    java_import(
+    jvm_import(
         name = "androidx_lifecycle__lifecycle_common__2_0_0",
         jars = ["@androidx_lifecycle__lifecycle_common__2_0_0//file"],
         testonly = False,

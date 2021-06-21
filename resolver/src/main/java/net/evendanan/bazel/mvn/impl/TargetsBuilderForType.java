@@ -27,6 +27,8 @@ public class TargetsBuilderForType {
         final TargetType type = targetTypeProvider.apply(dependency.mavenCoordinate());
         if (type == null) throw new IllegalArgumentException("Dependency: " + dependency.mavenCoordinate() + ": Unable to figure out builder for type NULL. This may be caused of unknown root dependency.");
         switch (type) {
+            case pom:
+                return TargetsBuilders.POM_IMPORT;
             case jar:
                 return TargetsBuilders.JAVA_IMPORT;
             case aar:

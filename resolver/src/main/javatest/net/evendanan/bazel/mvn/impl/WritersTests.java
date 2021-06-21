@@ -98,19 +98,19 @@ public class WritersTests {
                     "        name = \"macro_name\",\n" +
                     "        java_library = native.java_library,\n" +
                     "        java_plugin = native.java_plugin,\n" +
-                    "        java_import = jvm_import,\n" +
+                    "        jvm_import = jvm_import,\n" +
                     "        aar_import = _no_op_missing_aar_impl):\n" +
                     "    \"\"\"\n" +
                     "    Macro to set up the transitive rules.\n" +
                     "\n" +
-                    "    You can provide your own implementation of java_import, aar_import, etc. This can be used\n" +
+                    "    You can provide your own implementation of jvm_import, aar_import, etc. This can be used\n" +
                     "    in cases where you need to shade (or jar_jar or jetify) your jars.\n" +
                     "\n" +
                     "    Args:\n" +
                     "        name: a unique name for this macro. Not needed to specify.\n" +
                     "        java_library: rule implementation for java_library. Defaults to native.java_library.\n" +
                     "        java_plugin: rule implementation for java_plugin. Defaults to native.java_plugin.\n" +
-                    "        java_import: rule implementation for java_import. Defaults to native.java_import.\n" +
+                    "        jvm_import: rule implementation for jvm_import. Defaults to jvm_import.\n" +
                     "        aar_import: rule implementation for aar_import. Required only if you have Android dependencies.\n" +
                     "    \"\"\"\n" +
                     "\n" +
