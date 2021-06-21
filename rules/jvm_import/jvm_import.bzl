@@ -69,6 +69,11 @@ def _jvm_import_impl(ctx):
                 for dep in ctx.attr.deps
                 if JavaInfo in dep
             ],
+            exports = [
+                dep[JavaInfo]
+                for dep in ctx.attr.exports
+                if JavaInfo in dep
+            ],
             runtime_deps = [
                 dep[JavaInfo]
                 for dep in ctx.attr.runtime_deps
