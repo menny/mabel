@@ -14,11 +14,10 @@ This WORKSPACE will provide `mabel_rule` rule and `artifact` macro which will au
 * Automatically detects which rule-type to create for a given dependency:
   * `aar_import` for Android artifacts.
   * `java_plugin` + `java_library` for annotation-processors. More about this [here](#annotation-processors).
-  * `kt_jvm_library` for Kotlin modules. If you do not use Kotlin, you can omit this argument.
-  * `java_import` for anything else.
-* Allow implementation replacement for `java_import` and `aar_import`. Those can be replaced with another rule or macro. See `examples/android/program/BUILD.bazel` for an example.
+  * [`jvm_import`](rules/jvm_import/jvm_import.bzl) for anything else.
+* Allow implementation replacement for `jvm_import` and `aar_import`. Those can be replaced with another rule or macro. See `examples/android/program/BUILD.bazel` for an example.
 * Support custom Maven repo URLs and locking dependency for a Maven repository.
-* Adds `licenses` data to `java_import` rules, if license is declared in the artifact's POM file. Also, adds license metadata to the targets' `tags` attribute:
+* Adds `licenses` data to `jvm_import` rules, if license is declared in the artifact's POM file. Also, adds license metadata to the targets' `tags` attribute:
   * `mabel_license_name` - The name of the license, as appears in the `pom.xml` file.
   * `mabel_license_url` - The URL to the license's file, as appears in the `pom.xml` file.
   * `mabel_license_detected_type` - The type of the license (`Apache`, `MIT`, `GPL`, etc.) as detected by `mabel`. 
@@ -27,7 +26,7 @@ This WORKSPACE will provide `mabel_rule` rule and `artifact` macro which will au
   * Profiles and placeholders.
   * Version-specification.
   * Dependencies that do not have POM.
-  * Exports the Maven coordinate as a tag in the `java_import` rule. This can help with Bazel's [pom_file](https://github.com/google/bazel-common/blob/master/tools/maven/pom_file.bzl) rule.
+  * Exports the Maven coordinate as a tag in the `jvm_import` rule. This can help with Bazel's [pom_file](https://github.com/google/bazel-common/blob/master/tools/maven/pom_file.bzl) rule.
 * Calculates `sha256` for each remote artifact.
 * Produces a _lock_ file that describes the dependency graph. This file should be checked into your repo.
 
@@ -165,7 +164,7 @@ This rule declares a Maven dependency to be resolved and import into your WORKSP
 Attributes:
 
 * `coordinate`: Maven coordinate in the form of `group-id:artifact-id:version`.
-* `type`: What is the type of target(s) to create for this artifact. Default `auto`. Can be `jar`, `aar`, `kotlin`, `kotlin_aar`, `naive`, `processor`, `auto`. For more details, see [here](resolver/src/main/java/net/evendanan/bazel/mvn/api/model/TargetType.java).
+* `type`: What is the type of target(s) to create for this artifact. Default `auto`. Can be `jar`, `aar`, `naive`, `processor`, `auto`. For more details, see [here](resolver/src/main/java/net/evendanan/bazel/mvn/api/model/TargetType.java).
 * `test_only`: Mark this dependency to be used in tests only.
 * `maven_exclude_deps`: List of Maven dependencies which should not be resolved. You can omit the `version` or both `artifact-id:version`.
 * `repositories`: List of URLs that point to Maven servers. The default list includes Maven-Central.

@@ -2,6 +2,7 @@ package net.evendanan.bazel.mvn.impl;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Charsets;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.io.Resources;
 
 import net.evendanan.bazel.mvn.api.RuleWriter;
@@ -21,6 +22,9 @@ import java.util.stream.Collectors;
 
 public class RuleWriters {
 
+    private static final String INDENT = "    ";
+    private static final String NEW_LINE = System.lineSeparator();
+
     private static StringBuilder readTemplate(String templateResourceName, Map<String, String> replacements) throws IOException {
         final StringBuilder stringBuilder = new StringBuilder();
         Resources.readLines(Resources.getResource(templateResourceName), Charsets.UTF_8)
@@ -38,9 +42,6 @@ public class RuleWriters {
         return stringBuilder;
     }
 
-    private static final String INDENT = "    ";
-    private static final String NEW_LINE = System.lineSeparator();
-
     @VisibleForTesting
     static String getFilePathFromMavenName(String group, String artifactId) {
         return String.format(Locale.US, "%s/%s/", group.replaceAll("\\.", "/"), artifactId);
@@ -50,10 +51,12 @@ public class RuleWriters {
 
         private final File outputFile;
         private final String macroName;
+        private final String mabelRepositoryName;
 
-        public HttpRepoRulesMacroWriter(final File outputFile, final String macroName) {
+        public HttpRepoRulesMacroWriter(final File outputFile, final String macroName, final String mabelRepositoryName) {
             this.outputFile = outputFile;
             this.macroName = macroName;
+            this.mabelRepositoryName = mabelRepositoryName;
         }
 
         @Override
@@ -62,11 +65,15 @@ public class RuleWriters {
 
             StringBuilder httpRulesText = readTemplate(
                     "dependencies-http-repo-rules.bzl.template",
-                    Collections.singletonMap("{{generate_workspace_rules}}", macroName));
+                    ImmutableMap.of(
+                            "{{generate_workspace_rules}}", macroName,
+                            "{{repository_rule_name}}", mabelRepositoryName
+                    )
+            );
 
             try (final OutputStreamWriter fileWriter =
-                    new OutputStreamWriter(
-                            new FileOutputStream(outputFile, true), Charsets.UTF_8)) {
+                         new OutputStreamWriter(
+                                 new FileOutputStream(outputFile, true), Charsets.UTF_8)) {
                 fileWriter.append(httpRulesText.toString()).append(NEW_LINE);
 
                 if (targets.isEmpty()) {
@@ -105,8 +112,8 @@ public class RuleWriters {
                     Collections.singletonMap("{{generate_transitive_dependency_targets}}", macroName));
 
             try (final OutputStreamWriter fileWriter =
-                    new OutputStreamWriter(
-                            new FileOutputStream(outputFile, true), Charsets.UTF_8)) {
+                         new OutputStreamWriter(
+                                 new FileOutputStream(outputFile, true), Charsets.UTF_8)) {
                 fileWriter.append(NEW_LINE);
                 fileWriter.append(targetsMacro.toString()).append(NEW_LINE);
 
@@ -169,10 +176,10 @@ public class RuleWriters {
                 }
 
                 try (final OutputStreamWriter fileWriter =
-                        new OutputStreamWriter(
-                                new FileOutputStream(
-                                        new File(buildFileFolder, "BUILD.bazel"), false),
-                                Charsets.UTF_8)) {
+                             new OutputStreamWriter(
+                                     new FileOutputStream(
+                                             new File(buildFileFolder, "BUILD.bazel"), false),
+                                     Charsets.UTF_8)) {
                     fileWriter.append(readTemplate("dependencies-sub-folder-header.bzl.template",
                             Collections.singletonMap("{{MVN_COORDINATES}}", key))).append(NEW_LINE);
 

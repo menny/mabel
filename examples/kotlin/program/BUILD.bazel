@@ -1,11 +1,8 @@
-load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_binary", "kt_jvm_import", "kt_jvm_library")
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_binary")
 load("@mabel//rules/maven_deps:mabel.bzl", "artifact", "mabel_rule")
 load("//program/main_deps:dependencies.bzl", "generate_transitive_dependency_targets")
 
-generate_transitive_dependency_targets(
-    kt_jvm_import = kt_jvm_import,
-    kt_jvm_library = kt_jvm_library,
-)
+generate_transitive_dependency_targets()
 
 mabel_rule(
     name = "main_deps",

@@ -30,13 +30,7 @@ public class TargetsBuilderForTypeTest {
         Assert.assertSame(TargetsBuilders.JAVA_IMPORT, underTest.generateBuilder(dependency));
 
         returnValue.set(TargetType.aar);
-        Assert.assertSame(TargetsBuilders.AAR_IMPORT, underTest.generateBuilder(dependency));
-
-        returnValue.set(TargetType.kotlin);
-        Assert.assertSame(TargetsBuilders.KOTLIN_IMPORT, underTest.generateBuilder(dependency));
-
-        returnValue.set(TargetType.kotlin_aar);
-        Assert.assertSame(TargetsBuilders.KOTLIN_ANDROID_IMPORT, underTest.generateBuilder(dependency));
+        Assert.assertSame(TargetsBuilders.AAR_IMPORT_WITHOUT_EXPORTS, underTest.generateBuilder(dependency));
 
         returnValue.set(TargetType.naive);
         Assert.assertTrue(underTest.generateBuilder(dependency) instanceof TargetsBuilderForType.NaiveBuilder);

@@ -27,14 +27,12 @@ public class TargetsBuilderForType {
         final TargetType type = targetTypeProvider.apply(dependency.mavenCoordinate());
         if (type == null) throw new IllegalArgumentException("Dependency: " + dependency.mavenCoordinate() + ": Unable to figure out builder for type NULL. This may be caused of unknown root dependency.");
         switch (type) {
+            case pom:
+                return TargetsBuilders.POM_IMPORT;
             case jar:
                 return TargetsBuilders.JAVA_IMPORT;
             case aar:
-                return TargetsBuilders.AAR_IMPORT;
-            case kotlin:
-                return TargetsBuilders.KOTLIN_IMPORT;
-            case kotlin_aar:
-                return TargetsBuilders.KOTLIN_ANDROID_IMPORT;
+                return TargetsBuilders.AAR_IMPORT_WITHOUT_EXPORTS;
             case naive:
                 return new NaiveBuilder();
             case processor:
@@ -69,8 +67,6 @@ public class TargetsBuilderForType {
             return RuleClassifiers.priorityRuleClassifier(
                     Arrays.asList(
                             new RuleClassifiers.PomClassifier(),
-                            new RuleClassifiers.NaiveKotlinAarClassifier(),
-                            new RuleClassifiers.NaiveKotlinClassifier(),
                             new RuleClassifiers.AarClassifier()),
                     TargetsBuilders.JAVA_IMPORT,
                     dependency).buildTargets(dependency, dependencyTools);

@@ -30,6 +30,40 @@ import java.util.stream.Collectors;
 
 public class TargetsBuilders {
 
+    public static final TargetsBuilder POM_IMPORT =
+            (dependency, dependencyTools) -> {
+                List<Target> targets = new ArrayList<>();
+                targets.add(new Target(
+                        dependencyTools.mavenCoordinates(dependency),
+                        "java_library",
+                        dependencyTools.repositoryRuleName(dependency))
+                        .addBoolean("testonly", dependency.testOnly())
+                        .addList("tags", dependencyTagsList(dependency, dependencyTools))
+                        .addList(
+                                "licenses",
+                                dependency.licenses().stream()
+                                        .map(License::name)
+                                        .map(LicenseTools::classFromLicenseName)
+                                        .filter(Objects::nonNull)
+                                        .map(Object::toString)
+                                        .collect(Collectors.toList()))
+                        .addList(
+                                "exports",
+                                convertRulesToStrings(dependency.dependencies(), dependencyTools))
+                        .addList(
+                                "runtime_deps",
+                                convertRulesToStrings(
+                                        dependency.runtimeDependencies(), dependencyTools)));
+                targets.add(
+                        addAlias(
+                                dependency,
+                                dependency.mavenCoordinate().artifactId(),
+                                "",
+                                dependencyTools));
+
+                return targets;
+            };
+
     public static final TargetsBuilder JAVA_IMPORT =
             (dependency, dependencyTools) -> {
                 List<Target> targets = new ArrayList<>();
@@ -43,22 +77,20 @@ public class TargetsBuilders {
 
                 return targets;
             };
-    static final TargetsBuilder KOTLIN_IMPORT = new KotlinImport();
-    static final TargetsBuilder KOTLIN_ANDROID_IMPORT = new KotlinAndroidImport();
-    static final TargetsBuilder AAR_IMPORT = new AarImport();
+    static final TargetsBuilder AAR_IMPORT = new AarImport(true);
+    //due to https://github.com/bazelbuild/bazel/issues/13567
+    static final TargetsBuilder AAR_IMPORT_WITHOUT_EXPORTS = new AarImport(false);
 
     private static Target addJavaImportRule(
             Dependency dependency, DependencyTools dependencyTools) {
         final Target target =
                 new Target(
                         dependencyTools.mavenCoordinates(dependency),
-                        "java_import",
+                        "jvm_import",
                         dependencyTools.repositoryRuleName(dependency))
                         .addList(
                                 "jars",
-                                "pom".equalsIgnoreCase(dependency.mavenCoordinate().packaging())
-                                        ? Collections.emptyList()
-                                        : Collections.singletonList(
+                                Collections.singletonList(
                                         String.format(
                                                 Locale.ROOT,
                                                 "@%s//file",
@@ -174,12 +206,6 @@ public class TargetsBuilders {
                 .setPublicVisibility();
     }
 
-    private static <T> Collection<T> addItem(Collection<T> list, T item) {
-        List<T> newList = new ArrayList<>(list);
-        newList.add(item);
-        return newList;
-    }
-
     public static class HttpTargetsBuilder implements TargetsBuilder {
         private static final char[] hexArray = "0123456789abcdef".toCharArray();
         private final boolean calculateSha;
@@ -274,100 +300,6 @@ public class TargetsBuilders {
         @VisibleForTesting
         public Collection<TargetsBuilder> getTargetsBuilders() {
             return targetsBuilders;
-        }
-    }
-
-    public static class KotlinImport implements TargetsBuilder {
-
-        @Override
-        public List<Target> buildTargets(
-                final Dependency dependency, DependencyTools dependencyTools) {
-            List<Target> targets = new ArrayList<>();
-
-            //will create a kt_import for the jar
-            //and another kt_library for the jar+deps
-            //the kt_library is the visible one
-            final String ktTargetName = getKotlinJvmRepositoryRuleName(dependency, dependencyTools);
-            final String ktTargetImportName = ktTargetName + "_kt_jvm_import";
-            targets.add(
-                    new Target(
-                            dependencyTools.mavenCoordinates(dependency),
-                            "kt_jvm_import",
-                            ktTargetImportName)
-                            .addString(
-                                    "jar",
-                                    String.format(
-                                            Locale.US,
-                                            "@%s//file",
-                                            dependencyTools.repositoryRuleName(dependency)))
-                            .setPrivateVisibility());
-            targets.add(
-                    new Target(
-                            dependencyTools.mavenCoordinates(dependency),
-                            "kt_jvm_library",
-                            ktTargetName)
-                            .addList(
-                                    "tags",
-                                    Collections.singletonList(
-                                            String.format(
-                                                    Locale.ROOT,
-                                                    "maven_coordinates=%s",
-                                                    dependencyTools.mavenCoordinates(dependency))))
-                            .addList(
-                                    "exports",
-                                    addItem(convertRulesToStrings(dependency.exports(), dependencyTools), ":" + ktTargetImportName))
-                            .addList(
-                                    "runtime_deps",
-                                    convertRulesToStrings(
-                                            dependency.runtimeDependencies(), dependencyTools)));
-
-            targets.add(
-                    addAlias(
-                            dependency,
-                            dependency.mavenCoordinate().artifactId(),
-                            "",
-                            dependencyTools));
-
-            return targets;
-        }
-
-        protected String getKotlinJvmRepositoryRuleName(Dependency dependency, DependencyTools dependencyTools) {
-            return dependencyTools.repositoryRuleName(dependency);
-        }
-    }
-
-    public static class KotlinAndroidImport extends KotlinImport {
-
-        @Override
-        protected String getKotlinJvmRepositoryRuleName(Dependency dependency, DependencyTools dependencyTools) {
-            return super.getKotlinJvmRepositoryRuleName(dependency, dependencyTools) + "___kt_library";
-        }
-
-        @Override
-        public List<Target> buildTargets(
-                final Dependency dependency, DependencyTools dependencyTools) {
-            List<Target> targets = super.buildTargets(dependency, dependencyTools);
-
-            targets.add(
-                    new Target(
-                            dependencyTools.mavenCoordinates(dependency),
-                            "kt_android_library",
-                            dependencyTools.repositoryRuleName(dependency))
-                            .addList(
-                                    "deps",
-                                    convertRulesToStrings(dependency.dependencies(), dependencyTools))
-                            .addList(
-                                    "exports",
-                                    addItem(convertRulesToStrings(dependency.exports(), dependencyTools), ":" + getKotlinJvmRepositoryRuleName(dependency, dependencyTools)))
-                            .addList(
-                                    "tags",
-                                    Collections.singletonList(
-                                            String.format(
-                                                    Locale.ROOT,
-                                                    "maven_coordinates=%s",
-                                                    dependencyTools.mavenCoordinates(dependency)))));
-
-            return targets;
         }
     }
 
@@ -494,6 +426,11 @@ public class TargetsBuilders {
     }
 
     static class AarImport implements TargetsBuilder {
+        private final boolean mWriteExports;
+
+        AarImport(boolean writeExports) {
+            mWriteExports = writeExports;
+        }
 
         @Override
         public List<Target> buildTargets(
@@ -524,7 +461,9 @@ public class TargetsBuilders {
                             .addList("deps", convertRulesToStrings(deps, dependencyTools))
                             .addList(
                                     "exports",
-                                    convertRulesToStrings(dependency.exports(), dependencyTools)));
+                                    mWriteExports ?
+                                            convertRulesToStrings(dependency.exports(), dependencyTools)
+                                            : Collections.emptyList()));
 
             targets.add(
                     addAlias(

@@ -39,7 +39,7 @@ _mabel_maven_dependency_graph_resolving_rule = rule(
         "maven_exclude_deps": attr.string_list(allow_empty = True, default = [], doc = "List of Maven dependencies which should not be resolved. You can omit the `version` or both `artifact-id:version`."),
         "repositories": attr.string_list(allow_empty = False, default = DEFAULT_MAVEN_SERVERS, doc = "List of URLs that point to Maven servers. Defaut is Maven-Central."),
         "test_only": attr.bool(default = False, doc = "Should this artifact be marked as test_only. Default is False.", mandatory = False),
-        "type": attr.string(mandatory = True, default = "inherit", values = ["inherit", "jar", "aar", "kotlin", "kotlin_aar", "naive", "processor", "auto"], doc = "The type of artifact targets to generate."),
+        "type": attr.string(mandatory = True, default = "inherit", values = ["inherit", "jar", "aar", "naive", "processor", "auto"], doc = "The type of artifact targets to generate."),
         "_jdk": attr.label(default = Label("@bazel_tools//tools/jdk:remote_jdk11"), providers = [java_common.JavaRuntimeInfo]),
         "_resolver": attr.label(executable = True, allow_files = True, cfg = "host", default = Label("//resolver:resolver_bin")),
     },
@@ -70,6 +70,7 @@ def artifact(coordinate, maven_exclude_deps = [], repositories = DEFAULT_MAVEN_S
 script_merger_template = """
 {java} -jar {merger} {graph_files_list} \
     --output_macro_file_path={output_filename} \
+    --repository_rule_name={repository_rule_name} \
     --output_target_build_files_base_path=${{BUILD_WORKING_DIRECTORY}}/{output_target_build_files_base_path} \
     --calculate_sha={calculate_sha} \
     --fetch_srcjar={fetch_srcjar} \
@@ -101,6 +102,7 @@ def _impl_merger(ctx):
         java = java_path,
         merger = ctx.executable._merger.short_path,
         graph_files_list = " ".join(["--graph_file={}".format(file.short_path) for file in source_files]),
+        repository_rule_name = ctx.attr.mabel_repository_rule_name,
         output_filename = output_filename,
         output_target_build_files_base_path = output_target_build_files_base_path,
         package_path = package_path,
@@ -139,11 +141,12 @@ mabel_rule = rule(
         "calculate_sha": attr.bool(default = True, doc = "Will also calculate SHA256 of the artifact. Default True", mandatory = False),
         "debug_logs": attr.bool(default = False, doc = "If set to True, will print out debug logs while resolving dependencies. Default is False.", mandatory = False),
         "default_exports_generation": attr.string(default = "requested_deps", values = ["all", "requested_deps", "none"], doc = "For which targets should we generate exports attribute."),
-        "default_target_type": attr.string(default = "auto", values = ["jar", "aar", "kotlin", "kotlin_aar", "naive", "processor", "auto"], doc = "The type of artifact targets to generate."),
+        "default_target_type": attr.string(default = "auto", values = ["jar", "aar", "naive", "processor", "auto"], doc = "The type of artifact targets to generate."),
         "fetch_srcjar": attr.bool(default = False, doc = "Will also try to locate srcjar for the dependency. Default False", mandatory = False),
         "generate_deps_sub_folder": attr.bool(default = True, doc = "If set to True (the default), will create sub-folders with BUILD.bazel file for each dependency.", mandatory = False),
         "generated_targets_prefix": attr.string(default = "", doc = "A prefix to add to all generated targets. Default is an empty string, meaning no prefix.", mandatory = False),
         "keep_output_folder": attr.bool(default = False, doc = "If set to False (the default), will first remove the output folder.", mandatory = False),
+        "mabel_repository_rule_name": attr.string(mandatory = False, default = "mabel", doc = "The name of the mabel remote-repository name (the name of the `http_archive` used to import _mabel_). Default is `mabel`."),
         "maven_deps": attr.label_list(
             mandatory = True,
             allow_empty = False,

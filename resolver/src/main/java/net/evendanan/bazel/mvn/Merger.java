@@ -71,7 +71,7 @@ public class Merger {
 
         merger = new DefaultMerger(options.version_conflict_resolver.createMerger());
         repositoryRulesMacroWriter =
-                new RuleWriters.HttpRepoRulesMacroWriter(macrosFile, "generate_workspace_rules");
+                new RuleWriters.HttpRepoRulesMacroWriter(macrosFile, "generate_workspace_rules", options.repository_rule_name);
         targetsMacroWriter =
                 new RuleWriters.TransitiveRulesMacroWriter(
                         macrosFile, "generate_transitive_dependency_targets");
