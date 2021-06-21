@@ -25,7 +25,7 @@ public class WritersTests {
     private static final String REPO_RULES_MACRO_OUTPUT_WITH_SOURCES =
             "# Loading a drop-in replacement for native.http_file\n"
                     + "load(\"@bazel_tools//tools/build_defs/repo:http.bzl\", \"http_file\")\n"
-                    + "load(\"@mabel//rules/jvm_import:jvm_import.bzl\", \"jvm_import\")\n"
+                    + "load(\"@none_default_name_mabel//rules/jvm_import:jvm_import.bzl\", \"jvm_import\")\n"
                     + "\n"
                     + "def macro_name(name = \"macro_name\"):\n"
                     + "    \"\"\"\n"
@@ -258,7 +258,7 @@ public class WritersTests {
     public void testRepositoryRulesMacroWriter() throws Exception {
         File outputFile = File.createTempFile("testRepositoryRulesMacroWriter", ".bzl");
         RuleWriters.HttpRepoRulesMacroWriter writer =
-                new RuleWriters.HttpRepoRulesMacroWriter(outputFile, "macro_name");
+                new RuleWriters.HttpRepoRulesMacroWriter(outputFile, "macro_name", "mabel");
         writer.write(
                 Arrays.asList(
                         new TargetsBuilders.HttpTargetsBuilder(false, dep -> URI.create(""))
@@ -307,7 +307,7 @@ public class WritersTests {
 
         File outputFile = File.createTempFile("testRepositoryRulesMacroWriter", ".bzl");
         RuleWriters.HttpRepoRulesMacroWriter writer =
-                new RuleWriters.HttpRepoRulesMacroWriter(outputFile, "macro_name");
+                new RuleWriters.HttpRepoRulesMacroWriter(outputFile, "macro_name", "none_default_name_mabel");
         writer.write(targets);
 
         Assert.assertEquals(REPO_RULES_MACRO_OUTPUT_WITH_SOURCES, readFileContents(outputFile));

@@ -70,6 +70,7 @@ def artifact(coordinate, maven_exclude_deps = [], repositories = DEFAULT_MAVEN_S
 script_merger_template = """
 {java} -jar {merger} {graph_files_list} \
     --output_macro_file_path={output_filename} \
+    --repository_rule_name={repository_rule_name}
     --output_target_build_files_base_path=${{BUILD_WORKING_DIRECTORY}}/{output_target_build_files_base_path} \
     --calculate_sha={calculate_sha} \
     --fetch_srcjar={fetch_srcjar} \
@@ -101,6 +102,7 @@ def _impl_merger(ctx):
         java = java_path,
         merger = ctx.executable._merger.short_path,
         graph_files_list = " ".join(["--graph_file={}".format(file.short_path) for file in source_files]),
+        repository_rule_name = ctx.attr.mabel_repository_rule_name,
         output_filename = output_filename,
         output_target_build_files_base_path = output_target_build_files_base_path,
         package_path = package_path,
@@ -144,6 +146,7 @@ mabel_rule = rule(
         "generate_deps_sub_folder": attr.bool(default = True, doc = "If set to True (the default), will create sub-folders with BUILD.bazel file for each dependency.", mandatory = False),
         "generated_targets_prefix": attr.string(default = "", doc = "A prefix to add to all generated targets. Default is an empty string, meaning no prefix.", mandatory = False),
         "keep_output_folder": attr.bool(default = False, doc = "If set to False (the default), will first remove the output folder.", mandatory = False),
+        "mabel_repository_rule_name": attr.string(mandatory = False, default = "mabel", doc = "The name of the mabel remote-repository name (the name of the `http_archive` used to import _mabel_). Default is `mabel`."),
         "maven_deps": attr.label_list(
             mandatory = True,
             allow_empty = False,

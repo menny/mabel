@@ -29,6 +29,12 @@ public class CommandLineOptions {
     String output_macro_file = "";
 
     @Parameter(
+            names = {"--repository_rule_name"},
+            description = "The name of the repository",
+            required = true)
+    String repository_rule_name = "";
+
+    @Parameter(
             names = {"--output_target_build_files_base_path"},
             description = "Base path to output alias targets BUILD.bazel files")
     String output_target_build_files_base_path = "";

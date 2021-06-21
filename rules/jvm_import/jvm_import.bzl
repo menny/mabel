@@ -78,18 +78,6 @@ def _jvm_import_impl(ctx):
 
 jvm_import = rule(
     attrs = {
-        "jars": attr.label_list(
-            allow_files = True,
-            allow_empty = False,
-            mandatory = True,
-            cfg = "target",
-        ),
-        "srcjar": attr.label(
-            allow_single_file = True,
-            mandatory = False,
-            cfg = "target",
-        ),
-        "licenses": attr.string_list(mandatory = False, allow_empty = True, default = [], doc = ""),
         "deps": attr.label_list(
             default = [],
             providers = [JavaInfo],
@@ -98,12 +86,24 @@ jvm_import = rule(
             default = [],
             providers = [JavaInfo],
         ),
+        "jars": attr.label_list(
+            allow_files = True,
+            allow_empty = False,
+            mandatory = True,
+            cfg = "target",
+        ),
+        "licenses": attr.string_list(mandatory = False, allow_empty = True, default = [], doc = ""),
+        "neverlink": attr.bool(
+            default = False,
+        ),
         "runtime_deps": attr.label_list(
             default = [],
             providers = [JavaInfo],
         ),
-        "neverlink": attr.bool(
-            default = False,
+        "srcjar": attr.label(
+            allow_single_file = True,
+            mandatory = False,
+            cfg = "target",
         ),
         "_add_jar_manifest_entry": attr.label(
             executable = True,
