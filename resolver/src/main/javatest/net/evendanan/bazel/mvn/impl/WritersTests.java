@@ -94,63 +94,12 @@ public class WritersTests {
                     "            .format(name),\n" +
                     "    )\n" +
                     "\n" +
-                    "def _no_op_missing_kt_jvm_impl(name, **kwargs):\n" +
-                    "    \"\"\"\n" +
-                    "    This is a help macro for missing concrete rule implementation.\n" +
-                    "\n" +
-                    "    This will be used in cases when some dependencies require Kotlin rule implementation.\n" +
-                    "\n" +
-                    "    Args:\n" +
-                    "        name: A unique name for this target.\n" +
-                    "        **kwargs: Anything else. Not used.\n" +
-                    "    \"\"\"\n" +
-                    "\n" +
-                    "    fail(\n" +
-                    "        \"Unable to create target {} since it is a kt_jvm_import which was not provided. Add argument kt_jvm_import when calling macro_name.\"\n" +
-                    "            .format(name),\n" +
-                    "    )\n" +
-                    "\n" +
-                    "def _no_op_missing_kt_jvm_lib_impl(name, **kwargs):\n" +
-                    "    \"\"\"\n" +
-                    "    This is a help macro for missing concrete rule implementation.\n" +
-                    "\n" +
-                    "    This will be used in cases when some dependencies require Kotlin rule implementation.\n" +
-                    "\n" +
-                    "    Args:\n" +
-                    "        name: A unique name for this target.\n" +
-                    "        **kwargs: Anything else. Not used.\n" +
-                    "    \"\"\"\n" +
-                    "\n" +
-                    "    fail(\n" +
-                    "        \"Unable to create target {} since it is a kt_jvm_library which was not provided. Add argument kt_jvm_library when calling macro_name.\"\n" +
-                    "            .format(name),\n" +
-                    "    )\n" +
-                    "\n" +
-                    "def _no_op_missing_kt_android_impl(name, **kwargs):\n" +
-                    "    \"\"\"\n" +
-                    "    This is a help macro for missing concrete rule implementation.\n" +
-                    "\n" +
-                    "    This will be used in cases when some dependencies require Kotlin rule implementation.\n" +
-                    "\n" +
-                    "    Args:\n" +
-                    "        name: A unique name for this target.\n" +
-                    "        **kwargs: Anything else. Not used.\n" +
-                    "    \"\"\"\n" +
-                    "\n" +
-                    "    fail(\n" +
-                    "        \"Unable to create target {} since it is a kt_android_library which was not provided. Add argument kt_android_library when calling macro_name.\"\n" +
-                    "            .format(name),\n" +
-                    "    )\n" +
-                    "\n" +
                     "def macro_name(\n" +
                     "        name = \"macro_name\",\n" +
                     "        java_library = native.java_library,\n" +
                     "        java_plugin = native.java_plugin,\n" +
                     "        java_import = jvm_import,\n" +
-                    "        aar_import = _no_op_missing_aar_impl,\n" +
-                    "        kt_jvm_import = _no_op_missing_kt_jvm_impl,\n" +
-                    "        kt_jvm_library = _no_op_missing_kt_jvm_lib_impl,\n" +
-                    "        kt_android_library = _no_op_missing_kt_android_impl):\n" +
+                    "        aar_import = _no_op_missing_aar_impl,\n):\n" +
                     "    \"\"\"\n" +
                     "    Macro to set up the transitive rules.\n" +
                     "\n" +
@@ -163,9 +112,6 @@ public class WritersTests {
                     "        java_plugin: rule implementation for java_plugin. Defaults to native.java_plugin.\n" +
                     "        java_import: rule implementation for java_import. Defaults to native.java_import.\n" +
                     "        aar_import: rule implementation for aar_import. Required only if you have Android dependencies.\n" +
-                    "        kt_jvm_import: rule implementation for kt_jvm_import. Required only if you have Kotlin dependencies.\n" +
-                    "        kt_jvm_library: rule implementation for kt_jvm_library. Required only if you have Kotlin dependencies.\n" +
-                    "        kt_android_library: rule implementation for kt_android_library. Required only if you have Android-Kotlin dependencies.\n" +
                     "    \"\"\"\n" +
                     "\n" +
                     "    # from net.evendanan.dep1:artifact:1.2.3\n" +

@@ -43,8 +43,6 @@ public class TargetsBuilders {
 
                 return targets;
             };
-    static final TargetsBuilder KOTLIN_IMPORT = new KotlinImport();
-    static final TargetsBuilder KOTLIN_ANDROID_IMPORT = new KotlinAndroidImport();
     static final TargetsBuilder AAR_IMPORT = new AarImport(true);
     //due to https://github.com/bazelbuild/bazel/issues/13567
     static final TargetsBuilder AAR_IMPORT_WITHOUT_EXPORTS = new AarImport(false);
@@ -276,100 +274,6 @@ public class TargetsBuilders {
         @VisibleForTesting
         public Collection<TargetsBuilder> getTargetsBuilders() {
             return targetsBuilders;
-        }
-    }
-
-    public static class KotlinImport implements TargetsBuilder {
-
-        @Override
-        public List<Target> buildTargets(
-                final Dependency dependency, DependencyTools dependencyTools) {
-            List<Target> targets = new ArrayList<>();
-
-            //will create a kt_import for the jar
-            //and another kt_library for the jar+deps
-            //the kt_library is the visible one
-            final String ktTargetName = getKotlinJvmRepositoryRuleName(dependency, dependencyTools);
-            final String ktTargetImportName = ktTargetName + "_kt_jvm_import";
-            targets.add(
-                    new Target(
-                            dependencyTools.mavenCoordinates(dependency),
-                            "kt_jvm_import",
-                            ktTargetImportName)
-                            .addString(
-                                    "jar",
-                                    String.format(
-                                            Locale.US,
-                                            "@%s//file",
-                                            dependencyTools.repositoryRuleName(dependency)))
-                            .setPrivateVisibility());
-            targets.add(
-                    new Target(
-                            dependencyTools.mavenCoordinates(dependency),
-                            "kt_jvm_library",
-                            ktTargetName)
-                            .addList(
-                                    "tags",
-                                    Collections.singletonList(
-                                            String.format(
-                                                    Locale.ROOT,
-                                                    "maven_coordinates=%s",
-                                                    dependencyTools.mavenCoordinates(dependency))))
-                            .addList(
-                                    "exports",
-                                    addItem(convertRulesToStrings(dependency.exports(), dependencyTools), ":" + ktTargetImportName))
-                            .addList(
-                                    "runtime_deps",
-                                    convertRulesToStrings(
-                                            dependency.runtimeDependencies(), dependencyTools)));
-
-            targets.add(
-                    addAlias(
-                            dependency,
-                            dependency.mavenCoordinate().artifactId(),
-                            "",
-                            dependencyTools));
-
-            return targets;
-        }
-
-        protected String getKotlinJvmRepositoryRuleName(Dependency dependency, DependencyTools dependencyTools) {
-            return dependencyTools.repositoryRuleName(dependency);
-        }
-    }
-
-    public static class KotlinAndroidImport extends KotlinImport {
-
-        @Override
-        protected String getKotlinJvmRepositoryRuleName(Dependency dependency, DependencyTools dependencyTools) {
-            return super.getKotlinJvmRepositoryRuleName(dependency, dependencyTools) + "___kt_library";
-        }
-
-        @Override
-        public List<Target> buildTargets(
-                final Dependency dependency, DependencyTools dependencyTools) {
-            List<Target> targets = super.buildTargets(dependency, dependencyTools);
-
-            targets.add(
-                    new Target(
-                            dependencyTools.mavenCoordinates(dependency),
-                            "kt_android_library",
-                            dependencyTools.repositoryRuleName(dependency))
-                            .addList(
-                                    "deps",
-                                    convertRulesToStrings(dependency.dependencies(), dependencyTools))
-                            .addList(
-                                    "exports",
-                                    addItem(convertRulesToStrings(dependency.exports(), dependencyTools), ":" + getKotlinJvmRepositoryRuleName(dependency, dependencyTools)))
-                            .addList(
-                                    "tags",
-                                    Collections.singletonList(
-                                            String.format(
-                                                    Locale.ROOT,
-                                                    "maven_coordinates=%s",
-                                                    dependencyTools.mavenCoordinates(dependency)))));
-
-            return targets;
         }
     }
 

@@ -17,16 +17,6 @@ public enum TargetType {
     aar,
 
     /**
-     * Pure Kotlin library.
-     */
-    kotlin,
-
-    /**
-     * Kotlin library with Android support.
-     */
-    kotlin_aar,
-
-    /**
      * Very fast detector for pom, jar, aar, kotlin and kotlin-aar. Does not detect annotation-processors.
      */
     naive,

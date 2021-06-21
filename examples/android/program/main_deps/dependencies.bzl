@@ -249,63 +249,12 @@ def _no_op_missing_aar_impl(name, **kwargs):
             .format(name),
     )
 
-def _no_op_missing_kt_jvm_impl(name, **kwargs):
-    """
-    This is a help macro for missing concrete rule implementation.
-
-    This will be used in cases when some dependencies require Kotlin rule implementation.
-
-    Args:
-        name: A unique name for this target.
-        **kwargs: Anything else. Not used.
-    """
-
-    fail(
-        "Unable to create target {} since it is a kt_jvm_import which was not provided. Add argument kt_jvm_import when calling generate_transitive_dependency_targets."
-            .format(name),
-    )
-
-def _no_op_missing_kt_jvm_lib_impl(name, **kwargs):
-    """
-    This is a help macro for missing concrete rule implementation.
-
-    This will be used in cases when some dependencies require Kotlin rule implementation.
-
-    Args:
-        name: A unique name for this target.
-        **kwargs: Anything else. Not used.
-    """
-
-    fail(
-        "Unable to create target {} since it is a kt_jvm_library which was not provided. Add argument kt_jvm_library when calling generate_transitive_dependency_targets."
-            .format(name),
-    )
-
-def _no_op_missing_kt_android_impl(name, **kwargs):
-    """
-    This is a help macro for missing concrete rule implementation.
-
-    This will be used in cases when some dependencies require Kotlin rule implementation.
-
-    Args:
-        name: A unique name for this target.
-        **kwargs: Anything else. Not used.
-    """
-
-    fail(
-        "Unable to create target {} since it is a kt_android_library which was not provided. Add argument kt_android_library when calling generate_transitive_dependency_targets."
-            .format(name),
-    )
-
 def generate_transitive_dependency_targets(
         name = "generate_transitive_dependency_targets",
         java_library = native.java_library,
         java_plugin = native.java_plugin,
         java_import = jvm_import,
-        aar_import = _no_op_missing_aar_impl,
-        kt_jvm_import = _no_op_missing_kt_jvm_impl,
-        kt_jvm_library = _no_op_missing_kt_jvm_lib_impl,
-        kt_android_library = _no_op_missing_kt_android_impl):
+        aar_import = _no_op_missing_aar_impl):
     """
     Macro to set up the transitive rules.
 
@@ -318,9 +267,6 @@ def generate_transitive_dependency_targets(
         java_plugin: rule implementation for java_plugin. Defaults to native.java_plugin.
         java_import: rule implementation for java_import. Defaults to native.java_import.
         aar_import: rule implementation for aar_import. Required only if you have Android dependencies.
-        kt_jvm_import: rule implementation for kt_jvm_import. Required only if you have Kotlin dependencies.
-        kt_jvm_library: rule implementation for kt_jvm_library. Required only if you have Kotlin dependencies.
-        kt_android_library: rule implementation for kt_android_library. Required only if you have Android-Kotlin dependencies.
     """
 
     # from androidx.activity:activity:1.0.0-alpha02
@@ -452,16 +398,7 @@ def generate_transitive_dependency_targets(
             ":androidx_vectordrawable__vectordrawable",
             ":androidx_vectordrawable__vectordrawable_animated",
         ],
-        exports = [
-            ":androidx_annotation__annotation",
-            ":androidx_collection__collection",
-            ":androidx_core__core",
-            ":androidx_cursoradapter__cursoradapter",
-            ":androidx_fragment__fragment",
-            ":androidx_legacy__legacy_support_core_utils",
-            ":androidx_vectordrawable__vectordrawable",
-            ":androidx_vectordrawable__vectordrawable_animated",
-        ],
+        exports = [],
     )
 
     # from androidx.arch.core:core-common:2.0.0
@@ -763,14 +700,7 @@ def generate_transitive_dependency_targets(
             ":androidx_loader__loader",
             ":androidx_viewpager__viewpager",
         ],
-        exports = [
-            ":androidx_activity__activity",
-            ":androidx_annotation__annotation",
-            ":androidx_core__core",
-            ":androidx_lifecycle__lifecycle_viewmodel",
-            ":androidx_loader__loader",
-            ":androidx_viewpager__viewpager",
-        ],
+        exports = [],
     )
 
     # from androidx.interpolator:interpolator:1.0.0

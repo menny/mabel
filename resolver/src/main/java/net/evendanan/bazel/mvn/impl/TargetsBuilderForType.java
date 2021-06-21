@@ -31,10 +31,6 @@ public class TargetsBuilderForType {
                 return TargetsBuilders.JAVA_IMPORT;
             case aar:
                 return TargetsBuilders.AAR_IMPORT_WITHOUT_EXPORTS;
-            case kotlin:
-                return TargetsBuilders.KOTLIN_IMPORT;
-            case kotlin_aar:
-                return TargetsBuilders.KOTLIN_ANDROID_IMPORT;
             case naive:
                 return new NaiveBuilder();
             case processor:
@@ -69,8 +65,6 @@ public class TargetsBuilderForType {
             return RuleClassifiers.priorityRuleClassifier(
                     Arrays.asList(
                             new RuleClassifiers.PomClassifier(),
-                            new RuleClassifiers.NaiveKotlinAarClassifier(),
-                            new RuleClassifiers.NaiveKotlinClassifier(),
                             new RuleClassifiers.AarClassifier()),
                     TargetsBuilders.JAVA_IMPORT,
                     dependency).buildTargets(dependency, dependencyTools);

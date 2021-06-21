@@ -112,7 +112,6 @@ public class CommandLineOptions {
             required = true)
     TargetType type;
 
-
     @Parameter(
             names = {"--exports_generation"},
             splitter = NoSplitter.class,

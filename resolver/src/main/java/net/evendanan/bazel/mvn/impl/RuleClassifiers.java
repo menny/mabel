@@ -74,30 +74,6 @@ public class RuleClassifiers {
         }
     }
 
-    public static class NaiveKotlinClassifier implements RuleClassifier {
-        @Override
-        public List<TargetsBuilder> classifyRule(Dependency dependency) {
-            if (isNaivelyKotlin(dependency)) {
-                return Collections.singletonList(TargetsBuilders.KOTLIN_IMPORT);
-            }
-            return Collections.emptyList();
-        }
-    }
-
-    public static class NaiveKotlinAarClassifier extends PackagingClassifier {
-        public NaiveKotlinAarClassifier() {
-            super("aar", TargetsBuilders.KOTLIN_ANDROID_IMPORT);
-        }
-
-        @Override
-        public List<TargetsBuilder> classifyRule(Dependency dependency) {
-            if (isNaivelyKotlin(dependency)) {
-                return super.classifyRule(dependency);
-            }
-            return Collections.emptyList();
-        }
-    }
-
     public static class PomClassifier extends PackagingClassifier {
         public PomClassifier() {
             super("pom", TargetsBuilders.JAVA_IMPORT);
@@ -130,9 +106,6 @@ public class RuleClassifiers {
 
                         parseServicesProcessorFileContent(contentBuilder.toString())
                                 .ifPresent(detectedModules::add);
-                    } else if (jarEntryName.startsWith("META-INF/")
-                            && jarEntryName.endsWith(".kotlin_module")) {
-                        detectedModules.add(TargetsBuilders.KOTLIN_IMPORT);
                     }
                     zipInputStream.closeEntry();
                     jarEntry = zipInputStream.getNextJarEntry();
@@ -183,16 +156,7 @@ public class RuleClassifiers {
             //TODO: in the future, we should use android import
             //final boolean isAndroid = dependency.url().endsWith(".aar");
 
-            //we need to make sure the targets are ordered correctly:
-            //  1) kotlin
-            //  2) anything else
-            List<TargetsBuilder> targetsBuilders = mJarInspector.apply(dependency);
-            targetsBuilders.sort((o1, o2) -> {
-                final boolean isKotlin1 = o1 instanceof TargetsBuilders.KotlinImport;
-                final boolean isKotlin2 = o2 instanceof TargetsBuilders.KotlinImport;
-                return isKotlin1 == isKotlin2 ? 0 : isKotlin1 ? -1 : 1;
-            });
-            return targetsBuilders;
+            return mJarInspector.apply(dependency);
         }
     }
 }
