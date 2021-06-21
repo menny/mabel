@@ -36,18 +36,6 @@ public class RuleClassifiers {
                 .orElse(defaultFormatter);
     }
 
-    private static boolean isNaivelyKotlin(Dependency dependency) {
-        final Stream<MavenCoordinate> mvnStream =
-                Stream.concat(
-                        Stream.of(dependency.mavenCoordinate()),
-                        dependency.dependencies().stream()
-                );
-
-        return mvnStream.anyMatch(m ->
-                m.groupId().contains("jetbrains.kotlin") &&
-                        (m.artifactId().contains("kotlin-stdlib") || m.artifactId().contains("kotlin-runtime")));
-    }
-
     private static class PackagingClassifier implements RuleClassifier {
 
         private final String packaging;

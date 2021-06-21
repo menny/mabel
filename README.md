@@ -14,8 +14,7 @@ This WORKSPACE will provide `mabel_rule` rule and `artifact` macro which will au
 * Automatically detects which rule-type to create for a given dependency:
   * `aar_import` for Android artifacts.
   * `java_plugin` + `java_library` for annotation-processors. More about this [here](#annotation-processors).
-  * `kt_jvm_library` for Kotlin modules. If you do not use Kotlin, you can omit this argument.
-  * `java_import` for anything else.
+  * [`jvm_import`](rules/jvm_import/jvm_import.bzl) for anything else.
 * Allow implementation replacement for `java_import` and `aar_import`. Those can be replaced with another rule or macro. See `examples/android/program/BUILD.bazel` for an example.
 * Support custom Maven repo URLs and locking dependency for a Maven repository.
 * Adds `licenses` data to `java_import` rules, if license is declared in the artifact's POM file. Also, adds license metadata to the targets' `tags` attribute:
@@ -165,7 +164,7 @@ This rule declares a Maven dependency to be resolved and import into your WORKSP
 Attributes:
 
 * `coordinate`: Maven coordinate in the form of `group-id:artifact-id:version`.
-* `type`: What is the type of target(s) to create for this artifact. Default `auto`. Can be `jar`, `aar`, `kotlin`, `kotlin_aar`, `naive`, `processor`, `auto`. For more details, see [here](resolver/src/main/java/net/evendanan/bazel/mvn/api/model/TargetType.java).
+* `type`: What is the type of target(s) to create for this artifact. Default `auto`. Can be `jar`, `aar`, `naive`, `processor`, `auto`. For more details, see [here](resolver/src/main/java/net/evendanan/bazel/mvn/api/model/TargetType.java).
 * `test_only`: Mark this dependency to be used in tests only.
 * `maven_exclude_deps`: List of Maven dependencies which should not be resolved. You can omit the `version` or both `artifact-id:version`.
 * `repositories`: List of URLs that point to Maven servers. The default list includes Maven-Central.

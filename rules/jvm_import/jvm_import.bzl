@@ -1,24 +1,26 @@
-# Stripped down version of a java_import Starlark rule, without invoking ijar
-# to create interface jars.
+"""
+Stripped down version of a java_import Starlark rule, without invoking ijar
+to create interface jars.
 
-# Inspired by Square's implementation of `raw_jvm_import` [0] and discussions
-# on the GitHub thread [1] about ijar's interaction with Kotlin JARs.
-#
-# This file was taken from [2] jvm_external repo (under Apache2 license [3]).
-#
-# [0]: https://github.com/square/bazel_maven_repository/pull/48
-# [1]: https://github.com/bazelbuild/bazel/issues/4549
-# [2]: https://github.com/bazelbuild/rules_jvm_external/blob/aa530f0c37d86d18040df82ca7e5de7a4732f861/private/rules/jvm_import.bzl
-# [3]: https://github.com/bazelbuild/rules_jvm_external/blob/aa530f0c37d86d18040df82ca7e5de7a4732f861/LICENSE
+Inspired by Square's implementation of `raw_jvm_import` [0] and discussions
+on the GitHub thread [1] about ijar's interaction with Kotlin JARs.
 
-load(":stamp_manifest.bzl", "StampManifestProvider")
+This file was taken from [2] jvm_external repo (under Apache2 license [3]).
+
+[0]: https://github.com/square/bazel_maven_repository/pull/48
+[1]: https://github.com/bazelbuild/bazel/issues/4549
+[2]: https://github.com/bazelbuild/rules_jvm_external/blob/aa530f0c37d86d18040df82ca7e5de7a4732f861/private/rules/jvm_import.bzl
+[3]: https://github.com/bazelbuild/rules_jvm_external/blob/aa530f0c37d86d18040df82ca7e5de7a4732f861/LICENSE
+"""
+
+load(":stamp_manifest.bzl", "stamp_manifest_provider")
 
 def _jvm_import_impl(ctx):
     if len(ctx.files.jars) != 1:
         fail("Please only specify one jar to import in the jars attribute.")
 
     injar = ctx.files.jars[0]
-    if ctx.attr._stamp_manifest[StampManifestProvider].stamp_enabled:
+    if ctx.attr._stamp_manifest[stamp_manifest_provider].stamp_enabled:
         outjar = ctx.actions.declare_file("processed_" + injar.basename, sibling = injar)
         args = ctx.actions.args()
         args.add_all(["--source", injar, "--output", outjar])

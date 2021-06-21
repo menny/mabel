@@ -99,7 +99,7 @@ public class WritersTests {
                     "        java_library = native.java_library,\n" +
                     "        java_plugin = native.java_plugin,\n" +
                     "        java_import = jvm_import,\n" +
-                    "        aar_import = _no_op_missing_aar_impl,\n):\n" +
+                    "        aar_import = _no_op_missing_aar_impl):\n" +
                     "    \"\"\"\n" +
                     "    Macro to set up the transitive rules.\n" +
                     "\n" +
