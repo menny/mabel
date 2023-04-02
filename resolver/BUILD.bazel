@@ -134,7 +134,7 @@ java_library(
 java_test(
     name = "serialization_test",
     size = "small",
-    srcs = ["src/main/javatest/net/evendanan/bazel/mvn/api/serialization/SerializationTest.java"],
+    srcs = ["src/test/net/evendanan/bazel/mvn/api/serialization/SerializationTest.java"],
     test_class = "net.evendanan.bazel.mvn.api.serialization.SerializationTest",
     deps = [
         ":api_lib",
@@ -287,7 +287,7 @@ java_binary(
 java_library(
     name = "test_utils",
     testonly = True,
-    srcs = ["src/main/javatest/net/evendanan/bazel/mvn/TestUtils.java"],
+    srcs = ["src/test/net/evendanan/bazel/mvn/TestUtils.java"],
     deps = [
         ":api_lib",
         "//resolver/main_deps/com/google/code/findbugs/jsr305",
@@ -300,7 +300,7 @@ java_library(
 java_test(
     name = "timing_data",
     size = "small",
-    srcs = ["src/main/javatest/net/evendanan/timing/TimingDataTest.java"],
+    srcs = ["src/test/net/evendanan/timing/TimingDataTest.java"],
     test_class = "net.evendanan.timing.TimingDataTest",
     deps = [
         ":timing_lib",
@@ -312,8 +312,8 @@ java_test(
     name = "timing_timer",
     size = "small",
     srcs = [
-        "src/main/javatest/net/evendanan/timing/TaskTimingTest.java",
-        "src/main/javatest/net/evendanan/timing/TimingDataTest.java",
+        "src/test/net/evendanan/timing/TaskTimingTest.java",
+        "src/test/net/evendanan/timing/TimingDataTest.java",
     ],
     test_class = "net.evendanan.timing.TaskTimingTest",
     deps = [
@@ -325,15 +325,15 @@ java_test(
 java_test(
     name = "classifiers_test",
     size = "small",
-    srcs = ["src/main/javatest/net/evendanan/bazel/mvn/impl/RuleClassifiersTest.java"],
-    resource_strip_prefix = "resolver/src/main/javatest/net/evendanan/bazel/mvn/resourses/",
+    srcs = ["src/test/net/evendanan/bazel/mvn/impl/RuleClassifiersTest.java"],
+    resource_strip_prefix = "resolver/src/test/net/evendanan/bazel/mvn/resourses/",
     resources = [
-        "src/main/javatest/net/evendanan/bazel/mvn/resourses/dataenum-1.0.2.jar",
-        "src/main/javatest/net/evendanan/bazel/mvn/resourses/dataenum-processor-1.0.2.jar",
-        "src/main/javatest/net/evendanan/bazel/mvn/resourses/dataenum-processor-1.0.2-with-comments.jar",
-        "src/main/javatest/net/evendanan/bazel/mvn/resourses/mockk-1.0.jar",
-        "src/main/javatest/net/evendanan/bazel/mvn/resourses/mockk-1.0-for-android.aar",
-        "src/main/javatest/net/evendanan/bazel/mvn/resourses/mockk-1.0-for-android.jar",
+        "src/test/net/evendanan/bazel/mvn/resourses/dataenum-1.0.2.jar",
+        "src/test/net/evendanan/bazel/mvn/resourses/dataenum-processor-1.0.2.jar",
+        "src/test/net/evendanan/bazel/mvn/resourses/dataenum-processor-1.0.2-with-comments.jar",
+        "src/test/net/evendanan/bazel/mvn/resourses/mockk-1.0.jar",
+        "src/test/net/evendanan/bazel/mvn/resourses/mockk-1.0-for-android.aar",
+        "src/test/net/evendanan/bazel/mvn/resourses/mockk-1.0-for-android.jar",
     ],
     test_class = "net.evendanan.bazel.mvn.impl.RuleClassifiersTest",
     deps = [
@@ -347,7 +347,7 @@ java_test(
 java_test(
     name = "composite_formater_test",
     size = "small",
-    srcs = ["src/main/javatest/net/evendanan/bazel/mvn/impl/CompositeFormatterTest.java"],
+    srcs = ["src/test/net/evendanan/bazel/mvn/impl/CompositeFormatterTest.java"],
     test_class = "net.evendanan.bazel.mvn.impl.CompositeFormatterTest",
     deps = [
         ":api_lib",
@@ -361,9 +361,9 @@ java_test(
     name = "merger_tests",
     size = "small",
     srcs = [
-        "src/main/javatest/net/evendanan/bazel/mvn/merger/DefaultMergerTest.java",
+        "src/test/net/evendanan/bazel/mvn/merger/DefaultMergerTest.java",
         #GraphUtilsTest is needed because it has some utility functions
-        "src/main/javatest/net/evendanan/bazel/mvn/merger/GraphUtilsTest.java",
+        "src/test/net/evendanan/bazel/mvn/merger/GraphUtilsTest.java",
     ],
     test_class = "net.evendanan.bazel.mvn.merger.DefaultMergerTest",
     deps = [
@@ -378,7 +378,7 @@ java_test(
     name = "latest_version_merger_tests",
     size = "small",
     srcs = [
-        "src/main/javatest/net/evendanan/bazel/mvn/merger/LatestVersionMergerTest.java",
+        "src/test/net/evendanan/bazel/mvn/merger/LatestVersionMergerTest.java",
     ],
     test_class = "net.evendanan.bazel.mvn.merger.LatestVersionMergerTest",
     deps = [
@@ -393,7 +393,7 @@ java_test(
     name = "version_compare_tests",
     size = "small",
     srcs = [
-        "src/main/javatest/net/evendanan/bazel/mvn/merger/VersionComparatorTest.java",
+        "src/test/net/evendanan/bazel/mvn/merger/VersionComparatorTest.java",
     ],
     test_class = "net.evendanan.bazel.mvn.merger.VersionComparatorTest",
     deps = [
@@ -407,7 +407,7 @@ java_test(
     name = "public_category_tests",
     size = "small",
     srcs = [
-        "src/main/javatest/net/evendanan/bazel/mvn/merger/PublicTargetsCategoryTest.java",
+        "src/test/net/evendanan/bazel/mvn/merger/PublicTargetsCategoryTest.java",
     ],
     test_class = "net.evendanan.bazel.mvn.merger.PublicTargetsCategoryTest",
     deps = [
@@ -422,7 +422,7 @@ java_test(
     name = "test_only_merger_test",
     size = "small",
     srcs = [
-        "src/main/javatest/net/evendanan/bazel/mvn/merger/TestOnlyMarkerTest.java",
+        "src/test/net/evendanan/bazel/mvn/merger/TestOnlyMarkerTest.java",
     ],
     test_class = "net.evendanan.bazel.mvn.merger.TestOnlyMarkerTest",
     deps = [
@@ -436,7 +436,7 @@ java_test(
 java_test(
     name = "downloader_tests",
     size = "small",
-    srcs = ["src/main/javatest/net/evendanan/bazel/mvn/merger/ArtifactDownloaderTest.java"],
+    srcs = ["src/test/net/evendanan/bazel/mvn/merger/ArtifactDownloaderTest.java"],
     test_class = "net.evendanan.bazel.mvn.merger.ArtifactDownloaderTest",
     deps = [
         ":api_lib",
@@ -449,7 +449,7 @@ java_test(
 java_test(
     name = "graph_util_tests",
     size = "small",
-    srcs = ["src/main/javatest/net/evendanan/bazel/mvn/merger/GraphUtilsTest.java"],
+    srcs = ["src/test/net/evendanan/bazel/mvn/merger/GraphUtilsTest.java"],
     test_class = "net.evendanan.bazel.mvn.merger.GraphUtilsTest",
     deps = [
         ":api_lib",
@@ -462,7 +462,7 @@ java_test(
 java_test(
     name = "graph_checks_tests",
     size = "small",
-    srcs = ["src/main/javatest/net/evendanan/bazel/mvn/merger/GraphVerificationsTest.java"],
+    srcs = ["src/test/net/evendanan/bazel/mvn/merger/GraphVerificationsTest.java"],
     test_class = "net.evendanan.bazel.mvn.merger.GraphVerificationsTest",
     deps = [
         ":api_lib",
@@ -475,7 +475,7 @@ java_test(
 java_test(
     name = "formatters_test",
     size = "small",
-    srcs = ["src/main/javatest/net/evendanan/bazel/mvn/impl/FormattersTests.java"],
+    srcs = ["src/test/net/evendanan/bazel/mvn/impl/FormattersTests.java"],
     test_class = "net.evendanan.bazel.mvn.impl.FormattersTests",
     deps = [
         ":api_lib",
@@ -489,7 +489,7 @@ java_test(
 java_test(
     name = "target_test",
     size = "small",
-    srcs = ["src/main/javatest/net/evendanan/bazel/mvn/impl/TargetTest.java"],
+    srcs = ["src/test/net/evendanan/bazel/mvn/impl/TargetTest.java"],
     test_class = "net.evendanan.bazel.mvn.impl.TargetTest",
     deps = [":api_lib"],
 )
@@ -497,7 +497,7 @@ java_test(
 java_test(
     name = "dependency_test",
     size = "small",
-    srcs = ["src/main/javatest/net/evendanan/bazel/mvn/impl/DependencyToolsTest.java"],
+    srcs = ["src/test/net/evendanan/bazel/mvn/impl/DependencyToolsTest.java"],
     test_class = "net.evendanan.bazel.mvn.impl.DependencyToolsTest",
     deps = [
         ":api_lib",
@@ -508,7 +508,7 @@ java_test(
 java_test(
     name = "real_writers_test",
     size = "small",
-    srcs = ["src/main/javatest/net/evendanan/bazel/mvn/impl/WritersTests.java"],
+    srcs = ["src/test/net/evendanan/bazel/mvn/impl/WritersTests.java"],
     test_class = "net.evendanan.bazel.mvn.impl.WritersTests",
     deps = [
         ":api_lib",
@@ -523,7 +523,7 @@ java_test(
 java_test(
     name = "graph_resolver_lib_test",
     size = "small",
-    srcs = ["src/main/javatest/com/google/devtools/bazel/workspace/maven/ArtifactBuilderTest.java"],
+    srcs = ["src/test/com/google/devtools/bazel/workspace/maven/ArtifactBuilderTest.java"],
     test_class = "com.google.devtools.bazel.workspace.maven.ArtifactBuilderTest",
     deps = [
         ":graph_resolver_lib",
@@ -537,7 +537,7 @@ java_test(
 java_test(
     name = "sources_locator_test",
     size = "small",
-    srcs = ["src/main/javatest/net/evendanan/bazel/mvn/merger/SourcesLocatorTest.java"],
+    srcs = ["src/test/net/evendanan/bazel/mvn/merger/SourcesLocatorTest.java"],
     test_class = "net.evendanan.bazel.mvn.merger.SourcesLocatorTest",
     deps = [
         ":api_lib",
@@ -551,7 +551,7 @@ java_test(
 java_test(
     name = "general_commenter_test",
     size = "small",
-    srcs = ["src/main/javatest/net/evendanan/bazel/mvn/merger/TargetCommenterTest.java"],
+    srcs = ["src/test/net/evendanan/bazel/mvn/merger/TargetCommenterTest.java"],
     test_class = "net.evendanan.bazel.mvn.merger.TargetCommenterTest",
     deps = [
         ":api_lib",
@@ -565,7 +565,7 @@ java_test(
 java_test(
     name = "target_type_test",
     size = "small",
-    srcs = ["src/main/javatest/net/evendanan/bazel/mvn/impl/TargetsBuilderForTypeTest.java"],
+    srcs = ["src/test/net/evendanan/bazel/mvn/impl/TargetsBuilderForTypeTest.java"],
     test_class = "net.evendanan.bazel.mvn.impl.TargetsBuilderForTypeTest",
     deps = [
         ":api_lib",
