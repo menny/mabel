@@ -1,13 +1,26 @@
 load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
 
+alias(
+    name = "buildifier_bin",
+    actual = select({
+        "//platforms:darwin_arm64": "@buildifier_darwin_arm64//file",
+        "//platforms:darwin_x86": "@buildifier_darwin_amd64//file",
+        "//platforms:linux_arm64": "@buildifier_linux_arm64//file",
+        "//platforms:linux_x86": "@buildifier_linux_amd64//file",
+        "//platforms:windows_x86": "@buildifier_windows_amd64//file",
+    }),
+)
+
 buildifier(
     name = "buildifier_fix",
+    buildifier = ":buildifier_bin",
     lint_mode = "fix",
     lint_warnings = ["all"],
 )
 
 buildifier(
     name = "buildifier",
+    buildifier = ":buildifier_bin",
     lint_mode = "warn",
     lint_warnings = ["all"],
     mode = "check",
