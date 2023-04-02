@@ -97,9 +97,9 @@ public class WritersTests {
                     "def macro_name(\n" +
                     "        name = \"macro_name\",\n" +
                     "        java_library = native.java_library,\n" +
-                    "        java_plugin = native.java_plugin,\n" +
-                    "        jvm_import = jvm_import,\n" +
-                    "        aar_import = _no_op_missing_aar_impl):\n" +
+                    "        _java_plugin = native.java_plugin,\n" +
+                    "        _jvm_import = jvm_import,\n" +
+                    "        _aar_import = _no_op_missing_aar_impl):\n" +
                     "    \"\"\"\n" +
                     "    Macro to set up the transitive rules.\n" +
                     "\n" +
@@ -109,15 +109,15 @@ public class WritersTests {
                     "    Args:\n" +
                     "        name: a unique name for this macro. Not needed to specify.\n" +
                     "        java_library: rule implementation for java_library. Defaults to native.java_library.\n" +
-                    "        java_plugin: rule implementation for java_plugin. Defaults to native.java_plugin.\n" +
-                    "        jvm_import: rule implementation for jvm_import. Defaults to jvm_import.\n" +
-                    "        aar_import: rule implementation for aar_import. Required only if you have Android dependencies.\n" +
+                    "        _java_plugin: rule implementation for java_plugin. Defaults to native.java_plugin.\n" +
+                    "        _jvm_import: rule implementation for jvm_import. Defaults to jvm_import.\n" +
+                    "        _aar_import: rule implementation for aar_import. Required only if you have Android dependencies.\n" +
                     "    \"\"\"\n" +
                     "\n" +
                     "    # from net.evendanan.dep1:artifact:1.2.3\n" +
                     "    # comment one\n" +
                     "    # comment two\n" +
-                    "    rule(\n" +
+                    "    java_library(\n" +
                     "        name = \"name_name_1\",\n" +
                     "    )\n" +
                     "\n" +
@@ -477,7 +477,7 @@ public class WritersTests {
         File outputFile = File.createTempFile("testRepositoryRulesMacroWriter", ".bzl");
         RuleWriters.TransitiveRulesMacroWriter writer =
                 new RuleWriters.TransitiveRulesMacroWriter(outputFile, "macro_name");
-        Target targetWithComment = new Target("net.evendanan.dep1:artifact:1.2.3", "rule", "name_name_1");
+        Target targetWithComment = new Target("net.evendanan.dep1:artifact:1.2.3", "java_library", "name_name_1");
         targetWithComment.addComment("comment one");
         targetWithComment.addComment("comment two");
         Target targetWithoutComment = new Target("net.evendanan.dep2:artifact:2.0", "rule", "name_name_2");
