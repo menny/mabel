@@ -1,14 +1,26 @@
 workspace(name = "mabel")
 
-load("@//:init_deps.bzl", "init_mabel_deps")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-init_mabel_deps()
+http_archive(
+    name = "rules_java",
+    sha256 = "bcfabfb407cb0c8820141310faa102f7fb92cc806b0f0e26a625196101b0b57e",
+    urls = [
+        "https://github.com/bazelbuild/rules_java/releases/download/5.5.0/rules_java-5.5.0.tar.gz",
+    ],
+)
+
+load("@rules_java//java:repositories.bzl", "remote_jdk19_repos", "rules_java_dependencies", "rules_java_toolchains")
+
+rules_java_dependencies()
+
+remote_jdk19_repos()
+
+rules_java_toolchains()
 
 load("@//:init_rules.bzl", "init_mabel_rules")
 
 init_mabel_rules()
-
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "platforms",
