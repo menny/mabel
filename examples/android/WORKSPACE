@@ -11,35 +11,26 @@ http_archive(
     ],
 )
 
-load("@rules_java//java:repositories.bzl", "rules_java_dependencies", "rules_java_toolchains")
+load("@rules_java//java:repositories.bzl", "remote_jdk19_repos", "rules_java_dependencies", "rules_java_toolchains")
 
 rules_java_dependencies()
 
+remote_jdk19_repos()
+
 rules_java_toolchains()
-
-# Or a later commit
-RULES_ANDROID_COMMIT = "b5f00721a03801b5467ac2e8f39fc60bb200992a"
-
-RULES_ANDROID_SHA = "25fd56b68cf5e41c8995a8951d1d5f1acb74c7b310ee55b01c005d5dc0833a2c"
 
 http_archive(
     name = "build_bazel_rules_android",
-    sha256 = RULES_ANDROID_SHA,
-    strip_prefix = "rules_android-%s" % RULES_ANDROID_COMMIT,
-    url = "https://github.com/bazelbuild/rules_android/archive/%s.zip" % RULES_ANDROID_COMMIT,
+    sha256 = "cd06d15dd8bb59926e4d65f9003bfc20f9da4b2519985c27e190cddc8b7a7806",
+    strip_prefix = "rules_android-0.1.1",
+    urls = ["https://github.com/bazelbuild/rules_android/archive/v0.1.1.zip"],
 )
 
-load("@build_bazel_rules_android//:prereqs.bzl", "rules_android_prereqs")
+# Configure Android SDK Path
+load("@build_bazel_rules_android//android:rules.bzl", "android_sdk_repository")
 
-rules_android_prereqs()
-
-load("@build_bazel_rules_android//:defs.bzl", "rules_android_workspace")
-
-rules_android_workspace()
-
-register_toolchains(
-    "@build_bazel_rules_android//toolchains/android:android_default_toolchain",
-    "@build_bazel_rules_android//toolchains/android_sdk:android_sdk_tools",
+android_sdk_repository(
+    name = "androidsdk",
 )
 
 # Of course, this `local_repository` should be `http_archive` in your project (read the README.md file at the root)
