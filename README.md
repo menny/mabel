@@ -58,8 +58,8 @@ rules_java_toolchains()
 
 # Actual mabel setup
 # Check out the release page for the latest version
-mabel_version = "0.20.0"
-mabel_sha = "eeeb41abe0e4199bcbebe6c5f5d8d6221863f67fd140878dfafd5b8d028a7456"
+mabel_version = "0.30.0"
+mabel_sha = "c4487134b386be1d9a4b4f48b1bd6fabd77331188e0ae769cdf08cebc39546d0"
 http_archive(
     name = "mabel",
     urls = ["https://github.com/menny/mabel/archive/%s.zip" % mabel_version],
