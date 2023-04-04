@@ -6,7 +6,6 @@ load(":g_artifact.bzl", "g_artifact")
 
 generate_transitive_dependency_targets(
     aar_import = aar_import,
-    kt_android_library = kt_android_library,
 )
 
 mabel_rule(
@@ -37,6 +36,11 @@ mabel_rule(
     ],
 )
 
+kt_android_library(
+    name = "lib",
+    srcs = ["StringFormat.kt"],
+)
+
 android_binary(
     name = "app",
     srcs = ["HelloActivity.java"],
@@ -52,6 +56,7 @@ android_binary(
     resource_files = glob(["res/**/*"]),
     visibility = ["//visibility:public"],
     deps = [
+        ":lib",
         "//program:androidx_fragment__fragment",
         "//program/main_deps/androidx/annotation/annotation",
         "//program/main_deps/androidx/appcompat/appcompat",

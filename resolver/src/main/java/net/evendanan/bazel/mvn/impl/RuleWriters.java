@@ -14,10 +14,13 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class RuleWriters {
@@ -107,31 +110,54 @@ public class RuleWriters {
         public void write(Collection<Target> targets) throws IOException {
             targets = SortTargetsByName.sort(targets);
 
-            StringBuilder targetsMacro = readTemplate(
+            StringBuilder targetsFileContent = readTemplate(
                     "dependencies-targets-macro.bzl.template",
                     Collections.singletonMap("{{generate_transitive_dependency_targets}}", macroName));
+            targetsFileContent.append(NEW_LINE);
 
+            //we'll need to mark unused args as private.
+            Map<String, Boolean> macroArgs = new HashMap<>();
+            macroArgs.put("java_library", false);
+            macroArgs.put("java_plugin", false);
+            macroArgs.put("jvm_import", false);
+            macroArgs.put("aar_import", false);
+            if (targets.isEmpty()) {
+                targetsFileContent.append(INDENT).append("pass");
+            } else {
+                for (Iterator<Target> iterator = targets.iterator(); iterator.hasNext(); ) {
+                    Target target = iterator.next();
+                    targetsFileContent.append(INDENT).append("# from ").append(target.getMavenCoordinates()).append(NEW_LINE);
+                    //comments
+                    for (String comment : target.getComments()) {
+                        targetsFileContent.append(INDENT).append("# ").append(comment).append(NEW_LINE);
+                    }
+
+                    final String targetCode = target.outputString(INDENT);
+                    macroArgs.replaceAll((argName, state) -> state || targetCode.contains(argName));
+
+                    targetsFileContent.append(targetCode).append(NEW_LINE);
+                    if (iterator.hasNext()) targetsFileContent.append(NEW_LINE);
+                }
+            }
+            //unusedArgs now only includes args that were not found in any of the targetCode.
+            //we'll need to rename those to privates.
+            macroArgs.forEach((argName, state) -> {
+                final String argReplacement = String.format(Locale.ROOT, "<<%s>>", argName);
+                final String newArgText = state? argName : String.format(Locale.ROOT, "_%s", argName);
+                int index = targetsFileContent.indexOf(argReplacement);
+                while (index != -1) {
+                    targetsFileContent.replace(index, index + argReplacement.length(), newArgText);
+                    index += newArgText.length();
+                    index = targetsFileContent.indexOf(argReplacement, index);
+                }
+            });
+
+            //writing
             try (final OutputStreamWriter fileWriter =
                          new OutputStreamWriter(
                                  new FileOutputStream(outputFile, true), Charsets.UTF_8)) {
                 fileWriter.append(NEW_LINE);
-                fileWriter.append(targetsMacro.toString()).append(NEW_LINE);
-
-                if (targets.isEmpty()) {
-                    fileWriter.append(INDENT).append("pass");
-                } else {
-                    for (Iterator<Target> iterator = targets.iterator(); iterator.hasNext(); ) {
-                        Target target = iterator.next();
-                        fileWriter.append(INDENT).append("# from ").append(target.getMavenCoordinates()).append(NEW_LINE);
-                        //comments
-                        for (String comment : target.getComments()) {
-                            fileWriter.append(INDENT).append("# ").append(comment).append(NEW_LINE);
-                        }
-
-                        fileWriter.append(target.outputString(INDENT)).append(NEW_LINE);
-                        if (iterator.hasNext()) fileWriter.append(NEW_LINE);
-                    }
-                }
+                fileWriter.append(targetsFileContent);
             }
         }
     }

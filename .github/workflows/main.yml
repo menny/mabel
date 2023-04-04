@@ -12,10 +12,10 @@ on:
 
 jobs:
   checks:
-    runs-on: ubuntu-18.04
-    container: menny/android_bazel:1.13.8
+    runs-on: ubuntu-22.04
+    container: ghcr.io/menny/android_bazel:1.17.0
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3.5.0
         with:
           fetch-depth: 1
       - name: build
@@ -27,15 +27,15 @@ jobs:
       - name: verify-rules-generation
         run: ./scripts/ci_verify_rules_generation.sh
   examples:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     needs: [checks]
-    container: menny/android_bazel:1.13.8
+    container: ghcr.io/menny/android_bazel:1.17.0
     strategy:
       matrix:
-        example_name: [plain_java, java_plugin, android, kotlin]
+        example_name: [plain_java, java_plugin, android, kotlin, android-kotlin]
       fail-fast: false
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3.5.0
         with:
           fetch-depth: 1
       - name: build-examples

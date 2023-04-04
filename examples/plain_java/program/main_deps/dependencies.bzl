@@ -224,7 +224,7 @@ def generate_workspace_rules(name = "generate_workspace_rules"):
         sha256 = "1dee0481072d19c929b623e155e14d2f6085dc011529a0a0dbefc84cf571d865",
     )
 
-def _no_op_missing_aar_impl(name, **kwargs):
+def _no_op_missing_aar_impl(name, **_kwargs):
     """
     This is a help macro for missing concrete rule implementation.
 
@@ -232,7 +232,7 @@ def _no_op_missing_aar_impl(name, **kwargs):
 
     Args:
         name: A unique name for this target.
-        **kwargs: Anything else. Not used.
+        **_kwargs: Anything else. Not used.
     """
 
     fail(
@@ -242,10 +242,10 @@ def _no_op_missing_aar_impl(name, **kwargs):
 
 def generate_transitive_dependency_targets(
         name = "generate_transitive_dependency_targets",
-        java_library = native.java_library,
-        java_plugin = native.java_plugin,
+        _java_library = native.java_library,
+        _java_plugin = native.java_plugin,
         jvm_import = jvm_import,
-        aar_import = _no_op_missing_aar_impl):
+        _aar_import = _no_op_missing_aar_impl):
     """
     Macro to set up the transitive rules.
 
@@ -254,10 +254,10 @@ def generate_transitive_dependency_targets(
 
     Args:
         name: a unique name for this macro. Not needed to specify.
-        java_library: rule implementation for java_library. Defaults to native.java_library.
-        java_plugin: rule implementation for java_plugin. Defaults to native.java_plugin.
+        _java_library: rule implementation for java_library. Defaults to native.java_library.
+        _java_plugin: rule implementation for java_plugin. Defaults to native.java_plugin.
         jvm_import: rule implementation for jvm_import. Defaults to jvm_import.
-        aar_import: rule implementation for aar_import. Required only if you have Android dependencies.
+        _aar_import: rule implementation for aar_import. Required only if you have Android dependencies.
     """
 
     # from aopalliance:aopalliance:1.0
