@@ -78,7 +78,7 @@ public class WritersTests {
 
     private static final String TRANSITIVE_TARGETS_MACRO_OUTPUT =
             "\n" +
-                    "def _no_op_missing_aar_impl(name, **kwargs):\n" +
+                    "def _no_op_missing_aar_impl(name, **_kwargs):\n" +
                     "    \"\"\"\n" +
                     "    This is a help macro for missing concrete rule implementation.\n" +
                     "\n" +
@@ -86,7 +86,7 @@ public class WritersTests {
                     "\n" +
                     "    Args:\n" +
                     "        name: A unique name for this target.\n" +
-                    "        **kwargs: Anything else. Not used.\n" +
+                    "        **_kwargs: Anything else. Not used.\n" +
                     "    \"\"\"\n" +
                     "\n" +
                     "    fail(\n" +
