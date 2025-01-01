@@ -3,30 +3,39 @@ name: CI
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
       - '*'
     paths-ignore:
       - '**.md'
+
+
+env:
+  TERM: dumb
+  TMPDIR: "/tmp"
+
 jobs:
   checks:
-    runs-on: ubuntu-22.04
-    container: ghcr.io/menny/android_bazel:1.17.0
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v3.5.0
+      - uses: actions/checkout@v4.2.2
+      - uses: bazel-contrib/setup-bazel@0.9.1
         with:
-          fetch-depth: 1
+          bazelisk-cache: true
+          disk-cache: ${{ github.workflow }}
+          repository-cache: true
+
       - name: build
         run: ./scripts/ci_build.sh
-      - name: buildifier
-        run: ./scripts/ci_buildifier.sh
+      - name: formating
+        run: bazel run //tools:format
       - name: test
         run: ./scripts/ci_test.sh
       - name: verify-rules-generation
         run: ./scripts/ci_verify_rules_generation.sh
   examples:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [checks]
     container: ghcr.io/menny/android_bazel:1.17.0
     strategy:
@@ -34,9 +43,8 @@ jobs:
         example_name: [plain_java, java_plugin, android, kotlin, android-kotlin]
       fail-fast: false
     steps:
-      - uses: actions/checkout@v3.5.0
-        with:
-          fetch-depth: 1
+      - uses: actions/checkout@v4.2.2
+      - uses: bazel-contrib/setup-bazel@0.9.1
       - name: build-examples
         run: ./scripts/ci_build_examples.sh ${{ matrix.example_name }}
       - name: regenerate-examples
