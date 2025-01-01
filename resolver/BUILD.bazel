@@ -1,6 +1,45 @@
 load("@rules_java//java:defs.bzl", "java_binary", "java_library", "java_test")
 load("//resolver/main_deps:dependencies.bzl", "generate_transitive_dependency_targets")
 load("//rules/maven_deps:mabel.bzl", "artifact", "mabel_rule")
+load("//tools:linters.bzl", "checkstyle_test")
+
+checkstyle_test(
+    name = "checkstyle",
+    srcs = [
+        "//resolver:api_lib",
+        # "//resolver:api_model",
+        # "//resolver:classifiers_test",
+        # "//resolver:composite_formater_test",
+        # "//resolver:dependency_test",
+        # "//resolver:downloader_tests",
+        # "//resolver:formatters_test",
+        # "//resolver:general_commenter_test",
+        # "//resolver:graph_checks_tests",
+        # "//resolver:graph_resolver_lib",
+        # "//resolver:graph_resolver_lib_test",
+        # "//resolver:graph_util_tests",
+        # "//resolver:impl_lib",
+        # "//resolver:latest_version_merger_tests",
+        # "//resolver:merger",
+        # "//resolver:merger_bin",
+        # "//resolver:merger_tests",
+        # "//resolver:migration_tooling_graph_resolver",
+        # "//resolver:public_category_tests",
+        # "//resolver:real_writers_test",
+        # "//resolver:resolver_bin",
+        # "//resolver:serialization",
+        # "//resolver:serialization_test",
+        # "//resolver:sources_locator_test",
+        # "//resolver:target_test",
+        # "//resolver:target_type_test",
+        # "//resolver:test_only_merger_test",
+        # "//resolver:test_utils",
+        # "//resolver:timing_data",
+        # "//resolver:timing_lib",
+        # "//resolver:timing_timer",
+        # "//resolver:version_compare_tests",
+    ],
+)
 
 generate_transitive_dependency_targets()
 
@@ -339,6 +378,7 @@ java_test(
     deps = [
         ":api_lib",
         ":impl_lib",
+        "//resolver/main_deps/com/google/guava/guava",
         "//resolver/main_deps/junit/junit",
         "//resolver/main_deps/org/mockito/mockito-core",
     ],

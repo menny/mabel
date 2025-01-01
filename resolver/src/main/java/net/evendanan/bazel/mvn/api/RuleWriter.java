@@ -5,5 +5,5 @@ import java.util.Collection;
 
 public interface RuleWriter {
 
-    void write(Collection<Target> dependencies) throws IOException;
+  void write(Collection<Target> dependencies) throws IOException;
 }

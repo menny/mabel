@@ -1,0 +1,54 @@
+load("@aspect_rules_lint//format:defs.bzl", "format_multirun")
+load("@bazel_skylib//rules:native_binary.bzl", "native_binary")
+
+package(default_visibility = ["//visibility:public"])
+
+exports_files([
+    "checkstyle-suppressions.xml",
+    "checkstyle.xml",
+])
+
+native_binary(
+    name = "yamlfmt_runner",
+    src = "@multitool//tools/yamlfmt",
+    args = [
+        "-conf",
+        "$(execpath //:yamlfmt.yml)",
+        "-output_format",
+        "default",
+    ],
+    data = [
+        "//:gitignore",
+        "//:yamlfmt.yml",
+    ],
+)
+
+java_binary(
+    name = "checkstyle",
+    main_class = "com.puppycrawl.tools.checkstyle.Main",
+    runtime_deps = ["@com_puppycrawl_tools_checkstyle//jar"],
+)
+
+java_binary(
+    name = "java-format",
+    args = [
+        "--set-exit-if-changed",
+    ],
+    jvm_flags = [
+        "--add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED",
+        "--add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED",
+        "--add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED",
+        "--add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED",
+        "--add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED",
+    ],
+    main_class = "com.google.googlejavaformat.java.Main",
+    runtime_deps = ["@google-java-format//jar"],
+)
+
+# `run`ing this target will format the entire repo
+format_multirun(
+    name = "format",
+    java = ":java-format",
+    starlark = "@buildifier_prebuilt//:buildifier",
+    yaml = ":yamlfmt_runner",
+)

@@ -15,110 +15,102 @@
 package com.google.devtools.bazel.workspace.maven;
 
 import com.google.common.annotations.VisibleForTesting;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Profile;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.artifact.DefaultArtifact;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /* Builds Aether/Maven artifacts */
 public class ArtifactBuilder {
 
-    /** Builds a Maven artifact from a set of Maven coordinates */
-    public static Artifact fromCoords(String artifactCoords)
-            throws InvalidArtifactCoordinateException {
-        try {
-            return new DefaultArtifact(artifactCoords);
-        } catch (IllegalArgumentException e) {
-            throw new InvalidArtifactCoordinateException(e.getMessage(), e);
-        }
+  /** Builds a Maven artifact from a set of Maven coordinates */
+  public static Artifact fromCoords(String artifactCoords)
+      throws InvalidArtifactCoordinateException {
+    try {
+      return new DefaultArtifact(artifactCoords);
+    } catch (IllegalArgumentException e) {
+      throw new InvalidArtifactCoordinateException(e.getMessage(), e);
     }
+  }
 
-    /** Builds a Maven artifact from a set of Maven coordinates */
-    public static Artifact fromCoords(
-            String groupId, String artifactId, String classifier, String versionSpec) {
-        return new DefaultArtifact(
-                groupId, artifactId, classifier, null /*packaging*/, versionSpec);
-    }
+  /** Builds a Maven artifact from a set of Maven coordinates */
+  public static Artifact fromCoords(
+      String groupId, String artifactId, String classifier, String versionSpec) {
+    return new DefaultArtifact(groupId, artifactId, classifier, null /*packaging*/, versionSpec);
+  }
 
-    /**
-     * Builds a Maven artifact from a dependency. Note, this is a org.apache.maven.model.Dependency
-     * and not the Dependency defined by aether.
-     */
-    public static Artifact fromMavenDependency(
-            Dependency dep, VersionResolver versionResolver, Model model)
-            throws InvalidArtifactCoordinateException {
-        final String classifier = dep.getClassifier() == null ? "" : dep.getClassifier();
+  /**
+   * Builds a Maven artifact from a dependency. Note, this is a org.apache.maven.model.Dependency
+   * and not the Dependency defined by aether.
+   */
+  public static Artifact fromMavenDependency(
+      Dependency dep, VersionResolver versionResolver, Model model)
+      throws InvalidArtifactCoordinateException {
+    final String classifier = dep.getClassifier() == null ? "" : dep.getClassifier();
 
-        final String versionWithModelProperties =
-                ProfilePlaceholderUtil.replacePlaceholders(model, dep);
-        final String version =
-                versionResolver.resolveVersion(
-                        dep.getGroupId(),
-                        dep.getArtifactId(),
-                        classifier,
-                        versionWithModelProperties);
+    final String versionWithModelProperties =
+        ProfilePlaceholderUtil.replacePlaceholders(model, dep);
+    final String version =
+        versionResolver.resolveVersion(
+            dep.getGroupId(), dep.getArtifactId(), classifier, versionWithModelProperties);
 
-        return fromCoords(dep.getGroupId(), dep.getArtifactId(), classifier, version);
-    }
+    return fromCoords(dep.getGroupId(), dep.getArtifactId(), classifier, version);
+  }
+
+  @VisibleForTesting
+  static class ProfilePlaceholderUtil {
+    private static final boolean DEBUG = false;
+
+    private static final Pattern PROPERTY_PLACEHOLDER = Pattern.compile("(\\$\\{([\\w.]+)})");
 
     @VisibleForTesting
-    static class ProfilePlaceholderUtil {
-        private static final boolean DEBUG = false;
-
-        private static final Pattern PROPERTY_PLACEHOLDER = Pattern.compile("(\\$\\{([\\w.]+)})");
-
-        @VisibleForTesting
-        static String replacePlaceholders(final Model model, Dependency dep) {
-            String text = dep.getVersion();
-            if (text == null) {
-                throw new NullPointerException("model " + model.getId() + ", dep " + dep.toString() + " has no version!");
-            }
-            final Matcher matcher = PROPERTY_PLACEHOLDER.matcher(text);
-            // using while, since there could be multiple placeholders
-            while (matcher.find()) {
-                for (int matchIndex = 1; matchIndex <= matcher.groupCount(); matchIndex += 2) {
-                    final String placeholder = matcher.group(matchIndex);
-                    final String placeholderKey = matcher.group(matchIndex + 1);
-                    if (DEBUG)
-                        System.out.println("Match for " + text + ": placeholder " + placeholder);
-                    final String placeholderValue = findPropertyValue(model, placeholderKey);
-                    if (placeholderValue != null) {
-                        if (DEBUG)
-                            System.out.println(
-                                    "POM Property "
-                                            + placeholderKey
-                                            + " has value "
-                                            + placeholderValue);
-                        text = text.replace(placeholder, placeholderValue);
-                    }
-                }
-            }
-
-            return text;
+    static String replacePlaceholders(final Model model, Dependency dep) {
+      String text = dep.getVersion();
+      if (text == null) {
+        throw new NullPointerException(
+            "model " + model.getId() + ", dep " + dep.toString() + " has no version!");
+      }
+      final Matcher matcher = PROPERTY_PLACEHOLDER.matcher(text);
+      // using while, since there could be multiple placeholders
+      while (matcher.find()) {
+        for (int matchIndex = 1; matchIndex <= matcher.groupCount(); matchIndex += 2) {
+          final String placeholder = matcher.group(matchIndex);
+          final String placeholderKey = matcher.group(matchIndex + 1);
+          if (DEBUG) System.out.println("Match for " + text + ": placeholder " + placeholder);
+          final String placeholderValue = findPropertyValue(model, placeholderKey);
+          if (placeholderValue != null) {
+            if (DEBUG)
+              System.out.println(
+                  "POM Property " + placeholderKey + " has value " + placeholderValue);
+            text = text.replace(placeholder, placeholderValue);
+          }
         }
+      }
 
-        private static String findPropertyValue(final Model model, final String placeholderKey) {
-            for (final Profile profile : model.getProfiles()) {
-                for (final String propertyKey : profile.getProperties().stringPropertyNames()) {
-                    if (propertyKey.equals(placeholderKey)) {
-                        return profile.getProperties().getProperty(propertyKey);
-                    }
-                }
-            }
-
-            return null;
-        }
+      return text;
     }
 
-    /** Exception thrown if an artifact coordinate cannot be parsed */
-    public static class InvalidArtifactCoordinateException extends Exception {
-
-        InvalidArtifactCoordinateException(String message, Throwable e) {
-            super(message, e);
+    private static String findPropertyValue(final Model model, final String placeholderKey) {
+      for (final Profile profile : model.getProfiles()) {
+        for (final String propertyKey : profile.getProperties().stringPropertyNames()) {
+          if (propertyKey.equals(placeholderKey)) {
+            return profile.getProperties().getProperty(propertyKey);
+          }
         }
+      }
+
+      return null;
     }
+  }
+
+  /** Exception thrown if an artifact coordinate cannot be parsed */
+  public static class InvalidArtifactCoordinateException extends Exception {
+
+    InvalidArtifactCoordinateException(String message, Throwable e) {
+      super(message, e);
+    }
+  }
 }

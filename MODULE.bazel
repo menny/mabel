@@ -1,0 +1,15 @@
+"""bzlmod configuration for Mabel"""
+
+module(name = "mabel")
+
+bazel_dep(name = "aspect_bazel_lib", version = "2.9.4")
+bazel_dep(name = "bazel_skylib", version = "1.7.1")
+bazel_dep(name = "rules_multitool", version = "1.0.0")
+bazel_dep(name = "rules_java", version = "8.6.3")
+
+multitool = use_extension("@rules_multitool//multitool:extension.bzl", "multitool")
+multitool.hub(lockfile = "//tools:multitool.lock.json")
+use_repo(multitool, "multitool")
+
+bazel_dep(name = "aspect_rules_lint", version = "1.0.7")
+bazel_dep(name = "buildifier_prebuilt", version = "7.3.1")
