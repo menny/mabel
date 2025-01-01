@@ -23,7 +23,7 @@ public abstract class PinVersionMergerBase implements GraphMerger {
   public Collection<Dependency> mergeGraphs(final Collection<Resolution> resolutions) {
     Map<String, Dependency> pinnedVersions = new HashMap<>();
 
-    GraphUtils.DfsTraveller(
+    GraphUtils.dfsTraveller(
         resolutions,
         (dependency, level) ->
             pinnedVersions.compute(

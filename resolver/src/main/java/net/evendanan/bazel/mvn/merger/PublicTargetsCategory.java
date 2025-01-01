@@ -1,6 +1,10 @@
 package net.evendanan.bazel.mvn.merger;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Collection;
+import java.util.Deque;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import net.evendanan.bazel.mvn.api.Target;

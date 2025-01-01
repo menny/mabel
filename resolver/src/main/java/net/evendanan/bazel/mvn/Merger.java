@@ -1,7 +1,7 @@
 package net.evendanan.bazel.mvn;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
-import static net.evendanan.bazel.mvn.merger.GraphUtils.DfsTraveller;
+import static net.evendanan.bazel.mvn.merger.GraphUtils.dfsTraveller;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
@@ -193,7 +193,7 @@ public class Merger {
                 .map(old -> Resolution.create(old.rootDependency(), dependenciesToPrint))
                 .collect(Collectors.toList());
 
-        DfsTraveller(
+        dfsTraveller(
             resolutionsToPrint,
             (dependency, level) -> {
               try {

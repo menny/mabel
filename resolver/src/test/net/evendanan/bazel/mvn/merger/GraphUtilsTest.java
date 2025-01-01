@@ -85,7 +85,7 @@ public class GraphUtilsTest {
 
     Set<MavenCoordinate> seen = new HashSet<>();
 
-    GraphUtils.DfsTraveller(
+    GraphUtils.dfsTraveller(
         Collections.singleton(resolution),
         (dependency, integer) ->
             Assert.assertTrue(

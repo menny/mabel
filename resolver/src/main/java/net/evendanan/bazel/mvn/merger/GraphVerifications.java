@@ -2,7 +2,15 @@ package net.evendanan.bazel.mvn.merger;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Stream;
 import net.evendanan.bazel.mvn.api.DependencyTools;
@@ -47,7 +55,7 @@ public final class GraphVerifications {
     Set<MavenCoordinate> resolved = new HashSet<>();
     resolution.allResolvedDependencies().forEach(dep -> resolved.add(dep.mavenCoordinate()));
 
-    GraphUtils.DfsTraveller(
+    GraphUtils.dfsTraveller(
         Collections.singleton(resolution),
         (dependency, level) -> {
           if (!resolved.contains(dependency.mavenCoordinate()))
@@ -60,7 +68,7 @@ public final class GraphVerifications {
     Set<MavenCoordinate> resolved = new HashSet<>();
     resolution.allResolvedDependencies().forEach(dep -> resolved.add(dep.mavenCoordinate()));
 
-    GraphUtils.DfsTraveller(
+    GraphUtils.dfsTraveller(
         Collections.singleton(resolution),
         (dependency, level) -> resolved.remove(dependency.mavenCoordinate()));
 

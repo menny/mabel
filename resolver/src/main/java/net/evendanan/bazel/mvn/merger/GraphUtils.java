@@ -1,7 +1,14 @@
 package net.evendanan.bazel.mvn.merger;
 
 import com.google.common.base.Preconditions;
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -20,7 +27,7 @@ public class GraphUtils {
     final DependencyTools dependencyTools = new DependencyTools();
     final StringBuilder builder = new StringBuilder();
 
-    DfsTraveller(
+    dfsTraveller(
         resolutions,
         (dependency, level) -> {
           for (int i = 0; i < level; i++) {
@@ -35,7 +42,7 @@ public class GraphUtils {
     return builder.toString();
   }
 
-  public static void DfsTraveller(
+  public static void dfsTraveller(
       Collection<Resolution> resolutions, BiConsumer<Dependency, Integer> visitor) {
     Map<MavenCoordinate, Dependency> mapper = new HashMap<>();
     resolutions.forEach(
@@ -46,7 +53,7 @@ public class GraphUtils {
 
     resolutions.forEach(
         resolution ->
-            DfsTraveller(
+            dfsTraveller(
                 resolution.rootDependency(),
                 mapper::get,
                 1,
@@ -54,7 +61,7 @@ public class GraphUtils {
                 new HashSet<MavenCoordinate>()));
   }
 
-  private static void DfsTraveller(
+  private static void dfsTraveller(
       MavenCoordinate mavenCoordinate,
       Function<MavenCoordinate, Dependency> dependencyMap,
       int level,
@@ -72,12 +79,12 @@ public class GraphUtils {
             Stream.concat(dependency.dependencies().stream(), dependency.exports().stream()),
             dependency.runtimeDependencies().stream())
         .distinct()
-        .forEach(child -> DfsTraveller(child, dependencyMap, level + 1, visitor, seenDependencies));
+        .forEach(child -> dfsTraveller(child, dependencyMap, level + 1, visitor, seenDependencies));
 
     seenDependencies.remove(mavenCoordinate);
   }
 
-  static void BfsTraveller(
+  static void bfsTraveller(
       Collection<Resolution> resolutions, BiConsumer<Dependency, Integer> visitor) {
     Map<MavenCoordinate, Dependency> mapper = new HashMap<>();
     resolutions.forEach(
