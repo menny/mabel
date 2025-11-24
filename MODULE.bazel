@@ -2,15 +2,87 @@
 
 module(name = "mabel")
 
-bazel_dep(name = "aspect_bazel_lib", version = "2.9.4")
-bazel_dep(name = "bazel_skylib", version = "1.7.1")
-bazel_dep(name = "rules_multitool", version = "1.0.0")
-bazel_dep(name = "rules_java", version = "8.6.3")
-bazel_dep(name = "platforms", version = "0.0.10")
+bazel_dep(name = "bazel_lib", version = "3.0.0")
+bazel_dep(name = "bazel_skylib", version = "1.8.2")
+bazel_dep(name = "rules_multitool", version = "1.9.0")
+bazel_dep(name = "rules_java", version = "9.0.3")
+bazel_dep(name = "platforms", version = "1.0.0")
 
 multitool = use_extension("@rules_multitool//multitool:extension.bzl", "multitool")
 multitool.hub(lockfile = "//tools:multitool.lock.json")
 use_repo(multitool, "multitool")
 
-bazel_dep(name = "aspect_rules_lint", version = "1.0.7")
-bazel_dep(name = "buildifier_prebuilt", version = "7.3.1")
+bazel_dep(name = "aspect_rules_lint", version = "1.10.2")
+bazel_dep(
+    name = "buildifier_prebuilt",
+    version = "8.2.1",
+    dev_dependency = True,
+)
+
+# Tool dependencies (for checkstyle and java-format)
+http_jar = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_jar")
+
+http_jar(
+    name = "google-java-format",
+    sha256 = "25157797a0a972c2290b5bc71530c4f7ad646458025e3484412a6e5a9b8c9aa6",
+    url = "https://github.com/google/google-java-format/releases/download/v1.25.2/google-java-format-1.25.2-all-deps.jar",
+)
+
+http_jar(
+    name = "com_puppycrawl_tools_checkstyle",
+    sha256 = "51c34d738520c1389d71998a9ab0e6dabe0d7cf262149f3e01a7294496062e42",
+    url = "https://github.com/checkstyle/checkstyle/releases/download/checkstyle-10.17.0/checkstyle-10.17.0-all.jar",
+)
+
+# Mabel's own Maven dependencies using lockfile-based extension
+maven = use_extension("//rules/maven_deps:extensions.bzl", "maven")
+maven.install(lockfile = "//resolver:maven_install.json")
+use_repo(maven,
+    "com_beust__jcommander__1_72",
+    "com_google_auto_value__auto_value_annotations__1_7",
+    "com_google_auto_value__auto_value__1_7",
+    "com_google_code_findbugs__jsr305__3_0_2",
+    "com_google_code_gson__gson__2_8_5",
+    "com_google_errorprone__error_prone_annotations__2_2_0",
+    "com_google_guava__failureaccess__1_0_1",
+    "com_google_guava__guava__27_0_1_jre",
+    "com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava",
+    "com_google_j2objc__j2objc_annotations__1_1",
+    "commons_codec__commons_codec__1_11",
+    "commons_logging__commons_logging__1_2",
+    "javax_inject__javax_inject__1",
+    "junit__junit__4_12",
+    "net_bytebuddy__byte_buddy_agent__1_9_3",
+    "net_bytebuddy__byte_buddy__1_9_3",
+    "org_apache_commons__commons_lang3__3_8_1",
+    "org_apache_httpcomponents__httpclient__4_5_13",
+    "org_apache_httpcomponents__httpcore__4_4_13",
+    "org_apache_maven_wagon__wagon_provider_api__1_0",
+    "org_apache_maven__maven_aether_provider__3_3_9",
+    "org_apache_maven__maven_artifact__3_8_1",
+    "org_apache_maven__maven_builder_support__3_8_1",
+    "org_apache_maven__maven_model_builder__3_8_1",
+    "org_apache_maven__maven_model__3_8_1",
+    "org_apache_maven__maven_repository_metadata__3_8_1",
+    "org_checkerframework__checker_qual__2_5_2",
+    "org_codehaus_mojo__animal_sniffer_annotations__1_17",
+    "org_codehaus_plexus__plexus_component_annotations__1_6",
+    "org_codehaus_plexus__plexus_interpolation__1_26",
+    "org_codehaus_plexus__plexus_utils__3_3_0",
+    "org_eclipse_aether__aether_api__1_1_0",
+    "org_eclipse_aether__aether_connector_basic__1_1_0",
+    "org_eclipse_aether__aether_impl__1_1_0",
+    "org_eclipse_aether__aether_spi__1_1_0",
+    "org_eclipse_aether__aether_transport_classpath__1_1_0",
+    "org_eclipse_aether__aether_transport_file__1_1_0",
+    "org_eclipse_aether__aether_transport_http__1_1_0",
+    "org_eclipse_aether__aether_transport_wagon__1_1_0",
+    "org_eclipse_aether__aether_util__1_1_0",
+    "org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4",
+    "org_hamcrest__hamcrest_core__1_3",
+    "org_mockito__mockito_core__2_23_4",
+    "org_objenesis__objenesis__2_6",
+    "org_slf4j__jcl_over_slf4j__1_6_2",
+    "org_slf4j__slf4j_api__1_7_25",
+    "org_slf4j__slf4j_nop__1_7_25",
+)

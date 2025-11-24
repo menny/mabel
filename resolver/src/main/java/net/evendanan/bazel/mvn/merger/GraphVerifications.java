@@ -116,14 +116,15 @@ public final class GraphVerifications {
   }
 
   public static void checkResolutionSuccess(Resolution resolution) {
-    resolution.allResolvedDependencies().stream()
-        .filter(d -> d.mavenCoordinate().equals(resolution.rootDependency()))
-        .filter(d -> !StringUtils.isBlank(d.url()))
-        .findFirst()
-        .orElseThrow(
-            () ->
-                new InvalidGraphException(
-                    "Failed to resolve requested coordinate", resolution.rootDependency()));
+    Dependency resolvedRoot =
+        resolution.allResolvedDependencies().stream()
+            .filter(d -> d.mavenCoordinate().equals(resolution.rootDependency()))
+            .filter(d -> !StringUtils.isBlank(d.url()))
+            .findFirst()
+            .orElseThrow(
+                () ->
+                    new InvalidGraphException(
+                        "Failed to resolve requested coordinate", resolution.rootDependency()));
   }
 
   public static class InvalidGraphException extends RuntimeException {

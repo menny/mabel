@@ -58,6 +58,7 @@ public class Merger {
   private final RuleWriter repositoryRulesMacroWriter;
   private final RuleWriter targetsMacroWriter;
   private final RuleWriter hardAliasesWriter;
+  private final RuleWriter lockfileWriter;
   private final File macrosFile;
   private final File actualMacrosFile;
 
@@ -73,6 +74,14 @@ public class Merger {
     targetsMacroWriter =
         new RuleWriters.TransitiveRulesMacroWriter(
             macrosFile, "generate_transitive_dependency_targets");
+
+    // Create lockfile writer if lockfile path is specified
+    if (!options.lockfile_path.isEmpty()) {
+      File lockfileFile = new File(options.lockfile_path);
+      lockfileWriter = new net.evendanan.bazel.mvn.impl.JsonLockfileWriter(lockfileFile);
+    } else {
+      lockfileWriter = null;
+    }
 
     if (options.create_deps_sub_folders) {
       if (options.package_path.isEmpty()) {
@@ -409,11 +418,12 @@ public class Merger {
     timer.finish();
 
     System.out.print("Writing targets to files...");
-    repositoryRulesMacroWriter.write(
+    List<Target> repositoryRules =
         targetsToWritePairs.stream()
             .map(t -> t.repositoryRules)
             .flatMap(List::stream)
-            .collect(Collectors.toList()));
+            .collect(Collectors.toList());
+    repositoryRulesMacroWriter.write(repositoryRules);
 
     final Function<Target, Target> visibilityFixer =
         PublicTargetsCategory.create(
@@ -427,6 +437,17 @@ public class Merger {
             .collect(Collectors.toList());
     hardAliasesWriter.write(targets);
     targetsMacroWriter.write(targets);
+
+    // Write lockfile if configured
+    if (lockfileWriter != null) {
+      System.out.print("Writing lockfile...");
+      // Combine repository rules and import targets for the lockfile
+      List<Target> allTargets = new java.util.ArrayList<>();
+      allTargets.addAll(repositoryRules);
+      allTargets.addAll(targets);
+      lockfileWriter.write(allTargets);
+      System.out.println("✓");
+    }
 
     Files.move(macrosFile.toPath(), actualMacrosFile.toPath(), REPLACE_EXISTING);
 

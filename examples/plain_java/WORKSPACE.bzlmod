@@ -1,0 +1,3 @@
+load("//program/main_deps:dependencies.bzl", generate_example_workspace_rules = "generate_workspace_rules")
+
+generate_example_workspace_rules()

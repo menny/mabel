@@ -30,6 +30,7 @@ mabel_rule(
     name = "main_deps",
     default_exports_generation = "requested_deps",
     default_target_type = "naive",
+    lockfile_path = "resolver/maven_install.json",
     maven_deps = [
         artifact(
             "com.google.guava:guava:27.0.1-jre",
@@ -242,6 +243,7 @@ java_library(
         ":api_lib",
         ":timing_lib",
         "//resolver/main_deps/com/google/code/findbugs/jsr305",
+        "//resolver/main_deps/com/google/code/gson/gson",
         "//resolver/main_deps/com/google/guava/guava",
         "//resolver/main_deps/org/apache/commons/commons-lang3",
     ],

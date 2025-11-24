@@ -68,6 +68,34 @@ public class Target {
     return nameSpacedTargetName;
   }
 
+  public Map<String, AttributeValue> getAttributes() {
+    return Collections.unmodifiableMap(attributes);
+  }
+
+  public String getStringAttribute(String name) {
+    AttributeValue value = attributes.get(name);
+    if (value instanceof StringValue) {
+      return ((StringValue) value).value;
+    }
+    return null;
+  }
+
+  public List<String> getListAttribute(String name) {
+    AttributeValue value = attributes.get(name);
+    if (value instanceof ListValue) {
+      return new ArrayList<>(((ListValue) value).value);
+    }
+    return Collections.emptyList();
+  }
+
+  public Boolean getBooleanAttribute(String name) {
+    AttributeValue value = attributes.get(name);
+    if (value instanceof BooleanValue) {
+      return ((BooleanValue) value).value;
+    }
+    return null;
+  }
+
   public Target addBoolean(String name, boolean value) {
     attributes.put(name, new BooleanValue(value));
     return this;
@@ -156,16 +184,16 @@ public class Target {
         == PUBLIC_VISIBILITY;
   }
 
-  private interface AttributeValue {
+  interface AttributeValue {
 
     Collection<String> outputValue();
   }
 
-  private static class BooleanValue implements AttributeValue {
+  static class BooleanValue implements AttributeValue {
 
-    private final boolean value;
+    final boolean value;
 
-    private BooleanValue(final boolean value) {
+    BooleanValue(final boolean value) {
       this.value = value;
     }
 
@@ -175,11 +203,11 @@ public class Target {
     }
   }
 
-  private static class IntValue implements AttributeValue {
+  static class IntValue implements AttributeValue {
 
-    private final int value;
+    final int value;
 
-    private IntValue(final int value) {
+    IntValue(final int value) {
       this.value = value;
     }
 
@@ -189,11 +217,11 @@ public class Target {
     }
   }
 
-  private static class StringValue implements AttributeValue {
+  static class StringValue implements AttributeValue {
 
-    private final String value;
+    final String value;
 
-    private StringValue(final String value) {
+    StringValue(final String value) {
       this.value = value;
     }
 
@@ -203,11 +231,11 @@ public class Target {
     }
   }
 
-  private static class VarValue implements AttributeValue {
+  static class VarValue implements AttributeValue {
 
-    private final String varName;
+    final String varName;
 
-    private VarValue(final String varName) {
+    VarValue(final String varName) {
       this.varName = varName;
     }
 
@@ -217,11 +245,11 @@ public class Target {
     }
   }
 
-  private static class ListValue implements AttributeValue {
+  static class ListValue implements AttributeValue {
 
-    private final Collection<String> value;
+    final Collection<String> value;
 
-    private ListValue(final Collection<String> value) {
+    ListValue(final Collection<String> value) {
       this.value = ImmutableList.copyOf(value);
     }
 

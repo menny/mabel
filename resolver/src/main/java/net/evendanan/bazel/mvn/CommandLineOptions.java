@@ -122,6 +122,13 @@ public class CommandLineOptions {
       required = true)
   ExportsGenerationType exports_generation;
 
+  @Parameter(
+      names = {"--lockfile_path"},
+      description =
+          "Path to output JSON lockfile for bzlmod. If set, a lockfile will be generated in"
+              + " addition to the bzl macros.")
+  String lockfile_path = "";
+
   /**
    * Jcommander defaults to splitting each parameter by comma. For example,
    * --a=group:artifact:[x1,x2] is parsed as two items 'group:artifact:[x1' and 'x2]', instead of

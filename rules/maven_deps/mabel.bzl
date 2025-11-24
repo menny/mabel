@@ -40,7 +40,7 @@ _mabel_maven_dependency_graph_resolving_rule = rule(
         "repositories": attr.string_list(allow_empty = False, default = DEFAULT_MAVEN_SERVERS, doc = "List of URLs that point to Maven servers. Defaut is Maven-Central."),
         "test_only": attr.bool(default = False, doc = "Should this artifact be marked as test_only. Default is False.", mandatory = False),
         "type": attr.string(mandatory = True, default = "inherit", values = ["inherit", "jar", "aar", "naive", "processor", "auto"], doc = "The type of artifact targets to generate."),
-        "_jdk": attr.label(default = Label("@bazel_tools//tools/jdk:remote_jdk11"), providers = [java_common.JavaRuntimeInfo]),
+        "_jdk": attr.label(default = Label("@bazel_tools//tools/jdk:current_java_runtime"), providers = [java_common.JavaRuntimeInfo]),
         "_resolver": attr.label(executable = True, allow_files = True, cfg = "exec", default = Label("//resolver:resolver_bin")),
     },
     outputs = {"out": "%{name}-transitive-graph.data"},
@@ -84,9 +84,9 @@ script_merger_template = """
     --version_conflict_resolver={version_conflict_resolver} \
     --type={default_target_type} \
     --exports_generation={default_exports_generation} \
-    --keep_output_folder={keep_output_folder}
+    --keep_output_folder={keep_output_folder}{lockfile_param}
 
-echo "Stored resolved dependencies graph (rules) at ${{BUILD_WORKING_DIRECTORY}}/{output_target_build_files_base_path}{output_filename}"
+echo "Stored resolved dependencies graph (rules) at ${{BUILD_WORKING_DIRECTORY}}/{output_target_build_files_base_path}{output_filename}"{lockfile_echo}
 """
 
 def _impl_merger(ctx):
@@ -96,7 +96,15 @@ def _impl_merger(ctx):
     source_files = [dep[TransitiveDataInfo].graph_file for dep in ctx.attr.maven_deps]
     script = ctx.outputs.out
     java_runtime = ctx.attr._jdk[java_common.JavaRuntimeInfo]
-    java_path = str(java_runtime.java_executable_exec_path)
+    # Use runfiles path for bazel run - this will be available in the runfiles tree
+    java_path = "{}/bin/java".format(java_runtime.java_home_runfiles_path)
+
+    # Prepare lockfile parameters
+    lockfile_param = ""
+    lockfile_echo = ""
+    if ctx.attr.lockfile_path:
+        lockfile_param = " \\\n    --lockfile_path=${{BUILD_WORKING_DIRECTORY}}/{}".format(ctx.attr.lockfile_path)
+        lockfile_echo = "\necho \"Stored lockfile at ${{BUILD_WORKING_DIRECTORY}}/{}\"".format(ctx.attr.lockfile_path)
 
     script_content = script_merger_template.format(
         java = java_path,
@@ -118,6 +126,8 @@ def _impl_merger(ctx):
         keep_output_folder = "{}".format(ctx.attr.keep_output_folder).lower(),
         default_exports_generation = ctx.attr.default_exports_generation,
         default_target_type = ctx.attr.default_target_type,
+        lockfile_param = lockfile_param,
+        lockfile_echo = lockfile_echo,
     )
 
     ctx.actions.write(script, script_content, is_executable = True)
@@ -146,6 +156,7 @@ mabel_rule = rule(
         "generate_deps_sub_folder": attr.bool(default = True, doc = "If set to True (the default), will create sub-folders with BUILD.bazel file for each dependency.", mandatory = False),
         "generated_targets_prefix": attr.string(default = "", doc = "A prefix to add to all generated targets. Default is an empty string, meaning no prefix.", mandatory = False),
         "keep_output_folder": attr.bool(default = False, doc = "If set to False (the default), will first remove the output folder.", mandatory = False),
+        "lockfile_path": attr.string(default = "", doc = "Path to output JSON lockfile for bzlmod. If set, a lockfile will be generated in addition to the bzl macros. Path is relative to workspace root.", mandatory = False),
         "mabel_repository_rule_name": attr.string(mandatory = False, default = "mabel", doc = "The name of the mabel remote-repository name (the name of the `http_archive` used to import _mabel_). Default is `mabel`."),
         "maven_deps": attr.label_list(
             mandatory = True,
@@ -156,7 +167,7 @@ mabel_rule = rule(
         "output_graph_to_file": attr.bool(default = False, doc = "If set to True, will output the graph to dependencies.txt. Default is False.", mandatory = False),
         "public_targets_category": attr.string(mandatory = False, default = "all", values = ["requested_deps", "recursive_exports", "all"], doc = "Set public visibility of resolved targets. Default is 'all'. Can be: 'requested_deps', 'recursive_exports', 'all'."),
         "version_conflict_resolver": attr.string(mandatory = False, default = "latest_version", values = ["latest_version", "breadth_first"], doc = "Defines the strategy used to resolve version-conflicts. Default is 'latest_version'. Can be: 'latest_version', 'breadth_first'."),
-        "_jdk": attr.label(default = Label("@bazel_tools//tools/jdk:remote_jdk11"), providers = [java_common.JavaRuntimeInfo]),
+        "_jdk": attr.label(default = Label("@bazel_tools//tools/jdk:current_java_runtime"), providers = [java_common.JavaRuntimeInfo]),
         "_merger": attr.label(executable = True, allow_single_file = True, cfg = "exec", default = Label("//resolver:merger_bin_deploy.jar")),
     },
     outputs = {"out": "%{name}-generate-deps.sh"},
