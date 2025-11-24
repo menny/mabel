@@ -6,6 +6,38 @@ repository rules for all Maven artifacts without needing to re-resolve dependenc
 """
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
+load("@mabel//rules/jvm_import:jvm_import.bzl", "jvm_import")
+
+def _jvm_import_repo_impl(rctx):
+    """Creates a repository with a single jvm_import target."""
+    # Create a BUILD file with the jvm_import target
+    rctx.file("BUILD.bazel", """
+load("@mabel//rules/jvm_import:jvm_import.bzl", "jvm_import")
+
+jvm_import(
+    name = "jar",
+    jars = ["@{jar_repo}//file"],
+    visibility = ["//visibility:public"],
+    {deps}
+    {exports}
+    {runtime_deps}
+)
+""".format(
+        jar_repo = rctx.attr.jar_repo,
+        deps = "deps = {},".format(rctx.attr.deps) if rctx.attr.deps else "",
+        exports = "exports = {},".format(rctx.attr.exports) if rctx.attr.exports else "",
+        runtime_deps = "runtime_deps = {},".format(rctx.attr.runtime_deps) if rctx.attr.runtime_deps else "",
+    ))
+
+_jvm_import_repo = repository_rule(
+    implementation = _jvm_import_repo_impl,
+    attrs = {
+        "jar_repo": attr.string(mandatory = True),
+        "deps": attr.string_list(default = []),
+        "exports": attr.string_list(default = []),
+        "runtime_deps": attr.string_list(default = []),
+    },
+)
 
 def _maven_install_impl(module_ctx):
     """
@@ -16,6 +48,9 @@ def _maven_install_impl(module_ctx):
     2. Parses the artifact metadata
     3. Creates http_file repository rules for each Maven artifact
     """
+
+    # Track created repositories to avoid duplicates across lockfiles
+    created_repos = {}
 
     # Collect all install tags from modules that use this extension
     for mod in module_ctx.modules:
@@ -40,7 +75,23 @@ def _maven_install_impl(module_ctx):
                 if not repo_name or not url:
                     fail("Invalid artifact entry for {}: missing repo_name or url".format(maven_coordinate))
 
-                # Create http_file repository rule for the main artifact
+                # Skip if this repo was already created from another lockfile
+                if repo_name in created_repos:
+                    # Verify that the URL and sha256 match (same version)
+                    existing = created_repos[repo_name]
+                    if existing["url"] != url:
+                        fail("Repository {} defined multiple times with different URLs: {} vs {}".format(
+                            repo_name, existing["url"], url))
+                    if existing.get("sha256") != sha256:
+                        fail("Repository {} defined multiple times with different sha256: {} vs {}".format(
+                            repo_name, existing.get("sha256"), sha256))
+                    continue
+
+                # Track this repo
+                created_repos[repo_name] = {"url": url, "sha256": sha256}
+
+                # Create http_file repository rule for downloading the JAR
+                jar_repo_name = repo_name + "__jar"
                 http_file_attrs = {
                     "urls": [url],
                     "downloaded_file_path": url.split("/")[-1],  # Extract filename from URL
@@ -51,25 +102,42 @@ def _maven_install_impl(module_ctx):
                     http_file_attrs["sha256"] = sha256
 
                 http_file(
-                    name = repo_name,
+                    name = jar_repo_name,
                     **http_file_attrs
+                )
+
+                # Create jvm_import wrapper repository
+                deps = artifact_info.get("dependencies", [])
+                exports = artifact_info.get("exports", [])
+                runtime_deps = artifact_info.get("runtime_deps", [])
+
+                _jvm_import_repo(
+                    name = repo_name,
+                    jar_repo = jar_repo_name,
+                    deps = ["@" + d for d in deps],
+                    exports = ["@" + e for e in exports],
+                    runtime_deps = ["@" + r for r in runtime_deps],
                 )
 
                 # Create http_file for sources if available
                 sources = artifact_info.get("sources")
                 if sources and sources.get("url"):
                     sources_repo_name = repo_name + "__sources"
-                    sources_attrs = {
-                        "urls": [sources["url"]],
-                        "downloaded_file_path": sources["url"].split("/")[-1],
-                    }
-                    if sources.get("sha256"):
-                        sources_attrs["sha256"] = sources["sha256"]
 
-                    http_file(
-                        name = sources_repo_name,
-                        **sources_attrs
-                    )
+                    # Skip if sources repo already created
+                    if sources_repo_name not in created_repos:
+                        sources_attrs = {
+                            "urls": [sources["url"]],
+                            "downloaded_file_path": sources["url"].split("/")[-1],
+                        }
+                        if sources.get("sha256"):
+                            sources_attrs["sha256"] = sources["sha256"]
+
+                        http_file(
+                            name = sources_repo_name,
+                            **sources_attrs
+                        )
+                        created_repos[sources_repo_name] = {"url": sources["url"], "sha256": sources.get("sha256")}
 
 # Define the tag class for the install operation
 _install_tag = tag_class(

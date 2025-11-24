@@ -1,13 +1,9 @@
 load("@mabel//rules/maven_deps:mabel.bzl", "artifact", "mabel_rule")
 load("@rules_java//java:defs.bzl", "java_binary")
-load("//program/main_deps:dependencies.bzl", "generate_transitive_dependency_targets")
-
-generate_transitive_dependency_targets()
 
 mabel_rule(
     name = "main_deps",
-    debug_logs = True,
-    generated_targets_prefix = "",
+    lockfile_path = "program/maven_install.json",
     maven_deps = [
         artifact("com.google.guava:guava:20.0"),
         artifact("org.jboss.resteasy:resteasy-client:3.13.1.Final"),
@@ -19,5 +15,5 @@ java_binary(
     name = "plain_java",
     srcs = ["HelloWorld.java"],
     main_class = "examples.plain_java.program.HelloWorld",
-    deps = ["//program:com_google_guava__guava"],
+    deps = ["@com_google_guava__guava__20_0//:jar"],
 )
