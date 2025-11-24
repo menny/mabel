@@ -1,5 +1,4 @@
-load("@rules_java//java:defs.bzl", "java_binary", "java_library", "java_test")
-load("//resolver/main_deps:dependencies.bzl", "generate_transitive_dependency_targets")
+load("@rules_java//java:defs.bzl", "java_binary", "java_library", "java_plugin", "java_test")
 load("//rules/maven_deps:mabel.bzl", "artifact", "mabel_rule")
 load("//tools:linters.bzl", "checkstyle_test")
 
@@ -20,7 +19,12 @@ checkstyle_test(
     ],
 )
 
-generate_transitive_dependency_targets()
+# AutoValue annotation processor
+java_plugin(
+    name = "autovalue_plugin",
+    processor_class = "com.google.auto.value.processor.AutoValueProcessor",
+    deps = ["@com_google_auto_value__auto_value__1_7//:jar"],
+)
 
 _AETHER_VERSION = "1.1.0"
 
@@ -135,9 +139,9 @@ mabel_rule(
 java_library(
     name = "api_model",
     srcs = glob(["src/main/java/net/evendanan/bazel/mvn/api/model/*.java"]),
+    plugins = [":autovalue_plugin"],
     deps = [
-        "//resolver/main_deps/com/google/auto/value/auto-value:processors",
-        "//resolver/main_deps/com/google/auto/value/auto-value-annotations",
+        "@com_google_auto_value__auto_value_annotations__1_7//:jar",
     ],
 )
 
@@ -146,7 +150,7 @@ java_library(
     srcs = glob(["src/main/java/net/evendanan/bazel/mvn/api/serialization/*.java"]),
     deps = [
         ":api_model",
-        "//resolver/main_deps/com/google/code/gson/gson",
+        "@com_google_code_gson__gson__2_8_5//:jar",
     ],
 )
 
@@ -158,8 +162,8 @@ java_test(
     deps = [
         ":api_lib",
         ":serialization",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@junit__junit__4_12//:jar",
+        "@org_mockito__mockito_core__2_23_4//:jar",
     ],
 )
 
@@ -167,29 +171,30 @@ java_library(
     name = "graph_resolver_lib",
     srcs = glob(["src/main/java/com/google/devtools/bazel/workspace/maven/*.java"]),
     runtime_deps = [
-        "//resolver/main_deps/org/codehaus/plexus/plexus-interpolation",
-        "//resolver/main_deps/org/codehaus/plexus/plexus-utils",
+        "@org_codehaus_plexus__plexus_interpolation__1_26//:jar",
+        "@org_codehaus_plexus__plexus_utils__3_3_0//:jar",
     ],
     deps = [
         ":api_lib",
-        "//resolver/main_deps/com/google/code/findbugs/jsr305",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/org/apache/commons/commons-lang3",
-        "//resolver/main_deps/org/apache/httpcomponents/httpclient",
-        "//resolver/main_deps/org/apache/maven/maven-aether-provider",
-        "//resolver/main_deps/org/apache/maven/maven-artifact",
-        "//resolver/main_deps/org/apache/maven/maven-model",
-        "//resolver/main_deps/org/apache/maven/maven-model-builder",
-        "//resolver/main_deps/org/apache/maven/maven-repository-metadata",
-        "//resolver/main_deps/org/eclipse/aether/aether-api",
-        "//resolver/main_deps/org/eclipse/aether/aether-connector-basic",
-        "//resolver/main_deps/org/eclipse/aether/aether-impl",
-        "//resolver/main_deps/org/eclipse/aether/aether-spi",
-        "//resolver/main_deps/org/eclipse/aether/aether-transport-classpath",
-        "//resolver/main_deps/org/eclipse/aether/aether-transport-file",
-        "//resolver/main_deps/org/eclipse/aether/aether-transport-http",
-        "//resolver/main_deps/org/eclipse/aether/aether-transport-wagon",
-        "//resolver/main_deps/org/eclipse/aether/aether-util",
+        "@com_google_code_findbugs__jsr305__3_0_2//:jar",
+        "@com_google_guava__guava__27_0_1_jre//:jar",
+        "@org_apache_commons__commons_lang3__3_8_1//:jar",
+        "@org_apache_httpcomponents__httpclient__4_5_13//:jar",
+        "@org_apache_maven__maven_aether_provider__3_3_9//:jar",
+        "@org_apache_maven__maven_artifact__3_8_1//:jar",
+        "@org_apache_maven__maven_builder_support__3_8_1//:jar",
+        "@org_apache_maven__maven_model__3_8_1//:jar",
+        "@org_apache_maven__maven_model_builder__3_8_1//:jar",
+        "@org_apache_maven__maven_repository_metadata__3_8_1//:jar",
+        "@org_eclipse_aether__aether_api__1_1_0//:jar",
+        "@org_eclipse_aether__aether_connector_basic__1_1_0//:jar",
+        "@org_eclipse_aether__aether_impl__1_1_0//:jar",
+        "@org_eclipse_aether__aether_spi__1_1_0//:jar",
+        "@org_eclipse_aether__aether_transport_classpath__1_1_0//:jar",
+        "@org_eclipse_aether__aether_transport_file__1_1_0//:jar",
+        "@org_eclipse_aether__aether_transport_http__1_1_0//:jar",
+        "@org_eclipse_aether__aether_transport_wagon__1_1_0//:jar",
+        "@org_eclipse_aether__aether_util__1_1_0//:jar",
     ],
 )
 
@@ -199,8 +204,8 @@ java_library(
     deps = [
         ":api_lib",
         ":graph_resolver_lib",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/org/apache/maven/maven-model",
+        "@com_google_guava__guava__27_0_1_jre//:jar",
+        "@org_apache_maven__maven_model__3_8_1//:jar",
     ],
 )
 
@@ -209,9 +214,9 @@ java_library(
     srcs = glob(["src/main/java/net/evendanan/timing/*.java"]),
     runtime_deps = [],
     deps = [
-        "//resolver/main_deps/com/google/code/findbugs/jsr305",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/org/apache/commons/commons-lang3",
+        "@com_google_code_findbugs__jsr305__3_0_2//:jar",
+        "@com_google_guava__guava__27_0_1_jre//:jar",
+        "@org_apache_commons__commons_lang3__3_8_1//:jar",
     ],
 )
 
@@ -223,9 +228,9 @@ java_library(
     runtime_deps = [],
     deps = [
         ":api_model",
-        "//resolver/main_deps/com/google/code/findbugs/jsr305",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/org/apache/commons/commons-lang3",
+        "@com_google_code_findbugs__jsr305__3_0_2//:jar",
+        "@com_google_guava__guava__27_0_1_jre//:jar",
+        "@org_apache_commons__commons_lang3__3_8_1//:jar",
     ],
 )
 
@@ -242,10 +247,10 @@ java_library(
     deps = [
         ":api_lib",
         ":timing_lib",
-        "//resolver/main_deps/com/google/code/findbugs/jsr305",
-        "//resolver/main_deps/com/google/code/gson/gson",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/org/apache/commons/commons-lang3",
+        "@com_google_code_findbugs__jsr305__3_0_2//:jar",
+        "@com_google_code_gson__gson__2_8_5//:jar",
+        "@com_google_guava__guava__27_0_1_jre//:jar",
+        "@org_apache_commons__commons_lang3__3_8_1//:jar",
     ],
 )
 
@@ -254,9 +259,9 @@ java_library(
     srcs = glob(["src/main/java/net/evendanan/bazel/mvn/merger/*.java"]),
     deps = [
         ":api_lib",
-        "//resolver/main_deps/com/google/code/findbugs/jsr305",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/org/apache/commons/commons-lang3",
+        "@com_google_code_findbugs__jsr305__3_0_2//:jar",
+        "@com_google_guava__guava__27_0_1_jre//:jar",
+        "@org_apache_commons__commons_lang3__3_8_1//:jar",
     ],
 )
 
@@ -265,18 +270,18 @@ java_binary(
     srcs = ["src/main/java/net/evendanan/bazel/mvn/Resolver.java"],
     main_class = "net.evendanan.bazel.mvn.Resolver",
     visibility = ["//visibility:public"],
-    runtime_deps = ["//resolver/main_deps/org/slf4j/slf4j-nop"],
+    runtime_deps = ["@org_slf4j__slf4j_nop__1_7_25//:jar"],
     deps = [
         ":api_lib",
         ":impl_lib",
         ":migration_tooling_graph_resolver",
         ":serialization",
         ":timing_lib",
-        "//resolver/main_deps/com/beust/jcommander",
-        "//resolver/main_deps/com/google/code/findbugs/jsr305",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/org/apache/commons/commons-lang3",
-        "//resolver/main_deps/org/apache/maven/maven-model",
+        "@com_beust__jcommander__1_72//:jar",
+        "@com_google_code_findbugs__jsr305__3_0_2//:jar",
+        "@com_google_guava__guava__27_0_1_jre//:jar",
+        "@org_apache_commons__commons_lang3__3_8_1//:jar",
+        "@org_apache_maven__maven_model__3_8_1//:jar",
     ],
 )
 
@@ -288,17 +293,17 @@ java_binary(
     ],
     main_class = "net.evendanan.bazel.mvn.Merger",
     visibility = ["//visibility:public"],
-    runtime_deps = ["//resolver/main_deps/org/slf4j/slf4j-nop"],
+    runtime_deps = ["@org_slf4j__slf4j_nop__1_7_25//:jar"],
     deps = [
         ":api_lib",
         ":impl_lib",
         ":merger",
         ":serialization",
         ":timing_lib",
-        "//resolver/main_deps/com/beust/jcommander",
-        "//resolver/main_deps/com/google/code/findbugs/jsr305",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/org/apache/commons/commons-lang3",
+        "@com_beust__jcommander__1_72//:jar",
+        "@com_google_code_findbugs__jsr305__3_0_2//:jar",
+        "@com_google_guava__guava__27_0_1_jre//:jar",
+        "@org_apache_commons__commons_lang3__3_8_1//:jar",
     ],
 )
 
@@ -310,10 +315,10 @@ java_library(
     srcs = ["src/test/net/evendanan/bazel/mvn/TestUtils.java"],
     deps = [
         ":api_lib",
-        "//resolver/main_deps/com/google/code/findbugs/jsr305",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/org/apache/commons/commons-lang3",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@com_google_code_findbugs__jsr305__3_0_2//:jar",
+        "@com_google_guava__guava__27_0_1_jre//:jar",
+        "@org_apache_commons__commons_lang3__3_8_1//:jar",
+        "@org_mockito__mockito_core__2_23_4//:jar",
     ],
 )
 
@@ -324,7 +329,7 @@ java_test(
     test_class = "net.evendanan.timing.TimingDataTest",
     deps = [
         ":timing_lib",
-        "//resolver/main_deps/junit/junit",
+        "@junit__junit__4_12//:jar",
     ],
 )
 
@@ -338,7 +343,7 @@ java_test(
     test_class = "net.evendanan.timing.TaskTimingTest",
     deps = [
         ":timing_lib",
-        "//resolver/main_deps/junit/junit",
+        "@junit__junit__4_12//:jar",
     ],
 )
 
@@ -359,9 +364,12 @@ java_test(
     deps = [
         ":api_lib",
         ":impl_lib",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@com_google_guava__guava__27_0_1_jre//:jar",
+        "@junit__junit__4_12//:jar",
+        "@net_bytebuddy__byte_buddy__1_9_3//:jar",
+        "@net_bytebuddy__byte_buddy_agent__1_9_3//:jar",
+        "@org_mockito__mockito_core__2_23_4//:jar",
+        "@org_objenesis__objenesis__2_6//:jar",
     ],
 )
 
@@ -373,8 +381,11 @@ java_test(
     deps = [
         ":api_lib",
         ":impl_lib",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@junit__junit__4_12//:jar",
+        "@net_bytebuddy__byte_buddy__1_9_3//:jar",
+        "@net_bytebuddy__byte_buddy_agent__1_9_3//:jar",
+        "@org_mockito__mockito_core__2_23_4//:jar",
+        "@org_objenesis__objenesis__2_6//:jar",
     ],
 )
 
@@ -390,8 +401,8 @@ java_test(
     deps = [
         ":api_lib",
         ":merger",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@junit__junit__4_12//:jar",
+        "@org_mockito__mockito_core__2_23_4//:jar",
     ],
 )
 
@@ -405,8 +416,8 @@ java_test(
     deps = [
         ":api_model",
         ":merger",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@junit__junit__4_12//:jar",
+        "@org_mockito__mockito_core__2_23_4//:jar",
     ],
 )
 
@@ -419,8 +430,8 @@ java_test(
     test_class = "net.evendanan.bazel.mvn.merger.VersionComparatorTest",
     deps = [
         ":merger",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@junit__junit__4_12//:jar",
+        "@org_mockito__mockito_core__2_23_4//:jar",
     ],
 )
 
@@ -434,8 +445,8 @@ java_test(
     deps = [
         ":api_lib",
         ":merger",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@junit__junit__4_12//:jar",
+        "@org_mockito__mockito_core__2_23_4//:jar",
     ],
 )
 
@@ -449,8 +460,8 @@ java_test(
     deps = [
         ":api_lib",
         ":merger",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@junit__junit__4_12//:jar",
+        "@org_mockito__mockito_core__2_23_4//:jar",
     ],
 )
 
@@ -462,8 +473,8 @@ java_test(
     deps = [
         ":api_lib",
         ":merger",
-        "//resolver:com_google_guava__guava",
-        "//resolver/main_deps/junit/junit",
+        "@com_google_guava__guava__27_0_1_jre//:jar",
+        "@junit__junit__4_12//:jar",
     ],
 )
 
@@ -475,8 +486,8 @@ java_test(
     deps = [
         ":api_lib",
         ":merger",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@junit__junit__4_12//:jar",
+        "@org_mockito__mockito_core__2_23_4//:jar",
     ],
 )
 
@@ -488,8 +499,8 @@ java_test(
     deps = [
         ":api_lib",
         ":merger",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@junit__junit__4_12//:jar",
+        "@org_mockito__mockito_core__2_23_4//:jar",
     ],
 )
 
@@ -502,8 +513,8 @@ java_test(
         ":api_lib",
         ":impl_lib",
         ":test_utils",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@junit__junit__4_12//:jar",
+        "@org_mockito__mockito_core__2_23_4//:jar",
     ],
 )
 
@@ -522,7 +533,7 @@ java_test(
     test_class = "net.evendanan.bazel.mvn.impl.DependencyToolsTest",
     deps = [
         ":api_lib",
-        "//resolver/main_deps/junit/junit",
+        "@junit__junit__4_12//:jar",
     ],
 )
 
@@ -535,9 +546,9 @@ java_test(
         ":api_lib",
         ":impl_lib",
         ":test_utils",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@com_google_guava__guava__27_0_1_jre//:jar",
+        "@junit__junit__4_12//:jar",
+        "@org_mockito__mockito_core__2_23_4//:jar",
     ],
 )
 
@@ -548,10 +559,10 @@ java_test(
     test_class = "com.google.devtools.bazel.workspace.maven.ArtifactBuilderTest",
     deps = [
         ":graph_resolver_lib",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/apache/maven/maven-model",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@com_google_guava__guava__27_0_1_jre//:jar",
+        "@junit__junit__4_12//:jar",
+        "@org_apache_maven__maven_model__3_8_1//:jar",
+        "@org_mockito__mockito_core__2_23_4//:jar",
     ],
 )
 
@@ -563,9 +574,12 @@ java_test(
     deps = [
         ":api_lib",
         ":merger",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@com_google_guava__guava__27_0_1_jre//:jar",
+        "@junit__junit__4_12//:jar",
+        "@net_bytebuddy__byte_buddy__1_9_3//:jar",
+        "@net_bytebuddy__byte_buddy_agent__1_9_3//:jar",
+        "@org_mockito__mockito_core__2_23_4//:jar",
+        "@org_objenesis__objenesis__2_6//:jar",
     ],
 )
 
@@ -577,9 +591,12 @@ java_test(
     deps = [
         ":api_lib",
         ":merger",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@com_google_guava__guava__27_0_1_jre//:jar",
+        "@junit__junit__4_12//:jar",
+        "@net_bytebuddy__byte_buddy__1_9_3//:jar",
+        "@net_bytebuddy__byte_buddy_agent__1_9_3//:jar",
+        "@org_mockito__mockito_core__2_23_4//:jar",
+        "@org_objenesis__objenesis__2_6//:jar",
     ],
 )
 
@@ -591,8 +608,8 @@ java_test(
     deps = [
         ":api_lib",
         ":impl_lib",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@com_google_guava__guava__27_0_1_jre//:jar",
+        "@junit__junit__4_12//:jar",
+        "@org_mockito__mockito_core__2_23_4//:jar",
     ],
 )
