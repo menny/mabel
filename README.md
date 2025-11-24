@@ -38,8 +38,6 @@ There are several attempts to solve this problem (such as [sync-deps](https://gi
 
 ## Usage
 
-### Using Bzlmod (Recommended for Bazel 7.0+)
-
 Mabel uses a two-phase approach for dependency management:
 
 1. **Phase 1: Lockfile Generation** - Run `mabel_rule` target to resolve dependencies and generate a JSON lockfile
@@ -222,142 +220,6 @@ use_repo(maven,
 )
 ```
 
-### Using WORKSPACE (Legacy - for Bazel < 7.0)
-
-**Note:** WORKSPACE support is deprecated and will be removed in a future release. Please migrate to bzlmod for new projects.
-
-Add this repository to your WORKSPACE (set `mabel_version` to the latest [release](https://github.com/menny/mabel/releases)):
-
-```python
-# Set up rules_java (you probably already have this)
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-
-http_archive(
-    name = "rules_java",
-    urls = [
-        "https://github.com/bazelbuild/rules_java/releases/download/5.5.0/rules_java-5.5.0.tar.gz",
-    ],
-    sha256 = "bcfabfb407cb0c8820141310faa102f7fb92cc806b0f0e26a625196101b0b57e",
-)
-load("@rules_java//java:repositories.bzl", "rules_java_dependencies", "rules_java_toolchains")
-rules_java_dependencies()
-rules_java_toolchains()
-
-# Actual mabel setup
-# Check out the release page for the latest version
-mabel_version = "0.30.0"
-mabel_sha = "c4487134b386be1d9a4b4f48b1bd6fabd77331188e0ae769cdf08cebc39546d0"
-http_archive(
-    name = "mabel",
-    urls = ["https://github.com/menny/mabel/archive/%s.zip" % mabel_version],
-    type = "zip",
-    sha256 = mabel_sha,
-    strip_prefix = "mabel-%s" % mabel_version
-)
-
-```
-
-**Note:** With bzlmod enabled by default in Bazel 8+, WORKSPACE files are deprecated. This setup is only for legacy support with Bazel versions < 7.0.
-
-#### Target Definition
-
-In your module's `BUILD.bazel` file (e.g., `resolver/BUILD.bazel`), load the dependencies rule and `artifact` macro:
-
-```python
-load("@mabel//rules/maven_deps:maven_deps_workspace_generator.bzl", "mabel_rule", "artifact")
-```
-
-Define a target for resolving dependencies:
-
-```python
-mabel_rule(
-    name = 'main_deps',
-    maven_deps = [
-        artifact("com.google.guava:guava:20.0"),
-        artifact("org.apache.commons:commons-lang3:jar:3.8.1"),
-        artifact("com.google.code.findbugs:jsr305:3.0.2"),
-        artifact("com.google.auto.value:auto-value:1.6.3")
-    ],
-    generated_targets_prefix = "main_deps___"
-)
-```
-
-In this example, we defined the target `//resolver:main_deps` with 4 Maven dependencies:
-
-* `com.google.guava:guava:20.0`
-* `org.apache.commons:commons-lang3:jar:3.8.1` - here we're specifically requesting the `jar` classifier. In most cases, you don't need to do that.
-* `com.google.code.findbugs:jsr305:3.0.2`
-* `com.google.auto.value:auto-value:1.6.3` - which is an annotation processor.
-
-#### Resolving the Dependency Graph
-
-To generate the transitive rules for the required `maven_deps`, run the target:
-
-```bash
-bazel run //resolver:main_deps
-```
-
-This will retrieve all transitive dependencies and resolve conflicts. The resolved dependency graph (Bazel rules) will be stored in the file `resolver/main_deps/dependencies.bzl`, and a folder structure matching all the dependencies will be created:
-
-```
-resolver/
-    main_deps/
-        BUILD.bazel
-        dependencies.bzl
-        com/
-            google/
-                guava/
-                    guava/
-                        BUILD.bazel (with alias guava -> //resolver:main_deps___com_google_guava__guava)
-                code/
-                    findbugs/
-                        jsr305/
-                            BUILD.bazel (with alias jsr305 -> //resolver:main_deps___com_google_code_findbugs__jsr305)
-                auto/
-                    value/
-                        auto-value/
-                            BUILD.bazel (with alias auto-value -> //resolver:main_deps___com_google_auto_value__auto_value)
-        org/
-            apache/
-                commons/
-                    commons-lang3/
-                        BUILD.bazel (with alias commons-lang3 -> //resolver:main_deps___org_apache_commons__commons_lang3)
-```
-
-You'll notice that there's a prefix `main_deps___` on all targets. This prefix allows you to generate several graphs for different cases (for example, compile vs annotation-processor stages). It was added because we specified `generated_targets_prefix = "main_deps___"` in the target definition.
-
-This file needs to be checked into your repository, the same as [Yarn's lock file](https://yarnpkg.com/lang/en/docs/yarn-lock/).
-
-**Note:** If you don't want the rule to generate sub-folders, you can add `generate_deps_sub_folder = False` to your `mabel_rule` target definition.
-
-#### Using the Generated Maven Dependencies
-
-First, register all the repository rules for the remote Maven artifacts. In your `WORKSPACE` file, add:
-
-```python
-load("//resolver/main_deps:dependencies.bzl", main_mabel_deps_rules = "generate_workspace_rules")
-main_mabel_deps_rules()
-```
-
-In the same module where you declared `mabel_rule` (in our example `//resolver`), add to the `BUILD.bazel` file:
-
-```python
-load("//resolver/main_deps:dependencies.bzl", main_generate_transitive_dependency_targets = "generate_transitive_dependency_targets")
-main_generate_transitive_dependency_targets()
-```
-
-This makes the rules available in any target defined in that `BUILD.bazel` file as `//resolver:main_deps___XXX`:
-
-* `com.google.guava:guava:20.0` as `//resolver:main_deps___com_google_guava__guava`
-* `org.apache.commons:commons-lang3:jar:3.8.1` as `//resolver:main_deps___org_apache_commons__commons_lang3`
-* `com.google.code.findbugs:jsr305:3.0.2` as `//resolver:main_deps___com_google_code_findbugs__jsr305`
-
-Alternatively, you can use the sub-folder structure (IDEs find this easier to auto-complete):
-
-* `com.google.guava:guava:20.0` as `//resolver/main_deps/com/google/guava/guava`
-* `org.apache.commons:commons-lang3:jar:3.8.1` as `//resolver/main_deps/org/apache/commons/commons_lang3`
-* `com.google.code.findbugs:jsr305:3.0.2` as `//resolver/main_deps/com/google/code/findbugs/jsr305`
-
 ## Rule Configuration
 
 ### `mabel_rule`
@@ -367,7 +229,7 @@ This rule merges the dependencies into one version-conflict-resolved dependency 
 **Attributes:**
 
 * `maven_deps` - List of `artifact` targets representing Maven coordinates.
-* `lockfile_path` - (Bzlmod only) Path to output JSON lockfile. If set, a lockfile will be generated for use with the bzlmod extension.
+* `lockfile_path` - Path to output JSON lockfile. This file will be generated and used by the module extension to create repository rules.
 * `generate_deps_sub_folder` - Default `True`. Creates sub-folders with `BUILD.bazel` files for each dependency.
 * `keep_output_folder` - Default `False`. Deletes the output folder before generating outputs.
 * `public_targets_category` - Default `all`. Sets public visibility of resolved targets. Can be: `requested_deps`, `recursive_exports`, `all`.
@@ -414,47 +276,6 @@ For example, if you include `com.google.auto.value:auto-value:1.6.3`, which is a
 Please read the [Bazel docs](https://docs.bazel.build/versions/master/be/java.html#java_plugin.generates_api) about which variant you want.
 
 Since Mabel wraps the `java_plugin` rules in `java_library` rules, you should add them to the `deps` list of your rule and not to the `plugins` list, unless you're directly using the `X___processor_class_Y` variant, in which case you should use it in the `plugins` field.
-
-## Migrating from WORKSPACE to Bzlmod
-
-If you're currently using Mabel with WORKSPACE and want to migrate to bzlmod:
-
-1. **Add Mabel to MODULE.bazel:**
-   ```python
-   bazel_dep(name = "mabel", version = "0.31.0")
-   bazel_dep(name = "rules_java", version = "7.11.1")
-   ```
-
-2. **Add `lockfile_path` to your existing `mabel_rule`:**
-   ```python
-   mabel_rule(
-       name = "main_deps",
-       lockfile_path = "resolver/maven_install.json",  # Add this
-       maven_deps = [...],
-   )
-   ```
-
-3. **Generate the lockfile:**
-   ```bash
-   bazel run //resolver:main_deps
-   ```
-
-4. **Configure the module extension in MODULE.bazel:**
-   ```python
-   maven = use_extension("@mabel//rules/maven_deps:extensions.bzl", "maven")
-   maven.install(lockfile = "//resolver:maven_install.json")
-   use_repo(maven, /* list all repo names */)
-   ```
-
-5. **Update your dependency references:**
-   - Change from `//resolver:main_deps___com_google_guava__guava`
-   - To `@com_google_guava__guava__27_0_1_jre//file`
-
-6. **Remove WORKSPACE mabel setup** and the `load()` statements for `generate_workspace_rules()` and `generate_transitive_dependency_targets()`.
-
-7. **Test your build** to ensure everything works.
-
-8. **Commit the lockfile** to version control.
 
 ## Troubleshooting
 
