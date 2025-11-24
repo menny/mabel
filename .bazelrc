@@ -1,3 +1,6 @@
+# Enable bzlmod for all commands
+common --enable_bzlmod
+
 test --sandbox_tmpfs_path=/tmp
 
 common --java_language_version=17

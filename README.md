@@ -255,9 +255,9 @@ http_archive(
     strip_prefix = "mabel-%s" % mabel_version
 )
 
-load("@mabel//:init_rules.bzl", "init_mabel_rules")
-init_mabel_rules()
 ```
+
+**Note:** With bzlmod enabled by default in Bazel 8+, WORKSPACE files are deprecated. This setup is only for legacy support with Bazel versions < 7.0.
 
 #### Target Definition
 
