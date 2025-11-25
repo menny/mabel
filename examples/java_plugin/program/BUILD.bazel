@@ -1,13 +1,10 @@
 load("@mabel//rules/maven_deps:mabel.bzl", "artifact", "mabel_rule")
-load("@rules_java//java:defs.bzl", "java_binary")
-load("//program/main_deps:dependencies.bzl", "generate_transitive_dependency_targets")
-
-generate_transitive_dependency_targets()
+load("@rules_java//java:defs.bzl", "java_binary", "java_plugin")
 
 mabel_rule(
     name = "main_deps",
     fetch_srcjar = False,
-    generated_targets_prefix = "apt___",
+    lockfile_path = "program/maven_install.json",
     maven_deps = [
         artifact(
             "com.google.dagger:dagger:2.19",
@@ -26,6 +23,31 @@ mabel_rule(
     output_graph_to_file = True,
 )
 
+# AutoValue annotation processor
+java_plugin(
+    name = "autovalue_plugin",
+    processor_class = "com.google.auto.value.processor.AutoValueProcessor",
+    deps = ["@com_google_auto_value__auto_value__1_6_3//:jar"],
+)
+
+# Dagger annotation processor
+java_plugin(
+    name = "dagger_plugin",
+    processor_class = "dagger.internal.codegen.ComponentProcessor",
+    deps = [
+        "@com_google_dagger__dagger_compiler__2_19//:jar",
+        "@com_google_dagger__dagger__2_19//:jar",
+        "@com_google_dagger__dagger_producers__2_19//:jar",
+        "@com_google_dagger__dagger_spi__2_19//:jar",
+        "@com_google_errorprone__javac_shaded__9_dev_r4023_3//:jar",
+        "@com_google_googlejavaformat__google_java_format__1_5//:jar",
+        "@com_google_guava__guava__25_0_jre//:jar",
+        "@com_squareup__javapoet__1_11_1//:jar",
+        "@javax_annotation__jsr250_api__1_0//:jar",
+        "@javax_inject__javax_inject__1//:jar",
+    ],
+)
+
 java_binary(
     name = "java_plugin",
     srcs = [
@@ -33,15 +55,12 @@ java_binary(
         "Program.java",
     ],
     main_class = "examples.java_plugin.program.HelloWorld",
-    plugins =
-        #but, you can also explicitly specify one.
-        ["//program:apt___com_google_dagger__dagger_compiler___processor_class_0"],
+    plugins = [
+        ":autovalue_plugin",
+        ":dagger_plugin",
+    ],
     deps = [
-        # we can also reference the target via the generated target. Note that we used `generated_targets_prefix` so there is a prefix.
-        "//program:apt___com_google_auto_value__auto_value_annotations",
-        "//program/main_deps/com/google/dagger/dagger",
-        # If you want to run all detected plugins, then you can use the grouped target.
-        #Note: you should add this to the `deps` and not to `plugins`. This is just the way Bazel works
-        "//program:apt___com_google_auto_value__auto_value___processor_class_all",
+        "@com_google_auto_value__auto_value_annotations__1_6_3//:jar",
+        "@com_google_dagger__dagger__2_19//:jar",
     ],
 )
