@@ -35,9 +35,10 @@ http_jar(
 )
 
 # Mabel's own Maven dependencies using lockfile-based extension
-maven = use_extension("//rules/maven_deps:extensions.bzl", "maven")
-maven.install(lockfile = "//resolver:maven_install.json")
-use_repo(maven,
+mabel = use_extension("//rules/maven_deps:extensions.bzl", "mabel")
+mabel.install(lockfile = "//resolver:maven_install.json")
+use_repo(mabel,
+    "maven",  # Alias repository
     "com_beust__jcommander__1_72",
     "com_google_auto_value__auto_value_annotations__1_7",
     "com_google_auto_value__auto_value__1_7",

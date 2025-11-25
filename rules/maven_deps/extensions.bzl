@@ -6,7 +6,6 @@ repository rules for all Maven artifacts without needing to re-resolve dependenc
 """
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
-load("@mabel//rules/jvm_import:jvm_import.bzl", "jvm_import")
 
 def _jvm_import_repo_impl(rctx):
     """Creates a repository with a single jvm_import target."""
@@ -38,10 +37,6 @@ _jvm_import_repo = repository_rule(
         "runtime_deps": attr.string_list(default = []),
     },
 )
-
-def _normalize(name):
-    """Normalize Maven name by replacing special characters with underscores."""
-    return name.replace("+", "_").replace(".", "_").replace("-", "_")
 
 def _get_file_path_from_maven_name(group_id, artifact_id):
     """Convert Maven groupId:artifactId to a file path.
@@ -115,7 +110,7 @@ _maven_alias_repo = repository_rule(
     },
 )
 
-def _maven_install_impl(module_ctx):
+def _mabel_install_impl(module_ctx):
     """
     Module extension implementation that reads the lockfile and creates repos.
 
@@ -227,6 +222,7 @@ def _maven_install_impl(module_ctx):
     # Create the alias repository
     # This allows users to reference artifacts as @maven//group/id/artifact:artifact
     # Users import this via use_repo() with whatever name they prefer
+    # Note: named "maven" to avoid conflict with bazel_dep(name = "mabel")
     if all_artifacts:
         _maven_alias_repo(
             name = "maven",
@@ -244,8 +240,8 @@ _install_tag = tag_class(
 )
 
 # Define the module extension
-maven = module_extension(
-    implementation = _maven_install_impl,
+mabel = module_extension(
+    implementation = _mabel_install_impl,
     tag_classes = {
         "install": _install_tag,
     },

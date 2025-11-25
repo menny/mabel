@@ -434,10 +434,10 @@
         ]
       }
     },
-    "@@mabel+//rules/maven_deps:extensions.bzl%maven": {
+    "@@mabel+//rules/maven_deps:extensions.bzl%mabel": {
       "general": {
-        "bzlTransitiveDigest": "ZiVhM/vtgyruvLKsf3DMbWCkmUjGgcZXN3VBa4YeDJs=",
-        "usagesDigest": "juLdVk7wXluLhSJn/heZyKXNBJpOzLbaCskrHHeeiXw=",
+        "bzlTransitiveDigest": "JNc74XH5F+XZRZ0POyS6yN7xpI+1QABZZyiIp/qpDTY=",
+        "usagesDigest": "uUcu6LSJTG5htOh41tXA/qlEKiKnPp6SsyipCKqMhHs=",
         "recordedFileInputs": {
           "@@//program/maven_install.json": "290b315ba1c15a3e0dad87e79b2070260c79fbbd245f4b4f191097184acc2598",
           "@@mabel+//resolver/maven_install.json": "6a798eee6c7bcd49b4adea8d9f1fa3dc83a3023218a03ecdb402a6710a2a77e3"
@@ -1518,11 +1518,6 @@
             "mabel+",
             "bazel_tools",
             "bazel_tools"
-          ],
-          [
-            "mabel+",
-            "mabel",
-            "mabel+"
           ]
         ]
       }
