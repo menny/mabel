@@ -27,7 +27,7 @@ mabel_rule(
 java_plugin(
     name = "autovalue_plugin",
     processor_class = "com.google.auto.value.processor.AutoValueProcessor",
-    deps = ["@com_google_auto_value__auto_value__1_6_3//:jar"],
+    deps = ["@maven//com/google/auto/value/auto-value"],
 )
 
 # Dagger annotation processor
@@ -60,7 +60,7 @@ java_binary(
         ":dagger_plugin",
     ],
     deps = [
-        "@com_google_auto_value__auto_value_annotations__1_6_3//:jar",
-        "@com_google_dagger__dagger__2_19//:jar",
+        "@maven//com/google/auto/value/auto-value-annotations",  # Using maven alias
+        "@maven//com/google/dagger/dagger",  # Using maven alias
     ],
 )

@@ -15,8 +15,8 @@ kt_jvm_binary(
     srcs = ["HelloWorld.kt"],
     main_class = "examples.kotlin.program.HelloWorldKt",
     deps = [
-        "@com_github_salomonbrys_kotson__kotson__2_5_0//:jar",
-        "@com_google_code_gson__gson__2_8_0//:jar",
-        "@org_jetbrains_kotlin__kotlin_stdlib__1_3_72//:jar",
+        "@maven//com/github/salomonbrys/kotson/kotson",
+        "@maven//com/google/code/gson/gson",
+        "@maven//org/jetbrains/kotlin/kotlin-stdlib",
     ],
 )

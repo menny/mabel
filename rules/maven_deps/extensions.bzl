@@ -39,6 +39,82 @@ _jvm_import_repo = repository_rule(
     },
 )
 
+def _normalize(name):
+    """Normalize Maven name by replacing special characters with underscores."""
+    return name.replace("+", "_").replace(".", "_").replace("-", "_")
+
+def _get_file_path_from_maven_name(group_id, artifact_id):
+    """Convert Maven groupId:artifactId to a file path.
+
+    Example: com.google.guava:guava -> com/google/guava/guava
+    """
+    return group_id.replace(".", "/") + "/" + artifact_id
+
+def _parse_maven_coordinate(coordinate):
+    """Parse a Maven coordinate string into (groupId, artifactId, version)."""
+    parts = coordinate.split(":")
+    if len(parts) < 3:
+        fail("Invalid Maven coordinate: {}".format(coordinate))
+    return parts[0], parts[1], parts[2]
+
+def _maven_alias_repo_impl(rctx):
+    """Creates a repository with alias targets pointing to versioned repos.
+
+    This repository contains a directory structure based on Maven groupId and artifactId,
+    with alias targets pointing to the actual versioned repositories.
+
+    For example, for com.google.guava:guava:20.0, creates:
+      @maven//com/google/guava/guava:guava -> @com_google_guava__guava__20_0//:jar
+    """
+
+    # Parse the artifacts list - format is ["coordinate|repo_name|target_type", ...]
+    for artifact_info in rctx.attr.artifacts:
+        parts = artifact_info.split("|")
+        if len(parts) != 3:
+            fail("Invalid artifact info format: {}".format(artifact_info))
+
+        maven_coordinate = parts[0]
+        repo_name = parts[1]
+        target_type = parts[2]
+
+        group_id, artifact_id, version = _parse_maven_coordinate(maven_coordinate)
+
+        # Create the directory path: com/google/guava/guava
+        file_path = _get_file_path_from_maven_name(group_id, artifact_id)
+
+        # Create BUILD file with alias
+        build_content = """# Alias for {coordinate}
+alias(
+    name = "{artifact_id}",
+    actual = "@{repo_name}//:{target_type}",
+    visibility = ["//visibility:public"],
+)
+""".format(
+            coordinate = maven_coordinate,
+            artifact_id = artifact_id,
+            repo_name = repo_name,
+            target_type = target_type,
+        )
+
+        rctx.file(file_path + "/BUILD.bazel", build_content)
+
+    # Create root BUILD file
+    rctx.file("BUILD.bazel", """# Mabel Maven alias repository
+# This repository contains alias targets for Maven artifacts.
+# Use @{name}//group/id/artifact:artifact instead of @group_id__artifact_id__version//:jar
+# Import this repository via use_repo() with your preferred name.
+""".format(name = rctx.name))
+
+_maven_alias_repo = repository_rule(
+    implementation = _maven_alias_repo_impl,
+    attrs = {
+        "artifacts": attr.string_list(
+            doc = "List of artifact info strings in format 'coordinate|repo_name|target_type'",
+            mandatory = True,
+        ),
+    },
+)
+
 def _maven_install_impl(module_ctx):
     """
     Module extension implementation that reads the lockfile and creates repos.
@@ -47,10 +123,15 @@ def _maven_install_impl(module_ctx):
     1. Reads the JSON lockfile specified by the user
     2. Parses the artifact metadata
     3. Creates http_file repository rules for each Maven artifact
+    4. Creates an alias repository for convenient access to artifacts
     """
 
     # Track created repositories to avoid duplicates across lockfiles
     created_repos = {}
+
+    # Collect all artifacts for the alias repository
+    # Format: "coordinate|repo_name|target_type"
+    all_artifacts = []
 
     # Collect all install tags from modules that use this extension
     for mod in module_ctx.modules:
@@ -71,6 +152,7 @@ def _maven_install_impl(module_ctx):
                 repo_name = artifact_info.get("repo_name")
                 url = artifact_info.get("url")
                 sha256 = artifact_info.get("sha256")
+                target_type = artifact_info.get("target_type", "jar")
 
                 if not repo_name or not url:
                     fail("Invalid artifact entry for {}: missing repo_name or url".format(maven_coordinate))
@@ -89,6 +171,9 @@ def _maven_install_impl(module_ctx):
 
                 # Track this repo
                 created_repos[repo_name] = {"url": url, "sha256": sha256}
+
+                # Add to artifacts list for alias repo
+                all_artifacts.append("{}|{}|{}".format(maven_coordinate, repo_name, target_type))
 
                 # Create http_file repository rule for downloading the JAR
                 jar_repo_name = repo_name + "__jar"
@@ -138,6 +223,15 @@ def _maven_install_impl(module_ctx):
                             **sources_attrs
                         )
                         created_repos[sources_repo_name] = {"url": sources["url"], "sha256": sources.get("sha256")}
+
+    # Create the alias repository
+    # This allows users to reference artifacts as @maven//group/id/artifact:artifact
+    # Users import this via use_repo() with whatever name they prefer
+    if all_artifacts:
+        _maven_alias_repo(
+            name = "maven",
+            artifacts = all_artifacts,
+        )
 
 # Define the tag class for the install operation
 _install_tag = tag_class(

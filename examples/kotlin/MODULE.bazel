@@ -14,6 +14,7 @@ maven = use_extension("@mabel//rules/maven_deps:extensions.bzl", "maven")
 maven.install(lockfile = "//program:maven_install.json")
 use_repo(
     maven,
+    "maven",  # Alias repository for convenient access
     "com_github_salomonbrys_kotson__kotson__2_5_0",
     "com_google_code_gson__gson__2_8_0",
     "org_jetbrains__annotations__13_0",
