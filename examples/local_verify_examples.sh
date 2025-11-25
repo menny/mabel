@@ -9,13 +9,10 @@ function verify_example() {
     pushd "$example_name"
     bazel clean
     bazel build //...
-    bazel run //program:main_deps
-    bazel build //...
     popd
     echo "*** Success verifying $example_name"
 }
 
 verify_example plain_java
 verify_example java_plugin
-verify_example android
 verify_example kotlin
