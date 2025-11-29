@@ -1,7 +1,7 @@
 module(name = "mabel_examples_plain_java")
 
 bazel_dep(name = "mabel", version = "0.0.0")
-bazel_dep(name = "rules_java", version = "8.6.3")
+bazel_dep(name = "rules_java", version = "9.0.3")
 
 local_path_override(
     module_name = "mabel",
@@ -13,31 +13,5 @@ mabel = use_extension("@mabel//rules/maven_deps:extensions.bzl", "mabel")
 mabel.install(lockfile = "//program:maven_install.json")
 use_repo(
     mabel,
-    "maven",  # Alias repository for convenient access
-    "aopalliance__aopalliance__1_0",
-    "com_github_stephenc_jcip__jcip_annotations__1_0_1",
-    "com_google_code_findbugs__jsr305__3_0_2",
-    "com_google_errorprone__error_prone_annotations__2_2_0",
-    "com_google_guava__failureaccess__1_0_1",
-    "com_google_guava__guava__20_0",
-    "com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava",
-    "com_google_inject__guice__4_2_3",
-    "com_google_j2objc__j2objc_annotations__1_1",
-    "com_sun_activation__jakarta_activation__1_2_1",
-    "commons_codec__commons_codec__1_13",
-    "commons_io__commons_io__2_5",
-    "commons_logging__commons_logging__1_2",
-    "jakarta_validation__jakarta_validation_api__2_0_2",
-    "javax_inject__javax_inject__1",
-    "org_apache_httpcomponents__httpclient__4_5_12",
-    "org_apache_httpcomponents__httpcore__4_4_13",
-    "org_checkerframework__checker_qual__2_5_2",
-    "org_codehaus_mojo__animal_sniffer_annotations__1_17",
-    "org_jboss_logging__jboss_logging__3_3_2_Final",
-    "org_jboss_resteasy__resteasy_client__3_13_1_Final",
-    "org_jboss_resteasy__resteasy_jaxrs__3_13_1_Final",
-    "org_jboss_spec_javax_annotation__jboss_annotations_api_1_3_spec__2_0_1_Final",
-    "org_jboss_spec_javax_ws_rs__jboss_jaxrs_api_2_1_spec__2_0_1_Final",
-    "org_jboss_spec_javax_xml_bind__jboss_jaxb_api_2_3_spec__2_0_0_Final",
-    "org_reactivestreams__reactive_streams__1_0_3",
+    mabel_plain_java = "mabel",
 )

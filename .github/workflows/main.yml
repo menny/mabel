@@ -9,12 +9,9 @@ on:
       - '*'
     paths-ignore:
       - '**.md'
-
-
 env:
   TERM: dumb
   TMPDIR: "/tmp"
-
 jobs:
   checks:
     runs-on: ubuntu-24.04
@@ -25,7 +22,6 @@ jobs:
           bazelisk-cache: true
           disk-cache: ${{ github.workflow }}
           repository-cache: true
-
       - name: build
         run: ./scripts/ci_build.sh
       - name: formating

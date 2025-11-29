@@ -9,6 +9,7 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
 
 def _jvm_import_repo_impl(rctx):
     """Creates a repository with a single jvm_import target."""
+
     # Create a BUILD file with the jvm_import target
     rctx.file("BUILD.bazel", """
 load("@mabel//rules/jvm_import:jvm_import.bzl", "jvm_import")
@@ -124,14 +125,10 @@ def _mabel_install_impl(module_ctx):
     # Track created repositories to avoid duplicates across lockfiles
     created_repos = {}
 
-    # Collect all artifacts for the alias repository
-    # Format: "coordinate|repo_name|target_type"
-    all_artifacts = []
-
-    # Collect all install tags from modules that use this extension
     for mod in module_ctx.modules:
         for install in mod.tags.install:
             lockfile_path = install.lockfile
+            all_artifacts = []
 
             # Read the lockfile
             lockfile_content = module_ctx.read(lockfile_path)
@@ -158,10 +155,16 @@ def _mabel_install_impl(module_ctx):
                     existing = created_repos[repo_name]
                     if existing["url"] != url:
                         fail("Repository {} defined multiple times with different URLs: {} vs {}".format(
-                            repo_name, existing["url"], url))
+                            repo_name,
+                            existing["url"],
+                            url,
+                        ))
                     if existing.get("sha256") != sha256:
                         fail("Repository {} defined multiple times with different sha256: {} vs {}".format(
-                            repo_name, existing.get("sha256"), sha256))
+                            repo_name,
+                            existing.get("sha256"),
+                            sha256,
+                        ))
                     continue
 
                 # Track this repo
@@ -219,21 +222,21 @@ def _mabel_install_impl(module_ctx):
                         )
                         created_repos[sources_repo_name] = {"url": sources["url"], "sha256": sources.get("sha256")}
 
-    # Create the alias repository
-    # This allows users to reference artifacts as @maven//group/id/artifact:artifact
-    # Users import this via use_repo() with whatever name they prefer
-    # Note: named "maven" to avoid conflict with bazel_dep(name = "mabel")
-    if all_artifacts:
-        _maven_alias_repo(
-            name = "maven",
-            artifacts = all_artifacts,
-        )
+            # Creating the aliases repo
+            _maven_alias_repo(
+                name = install.aliases_repo,
+                artifacts = all_artifacts,
+            )
 
 # Define the tag class for the install operation
 _install_tag = tag_class(
     attrs = {
         "lockfile": attr.label(
             doc = "Label pointing to the Maven lockfile (e.g., '//resolver:maven_install.json')",
+            mandatory = True,
+        ),
+        "aliases_repo": attr.string(
+            doc = "The name of the repo to use for aliases.",
             mandatory = True,
         ),
     },

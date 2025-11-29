@@ -96,6 +96,7 @@ def _impl_merger(ctx):
     source_files = [dep[TransitiveDataInfo].graph_file for dep in ctx.attr.maven_deps]
     script = ctx.outputs.out
     java_runtime = ctx.attr._jdk[java_common.JavaRuntimeInfo]
+
     # Use runfiles path for bazel run - this will be available in the runfiles tree
     java_path = "{}/bin/java".format(java_runtime.java_home_runfiles_path)
 

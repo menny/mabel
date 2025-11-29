@@ -15,5 +15,5 @@ java_binary(
     name = "plain_java",
     srcs = ["HelloWorld.java"],
     main_class = "examples.plain_java.program.HelloWorld",
-    deps = ["@maven//com/google/guava/guava"],
+    deps = ["@mabel_plain_java//com/google/guava/guava"],
 )

@@ -133,12 +133,15 @@ In your `MODULE.bazel`, configure the `mabel` extension to read the lockfile:
 
 ```python
 mabel = use_extension("@mabel//rules/maven_deps:extensions.bzl", "mabel")
-mabel.install(lockfile = "//third_party:maven_install.json")
+mabel.install(
+    lockfile = "//third_party:maven_install.json",
+    aliases_repo = "maven",
+)
 
 # Import the maven alias repository for convenient access
 use_repo(mabel, "maven")
 
-# Optionally import specific versioned repositories if needed
+# Optionally (and discouraged) import specific versioned repositories if needed
 use_repo(mabel,
     "com_google_guava__guava__33_0_0_jre",
     "org_apache_commons__commons_lang3__3_14_0",
@@ -149,6 +152,7 @@ use_repo(mabel,
 The `mabel.install()` tag accepts:
 
 * `lockfile` - Label pointing to the JSON lockfile generated in Step 3.
+* `aliases_repo` - Name of the alias repository to create (e.g., `"maven"`). This repository provides clean, version-free paths to your dependencies.
 
 The `use_repo()` call imports the repository rules created by the extension. The `"maven"` repository is an alias repository that provides convenient access to all dependencies. Repository names follow the pattern: `{group_id}__{artifact_id}__{version}` where dots, hyphens, and other special characters are replaced with underscores.
 
@@ -176,21 +180,6 @@ java_library(
 ```
 
 The `@maven` repository provides clean, version-free paths to your dependencies using the pattern `@maven//group/id/artifact-id`.
-
-**Alternative:** You can also reference the versioned repositories directly:
-
-```python
-java_library(
-    name = "mylib",
-    srcs = ["MyLib.java"],
-    deps = [
-        "@com_google_guava__guava__33_0_0_jre//:jar",
-        "@org_apache_commons__commons_lang3__3_14_0//:jar",
-    ],
-)
-```
-
-The `//:jar` suffix refers to the jvm_import target in the versioned repository.
 
 #### Updating Dependencies
 
@@ -229,15 +218,21 @@ Then configure multiple lockfiles in `MODULE.bazel`:
 
 ```python
 mabel = use_extension("@mabel//rules/maven_deps:extensions.bzl", "mabel")
-mabel.install(lockfile = "//third_party:main_install.json")
-mabel.install(lockfile = "//third_party:test_install.json")
+mabel.install(
+    lockfile = "//third_party:main_install.json",
+    aliases_repo = "maven",
+)
+mabel.install(
+    lockfile = "//third_party:test_install.json",
+    aliases_repo = "maven_test",
+)
 use_repo(mabel,
-    "maven",  # Alias repository includes all dependencies from both lockfiles
-    "com_google_guava__guava__33_0_0_jre",
-    "junit__junit__4_13_2",
-    "org_mockito__mockito_core__5_0_0",
+    "maven",       # Alias repository for main dependencies
+    "maven_test",  # Alias repository for test dependencies
 )
 ```
+
+Each `mabel.install()` creates its own alias repository, allowing you to organize dependencies by category. You can use `@maven//...` for main dependencies and `@maven_test//...` for test dependencies.
 
 ## Maven Alias Repository
 
@@ -254,8 +249,8 @@ The `@maven` alias repository provides a convenient way to reference Maven artif
 The extension automatically creates the `@maven` repository that contains alias targets for all dependencies in your lockfiles. Each alias points to the actual versioned repository.
 
 For example, for `com.google.guava:guava:33.0.0-jre`, the extension creates:
-- A versioned repository: `@com_google_guava__guava__33_0_0_jre`
-- An alias at: `@maven//com/google/guava/guava` → points to `@com_google_guava__guava__33_0_0_jre//:jar`
+- A versioned repository: `@com_google_guava__guava__33_0_0_jre` <- do not use that
+- An alias at: `@maven//com/google/guava/guava` -> points to `@com_google_guava__guava__33_0_0_jre//:jar`
 
 ### Path structure
 

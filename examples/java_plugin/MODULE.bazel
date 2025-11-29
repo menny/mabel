@@ -13,7 +13,6 @@ mabel = use_extension("@mabel//rules/maven_deps:extensions.bzl", "mabel")
 mabel.install(lockfile = "//program:maven_install.json")
 use_repo(
     mabel,
-    "maven",  # Alias repository for convenient access
     "com_google_auto_value__auto_value__1_6_3",
     "com_google_auto_value__auto_value_annotations__1_6_3",
     "com_google_code_findbugs__jsr305__1_3_9",
@@ -29,6 +28,7 @@ use_repo(
     "com_squareup__javapoet__1_11_1",
     "javax_annotation__jsr250_api__1_0",
     "javax_inject__javax_inject__1",
+    "mabel_java_plugin",  # Alias repository for convenient access
     "org_checkerframework__checker_compat_qual__2_5_3",
     "org_codehaus_mojo__animal_sniffer_annotations__1_14",
 )

@@ -27,7 +27,7 @@ mabel_rule(
 java_plugin(
     name = "autovalue_plugin",
     processor_class = "com.google.auto.value.processor.AutoValueProcessor",
-    deps = ["@maven//com/google/auto/value/auto-value"],
+    deps = ["@mabel_java_plugin//com/google/auto/value/auto-value"],
 )
 
 # Dagger annotation processor
@@ -35,8 +35,8 @@ java_plugin(
     name = "dagger_plugin",
     processor_class = "dagger.internal.codegen.ComponentProcessor",
     deps = [
-        "@com_google_dagger__dagger_compiler__2_19//:jar",
         "@com_google_dagger__dagger__2_19//:jar",
+        "@com_google_dagger__dagger_compiler__2_19//:jar",
         "@com_google_dagger__dagger_producers__2_19//:jar",
         "@com_google_dagger__dagger_spi__2_19//:jar",
         "@com_google_errorprone__javac_shaded__9_dev_r4023_3//:jar",
@@ -60,7 +60,7 @@ java_binary(
         ":dagger_plugin",
     ],
     deps = [
-        "@maven//com/google/auto/value/auto-value-annotations",  # Using maven alias
-        "@maven//com/google/dagger/dagger",  # Using maven alias
+        "@mabel_java_plugin//com/google/auto/value/auto-value-annotations",  # Using maven alias
+        "@mabel_java_plugin//com/google/dagger/dagger",  # Using maven alias
     ],
 )
