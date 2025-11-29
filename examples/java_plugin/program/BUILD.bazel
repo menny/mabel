@@ -27,7 +27,7 @@ mabel_rule(
 java_plugin(
     name = "autovalue_plugin",
     processor_class = "com.google.auto.value.processor.AutoValueProcessor",
-    deps = ["@mabel_java_plugin//com/google/auto/value/auto-value"],
+    deps = ["@maven//com/google/auto/value/auto-value"],
 )
 
 # Dagger annotation processor
@@ -35,16 +35,16 @@ java_plugin(
     name = "dagger_plugin",
     processor_class = "dagger.internal.codegen.ComponentProcessor",
     deps = [
-        "@com_google_dagger__dagger__2_19//:jar",
-        "@com_google_dagger__dagger_compiler__2_19//:jar",
-        "@com_google_dagger__dagger_producers__2_19//:jar",
-        "@com_google_dagger__dagger_spi__2_19//:jar",
-        "@com_google_errorprone__javac_shaded__9_dev_r4023_3//:jar",
-        "@com_google_googlejavaformat__google_java_format__1_5//:jar",
-        "@com_google_guava__guava__25_0_jre//:jar",
-        "@com_squareup__javapoet__1_11_1//:jar",
-        "@javax_annotation__jsr250_api__1_0//:jar",
-        "@javax_inject__javax_inject__1//:jar",
+        "@maven//com/google/dagger/dagger",
+        "@maven//com/google/dagger/dagger-compiler",
+        "@maven//com/google/dagger/dagger-producers",
+        "@maven//com/google/dagger/dagger-spi",
+        "@maven//com/google/errorprone/javac-shaded",
+        "@maven//com/google/googlejavaformat/google-java-format",
+        "@maven//com/google/guava/guava",
+        "@maven//com/squareup/javapoet",
+        "@maven//javax/annotation/jsr250-api",
+        "@maven//javax/inject/javax.inject",
     ],
 )
 
@@ -60,7 +60,7 @@ java_binary(
         ":dagger_plugin",
     ],
     deps = [
-        "@mabel_java_plugin//com/google/auto/value/auto-value-annotations",  # Using maven alias
-        "@mabel_java_plugin//com/google/dagger/dagger",  # Using maven alias
+        "@maven//com/google/auto/value/auto-value-annotations",
+        "@maven//com/google/dagger/dagger",
     ],
 )

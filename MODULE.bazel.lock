@@ -265,8 +265,8 @@
   "moduleExtensions": {
     "//rules/maven_deps:extensions.bzl%mabel": {
       "general": {
-        "bzlTransitiveDigest": "kce6cQk3SMA7bzr4raMj7XQOJX0fzlHZ5eHXtOtvqps=",
-        "usagesDigest": "kf1Fde8T/DGsA7XXq6ElYrfzgncvTNnkLS8W+XGBm+4=",
+        "bzlTransitiveDigest": "EYwba3+jMntgdKxyQ01/5fpRN67L9Xiv2txzZMyVuzA=",
+        "usagesDigest": "ILon3QSAHnZ+YBlhgEqgguJY6hMbMvbtXACGxwtkv2Y=",
         "recordedFileInputs": {
           "@@//resolver/maven_install.json": "6a798eee6c7bcd49b4adea8d9f1fa3dc83a3023218a03ecdb402a6710a2a77e3"
         },

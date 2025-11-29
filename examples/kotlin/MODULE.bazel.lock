@@ -436,8 +436,8 @@
     },
     "@@mabel+//rules/maven_deps:extensions.bzl%mabel": {
       "general": {
-        "bzlTransitiveDigest": "JNc74XH5F+XZRZ0POyS6yN7xpI+1QABZZyiIp/qpDTY=",
-        "usagesDigest": "uUcu6LSJTG5htOh41tXA/qlEKiKnPp6SsyipCKqMhHs=",
+        "bzlTransitiveDigest": "EYwba3+jMntgdKxyQ01/5fpRN67L9Xiv2txzZMyVuzA=",
+        "usagesDigest": "9E9TijnwZjnkOJSn6p/CpSWbw456asdmmj0ybwHNmbQ=",
         "recordedFileInputs": {
           "@@//program/maven_install.json": "290b315ba1c15a3e0dad87e79b2070260c79fbbd245f4b4f191097184acc2598",
           "@@mabel+//resolver/maven_install.json": "6a798eee6c7bcd49b4adea8d9f1fa3dc83a3023218a03ecdb402a6710a2a77e3"
@@ -557,6 +557,19 @@
               "deps": [],
               "exports": [],
               "runtime_deps": []
+            }
+          },
+          "maven": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_maven_alias_repo",
+            "attributes": {
+              "artifacts": [
+                "org.jetbrains.kotlin:kotlin-runtime:1.0.6|org_jetbrains_kotlin__kotlin_runtime__1_0_6|jar",
+                "com.github.salomonbrys.kotson:kotson:2.5.0|com_github_salomonbrys_kotson__kotson__2_5_0|jar",
+                "org.jetbrains.kotlin:kotlin-stdlib:1.3.72|org_jetbrains_kotlin__kotlin_stdlib__1_3_72|jar",
+                "com.google.code.gson:gson:2.8.0|com_google_code_gson__gson__2_8_0|jar",
+                "org.jetbrains:annotations:13.0|org_jetbrains__annotations__13_0|jar",
+                "org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72|org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72|jar"
+              ]
             }
           },
           "org_codehaus_plexus__plexus_component_annotations__1_6__jar": {
@@ -1452,16 +1465,10 @@
               "runtime_deps": []
             }
           },
-          "maven": {
+          "mvn": {
             "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_maven_alias_repo",
             "attributes": {
               "artifacts": [
-                "org.jetbrains.kotlin:kotlin-runtime:1.0.6|org_jetbrains_kotlin__kotlin_runtime__1_0_6|jar",
-                "com.github.salomonbrys.kotson:kotson:2.5.0|com_github_salomonbrys_kotson__kotson__2_5_0|jar",
-                "org.jetbrains.kotlin:kotlin-stdlib:1.3.72|org_jetbrains_kotlin__kotlin_stdlib__1_3_72|jar",
-                "com.google.code.gson:gson:2.8.0|com_google_code_gson__gson__2_8_0|jar",
-                "org.jetbrains:annotations:13.0|org_jetbrains__annotations__13_0|jar",
-                "org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72|org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72|jar",
                 "org.codehaus.plexus:plexus-component-annotations:1.6|org_codehaus_plexus__plexus_component_annotations__1_6|jar",
                 "org.slf4j:jcl-over-slf4j:1.6.2|org_slf4j__jcl_over_slf4j__1_6_2|jar",
                 "org.eclipse.aether:aether-transport-http:1.1.0|org_eclipse_aether__aether_transport_http__1_1_0|jar",

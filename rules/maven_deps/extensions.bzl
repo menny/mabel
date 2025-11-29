@@ -149,7 +149,10 @@ def _mabel_install_impl(module_ctx):
                 if not repo_name or not url:
                     fail("Invalid artifact entry for {}: missing repo_name or url".format(maven_coordinate))
 
-                # Skip if this repo was already created from another lockfile
+                # Add to artifacts list for alias repo (always, even if repo already exists)
+                all_artifacts.append("{}|{}|{}".format(maven_coordinate, repo_name, target_type))
+
+                # Skip creating repos if this repo was already created from another lockfile
                 if repo_name in created_repos:
                     # Verify that the URL and sha256 match (same version)
                     existing = created_repos[repo_name]
@@ -169,9 +172,6 @@ def _mabel_install_impl(module_ctx):
 
                 # Track this repo
                 created_repos[repo_name] = {"url": url, "sha256": sha256}
-
-                # Add to artifacts list for alias repo
-                all_artifacts.append("{}|{}|{}".format(maven_coordinate, repo_name, target_type))
 
                 # Create http_file repository rule for downloading the JAR
                 jar_repo_name = repo_name + "__jar"
