@@ -12,9 +12,6 @@ local_path_override(
 mabel = use_extension("@mabel//rules/maven_deps:extensions.bzl", "mabel")
 mabel.install(
     lockfile = "//program:maven_install.json",
-    aliases_repo = "maven",
+    aliases_repo = "mvn_plain_java",
 )
-use_repo(
-    mabel,
-    "maven",  # Alias repository for this example's dependencies
-)
+use_repo(mabel, "mvn_plain_java")

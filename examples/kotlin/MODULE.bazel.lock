@@ -437,7 +437,7 @@
     "@@mabel+//rules/maven_deps:extensions.bzl%mabel": {
       "general": {
         "bzlTransitiveDigest": "EYwba3+jMntgdKxyQ01/5fpRN67L9Xiv2txzZMyVuzA=",
-        "usagesDigest": "9E9TijnwZjnkOJSn6p/CpSWbw456asdmmj0ybwHNmbQ=",
+        "usagesDigest": "6T4GXKfDXlD1jQu2ke0mC2KKkadAp/Hcu4Q66KMMOCA=",
         "recordedFileInputs": {
           "@@//program/maven_install.json": "290b315ba1c15a3e0dad87e79b2070260c79fbbd245f4b4f191097184acc2598",
           "@@mabel+//resolver/maven_install.json": "6a798eee6c7bcd49b4adea8d9f1fa3dc83a3023218a03ecdb402a6710a2a77e3"
@@ -559,7 +559,7 @@
               "runtime_deps": []
             }
           },
-          "maven": {
+          "kotlin_maven": {
             "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_maven_alias_repo",
             "attributes": {
               "artifacts": [

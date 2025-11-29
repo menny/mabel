@@ -466,7 +466,7 @@
     "@@mabel~//rules/maven_deps:extensions.bzl%mabel": {
       "general": {
         "bzlTransitiveDigest": "457Iai4jTU8sMgLNtb4B4AawNKGAa4ZpM1ZbxMqhGuY=",
-        "usagesDigest": "HzQvBtHOWn8UYTR/BYiDd4+LFr9Z6MunoQm3EsTl/W8=",
+        "usagesDigest": "XmixI9m9eaRdaWwdu3I16ByqHUj41OVkrgCkloN6fzU=",
         "recordedFileInputs": {
           "@@mabel~//resolver/maven_install.json": "6a798eee6c7bcd49b4adea8d9f1fa3dc83a3023218a03ecdb402a6710a2a77e3",
           "@@//program/maven_install.json": "d98cc3e03581f49d57267e2f2eeed6b1f354e625a68a8e9b48284516381b210d"
@@ -1020,7 +1020,7 @@
               "runtime_deps": []
             }
           },
-          "maven": {
+          "mvn_plain_java": {
             "bzlFile": "@@mabel~//rules/maven_deps:extensions.bzl",
             "ruleClassName": "_maven_alias_repo",
             "attributes": {
