@@ -11,7 +11,9 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 import net.evendanan.bazel.mvn.api.RuleWriter;
 import net.evendanan.bazel.mvn.api.Target;
 
@@ -97,7 +99,20 @@ public class JsonLockfileWriter implements RuleWriter {
 
   private void processImportRule(Target target, ArtifactInfo info) {
     // Extract information from jvm_import or other import rules
-    info.importTarget = target;
+    if (target.getRuleName().equals("java_plugin")) {
+      // For java_plugin targets, collect the processor class
+      String processorClass = target.getStringAttribute("processor_class");
+      if (processorClass != null && !processorClass.isEmpty()) {
+        info.processorClasses.add(processorClass);
+      }
+      // Use the first java_plugin as the import target if we don't have one
+      if (info.importTarget == null) {
+        info.importTarget = target;
+      }
+    } else if (info.importTarget == null) {
+      // For non-processor targets, or if we don't have an import target yet
+      info.importTarget = target;
+    }
   }
 
   /** Helper class to accumulate information about a single artifact from multiple targets. */
@@ -107,6 +122,7 @@ public class JsonLockfileWriter implements RuleWriter {
     String sourcesRepoName;
     Target sourcesTarget; // http_file target for sources
     Target importTarget; // jvm_import or similar target
+    Set<String> processorClasses = new LinkedHashSet<>(); // processor classes for annotation processors (deduplicated)
 
     boolean hasMainArtifact() {
       return mainTarget != null;
@@ -179,14 +195,23 @@ public class JsonLockfileWriter implements RuleWriter {
         Boolean testOnly = importTarget.getBooleanAttribute("testonly");
         artifact.addProperty("test_only", testOnly != null ? testOnly : false);
 
-        // Target type from rule name
+        // Target type from rule name or processor classes
         String targetType = "jar"; // default
         if (importTarget.getRuleName().equals("aar_import")) {
           targetType = "aar";
-        } else if (importTarget.getRuleName().equals("java_plugin")) {
+        } else if (!processorClasses.isEmpty()) {
           targetType = "processor";
         }
         artifact.addProperty("target_type", targetType);
+
+        // Processor classes for annotation processors
+        if (!processorClasses.isEmpty()) {
+          JsonArray processorClassesArray = new JsonArray();
+          for (String processorClass : processorClasses) {
+            processorClassesArray.add(processorClass);
+          }
+          artifact.add("processor_classes", processorClassesArray);
+        }
 
         // Licenses - extract from tags attribute
         JsonArray licenses = new JsonArray();

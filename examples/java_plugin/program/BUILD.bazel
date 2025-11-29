@@ -1,9 +1,10 @@
 load("@mabel//rules/maven_deps:mabel.bzl", "artifact", "mabel_rule")
-load("@rules_java//java:defs.bzl", "java_binary", "java_plugin")
+load("@rules_java//java:defs.bzl", "java_binary")
 
 mabel_rule(
     name = "main_deps",
     fetch_srcjar = False,
+    generate_deps_sub_folder = False,  # Use bzlmod extension instead
     lockfile_path = "program/maven_install.json",
     maven_deps = [
         artifact(
@@ -23,31 +24,6 @@ mabel_rule(
     output_graph_to_file = True,
 )
 
-# AutoValue annotation processor
-java_plugin(
-    name = "autovalue_plugin",
-    processor_class = "com.google.auto.value.processor.AutoValueProcessor",
-    deps = ["@maven//com/google/auto/value/auto-value"],
-)
-
-# Dagger annotation processor
-java_plugin(
-    name = "dagger_plugin",
-    processor_class = "dagger.internal.codegen.ComponentProcessor",
-    deps = [
-        "@maven//com/google/dagger/dagger",
-        "@maven//com/google/dagger/dagger-compiler",
-        "@maven//com/google/dagger/dagger-producers",
-        "@maven//com/google/dagger/dagger-spi",
-        "@maven//com/google/errorprone/javac-shaded",
-        "@maven//com/google/googlejavaformat/google-java-format",
-        "@maven//com/google/guava/guava",
-        "@maven//com/squareup/javapoet",
-        "@maven//javax/annotation/jsr250-api",
-        "@maven//javax/inject/javax.inject",
-    ],
-)
-
 java_binary(
     name = "java_plugin",
     srcs = [
@@ -55,12 +31,13 @@ java_binary(
         "Program.java",
     ],
     main_class = "examples.java_plugin.program.HelloWorld",
-    plugins = [
-        ":autovalue_plugin",
-        ":dagger_plugin",
-    ],
     deps = [
+        # Runtime dependencies
         "@maven//com/google/auto/value/auto-value-annotations",
         "@maven//com/google/dagger/dagger",
+        # Annotation processors - using ___processors exports all java_plugins via exported_plugins
+        # This is the recommended way to use processors (add to deps, not plugins)
+        "@maven//com/google/auto/value/auto-value:auto-value___processors",
+        "@maven//com/google/dagger/dagger-compiler:dagger-compiler___processors",
     ],
 )

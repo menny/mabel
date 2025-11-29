@@ -8,10 +8,11 @@ repository rules for all Maven artifacts without needing to re-resolve dependenc
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
 
 def _jvm_import_repo_impl(rctx):
-    """Creates a repository with a single jvm_import target."""
+    """Creates a repository with jvm_import and optionally java_plugin targets for processors."""
+    processor_classes = rctx.attr.processor_classes
 
-    # Create a BUILD file with the jvm_import target
-    rctx.file("BUILD.bazel", """
+    # Build the jvm_import target
+    build_content = """
 load("@mabel//rules/jvm_import:jvm_import.bzl", "jvm_import")
 
 jvm_import(
@@ -27,7 +28,64 @@ jvm_import(
         deps = "deps = {},".format(rctx.attr.deps) if rctx.attr.deps else "",
         exports = "exports = {},".format(rctx.attr.exports) if rctx.attr.exports else "",
         runtime_deps = "runtime_deps = {},".format(rctx.attr.runtime_deps) if rctx.attr.runtime_deps else "",
-    ))
+    )
+
+    # If this is a processor, add java_plugin targets
+    if processor_classes:
+        # Deps for java_plugin include the jar itself plus runtime deps
+        plugin_deps = [":jar"] + rctx.attr.runtime_deps + rctx.attr.deps
+        plugin_deps_str = str(plugin_deps)
+
+        no_api_plugins = []
+        with_api_plugins = []
+
+        for i, processor_class in enumerate(processor_classes):
+            no_api_name = "___processor_class_{}".format(i)
+            with_api_name = "___generates_api___processor_class_{}".format(i)
+            no_api_plugins.append(":{}".format(no_api_name))
+            with_api_plugins.append(":{}".format(with_api_name))
+
+            # java_plugin without generates_api
+            build_content += """
+java_plugin(
+    name = "{name}",
+    processor_class = "{processor_class}",
+    generates_api = False,
+    deps = {deps},
+    visibility = ["//visibility:public"],
+)
+""".format(name = no_api_name, processor_class = processor_class, deps = plugin_deps_str)
+
+            # java_plugin with generates_api
+            build_content += """
+java_plugin(
+    name = "{name}",
+    processor_class = "{processor_class}",
+    generates_api = True,
+    deps = {deps},
+    visibility = ["//visibility:public"],
+)
+""".format(name = with_api_name, processor_class = processor_class, deps = plugin_deps_str)
+
+        # java_library that exports all non-API plugins
+        build_content += """
+java_library(
+    name = "___processor_class_all",
+    exported_plugins = {plugins},
+    visibility = ["//visibility:public"],
+)
+""".format(plugins = str(no_api_plugins))
+
+        # java_library that exports all API-generating plugins
+        build_content += """
+java_library(
+    name = "___generates_api___processor_class_all",
+    exported_plugins = {plugins},
+    visibility = ["//visibility:public"],
+)
+""".format(plugins = str(with_api_plugins))
+
+    rctx.file("BUILD.bazel", build_content)
 
 _jvm_import_repo = repository_rule(
     implementation = _jvm_import_repo_impl,
@@ -36,6 +94,7 @@ _jvm_import_repo = repository_rule(
         "deps": attr.string_list(default = []),
         "exports": attr.string_list(default = []),
         "runtime_deps": attr.string_list(default = []),
+        "processor_classes": attr.string_list(default = []),
     },
 )
 
@@ -63,34 +122,73 @@ def _maven_alias_repo_impl(rctx):
       @maven//com/google/guava/guava:guava -> @com_google_guava__guava__20_0//:jar
     """
 
-    # Parse the artifacts list - format is ["coordinate|repo_name|target_type", ...]
+    # Parse the artifacts list - format is ["coordinate|repo_name|target_type|processor_classes_count", ...]
     for artifact_info in rctx.attr.artifacts:
         parts = artifact_info.split("|")
-        if len(parts) != 3:
+        if len(parts) < 3:
             fail("Invalid artifact info format: {}".format(artifact_info))
 
         maven_coordinate = parts[0]
         repo_name = parts[1]
         target_type = parts[2]
+        processor_classes_count = int(parts[3]) if len(parts) > 3 else 0
 
         group_id, artifact_id, version = _parse_maven_coordinate(maven_coordinate)
 
         # Create the directory path: com/google/guava/guava
         file_path = _get_file_path_from_maven_name(group_id, artifact_id)
 
-        # Create BUILD file with alias
+        # Create BUILD file with alias for the main jar
         build_content = """# Alias for {coordinate}
 alias(
     name = "{artifact_id}",
-    actual = "@{repo_name}//:{target_type}",
+    actual = "@{repo_name}//:jar",
     visibility = ["//visibility:public"],
 )
 """.format(
             coordinate = maven_coordinate,
             artifact_id = artifact_id,
             repo_name = repo_name,
-            target_type = target_type,
         )
+
+        # If this is a processor, add aliases for processor targets
+        if processor_classes_count > 0:
+            for i in range(processor_classes_count):
+                # Alias for individual processor without API
+                build_content += """
+alias(
+    name = "{artifact_id}___processor_class_{i}",
+    actual = "@{repo_name}//:___processor_class_{i}",
+    visibility = ["//visibility:public"],
+)
+""".format(artifact_id = artifact_id, repo_name = repo_name, i = i)
+
+                # Alias for individual processor with API
+                build_content += """
+alias(
+    name = "{artifact_id}___generates_api___processor_class_{i}",
+    actual = "@{repo_name}//:___generates_api___processor_class_{i}",
+    visibility = ["//visibility:public"],
+)
+""".format(artifact_id = artifact_id, repo_name = repo_name, i = i)
+
+            # Alias for all processors without API
+            build_content += """
+alias(
+    name = "{artifact_id}___processors",
+    actual = "@{repo_name}//:___processor_class_all",
+    visibility = ["//visibility:public"],
+)
+""".format(artifact_id = artifact_id, repo_name = repo_name)
+
+            # Alias for all processors with API
+            build_content += """
+alias(
+    name = "{artifact_id}___processors_with_api",
+    actual = "@{repo_name}//:___generates_api___processor_class_all",
+    visibility = ["//visibility:public"],
+)
+""".format(artifact_id = artifact_id, repo_name = repo_name)
 
         rctx.file(file_path + "/BUILD.bazel", build_content)
 
@@ -140,17 +238,38 @@ def _mabel_install_impl(module_ctx):
 
             # Create repository rules for each artifact
             artifacts = lockfile.get("artifacts", {})
+
+            # First pass: build a mapping from target_name (groupId__artifactId) to repo_name (groupId__artifactId__version)
+            # This is needed because deps in the lockfile use target_name format
+            target_name_to_repo_name = {}
+            for maven_coordinate, artifact_info in artifacts.items():
+                repo_name = artifact_info.get("repo_name")
+                # Target name is groupId__artifactId (without version)
+                # Repo name is groupId__artifactId__version
+                # Extract target name by removing the version suffix
+                parts = repo_name.rsplit("__", 1)
+                if len(parts) == 2:
+                    target_name = parts[0]
+                    target_name_to_repo_name[target_name] = repo_name
+
             for maven_coordinate, artifact_info in artifacts.items():
                 repo_name = artifact_info.get("repo_name")
                 url = artifact_info.get("url")
                 sha256 = artifact_info.get("sha256")
                 target_type = artifact_info.get("target_type", "jar")
+                processor_classes = artifact_info.get("processor_classes", [])
 
                 if not repo_name or not url:
                     fail("Invalid artifact entry for {}: missing repo_name or url".format(maven_coordinate))
 
                 # Add to artifacts list for alias repo (always, even if repo already exists)
-                all_artifacts.append("{}|{}|{}".format(maven_coordinate, repo_name, target_type))
+                # Format: coordinate|repo_name|target_type|processor_classes_count
+                all_artifacts.append("{}|{}|{}|{}".format(
+                    maven_coordinate,
+                    repo_name,
+                    target_type,
+                    len(processor_classes),
+                ))
 
                 # Skip creating repos if this repo was already created from another lockfile
                 if repo_name in created_repos:
@@ -194,12 +313,23 @@ def _mabel_install_impl(module_ctx):
                 exports = artifact_info.get("exports", [])
                 runtime_deps = artifact_info.get("runtime_deps", [])
 
+                # Convert dependency references to proper repo labels
+                # Dependencies come as ":target_name" format (without version) from the lockfile
+                # We need to map them to full repo names (with version)
+                def _to_repo_label(dep):
+                    # Remove leading colon if present
+                    target_name = dep[1:] if dep.startswith(":") else dep
+                    # Look up the full repo name from our mapping
+                    full_repo_name = target_name_to_repo_name.get(target_name, target_name)
+                    return "@" + full_repo_name + "//:jar"
+
                 _jvm_import_repo(
                     name = repo_name,
                     jar_repo = jar_repo_name,
-                    deps = ["@" + d for d in deps],
-                    exports = ["@" + e for e in exports],
-                    runtime_deps = ["@" + r for r in runtime_deps],
+                    deps = [_to_repo_label(d) for d in deps],
+                    exports = [_to_repo_label(e) for e in exports],
+                    runtime_deps = [_to_repo_label(r) for r in runtime_deps],
+                    processor_classes = processor_classes,
                 )
 
                 # Create http_file for sources if available
