@@ -32,6 +32,9 @@ jvm_import(
 
     # If this is a processor, add java_plugin targets
     if processor_classes:
+        # Add load statement for java_plugin and java_library
+        build_content = 'load("@rules_java//java:defs.bzl", "java_library", "java_plugin")\n' + build_content
+
         # Deps for java_plugin include the jar itself plus runtime deps
         plugin_deps = [":jar"] + rctx.attr.runtime_deps + rctx.attr.deps
         plugin_deps_str = str(plugin_deps)

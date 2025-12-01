@@ -13,6 +13,7 @@ This file was taken from [2] jvm_external repo (under Apache2 license [3]).
 [3]: https://github.com/bazelbuild/rules_jvm_external/blob/aa530f0c37d86d18040df82ca7e5de7a4732f861/LICENSE
 """
 
+load("@rules_java//java:defs.bzl", "JavaInfo")
 load(":stamp_manifest.bzl", "stamp_manifest_provider")
 
 def _jvm_import_impl(ctx):
