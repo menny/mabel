@@ -436,7 +436,7 @@
     },
     "@@mabel+//rules/maven_deps:extensions.bzl%mabel": {
       "general": {
-        "bzlTransitiveDigest": "EYwba3+jMntgdKxyQ01/5fpRN67L9Xiv2txzZMyVuzA=",
+        "bzlTransitiveDigest": "A2sx1R8E7WwOWuD8DtXvSfrmifNDxkQvfTUBtqmW/Y0=",
         "usagesDigest": "6T4GXKfDXlD1jQu2ke0mC2KKkadAp/Hcu4Q66KMMOCA=",
         "recordedFileInputs": {
           "@@//program/maven_install.json": "290b315ba1c15a3e0dad87e79b2070260c79fbbd245f4b4f191097184acc2598",
@@ -461,7 +461,8 @@
               "jar_repo": "org_jetbrains_kotlin__kotlin_runtime__1_0_6__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "com_github_salomonbrys_kotson__kotson__2_5_0__jar": {
@@ -480,7 +481,8 @@
               "jar_repo": "com_github_salomonbrys_kotson__kotson__2_5_0__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_jetbrains_kotlin__kotlin_stdlib__1_3_72__jar": {
@@ -499,7 +501,8 @@
               "jar_repo": "org_jetbrains_kotlin__kotlin_stdlib__1_3_72__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "com_google_code_gson__gson__2_8_0__jar": {
@@ -518,7 +521,8 @@
               "jar_repo": "com_google_code_gson__gson__2_8_0__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_jetbrains__annotations__13_0__jar": {
@@ -537,7 +541,8 @@
               "jar_repo": "org_jetbrains__annotations__13_0__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72__jar": {
@@ -556,19 +561,20 @@
               "jar_repo": "org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "kotlin_maven": {
             "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_maven_alias_repo",
             "attributes": {
               "artifacts": [
-                "org.jetbrains.kotlin:kotlin-runtime:1.0.6|org_jetbrains_kotlin__kotlin_runtime__1_0_6|jar",
-                "com.github.salomonbrys.kotson:kotson:2.5.0|com_github_salomonbrys_kotson__kotson__2_5_0|jar",
-                "org.jetbrains.kotlin:kotlin-stdlib:1.3.72|org_jetbrains_kotlin__kotlin_stdlib__1_3_72|jar",
-                "com.google.code.gson:gson:2.8.0|com_google_code_gson__gson__2_8_0|jar",
-                "org.jetbrains:annotations:13.0|org_jetbrains__annotations__13_0|jar",
-                "org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72|org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72|jar"
+                "org.jetbrains.kotlin:kotlin-runtime:1.0.6|org_jetbrains_kotlin__kotlin_runtime__1_0_6|jar|0",
+                "com.github.salomonbrys.kotson:kotson:2.5.0|com_github_salomonbrys_kotson__kotson__2_5_0|jar|0",
+                "org.jetbrains.kotlin:kotlin-stdlib:1.3.72|org_jetbrains_kotlin__kotlin_stdlib__1_3_72|jar|0",
+                "com.google.code.gson:gson:2.8.0|com_google_code_gson__gson__2_8_0|jar|0",
+                "org.jetbrains:annotations:13.0|org_jetbrains__annotations__13_0|jar|0",
+                "org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72|org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72|jar|0"
               ]
             }
           },
@@ -588,7 +594,8 @@
               "jar_repo": "org_codehaus_plexus__plexus_component_annotations__1_6__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_slf4j__jcl_over_slf4j__1_6_2__jar": {
@@ -607,7 +614,8 @@
               "jar_repo": "org_slf4j__jcl_over_slf4j__1_6_2__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_eclipse_aether__aether_transport_http__1_1_0__jar": {
@@ -626,7 +634,8 @@
               "jar_repo": "org_eclipse_aether__aether_transport_http__1_1_0__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_codehaus_plexus__plexus_utils__3_3_0__jar": {
@@ -645,7 +654,8 @@
               "jar_repo": "org_codehaus_plexus__plexus_utils__3_3_0__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "javax_inject__javax_inject__1__jar": {
@@ -664,7 +674,8 @@
               "jar_repo": "javax_inject__javax_inject__1__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "net_bytebuddy__byte_buddy__1_9_3__jar": {
@@ -683,7 +694,8 @@
               "jar_repo": "net_bytebuddy__byte_buddy__1_9_3__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_codehaus_plexus__plexus_interpolation__1_26__jar": {
@@ -702,7 +714,8 @@
               "jar_repo": "org_codehaus_plexus__plexus_interpolation__1_26__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "com_google_code_gson__gson__2_8_5__jar": {
@@ -721,7 +734,8 @@
               "jar_repo": "com_google_code_gson__gson__2_8_5__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_hamcrest__hamcrest_core__1_3__jar": {
@@ -740,7 +754,8 @@
               "jar_repo": "org_hamcrest__hamcrest_core__1_3__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_eclipse_aether__aether_transport_classpath__1_1_0__jar": {
@@ -759,7 +774,8 @@
               "jar_repo": "org_eclipse_aether__aether_transport_classpath__1_1_0__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_apache_maven_wagon__wagon_provider_api__1_0__jar": {
@@ -778,7 +794,8 @@
               "jar_repo": "org_apache_maven_wagon__wagon_provider_api__1_0__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_apache_commons__commons_lang3__3_8_1__jar": {
@@ -797,7 +814,8 @@
               "jar_repo": "org_apache_commons__commons_lang3__3_8_1__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "commons_logging__commons_logging__1_2__jar": {
@@ -816,7 +834,8 @@
               "jar_repo": "commons_logging__commons_logging__1_2__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "junit__junit__4_12__jar": {
@@ -835,7 +854,8 @@
               "jar_repo": "junit__junit__4_12__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_eclipse_aether__aether_api__1_1_0__jar": {
@@ -854,7 +874,8 @@
               "jar_repo": "org_eclipse_aether__aether_api__1_1_0__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_apache_httpcomponents__httpclient__4_5_13__jar": {
@@ -873,7 +894,8 @@
               "jar_repo": "org_apache_httpcomponents__httpclient__4_5_13__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_apache_maven__maven_repository_metadata__3_8_1__jar": {
@@ -892,7 +914,8 @@
               "jar_repo": "org_apache_maven__maven_repository_metadata__3_8_1__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "com_google_auto_value__auto_value__1_7__jar": {
@@ -911,7 +934,8 @@
               "jar_repo": "com_google_auto_value__auto_value__1_7__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4__jar": {
@@ -930,7 +954,8 @@
               "jar_repo": "org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_mockito__mockito_core__2_23_4__jar": {
@@ -949,7 +974,8 @@
               "jar_repo": "org_mockito__mockito_core__2_23_4__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_eclipse_aether__aether_transport_file__1_1_0__jar": {
@@ -968,7 +994,8 @@
               "jar_repo": "org_eclipse_aether__aether_transport_file__1_1_0__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava__jar": {
@@ -987,7 +1014,8 @@
               "jar_repo": "com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_apache_httpcomponents__httpcore__4_4_13__jar": {
@@ -1006,7 +1034,8 @@
               "jar_repo": "org_apache_httpcomponents__httpcore__4_4_13__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_apache_maven__maven_builder_support__3_8_1__jar": {
@@ -1025,7 +1054,8 @@
               "jar_repo": "org_apache_maven__maven_builder_support__3_8_1__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_apache_maven__maven_model_builder__3_8_1__jar": {
@@ -1044,7 +1074,8 @@
               "jar_repo": "org_apache_maven__maven_model_builder__3_8_1__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "com_google_guava__guava__27_0_1_jre__jar": {
@@ -1063,7 +1094,8 @@
               "jar_repo": "com_google_guava__guava__27_0_1_jre__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_eclipse_aether__aether_transport_wagon__1_1_0__jar": {
@@ -1082,7 +1114,8 @@
               "jar_repo": "org_eclipse_aether__aether_transport_wagon__1_1_0__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_eclipse_aether__aether_connector_basic__1_1_0__jar": {
@@ -1101,7 +1134,8 @@
               "jar_repo": "org_eclipse_aether__aether_connector_basic__1_1_0__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "com_beust__jcommander__1_72__jar": {
@@ -1120,7 +1154,8 @@
               "jar_repo": "com_beust__jcommander__1_72__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_objenesis__objenesis__2_6__jar": {
@@ -1139,7 +1174,8 @@
               "jar_repo": "org_objenesis__objenesis__2_6__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "com_google_auto_value__auto_value_annotations__1_7__jar": {
@@ -1158,7 +1194,8 @@
               "jar_repo": "com_google_auto_value__auto_value_annotations__1_7__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "com_google_errorprone__error_prone_annotations__2_2_0__jar": {
@@ -1177,7 +1214,8 @@
               "jar_repo": "com_google_errorprone__error_prone_annotations__2_2_0__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_checkerframework__checker_qual__2_5_2__jar": {
@@ -1196,7 +1234,8 @@
               "jar_repo": "org_checkerframework__checker_qual__2_5_2__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "commons_codec__commons_codec__1_11__jar": {
@@ -1215,7 +1254,8 @@
               "jar_repo": "commons_codec__commons_codec__1_11__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "com_google_j2objc__j2objc_annotations__1_1__jar": {
@@ -1234,7 +1274,8 @@
               "jar_repo": "com_google_j2objc__j2objc_annotations__1_1__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_eclipse_aether__aether_impl__1_1_0__jar": {
@@ -1253,7 +1294,8 @@
               "jar_repo": "org_eclipse_aether__aether_impl__1_1_0__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_slf4j__slf4j_nop__1_7_25__jar": {
@@ -1272,7 +1314,8 @@
               "jar_repo": "org_slf4j__slf4j_nop__1_7_25__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_apache_maven__maven_aether_provider__3_3_9__jar": {
@@ -1291,7 +1334,8 @@
               "jar_repo": "org_apache_maven__maven_aether_provider__3_3_9__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_eclipse_aether__aether_spi__1_1_0__jar": {
@@ -1310,7 +1354,8 @@
               "jar_repo": "org_eclipse_aether__aether_spi__1_1_0__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_slf4j__slf4j_api__1_7_25__jar": {
@@ -1329,7 +1374,8 @@
               "jar_repo": "org_slf4j__slf4j_api__1_7_25__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_eclipse_aether__aether_util__1_1_0__jar": {
@@ -1348,7 +1394,8 @@
               "jar_repo": "org_eclipse_aether__aether_util__1_1_0__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "com_google_code_findbugs__jsr305__3_0_2__jar": {
@@ -1367,7 +1414,8 @@
               "jar_repo": "com_google_code_findbugs__jsr305__3_0_2__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "net_bytebuddy__byte_buddy_agent__1_9_3__jar": {
@@ -1386,7 +1434,8 @@
               "jar_repo": "net_bytebuddy__byte_buddy_agent__1_9_3__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_apache_maven__maven_artifact__3_8_1__jar": {
@@ -1405,7 +1454,8 @@
               "jar_repo": "org_apache_maven__maven_artifact__3_8_1__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "com_google_guava__failureaccess__1_0_1__jar": {
@@ -1424,7 +1474,8 @@
               "jar_repo": "com_google_guava__failureaccess__1_0_1__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_codehaus_mojo__animal_sniffer_annotations__1_17__jar": {
@@ -1443,7 +1494,8 @@
               "jar_repo": "org_codehaus_mojo__animal_sniffer_annotations__1_17__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "org_apache_maven__maven_model__3_8_1__jar": {
@@ -1462,60 +1514,61 @@
               "jar_repo": "org_apache_maven__maven_model__3_8_1__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": []
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "mvn": {
             "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_maven_alias_repo",
             "attributes": {
               "artifacts": [
-                "org.codehaus.plexus:plexus-component-annotations:1.6|org_codehaus_plexus__plexus_component_annotations__1_6|jar",
-                "org.slf4j:jcl-over-slf4j:1.6.2|org_slf4j__jcl_over_slf4j__1_6_2|jar",
-                "org.eclipse.aether:aether-transport-http:1.1.0|org_eclipse_aether__aether_transport_http__1_1_0|jar",
-                "org.codehaus.plexus:plexus-utils:3.3.0|org_codehaus_plexus__plexus_utils__3_3_0|jar",
-                "javax.inject:javax.inject:1|javax_inject__javax_inject__1|jar",
-                "net.bytebuddy:byte-buddy:1.9.3|net_bytebuddy__byte_buddy__1_9_3|jar",
-                "org.codehaus.plexus:plexus-interpolation:1.26|org_codehaus_plexus__plexus_interpolation__1_26|jar",
-                "com.google.code.gson:gson:2.8.5|com_google_code_gson__gson__2_8_5|jar",
-                "org.hamcrest:hamcrest-core:1.3|org_hamcrest__hamcrest_core__1_3|jar",
-                "org.eclipse.aether:aether-transport-classpath:1.1.0|org_eclipse_aether__aether_transport_classpath__1_1_0|jar",
-                "org.apache.maven.wagon:wagon-provider-api:1.0|org_apache_maven_wagon__wagon_provider_api__1_0|jar",
-                "org.apache.commons:commons-lang3:3.8.1|org_apache_commons__commons_lang3__3_8_1|jar",
-                "commons-logging:commons-logging:1.2|commons_logging__commons_logging__1_2|jar",
-                "junit:junit:4.12|junit__junit__4_12|jar",
-                "org.eclipse.aether:aether-api:1.1.0|org_eclipse_aether__aether_api__1_1_0|jar",
-                "org.apache.httpcomponents:httpclient:4.5.13|org_apache_httpcomponents__httpclient__4_5_13|jar",
-                "org.apache.maven:maven-repository-metadata:3.8.1|org_apache_maven__maven_repository_metadata__3_8_1|jar",
-                "com.google.auto.value:auto-value:1.7|com_google_auto_value__auto_value__1_7|jar",
-                "org.eclipse.sisu:org.eclipse.sisu.inject:0.3.4|org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4|jar",
-                "org.mockito:mockito-core:2.23.4|org_mockito__mockito_core__2_23_4|jar",
-                "org.eclipse.aether:aether-transport-file:1.1.0|org_eclipse_aether__aether_transport_file__1_1_0|jar",
-                "com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava|com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava|jar",
-                "org.apache.httpcomponents:httpcore:4.4.13|org_apache_httpcomponents__httpcore__4_4_13|jar",
-                "org.apache.maven:maven-builder-support:3.8.1|org_apache_maven__maven_builder_support__3_8_1|jar",
-                "org.apache.maven:maven-model-builder:3.8.1|org_apache_maven__maven_model_builder__3_8_1|jar",
-                "com.google.guava:guava:27.0.1-jre|com_google_guava__guava__27_0_1_jre|jar",
-                "org.eclipse.aether:aether-transport-wagon:1.1.0|org_eclipse_aether__aether_transport_wagon__1_1_0|jar",
-                "org.eclipse.aether:aether-connector-basic:1.1.0|org_eclipse_aether__aether_connector_basic__1_1_0|jar",
-                "com.beust:jcommander:1.72|com_beust__jcommander__1_72|jar",
-                "org.objenesis:objenesis:2.6|org_objenesis__objenesis__2_6|jar",
-                "com.google.auto.value:auto-value-annotations:1.7|com_google_auto_value__auto_value_annotations__1_7|jar",
-                "com.google.errorprone:error_prone_annotations:2.2.0|com_google_errorprone__error_prone_annotations__2_2_0|jar",
-                "org.checkerframework:checker-qual:2.5.2|org_checkerframework__checker_qual__2_5_2|jar",
-                "commons-codec:commons-codec:1.11|commons_codec__commons_codec__1_11|jar",
-                "com.google.j2objc:j2objc-annotations:1.1|com_google_j2objc__j2objc_annotations__1_1|jar",
-                "org.eclipse.aether:aether-impl:1.1.0|org_eclipse_aether__aether_impl__1_1_0|jar",
-                "org.slf4j:slf4j-nop:1.7.25|org_slf4j__slf4j_nop__1_7_25|jar",
-                "org.apache.maven:maven-aether-provider:3.3.9|org_apache_maven__maven_aether_provider__3_3_9|jar",
-                "org.eclipse.aether:aether-spi:1.1.0|org_eclipse_aether__aether_spi__1_1_0|jar",
-                "org.slf4j:slf4j-api:1.7.25|org_slf4j__slf4j_api__1_7_25|jar",
-                "org.eclipse.aether:aether-util:1.1.0|org_eclipse_aether__aether_util__1_1_0|jar",
-                "com.google.code.findbugs:jsr305:3.0.2|com_google_code_findbugs__jsr305__3_0_2|jar",
-                "net.bytebuddy:byte-buddy-agent:1.9.3|net_bytebuddy__byte_buddy_agent__1_9_3|jar",
-                "org.apache.maven:maven-artifact:3.8.1|org_apache_maven__maven_artifact__3_8_1|jar",
-                "com.google.guava:failureaccess:1.0.1|com_google_guava__failureaccess__1_0_1|jar",
-                "org.codehaus.mojo:animal-sniffer-annotations:1.17|org_codehaus_mojo__animal_sniffer_annotations__1_17|jar",
-                "org.apache.maven:maven-model:3.8.1|org_apache_maven__maven_model__3_8_1|jar"
+                "org.codehaus.plexus:plexus-component-annotations:1.6|org_codehaus_plexus__plexus_component_annotations__1_6|jar|0",
+                "org.slf4j:jcl-over-slf4j:1.6.2|org_slf4j__jcl_over_slf4j__1_6_2|jar|0",
+                "org.eclipse.aether:aether-transport-http:1.1.0|org_eclipse_aether__aether_transport_http__1_1_0|jar|0",
+                "org.codehaus.plexus:plexus-utils:3.3.0|org_codehaus_plexus__plexus_utils__3_3_0|jar|0",
+                "javax.inject:javax.inject:1|javax_inject__javax_inject__1|jar|0",
+                "net.bytebuddy:byte-buddy:1.9.3|net_bytebuddy__byte_buddy__1_9_3|jar|0",
+                "org.codehaus.plexus:plexus-interpolation:1.26|org_codehaus_plexus__plexus_interpolation__1_26|jar|0",
+                "com.google.code.gson:gson:2.8.5|com_google_code_gson__gson__2_8_5|jar|0",
+                "org.hamcrest:hamcrest-core:1.3|org_hamcrest__hamcrest_core__1_3|jar|0",
+                "org.eclipse.aether:aether-transport-classpath:1.1.0|org_eclipse_aether__aether_transport_classpath__1_1_0|jar|0",
+                "org.apache.maven.wagon:wagon-provider-api:1.0|org_apache_maven_wagon__wagon_provider_api__1_0|jar|0",
+                "org.apache.commons:commons-lang3:3.8.1|org_apache_commons__commons_lang3__3_8_1|jar|0",
+                "commons-logging:commons-logging:1.2|commons_logging__commons_logging__1_2|jar|0",
+                "junit:junit:4.12|junit__junit__4_12|jar|0",
+                "org.eclipse.aether:aether-api:1.1.0|org_eclipse_aether__aether_api__1_1_0|jar|0",
+                "org.apache.httpcomponents:httpclient:4.5.13|org_apache_httpcomponents__httpclient__4_5_13|jar|0",
+                "org.apache.maven:maven-repository-metadata:3.8.1|org_apache_maven__maven_repository_metadata__3_8_1|jar|0",
+                "com.google.auto.value:auto-value:1.7|com_google_auto_value__auto_value__1_7|jar|0",
+                "org.eclipse.sisu:org.eclipse.sisu.inject:0.3.4|org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4|jar|0",
+                "org.mockito:mockito-core:2.23.4|org_mockito__mockito_core__2_23_4|jar|0",
+                "org.eclipse.aether:aether-transport-file:1.1.0|org_eclipse_aether__aether_transport_file__1_1_0|jar|0",
+                "com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava|com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava|jar|0",
+                "org.apache.httpcomponents:httpcore:4.4.13|org_apache_httpcomponents__httpcore__4_4_13|jar|0",
+                "org.apache.maven:maven-builder-support:3.8.1|org_apache_maven__maven_builder_support__3_8_1|jar|0",
+                "org.apache.maven:maven-model-builder:3.8.1|org_apache_maven__maven_model_builder__3_8_1|jar|0",
+                "com.google.guava:guava:27.0.1-jre|com_google_guava__guava__27_0_1_jre|jar|0",
+                "org.eclipse.aether:aether-transport-wagon:1.1.0|org_eclipse_aether__aether_transport_wagon__1_1_0|jar|0",
+                "org.eclipse.aether:aether-connector-basic:1.1.0|org_eclipse_aether__aether_connector_basic__1_1_0|jar|0",
+                "com.beust:jcommander:1.72|com_beust__jcommander__1_72|jar|0",
+                "org.objenesis:objenesis:2.6|org_objenesis__objenesis__2_6|jar|0",
+                "com.google.auto.value:auto-value-annotations:1.7|com_google_auto_value__auto_value_annotations__1_7|jar|0",
+                "com.google.errorprone:error_prone_annotations:2.2.0|com_google_errorprone__error_prone_annotations__2_2_0|jar|0",
+                "org.checkerframework:checker-qual:2.5.2|org_checkerframework__checker_qual__2_5_2|jar|0",
+                "commons-codec:commons-codec:1.11|commons_codec__commons_codec__1_11|jar|0",
+                "com.google.j2objc:j2objc-annotations:1.1|com_google_j2objc__j2objc_annotations__1_1|jar|0",
+                "org.eclipse.aether:aether-impl:1.1.0|org_eclipse_aether__aether_impl__1_1_0|jar|0",
+                "org.slf4j:slf4j-nop:1.7.25|org_slf4j__slf4j_nop__1_7_25|jar|0",
+                "org.apache.maven:maven-aether-provider:3.3.9|org_apache_maven__maven_aether_provider__3_3_9|jar|0",
+                "org.eclipse.aether:aether-spi:1.1.0|org_eclipse_aether__aether_spi__1_1_0|jar|0",
+                "org.slf4j:slf4j-api:1.7.25|org_slf4j__slf4j_api__1_7_25|jar|0",
+                "org.eclipse.aether:aether-util:1.1.0|org_eclipse_aether__aether_util__1_1_0|jar|0",
+                "com.google.code.findbugs:jsr305:3.0.2|com_google_code_findbugs__jsr305__3_0_2|jar|0",
+                "net.bytebuddy:byte-buddy-agent:1.9.3|net_bytebuddy__byte_buddy_agent__1_9_3|jar|0",
+                "org.apache.maven:maven-artifact:3.8.1|org_apache_maven__maven_artifact__3_8_1|jar|0",
+                "com.google.guava:failureaccess:1.0.1|com_google_guava__failureaccess__1_0_1|jar|0",
+                "org.codehaus.mojo:animal-sniffer-annotations:1.17|org_codehaus_mojo__animal_sniffer_annotations__1_17|jar|0",
+                "org.apache.maven:maven-model:3.8.1|org_apache_maven__maven_model__3_8_1|jar|0"
               ]
             }
           }
