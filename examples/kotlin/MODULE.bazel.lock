@@ -469,7 +469,7 @@
         "bzlTransitiveDigest": "+IZJFbiWchbUL1IjlulBEvmuFMF8vgYI02VBOIZeyh8=",
         "usagesDigest": "Ji09cqOQT4g8OabAyhMklYe9MW6cfYS550H7UjYJn7E=",
         "recordedFileInputs": {
-          "@@//program/maven_install.json": "290b315ba1c15a3e0dad87e79b2070260c79fbbd245f4b4f191097184acc2598",
+          "@@//program/maven_install.json": "d67d3ed567dcfaef9890437017231a89e13e0779b97ea06bac568cc40fdb5b44",
           "@@mabel+//resolver/maven_install.json": "6a798eee6c7bcd49b4adea8d9f1fa3dc83a3023218a03ecdb402a6710a2a77e3"
         },
         "recordedDirentsInputs": {},
@@ -509,8 +509,14 @@
             "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "com_github_salomonbrys_kotson__kotson__2_5_0__jar",
-              "deps": [],
-              "exports": [],
+              "deps": [
+                "@com_google_code_gson__gson__2_8_0//:jar",
+                "@org_jetbrains_kotlin__kotlin_stdlib__1_3_72//:jar"
+              ],
+              "exports": [
+                "@com_google_code_gson__gson__2_8_0//:jar",
+                "@org_jetbrains_kotlin__kotlin_stdlib__1_3_72//:jar"
+              ],
               "runtime_deps": [],
               "processor_classes": []
             }
@@ -529,8 +535,14 @@
             "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_jetbrains_kotlin__kotlin_stdlib__1_3_72__jar",
-              "deps": [],
-              "exports": [],
+              "deps": [
+                "@org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72//:jar",
+                "@org_jetbrains__annotations__13_0//:jar"
+              ],
+              "exports": [
+                "@org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72//:jar",
+                "@org_jetbrains__annotations__13_0//:jar"
+              ],
               "runtime_deps": [],
               "processor_classes": []
             }
