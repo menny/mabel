@@ -101,6 +101,34 @@ _jvm_import_repo = repository_rule(
     },
 )
 
+def _aar_import_repo_impl(rctx):
+    """Creates a repository with native.aar_import target."""
+
+    build_content = """
+aar_import(
+    name = "aar",
+    aar = "@{aar_repo}//file",
+    visibility = ["//visibility:public"],
+    {deps}
+    {exports}
+)
+""".format(
+        aar_repo = rctx.attr.aar_repo,
+        deps = "deps = {},".format(rctx.attr.deps) if rctx.attr.deps else "",
+        exports = "exports = {},".format(rctx.attr.exports) if rctx.attr.exports else "",
+    )
+
+    rctx.file("BUILD.bazel", build_content)
+
+_aar_import_repo = repository_rule(
+    implementation = _aar_import_repo_impl,
+    attrs = {
+        "aar_repo": attr.string(mandatory = True),
+        "deps": attr.string_list(default = []),
+        "exports": attr.string_list(default = []),
+    },
+)
+
 def _get_file_path_from_maven_name(group_id, artifact_id):
     """Convert Maven groupId:artifactId to a file path.
 
@@ -153,6 +181,19 @@ alias(
             artifact_id = artifact_id,
             repo_name = repo_name,
         )
+
+        if target_type == "aar":
+            build_content = """# Alias for {coordinate}
+alias(
+    name = "{artifact_id}",
+    actual = "@{repo_name}//:aar",
+    visibility = ["//visibility:public"],
+)
+""".format(
+                coordinate = maven_coordinate,
+                artifact_id = artifact_id,
+                repo_name = repo_name,
+            )
 
         # If this is a processor, add aliases for processor targets
         if processor_classes_count > 0:
@@ -245,8 +286,10 @@ def _mabel_install_impl(module_ctx):
             # First pass: build a mapping from target_name (groupId__artifactId) to repo_name (groupId__artifactId__version)
             # This is needed because deps in the lockfile use target_name format
             target_name_to_repo_name = {}
+            target_name_to_type = {}
             for maven_coordinate, artifact_info in artifacts.items():
                 repo_name = artifact_info.get("repo_name")
+
                 # Target name is groupId__artifactId (without version)
                 # Repo name is groupId__artifactId__version
                 # Extract target name by removing the version suffix
@@ -254,6 +297,7 @@ def _mabel_install_impl(module_ctx):
                 if len(parts) == 2:
                     target_name = parts[0]
                     target_name_to_repo_name[target_name] = repo_name
+                    target_name_to_type[target_name] = artifact_info.get("target_type", "jar")
 
             for maven_coordinate, artifact_info in artifacts.items():
                 repo_name = artifact_info.get("repo_name")
@@ -322,18 +366,29 @@ def _mabel_install_impl(module_ctx):
                 def _to_repo_label(dep):
                     # Remove leading colon if present
                     target_name = dep[1:] if dep.startswith(":") else dep
+
                     # Look up the full repo name from our mapping
                     full_repo_name = target_name_to_repo_name.get(target_name, target_name)
-                    return "@" + full_repo_name + "//:jar"
+                    dep_type = target_name_to_type.get(target_name, "jar")
+                    target_suffix = "aar" if dep_type == "aar" else "jar"
+                    return "@" + full_repo_name + "//:" + target_suffix
 
-                _jvm_import_repo(
-                    name = repo_name,
-                    jar_repo = jar_repo_name,
-                    deps = [_to_repo_label(d) for d in deps],
-                    exports = [_to_repo_label(e) for e in exports],
-                    runtime_deps = [_to_repo_label(r) for r in runtime_deps],
-                    processor_classes = processor_classes,
-                )
+                if target_type == "aar":
+                    _aar_import_repo(
+                        name = repo_name,
+                        aar_repo = jar_repo_name,
+                        deps = [_to_repo_label(d) for d in deps],
+                        exports = [_to_repo_label(e) for e in exports],
+                    )
+                else:
+                    _jvm_import_repo(
+                        name = repo_name,
+                        jar_repo = jar_repo_name,
+                        deps = [_to_repo_label(d) for d in deps],
+                        exports = [_to_repo_label(e) for e in exports],
+                        runtime_deps = [_to_repo_label(r) for r in runtime_deps],
+                        processor_classes = processor_classes,
+                    )
 
                 # Create http_file for sources if available
                 sources = artifact_info.get("sources")

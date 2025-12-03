@@ -84,8 +84,7 @@
     "https://bcr.bazel.build/modules/bazel_worker_java/0.0.4/source.json": "a2d30458fd86cf022c2b6331e652526fa08e17573b2f5034a9dbcacdf9c2583c",
     "https://bcr.bazel.build/modules/buildifier_prebuilt/6.4.0/MODULE.bazel": "37389c6b5a40c59410b4226d3bb54b08637f393d66e2fa57925c6fcf68e64bf4",
     "https://bcr.bazel.build/modules/buildifier_prebuilt/7.3.1/MODULE.bazel": "537faf0ad9f5892910074b8e43b4c91c96f1d5d86b6ed04bdbe40cf68aa48b68",
-    "https://bcr.bazel.build/modules/buildifier_prebuilt/8.2.1/MODULE.bazel": "57f2736616367163651d9d3e918cddfd6c67ec7a541d924f2c4544d3fae8630e",
-    "https://bcr.bazel.build/modules/buildifier_prebuilt/8.2.1/source.json": "a3e79a347f9d8256d83eba2b621b5b6affa17c8b3236127f030db03b72a44a91",
+    "https://bcr.bazel.build/modules/buildifier_prebuilt/7.3.1/source.json": "55153a5e6ca9c8a7e266c4b46b951e8a010d25ec6062bc35d5d4f89925796bad",
     "https://bcr.bazel.build/modules/buildozer/7.1.2/MODULE.bazel": "2e8dd40ede9c454042645fd8d8d0cd1527966aa5c919de86661e62953cd73d84",
     "https://bcr.bazel.build/modules/buildozer/7.1.2/source.json": "c9028a501d2db85793a6996205c8de120944f50a0d570438fcae0457a5f9d1f8",
     "https://bcr.bazel.build/modules/download_utils/1.0.1/MODULE.bazel": "f1d0afade59e37de978506d6bbf08d7fe5f94964e86944aaf58efcead827b41b",
@@ -294,16 +293,1009 @@
   },
   "selectedYankedVersions": {},
   "moduleExtensions": {
-    "//rules/maven_deps:extensions.bzl%mabel": {
+    "@@aspect_rules_js+//npm:extensions.bzl%pnpm": {
+      "general": {
+        "bzlTransitiveDigest": "fSYvaGjYL+cJS5EiFp7cLBpFaqL3+cAzyLrimehAbnM=",
+        "usagesDigest": "ZYGEy1FrDUNPBzAzD+ujlHkMEsVPMYOvpHm9RhUexUE=",
+        "recordedFileInputs": {},
+        "recordedDirentsInputs": {},
+        "envVariables": {},
+        "generatedRepoSpecs": {
+          "pnpm": {
+            "repoRuleId": "@@aspect_rules_js+//npm/private:npm_import.bzl%npm_import_rule",
+            "attributes": {
+              "package": "pnpm",
+              "version": "8.6.7",
+              "root_package": "",
+              "link_workspace": "",
+              "link_packages": {},
+              "integrity": "sha512-vRIWpD/L4phf9Bk2o/O2TDR8fFoJnpYrp2TKqTIZF/qZ2/rgL3qKXzHofHgbXsinwMoSEigz28sqk3pQ+yMEQQ==",
+              "url": "",
+              "commit": "",
+              "patch_args": [
+                "-p0"
+              ],
+              "patches": [],
+              "custom_postinstall": "",
+              "npm_auth": "",
+              "npm_auth_basic": "",
+              "npm_auth_username": "",
+              "npm_auth_password": "",
+              "lifecycle_hooks": [],
+              "extra_build_content": "load(\"@aspect_rules_js//js:defs.bzl\", \"js_binary\")\njs_binary(name = \"pnpm\", data = glob([\"package/**\"]), entry_point = \"package/dist/pnpm.cjs\", visibility = [\"//visibility:public\"])",
+              "generate_bzl_library_targets": false,
+              "extract_full_archive": true
+            }
+          },
+          "pnpm__links": {
+            "repoRuleId": "@@aspect_rules_js+//npm/private:npm_import.bzl%npm_import_links",
+            "attributes": {
+              "package": "pnpm",
+              "version": "8.6.7",
+              "dev": false,
+              "root_package": "",
+              "link_packages": {},
+              "deps": {},
+              "transitive_closure": {},
+              "lifecycle_build_target": false,
+              "lifecycle_hooks_env": [],
+              "lifecycle_hooks_execution_requirements": [
+                "no-sandbox"
+              ],
+              "lifecycle_hooks_use_default_shell_env": false,
+              "bins": {},
+              "npm_translate_lock_repo": "",
+              "package_visibility": [
+                "//visibility:public"
+              ],
+              "replace_package": ""
+            }
+          }
+        },
+        "recordedRepoMappingEntries": [
+          [
+            "aspect_bazel_lib+",
+            "bazel_skylib",
+            "bazel_skylib+"
+          ],
+          [
+            "aspect_bazel_lib+",
+            "bazel_tools",
+            "bazel_tools"
+          ],
+          [
+            "aspect_rules_js+",
+            "aspect_bazel_lib",
+            "aspect_bazel_lib+"
+          ],
+          [
+            "aspect_rules_js+",
+            "bazel_features",
+            "bazel_features+"
+          ],
+          [
+            "aspect_rules_js+",
+            "bazel_skylib",
+            "bazel_skylib+"
+          ],
+          [
+            "aspect_rules_js+",
+            "bazel_tools",
+            "bazel_tools"
+          ],
+          [
+            "bazel_features+",
+            "bazel_tools",
+            "bazel_tools"
+          ]
+        ]
+      }
+    },
+    "@@aspect_tools_telemetry+//:extension.bzl%telemetry": {
+      "general": {
+        "bzlTransitiveDigest": "gA7tPEdJXhskzPIEUxjX9IdDrM6+WjfbgXJ8Ez47umk=",
+        "usagesDigest": "XVw9FHnkwaV74zK/kH7wWSjsW5cYA6SOrKbcBpdR9P8=",
+        "recordedFileInputs": {},
+        "recordedDirentsInputs": {},
+        "envVariables": {},
+        "generatedRepoSpecs": {
+          "aspect_tools_telemetry_report": {
+            "repoRuleId": "@@aspect_tools_telemetry+//:extension.bzl%tel_repository",
+            "attributes": {
+              "deps": {
+                "aspect_rules_lint": "1.10.2",
+                "aspect_tools_telemetry": "0.2.8"
+              }
+            }
+          }
+        },
+        "recordedRepoMappingEntries": [
+          [
+            "aspect_tools_telemetry+",
+            "aspect_bazel_lib",
+            "aspect_bazel_lib+"
+          ],
+          [
+            "aspect_tools_telemetry+",
+            "bazel_skylib",
+            "bazel_skylib+"
+          ]
+        ]
+      }
+    },
+    "@@buildifier_prebuilt+//:defs.bzl%buildifier_prebuilt_deps_extension": {
+      "general": {
+        "bzlTransitiveDigest": "izaEjT7NE6vV9H5axiYiPrvmFtCLNkfjhj+bpMolt1A=",
+        "usagesDigest": "eWMDBEn8E8CrwAPXrlrjIap2pseSMhxDyDdrntHBOOE=",
+        "recordedFileInputs": {},
+        "recordedDirentsInputs": {},
+        "envVariables": {},
+        "generatedRepoSpecs": {
+          "buildifier_darwin_amd64": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://github.com/bazelbuild/buildtools/releases/download/v7.3.1/buildifier-darwin-amd64"
+              ],
+              "downloaded_file_path": "buildifier",
+              "executable": true,
+              "sha256": "375f823103d01620aaec20a0c29c6cbca99f4fd0725ae30b93655c6704f44d71"
+            }
+          },
+          "buildifier_darwin_arm64": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://github.com/bazelbuild/buildtools/releases/download/v7.3.1/buildifier-darwin-arm64"
+              ],
+              "downloaded_file_path": "buildifier",
+              "executable": true,
+              "sha256": "5a6afc6ac7a09f5455ba0b89bd99d5ae23b4174dc5dc9d6c0ed5ce8caac3f813"
+            }
+          },
+          "buildifier_linux_amd64": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://github.com/bazelbuild/buildtools/releases/download/v7.3.1/buildifier-linux-amd64"
+              ],
+              "downloaded_file_path": "buildifier",
+              "executable": true,
+              "sha256": "5474cc5128a74e806783d54081f581662c4be8ae65022f557e9281ed5dc88009"
+            }
+          },
+          "buildifier_linux_arm64": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://github.com/bazelbuild/buildtools/releases/download/v7.3.1/buildifier-linux-arm64"
+              ],
+              "downloaded_file_path": "buildifier",
+              "executable": true,
+              "sha256": "0bf86c4bfffaf4f08eed77bde5b2082e4ae5039a11e2e8b03984c173c34a561c"
+            }
+          },
+          "buildifier_windows_amd64": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://github.com/bazelbuild/buildtools/releases/download/v7.3.1/buildifier-windows-amd64.exe"
+              ],
+              "downloaded_file_path": "buildifier.exe",
+              "executable": true,
+              "sha256": "370cd576075ad29930a82f5de132f1a1de4084c784a82514bd4da80c85acf4a8"
+            }
+          },
+          "buildozer_darwin_amd64": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://github.com/bazelbuild/buildtools/releases/download/v7.3.1/buildozer-darwin-amd64"
+              ],
+              "downloaded_file_path": "buildozer",
+              "executable": true,
+              "sha256": "854c9583efc166602276802658cef3f224d60898cfaa60630b33d328db3b0de2"
+            }
+          },
+          "buildozer_darwin_arm64": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://github.com/bazelbuild/buildtools/releases/download/v7.3.1/buildozer-darwin-arm64"
+              ],
+              "downloaded_file_path": "buildozer",
+              "executable": true,
+              "sha256": "31b1bfe20d7d5444be217af78f94c5c43799cdf847c6ce69794b7bf3319c5364"
+            }
+          },
+          "buildozer_linux_amd64": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://github.com/bazelbuild/buildtools/releases/download/v7.3.1/buildozer-linux-amd64"
+              ],
+              "downloaded_file_path": "buildozer",
+              "executable": true,
+              "sha256": "3305e287b3fcc68b9a35fd8515ee617452cd4e018f9e6886b6c7cdbcba8710d4"
+            }
+          },
+          "buildozer_linux_arm64": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://github.com/bazelbuild/buildtools/releases/download/v7.3.1/buildozer-linux-arm64"
+              ],
+              "downloaded_file_path": "buildozer",
+              "executable": true,
+              "sha256": "0b5a2a717ac4fc911e1fec8d92af71dbb4fe95b10e5213da0cc3d56cea64a328"
+            }
+          },
+          "buildozer_windows_amd64": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://github.com/bazelbuild/buildtools/releases/download/v7.3.1/buildozer-windows-amd64.exe"
+              ],
+              "downloaded_file_path": "buildozer.exe",
+              "executable": true,
+              "sha256": "58d41ce53257c5594c9bc86d769f580909269f68de114297f46284fbb9023dcf"
+            }
+          },
+          "buildifier_prebuilt_toolchains": {
+            "repoRuleId": "@@buildifier_prebuilt+//:defs.bzl%_buildifier_toolchain_setup",
+            "attributes": {
+              "assets_json": "[{\"arch\":\"amd64\",\"name\":\"buildifier\",\"platform\":\"darwin\",\"sha256\":\"375f823103d01620aaec20a0c29c6cbca99f4fd0725ae30b93655c6704f44d71\",\"version\":\"v7.3.1\"},{\"arch\":\"arm64\",\"name\":\"buildifier\",\"platform\":\"darwin\",\"sha256\":\"5a6afc6ac7a09f5455ba0b89bd99d5ae23b4174dc5dc9d6c0ed5ce8caac3f813\",\"version\":\"v7.3.1\"},{\"arch\":\"amd64\",\"name\":\"buildifier\",\"platform\":\"linux\",\"sha256\":\"5474cc5128a74e806783d54081f581662c4be8ae65022f557e9281ed5dc88009\",\"version\":\"v7.3.1\"},{\"arch\":\"arm64\",\"name\":\"buildifier\",\"platform\":\"linux\",\"sha256\":\"0bf86c4bfffaf4f08eed77bde5b2082e4ae5039a11e2e8b03984c173c34a561c\",\"version\":\"v7.3.1\"},{\"arch\":\"amd64\",\"name\":\"buildifier\",\"platform\":\"windows\",\"sha256\":\"370cd576075ad29930a82f5de132f1a1de4084c784a82514bd4da80c85acf4a8\",\"version\":\"v7.3.1\"},{\"arch\":\"amd64\",\"name\":\"buildozer\",\"platform\":\"darwin\",\"sha256\":\"854c9583efc166602276802658cef3f224d60898cfaa60630b33d328db3b0de2\",\"version\":\"v7.3.1\"},{\"arch\":\"arm64\",\"name\":\"buildozer\",\"platform\":\"darwin\",\"sha256\":\"31b1bfe20d7d5444be217af78f94c5c43799cdf847c6ce69794b7bf3319c5364\",\"version\":\"v7.3.1\"},{\"arch\":\"amd64\",\"name\":\"buildozer\",\"platform\":\"linux\",\"sha256\":\"3305e287b3fcc68b9a35fd8515ee617452cd4e018f9e6886b6c7cdbcba8710d4\",\"version\":\"v7.3.1\"},{\"arch\":\"arm64\",\"name\":\"buildozer\",\"platform\":\"linux\",\"sha256\":\"0b5a2a717ac4fc911e1fec8d92af71dbb4fe95b10e5213da0cc3d56cea64a328\",\"version\":\"v7.3.1\"},{\"arch\":\"amd64\",\"name\":\"buildozer\",\"platform\":\"windows\",\"sha256\":\"58d41ce53257c5594c9bc86d769f580909269f68de114297f46284fbb9023dcf\",\"version\":\"v7.3.1\"}]"
+            }
+          }
+        },
+        "recordedRepoMappingEntries": [
+          [
+            "buildifier_prebuilt+",
+            "bazel_skylib",
+            "bazel_skylib+"
+          ],
+          [
+            "buildifier_prebuilt+",
+            "bazel_tools",
+            "bazel_tools"
+          ]
+        ]
+      }
+    },
+    "@@mabel+//rules/maven_deps:extensions.bzl%mabel": {
       "general": {
         "bzlTransitiveDigest": "+IZJFbiWchbUL1IjlulBEvmuFMF8vgYI02VBOIZeyh8=",
-        "usagesDigest": "ILon3QSAHnZ+YBlhgEqgguJY6hMbMvbtXACGxwtkv2Y=",
+        "usagesDigest": "JzPoZmzmJICeUKMURKFUsCJkqUjcXhaCUpRJwu/Kh48=",
         "recordedFileInputs": {
-          "@@//resolver/maven_install.json": "6a798eee6c7bcd49b4adea8d9f1fa3dc83a3023218a03ecdb402a6710a2a77e3"
+          "@@//program/maven_install.json": "e29577609e7cd816ade372b0148844f2806004be9a9b5c5dd62f92fba6dc42e8",
+          "@@mabel+//resolver/maven_install.json": "6a798eee6c7bcd49b4adea8d9f1fa3dc83a3023218a03ecdb402a6710a2a77e3"
         },
         "recordedDirentsInputs": {},
         "envVariables": {},
         "generatedRepoSpecs": {
+          "androidx_fragment__fragment__1_1_0_alpha02__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/fragment/fragment/1.1.0-alpha02/fragment-1.1.0-alpha02.aar"
+              ],
+              "downloaded_file_path": "fragment-1.1.0-alpha02.aar",
+              "sha256": "e1729441064d6052b6043678e0205326f513e8fd32a367d59c429cd4384854c4"
+            }
+          },
+          "androidx_fragment__fragment__1_1_0_alpha02": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_fragment__fragment__1_1_0_alpha02__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar",
+                "@androidx_lifecycle__lifecycle_viewmodel__2_0_0//:aar",
+                "@androidx_core__core__1_1_0_alpha01//:aar",
+                "@androidx_activity__activity__1_0_0_alpha02//:aar",
+                "@androidx_loader__loader__1_0_0//:aar",
+                "@androidx_viewpager__viewpager__1_0_0//:aar"
+              ],
+              "exports": []
+            }
+          },
+          "androidx_slidingpanelayout__slidingpanelayout__1_0_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/slidingpanelayout/slidingpanelayout/1.0.0/slidingpanelayout-1.0.0.aar"
+              ],
+              "downloaded_file_path": "slidingpanelayout-1.0.0.aar",
+              "sha256": "76bffb7cefbf780794d8817002dad1562f3e27c0a9f746d62401c8edb30aeede"
+            }
+          },
+          "androidx_slidingpanelayout__slidingpanelayout__1_0_0": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_slidingpanelayout__slidingpanelayout__1_0_0__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar",
+                "@androidx_core__core__1_1_0_alpha01//:aar",
+                "@androidx_customview__customview__1_0_0//:aar"
+              ],
+              "exports": []
+            }
+          },
+          "androidx_appcompat__appcompat__1_0_2__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/appcompat/appcompat/1.0.2/appcompat-1.0.2.aar"
+              ],
+              "downloaded_file_path": "appcompat-1.0.2.aar",
+              "sha256": "a3080cdd5e5c56cb72f9d428b1657d4380011ec211cfedf76e084b95f6bf0d03"
+            }
+          },
+          "androidx_appcompat__appcompat__1_0_2": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_appcompat__appcompat__1_0_2__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar",
+                "@androidx_fragment__fragment__1_1_0_alpha02//:aar",
+                "@androidx_collection__collection__1_0_0//:jar",
+                "@androidx_cursoradapter__cursoradapter__1_0_0//:aar",
+                "@androidx_core__core__1_1_0_alpha01//:aar",
+                "@androidx_vectordrawable__vectordrawable_animated__1_0_0//:aar",
+                "@androidx_vectordrawable__vectordrawable__1_0_1//:aar",
+                "@androidx_legacy__legacy_support_core_utils__1_0_0//:aar"
+              ],
+              "exports": []
+            }
+          },
+          "androidx_customview__customview__1_0_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/customview/customview/1.0.0/customview-1.0.0.aar"
+              ],
+              "downloaded_file_path": "customview-1.0.0.aar",
+              "sha256": "20e5b8f6526a34595a604f56718da81167c0b40a7a94a57daa355663f2594df2"
+            }
+          },
+          "androidx_customview__customview__1_0_0": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_customview__customview__1_0_0__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar",
+                "@androidx_core__core__1_1_0_alpha01//:aar"
+              ],
+              "exports": []
+            }
+          },
+          "androidx_swiperefreshlayout__swiperefreshlayout__1_0_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/swiperefreshlayout/swiperefreshlayout/1.0.0/swiperefreshlayout-1.0.0.aar"
+              ],
+              "downloaded_file_path": "swiperefreshlayout-1.0.0.aar",
+              "sha256": "9761b3a809c9b093fd06a3c4bbc645756dec0e95b5c9da419bc9f2a3f3026e8d"
+            }
+          },
+          "androidx_swiperefreshlayout__swiperefreshlayout__1_0_0": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_swiperefreshlayout__swiperefreshlayout__1_0_0__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar",
+                "@androidx_interpolator__interpolator__1_0_0//:aar",
+                "@androidx_core__core__1_1_0_alpha01//:aar"
+              ],
+              "exports": []
+            }
+          },
+          "androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/versionedparcelable/versionedparcelable/1.1.0-alpha01/versionedparcelable-1.1.0-alpha01.aar"
+              ],
+              "downloaded_file_path": "versionedparcelable-1.1.0-alpha01.aar",
+              "sha256": "17590f5841e133b2699c9ad3791b58695c181c87316ac00a64eaef49af1904dd"
+            }
+          },
+          "androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar",
+                "@androidx_collection__collection__1_0_0//:jar"
+              ],
+              "exports": []
+            }
+          },
+          "androidx_interpolator__interpolator__1_0_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/interpolator/interpolator/1.0.0/interpolator-1.0.0.aar"
+              ],
+              "downloaded_file_path": "interpolator-1.0.0.aar",
+              "sha256": "33193135a64fe21fa2c35eec6688f1a76e512606c0fc83dc1b689e37add7732a"
+            }
+          },
+          "androidx_interpolator__interpolator__1_0_0": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_interpolator__interpolator__1_0_0__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar"
+              ],
+              "exports": []
+            }
+          },
+          "androidx_loader__loader__1_0_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/loader/loader/1.0.0/loader-1.0.0.aar"
+              ],
+              "downloaded_file_path": "loader-1.0.0.aar",
+              "sha256": "11f735cb3b55c458d470bed9e25254375b518b4b1bad6926783a7026db0f5025"
+            }
+          },
+          "androidx_loader__loader__1_0_0": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_loader__loader__1_0_0__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar",
+                "@androidx_lifecycle__lifecycle_viewmodel__2_0_0//:aar",
+                "@androidx_core__core__1_1_0_alpha01//:aar",
+                "@androidx_lifecycle__lifecycle_livedata__2_0_0//:aar"
+              ],
+              "exports": []
+            }
+          },
+          "androidx_drawerlayout__drawerlayout__1_0_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/drawerlayout/drawerlayout/1.0.0/drawerlayout-1.0.0.aar"
+              ],
+              "downloaded_file_path": "drawerlayout-1.0.0.aar",
+              "sha256": "9402442cdc5a43cf62fb14f8cf98c63342d4d9d9b805c8033c6cf7e802749ac1"
+            }
+          },
+          "androidx_drawerlayout__drawerlayout__1_0_0": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_drawerlayout__drawerlayout__1_0_0__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar",
+                "@androidx_core__core__1_1_0_alpha01//:aar",
+                "@androidx_customview__customview__1_0_0//:aar"
+              ],
+              "exports": []
+            }
+          },
+          "androidx_viewpager__viewpager__1_0_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/viewpager/viewpager/1.0.0/viewpager-1.0.0.aar"
+              ],
+              "downloaded_file_path": "viewpager-1.0.0.aar",
+              "sha256": "147af4e14a1984010d8f155e5e19d781f03c1d70dfed02a8e0d18428b8fc8682"
+            }
+          },
+          "androidx_viewpager__viewpager__1_0_0": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_viewpager__viewpager__1_0_0__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar",
+                "@androidx_core__core__1_1_0_alpha01//:aar",
+                "@androidx_customview__customview__1_0_0//:aar"
+              ],
+              "exports": []
+            }
+          },
+          "androidx_collection__collection__1_0_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/collection/collection/1.0.0/collection-1.0.0.jar"
+              ],
+              "downloaded_file_path": "collection-1.0.0.jar",
+              "sha256": "9c8d117b5c2bc120a1cdfeb857e05b495b16c36013570372a708f7827e3ac9f9"
+            }
+          },
+          "androidx_collection__collection__1_0_0": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "androidx_collection__collection__1_0_0__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar"
+              ],
+              "exports": [],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "androidx_activity__activity__1_0_0_alpha02__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/activity/activity/1.0.0-alpha02/activity-1.0.0-alpha02.aar"
+              ],
+              "downloaded_file_path": "activity-1.0.0-alpha02.aar",
+              "sha256": "f4557ac651b76f573f56ce7cca90f2c92c4b90f0ab977fe8ac068dac4cf89630"
+            }
+          },
+          "androidx_activity__activity__1_0_0_alpha02": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_activity__activity__1_0_0_alpha02__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar",
+                "@androidx_lifecycle__lifecycle_viewmodel__2_0_0//:aar",
+                "@androidx_core__core__1_1_0_alpha01//:aar",
+                "@androidx_lifecycle__lifecycle_runtime__2_0_0//:aar"
+              ],
+              "exports": []
+            }
+          },
+          "androidx_localbroadcastmanager__localbroadcastmanager__1_0_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/localbroadcastmanager/localbroadcastmanager/1.0.0/localbroadcastmanager-1.0.0.aar"
+              ],
+              "downloaded_file_path": "localbroadcastmanager-1.0.0.aar",
+              "sha256": "e71c328ceef5c4a7d76f2d86df1b65d65fe2acf868b1a4efd84a3f34336186d8"
+            }
+          },
+          "androidx_localbroadcastmanager__localbroadcastmanager__1_0_0": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_localbroadcastmanager__localbroadcastmanager__1_0_0__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar"
+              ],
+              "exports": []
+            }
+          },
+          "androidx_lifecycle__lifecycle_common__2_0_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/lifecycle/lifecycle-common/2.0.0/lifecycle-common-2.0.0.jar"
+              ],
+              "downloaded_file_path": "lifecycle-common-2.0.0.jar",
+              "sha256": "7bad7a188804adea6fa1f35d5ef99b705f20bd93ecadde484760ff86b535fefc"
+            }
+          },
+          "androidx_lifecycle__lifecycle_common__2_0_0": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "androidx_lifecycle__lifecycle_common__2_0_0__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar"
+              ],
+              "exports": [],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "androidx_arch_core__core_common__2_0_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/arch/core/core-common/2.0.0/core-common-2.0.0.jar"
+              ],
+              "downloaded_file_path": "core-common-2.0.0.jar",
+              "sha256": "4b80b337779b526e64b0ee0ca9e0df43b808344d145f8e9b1c42a134dac57ad8"
+            }
+          },
+          "androidx_arch_core__core_common__2_0_0": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "androidx_arch_core__core_common__2_0_0__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar"
+              ],
+              "exports": [],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "androidx_annotation__annotation__1_0_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/annotation/annotation/1.0.0/annotation-1.0.0.jar"
+              ],
+              "downloaded_file_path": "annotation-1.0.0.jar",
+              "sha256": "0baae9755f7caf52aa80cd04324b91ba93af55d4d1d17dcc9a7b53d99ef7c016"
+            }
+          },
+          "androidx_annotation__annotation__1_0_0": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "androidx_annotation__annotation__1_0_0__jar",
+              "deps": [],
+              "exports": [],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "androidx_lifecycle__lifecycle_livedata__2_0_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/lifecycle/lifecycle-livedata/2.0.0/lifecycle-livedata-2.0.0.aar"
+              ],
+              "downloaded_file_path": "lifecycle-livedata-2.0.0.aar",
+              "sha256": "c82609ced8c498f0a701a30fb6771bb7480860daee84d82e0a81ee86edf7ba39"
+            }
+          },
+          "androidx_lifecycle__lifecycle_livedata__2_0_0": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_lifecycle__lifecycle_livedata__2_0_0__jar",
+              "deps": [
+                "@androidx_arch_core__core_runtime__2_0_0//:aar",
+                "@androidx_lifecycle__lifecycle_livedata_core__2_0_0//:aar",
+                "@androidx_arch_core__core_common__2_0_0//:jar"
+              ],
+              "exports": []
+            }
+          },
+          "androidx_legacy__legacy_support_core_ui__1_0_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/legacy/legacy-support-core-ui/1.0.0/legacy-support-core-ui-1.0.0.aar"
+              ],
+              "downloaded_file_path": "legacy-support-core-ui-1.0.0.aar",
+              "sha256": "0d1260c6e7e6a337f875df71b516931e703f716e90889817cd3a20fa5ac3d947"
+            }
+          },
+          "androidx_legacy__legacy_support_core_ui__1_0_0": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_legacy__legacy_support_core_ui__1_0_0__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar",
+                "@androidx_interpolator__interpolator__1_0_0//:aar",
+                "@androidx_cursoradapter__cursoradapter__1_0_0//:aar",
+                "@androidx_swiperefreshlayout__swiperefreshlayout__1_0_0//:aar",
+                "@androidx_core__core__1_1_0_alpha01//:aar",
+                "@androidx_asynclayoutinflater__asynclayoutinflater__1_0_0//:aar",
+                "@androidx_customview__customview__1_0_0//:aar",
+                "@androidx_slidingpanelayout__slidingpanelayout__1_0_0//:aar",
+                "@androidx_coordinatorlayout__coordinatorlayout__1_0_0//:aar",
+                "@androidx_drawerlayout__drawerlayout__1_0_0//:aar",
+                "@androidx_viewpager__viewpager__1_0_0//:aar",
+                "@androidx_legacy__legacy_support_core_utils__1_0_0//:aar"
+              ],
+              "exports": []
+            }
+          },
+          "androidx_lifecycle__lifecycle_viewmodel__2_0_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/lifecycle/lifecycle-viewmodel/2.0.0/lifecycle-viewmodel-2.0.0.aar"
+              ],
+              "downloaded_file_path": "lifecycle-viewmodel-2.0.0.aar",
+              "sha256": "d6460aea1b6bad80ab14cf88297e9e43bfde8d87c3e5c28f2c508233ffbcc062"
+            }
+          },
+          "androidx_lifecycle__lifecycle_viewmodel__2_0_0": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_lifecycle__lifecycle_viewmodel__2_0_0__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar"
+              ],
+              "exports": []
+            }
+          },
+          "androidx_lifecycle__lifecycle_livedata_core__2_0_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/lifecycle/lifecycle-livedata-core/2.0.0/lifecycle-livedata-core-2.0.0.aar"
+              ],
+              "downloaded_file_path": "lifecycle-livedata-core-2.0.0.aar",
+              "sha256": "fde334ec7e22744c0f5bfe7caf1a84c9d717327044400577bdf9bd921ec4f7bc"
+            }
+          },
+          "androidx_lifecycle__lifecycle_livedata_core__2_0_0": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_lifecycle__lifecycle_livedata_core__2_0_0__jar",
+              "deps": [
+                "@androidx_lifecycle__lifecycle_common__2_0_0//:jar",
+                "@androidx_arch_core__core_runtime__2_0_0//:aar",
+                "@androidx_arch_core__core_common__2_0_0//:jar"
+              ],
+              "exports": []
+            }
+          },
+          "androidx_arch_core__core_runtime__2_0_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/arch/core/core-runtime/2.0.0/core-runtime-2.0.0.aar"
+              ],
+              "downloaded_file_path": "core-runtime-2.0.0.aar",
+              "sha256": "87e65fc767c712b437649c7cee2431ebb4bed6daef82e501d4125b3ed3f65f8e"
+            }
+          },
+          "androidx_arch_core__core_runtime__2_0_0": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_arch_core__core_runtime__2_0_0__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar",
+                "@androidx_arch_core__core_common__2_0_0//:jar"
+              ],
+              "exports": []
+            }
+          },
+          "androidx_legacy__legacy_support_core_utils__1_0_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/legacy/legacy-support-core-utils/1.0.0/legacy-support-core-utils-1.0.0.aar"
+              ],
+              "downloaded_file_path": "legacy-support-core-utils-1.0.0.aar",
+              "sha256": "a7edcf01d5b52b3034073027bc4775b78a4764bb6202bb91d61c829add8dd1c7"
+            }
+          },
+          "androidx_legacy__legacy_support_core_utils__1_0_0": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_legacy__legacy_support_core_utils__1_0_0__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar",
+                "@androidx_core__core__1_1_0_alpha01//:aar",
+                "@androidx_localbroadcastmanager__localbroadcastmanager__1_0_0//:aar",
+                "@androidx_documentfile__documentfile__1_0_0//:aar",
+                "@androidx_loader__loader__1_0_0//:aar",
+                "@androidx_print__print__1_0_0//:aar"
+              ],
+              "exports": []
+            }
+          },
+          "androidx_documentfile__documentfile__1_0_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/documentfile/documentfile/1.0.0/documentfile-1.0.0.aar"
+              ],
+              "downloaded_file_path": "documentfile-1.0.0.aar",
+              "sha256": "865a061ef2fad16522f8433536b8d47208c46ff7c7745197dfa1eeb481869487"
+            }
+          },
+          "androidx_documentfile__documentfile__1_0_0": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_documentfile__documentfile__1_0_0__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar"
+              ],
+              "exports": []
+            }
+          },
+          "androidx_vectordrawable__vectordrawable_animated__1_0_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/vectordrawable/vectordrawable-animated/1.0.0/vectordrawable-animated-1.0.0.aar"
+              ],
+              "downloaded_file_path": "vectordrawable-animated-1.0.0.aar",
+              "sha256": "26c3a0cf0a9a9a7d235a0b00f2f37e431d52d9952751e3eb7c90b4b52c236cf1"
+            }
+          },
+          "androidx_vectordrawable__vectordrawable_animated__1_0_0": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_vectordrawable__vectordrawable_animated__1_0_0__jar",
+              "deps": [
+                "@androidx_vectordrawable__vectordrawable__1_0_1//:aar",
+                "@androidx_legacy__legacy_support_core_ui__1_0_0//:aar"
+              ],
+              "exports": []
+            }
+          },
+          "androidx_cursoradapter__cursoradapter__1_0_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/cursoradapter/cursoradapter/1.0.0/cursoradapter-1.0.0.aar"
+              ],
+              "downloaded_file_path": "cursoradapter-1.0.0.aar",
+              "sha256": "a81c8fe78815fa47df5b749deb52727ad11f9397da58b16017f4eb2c11e28564"
+            }
+          },
+          "androidx_cursoradapter__cursoradapter__1_0_0": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_cursoradapter__cursoradapter__1_0_0__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar"
+              ],
+              "exports": []
+            }
+          },
+          "androidx_coordinatorlayout__coordinatorlayout__1_0_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/coordinatorlayout/coordinatorlayout/1.0.0/coordinatorlayout-1.0.0.aar"
+              ],
+              "downloaded_file_path": "coordinatorlayout-1.0.0.aar",
+              "sha256": "e508c695489493374d942bf7b4ee02abf7571d25aac4c622e57d6cd5cd29eb73"
+            }
+          },
+          "androidx_coordinatorlayout__coordinatorlayout__1_0_0": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_coordinatorlayout__coordinatorlayout__1_0_0__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar",
+                "@androidx_core__core__1_1_0_alpha01//:aar",
+                "@androidx_customview__customview__1_0_0//:aar"
+              ],
+              "exports": []
+            }
+          },
+          "androidx_asynclayoutinflater__asynclayoutinflater__1_0_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/asynclayoutinflater/asynclayoutinflater/1.0.0/asynclayoutinflater-1.0.0.aar"
+              ],
+              "downloaded_file_path": "asynclayoutinflater-1.0.0.aar",
+              "sha256": "f7eab60c57addd94bb06275832fe7600611beaaae1a1ec597c231956faf96c8b"
+            }
+          },
+          "androidx_asynclayoutinflater__asynclayoutinflater__1_0_0": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_asynclayoutinflater__asynclayoutinflater__1_0_0__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar",
+                "@androidx_core__core__1_1_0_alpha01//:aar"
+              ],
+              "exports": []
+            }
+          },
+          "androidx_vectordrawable__vectordrawable__1_0_1__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/vectordrawable/vectordrawable/1.0.1/vectordrawable-1.0.1.aar"
+              ],
+              "downloaded_file_path": "vectordrawable-1.0.1.aar",
+              "sha256": "4ca358957b9510e52fc388e01c9d33c2d655d406bfe6e71984e9afea9f715ed2"
+            }
+          },
+          "androidx_vectordrawable__vectordrawable__1_0_1": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_vectordrawable__vectordrawable__1_0_1__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar",
+                "@androidx_core__core__1_1_0_alpha01//:aar"
+              ],
+              "exports": []
+            }
+          },
+          "androidx_core__core__1_1_0_alpha01__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/core/core/1.1.0-alpha01/core-1.1.0-alpha01.aar"
+              ],
+              "downloaded_file_path": "core-1.1.0-alpha01.aar",
+              "sha256": "45a127cb151afbb0c04e47eb2be828ebc44cca4c8eea0525acb96a9eb755d7a8"
+            }
+          },
+          "androidx_core__core__1_1_0_alpha01": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_core__core__1_1_0_alpha01__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar",
+                "@androidx_collection__collection__1_0_0//:jar",
+                "@androidx_lifecycle__lifecycle_runtime__2_0_0//:aar",
+                "@androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01//:aar"
+              ],
+              "exports": []
+            }
+          },
+          "androidx_lifecycle__lifecycle_runtime__2_0_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/lifecycle/lifecycle-runtime/2.0.0/lifecycle-runtime-2.0.0.aar"
+              ],
+              "downloaded_file_path": "lifecycle-runtime-2.0.0.aar",
+              "sha256": "e4afc9e636183f6f3e0edf1cf46121a492ffd2c673075bb07f55c7a99dd43cfb"
+            }
+          },
+          "androidx_lifecycle__lifecycle_runtime__2_0_0": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_lifecycle__lifecycle_runtime__2_0_0__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar",
+                "@androidx_lifecycle__lifecycle_common__2_0_0//:jar",
+                "@androidx_arch_core__core_common__2_0_0//:jar"
+              ],
+              "exports": []
+            }
+          },
+          "androidx_print__print__1_0_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://maven.google.com/androidx/print/print/1.0.0/print-1.0.0.aar"
+              ],
+              "downloaded_file_path": "print-1.0.0.aar",
+              "sha256": "1d5c7f3135a1bba661fc373fd72e11eb0a4adbb3396787826dd8e4190d5d9edd"
+            }
+          },
+          "androidx_print__print__1_0_0": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_aar_import_repo",
+            "attributes": {
+              "aar_repo": "androidx_print__print__1_0_0__jar",
+              "deps": [
+                "@androidx_annotation__annotation__1_0_0//:jar"
+              ],
+              "exports": []
+            }
+          },
+          "mvn_android": {
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_maven_alias_repo",
+            "attributes": {
+              "artifacts": [
+                "androidx.fragment:fragment:1.1.0-alpha02|androidx_fragment__fragment__1_1_0_alpha02|aar|0",
+                "androidx.slidingpanelayout:slidingpanelayout:1.0.0|androidx_slidingpanelayout__slidingpanelayout__1_0_0|aar|0",
+                "androidx.appcompat:appcompat:1.0.2|androidx_appcompat__appcompat__1_0_2|aar|0",
+                "androidx.customview:customview:1.0.0|androidx_customview__customview__1_0_0|aar|0",
+                "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0|androidx_swiperefreshlayout__swiperefreshlayout__1_0_0|aar|0",
+                "androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01|androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01|aar|0",
+                "androidx.interpolator:interpolator:1.0.0|androidx_interpolator__interpolator__1_0_0|aar|0",
+                "androidx.loader:loader:1.0.0|androidx_loader__loader__1_0_0|aar|0",
+                "androidx.drawerlayout:drawerlayout:1.0.0|androidx_drawerlayout__drawerlayout__1_0_0|aar|0",
+                "androidx.viewpager:viewpager:1.0.0|androidx_viewpager__viewpager__1_0_0|aar|0",
+                "androidx.collection:collection:1.0.0|androidx_collection__collection__1_0_0|jar|0",
+                "androidx.activity:activity:1.0.0-alpha02|androidx_activity__activity__1_0_0_alpha02|aar|0",
+                "androidx.localbroadcastmanager:localbroadcastmanager:1.0.0|androidx_localbroadcastmanager__localbroadcastmanager__1_0_0|aar|0",
+                "androidx.lifecycle:lifecycle-common:2.0.0|androidx_lifecycle__lifecycle_common__2_0_0|jar|0",
+                "androidx.arch.core:core-common:2.0.0|androidx_arch_core__core_common__2_0_0|jar|0",
+                "androidx.annotation:annotation:1.0.0|androidx_annotation__annotation__1_0_0|jar|0",
+                "androidx.lifecycle:lifecycle-livedata:2.0.0|androidx_lifecycle__lifecycle_livedata__2_0_0|aar|0",
+                "androidx.legacy:legacy-support-core-ui:1.0.0|androidx_legacy__legacy_support_core_ui__1_0_0|aar|0",
+                "androidx.lifecycle:lifecycle-viewmodel:2.0.0|androidx_lifecycle__lifecycle_viewmodel__2_0_0|aar|0",
+                "androidx.lifecycle:lifecycle-livedata-core:2.0.0|androidx_lifecycle__lifecycle_livedata_core__2_0_0|aar|0",
+                "androidx.arch.core:core-runtime:2.0.0|androidx_arch_core__core_runtime__2_0_0|aar|0",
+                "androidx.legacy:legacy-support-core-utils:1.0.0|androidx_legacy__legacy_support_core_utils__1_0_0|aar|0",
+                "androidx.documentfile:documentfile:1.0.0|androidx_documentfile__documentfile__1_0_0|aar|0",
+                "androidx.vectordrawable:vectordrawable-animated:1.0.0|androidx_vectordrawable__vectordrawable_animated__1_0_0|aar|0",
+                "androidx.cursoradapter:cursoradapter:1.0.0|androidx_cursoradapter__cursoradapter__1_0_0|aar|0",
+                "androidx.coordinatorlayout:coordinatorlayout:1.0.0|androidx_coordinatorlayout__coordinatorlayout__1_0_0|aar|0",
+                "androidx.asynclayoutinflater:asynclayoutinflater:1.0.0|androidx_asynclayoutinflater__asynclayoutinflater__1_0_0|aar|0",
+                "androidx.vectordrawable:vectordrawable:1.0.1|androidx_vectordrawable__vectordrawable__1_0_1|aar|0",
+                "androidx.core:core:1.1.0-alpha01|androidx_core__core__1_1_0_alpha01|aar|0",
+                "androidx.lifecycle:lifecycle-runtime:2.0.0|androidx_lifecycle__lifecycle_runtime__2_0_0|aar|0",
+                "androidx.print:print:1.0.0|androidx_print__print__1_0_0|aar|0"
+              ]
+            }
+          },
           "org_codehaus_plexus__plexus_component_annotations__1_6__jar": {
             "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
             "attributes": {
@@ -315,7 +1307,7 @@
             }
           },
           "org_codehaus_plexus__plexus_component_annotations__1_6": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_codehaus_plexus__plexus_component_annotations__1_6__jar",
               "deps": [],
@@ -335,7 +1327,7 @@
             }
           },
           "org_slf4j__jcl_over_slf4j__1_6_2": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_slf4j__jcl_over_slf4j__1_6_2__jar",
               "deps": [],
@@ -355,7 +1347,7 @@
             }
           },
           "org_eclipse_aether__aether_transport_http__1_1_0": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_eclipse_aether__aether_transport_http__1_1_0__jar",
               "deps": [],
@@ -375,7 +1367,7 @@
             }
           },
           "org_codehaus_plexus__plexus_utils__3_3_0": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_codehaus_plexus__plexus_utils__3_3_0__jar",
               "deps": [],
@@ -395,7 +1387,7 @@
             }
           },
           "javax_inject__javax_inject__1": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "javax_inject__javax_inject__1__jar",
               "deps": [],
@@ -415,7 +1407,7 @@
             }
           },
           "net_bytebuddy__byte_buddy__1_9_3": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "net_bytebuddy__byte_buddy__1_9_3__jar",
               "deps": [],
@@ -435,7 +1427,7 @@
             }
           },
           "org_codehaus_plexus__plexus_interpolation__1_26": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_codehaus_plexus__plexus_interpolation__1_26__jar",
               "deps": [],
@@ -455,7 +1447,7 @@
             }
           },
           "com_google_code_gson__gson__2_8_5": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "com_google_code_gson__gson__2_8_5__jar",
               "deps": [],
@@ -475,7 +1467,7 @@
             }
           },
           "org_hamcrest__hamcrest_core__1_3": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_hamcrest__hamcrest_core__1_3__jar",
               "deps": [],
@@ -495,7 +1487,7 @@
             }
           },
           "org_eclipse_aether__aether_transport_classpath__1_1_0": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_eclipse_aether__aether_transport_classpath__1_1_0__jar",
               "deps": [],
@@ -515,7 +1507,7 @@
             }
           },
           "org_apache_maven_wagon__wagon_provider_api__1_0": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_apache_maven_wagon__wagon_provider_api__1_0__jar",
               "deps": [],
@@ -535,7 +1527,7 @@
             }
           },
           "org_apache_commons__commons_lang3__3_8_1": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_apache_commons__commons_lang3__3_8_1__jar",
               "deps": [],
@@ -555,7 +1547,7 @@
             }
           },
           "commons_logging__commons_logging__1_2": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "commons_logging__commons_logging__1_2__jar",
               "deps": [],
@@ -575,7 +1567,7 @@
             }
           },
           "junit__junit__4_12": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "junit__junit__4_12__jar",
               "deps": [],
@@ -595,7 +1587,7 @@
             }
           },
           "org_eclipse_aether__aether_api__1_1_0": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_eclipse_aether__aether_api__1_1_0__jar",
               "deps": [],
@@ -615,7 +1607,7 @@
             }
           },
           "org_apache_httpcomponents__httpclient__4_5_13": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_apache_httpcomponents__httpclient__4_5_13__jar",
               "deps": [],
@@ -635,7 +1627,7 @@
             }
           },
           "org_apache_maven__maven_repository_metadata__3_8_1": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_apache_maven__maven_repository_metadata__3_8_1__jar",
               "deps": [],
@@ -655,7 +1647,7 @@
             }
           },
           "com_google_auto_value__auto_value__1_7": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "com_google_auto_value__auto_value__1_7__jar",
               "deps": [],
@@ -675,7 +1667,7 @@
             }
           },
           "org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4__jar",
               "deps": [],
@@ -695,7 +1687,7 @@
             }
           },
           "org_mockito__mockito_core__2_23_4": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_mockito__mockito_core__2_23_4__jar",
               "deps": [],
@@ -715,7 +1707,7 @@
             }
           },
           "org_eclipse_aether__aether_transport_file__1_1_0": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_eclipse_aether__aether_transport_file__1_1_0__jar",
               "deps": [],
@@ -735,7 +1727,7 @@
             }
           },
           "com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava__jar",
               "deps": [],
@@ -755,7 +1747,7 @@
             }
           },
           "org_apache_httpcomponents__httpcore__4_4_13": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_apache_httpcomponents__httpcore__4_4_13__jar",
               "deps": [],
@@ -775,7 +1767,7 @@
             }
           },
           "org_apache_maven__maven_builder_support__3_8_1": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_apache_maven__maven_builder_support__3_8_1__jar",
               "deps": [],
@@ -795,7 +1787,7 @@
             }
           },
           "org_apache_maven__maven_model_builder__3_8_1": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_apache_maven__maven_model_builder__3_8_1__jar",
               "deps": [],
@@ -815,7 +1807,7 @@
             }
           },
           "com_google_guava__guava__27_0_1_jre": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "com_google_guava__guava__27_0_1_jre__jar",
               "deps": [],
@@ -835,7 +1827,7 @@
             }
           },
           "org_eclipse_aether__aether_transport_wagon__1_1_0": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_eclipse_aether__aether_transport_wagon__1_1_0__jar",
               "deps": [],
@@ -855,7 +1847,7 @@
             }
           },
           "org_eclipse_aether__aether_connector_basic__1_1_0": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_eclipse_aether__aether_connector_basic__1_1_0__jar",
               "deps": [],
@@ -875,7 +1867,7 @@
             }
           },
           "com_beust__jcommander__1_72": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "com_beust__jcommander__1_72__jar",
               "deps": [],
@@ -895,7 +1887,7 @@
             }
           },
           "org_objenesis__objenesis__2_6": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_objenesis__objenesis__2_6__jar",
               "deps": [],
@@ -915,7 +1907,7 @@
             }
           },
           "com_google_auto_value__auto_value_annotations__1_7": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "com_google_auto_value__auto_value_annotations__1_7__jar",
               "deps": [],
@@ -935,7 +1927,7 @@
             }
           },
           "com_google_errorprone__error_prone_annotations__2_2_0": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "com_google_errorprone__error_prone_annotations__2_2_0__jar",
               "deps": [],
@@ -955,7 +1947,7 @@
             }
           },
           "org_checkerframework__checker_qual__2_5_2": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_checkerframework__checker_qual__2_5_2__jar",
               "deps": [],
@@ -975,7 +1967,7 @@
             }
           },
           "commons_codec__commons_codec__1_11": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "commons_codec__commons_codec__1_11__jar",
               "deps": [],
@@ -995,7 +1987,7 @@
             }
           },
           "com_google_j2objc__j2objc_annotations__1_1": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "com_google_j2objc__j2objc_annotations__1_1__jar",
               "deps": [],
@@ -1015,7 +2007,7 @@
             }
           },
           "org_eclipse_aether__aether_impl__1_1_0": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_eclipse_aether__aether_impl__1_1_0__jar",
               "deps": [],
@@ -1035,7 +2027,7 @@
             }
           },
           "org_slf4j__slf4j_nop__1_7_25": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_slf4j__slf4j_nop__1_7_25__jar",
               "deps": [],
@@ -1055,7 +2047,7 @@
             }
           },
           "org_apache_maven__maven_aether_provider__3_3_9": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_apache_maven__maven_aether_provider__3_3_9__jar",
               "deps": [],
@@ -1075,7 +2067,7 @@
             }
           },
           "org_eclipse_aether__aether_spi__1_1_0": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_eclipse_aether__aether_spi__1_1_0__jar",
               "deps": [],
@@ -1095,7 +2087,7 @@
             }
           },
           "org_slf4j__slf4j_api__1_7_25": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_slf4j__slf4j_api__1_7_25__jar",
               "deps": [],
@@ -1115,7 +2107,7 @@
             }
           },
           "org_eclipse_aether__aether_util__1_1_0": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_eclipse_aether__aether_util__1_1_0__jar",
               "deps": [],
@@ -1135,7 +2127,7 @@
             }
           },
           "com_google_code_findbugs__jsr305__3_0_2": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "com_google_code_findbugs__jsr305__3_0_2__jar",
               "deps": [],
@@ -1155,7 +2147,7 @@
             }
           },
           "net_bytebuddy__byte_buddy_agent__1_9_3": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "net_bytebuddy__byte_buddy_agent__1_9_3__jar",
               "deps": [],
@@ -1175,7 +2167,7 @@
             }
           },
           "org_apache_maven__maven_artifact__3_8_1": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_apache_maven__maven_artifact__3_8_1__jar",
               "deps": [],
@@ -1195,7 +2187,7 @@
             }
           },
           "com_google_guava__failureaccess__1_0_1": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "com_google_guava__failureaccess__1_0_1__jar",
               "deps": [],
@@ -1215,7 +2207,7 @@
             }
           },
           "org_codehaus_mojo__animal_sniffer_annotations__1_17": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_codehaus_mojo__animal_sniffer_annotations__1_17__jar",
               "deps": [],
@@ -1235,7 +2227,7 @@
             }
           },
           "org_apache_maven__maven_model__3_8_1": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_apache_maven__maven_model__3_8_1__jar",
               "deps": [],
@@ -1245,7 +2237,7 @@
             }
           },
           "mvn": {
-            "repoRuleId": "@@//rules/maven_deps:extensions.bzl%_maven_alias_repo",
+            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_maven_alias_repo",
             "attributes": {
               "artifacts": [
                 "org.codehaus.plexus:plexus-component-annotations:1.6|org_codehaus_plexus__plexus_component_annotations__1_6|jar|0",
@@ -1301,41 +2293,89 @@
         },
         "recordedRepoMappingEntries": [
           [
-            "",
+            "mabel+",
             "bazel_tools",
             "bazel_tools"
           ]
         ]
       }
     },
-    "@@aspect_tools_telemetry+//:extension.bzl%telemetry": {
+    "@@pybind11_bazel+//:internal_configure.bzl%internal_configure_extension": {
       "general": {
-        "bzlTransitiveDigest": "gA7tPEdJXhskzPIEUxjX9IdDrM6+WjfbgXJ8Ez47umk=",
-        "usagesDigest": "XVw9FHnkwaV74zK/kH7wWSjsW5cYA6SOrKbcBpdR9P8=",
-        "recordedFileInputs": {},
+        "bzlTransitiveDigest": "G7xCmtNWXRuBtChRgB5OK5+gmM8Uoy8Mec/B7j3fhqs=",
+        "usagesDigest": "D1r3lfzMuUBFxgG8V6o0bQTLMk3GkaGOaPzw53wrwyw=",
+        "recordedFileInputs": {
+          "@@pybind11_bazel+//MODULE.bazel": "e6f4c20442eaa7c90d7190d8dc539d0ab422f95c65a57cc59562170c58ae3d34"
+        },
         "recordedDirentsInputs": {},
         "envVariables": {},
         "generatedRepoSpecs": {
-          "aspect_tools_telemetry_report": {
-            "repoRuleId": "@@aspect_tools_telemetry+//:extension.bzl%tel_repository",
+          "pybind11": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
             "attributes": {
-              "deps": {
-                "aspect_rules_lint": "1.10.2",
-                "aspect_tools_telemetry": "0.2.8"
-              }
+              "build_file": "@@pybind11_bazel+//:pybind11-BUILD.bazel",
+              "strip_prefix": "pybind11-2.12.0",
+              "urls": [
+                "https://github.com/pybind/pybind11/archive/v2.12.0.zip"
+              ]
             }
           }
         },
         "recordedRepoMappingEntries": [
           [
-            "aspect_tools_telemetry+",
-            "aspect_bazel_lib",
-            "aspect_bazel_lib+"
-          ],
+            "pybind11_bazel+",
+            "bazel_tools",
+            "bazel_tools"
+          ]
+        ]
+      }
+    },
+    "@@rules_android+//bzlmod_extensions:apksig.bzl%apksig_extension": {
+      "general": {
+        "bzlTransitiveDigest": "oNxmR17oNBDtqdMtQ04f77G1dxpDmcW7KbgGb9I5vp0=",
+        "usagesDigest": "xq6OVkELeJvOgYo3oY/sUBsGFbcqdV+9BYiNgSPV/po=",
+        "recordedFileInputs": {},
+        "recordedDirentsInputs": {},
+        "envVariables": {},
+        "generatedRepoSpecs": {
+          "apksig": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "url": "https://android.googlesource.com/platform/tools/apksig/+archive/24e3075e68ebe17c0b529bb24bfda819db5e2f3b.tar.gz",
+              "build_file": "@@rules_android+//bzlmod_extensions:apksig.BUILD"
+            }
+          }
+        },
+        "recordedRepoMappingEntries": [
           [
-            "aspect_tools_telemetry+",
-            "bazel_skylib",
-            "bazel_skylib+"
+            "rules_android+",
+            "bazel_tools",
+            "bazel_tools"
+          ]
+        ]
+      }
+    },
+    "@@rules_android+//bzlmod_extensions:com_android_dex.bzl%com_android_dex_extension": {
+      "general": {
+        "bzlTransitiveDigest": "Rux2kPXUP93tJLEXkVk6q0CHomvsLAuRfqBNU8xddsY=",
+        "usagesDigest": "toF8IFMu98H/VU2p1sfVC5fVXVYJunpbbmtM6tOsQXY=",
+        "recordedFileInputs": {},
+        "recordedDirentsInputs": {},
+        "envVariables": {},
+        "generatedRepoSpecs": {
+          "com_android_dex": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "url": "https://android.googlesource.com/platform/dalvik/+archive/5a81c499a569731e2395f7c8d13c0e0d4e17a2b6.tar.gz",
+              "build_file": "@@rules_android+//bzlmod_extensions:com_android_dex.BUILD"
+            }
+          }
+        },
+        "recordedRepoMappingEntries": [
+          [
+            "rules_android+",
+            "bazel_tools",
+            "bazel_tools"
           ]
         ]
       }
@@ -1354,6 +2394,126 @@
           }
         },
         "recordedRepoMappingEntries": []
+      }
+    },
+    "@@rules_apple+//apple:apple.bzl%provisioning_profile_repository_extension": {
+      "general": {
+        "bzlTransitiveDigest": "EGiMNop0zkFmJjeyGsg8hfIezYBxM9h1yHmaKdnqoNY=",
+        "usagesDigest": "vsJl8Rw5NL+5Ag2wdUDoTeRF/5klkXO8545Iy7U1Q08=",
+        "recordedFileInputs": {},
+        "recordedDirentsInputs": {},
+        "envVariables": {},
+        "generatedRepoSpecs": {
+          "local_provisioning_profiles": {
+            "repoRuleId": "@@rules_apple+//apple/internal:local_provisioning_profiles.bzl%provisioning_profile_repository",
+            "attributes": {}
+          }
+        },
+        "recordedRepoMappingEntries": [
+          [
+            "apple_support+",
+            "bazel_skylib",
+            "bazel_skylib+"
+          ],
+          [
+            "bazel_tools",
+            "rules_cc",
+            "rules_cc+"
+          ],
+          [
+            "rules_apple+",
+            "bazel_skylib",
+            "bazel_skylib+"
+          ],
+          [
+            "rules_apple+",
+            "bazel_tools",
+            "bazel_tools"
+          ],
+          [
+            "rules_apple+",
+            "build_bazel_apple_support",
+            "apple_support+"
+          ],
+          [
+            "rules_apple+",
+            "build_bazel_rules_swift",
+            "rules_swift+"
+          ],
+          [
+            "rules_cc+",
+            "bazel_tools",
+            "bazel_tools"
+          ],
+          [
+            "rules_cc+",
+            "cc_compatibility_proxy",
+            "rules_cc++compatibility_proxy+cc_compatibility_proxy"
+          ],
+          [
+            "rules_cc+",
+            "rules_cc",
+            "rules_cc+"
+          ],
+          [
+            "rules_cc++compatibility_proxy+cc_compatibility_proxy",
+            "rules_cc",
+            "rules_cc+"
+          ],
+          [
+            "rules_swift+",
+            "bazel_skylib",
+            "bazel_skylib+"
+          ],
+          [
+            "rules_swift+",
+            "bazel_tools",
+            "bazel_tools"
+          ],
+          [
+            "rules_swift+",
+            "build_bazel_apple_support",
+            "apple_support+"
+          ],
+          [
+            "rules_swift+",
+            "build_bazel_rules_swift",
+            "rules_swift+"
+          ],
+          [
+            "rules_swift+",
+            "build_bazel_rules_swift_local_config",
+            "rules_swift++non_module_deps+build_bazel_rules_swift_local_config"
+          ]
+        ]
+      }
+    },
+    "@@rules_apple+//apple:extensions.bzl%non_module_deps": {
+      "general": {
+        "bzlTransitiveDigest": "hZq9NZQ3DfMM3SejWMrPlGSZAv38GRVt6iSG5FbwbhQ=",
+        "usagesDigest": "M3VqFpeTCo4qmrNKGZw0dxBHvTYDrfV3cscGzlSAhQ4=",
+        "recordedFileInputs": {},
+        "recordedDirentsInputs": {},
+        "envVariables": {},
+        "generatedRepoSpecs": {
+          "xctestrunner": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "urls": [
+                "https://github.com/google/xctestrunner/archive/b7698df3d435b6491b4b4c0f9fc7a63fbed5e3a6.tar.gz"
+              ],
+              "strip_prefix": "xctestrunner-b7698df3d435b6491b4b4c0f9fc7a63fbed5e3a6",
+              "sha256": "ae3a063c985a8633cb7eb566db21656f8db8eb9a0edb8c182312c7f0db53730d"
+            }
+          }
+        },
+        "recordedRepoMappingEntries": [
+          [
+            "rules_apple+",
+            "bazel_tools",
+            "bazel_tools"
+          ]
+        ]
       }
     },
     "@@rules_buf+//buf:extensions.bzl%buf": {
@@ -1567,6 +2727,165 @@
             "rules_python+",
             "platforms",
             "platforms"
+          ]
+        ]
+      }
+    },
+    "@@rules_swift+//swift:extensions.bzl%non_module_deps": {
+      "general": {
+        "bzlTransitiveDigest": "7HCu9g5L/A6rnapg3vth7ZT5JAXGhHB5cfk39qhGYuM=",
+        "usagesDigest": "mhACFnrdMv9Wi0Mt67bxocJqviRkDSV+Ee5Mqdj5akA=",
+        "recordedFileInputs": {},
+        "recordedDirentsInputs": {},
+        "envVariables": {},
+        "generatedRepoSpecs": {
+          "com_github_apple_swift_protobuf": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "urls": [
+                "https://github.com/apple/swift-protobuf/archive/1.20.2.tar.gz"
+              ],
+              "sha256": "3fb50bd4d293337f202d917b6ada22f9548a0a0aed9d9a4d791e6fbd8a246ebb",
+              "strip_prefix": "swift-protobuf-1.20.2/",
+              "build_file": "@@rules_swift+//third_party:com_github_apple_swift_protobuf/BUILD.overlay"
+            }
+          },
+          "com_github_grpc_grpc_swift": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "urls": [
+                "https://github.com/grpc/grpc-swift/archive/1.16.0.tar.gz"
+              ],
+              "sha256": "58b60431d0064969f9679411264b82e40a217ae6bd34e17096d92cc4e47556a5",
+              "strip_prefix": "grpc-swift-1.16.0/",
+              "build_file": "@@rules_swift+//third_party:com_github_grpc_grpc_swift/BUILD.overlay"
+            }
+          },
+          "com_github_apple_swift_docc_symbolkit": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "urls": [
+                "https://github.com/apple/swift-docc-symbolkit/archive/refs/tags/swift-5.10-RELEASE.tar.gz"
+              ],
+              "sha256": "de1d4b6940468ddb53b89df7aa1a81323b9712775b0e33e8254fa0f6f7469a97",
+              "strip_prefix": "swift-docc-symbolkit-swift-5.10-RELEASE",
+              "build_file": "@@rules_swift+//third_party:com_github_apple_swift_docc_symbolkit/BUILD.overlay"
+            }
+          },
+          "com_github_apple_swift_nio": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "urls": [
+                "https://github.com/apple/swift-nio/archive/2.42.0.tar.gz"
+              ],
+              "sha256": "e3304bc3fb53aea74a3e54bd005ede11f6dc357117d9b1db642d03aea87194a0",
+              "strip_prefix": "swift-nio-2.42.0/",
+              "build_file": "@@rules_swift+//third_party:com_github_apple_swift_nio/BUILD.overlay"
+            }
+          },
+          "com_github_apple_swift_nio_http2": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "urls": [
+                "https://github.com/apple/swift-nio-http2/archive/1.26.0.tar.gz"
+              ],
+              "sha256": "f0edfc9d6a7be1d587e5b403f2d04264bdfae59aac1d74f7d974a9022c6d2b25",
+              "strip_prefix": "swift-nio-http2-1.26.0/",
+              "build_file": "@@rules_swift+//third_party:com_github_apple_swift_nio_http2/BUILD.overlay"
+            }
+          },
+          "com_github_apple_swift_nio_transport_services": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "urls": [
+                "https://github.com/apple/swift-nio-transport-services/archive/1.15.0.tar.gz"
+              ],
+              "sha256": "f3498dafa633751a52b9b7f741f7ac30c42bcbeb3b9edca6d447e0da8e693262",
+              "strip_prefix": "swift-nio-transport-services-1.15.0/",
+              "build_file": "@@rules_swift+//third_party:com_github_apple_swift_nio_transport_services/BUILD.overlay"
+            }
+          },
+          "com_github_apple_swift_nio_extras": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "urls": [
+                "https://github.com/apple/swift-nio-extras/archive/1.4.0.tar.gz"
+              ],
+              "sha256": "4684b52951d9d9937bb3e8ccd6b5daedd777021ef2519ea2f18c4c922843b52b",
+              "strip_prefix": "swift-nio-extras-1.4.0/",
+              "build_file": "@@rules_swift+//third_party:com_github_apple_swift_nio_extras/BUILD.overlay"
+            }
+          },
+          "com_github_apple_swift_log": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "urls": [
+                "https://github.com/apple/swift-log/archive/1.4.4.tar.gz"
+              ],
+              "sha256": "48fe66426c784c0c20031f15dc17faf9f4c9037c192bfac2f643f65cb2321ba0",
+              "strip_prefix": "swift-log-1.4.4/",
+              "build_file": "@@rules_swift+//third_party:com_github_apple_swift_log/BUILD.overlay"
+            }
+          },
+          "com_github_apple_swift_nio_ssl": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "urls": [
+                "https://github.com/apple/swift-nio-ssl/archive/2.23.0.tar.gz"
+              ],
+              "sha256": "4787c63f61dd04d99e498adc3d1a628193387e41efddf8de19b8db04544d016d",
+              "strip_prefix": "swift-nio-ssl-2.23.0/",
+              "build_file": "@@rules_swift+//third_party:com_github_apple_swift_nio_ssl/BUILD.overlay"
+            }
+          },
+          "com_github_apple_swift_collections": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "urls": [
+                "https://github.com/apple/swift-collections/archive/1.0.4.tar.gz"
+              ],
+              "sha256": "d9e4c8a91c60fb9c92a04caccbb10ded42f4cb47b26a212bc6b39cc390a4b096",
+              "strip_prefix": "swift-collections-1.0.4/",
+              "build_file": "@@rules_swift+//third_party:com_github_apple_swift_collections/BUILD.overlay"
+            }
+          },
+          "com_github_apple_swift_atomics": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "urls": [
+                "https://github.com/apple/swift-atomics/archive/1.1.0.tar.gz"
+              ],
+              "sha256": "1bee7f469f7e8dc49f11cfa4da07182fbc79eab000ec2c17bfdce468c5d276fb",
+              "strip_prefix": "swift-atomics-1.1.0/",
+              "build_file": "@@rules_swift+//third_party:com_github_apple_swift_atomics/BUILD.overlay"
+            }
+          },
+          "build_bazel_rules_swift_index_import": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "build_file": "@@rules_swift+//third_party:build_bazel_rules_swift_index_import/BUILD.overlay",
+              "canonical_id": "index-import-5.8",
+              "urls": [
+                "https://github.com/MobileNativeFoundation/index-import/releases/download/5.8.0.1/index-import.tar.gz"
+              ],
+              "sha256": "28c1ffa39d99e74ed70623899b207b41f79214c498c603915aef55972a851a15"
+            }
+          },
+          "build_bazel_rules_swift_local_config": {
+            "repoRuleId": "@@rules_swift+//swift/internal:swift_autoconfiguration.bzl%swift_autoconfiguration",
+            "attributes": {}
+          }
+        },
+        "recordedRepoMappingEntries": [
+          [
+            "rules_swift+",
+            "bazel_tools",
+            "bazel_tools"
+          ],
+          [
+            "rules_swift+",
+            "build_bazel_rules_swift",
+            "rules_swift+"
           ]
         ]
       }

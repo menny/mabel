@@ -51,7 +51,7 @@ Add Mabel and rules_java as dependencies:
 
 ```python
 bazel_dep(name = "mabel", version = "0.31.0")  # Check latest release
-bazel_dep(name = "rules_java", version = "7.11.1")
+bazel_dep(name = "rules_java", version = "9.1.0")
 ```
 
 #### Step 2: Define Dependencies in BUILD.bazel

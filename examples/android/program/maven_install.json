@@ -1,0 +1,485 @@
+{
+  "version": "1.0",
+  "artifacts": {
+    "androidx.fragment:fragment:1.1.0-alpha02": {
+      "repo_name": "androidx_fragment__fragment__1_1_0_alpha02",
+      "url": "https://maven.google.com/androidx/fragment/fragment/1.1.0-alpha02/fragment-1.1.0-alpha02.aar",
+      "sha256": "e1729441064d6052b6043678e0205326f513e8fd32a367d59c429cd4384854c4",
+      "dependencies": [
+        ":androidx_annotation__annotation",
+        ":androidx_lifecycle__lifecycle_viewmodel",
+        ":androidx_core__core",
+        ":androidx_activity__activity",
+        ":androidx_loader__loader",
+        ":androidx_viewpager__viewpager"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    },
+    "androidx.slidingpanelayout:slidingpanelayout:1.0.0": {
+      "repo_name": "androidx_slidingpanelayout__slidingpanelayout__1_0_0",
+      "url": "https://maven.google.com/androidx/slidingpanelayout/slidingpanelayout/1.0.0/slidingpanelayout-1.0.0.aar",
+      "sha256": "76bffb7cefbf780794d8817002dad1562f3e27c0a9f746d62401c8edb30aeede",
+      "dependencies": [
+        ":androidx_annotation__annotation",
+        ":androidx_core__core",
+        ":androidx_customview__customview"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    },
+    "androidx.appcompat:appcompat:1.0.2": {
+      "repo_name": "androidx_appcompat__appcompat__1_0_2",
+      "url": "https://maven.google.com/androidx/appcompat/appcompat/1.0.2/appcompat-1.0.2.aar",
+      "sha256": "a3080cdd5e5c56cb72f9d428b1657d4380011ec211cfedf76e084b95f6bf0d03",
+      "dependencies": [
+        ":androidx_annotation__annotation",
+        ":androidx_fragment__fragment",
+        ":androidx_collection__collection",
+        ":androidx_cursoradapter__cursoradapter",
+        ":androidx_core__core",
+        ":androidx_vectordrawable__vectordrawable_animated",
+        ":androidx_vectordrawable__vectordrawable",
+        ":androidx_legacy__legacy_support_core_utils"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    },
+    "androidx.customview:customview:1.0.0": {
+      "repo_name": "androidx_customview__customview__1_0_0",
+      "url": "https://maven.google.com/androidx/customview/customview/1.0.0/customview-1.0.0.aar",
+      "sha256": "20e5b8f6526a34595a604f56718da81167c0b40a7a94a57daa355663f2594df2",
+      "dependencies": [
+        ":androidx_annotation__annotation",
+        ":androidx_core__core"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    },
+    "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0": {
+      "repo_name": "androidx_swiperefreshlayout__swiperefreshlayout__1_0_0",
+      "url": "https://maven.google.com/androidx/swiperefreshlayout/swiperefreshlayout/1.0.0/swiperefreshlayout-1.0.0.aar",
+      "sha256": "9761b3a809c9b093fd06a3c4bbc645756dec0e95b5c9da419bc9f2a3f3026e8d",
+      "dependencies": [
+        ":androidx_annotation__annotation",
+        ":androidx_interpolator__interpolator",
+        ":androidx_core__core"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    },
+    "androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01": {
+      "repo_name": "androidx_versionedparcelable__versionedparcelable__1_1_0_alpha01",
+      "url": "https://maven.google.com/androidx/versionedparcelable/versionedparcelable/1.1.0-alpha01/versionedparcelable-1.1.0-alpha01.aar",
+      "sha256": "17590f5841e133b2699c9ad3791b58695c181c87316ac00a64eaef49af1904dd",
+      "dependencies": [
+        ":androidx_annotation__annotation",
+        ":androidx_collection__collection"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    },
+    "androidx.interpolator:interpolator:1.0.0": {
+      "repo_name": "androidx_interpolator__interpolator__1_0_0",
+      "url": "https://maven.google.com/androidx/interpolator/interpolator/1.0.0/interpolator-1.0.0.aar",
+      "sha256": "33193135a64fe21fa2c35eec6688f1a76e512606c0fc83dc1b689e37add7732a",
+      "dependencies": [
+        ":androidx_annotation__annotation"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    },
+    "androidx.loader:loader:1.0.0": {
+      "repo_name": "androidx_loader__loader__1_0_0",
+      "url": "https://maven.google.com/androidx/loader/loader/1.0.0/loader-1.0.0.aar",
+      "sha256": "11f735cb3b55c458d470bed9e25254375b518b4b1bad6926783a7026db0f5025",
+      "dependencies": [
+        ":androidx_annotation__annotation",
+        ":androidx_lifecycle__lifecycle_viewmodel",
+        ":androidx_core__core",
+        ":androidx_lifecycle__lifecycle_livedata"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    },
+    "androidx.drawerlayout:drawerlayout:1.0.0": {
+      "repo_name": "androidx_drawerlayout__drawerlayout__1_0_0",
+      "url": "https://maven.google.com/androidx/drawerlayout/drawerlayout/1.0.0/drawerlayout-1.0.0.aar",
+      "sha256": "9402442cdc5a43cf62fb14f8cf98c63342d4d9d9b805c8033c6cf7e802749ac1",
+      "dependencies": [
+        ":androidx_annotation__annotation",
+        ":androidx_core__core",
+        ":androidx_customview__customview"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    },
+    "androidx.viewpager:viewpager:1.0.0": {
+      "repo_name": "androidx_viewpager__viewpager__1_0_0",
+      "url": "https://maven.google.com/androidx/viewpager/viewpager/1.0.0/viewpager-1.0.0.aar",
+      "sha256": "147af4e14a1984010d8f155e5e19d781f03c1d70dfed02a8e0d18428b8fc8682",
+      "dependencies": [
+        ":androidx_annotation__annotation",
+        ":androidx_core__core",
+        ":androidx_customview__customview"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    },
+    "androidx.collection:collection:1.0.0": {
+      "repo_name": "androidx_collection__collection__1_0_0",
+      "url": "https://maven.google.com/androidx/collection/collection/1.0.0/collection-1.0.0.jar",
+      "sha256": "9c8d117b5c2bc120a1cdfeb857e05b495b16c36013570372a708f7827e3ac9f9",
+      "dependencies": [
+        ":androidx_annotation__annotation"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "notice",
+          "url": ""
+        }
+      ]
+    },
+    "androidx.activity:activity:1.0.0-alpha02": {
+      "repo_name": "androidx_activity__activity__1_0_0_alpha02",
+      "url": "https://maven.google.com/androidx/activity/activity/1.0.0-alpha02/activity-1.0.0-alpha02.aar",
+      "sha256": "f4557ac651b76f573f56ce7cca90f2c92c4b90f0ab977fe8ac068dac4cf89630",
+      "dependencies": [
+        ":androidx_annotation__annotation",
+        ":androidx_lifecycle__lifecycle_viewmodel",
+        ":androidx_core__core",
+        ":androidx_lifecycle__lifecycle_runtime"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    },
+    "androidx.localbroadcastmanager:localbroadcastmanager:1.0.0": {
+      "repo_name": "androidx_localbroadcastmanager__localbroadcastmanager__1_0_0",
+      "url": "https://maven.google.com/androidx/localbroadcastmanager/localbroadcastmanager/1.0.0/localbroadcastmanager-1.0.0.aar",
+      "sha256": "e71c328ceef5c4a7d76f2d86df1b65d65fe2acf868b1a4efd84a3f34336186d8",
+      "dependencies": [
+        ":androidx_annotation__annotation"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    },
+    "androidx.lifecycle:lifecycle-common:2.0.0": {
+      "repo_name": "androidx_lifecycle__lifecycle_common__2_0_0",
+      "url": "https://maven.google.com/androidx/lifecycle/lifecycle-common/2.0.0/lifecycle-common-2.0.0.jar",
+      "sha256": "7bad7a188804adea6fa1f35d5ef99b705f20bd93ecadde484760ff86b535fefc",
+      "dependencies": [
+        ":androidx_annotation__annotation"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "notice",
+          "url": ""
+        }
+      ]
+    },
+    "androidx.arch.core:core-common:2.0.0": {
+      "repo_name": "androidx_arch_core__core_common__2_0_0",
+      "url": "https://maven.google.com/androidx/arch/core/core-common/2.0.0/core-common-2.0.0.jar",
+      "sha256": "4b80b337779b526e64b0ee0ca9e0df43b808344d145f8e9b1c42a134dac57ad8",
+      "dependencies": [
+        ":androidx_annotation__annotation"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "notice",
+          "url": ""
+        }
+      ]
+    },
+    "androidx.annotation:annotation:1.0.0": {
+      "repo_name": "androidx_annotation__annotation__1_0_0",
+      "url": "https://maven.google.com/androidx/annotation/annotation/1.0.0/annotation-1.0.0.jar",
+      "sha256": "0baae9755f7caf52aa80cd04324b91ba93af55d4d1d17dcc9a7b53d99ef7c016",
+      "dependencies": [],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "notice",
+          "url": ""
+        }
+      ]
+    },
+    "androidx.lifecycle:lifecycle-livedata:2.0.0": {
+      "repo_name": "androidx_lifecycle__lifecycle_livedata__2_0_0",
+      "url": "https://maven.google.com/androidx/lifecycle/lifecycle-livedata/2.0.0/lifecycle-livedata-2.0.0.aar",
+      "sha256": "c82609ced8c498f0a701a30fb6771bb7480860daee84d82e0a81ee86edf7ba39",
+      "dependencies": [
+        ":androidx_arch_core__core_runtime",
+        ":androidx_lifecycle__lifecycle_livedata_core",
+        ":androidx_arch_core__core_common"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    },
+    "androidx.legacy:legacy-support-core-ui:1.0.0": {
+      "repo_name": "androidx_legacy__legacy_support_core_ui__1_0_0",
+      "url": "https://maven.google.com/androidx/legacy/legacy-support-core-ui/1.0.0/legacy-support-core-ui-1.0.0.aar",
+      "sha256": "0d1260c6e7e6a337f875df71b516931e703f716e90889817cd3a20fa5ac3d947",
+      "dependencies": [
+        ":androidx_annotation__annotation",
+        ":androidx_interpolator__interpolator",
+        ":androidx_cursoradapter__cursoradapter",
+        ":androidx_swiperefreshlayout__swiperefreshlayout",
+        ":androidx_core__core",
+        ":androidx_asynclayoutinflater__asynclayoutinflater",
+        ":androidx_customview__customview",
+        ":androidx_slidingpanelayout__slidingpanelayout",
+        ":androidx_coordinatorlayout__coordinatorlayout",
+        ":androidx_drawerlayout__drawerlayout",
+        ":androidx_viewpager__viewpager",
+        ":androidx_legacy__legacy_support_core_utils"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    },
+    "androidx.lifecycle:lifecycle-viewmodel:2.0.0": {
+      "repo_name": "androidx_lifecycle__lifecycle_viewmodel__2_0_0",
+      "url": "https://maven.google.com/androidx/lifecycle/lifecycle-viewmodel/2.0.0/lifecycle-viewmodel-2.0.0.aar",
+      "sha256": "d6460aea1b6bad80ab14cf88297e9e43bfde8d87c3e5c28f2c508233ffbcc062",
+      "dependencies": [
+        ":androidx_annotation__annotation"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    },
+    "androidx.lifecycle:lifecycle-livedata-core:2.0.0": {
+      "repo_name": "androidx_lifecycle__lifecycle_livedata_core__2_0_0",
+      "url": "https://maven.google.com/androidx/lifecycle/lifecycle-livedata-core/2.0.0/lifecycle-livedata-core-2.0.0.aar",
+      "sha256": "fde334ec7e22744c0f5bfe7caf1a84c9d717327044400577bdf9bd921ec4f7bc",
+      "dependencies": [
+        ":androidx_lifecycle__lifecycle_common",
+        ":androidx_arch_core__core_runtime",
+        ":androidx_arch_core__core_common"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    },
+    "androidx.arch.core:core-runtime:2.0.0": {
+      "repo_name": "androidx_arch_core__core_runtime__2_0_0",
+      "url": "https://maven.google.com/androidx/arch/core/core-runtime/2.0.0/core-runtime-2.0.0.aar",
+      "sha256": "87e65fc767c712b437649c7cee2431ebb4bed6daef82e501d4125b3ed3f65f8e",
+      "dependencies": [
+        ":androidx_annotation__annotation",
+        ":androidx_arch_core__core_common"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    },
+    "androidx.legacy:legacy-support-core-utils:1.0.0": {
+      "repo_name": "androidx_legacy__legacy_support_core_utils__1_0_0",
+      "url": "https://maven.google.com/androidx/legacy/legacy-support-core-utils/1.0.0/legacy-support-core-utils-1.0.0.aar",
+      "sha256": "a7edcf01d5b52b3034073027bc4775b78a4764bb6202bb91d61c829add8dd1c7",
+      "dependencies": [
+        ":androidx_annotation__annotation",
+        ":androidx_core__core",
+        ":androidx_localbroadcastmanager__localbroadcastmanager",
+        ":androidx_documentfile__documentfile",
+        ":androidx_loader__loader",
+        ":androidx_print__print"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    },
+    "androidx.documentfile:documentfile:1.0.0": {
+      "repo_name": "androidx_documentfile__documentfile__1_0_0",
+      "url": "https://maven.google.com/androidx/documentfile/documentfile/1.0.0/documentfile-1.0.0.aar",
+      "sha256": "865a061ef2fad16522f8433536b8d47208c46ff7c7745197dfa1eeb481869487",
+      "dependencies": [
+        ":androidx_annotation__annotation"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    },
+    "androidx.vectordrawable:vectordrawable-animated:1.0.0": {
+      "repo_name": "androidx_vectordrawable__vectordrawable_animated__1_0_0",
+      "url": "https://maven.google.com/androidx/vectordrawable/vectordrawable-animated/1.0.0/vectordrawable-animated-1.0.0.aar",
+      "sha256": "26c3a0cf0a9a9a7d235a0b00f2f37e431d52d9952751e3eb7c90b4b52c236cf1",
+      "dependencies": [
+        ":androidx_vectordrawable__vectordrawable",
+        ":androidx_legacy__legacy_support_core_ui"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    },
+    "androidx.cursoradapter:cursoradapter:1.0.0": {
+      "repo_name": "androidx_cursoradapter__cursoradapter__1_0_0",
+      "url": "https://maven.google.com/androidx/cursoradapter/cursoradapter/1.0.0/cursoradapter-1.0.0.aar",
+      "sha256": "a81c8fe78815fa47df5b749deb52727ad11f9397da58b16017f4eb2c11e28564",
+      "dependencies": [
+        ":androidx_annotation__annotation"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    },
+    "androidx.coordinatorlayout:coordinatorlayout:1.0.0": {
+      "repo_name": "androidx_coordinatorlayout__coordinatorlayout__1_0_0",
+      "url": "https://maven.google.com/androidx/coordinatorlayout/coordinatorlayout/1.0.0/coordinatorlayout-1.0.0.aar",
+      "sha256": "e508c695489493374d942bf7b4ee02abf7571d25aac4c622e57d6cd5cd29eb73",
+      "dependencies": [
+        ":androidx_annotation__annotation",
+        ":androidx_core__core",
+        ":androidx_customview__customview"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    },
+    "androidx.asynclayoutinflater:asynclayoutinflater:1.0.0": {
+      "repo_name": "androidx_asynclayoutinflater__asynclayoutinflater__1_0_0",
+      "url": "https://maven.google.com/androidx/asynclayoutinflater/asynclayoutinflater/1.0.0/asynclayoutinflater-1.0.0.aar",
+      "sha256": "f7eab60c57addd94bb06275832fe7600611beaaae1a1ec597c231956faf96c8b",
+      "dependencies": [
+        ":androidx_annotation__annotation",
+        ":androidx_core__core"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    },
+    "androidx.vectordrawable:vectordrawable:1.0.1": {
+      "repo_name": "androidx_vectordrawable__vectordrawable__1_0_1",
+      "url": "https://maven.google.com/androidx/vectordrawable/vectordrawable/1.0.1/vectordrawable-1.0.1.aar",
+      "sha256": "4ca358957b9510e52fc388e01c9d33c2d655d406bfe6e71984e9afea9f715ed2",
+      "dependencies": [
+        ":androidx_annotation__annotation",
+        ":androidx_core__core"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    },
+    "androidx.core:core:1.1.0-alpha01": {
+      "repo_name": "androidx_core__core__1_1_0_alpha01",
+      "url": "https://maven.google.com/androidx/core/core/1.1.0-alpha01/core-1.1.0-alpha01.aar",
+      "sha256": "45a127cb151afbb0c04e47eb2be828ebc44cca4c8eea0525acb96a9eb755d7a8",
+      "dependencies": [
+        ":androidx_annotation__annotation",
+        ":androidx_collection__collection",
+        ":androidx_lifecycle__lifecycle_runtime",
+        ":androidx_versionedparcelable__versionedparcelable"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    },
+    "androidx.lifecycle:lifecycle-runtime:2.0.0": {
+      "repo_name": "androidx_lifecycle__lifecycle_runtime__2_0_0",
+      "url": "https://maven.google.com/androidx/lifecycle/lifecycle-runtime/2.0.0/lifecycle-runtime-2.0.0.aar",
+      "sha256": "e4afc9e636183f6f3e0edf1cf46121a492ffd2c673075bb07f55c7a99dd43cfb",
+      "dependencies": [
+        ":androidx_annotation__annotation",
+        ":androidx_lifecycle__lifecycle_common",
+        ":androidx_arch_core__core_common"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    },
+    "androidx.print:print:1.0.0": {
+      "repo_name": "androidx_print__print__1_0_0",
+      "url": "https://maven.google.com/androidx/print/print/1.0.0/print-1.0.0.aar",
+      "sha256": "1d5c7f3135a1bba661fc373fd72e11eb0a4adbb3396787826dd8e4190d5d9edd",
+      "dependencies": [
+        ":androidx_annotation__annotation"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "aar",
+      "licenses": []
+    }
+  }
+}

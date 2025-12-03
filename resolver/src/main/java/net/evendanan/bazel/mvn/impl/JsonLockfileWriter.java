@@ -122,7 +122,8 @@ public class JsonLockfileWriter implements RuleWriter {
     String sourcesRepoName;
     Target sourcesTarget; // http_file target for sources
     Target importTarget; // jvm_import or similar target
-    Set<String> processorClasses = new LinkedHashSet<>(); // processor classes for annotation processors (deduplicated)
+    Set<String> processorClasses =
+        new LinkedHashSet<>(); // processor classes for annotation processors (deduplicated)
 
     boolean hasMainArtifact() {
       return mainTarget != null;

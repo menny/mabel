@@ -1,7 +1,7 @@
 module(name = "mabel_examples_plain_java")
 
 bazel_dep(name = "mabel", version = "0.0.0")
-bazel_dep(name = "rules_java", version = "9.0.3")
+bazel_dep(name = "rules_java", version = "9.1.0")
 
 local_path_override(
     module_name = "mabel",
@@ -11,7 +11,7 @@ local_path_override(
 # Maven dependencies
 mabel = use_extension("@mabel//rules/maven_deps:extensions.bzl", "mabel")
 mabel.install(
-    lockfile = "//program:maven_install.json",
     aliases_repo = "mvn_plain_java",
+    lockfile = "//program:maven_install.json",
 )
 use_repo(mabel, "mvn_plain_java")

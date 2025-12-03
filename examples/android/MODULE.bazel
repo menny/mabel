@@ -1,7 +1,8 @@
-module(name = "mabel_examples_java_plugin")
+module(name = "mabel_examples_android")
 
 bazel_dep(name = "mabel", version = "0.0.0")
 bazel_dep(name = "rules_java", version = "9.1.0")
+bazel_dep(name = "rules_android", version = "0.6.6")
 
 local_path_override(
     module_name = "mabel",
@@ -11,7 +12,7 @@ local_path_override(
 # Maven dependencies
 mabel = use_extension("@mabel//rules/maven_deps:extensions.bzl", "mabel")
 mabel.install(
-    aliases_repo = "maven",
+    aliases_repo = "mvn_android",
     lockfile = "//program:maven_install.json",
 )
-use_repo(mabel, "maven")
+use_repo(mabel, "mvn_android")
