@@ -12,10 +12,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
 import net.evendanan.bazel.mvn.api.RuleWriter;
 import net.evendanan.bazel.mvn.api.Target;
 
@@ -141,7 +139,8 @@ public class RuleWriters {
           if (iterator.hasNext()) targetsFileContent.append(NEW_LINE);
         }
       }
-      // unusedArgs now only includes args that were not found in any of the targetCode.
+      // unusedArgs now only includes args that were not found in any of the
+      // targetCode.
       // we'll need to rename those to privates.
       macroArgs.forEach(
           (argName, state) -> {
@@ -160,80 +159,6 @@ public class RuleWriters {
           new OutputStreamWriter(new FileOutputStream(outputFile, true), Charsets.UTF_8)) {
         fileWriter.append(NEW_LINE);
         fileWriter.append(targetsFileContent);
-      }
-    }
-  }
-
-  public static class TransitiveRulesAliasWriter implements RuleWriter {
-
-    private final File baseFolder;
-    private final String pathToTransitiveRulesPackage;
-
-    public TransitiveRulesAliasWriter(
-        final File baseFolder, final String pathToTransitiveRulesPackage) {
-      this.baseFolder = baseFolder;
-      this.pathToTransitiveRulesPackage = pathToTransitiveRulesPackage;
-    }
-
-    private static String versionlessMaven(Target target) {
-      final String[] mavenCoordinates = target.getMavenCoordinates().split(":", -1);
-      return String.format(Locale.US, "%s:%s", mavenCoordinates[0], mavenCoordinates[1]);
-    }
-
-    @Override
-    public void write(final Collection<Target> targets) throws IOException {
-      // Grouping by maven coordinates
-      final Map<String, List<Target>> publicTargets =
-          targets.stream()
-              .filter(Target::isPublic)
-              .collect(Collectors.groupingBy(TransitiveRulesAliasWriter::versionlessMaven));
-
-      for (Map.Entry<String, List<Target>> entry : publicTargets.entrySet()) {
-        String key = entry.getKey();
-        List<Target> packageTargets = entry.getValue();
-        final String[] mavenCoordinates = key.split(":", -1);
-        final File buildFileFolder =
-            new File(
-                baseFolder, getFilePathFromMavenName(mavenCoordinates[0], mavenCoordinates[1]));
-        if (!buildFileFolder.exists() && !buildFileFolder.mkdirs()) {
-          throw new IOException("Failed to create folder " + buildFileFolder.getAbsolutePath());
-        }
-
-        try (final OutputStreamWriter fileWriter =
-            new OutputStreamWriter(
-                new FileOutputStream(new File(buildFileFolder, "BUILD.bazel"), false),
-                Charsets.UTF_8)) {
-          fileWriter
-              .append(
-                  readTemplate(
-                      "dependencies-sub-folder-header.bzl.template",
-                      Collections.singletonMap("{{MVN_COORDINATES}}", key)))
-              .append(NEW_LINE);
-
-          for (int targetIndex = 0, packageTargetsSize = packageTargets.size();
-              targetIndex < packageTargetsSize;
-              targetIndex++) {
-            Target target = packageTargets.get(targetIndex);
-            fileWriter
-                .append(
-                    new Target(
-                            target.getMavenCoordinates(), "alias", target.getNameSpacedTargetName())
-                        .addString(
-                            "actual",
-                            String.format(
-                                Locale.US,
-                                "//%s:%s",
-                                pathToTransitiveRulesPackage,
-                                target.getTargetName()))
-                        .setPublicVisibility()
-                        .outputString(""))
-                .append(NEW_LINE);
-
-            if (targetIndex != packageTargetsSize - 1) {
-              fileWriter.append(NEW_LINE);
-            }
-          }
-        }
       }
     }
   }

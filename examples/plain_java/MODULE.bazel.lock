@@ -500,7 +500,7 @@
         "usagesDigest": "q7MBA2xJ+XemMI1w1McVxt8sLxRqykiip/P5JQPacuk=",
         "recordedFileInputs": {
           "@@mabel~//resolver/maven_install.json": "6a798eee6c7bcd49b4adea8d9f1fa3dc83a3023218a03ecdb402a6710a2a77e3",
-          "@@//program/maven_install.json": "d98cc3e03581f49d57267e2f2eeed6b1f354e625a68a8e9b48284516381b210d"
+          "@@//program/maven_install.json": "cb94461ac6ff62f2683b93602dcba3ed3a8de7d3894756d2b2b4168c9eecbbb9"
         },
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -565,7 +565,11 @@
             "ruleClassName": "_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_apache_httpcomponents__httpclient__4_5_12__jar",
-              "deps": [],
+              "deps": [
+                "@org_apache_httpcomponents__httpcore__4_4_13//:jar",
+                "@commons_codec__commons_codec__1_13//:jar",
+                "@commons_logging__commons_logging__1_2//:jar"
+              ],
               "exports": [],
               "runtime_deps": [],
               "processor_classes": []
@@ -587,7 +591,18 @@
             "ruleClassName": "_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_jboss_resteasy__resteasy_jaxrs__3_13_1_Final__jar",
-              "deps": [],
+              "deps": [
+                "@com_sun_activation__jakarta_activation__1_2_1//:jar",
+                "@org_jboss_spec_javax_annotation__jboss_annotations_api_1_3_spec__2_0_1_Final//:jar",
+                "@com_github_stephenc_jcip__jcip_annotations__1_0_1//:jar",
+                "@jakarta_validation__jakarta_validation_api__2_0_2//:jar",
+                "@org_apache_httpcomponents__httpclient__4_5_12//:jar",
+                "@commons_io__commons_io__2_5//:jar",
+                "@org_jboss_spec_javax_ws_rs__jboss_jaxrs_api_2_1_spec__2_0_1_Final//:jar",
+                "@org_jboss_spec_javax_xml_bind__jboss_jaxb_api_2_3_spec__2_0_0_Final//:jar",
+                "@org_reactivestreams__reactive_streams__1_0_3//:jar",
+                "@org_jboss_logging__jboss_logging__3_3_2_Final//:jar"
+              ],
               "exports": [],
               "runtime_deps": [],
               "processor_classes": []
@@ -785,8 +800,22 @@
             "ruleClassName": "_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_jboss_resteasy__resteasy_client__3_13_1_Final__jar",
-              "deps": [],
-              "exports": [],
+              "deps": [
+                "@commons_codec__commons_codec__1_13//:jar",
+                "@org_jboss_resteasy__resteasy_jaxrs__3_13_1_Final//:jar",
+                "@org_apache_httpcomponents__httpclient__4_5_12//:jar",
+                "@commons_io__commons_io__2_5//:jar",
+                "@org_jboss_spec_javax_ws_rs__jboss_jaxrs_api_2_1_spec__2_0_1_Final//:jar",
+                "@org_jboss_logging__jboss_logging__3_3_2_Final//:jar"
+              ],
+              "exports": [
+                "@commons_codec__commons_codec__1_13//:jar",
+                "@org_jboss_resteasy__resteasy_jaxrs__3_13_1_Final//:jar",
+                "@org_apache_httpcomponents__httpclient__4_5_12//:jar",
+                "@commons_io__commons_io__2_5//:jar",
+                "@org_jboss_spec_javax_ws_rs__jboss_jaxrs_api_2_1_spec__2_0_1_Final//:jar",
+                "@org_jboss_logging__jboss_logging__3_3_2_Final//:jar"
+              ],
               "runtime_deps": [],
               "processor_classes": []
             }
@@ -939,8 +968,16 @@
             "ruleClassName": "_jvm_import_repo",
             "attributes": {
               "jar_repo": "com_google_inject__guice__4_2_3__jar",
-              "deps": [],
-              "exports": [],
+              "deps": [
+                "@aopalliance__aopalliance__1_0//:jar",
+                "@javax_inject__javax_inject__1//:jar",
+                "@com_google_guava__guava__20_0//:jar"
+              ],
+              "exports": [
+                "@aopalliance__aopalliance__1_0//:jar",
+                "@javax_inject__javax_inject__1//:jar",
+                "@com_google_guava__guava__20_0//:jar"
+              ],
               "runtime_deps": [],
               "processor_classes": []
             }

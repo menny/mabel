@@ -4,7 +4,6 @@ load("@rules_java//java:defs.bzl", "java_binary")
 mabel_rule(
     name = "main_deps",
     fetch_srcjar = False,
-    generate_deps_sub_folder = False,  # Use bzlmod extension instead
     lockfile_path = "program/maven_install.json",
     maven_deps = [
         artifact(

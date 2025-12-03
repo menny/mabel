@@ -38,20 +38,9 @@ public class CommandLineOptions {
   String output_target_build_files_base_path = "";
 
   @Parameter(
-      names = {"--package_path"},
-      description = "Package path for for transitive rules.")
-  String package_path = "";
-
-  @Parameter(
       names = {"--rule_prefix"},
       description = "Prefix to add to all rules.")
   String rule_prefix = "";
-
-  @Parameter(
-      names = {"--create_deps_sub_folders"},
-      description = "Generate sub-folders matching dependencies tree.",
-      arity = 1)
-  boolean create_deps_sub_folders = true;
 
   @Parameter(
       names = {"--fetch_srcjar"},

@@ -83,15 +83,7 @@ public class Merger {
       lockfileWriter = null;
     }
 
-    if (options.create_deps_sub_folders) {
-      if (options.package_path.isEmpty()) {
-        throw new IllegalArgumentException(
-            "--package_path can not be empty, if --output_target_build_files_base_path was set.");
-      }
-      hardAliasesWriter = new RuleWriters.TransitiveRulesAliasWriter(parent, options.package_path);
-    } else {
-      hardAliasesWriter = dependencies -> {};
-    }
+    hardAliasesWriter = dependencies -> {};
   }
 
   public static void main(String[] args) throws Exception {

@@ -74,10 +74,8 @@ script_merger_template = """
     --output_target_build_files_base_path=${{BUILD_WORKING_DIRECTORY}}/{output_target_build_files_base_path} \
     --calculate_sha={calculate_sha} \
     --fetch_srcjar={fetch_srcjar} \
-    --package_path={package_path} \
     --rule_prefix={rule_prefix} \
     --debug_logs={debug_logs} \
-    --create_deps_sub_folders={create_deps_sub_folders} \
     --output_pretty_dep_graph_filename={output_pretty_dep_graph_filename} \
     --artifacts_path={artifacts_path} \
     --public_targets_category={public_targets_category} \
@@ -121,7 +119,6 @@ def _impl_merger(ctx):
         rule_prefix = ctx.attr.generated_targets_prefix,
         artifacts_path = "~/.mabel/artifacts/".format("~") if ctx.attr.artifacts_path == "" else ctx.attr.artifacts_path,
         output_pretty_dep_graph_filename = "dependencies.txt" if ctx.attr.output_graph_to_file else "",
-        create_deps_sub_folders = "{}".format(ctx.attr.generate_deps_sub_folder).lower(),
         public_targets_category = ctx.attr.public_targets_category,
         version_conflict_resolver = ctx.attr.version_conflict_resolver,
         keep_output_folder = "{}".format(ctx.attr.keep_output_folder).lower(),
@@ -154,7 +151,6 @@ mabel_rule = rule(
         "default_exports_generation": attr.string(default = "requested_deps", values = ["all", "requested_deps", "none"], doc = "For which targets should we generate exports attribute."),
         "default_target_type": attr.string(default = "auto", values = ["jar", "aar", "naive", "processor", "auto"], doc = "The type of artifact targets to generate."),
         "fetch_srcjar": attr.bool(default = False, doc = "Will also try to locate srcjar for the dependency. Default False", mandatory = False),
-        "generate_deps_sub_folder": attr.bool(default = True, doc = "If set to True (the default), will create sub-folders with BUILD.bazel file for each dependency.", mandatory = False),
         "generated_targets_prefix": attr.string(default = "", doc = "A prefix to add to all generated targets. Default is an empty string, meaning no prefix.", mandatory = False),
         "keep_output_folder": attr.bool(default = False, doc = "If set to False (the default), will first remove the output folder.", mandatory = False),
         "lockfile_path": attr.string(default = "", doc = "Path to output JSON lockfile for bzlmod. If set, a lockfile will be generated in addition to the bzl macros. Path is relative to workspace root.", mandatory = False),
