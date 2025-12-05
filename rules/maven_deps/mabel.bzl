@@ -69,9 +69,7 @@ def artifact(coordinate, maven_exclude_deps = [], repositories = DEFAULT_MAVEN_S
 
 script_merger_template = """
 {java} -jar {merger} {graph_files_list} \
-    --output_macro_file_path={output_filename} \
     --repository_rule_name={repository_rule_name} \
-    --output_target_build_files_base_path=${{BUILD_WORKING_DIRECTORY}}/{output_target_build_files_base_path} \
     --calculate_sha={calculate_sha} \
     --fetch_srcjar={fetch_srcjar} \
     --rule_prefix={rule_prefix} \
@@ -82,15 +80,12 @@ script_merger_template = """
     --version_conflict_resolver={version_conflict_resolver} \
     --type={default_target_type} \
     --exports_generation={default_exports_generation} \
-    --keep_output_folder={keep_output_folder}{lockfile_param}
+    {lockfile_param}
 
-echo "Stored resolved dependencies graph (rules) at ${{BUILD_WORKING_DIRECTORY}}/{output_target_build_files_base_path}{output_filename}"{lockfile_echo}
+echo "Stored resolved dependencies graph (rules) at {output_pretty_dep_graph_filename}"{lockfile_echo}
 """
 
 def _impl_merger(ctx):
-    output_filename = "dependencies.bzl"
-    output_target_build_files_base_path = "{}/{}/".format(ctx.label.package, ctx.label.name)
-    package_path = ctx.label.package
     source_files = [dep[TransitiveDataInfo].graph_file for dep in ctx.attr.maven_deps]
     script = ctx.outputs.out
     java_runtime = ctx.attr._jdk[java_common.JavaRuntimeInfo]
@@ -105,23 +100,23 @@ def _impl_merger(ctx):
         lockfile_param = " \\\n    --lockfile_path=${{BUILD_WORKING_DIRECTORY}}/{}".format(ctx.attr.lockfile_path)
         lockfile_echo = "\necho \"Stored lockfile at ${{BUILD_WORKING_DIRECTORY}}/{}\"".format(ctx.attr.lockfile_path)
 
+    output_pretty_dep_graph_filename = ""
+    if ctx.attr.output_graph_to_file:
+        output_pretty_dep_graph_filename = "${{BUILD_WORKING_DIRECTORY}}/{}/dependencies.txt".format(ctx.label.package)
+
     script_content = script_merger_template.format(
         java = java_path,
         merger = ctx.executable._merger.short_path,
         graph_files_list = " ".join(["--graph_file={}".format(file.short_path) for file in source_files]),
         repository_rule_name = ctx.attr.mabel_repository_rule_name,
-        output_filename = output_filename,
-        output_target_build_files_base_path = output_target_build_files_base_path,
-        package_path = package_path,
         fetch_srcjar = "{}".format(ctx.attr.fetch_srcjar).lower(),
         calculate_sha = "{}".format(ctx.attr.calculate_sha).lower(),
         debug_logs = "{}".format(ctx.attr.debug_logs).lower(),
         rule_prefix = ctx.attr.generated_targets_prefix,
         artifacts_path = "~/.mabel/artifacts/".format("~") if ctx.attr.artifacts_path == "" else ctx.attr.artifacts_path,
-        output_pretty_dep_graph_filename = "dependencies.txt" if ctx.attr.output_graph_to_file else "",
+        output_pretty_dep_graph_filename = output_pretty_dep_graph_filename,
         public_targets_category = ctx.attr.public_targets_category,
         version_conflict_resolver = ctx.attr.version_conflict_resolver,
-        keep_output_folder = "{}".format(ctx.attr.keep_output_folder).lower(),
         default_exports_generation = ctx.attr.default_exports_generation,
         default_target_type = ctx.attr.default_target_type,
         lockfile_param = lockfile_param,
@@ -134,15 +129,7 @@ def _impl_merger(ctx):
 
 mabel_rule = rule(
     implementation = _impl_merger,
-    doc = """Generates a bzl file with repository-rules and targets which describes a Maven dependecy graph based on
-     the provided `maven_deps` values. The result will be stored in a `bzl` file in a sub-folder named the same as this rule target's name.
-     The generated file will contain two macros:
-
-     * `generate_XXX_workspace_rules` - should be load and run in the `WORKSPACE` file. This will create repository-rules for all the remote Maven artifacts (jars).
-     * `generate_XXX_transitive_dependency_rules` - should be loaded in the relavent `BUILD.bazel` file. This will create targets for each of the requested `maven_deps`.
-
-     Additionally, a sub-folder structure will also be generated
-     """,
+    doc = """Generates a JSON lockfile which describes a Maven dependecy graph based on the provided `maven_deps` values.""",
     executable = True,
     attrs = {
         "artifacts_path": attr.string(default = "", doc = "Cache location to download artifacts into. Empty means `[user-home-folder]/.mabel/artifacts/`", mandatory = False),
@@ -152,8 +139,7 @@ mabel_rule = rule(
         "default_target_type": attr.string(default = "auto", values = ["jar", "aar", "naive", "processor", "auto"], doc = "The type of artifact targets to generate."),
         "fetch_srcjar": attr.bool(default = False, doc = "Will also try to locate srcjar for the dependency. Default False", mandatory = False),
         "generated_targets_prefix": attr.string(default = "", doc = "A prefix to add to all generated targets. Default is an empty string, meaning no prefix.", mandatory = False),
-        "keep_output_folder": attr.bool(default = False, doc = "If set to False (the default), will first remove the output folder.", mandatory = False),
-        "lockfile_path": attr.string(default = "", doc = "Path to output JSON lockfile for bzlmod. If set, a lockfile will be generated in addition to the bzl macros. Path is relative to workspace root.", mandatory = False),
+        "lockfile_path": attr.string(default = "", doc = "Path to output JSON lockfile for bzlmod. Path is relative to workspace root.", mandatory = False),
         "mabel_repository_rule_name": attr.string(mandatory = False, default = "mabel", doc = "The name of the mabel remote-repository name (the name of the `http_archive` used to import _mabel_). Default is `mabel`."),
         "maven_deps": attr.label_list(
             mandatory = True,

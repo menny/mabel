@@ -273,7 +273,6 @@ This rule merges the dependencies into one version-conflict-resolved dependency 
 
 * `maven_deps` - List of `artifact` targets representing Maven coordinates.
 * `lockfile_path` - Path to output JSON lockfile. This file will be generated and used by the module extension to create repository rules.
-* `keep_output_folder` - Default `False`. Deletes the output folder before generating outputs.
 * `public_targets_category` - Default `all`. Sets public visibility of resolved targets. Can be: `requested_deps`, `recursive_exports`, `all`.
 * `version_conflict_resolver` - Default `latest_version`. Defines the strategy used to resolve version conflicts. Can be: `latest_version`, `breadth_first`.
 * `calculate_sha` - Default `True`. Calculates the `sha256` value of each remote artifact.

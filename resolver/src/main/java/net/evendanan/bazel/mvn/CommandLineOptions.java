@@ -21,21 +21,10 @@ public class CommandLineOptions {
   List<String> artifacts = new ArrayList<>();
 
   @Parameter(
-      names = {"--output_macro_file_path"},
-      description = "Path to output macros bzl file",
-      required = true)
-  String output_macro_file = "";
-
-  @Parameter(
       names = {"--repository_rule_name"},
       description = "The name of the repository",
       required = true)
   String repository_rule_name = "";
-
-  @Parameter(
-      names = {"--output_target_build_files_base_path"},
-      description = "Base path to output alias targets BUILD.bazel files")
-  String output_target_build_files_base_path = "";
 
   @Parameter(
       names = {"--rule_prefix"},
@@ -72,14 +61,6 @@ public class CommandLineOptions {
   String artifacts_path;
 
   @Parameter(
-      names = {"--keep_output_folder"},
-      description =
-          "Do not delete the output-folder prior to writing generated files. This helps if you"
-              + " store other files at the same folder.",
-      arity = 1)
-  boolean keep_output_folder = false;
-
-  @Parameter(
       names = {"--public_targets_category"},
       description =
           "Set public visibility of resolved targets. Default is 'all'. Can be: 'requested_deps',"
@@ -113,9 +94,7 @@ public class CommandLineOptions {
 
   @Parameter(
       names = {"--lockfile_path"},
-      description =
-          "Path to output JSON lockfile for bzlmod. If set, a lockfile will be generated in"
-              + " addition to the bzl macros.")
+      description = "Path to output JSON lockfile for bzlmod.")
   String lockfile_path = "";
 
   /**
