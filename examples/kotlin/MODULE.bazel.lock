@@ -464,10 +464,10 @@
         ]
       }
     },
-    "@@mabel+//rules/maven_deps:extensions.bzl%mabel": {
+    "@@mabel+//rules:extensions.bzl%mabel": {
       "general": {
-        "bzlTransitiveDigest": "+IZJFbiWchbUL1IjlulBEvmuFMF8vgYI02VBOIZeyh8=",
-        "usagesDigest": "Ji09cqOQT4g8OabAyhMklYe9MW6cfYS550H7UjYJn7E=",
+        "bzlTransitiveDigest": "g/hkiQf3eDNq7DYM4g8pl8B4+bcE/GPTIsboJa5QTPQ=",
+        "usagesDigest": "+cU5bEFoHV/gythEIcx+A7Na51gDMjeftGSiiKXO5SQ=",
         "recordedFileInputs": {
           "@@//program/maven_install.json": "d67d3ed567dcfaef9890437017231a89e13e0779b97ea06bac568cc40fdb5b44",
           "@@mabel+//resolver/maven_install.json": "878921f485d23d0b8fc7a14e593937af6fafd9efe8d16d8f2dcd67c2e4962690"
@@ -486,7 +486,7 @@
             }
           },
           "org_jetbrains_kotlin__kotlin_runtime__1_0_6": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_jetbrains_kotlin__kotlin_runtime__1_0_6__jar",
               "deps": [],
@@ -506,7 +506,7 @@
             }
           },
           "com_github_salomonbrys_kotson__kotson__2_5_0": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "com_github_salomonbrys_kotson__kotson__2_5_0__jar",
               "deps": [
@@ -532,7 +532,7 @@
             }
           },
           "org_jetbrains_kotlin__kotlin_stdlib__1_3_72": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_jetbrains_kotlin__kotlin_stdlib__1_3_72__jar",
               "deps": [
@@ -558,7 +558,7 @@
             }
           },
           "com_google_code_gson__gson__2_8_0": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "com_google_code_gson__gson__2_8_0__jar",
               "deps": [],
@@ -578,7 +578,7 @@
             }
           },
           "org_jetbrains__annotations__13_0": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_jetbrains__annotations__13_0__jar",
               "deps": [],
@@ -598,7 +598,7 @@
             }
           },
           "org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72__jar",
               "deps": [],
@@ -608,7 +608,7 @@
             }
           },
           "kotlin_maven": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_maven_alias_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_maven_alias_repo",
             "attributes": {
               "artifacts": [
                 "org.jetbrains.kotlin:kotlin-runtime:1.0.6|org_jetbrains_kotlin__kotlin_runtime__1_0_6|jar|0",
@@ -631,7 +631,7 @@
             }
           },
           "org_codehaus_plexus__plexus_component_annotations__1_6": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_codehaus_plexus__plexus_component_annotations__1_6__jar",
               "deps": [],
@@ -651,7 +651,7 @@
             }
           },
           "org_slf4j__jcl_over_slf4j__1_6_2": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_slf4j__jcl_over_slf4j__1_6_2__jar",
               "deps": [
@@ -673,7 +673,7 @@
             }
           },
           "org_eclipse_aether__aether_transport_http__1_1_0": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_eclipse_aether__aether_transport_http__1_1_0__jar",
               "deps": [
@@ -705,7 +705,7 @@
             }
           },
           "org_codehaus_plexus__plexus_utils__3_3_0": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_codehaus_plexus__plexus_utils__3_3_0__jar",
               "deps": [],
@@ -725,7 +725,7 @@
             }
           },
           "javax_inject__javax_inject__1": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "javax_inject__javax_inject__1__jar",
               "deps": [],
@@ -745,7 +745,7 @@
             }
           },
           "net_bytebuddy__byte_buddy__1_9_3": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "net_bytebuddy__byte_buddy__1_9_3__jar",
               "deps": [],
@@ -765,7 +765,7 @@
             }
           },
           "org_codehaus_plexus__plexus_interpolation__1_26": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_codehaus_plexus__plexus_interpolation__1_26__jar",
               "deps": [],
@@ -785,7 +785,7 @@
             }
           },
           "com_google_code_gson__gson__2_8_5": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "com_google_code_gson__gson__2_8_5__jar",
               "deps": [],
@@ -805,7 +805,7 @@
             }
           },
           "org_hamcrest__hamcrest_core__1_3": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_hamcrest__hamcrest_core__1_3__jar",
               "deps": [],
@@ -825,7 +825,7 @@
             }
           },
           "org_eclipse_aether__aether_transport_classpath__1_1_0": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_eclipse_aether__aether_transport_classpath__1_1_0__jar",
               "deps": [
@@ -853,7 +853,7 @@
             }
           },
           "org_apache_maven_wagon__wagon_provider_api__1_0": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_apache_maven_wagon__wagon_provider_api__1_0__jar",
               "deps": [
@@ -875,7 +875,7 @@
             }
           },
           "org_apache_commons__commons_lang3__3_8_1": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_apache_commons__commons_lang3__3_8_1__jar",
               "deps": [],
@@ -895,7 +895,7 @@
             }
           },
           "commons_logging__commons_logging__1_2": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "commons_logging__commons_logging__1_2__jar",
               "deps": [],
@@ -915,7 +915,7 @@
             }
           },
           "junit__junit__4_12": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "junit__junit__4_12__jar",
               "deps": [
@@ -939,7 +939,7 @@
             }
           },
           "org_eclipse_aether__aether_api__1_1_0": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_eclipse_aether__aether_api__1_1_0__jar",
               "deps": [],
@@ -959,7 +959,7 @@
             }
           },
           "org_apache_httpcomponents__httpclient__4_5_13": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_apache_httpcomponents__httpclient__4_5_13__jar",
               "deps": [
@@ -987,7 +987,7 @@
             }
           },
           "org_apache_maven__maven_repository_metadata__3_8_1": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_apache_maven__maven_repository_metadata__3_8_1__jar",
               "deps": [
@@ -1011,7 +1011,7 @@
             }
           },
           "com_google_auto_value__auto_value__1_7": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "com_google_auto_value__auto_value__1_7__jar",
               "deps": [],
@@ -1037,7 +1037,7 @@
             }
           },
           "org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4__jar",
               "deps": [],
@@ -1059,7 +1059,7 @@
             }
           },
           "org_mockito__mockito_core__2_23_4": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_mockito__mockito_core__2_23_4__jar",
               "deps": [
@@ -1087,7 +1087,7 @@
             }
           },
           "org_eclipse_aether__aether_transport_file__1_1_0": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_eclipse_aether__aether_transport_file__1_1_0__jar",
               "deps": [
@@ -1115,7 +1115,7 @@
             }
           },
           "com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava__jar",
               "deps": [],
@@ -1135,7 +1135,7 @@
             }
           },
           "org_apache_httpcomponents__httpcore__4_4_13": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_apache_httpcomponents__httpcore__4_4_13__jar",
               "deps": [],
@@ -1155,7 +1155,7 @@
             }
           },
           "org_apache_maven__maven_builder_support__3_8_1": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_apache_maven__maven_builder_support__3_8_1__jar",
               "deps": [],
@@ -1175,7 +1175,7 @@
             }
           },
           "org_apache_maven__maven_model_builder__3_8_1": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_apache_maven__maven_model_builder__3_8_1__jar",
               "deps": [
@@ -1211,7 +1211,7 @@
             }
           },
           "com_google_guava__guava__27_0_1_jre": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "com_google_guava__guava__27_0_1_jre__jar",
               "deps": [
@@ -1247,7 +1247,7 @@
             }
           },
           "org_eclipse_aether__aether_transport_wagon__1_1_0": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_eclipse_aether__aether_transport_wagon__1_1_0__jar",
               "deps": [
@@ -1277,7 +1277,7 @@
             }
           },
           "org_eclipse_aether__aether_connector_basic__1_1_0": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_eclipse_aether__aether_connector_basic__1_1_0__jar",
               "deps": [
@@ -1305,7 +1305,7 @@
             }
           },
           "com_beust__jcommander__1_72": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "com_beust__jcommander__1_72__jar",
               "deps": [],
@@ -1325,7 +1325,7 @@
             }
           },
           "org_objenesis__objenesis__2_6": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_objenesis__objenesis__2_6__jar",
               "deps": [],
@@ -1345,7 +1345,7 @@
             }
           },
           "com_google_auto_value__auto_value_annotations__1_7": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "com_google_auto_value__auto_value_annotations__1_7__jar",
               "deps": [],
@@ -1365,7 +1365,7 @@
             }
           },
           "com_google_errorprone__error_prone_annotations__2_2_0": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "com_google_errorprone__error_prone_annotations__2_2_0__jar",
               "deps": [],
@@ -1385,7 +1385,7 @@
             }
           },
           "org_checkerframework__checker_qual__2_5_2": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_checkerframework__checker_qual__2_5_2__jar",
               "deps": [],
@@ -1405,7 +1405,7 @@
             }
           },
           "commons_codec__commons_codec__1_11": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "commons_codec__commons_codec__1_11__jar",
               "deps": [],
@@ -1425,7 +1425,7 @@
             }
           },
           "com_google_j2objc__j2objc_annotations__1_1": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "com_google_j2objc__j2objc_annotations__1_1__jar",
               "deps": [],
@@ -1445,7 +1445,7 @@
             }
           },
           "org_eclipse_aether__aether_impl__1_1_0": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_eclipse_aether__aether_impl__1_1_0__jar",
               "deps": [
@@ -1473,7 +1473,7 @@
             }
           },
           "org_slf4j__slf4j_nop__1_7_25": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_slf4j__slf4j_nop__1_7_25__jar",
               "deps": [
@@ -1497,7 +1497,7 @@
             }
           },
           "org_apache_maven__maven_aether_provider__3_3_9": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_apache_maven__maven_aether_provider__3_3_9__jar",
               "deps": [
@@ -1539,7 +1539,7 @@
             }
           },
           "org_eclipse_aether__aether_spi__1_1_0": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_eclipse_aether__aether_spi__1_1_0__jar",
               "deps": [
@@ -1563,7 +1563,7 @@
             }
           },
           "org_slf4j__slf4j_api__1_7_25": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_slf4j__slf4j_api__1_7_25__jar",
               "deps": [],
@@ -1583,7 +1583,7 @@
             }
           },
           "org_eclipse_aether__aether_util__1_1_0": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_eclipse_aether__aether_util__1_1_0__jar",
               "deps": [
@@ -1607,7 +1607,7 @@
             }
           },
           "com_google_code_findbugs__jsr305__3_0_2": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "com_google_code_findbugs__jsr305__3_0_2__jar",
               "deps": [],
@@ -1627,7 +1627,7 @@
             }
           },
           "net_bytebuddy__byte_buddy_agent__1_9_3": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "net_bytebuddy__byte_buddy_agent__1_9_3__jar",
               "deps": [],
@@ -1647,7 +1647,7 @@
             }
           },
           "org_apache_maven__maven_artifact__3_8_1": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_apache_maven__maven_artifact__3_8_1__jar",
               "deps": [
@@ -1673,7 +1673,7 @@
             }
           },
           "com_google_guava__failureaccess__1_0_1": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "com_google_guava__failureaccess__1_0_1__jar",
               "deps": [],
@@ -1693,7 +1693,7 @@
             }
           },
           "org_codehaus_mojo__animal_sniffer_annotations__1_17": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_codehaus_mojo__animal_sniffer_annotations__1_17__jar",
               "deps": [],
@@ -1713,7 +1713,7 @@
             }
           },
           "org_apache_maven__maven_model__3_8_1": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_jvm_import_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "org_apache_maven__maven_model__3_8_1__jar",
               "deps": [
@@ -1727,7 +1727,7 @@
             }
           },
           "mvn": {
-            "repoRuleId": "@@mabel+//rules/maven_deps:extensions.bzl%_maven_alias_repo",
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_maven_alias_repo",
             "attributes": {
               "artifacts": [
                 "org.codehaus.plexus:plexus-component-annotations:1.6|org_codehaus_plexus__plexus_component_annotations__1_6|jar|0",

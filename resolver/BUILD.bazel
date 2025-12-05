@@ -1,5 +1,5 @@
 load("@rules_java//java:defs.bzl", "java_binary", "java_library", "java_plugin", "java_test")
-load("//rules/maven_deps:mabel.bzl", "artifact", "mabel_rule")
+load("//rules:mabel.bzl", "artifact", "mabel_rule")
 load("//tools:linters.bzl", "checkstyle_test")
 
 checkstyle_test(

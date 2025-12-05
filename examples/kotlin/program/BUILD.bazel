@@ -1,4 +1,4 @@
-load("@mabel//rules/maven_deps:mabel.bzl", "artifact", "mabel_rule")
+load("@mabel//rules:mabel.bzl", "artifact", "mabel_rule")
 load("@rules_kotlin//kotlin:jvm.bzl", "kt_jvm_binary")
 
 mabel_rule(

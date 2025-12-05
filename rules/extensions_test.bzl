@@ -1,5 +1,5 @@
 load("@bazel_skylib//lib:unittest.bzl", "asserts", "unittest")
-load("//rules/maven_deps:extensions.bzl", "get_file_path_from_maven_name", "parse_maven_coordinate")
+load("//rules:extensions.bzl", "get_file_path_from_maven_name", "parse_maven_coordinate")
 
 def _get_file_path_from_maven_name_test(ctx):
     env = unittest.begin(ctx)

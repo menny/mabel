@@ -1,4 +1,4 @@
-load("@mabel//rules/maven_deps:mabel.bzl", "artifact", "mabel_rule")
+load("@mabel//rules:mabel.bzl", "artifact", "mabel_rule")
 load("@rules_java//java:defs.bzl", "java_binary")
 
 mabel_rule(

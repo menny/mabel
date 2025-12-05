@@ -8,14 +8,14 @@ This document provides context and guidelines for LLM Agents working on the Mabe
 
 **Key Mechanism:**
 1.  **Resolution Phase (Java)**: A `mabel_rule` target runs a Java application (`resolver/`) that uses Maven Resolver (Aether) to resolve the dependency graph and output a JSON lockfile.
-2.  **Repository Generation Phase (Starlark)**: A module extension (`rules/maven_deps/extensions.bzl`) reads the lockfile and generates an external repository containing `http_file` (or `jvm_import`/`aar_import`) rules for the artifacts.
+2.  **Repository Generation Phase (Starlark)**: A module extension (`rules/extensions.bzl`) reads the lockfile and generates an external repository containing `http_file` (or `jvm_import`/`aar_import`) rules for the artifacts.
 
 ## Repository Structure
 
 *   **`resolver/`**: Contains the Java source code for the CLI tool that calculates the dependency graph.
     *   This is a standard Java project built with Bazel.
     *   Main classes: `Resolver.java` (resolution), `Merger.java` (graph merging).
-*   **`rules/maven_deps/`**: Contains the Starlark implementation.
+*   **`rules/`**: Contains the Starlark implementation.
     *   `mabel.bzl`: Defines the `mabel_rule` and `artifact` macro.
     *   `extensions.bzl`: Defines the Bzlmod module extension.
 *   **`examples/`**: Contains working examples.

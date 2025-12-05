@@ -59,7 +59,7 @@ bazel_dep(name = "rules_java", version = "9.1.0")
 In your module's `BUILD.bazel` file (e.g., `//third_party:BUILD.bazel`), load the `mabel_rule` and `artifact` symbols:
 
 ```python
-load("@mabel//rules/maven_deps:mabel.bzl", "mabel_rule", "artifact")
+load("@mabel//rules:mabel.bzl", "mabel_rule", "artifact")
 
 mabel_rule(
     name = "maven_deps",
@@ -134,7 +134,7 @@ The lockfile is a JSON file with the following structure:
 In your `MODULE.bazel`, configure the `mabel` extension to read the lockfile:
 
 ```python
-mabel = use_extension("@mabel//rules/maven_deps:extensions.bzl", "mabel")
+mabel = use_extension("@mabel//rules:extensions.bzl", "mabel")
 mabel.install(
     lockfile = "//third_party:maven_install.json",
     aliases_repo = "maven",
@@ -219,7 +219,7 @@ mabel_rule(
 Then configure multiple lockfiles in `MODULE.bazel`:
 
 ```python
-mabel = use_extension("@mabel//rules/maven_deps:extensions.bzl", "mabel")
+mabel = use_extension("@mabel//rules:extensions.bzl", "mabel")
 mabel.install(
     lockfile = "//third_party:main_install.json",
     aliases_repo = "maven",
