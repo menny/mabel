@@ -15,7 +15,7 @@ Mabel provides the `mabel_rule` rule and `artifact` macro, which automatically g
   * `aar_import` for Android artifacts.
   * `java_plugin` + `java_library` for annotation processors. More about this [here](#annotation-processors).
   * [`jvm_import`](rules/jvm_import/jvm_import.bzl) for anything else.
-* Allows implementation replacement for `jvm_import` and `aar_import`. These can be replaced with another rule or macro. See `examples/android/program/BUILD.bazel` for an example.
+* Allows implementation replacement for `jvm_import` and `aar_import`. These can be replaced with another rule or macro.
 * Supports custom Maven repository URLs and locking dependencies to a specific Maven repository.
 * Adds `licenses` data to `jvm_import` rules if a license is declared in the artifact's POM file. Also adds license metadata to the targets' `tags` attribute:
   * `mabel_license_name` - The name of the license as it appears in the `pom.xml` file.
@@ -40,7 +40,7 @@ There are several attempts to solve this problem (such as [sync-deps](https://gi
 
 Mabel uses a two-phase approach for dependency management:
 
-1. **Phase 1: Lockfile Generation** - Run `mabel_rule` target to resolve dependencies and generate a JSON lockfile
+1. **Phase 1: Lockfile Generation** - Run the `mabel_rule` target to resolve dependencies and generate a JSON lockfile
 2. **Phase 2: Module Extension** - Configure the `maven` extension to read the lockfile and create repository rules
 
 This approach ensures reproducible builds and allows you to review dependency changes before committing them.
@@ -85,10 +85,12 @@ mabel_rule(
 The `artifact()` macro accepts:
 
 * `coordinate` - Maven coordinate in the form `group-id:artifact-id:version` (e.g., `"com.google.guava:guava:33.0.0-jre"`).
-* `type` - (Optional) Target type to create. Default is `auto`. Can be `jar`, `aar`, `naive`, `processor`, or `auto`.
+* `type` - (Optional) Target type to create. Default is `inherit`. Can be `jar`, `aar`, `naive`, `processor`, `inherit`, or `auto`.
 * `test_only` - (Optional) Marks this dependency as test-only.
 * `maven_exclude_deps` - (Optional) List of Maven dependencies to exclude from resolution.
 * `repositories` - (Optional) List of URLs pointing to Maven servers. Defaults to Maven Central.
+* `exports_generation_type` - (Optional) Default `inherit`. Override exports generation for this artifact. Can be `inherit`, `all`, `requested_deps`, `none`.
+* `debug_logs` - (Optional) Default `False`. Prints debug logs for this artifact.
 
 #### Step 3: Generate the Lockfile
 
@@ -141,7 +143,7 @@ mabel.install(
 # Import the maven alias repository for convenient access
 use_repo(mabel, "maven")
 
-# Optionally (and discouraged) import specific versioned repositories if needed
+# Optionally (but discouraged) import specific versioned repositories if needed
 use_repo(mabel,
     "com_google_guava__guava__33_0_0_jre",
     "org_apache_commons__commons_lang3__3_14_0",
@@ -154,7 +156,7 @@ The `mabel.install()` tag accepts:
 * `lockfile` - Label pointing to the JSON lockfile generated in Step 3.
 * `aliases_repo` - Name of the alias repository to create (e.g., `"maven"`). This repository provides clean, version-free paths to your dependencies.
 
-The `use_repo()` call imports the repository rules created by the extension. The `"maven"` repository is an alias repository that provides convenient access to all dependencies. Repository names follow the pattern: `{group_id}__{artifact_id}__{version}` where dots, hyphens, and other special characters are replaced with underscores.
+The `use_repo()` call imports the repository rules created by the extension. The `"maven"` repository is an alias repository that provides convenient access to all dependencies. Repository names follow the `{group_id}__{artifact_id}__{version}` pattern, where dots, hyphens, and other special characters are replaced with underscores.
 
 **How to find repository names:**
 
@@ -273,12 +275,17 @@ This rule merges the dependencies into one version-conflict-resolved dependency 
 
 * `maven_deps` - List of `artifact` targets representing Maven coordinates.
 * `lockfile_path` - Path to output JSON lockfile. This file will be generated and used by the module extension to create repository rules.
+* `artifacts_path` - (Optional) Cache location to download artifacts into. Empty means `[user-home-folder]/.mabel/artifacts/`.
+* `calculate_sha` - Default `True`. Calculates the `sha256` value of each remote artifact.
+* `debug_logs` - Default `False`. If set to `True`, prints debug logs while resolving dependencies.
+* `default_exports_generation` - Default `requested_deps`. Specifies for which targets the `exports` attribute should be generated. Can be: `all`, `requested_deps`, `none`.
+* `default_target_type` - Default `auto`. The type of artifact targets to generate. Can be: `jar`, `aar`, `naive`, `processor`, `auto`.
+* `fetch_srcjar` - Default `False`. Also attempts to fetch the source jar for each dependency.
+* `generated_targets_prefix` - A prefix to add to all generated targets. Default is empty (no prefix). This is useful if you want to generate several unrelated graphs.
+* `mabel_repository_rule_name` - Default `mabel`. The name of the mabel remote repository.
+* `output_graph_to_file` - Default `False`. If set to `True`, outputs the graph to `dependencies.txt`.
 * `public_targets_category` - Default `all`. Sets public visibility of resolved targets. Can be: `requested_deps`, `recursive_exports`, `all`.
 * `version_conflict_resolver` - Default `latest_version`. Defines the strategy used to resolve version conflicts. Can be: `latest_version`, `breadth_first`.
-* `calculate_sha` - Default `True`. Calculates the `sha256` value of each remote artifact.
-* `fetch_srcjar` - Default `False`. Also tries to fetch sources jar for each dependency.
-* `generated_targets_prefix` - A prefix to add to all generated targets. Default is empty (no prefix). This is useful if you want to generate several unrelated graphs.
-* `output_graph_to_file` - If set to `True`, outputs the graph to `dependencies.txt`. Default is `False`.
 
 ### `artifact`
 
@@ -287,10 +294,12 @@ This macro declares a Maven dependency to be resolved and imported into your wor
 **Attributes:**
 
 * `coordinate` - Maven coordinate in the form `group-id:artifact-id:version`.
-* `type` - The type of target(s) to create for this artifact. Default is `auto`. Can be `jar`, `aar`, `naive`, `processor`, or `auto`. For more details, see [TargetType.java](resolver/src/main/java/net/evendanan/bazel/mvn/api/model/TargetType.java).
+* `type` - The type of target(s) to create for this artifact. Default is `inherit`. Can be `jar`, `aar`, `naive`, `processor`, `inherit` or `auto`. For more details, see [TargetType.java](resolver/src/main/java/net/evendanan/bazel/mvn/api/model/TargetType.java).
 * `test_only` - Marks this dependency to be used in tests only.
 * `maven_exclude_deps` - List of Maven dependencies that should not be resolved. You can omit the `version` or both `artifact-id:version`.
 * `repositories` - List of URLs that point to Maven servers. The default list includes Maven Central.
+* `exports_generation_type` - Default `inherit`. Overrides exports generation for this artifact. Can be `inherit`, `all`, `requested_deps`, `none`.
+* `debug_logs` - Default `False`. Prints debug logs for this artifact.
 
 ### Real Examples
 
