@@ -101,6 +101,12 @@ When creating a commit message, follow these guidelines:
   - The files are located under the `src/test` root directory of the same package as the original file.
     - for example, if the original file is `resolver/src/main/java/net/evendanan/bazel/mvn/impl/JsonLockfileWriter.java`, the test file should be `resolver/src/test/java/net/evendanan/bazel/mvn/impl/JsonLockfileWriterTest.java`
   - prefer creating fakes over mocks or patches. But, if it is simpler to patch or mock, do that.
+  - For Starlark (bz, bzl), use `bazel_skylib`'s `unittest` framework:
+    - The test file name follows the pattern `[original_file_name]_test.bzl` and must be located in the same directory as the original file.
+    - You may export private functions (functions starting with `_`) to be public (remove the `_` prefix) to be able to test them, but only do so if strictly necessary.
+    - Create a test suite function (e.g., `extensions_test_suite()`) in the test file that aggregates all test cases.
+    - In the `BUILD.bazel` file, load the test suite and execute it.
+    - Ensure `bazel_skylib` is available in `MODULE.bazel`.
 
 ### Naming
 
