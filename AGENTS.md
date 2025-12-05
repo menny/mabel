@@ -24,6 +24,8 @@ This document provides context and guidelines for LLM Agents working on the Mabe
 
 ## Build and Test
 
+*   **BAZEL build system**: Ensure you keep the `BUILD.bazel` files in sync with the the code changes, new targets, removed targets or files, etc.
+
 *   **Build everything**:
     ```bash
     bazel build //...
@@ -42,6 +44,11 @@ This document provides context and guidelines for LLM Agents working on the Mabe
     ```
     *   *Always* run this script before submitting changes that affect the rules or the resolver logic.
     *   It cleans the examples and runs `bazel build` on them to ensure the end-to-end flow works.
+
+## Lint and Format
+
+- don't try to fix linting or formatting issues, we have auto-fixers for that. This is applicable for _all_ code in the codebase.
+- You can run the auto-fixers with `bazel run //tools:format`. This is applicable for _all_ code in the codebase.
 
 ## Guidelines for Agents
 
@@ -72,3 +79,34 @@ The project is fully adopting Bzlmod. When working on Bazel rules:
 *   **Kotlin Support**: Works seamlessly via standard JVM rules.
 *   **Lockfile**: The JSON lockfile is the interface between the resolution phase and the repository generation phase. Its structure is critical.
 
+### Commit Message
+
+Before creating a commit always run `bazel run //tools:format`.
+
+When creating a commit message, follow these guidelines:
+
+- **Title:** Use a concise title. Prefix the title with "[LLM]"
+- **Description:** The description should include a short description of the issue (bug, feature-request, crash, chore, etc) and a short description of the solution. Add your name at the end of the description to signify the commit was made by an AI Agent.
+
+### Tests
+
+- when ask to suggest tests for a function or file:
+  - Do not implement anything or suggest how to implement.
+  - You should only look at the code and suggest tests based on functionality and error cases.
+  - Identify the "happy path" - core functionality - cases and mark them as such in your suggestions
+  - Identify the error cases and mark them as such in your suggestions. Estimate importance based on likelyhood.
+  - Identify the edge cases and mark them as such in your suggestions. Estimate importance based on likelyhood.
+- when implementing tests:
+  - For Java, the test file name follows the pattern `[original_file_name]Test.java`
+  - The files are located under the `src/test` root directory of the same package as the original file.
+    - for example, if the original file is `resolver/src/main/java/net/evendanan/bazel/mvn/impl/JsonLockfileWriter.java`, the test file should be `resolver/src/test/java/net/evendanan/bazel/mvn/impl/JsonLockfileWriterTest.java`
+  - prefer creating fakes over mocks or patches. But, if it is simpler to patch or mock, do that.
+
+### Naming
+
+- use inclusive language when creating variables, functions, class names, stubs, etc:
+  - Do not use "dummy", instead use "fake", "mock", "noop" etc.
+  - Do not use "blacklist", instead use "disallow-list"
+  - Do not use "whilelist", instead use "allow-list"
+  - Stay away from: "master", "slave", "insane", "dumb", etc.
+  - Use gender neutral pronouns
