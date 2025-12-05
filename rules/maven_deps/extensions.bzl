@@ -129,14 +129,14 @@ _aar_import_repo = repository_rule(
     },
 )
 
-def _get_file_path_from_maven_name(group_id, artifact_id):
+def get_file_path_from_maven_name(group_id, artifact_id):
     """Convert Maven groupId:artifactId to a file path.
 
     Example: com.google.guava:guava -> com/google/guava/guava
     """
     return group_id.replace(".", "/") + "/" + artifact_id
 
-def _parse_maven_coordinate(coordinate):
+def parse_maven_coordinate(coordinate):
     """Parse a Maven coordinate string into (groupId, artifactId, version)."""
     parts = coordinate.split(":")
     if len(parts) < 3:
@@ -164,10 +164,10 @@ def _maven_alias_repo_impl(rctx):
         target_type = parts[2]
         processor_classes_count = int(parts[3]) if len(parts) > 3 else 0
 
-        group_id, artifact_id, version = _parse_maven_coordinate(maven_coordinate)
+        group_id, artifact_id, version = parse_maven_coordinate(maven_coordinate)
 
         # Create the directory path: com/google/guava/guava
-        file_path = _get_file_path_from_maven_name(group_id, artifact_id)
+        file_path = get_file_path_from_maven_name(group_id, artifact_id)
 
         # Create BUILD file with alias for the main jar
         build_content = """# Alias for {coordinate}

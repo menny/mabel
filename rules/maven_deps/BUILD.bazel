@@ -1,0 +1,3 @@
+load(":extensions_test.bzl", "extensions_test_suite")
+
+extensions_test_suite()
