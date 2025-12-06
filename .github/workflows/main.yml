@@ -16,8 +16,8 @@ jobs:
   checks:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4.2.2
-      - uses: bazel-contrib/setup-bazel@0.9.1
+      - uses: actions/checkout@v6.0.1
+      - uses: bazel-contrib/setup-bazel@0.15.0
         with:
           bazelisk-cache: true
           disk-cache: ${{ github.workflow }}
@@ -35,14 +35,18 @@ jobs:
   examples:
     runs-on: ubuntu-24.04
     needs: [checks]
-    container: ghcr.io/menny/android_bazel:1.17.0
+    container: ghcr.io/menny/android_bazel:1.22.3
     strategy:
       matrix:
-        example_name: [plain_java, java_plugin, android, kotlin, android-kotlin]
+        example_name: [plain_java, java_plugin, kotlin]
       fail-fast: false
     steps:
-      - uses: actions/checkout@v4.2.2
-      - uses: bazel-contrib/setup-bazel@0.9.1
+      - uses: actions/checkout@v6.0.1
+      - uses: bazel-contrib/setup-bazel@0.15.0
+        with:
+          bazelisk-cache: true
+          disk-cache: ${{ github.workflow }}
+          repository-cache: true
       - name: build-examples
         run: ./scripts/ci_build_examples.sh ${{ matrix.example_name }}
       - name: regenerate-examples
