@@ -1,0 +1,448 @@
+{
+  "version": "1.0",
+  "artifacts": {
+    "javax.inject:javax.inject:1": {
+      "repo_name": "javax_inject__javax_inject__1",
+      "url": "https://repo1.maven.org/maven2/javax/inject/javax.inject/1/javax.inject-1.jar",
+      "sha256": "91c77044a50c481636c32d916fd89c9118a72195390452c81065080f957de7ff",
+      "dependencies": [],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "notice",
+          "url": ""
+        }
+      ]
+    },
+    "commons-logging:commons-logging:1.2": {
+      "repo_name": "commons_logging__commons_logging__1_2",
+      "url": "https://repo1.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2.jar",
+      "sha256": "daddea1ea0be0f56978ab3006b8ac92834afeefbd9b7e4e6316fca57df0fa636",
+      "dependencies": [],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "notice",
+          "url": ""
+        }
+      ]
+    },
+    "org.apache.httpcomponents:httpclient:4.5.12": {
+      "repo_name": "org_apache_httpcomponents__httpclient__4_5_12",
+      "url": "https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.5.12/httpclient-4.5.12.jar",
+      "sha256": "bc5f065aba5dd815ee559dd24d9bcb797fb102ff9cfa036f5091ebc529bd3b93",
+      "dependencies": [
+        ":org_apache_httpcomponents__httpcore",
+        ":commons_codec__commons_codec",
+        ":commons_logging__commons_logging"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "notice",
+          "url": ""
+        }
+      ]
+    },
+    "org.jboss.resteasy:resteasy-jaxrs:3.13.1.Final": {
+      "repo_name": "org_jboss_resteasy__resteasy_jaxrs__3_13_1_Final",
+      "url": "https://repo1.maven.org/maven2/org/jboss/resteasy/resteasy-jaxrs/3.13.1.Final/resteasy-jaxrs-3.13.1.Final.jar",
+      "sha256": "115adedd56f985c33f037590af7e497142172f69731086f5a455c355fcdc1da8",
+      "dependencies": [
+        ":com_sun_activation__jakarta_activation",
+        ":org_jboss_spec_javax_annotation__jboss_annotations_api_1_3_spec",
+        ":com_github_stephenc_jcip__jcip_annotations",
+        ":jakarta_validation__jakarta_validation_api",
+        ":org_apache_httpcomponents__httpclient",
+        ":commons_io__commons_io",
+        ":org_jboss_spec_javax_ws_rs__jboss_jaxrs_api_2_1_spec",
+        ":org_jboss_spec_javax_xml_bind__jboss_jaxb_api_2_3_spec",
+        ":org_reactivestreams__reactive_streams",
+        ":org_jboss_logging__jboss_logging"
+      ],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "notice",
+          "url": ""
+        }
+      ]
+    },
+    "org.jboss.spec.javax.xml.bind:jboss-jaxb-api_2.3_spec:2.0.0.Final": {
+      "repo_name": "org_jboss_spec_javax_xml_bind__jboss_jaxb_api_2_3_spec__2_0_0_Final",
+      "url": "https://repo1.maven.org/maven2/org/jboss/spec/javax/xml/bind/jboss-jaxb-api_2.3_spec/2.0.0.Final/jboss-jaxb-api_2.3_spec-2.0.0.Final.jar",
+      "sha256": "f73f5832acef810d4d72da3b04378b6a70b72e955fdb0315591f0115c3ee701b",
+      "dependencies": [],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": []
+    },
+    "com.sun.activation:jakarta.activation:1.2.1": {
+      "repo_name": "com_sun_activation__jakarta_activation__1_2_1",
+      "url": "https://repo1.maven.org/maven2/com/sun/activation/jakarta.activation/1.2.1/jakarta.activation-1.2.1.jar",
+      "sha256": "d84d4ba8b55cdb7fdcbb885e6939386367433f56f5ab8cfdc302a7c3587fa92b",
+      "dependencies": [],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": []
+    },
+    "com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava": {
+      "repo_name": "com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava",
+      "url": "https://repo1.maven.org/maven2/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar",
+      "sha256": "b372a037d4230aa57fbeffdef30fd6123f9c0c2db85d0aced00c91b974f33f99",
+      "dependencies": [],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "notice",
+          "url": ""
+        }
+      ]
+    },
+    "com.github.stephenc.jcip:jcip-annotations:1.0-1": {
+      "repo_name": "com_github_stephenc_jcip__jcip_annotations__1_0_1",
+      "url": "https://repo1.maven.org/maven2/com/github/stephenc/jcip/jcip-annotations/1.0-1/jcip-annotations-1.0-1.jar",
+      "sha256": "4fccff8382aafc589962c4edb262f6aa595e34f1e11e61057d1c6a96e8fc7323",
+      "dependencies": [],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "notice",
+          "url": ""
+        }
+      ]
+    },
+    "org.apache.httpcomponents:httpcore:4.4.13": {
+      "repo_name": "org_apache_httpcomponents__httpcore__4_4_13",
+      "url": "https://repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/4.4.13/httpcore-4.4.13.jar",
+      "sha256": "e06e89d40943245fcfa39ec537cdbfce3762aecde8f9c597780d2b00c2b43424",
+      "dependencies": [],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "notice",
+          "url": ""
+        }
+      ]
+    },
+    "aopalliance:aopalliance:1.0": {
+      "repo_name": "aopalliance__aopalliance__1_0",
+      "url": "https://repo1.maven.org/maven2/aopalliance/aopalliance/1.0/aopalliance-1.0.jar",
+      "sha256": "0addec670fedcd3f113c5c8091d783280d23f75e3acb841b61a9cdb079376a08",
+      "dependencies": [],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "unencumbered",
+          "url": ""
+        }
+      ]
+    },
+    "jakarta.validation:jakarta.validation-api:2.0.2": {
+      "repo_name": "jakarta_validation__jakarta_validation_api__2_0_2",
+      "url": "https://repo1.maven.org/maven2/jakarta/validation/jakarta.validation-api/2.0.2/jakarta.validation-api-2.0.2.jar",
+      "sha256": "b42d42428f3d922c892a909fa043287d577c0c5b165ad9b7d568cebf87fc9ea4",
+      "dependencies": [],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "notice",
+          "url": ""
+        }
+      ]
+    },
+    "commons-io:commons-io:2.5": {
+      "repo_name": "commons_io__commons_io__2_5",
+      "url": "https://repo1.maven.org/maven2/commons-io/commons-io/2.5/commons-io-2.5.jar",
+      "sha256": "a10418348d234968600ccb1d988efcbbd08716e1d96936ccc1880e7d22513474",
+      "dependencies": [],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "notice",
+          "url": ""
+        }
+      ]
+    },
+    "org.jboss.resteasy:resteasy-client:3.13.1.Final": {
+      "repo_name": "org_jboss_resteasy__resteasy_client__3_13_1_Final",
+      "url": "https://repo1.maven.org/maven2/org/jboss/resteasy/resteasy-client/3.13.1.Final/resteasy-client-3.13.1.Final.jar",
+      "sha256": "b12177a17bedb2db3efc38ceec1dc3b7e2aa052e0b392a5a9e6a1379b5347926",
+      "dependencies": [
+        ":commons_codec__commons_codec",
+        ":org_jboss_resteasy__resteasy_jaxrs",
+        ":org_apache_httpcomponents__httpclient",
+        ":commons_io__commons_io",
+        ":org_jboss_spec_javax_ws_rs__jboss_jaxrs_api_2_1_spec",
+        ":org_jboss_logging__jboss_logging"
+      ],
+      "exports": [
+        ":commons_codec__commons_codec",
+        ":org_jboss_resteasy__resteasy_jaxrs",
+        ":org_apache_httpcomponents__httpclient",
+        ":commons_io__commons_io",
+        ":org_jboss_spec_javax_ws_rs__jboss_jaxrs_api_2_1_spec",
+        ":org_jboss_logging__jboss_logging"
+      ],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "notice",
+          "url": ""
+        }
+      ]
+    },
+    "org.jboss.spec.javax.annotation:jboss-annotations-api_1.3_spec:2.0.1.Final": {
+      "repo_name": "org_jboss_spec_javax_annotation__jboss_annotations_api_1_3_spec__2_0_1_Final",
+      "url": "https://repo1.maven.org/maven2/org/jboss/spec/javax/annotation/jboss-annotations-api_1.3_spec/2.0.1.Final/jboss-annotations-api_1.3_spec-2.0.1.Final.jar",
+      "sha256": "afc4e3b8701119c9a2ceb8cebe3fd1869a269de768d7d56e7b5051827a132368",
+      "dependencies": [],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "restricted",
+          "url": ""
+        }
+      ]
+    },
+    "org.reactivestreams:reactive-streams:1.0.3": {
+      "repo_name": "org_reactivestreams__reactive_streams__1_0_3",
+      "url": "https://repo1.maven.org/maven2/org/reactivestreams/reactive-streams/1.0.3/reactive-streams-1.0.3.jar",
+      "sha256": "1dee0481072d19c929b623e155e14d2f6085dc011529a0a0dbefc84cf571d865",
+      "dependencies": [],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "unencumbered",
+          "url": ""
+        }
+      ]
+    },
+    "commons-codec:commons-codec:1.13": {
+      "repo_name": "commons_codec__commons_codec__1_13",
+      "url": "https://repo1.maven.org/maven2/commons-codec/commons-codec/1.13/commons-codec-1.13.jar",
+      "sha256": "61f7a3079e92b9fdd605238d0295af5fd11ac411a0a0af48deace1f6c5ffa072",
+      "dependencies": [],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "notice",
+          "url": ""
+        }
+      ]
+    },
+    "com.google.errorprone:error_prone_annotations:2.2.0": {
+      "repo_name": "com_google_errorprone__error_prone_annotations__2_2_0",
+      "url": "https://repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.2.0/error_prone_annotations-2.2.0.jar",
+      "sha256": "6ebd22ca1b9d8ec06d41de8d64e0596981d9607b42035f9ed374f9de271a481a",
+      "dependencies": [],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "notice",
+          "url": ""
+        }
+      ]
+    },
+    "org.checkerframework:checker-qual:2.5.2": {
+      "repo_name": "org_checkerframework__checker_qual__2_5_2",
+      "url": "https://repo1.maven.org/maven2/org/checkerframework/checker-qual/2.5.2/checker-qual-2.5.2.jar",
+      "sha256": "64b02691c8b9d4e7700f8ee2e742dce7ea2c6e81e662b7522c9ee3bf568c040a",
+      "dependencies": [],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "notice",
+          "url": ""
+        }
+      ]
+    },
+    "com.google.j2objc:j2objc-annotations:1.1": {
+      "repo_name": "com_google_j2objc__j2objc_annotations__1_1",
+      "url": "https://repo1.maven.org/maven2/com/google/j2objc/j2objc-annotations/1.1/j2objc-annotations-1.1.jar",
+      "sha256": "2994a7eb78f2710bd3d3bfb639b2c94e219cedac0d4d084d516e78c16dddecf6",
+      "dependencies": [],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "notice",
+          "url": ""
+        }
+      ]
+    },
+    "com.google.inject:guice:4.2.3": {
+      "repo_name": "com_google_inject__guice__4_2_3",
+      "url": "https://repo1.maven.org/maven2/com/google/inject/guice/4.2.3/guice-4.2.3.jar",
+      "sha256": "a21e50ffbb67e7adc5b46cf7b9e1a480f1e0f04fd4201ddb1c65da91290601af",
+      "dependencies": [
+        ":aopalliance__aopalliance",
+        ":javax_inject__javax_inject",
+        ":com_google_guava__guava"
+      ],
+      "exports": [
+        ":aopalliance__aopalliance",
+        ":javax_inject__javax_inject",
+        ":com_google_guava__guava"
+      ],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "notice",
+          "url": ""
+        }
+      ]
+    },
+    "com.google.code.findbugs:jsr305:3.0.2": {
+      "repo_name": "com_google_code_findbugs__jsr305__3_0_2",
+      "url": "https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar",
+      "sha256": "766ad2a0783f2687962c8ad74ceecc38a28b9f72a2d085ee438b7813e928d0c7",
+      "dependencies": [],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "notice",
+          "url": ""
+        }
+      ]
+    },
+    "com.google.guava:guava:20.0": {
+      "repo_name": "com_google_guava__guava__20_0",
+      "url": "https://repo1.maven.org/maven2/com/google/guava/guava/20.0/guava-20.0.jar",
+      "sha256": "36a666e3b71ae7f0f0dca23654b67e086e6c93d192f60ba5dfd5519db6c288c8",
+      "dependencies": [],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "notice",
+          "url": ""
+        }
+      ]
+    },
+    "com.google.guava:failureaccess:1.0.1": {
+      "repo_name": "com_google_guava__failureaccess__1_0_1",
+      "url": "https://repo1.maven.org/maven2/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar",
+      "sha256": "a171ee4c734dd2da837e4b16be9df4661afab72a41adaf31eb84dfdaf936ca26",
+      "dependencies": [],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "notice",
+          "url": ""
+        }
+      ]
+    },
+    "org.jboss.spec.javax.ws.rs:jboss-jaxrs-api_2.1_spec:2.0.1.Final": {
+      "repo_name": "org_jboss_spec_javax_ws_rs__jboss_jaxrs_api_2_1_spec__2_0_1_Final",
+      "url": "https://repo1.maven.org/maven2/org/jboss/spec/javax/ws/rs/jboss-jaxrs-api_2.1_spec/2.0.1.Final/jboss-jaxrs-api_2.1_spec-2.0.1.Final.jar",
+      "sha256": "3518db0a3980aacfdae916f0eb081d0fcefaa2076d2ba603edc779a601d2d1a4",
+      "dependencies": [],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "restricted",
+          "url": ""
+        }
+      ]
+    },
+    "org.codehaus.mojo:animal-sniffer-annotations:1.17": {
+      "repo_name": "org_codehaus_mojo__animal_sniffer_annotations__1_17",
+      "url": "https://repo1.maven.org/maven2/org/codehaus/mojo/animal-sniffer-annotations/1.17/animal-sniffer-annotations-1.17.jar",
+      "sha256": "92654f493ecfec52082e76354f0ebf87648dc3d5cec2e3c3cdb947c016747a53",
+      "dependencies": [],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "notice",
+          "url": ""
+        }
+      ]
+    },
+    "org.jboss.logging:jboss-logging:3.3.2.Final": {
+      "repo_name": "org_jboss_logging__jboss_logging__3_3_2_Final",
+      "url": "https://repo1.maven.org/maven2/org/jboss/logging/jboss-logging/3.3.2.Final/jboss-logging-3.3.2.Final.jar",
+      "sha256": "cb914bfe888da7d9162e965ac8b0d6f28f2f32eca944a00fbbf6dd3cf1aacc13",
+      "dependencies": [],
+      "exports": [],
+      "runtime_deps": [],
+      "test_only": false,
+      "target_type": "jar",
+      "licenses": [
+        {
+          "name": "notice",
+          "url": ""
+        }
+      ]
+    }
+  }
+}

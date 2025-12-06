@@ -1,13 +1,10 @@
-load("@mabel//rules/maven_deps:mabel.bzl", "artifact", "mabel_rule")
+load("@mabel//rules:mabel.bzl", "artifact", "mabel_rule")
 load("@rules_java//java:defs.bzl", "java_binary")
-load("//program/main_deps:dependencies.bzl", "generate_transitive_dependency_targets")
-
-generate_transitive_dependency_targets()
 
 mabel_rule(
     name = "main_deps",
     fetch_srcjar = False,
-    generated_targets_prefix = "apt___",
+    lockfile_path = "program/maven_install.json",
     maven_deps = [
         artifact(
             "com.google.dagger:dagger:2.19",
@@ -33,15 +30,13 @@ java_binary(
         "Program.java",
     ],
     main_class = "examples.java_plugin.program.HelloWorld",
-    plugins =
-        #but, you can also explicitly specify one.
-        ["//program:apt___com_google_dagger__dagger_compiler___processor_class_0"],
     deps = [
-        # we can also reference the target via the generated target. Note that we used `generated_targets_prefix` so there is a prefix.
-        "//program:apt___com_google_auto_value__auto_value_annotations",
-        "//program/main_deps/com/google/dagger/dagger",
-        # If you want to run all detected plugins, then you can use the grouped target.
-        #Note: you should add this to the `deps` and not to `plugins`. This is just the way Bazel works
-        "//program:apt___com_google_auto_value__auto_value___processor_class_all",
+        # Runtime dependencies
+        "@maven//com/google/auto/value/auto-value-annotations",
+        "@maven//com/google/dagger/dagger",
+        # Annotation processors - using ___processors exports all java_plugins via exported_plugins
+        # This is the recommended way to use processors (add to deps, not plugins)
+        "@maven//com/google/auto/value/auto-value:auto-value___processors",
+        "@maven//com/google/dagger/dagger-compiler:dagger-compiler___processors",
     ],
 )

@@ -1,0 +1,18 @@
+module(name = "mabel_examples_kotlin")
+
+bazel_dep(name = "mabel", version = "0.0.0")
+bazel_dep(name = "rules_java", version = "9.1.0")
+bazel_dep(name = "rules_kotlin", version = "1.9.6")
+
+local_path_override(
+    module_name = "mabel",
+    path = "../../",
+)
+
+# Maven dependencies
+mabel = use_extension("@mabel//rules:extensions.bzl", "mabel")
+mabel.install(
+    aliases_repo = "kotlin_maven",
+    lockfile = "//program:maven_install.json",
+)
+use_repo(mabel, "kotlin_maven")

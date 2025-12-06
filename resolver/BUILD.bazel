@@ -1,8 +1,30 @@
-load("@rules_java//java:defs.bzl", "java_binary", "java_library", "java_test")
-load("//resolver/main_deps:dependencies.bzl", "generate_transitive_dependency_targets")
-load("//rules/maven_deps:mabel.bzl", "artifact", "mabel_rule")
+load("@rules_java//java:defs.bzl", "java_binary", "java_library", "java_plugin", "java_test")
+load("//rules:mabel.bzl", "artifact", "mabel_rule")
+load("//tools:linters.bzl", "checkstyle_test")
 
-generate_transitive_dependency_targets()
+checkstyle_test(
+    name = "checkstyle",
+    srcs = [
+        "//resolver:api_lib",
+        "//resolver:api_model",
+        "//resolver:graph_resolver_lib",
+        "//resolver:impl_lib",
+        "//resolver:merger",
+        "//resolver:merger_bin",
+        "//resolver:migration_tooling_graph_resolver",
+        "//resolver:resolver_bin",
+        "//resolver:serialization",
+        "//resolver:test_utils",
+        "//resolver:timing_lib",
+    ],
+)
+
+# AutoValue annotation processor
+java_plugin(
+    name = "autovalue_plugin",
+    processor_class = "com.google.auto.value.processor.AutoValueProcessor",
+    deps = ["@mvn//com/google/auto/value/auto-value"],
+)
 
 _AETHER_VERSION = "1.1.0"
 
@@ -12,6 +34,7 @@ mabel_rule(
     name = "main_deps",
     default_exports_generation = "requested_deps",
     default_target_type = "naive",
+    lockfile_path = "resolver/maven_install.json",
     maven_deps = [
         artifact(
             "com.google.guava:guava:27.0.1-jre",
@@ -116,9 +139,9 @@ mabel_rule(
 java_library(
     name = "api_model",
     srcs = glob(["src/main/java/net/evendanan/bazel/mvn/api/model/*.java"]),
+    plugins = [":autovalue_plugin"],
     deps = [
-        "//resolver/main_deps/com/google/auto/value/auto-value:processors",
-        "//resolver/main_deps/com/google/auto/value/auto-value-annotations",
+        "@mvn//com/google/auto/value/auto-value-annotations",
     ],
 )
 
@@ -127,20 +150,20 @@ java_library(
     srcs = glob(["src/main/java/net/evendanan/bazel/mvn/api/serialization/*.java"]),
     deps = [
         ":api_model",
-        "//resolver/main_deps/com/google/code/gson/gson",
+        "@mvn//com/google/code/gson/gson",
     ],
 )
 
 java_test(
     name = "serialization_test",
     size = "small",
-    srcs = ["src/test/net/evendanan/bazel/mvn/api/serialization/SerializationTest.java"],
+    srcs = ["src/test/java/net/evendanan/bazel/mvn/api/serialization/SerializationTest.java"],
     test_class = "net.evendanan.bazel.mvn.api.serialization.SerializationTest",
     deps = [
         ":api_lib",
         ":serialization",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@mvn//junit/junit",
+        "@mvn//org/mockito/mockito-core",
     ],
 )
 
@@ -148,29 +171,30 @@ java_library(
     name = "graph_resolver_lib",
     srcs = glob(["src/main/java/com/google/devtools/bazel/workspace/maven/*.java"]),
     runtime_deps = [
-        "//resolver/main_deps/org/codehaus/plexus/plexus-interpolation",
-        "//resolver/main_deps/org/codehaus/plexus/plexus-utils",
+        "@mvn//org/codehaus/plexus/plexus-interpolation",
+        "@mvn//org/codehaus/plexus/plexus-utils",
     ],
     deps = [
         ":api_lib",
-        "//resolver/main_deps/com/google/code/findbugs/jsr305",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/org/apache/commons/commons-lang3",
-        "//resolver/main_deps/org/apache/httpcomponents/httpclient",
-        "//resolver/main_deps/org/apache/maven/maven-aether-provider",
-        "//resolver/main_deps/org/apache/maven/maven-artifact",
-        "//resolver/main_deps/org/apache/maven/maven-model",
-        "//resolver/main_deps/org/apache/maven/maven-model-builder",
-        "//resolver/main_deps/org/apache/maven/maven-repository-metadata",
-        "//resolver/main_deps/org/eclipse/aether/aether-api",
-        "//resolver/main_deps/org/eclipse/aether/aether-connector-basic",
-        "//resolver/main_deps/org/eclipse/aether/aether-impl",
-        "//resolver/main_deps/org/eclipse/aether/aether-spi",
-        "//resolver/main_deps/org/eclipse/aether/aether-transport-classpath",
-        "//resolver/main_deps/org/eclipse/aether/aether-transport-file",
-        "//resolver/main_deps/org/eclipse/aether/aether-transport-http",
-        "//resolver/main_deps/org/eclipse/aether/aether-transport-wagon",
-        "//resolver/main_deps/org/eclipse/aether/aether-util",
+        "@mvn//com/google/code/findbugs/jsr305",
+        "@mvn//com/google/guava/guava",
+        "@mvn//org/apache/commons/commons-lang3",
+        "@mvn//org/apache/httpcomponents/httpclient",
+        "@mvn//org/apache/maven/maven-aether-provider",
+        "@mvn//org/apache/maven/maven-artifact",
+        "@mvn//org/apache/maven/maven-builder-support",
+        "@mvn//org/apache/maven/maven-model",
+        "@mvn//org/apache/maven/maven-model-builder",
+        "@mvn//org/apache/maven/maven-repository-metadata",
+        "@mvn//org/eclipse/aether/aether-api",
+        "@mvn//org/eclipse/aether/aether-connector-basic",
+        "@mvn//org/eclipse/aether/aether-impl",
+        "@mvn//org/eclipse/aether/aether-spi",
+        "@mvn//org/eclipse/aether/aether-transport-classpath",
+        "@mvn//org/eclipse/aether/aether-transport-file",
+        "@mvn//org/eclipse/aether/aether-transport-http",
+        "@mvn//org/eclipse/aether/aether-transport-wagon",
+        "@mvn//org/eclipse/aether/aether-util",
     ],
 )
 
@@ -180,8 +204,8 @@ java_library(
     deps = [
         ":api_lib",
         ":graph_resolver_lib",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/org/apache/maven/maven-model",
+        "@mvn//com/google/guava/guava",
+        "@mvn//org/apache/maven/maven-model",
     ],
 )
 
@@ -190,9 +214,9 @@ java_library(
     srcs = glob(["src/main/java/net/evendanan/timing/*.java"]),
     runtime_deps = [],
     deps = [
-        "//resolver/main_deps/com/google/code/findbugs/jsr305",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/org/apache/commons/commons-lang3",
+        "@mvn//com/google/code/findbugs/jsr305",
+        "@mvn//com/google/guava/guava",
+        "@mvn//org/apache/commons/commons-lang3",
     ],
 )
 
@@ -204,28 +228,23 @@ java_library(
     runtime_deps = [],
     deps = [
         ":api_model",
-        "//resolver/main_deps/com/google/code/findbugs/jsr305",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/org/apache/commons/commons-lang3",
+        "@mvn//com/google/code/findbugs/jsr305",
+        "@mvn//com/google/guava/guava",
+        "@mvn//org/apache/commons/commons-lang3",
     ],
 )
 
 java_library(
     name = "impl_lib",
     srcs = glob(["src/main/java/net/evendanan/bazel/mvn/impl/*.java"]),
-    resource_strip_prefix = "resolver/src/main/java/net/evendanan/bazel/mvn/impl",
-    resources = [
-        "src/main/java/net/evendanan/bazel/mvn/impl/dependencies-http-repo-rules.bzl.template",
-        "src/main/java/net/evendanan/bazel/mvn/impl/dependencies-sub-folder-header.bzl.template",
-        "src/main/java/net/evendanan/bazel/mvn/impl/dependencies-targets-macro.bzl.template",
-    ],
     runtime_deps = [],
     deps = [
         ":api_lib",
         ":timing_lib",
-        "//resolver/main_deps/com/google/code/findbugs/jsr305",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/org/apache/commons/commons-lang3",
+        "@mvn//com/google/code/findbugs/jsr305",
+        "@mvn//com/google/code/gson/gson",
+        "@mvn//com/google/guava/guava",
+        "@mvn//org/apache/commons/commons-lang3",
     ],
 )
 
@@ -234,9 +253,9 @@ java_library(
     srcs = glob(["src/main/java/net/evendanan/bazel/mvn/merger/*.java"]),
     deps = [
         ":api_lib",
-        "//resolver/main_deps/com/google/code/findbugs/jsr305",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/org/apache/commons/commons-lang3",
+        "@mvn//com/google/code/findbugs/jsr305",
+        "@mvn//com/google/guava/guava",
+        "@mvn//org/apache/commons/commons-lang3",
     ],
 )
 
@@ -245,18 +264,18 @@ java_binary(
     srcs = ["src/main/java/net/evendanan/bazel/mvn/Resolver.java"],
     main_class = "net.evendanan.bazel.mvn.Resolver",
     visibility = ["//visibility:public"],
-    runtime_deps = ["//resolver/main_deps/org/slf4j/slf4j-nop"],
+    runtime_deps = ["@mvn//org/slf4j/slf4j-nop"],
     deps = [
         ":api_lib",
         ":impl_lib",
         ":migration_tooling_graph_resolver",
         ":serialization",
         ":timing_lib",
-        "//resolver/main_deps/com/beust/jcommander",
-        "//resolver/main_deps/com/google/code/findbugs/jsr305",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/org/apache/commons/commons-lang3",
-        "//resolver/main_deps/org/apache/maven/maven-model",
+        "@mvn//com/beust/jcommander",
+        "@mvn//com/google/code/findbugs/jsr305",
+        "@mvn//com/google/guava/guava",
+        "@mvn//org/apache/commons/commons-lang3",
+        "@mvn//org/apache/maven/maven-model",
     ],
 )
 
@@ -268,17 +287,17 @@ java_binary(
     ],
     main_class = "net.evendanan.bazel.mvn.Merger",
     visibility = ["//visibility:public"],
-    runtime_deps = ["//resolver/main_deps/org/slf4j/slf4j-nop"],
+    runtime_deps = ["@mvn//org/slf4j/slf4j-nop"],
     deps = [
         ":api_lib",
         ":impl_lib",
         ":merger",
         ":serialization",
         ":timing_lib",
-        "//resolver/main_deps/com/beust/jcommander",
-        "//resolver/main_deps/com/google/code/findbugs/jsr305",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/org/apache/commons/commons-lang3",
+        "@mvn//com/beust/jcommander",
+        "@mvn//com/google/code/findbugs/jsr305",
+        "@mvn//com/google/guava/guava",
+        "@mvn//org/apache/commons/commons-lang3",
     ],
 )
 
@@ -287,24 +306,24 @@ java_binary(
 java_library(
     name = "test_utils",
     testonly = True,
-    srcs = ["src/test/net/evendanan/bazel/mvn/TestUtils.java"],
+    srcs = ["src/test/java/net/evendanan/bazel/mvn/TestUtils.java"],
     deps = [
         ":api_lib",
-        "//resolver/main_deps/com/google/code/findbugs/jsr305",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/org/apache/commons/commons-lang3",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@mvn//com/google/code/findbugs/jsr305",
+        "@mvn//com/google/guava/guava",
+        "@mvn//org/apache/commons/commons-lang3",
+        "@mvn//org/mockito/mockito-core",
     ],
 )
 
 java_test(
     name = "timing_data",
     size = "small",
-    srcs = ["src/test/net/evendanan/timing/TimingDataTest.java"],
+    srcs = ["src/test/java/net/evendanan/timing/TimingDataTest.java"],
     test_class = "net.evendanan.timing.TimingDataTest",
     deps = [
         ":timing_lib",
-        "//resolver/main_deps/junit/junit",
+        "@mvn//junit/junit",
     ],
 )
 
@@ -312,48 +331,48 @@ java_test(
     name = "timing_timer",
     size = "small",
     srcs = [
-        "src/test/net/evendanan/timing/TaskTimingTest.java",
-        "src/test/net/evendanan/timing/TimingDataTest.java",
+        "src/test/java/net/evendanan/timing/TaskTimingTest.java",
+        "src/test/java/net/evendanan/timing/TimingDataTest.java",
     ],
     test_class = "net.evendanan.timing.TaskTimingTest",
     deps = [
         ":timing_lib",
-        "//resolver/main_deps/junit/junit",
+        "@mvn//junit/junit",
     ],
 )
 
 java_test(
     name = "classifiers_test",
     size = "small",
-    srcs = ["src/test/net/evendanan/bazel/mvn/impl/RuleClassifiersTest.java"],
-    resource_strip_prefix = "resolver/src/test/net/evendanan/bazel/mvn/resourses/",
-    resources = [
-        "src/test/net/evendanan/bazel/mvn/resourses/dataenum-1.0.2.jar",
-        "src/test/net/evendanan/bazel/mvn/resourses/dataenum-processor-1.0.2.jar",
-        "src/test/net/evendanan/bazel/mvn/resourses/dataenum-processor-1.0.2-with-comments.jar",
-        "src/test/net/evendanan/bazel/mvn/resourses/mockk-1.0.jar",
-        "src/test/net/evendanan/bazel/mvn/resourses/mockk-1.0-for-android.aar",
-        "src/test/net/evendanan/bazel/mvn/resourses/mockk-1.0-for-android.jar",
-    ],
+    srcs = ["src/test/java/net/evendanan/bazel/mvn/impl/RuleClassifiersTest.java"],
+    resource_strip_prefix = "resolver/src/test/resources/",
+    resources = glob(["src/test/resources/**"]),
     test_class = "net.evendanan.bazel.mvn.impl.RuleClassifiersTest",
     deps = [
         ":api_lib",
         ":impl_lib",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@mvn//com/google/guava/guava",
+        "@mvn//junit/junit",
+        "@mvn//net/bytebuddy/byte-buddy",
+        "@mvn//net/bytebuddy/byte-buddy-agent",
+        "@mvn//org/mockito/mockito-core",
+        "@mvn//org/objenesis/objenesis",
     ],
 )
 
 java_test(
     name = "composite_formater_test",
     size = "small",
-    srcs = ["src/test/net/evendanan/bazel/mvn/impl/CompositeFormatterTest.java"],
+    srcs = ["src/test/java/net/evendanan/bazel/mvn/impl/CompositeFormatterTest.java"],
     test_class = "net.evendanan.bazel.mvn.impl.CompositeFormatterTest",
     deps = [
         ":api_lib",
         ":impl_lib",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@mvn//junit/junit",
+        "@mvn//net/bytebuddy/byte-buddy",
+        "@mvn//net/bytebuddy/byte-buddy-agent",
+        "@mvn//org/mockito/mockito-core",
+        "@mvn//org/objenesis/objenesis",
     ],
 )
 
@@ -361,16 +380,16 @@ java_test(
     name = "merger_tests",
     size = "small",
     srcs = [
-        "src/test/net/evendanan/bazel/mvn/merger/DefaultMergerTest.java",
+        "src/test/java/net/evendanan/bazel/mvn/merger/DefaultMergerTest.java",
         #GraphUtilsTest is needed because it has some utility functions
-        "src/test/net/evendanan/bazel/mvn/merger/GraphUtilsTest.java",
+        "src/test/java/net/evendanan/bazel/mvn/merger/GraphUtilsTest.java",
     ],
     test_class = "net.evendanan.bazel.mvn.merger.DefaultMergerTest",
     deps = [
         ":api_lib",
         ":merger",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@mvn//junit/junit",
+        "@mvn//org/mockito/mockito-core",
     ],
 )
 
@@ -378,14 +397,14 @@ java_test(
     name = "latest_version_merger_tests",
     size = "small",
     srcs = [
-        "src/test/net/evendanan/bazel/mvn/merger/LatestVersionMergerTest.java",
+        "src/test/java/net/evendanan/bazel/mvn/merger/LatestVersionMergerTest.java",
     ],
     test_class = "net.evendanan.bazel.mvn.merger.LatestVersionMergerTest",
     deps = [
         ":api_model",
         ":merger",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@mvn//junit/junit",
+        "@mvn//org/mockito/mockito-core",
     ],
 )
 
@@ -393,13 +412,13 @@ java_test(
     name = "version_compare_tests",
     size = "small",
     srcs = [
-        "src/test/net/evendanan/bazel/mvn/merger/VersionComparatorTest.java",
+        "src/test/java/net/evendanan/bazel/mvn/merger/VersionComparatorTest.java",
     ],
     test_class = "net.evendanan.bazel.mvn.merger.VersionComparatorTest",
     deps = [
         ":merger",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@mvn//junit/junit",
+        "@mvn//org/mockito/mockito-core",
     ],
 )
 
@@ -407,14 +426,14 @@ java_test(
     name = "public_category_tests",
     size = "small",
     srcs = [
-        "src/test/net/evendanan/bazel/mvn/merger/PublicTargetsCategoryTest.java",
+        "src/test/java/net/evendanan/bazel/mvn/merger/PublicTargetsCategoryTest.java",
     ],
     test_class = "net.evendanan.bazel.mvn.merger.PublicTargetsCategoryTest",
     deps = [
         ":api_lib",
         ":merger",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@mvn//junit/junit",
+        "@mvn//org/mockito/mockito-core",
     ],
 )
 
@@ -422,74 +441,74 @@ java_test(
     name = "test_only_merger_test",
     size = "small",
     srcs = [
-        "src/test/net/evendanan/bazel/mvn/merger/TestOnlyMarkerTest.java",
+        "src/test/java/net/evendanan/bazel/mvn/merger/TestOnlyMarkerTest.java",
     ],
     test_class = "net.evendanan.bazel.mvn.merger.TestOnlyMarkerTest",
     deps = [
         ":api_lib",
         ":merger",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@mvn//junit/junit",
+        "@mvn//org/mockito/mockito-core",
     ],
 )
 
 java_test(
     name = "downloader_tests",
     size = "small",
-    srcs = ["src/test/net/evendanan/bazel/mvn/merger/ArtifactDownloaderTest.java"],
+    srcs = ["src/test/java/net/evendanan/bazel/mvn/merger/ArtifactDownloaderTest.java"],
     test_class = "net.evendanan.bazel.mvn.merger.ArtifactDownloaderTest",
     deps = [
         ":api_lib",
         ":merger",
-        "//resolver:com_google_guava__guava",
-        "//resolver/main_deps/junit/junit",
+        "@mvn//com/google/guava/guava",
+        "@mvn//junit/junit",
     ],
 )
 
 java_test(
     name = "graph_util_tests",
     size = "small",
-    srcs = ["src/test/net/evendanan/bazel/mvn/merger/GraphUtilsTest.java"],
+    srcs = ["src/test/java/net/evendanan/bazel/mvn/merger/GraphUtilsTest.java"],
     test_class = "net.evendanan.bazel.mvn.merger.GraphUtilsTest",
     deps = [
         ":api_lib",
         ":merger",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@mvn//junit/junit",
+        "@mvn//org/mockito/mockito-core",
     ],
 )
 
 java_test(
     name = "graph_checks_tests",
     size = "small",
-    srcs = ["src/test/net/evendanan/bazel/mvn/merger/GraphVerificationsTest.java"],
+    srcs = ["src/test/java/net/evendanan/bazel/mvn/merger/GraphVerificationsTest.java"],
     test_class = "net.evendanan.bazel.mvn.merger.GraphVerificationsTest",
     deps = [
         ":api_lib",
         ":merger",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@mvn//junit/junit",
+        "@mvn//org/mockito/mockito-core",
     ],
 )
 
 java_test(
     name = "formatters_test",
     size = "small",
-    srcs = ["src/test/net/evendanan/bazel/mvn/impl/FormattersTests.java"],
+    srcs = ["src/test/java/net/evendanan/bazel/mvn/impl/FormattersTests.java"],
     test_class = "net.evendanan.bazel.mvn.impl.FormattersTests",
     deps = [
         ":api_lib",
         ":impl_lib",
         ":test_utils",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@mvn//junit/junit",
+        "@mvn//org/mockito/mockito-core",
     ],
 )
 
 java_test(
     name = "target_test",
     size = "small",
-    srcs = ["src/test/net/evendanan/bazel/mvn/impl/TargetTest.java"],
+    srcs = ["src/test/java/net/evendanan/bazel/mvn/impl/TargetTest.java"],
     test_class = "net.evendanan.bazel.mvn.impl.TargetTest",
     deps = [":api_lib"],
 )
@@ -497,81 +516,185 @@ java_test(
 java_test(
     name = "dependency_test",
     size = "small",
-    srcs = ["src/test/net/evendanan/bazel/mvn/impl/DependencyToolsTest.java"],
+    srcs = ["src/test/java/net/evendanan/bazel/mvn/impl/DependencyToolsTest.java"],
     test_class = "net.evendanan.bazel.mvn.impl.DependencyToolsTest",
     deps = [
         ":api_lib",
-        "//resolver/main_deps/junit/junit",
+        "@mvn//junit/junit",
     ],
 )
 
 java_test(
     name = "real_writers_test",
     size = "small",
-    srcs = ["src/test/net/evendanan/bazel/mvn/impl/WritersTests.java"],
+    srcs = ["src/test/java/net/evendanan/bazel/mvn/impl/WritersTests.java"],
     test_class = "net.evendanan.bazel.mvn.impl.WritersTests",
     deps = [
         ":api_lib",
         ":impl_lib",
         ":test_utils",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@mvn//com/google/guava/guava",
+        "@mvn//junit/junit",
+        "@mvn//org/mockito/mockito-core",
     ],
 )
 
 java_test(
     name = "graph_resolver_lib_test",
     size = "small",
-    srcs = ["src/test/com/google/devtools/bazel/workspace/maven/ArtifactBuilderTest.java"],
+    srcs = ["src/test/java/com/google/devtools/bazel/workspace/maven/ArtifactBuilderTest.java"],
     test_class = "com.google.devtools.bazel.workspace.maven.ArtifactBuilderTest",
     deps = [
         ":graph_resolver_lib",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/apache/maven/maven-model",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@mvn//com/google/guava/guava",
+        "@mvn//junit/junit",
+        "@mvn//org/apache/maven/maven-model",
+        "@mvn//org/mockito/mockito-core",
     ],
 )
 
 java_test(
     name = "sources_locator_test",
     size = "small",
-    srcs = ["src/test/net/evendanan/bazel/mvn/merger/SourcesLocatorTest.java"],
+    srcs = ["src/test/java/net/evendanan/bazel/mvn/merger/SourcesLocatorTest.java"],
     test_class = "net.evendanan.bazel.mvn.merger.SourcesLocatorTest",
     deps = [
         ":api_lib",
         ":merger",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@mvn//com/google/guava/guava",
+        "@mvn//junit/junit",
+        "@mvn//net/bytebuddy/byte-buddy",
+        "@mvn//net/bytebuddy/byte-buddy-agent",
+        "@mvn//org/mockito/mockito-core",
+        "@mvn//org/objenesis/objenesis",
     ],
 )
 
 java_test(
     name = "general_commenter_test",
     size = "small",
-    srcs = ["src/test/net/evendanan/bazel/mvn/merger/TargetCommenterTest.java"],
+    srcs = ["src/test/java/net/evendanan/bazel/mvn/merger/TargetCommenterTest.java"],
     test_class = "net.evendanan.bazel.mvn.merger.TargetCommenterTest",
     deps = [
         ":api_lib",
         ":merger",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@mvn//com/google/guava/guava",
+        "@mvn//junit/junit",
+        "@mvn//net/bytebuddy/byte-buddy",
+        "@mvn//net/bytebuddy/byte-buddy-agent",
+        "@mvn//org/mockito/mockito-core",
+        "@mvn//org/objenesis/objenesis",
     ],
 )
 
 java_test(
     name = "target_type_test",
     size = "small",
-    srcs = ["src/test/net/evendanan/bazel/mvn/impl/TargetsBuilderForTypeTest.java"],
+    srcs = ["src/test/java/net/evendanan/bazel/mvn/impl/TargetsBuilderForTypeTest.java"],
     test_class = "net.evendanan.bazel.mvn.impl.TargetsBuilderForTypeTest",
     deps = [
         ":api_lib",
         ":impl_lib",
-        "//resolver/main_deps/com/google/guava/guava",
-        "//resolver/main_deps/junit/junit",
-        "//resolver/main_deps/org/mockito/mockito-core",
+        "@mvn//com/google/guava/guava",
+        "@mvn//junit/junit",
+        "@mvn//org/mockito/mockito-core",
+    ],
+)
+
+java_test(
+    name = "json_lockfile_writer_test",
+    size = "small",
+    srcs = ["src/test/java/net/evendanan/bazel/mvn/impl/JsonLockfileWriterTest.java"],
+    test_class = "net.evendanan.bazel.mvn.impl.JsonLockfileWriterTest",
+    deps = [
+        ":api_lib",
+        ":impl_lib",
+        "@mvn//com/google/guava/guava",
+        "@mvn//junit/junit",
+    ],
+)
+
+java_test(
+    name = "sort_targets_test",
+    size = "small",
+    srcs = ["src/test/java/net/evendanan/bazel/mvn/impl/SortTargetsByNameTest.java"],
+    test_class = "net.evendanan.bazel.mvn.impl.SortTargetsByNameTest",
+    deps = [
+        ":api_lib",
+        ":impl_lib",
+        "@mvn//junit/junit",
+    ],
+)
+
+java_test(
+    name = "clear_src_jar_test",
+    size = "small",
+    srcs = ["src/test/java/net/evendanan/bazel/mvn/merger/ClearSrcJarAttributeTest.java"],
+    test_class = "net.evendanan.bazel.mvn.merger.ClearSrcJarAttributeTest",
+    deps = [
+        ":api_lib",
+        ":merger",
+        "@mvn//junit/junit",
+    ],
+)
+
+java_test(
+    name = "dependency_tools_prefix_test",
+    size = "small",
+    srcs = ["src/test/java/net/evendanan/bazel/mvn/merger/DependencyToolsWithPrefixTest.java"],
+    test_class = "net.evendanan.bazel.mvn.merger.DependencyToolsWithPrefixTest",
+    deps = [
+        ":api_lib",
+        ":merger",
+        "@mvn//junit/junit",
+    ],
+)
+
+java_test(
+    name = "excludes_filter_test",
+    size = "small",
+    srcs = ["src/test/java/net/evendanan/bazel/mvn/merger/ExcludesFilterTest.java"],
+    test_class = "net.evendanan.bazel.mvn.merger.ExcludesFilterTest",
+    deps = [
+        ":api_lib",
+        ":merger",
+        "@mvn//junit/junit",
+    ],
+)
+
+java_test(
+    name = "filter_duplicate_deps_test",
+    size = "small",
+    srcs = ["src/test/java/net/evendanan/bazel/mvn/merger/FilterDuplicateDependenciesEntriesTest.java"],
+    test_class = "net.evendanan.bazel.mvn.merger.FilterDuplicateDependenciesEntriesTest",
+    deps = [
+        ":api_lib",
+        ":merger",
+        "@mvn//junit/junit",
+    ],
+)
+
+java_test(
+    name = "pin_version_merger_base_test",
+    size = "small",
+    srcs = ["src/test/java/net/evendanan/bazel/mvn/merger/PinVersionMergerBaseTest.java"],
+    test_class = "net.evendanan.bazel.mvn.merger.PinVersionMergerBaseTest",
+    deps = [
+        ":api_lib",
+        ":api_model",
+        ":merger",
+        "@mvn//junit/junit",
+    ],
+)
+
+java_test(
+    name = "license_tools_test",
+    size = "small",
+    srcs = ["src/test/java/net/evendanan/bazel/mvn/api/LicenseToolsTest.java"],
+    test_class = "net.evendanan.bazel.mvn.api.LicenseToolsTest",
+    deps = [
+        ":api_lib",
+        ":api_model",
+        "@mvn//junit/junit",
     ],
 )
