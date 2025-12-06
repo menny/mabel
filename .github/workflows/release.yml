@@ -11,21 +11,25 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: Generate Release Body
+      - name: Prepare Release
         run: |
           VERSION=${GITHUB_REF_NAME#v}
-          echo "## Usage" > release_body.md
-          echo "" >> release_body.md
-          echo "Add the following to your \`MODULE.bazel\`:" >> release_body.md
-          echo "\`\`\`starlark" >> release_body.md
-          cat examples/plain_java/MODULE.bazel | \
-          sed '/module(/d' | \
-          sed '/local_path_override(/,/)/d' | \
-          sed "s/version = \"0.0.0\"/version = \"$VERSION\"/" | \
-          cat -s >> release_body.md
-          echo "\`\`\`" >> release_body.md
+          {
+            echo "RELEASE_BODY<<EOF"
+            echo "## Usage"
+            echo ""
+            echo "Add the following to your \`MODULE.bazel\`:"
+            echo "\`\`\`starlark"
+            cat examples/plain_java/MODULE.bazel | \
+            sed '/module(/d' | \
+            sed '/local_path_override(/,/)/d' | \
+            sed "s/version = \"0.0.0\"/version = \"$VERSION\"/" | \
+            cat -s
+            echo "\`\`\`"
+            echo "EOF"
+          } >> "$GITHUB_ENV"
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          body_path: release_body.md
+          body: ${{ env.RELEASE_BODY }}
           generate_release_notes: true
