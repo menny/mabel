@@ -1,0 +1,31 @@
+name: Release
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate Release Body
+        run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          echo "## Usage" > release_body.md
+          echo "" >> release_body.md
+          echo "Add the following to your \`MODULE.bazel\`:" >> release_body.md
+          echo "\`\`\`starlark" >> release_body.md
+          cat examples/plain_java/MODULE.bazel | \
+          sed '/module(/d' | \
+          sed '/local_path_override(/,/)/d' | \
+          sed "s/version = \"0.0.0\"/version = \"$VERSION\"/" | \
+          cat -s >> release_body.md
+          echo "\`\`\`" >> release_body.md
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: release_body.md
+          generate_release_notes: true
