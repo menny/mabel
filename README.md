@@ -56,7 +56,7 @@ bazel_dep(name = "rules_java", version = "9.1.0")
 
 #### Step 2: Define Dependencies in BUILD.bazel
 
-In your module's `BUILD.bazel` file (e.g., `//third_party:BUILD.bazel`), load the `mabel_rule` and `artifact` symbols:
+In your module's `BUILD.bazel` file (e.g., `//third_party:BUILD.bazel`), load the `mabel_rule` and `artifact` symbols, and define a `mabel_rule` target with the list of your dependencies:
 
 ```python
 load("@mabel//rules:mabel.bzl", "mabel_rule", "artifact")

@@ -1,0 +1,67 @@
+---
+name: Release
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.*'
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare Release
+        run: |
+          echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          body: |
+            This version of `mabel` requires Bazel 7+ and will only work with `bzlmod`.
+            ## Setup
+            In your `MODULE.bazel` file:
+              ```starlark
+              bazel_dep(name = "mabel", version = "${{ env.VERSION }}")
+              ```
+
+              To add dependencies, define those in a `BUILD.bazel` file:
+              ```starlark
+              load("@mabel//rules:mabel.bzl", "artifact", "mabel_rule")
+
+              mabel_rule(
+                  name = "mvn_deps",
+                  lockfile_path = " mvn_install.json",
+                  maven_deps = [
+                      artifact("com.google.guava:guava:20.0"),
+                  ],
+              )
+              ```
+
+              Then in your MODULE.bazel file:
+              ```starlark
+              mabel = use_extension("@mabel//rules:extensions.bzl", "mabel")
+              mabel.install(
+                  aliases_repo = "mvn",
+                  lockfile = "//:mvn_install.json",
+              )
+              use_repo(mabel, "mvn")
+              ```
+
+              Read more in the [README](https://github.com/menny/mabel#usage).
+      - name: Update README.md
+        run: |
+          DEFAULT_BRANCH=$(git ls-remote --symref origin HEAD | awk '/^ref: refs\/heads\//{sub(/refs\/heads\//, "", $2); print $2}')
+          git fetch origin $DEFAULT_BRANCH
+          git checkout $DEFAULT_BRANCH
+          sed -i "s/bazel_dep(name = \"mabel\", version = \".*\")/bazel_dep(name = \"mabel\", version = \"${{ env.VERSION }}\")/" README.md
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add README.md
+          if git diff-index --quiet HEAD; then
+            echo "No changes in README.md"
+          else
+            git commit -m "Update mabel version to ${{ env.VERSION }}"
+            git push origin $DEFAULT_BRANCH
+          fi
