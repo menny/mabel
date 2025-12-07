@@ -47,11 +47,10 @@ This approach ensures reproducible builds and allows you to review dependency ch
 
 #### Step 1: Add Mabel to your MODULE.bazel
 
-Add Mabel and rules_java as dependencies:
+Add `mabel` as dependencies:
 
 ```python
 bazel_dep(name = "mabel", version = "0.31.0")  # Check latest release
-bazel_dep(name = "rules_java", version = "9.1.0")
 ```
 
 #### Step 2: Define Dependencies in BUILD.bazel
