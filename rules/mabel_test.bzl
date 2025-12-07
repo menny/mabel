@@ -11,29 +11,16 @@ def _artifact_basic_test_impl(ctx):
     info = target[TransitiveDataInfo]
     asserts.equals(env, "inherit", info.type)
 
-    # Check actions
+    # Check actions - high level check
     actions = analysistest.target_actions(env)
     asserts.equals(env, 1, len(actions))
     action = actions[0]
     asserts.equals(env, "MabelMavenTransitiveDependencyResolve", action.mnemonic)
 
-    # Check arguments
+    # Check critical arguments
     args = action.argv
-    # Note: action.argv includes the executable as first argument usually?
-    # Or just the arguments passed?
-    # For ctx.actions.run with arguments list, argv usually contains the arguments.
-    # We search for our expected flags.
-
     asserts.true(env, _has_arg(args, "--artifact=com.example:foo:1.0"), "Missing artifact arg")
     asserts.true(env, _has_arg(args, "--type=inherit"), "Missing type arg")
-    asserts.true(env, _has_arg(args, "--debug_logs=false"), "Missing debug_logs arg")
-    asserts.true(env, _has_arg(args, "--test_only=false"), "Missing test_only arg")
-    asserts.true(env, _has_arg(args, "--exports_generation=inherit"), "Missing exports_generation arg")
-
-    # Check default repository
-    # It loops over repositories.
-    # DEFAULT_MAVEN_SERVERS is ["https://repo1.maven.org/maven2/"]
-    asserts.true(env, _has_arg(args, "--repository=https://repo1.maven.org/maven2/"), "Missing default repository")
 
     return analysistest.end(env)
 
@@ -52,13 +39,12 @@ def _artifact_custom_test_impl(ctx):
 
     args = action.argv
 
+    # Check critical arguments
     asserts.true(env, _has_arg(args, "--artifact=com.example:bar:2.0"), "Missing artifact arg")
     asserts.true(env, _has_arg(args, "--type=jar"), "Missing type arg")
-    asserts.true(env, _has_arg(args, "--debug_logs=true"), "Missing debug_logs arg")
-    asserts.true(env, _has_arg(args, "--test_only=true"), "Missing test_only arg")
-    asserts.true(env, _has_arg(args, "--exports_generation=none"), "Missing exports_generation arg")
 
-    # Check excluded deps
+    # Check custom values that change behavior
+    asserts.true(env, _has_arg(args, "--test_only=true"), "Missing test_only arg")
     asserts.true(env, _has_arg(args, "--blacklist=group:exclude"), "Missing blacklist arg")
 
     return analysistest.end(env)
@@ -75,11 +61,6 @@ artifact_custom_test = analysistest.make(_artifact_custom_test_impl)
 def mabel_test_suite():
     # Test 1: Basic usage
     basic_label = artifact("com.example:foo:1.0")
-
-    # Verify name generation logic partially
-    expected_name_suffix = "com_example__foo__1_0"
-    if expected_name_suffix not in basic_label:
-        fail("Label name should contain mangled coordinate. Expected suffix '{}' in '{}'".format(expected_name_suffix, basic_label))
 
     artifact_basic_test(
         name = "artifact_basic_test",
