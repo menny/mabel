@@ -27,6 +27,8 @@ bazel-genfiles
 bazel-out
 bazel-testlogs
 bazel-bin
+bazel-app
+bazel
 
 #idea
 .idea
