@@ -1,5 +1,8 @@
 # This folder holds Bazel rules we created
 
 load(":extensions_test.bzl", "extensions_test_suite")
+load(":mabel_test.bzl", "mabel_test_suite")
 
 extensions_test_suite()
+
+mabel_test_suite()
