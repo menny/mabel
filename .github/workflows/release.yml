@@ -18,6 +18,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           generate_release_notes: true
+          append_body: true
           body: |
             This version of `mabel` requires Bazel 7+ and will only work with `bzlmod`.
             ## Setup
