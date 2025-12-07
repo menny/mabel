@@ -13,6 +13,9 @@ def _artifact_basic_test_impl(ctx):
 
     # Check actions - high level check
     actions = analysistest.target_actions(env)
+
+    # Filter out BaselineCoverage action which is present when running with coverage
+    actions = [a for a in actions if a.mnemonic != "BaselineCoverage"]
     asserts.equals(env, 1, len(actions))
     action = actions[0]
     asserts.equals(env, "MabelMavenTransitiveDependencyResolve", action.mnemonic)
@@ -34,6 +37,9 @@ def _artifact_custom_test_impl(ctx):
 
     # Check actions
     actions = analysistest.target_actions(env)
+
+    # Filter out BaselineCoverage action which is present when running with coverage
+    actions = [a for a in actions if a.mnemonic != "BaselineCoverage"]
     asserts.equals(env, 1, len(actions))
     action = actions[0]
 
