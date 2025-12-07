@@ -1,3 +1,5 @@
+"""Tests for mabel.bzl artifact macro."""
+
 load("@bazel_skylib//lib:unittest.bzl", "analysistest", "asserts")
 load("//rules:mabel.bzl", "DEFAULT_MAVEN_SERVERS", "TransitiveDataInfo", "artifact")
 
