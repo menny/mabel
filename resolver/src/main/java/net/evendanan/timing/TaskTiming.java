@@ -25,24 +25,24 @@ public class TaskTiming {
     return timeString;
   }
 
-  public TimingData start(final int totalTasksCount) {
+  public synchronized TimingData start(final int totalTasksCount) {
     startTime = getCurrentTime();
     completedTasks = 0;
     totalTasks = totalTasksCount;
     return generateTimingData();
   }
 
-  public TimingData updateTotalTasks(final int totalTasksCount) {
+  public synchronized TimingData updateTotalTasks(final int totalTasksCount) {
     totalTasks = totalTasksCount;
     return generateTimingData();
   }
 
-  public TimingData taskDone() {
+  public synchronized TimingData taskDone() {
     completedTasks++;
     return generateTimingData();
   }
 
-  public TimingData finish() {
+  public synchronized TimingData finish() {
     return generateTimingData();
   }
 
@@ -50,7 +50,8 @@ public class TaskTiming {
     final long totalTime = getCurrentTime();
     final long duration = totalTime - startTime;
     final float ratioOfDone = completedTasks / (float) totalTasks;
-    final long estimatedTimeLeft = (long) (duration / ratioOfDone) - duration;
+    final long estimatedTimeLeft =
+        (ratioOfDone == 0) ? 0 : (long) (duration / ratioOfDone) - duration;
 
     return new TimingData(
         totalTasks, completedTasks, startTime, totalTime, estimatedTimeLeft, ratioOfDone);

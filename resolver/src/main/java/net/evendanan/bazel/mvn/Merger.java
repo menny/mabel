@@ -340,7 +340,7 @@ public class Merger {
             "Constructing Bazel targets",
             "%d out of %d (%.2f%%%s): %s...");
     List<TargetsToWrite> targetsToWritePairs =
-        resolvedDependencies.stream()
+        resolvedDependencies.parallelStream()
             .peek(d -> timer.taskDone(dependencyTools.mavenCoordinates(d)))
             .map(
                 dependency ->
