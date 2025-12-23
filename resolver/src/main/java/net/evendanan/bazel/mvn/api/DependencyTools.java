@@ -1,6 +1,5 @@
 package net.evendanan.bazel.mvn.api;
 
-import java.util.Locale;
 import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 
@@ -9,7 +8,16 @@ public class DependencyTools {
   public static final DependencyTools DEFAULT = new DependencyTools();
 
   private static String normalize(String name) {
-    return name.replaceAll("[+.-]", "_");
+    StringBuilder sb = new StringBuilder(name.length());
+    for (int i = 0; i < name.length(); i++) {
+      char c = name.charAt(i);
+      if (c == '+' || c == '.' || c == '-') {
+        sb.append('_');
+      } else {
+        sb.append(c);
+      }
+    }
+    return sb.toString();
   }
 
   public final String mavenCoordinates(Dependency dependency) {
@@ -17,12 +25,11 @@ public class DependencyTools {
   }
 
   public String mavenCoordinates(MavenCoordinate mavenCoordinate) {
-    return String.format(
-        Locale.ROOT,
-        "%s:%s:%s",
-        mavenCoordinate.groupId(),
-        mavenCoordinate.artifactId(),
-        mavenCoordinate.version());
+    return mavenCoordinate.groupId()
+        + ":"
+        + mavenCoordinate.artifactId()
+        + ":"
+        + mavenCoordinate.version();
   }
 
   public final String repositoryRuleName(Dependency dependency) {
@@ -30,12 +37,11 @@ public class DependencyTools {
   }
 
   public String repositoryRuleName(MavenCoordinate mavenCoordinate) {
-    return String.format(
-        Locale.ROOT,
-        "%s__%s__%s",
-        normalize(mavenCoordinate.groupId()),
-        normalize(mavenCoordinate.artifactId()),
-        normalize(mavenCoordinate.version()));
+    return normalize(mavenCoordinate.groupId())
+        + "__"
+        + normalize(mavenCoordinate.artifactId())
+        + "__"
+        + normalize(mavenCoordinate.version());
   }
 
   public final String targetName(Dependency dependency) {
@@ -43,10 +49,6 @@ public class DependencyTools {
   }
 
   public String targetName(MavenCoordinate mavenCoordinate) {
-    return String.format(
-        Locale.ROOT,
-        "%s__%s",
-        normalize(mavenCoordinate.groupId()),
-        normalize(mavenCoordinate.artifactId()));
+    return normalize(mavenCoordinate.groupId()) + "__" + normalize(mavenCoordinate.artifactId());
   }
 }
