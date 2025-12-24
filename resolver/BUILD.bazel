@@ -554,6 +554,17 @@ java_test(
 )
 
 java_test(
+    name = "rule_test",
+    size = "small",
+    srcs = ["src/test/java/com/google/devtools/bazel/workspace/maven/RuleTest.java"],
+    test_class = "com.google.devtools.bazel.workspace.maven.RuleTest",
+    deps = [
+        ":graph_resolver_lib",
+        "@mvn//junit/junit",
+    ],
+)
+
+java_test(
     name = "sources_locator_test",
     size = "small",
     srcs = ["src/test/java/net/evendanan/bazel/mvn/merger/SourcesLocatorTest.java"],
