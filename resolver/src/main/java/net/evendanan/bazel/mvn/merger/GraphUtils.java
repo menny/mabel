@@ -30,9 +30,8 @@ public class GraphUtils {
     dfsTraveller(
         resolutions,
         (dependency, level) -> {
-          for (int i = 0; i < level; i++) {
-            builder.append("  ");
-          }
+          // Optimization: Use String.repeat to avoid loop for indentation
+          builder.append("  ".repeat(level));
 
           builder
               .append(dependencyTools.mavenCoordinates(dependency))
