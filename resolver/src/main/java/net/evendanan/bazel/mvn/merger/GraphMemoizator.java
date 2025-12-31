@@ -1,11 +1,11 @@
 package net.evendanan.bazel.mvn.merger;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nonnull;
 
 public abstract class GraphMemoizator<T> {
-  private final Map<String, T> cache = new HashMap<>();
+  private final Map<String, T> cache = new ConcurrentHashMap<>();
 
   @Nonnull
   protected abstract T calculate(@Nonnull T original);
@@ -13,13 +13,8 @@ public abstract class GraphMemoizator<T> {
   @Nonnull
   public T map(@Nonnull T original) {
     final String key = getKeyForObject(original);
-    if (cache.containsKey(key)) {
-      return cache.get(key);
-    } else {
-      final T revised = calculate(original);
-      cache.put(key, revised);
-      return revised;
-    }
+    // atomic operation to ensure thread safety when used in parallel streams
+    return cache.computeIfAbsent(key, k -> calculate(original));
   }
 
   protected abstract String getKeyForObject(final T object);

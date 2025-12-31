@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import net.evendanan.bazel.mvn.api.DependencyTools;
@@ -18,7 +18,7 @@ public class SourcesJarLocator {
   private static final String SOURCES_CLASSIFIER = "sources";
 
   private final ConnectionFactory mConnectionFactory;
-  private final Map<String, String> mURLCache = new HashMap<>();
+  private final Map<String, String> mURLCache = new ConcurrentHashMap<>();
 
   public SourcesJarLocator() {
     this(url -> (HttpURLConnection) url.openConnection());
@@ -31,7 +31,8 @@ public class SourcesJarLocator {
 
   private static Collection<Dependency> fillSourcesAttribute(
       Collection<Dependency> dependencies, DependencyMemoizator memoizator) {
-    return dependencies.stream().map(memoizator::map).collect(Collectors.toList());
+    // using parallel stream to optimize I/O bound operations (checking source jars existence)
+    return dependencies.stream().parallel().map(memoizator::map).collect(Collectors.toList());
   }
 
   public Collection<Dependency> fillSourcesAttribute(Collection<Dependency> dependencies) {
