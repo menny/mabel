@@ -1,8 +1,10 @@
 package net.evendanan.bazel.mvn.impl;
 
 import com.google.common.base.Charsets;
+import com.google.common.io.CharStreams;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -81,15 +83,11 @@ public class RuleClassifiers {
           final String jarEntryName = jarEntry.getName();
           if (jarEntryName.equalsIgnoreCase(
               "META-INF/services/javax.annotation.processing.Processor")) {
-            StringBuilder contentBuilder = new StringBuilder();
-            final byte[] buffer = new byte[1024];
-            int read = 0;
-            while ((read = zipInputStream.read(buffer, 0, buffer.length)) >= 0) {
-              contentBuilder.append(new String(buffer, 0, read, Charsets.UTF_8));
-            }
+            String content =
+                CharStreams.toString(new InputStreamReader(zipInputStream, Charsets.UTF_8));
 
-            parseServicesProcessorFileContent(contentBuilder.toString())
-                .ifPresent(detectedModules::add);
+            parseServicesProcessorFileContent(content).ifPresent(detectedModules::add);
+            break;
           }
           zipInputStream.closeEntry();
           jarEntry = zipInputStream.getNextJarEntry();
