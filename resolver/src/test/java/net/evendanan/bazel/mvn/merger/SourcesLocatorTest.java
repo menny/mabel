@@ -151,8 +151,9 @@ public class SourcesLocatorTest {
   private static class FakeOpener
       implements net.evendanan.bazel.mvn.merger.SourcesJarLocator.ConnectionFactory {
 
-    private final Map<URL, Integer> buildsCounter = new HashMap<>();
-    private final Map<URL, HttpURLConnection> returnedConnections = new HashMap<>();
+    private final Map<URL, Integer> buildsCounter = new java.util.concurrent.ConcurrentHashMap<>();
+    private final Map<URL, HttpURLConnection> returnedConnections =
+        new java.util.concurrent.ConcurrentHashMap<>();
 
     private boolean openFailure = false;
 
