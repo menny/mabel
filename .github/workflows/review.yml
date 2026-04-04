@@ -1,3 +1,4 @@
+---
 name: AI Code Review
 on:
   pull_request:
@@ -14,7 +15,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Important: fetch all history for diffing
-
       - name: Run Cassandra AI Review
         uses: menny/cassandra@main
         with:
