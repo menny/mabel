@@ -1,7 +1,3 @@
-# Cassandra AI Review Configuration
-# This file centralizes static settings for the reviewer.
-# Precedence: CLI Arguments > Configuration File > Defaults
-
 provider = "google"
 model = "gemini-3-flash-preview"
 
