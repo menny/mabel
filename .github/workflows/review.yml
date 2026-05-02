@@ -6,25 +6,31 @@ on:
 jobs:
   review:
     name: Cassandra Review
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    if: github.event.pull_request.head.repo.full_name == github.repository
     concurrency:
       group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
       cancel-in-progress: true
     permissions:
       contents: read
       pull-requests: write
+      issues: write
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6.0.2
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
         with:
-          fetch-depth: 0 # Important: fetch all history for diffing
+          app-id: 3562238
+          private-key: ${{ secrets.CASSANDRA_APP_PRIVATE_KEY }}
       - name: Run Cassandra AI Review
-        uses: menny/cassandra@0e02fd244b1c8c1e3a41a8aefb14bf1d367a11ad
+        uses: menny/cassandra@v0.3.0
         with:
-          provider: 'google'
-          model_id: 'gemini-3-flash-preview'
+          reviewer_github_token: ${{ steps.app-token.outputs.token }}
           provider_api_key: ${{ secrets.GEMINI_API_KEY }}
           # The base branch to compare against (defaults to main)
           base: ${{ github.event.pull_request.base.sha }}
           # The head branch/commit (defaults to HEAD)
           head: ${{ github.event.pull_request.head.sha }}
+          submit_review_action: 'true'

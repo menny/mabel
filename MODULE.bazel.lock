@@ -1,5 +1,5 @@
 {
-  "lockFileVersion": 18,
+  "lockFileVersion": 24,
   "registryFileHashes": {
     "https://bcr.bazel.build/bazel_registry.json": "8a28e4aff06ee60aed2a8c281907fb8bcbf3b753c91fb5a5c57da3215d5b3497",
     "https://bcr.bazel.build/modules/abseil-cpp/20210324.2/MODULE.bazel": "7cd0312e064fde87c8d1cd79ba06c876bd23630c83466e9500321be55c96ace2",
@@ -296,7 +296,7 @@
   "moduleExtensions": {
     "//rules:extensions.bzl%mabel": {
       "general": {
-        "bzlTransitiveDigest": "g/hkiQf3eDNq7DYM4g8pl8B4+bcE/GPTIsboJa5QTPQ=",
+        "bzlTransitiveDigest": "1FKJNZ1vpPceAHtjN58l1X1AFrNY2fY3NkJNApa7+Hc=",
         "usagesDigest": "KHQuMiQXlD1q6CkLcE686p7u/BxDJQucDBL81qCnyjM=",
         "recordedFileInputs": {
           "@@//resolver/maven_install.json": "878921f485d23d0b8fc7a14e593937af6fafd9efe8d16d8f2dcd67c2e4962690"
@@ -1524,7 +1524,7 @@
     },
     "@@rules_buf+//buf:extensions.bzl%buf": {
       "general": {
-        "bzlTransitiveDigest": "nziVPz62Pjv2JecWM9NXmhpU/OjKhPz1MT9++4ObLUw=",
+        "bzlTransitiveDigest": "dSWqckK2ILN7aDIDHfv+Qrl1fb1hF7o7MDXY6T8C41s=",
         "usagesDigest": "vxN6C2h72rUERbAmd1476FWpxdxo1NhYoY5JSFXJT3g=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -1549,7 +1549,7 @@
     },
     "@@rules_kotlin+//src/main/starlark/core/repositories:bzlmod_setup.bzl%rules_kotlin_extensions": {
       "general": {
-        "bzlTransitiveDigest": "OlvsB0HsvxbR8ZN+J9Vf00X/+WVz/Y/5Xrq2LgcVfdo=",
+        "bzlTransitiveDigest": "nvW/NrBXlAmiQw99EMGKkLaD2KbNp2mQDlxdfpr+0Ls=",
         "usagesDigest": "QI2z8ZUR+mqtbwsf2fLqYdJAkPOHdOV+tF2yVAUgRzw=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -1613,7 +1613,7 @@
     },
     "@@rules_nodejs+//nodejs:extensions.bzl%node": {
       "general": {
-        "bzlTransitiveDigest": "PlbDlTkTjipL4rJTSM7NFGKQWgR5KMJGAfophD4adeo=",
+        "bzlTransitiveDigest": "hoXtAG/quA3VbchnWHFm/HQ5i2gbVPmeNqS9YRlg0ec=",
         "usagesDigest": "8OoyQ05AfTDe1T/jKkylUFidWxQge7e3HN2eOIIA6xM=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -1737,5 +1737,6 @@
         ]
       }
     }
-  }
+  },
+  "facts": {}
 }
