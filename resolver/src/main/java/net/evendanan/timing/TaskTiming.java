@@ -1,12 +1,13 @@
 package net.evendanan.timing;
 
 import com.google.common.annotations.VisibleForTesting;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class TaskTiming {
 
   private long startTime;
-  private int completedTasks;
-  private int totalTasks;
+  private final AtomicInteger completedTasks = new AtomicInteger(0);
+  private final AtomicInteger totalTasks = new AtomicInteger(0);
 
   public static String humanReadableTime(long milliseconds) {
     final long secondsInMilli = 1000;
@@ -27,18 +28,18 @@ public class TaskTiming {
 
   public TimingData start(final int totalTasksCount) {
     startTime = getCurrentTime();
-    completedTasks = 0;
-    totalTasks = totalTasksCount;
+    completedTasks.set(0);
+    totalTasks.set(totalTasksCount);
     return generateTimingData();
   }
 
   public TimingData updateTotalTasks(final int totalTasksCount) {
-    totalTasks = totalTasksCount;
+    totalTasks.set(totalTasksCount);
     return generateTimingData();
   }
 
   public TimingData taskDone() {
-    completedTasks++;
+    completedTasks.incrementAndGet();
     return generateTimingData();
   }
 
@@ -49,11 +50,12 @@ public class TaskTiming {
   private TimingData generateTimingData() {
     final long totalTime = getCurrentTime();
     final long duration = totalTime - startTime;
-    final float ratioOfDone = completedTasks / (float) totalTasks;
+    final int completed = completedTasks.get();
+    final int total = totalTasks.get();
+    final float ratioOfDone = completed / (float) total;
     final long estimatedTimeLeft = (long) (duration / ratioOfDone) - duration;
 
-    return new TimingData(
-        totalTasks, completedTasks, startTime, totalTime, estimatedTimeLeft, ratioOfDone);
+    return new TimingData(total, completed, startTime, totalTime, estimatedTimeLeft, ratioOfDone);
   }
 
   @VisibleForTesting
