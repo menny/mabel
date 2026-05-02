@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
 import org.junit.Assert;
@@ -151,9 +152,8 @@ public class SourcesLocatorTest {
   private static class FakeOpener
       implements net.evendanan.bazel.mvn.merger.SourcesJarLocator.ConnectionFactory {
 
-    private final Map<URL, Integer> buildsCounter = new java.util.concurrent.ConcurrentHashMap<>();
-    private final Map<URL, HttpURLConnection> returnedConnections =
-        new java.util.concurrent.ConcurrentHashMap<>();
+    private final Map<URL, Integer> buildsCounter = new ConcurrentHashMap<>();
+    private final Map<URL, HttpURLConnection> returnedConnections = new ConcurrentHashMap<>();
 
     private boolean openFailure = false;
 
