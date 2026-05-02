@@ -6,7 +6,7 @@ on:
 jobs:
   review:
     name: Cassandra Review
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: github.event.pull_request.head.repo.full_name == github.repository
     permissions:
       contents: read
@@ -15,8 +15,6 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Important: fetch all history for diffing
       - name: Generate GitHub App Token
         id: app-token
         uses: actions/create-github-app-token@v1
