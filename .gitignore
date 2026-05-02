@@ -16,18 +16,7 @@ hs_err_pid*
 .DS_Store
 
 #bazel output folders
-/bazel-bazel-mvn-deps
-/bazel-mabel
-/bazel-android
-/bazel-plain_java
-/bazel-java_plugin
-/bazel-kotlin
-/bazel-kotlin_with_kt_rules
-/bazel-genfiles
-/bazel-out
-/bazel-testlogs
-/bazel-bin
-/bazel-app
+bazel-*
 /bazel
 
 #idea
