@@ -87,12 +87,16 @@ public class DefaultModelResolver implements ModelResolver {
       }
 
       HttpURLConnection connection = (HttpURLConnection) urlConnection;
-      connection.setRequestMethod("HEAD");
-      connection.setInstanceFollowRedirects(true);
-      connection.connect();
+      try {
+        connection.setRequestMethod("HEAD");
+        connection.setInstanceFollowRedirects(true);
+        connection.connect();
 
-      int code = connection.getResponseCode();
-      return code == 200;
+        int code = connection.getResponseCode();
+        return code == 200;
+      } finally {
+        connection.disconnect();
+      }
     } catch (IOException e) {
       return false;
     }

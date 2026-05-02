@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import net.evendanan.bazel.mvn.api.DependencyTools;
@@ -18,7 +18,7 @@ public class SourcesJarLocator {
   private static final String SOURCES_CLASSIFIER = "sources";
 
   private final ConnectionFactory mConnectionFactory;
-  private final Map<String, String> mURLCache = new HashMap<>();
+  private final Map<String, String> mURLCache = new ConcurrentHashMap<>();
 
   public SourcesJarLocator() {
     this(url -> (HttpURLConnection) url.openConnection());
@@ -31,7 +31,7 @@ public class SourcesJarLocator {
 
   private static Collection<Dependency> fillSourcesAttribute(
       Collection<Dependency> dependencies, DependencyMemoizator memoizator) {
-    return dependencies.stream().map(memoizator::map).collect(Collectors.toList());
+    return dependencies.parallelStream().map(memoizator::map).collect(Collectors.toList());
   }
 
   public Collection<Dependency> fillSourcesAttribute(Collection<Dependency> dependencies) {
@@ -57,12 +57,16 @@ public class SourcesJarLocator {
                 Locale.US, "%s-%s.jar", url.substring(0, extStartIndex), SOURCES_CLASSIFIER);
         final URL classifiedUrl = new URL(urlWithClassifier);
         HttpURLConnection con = mConnectionFactory.openUrlConnection(classifiedUrl);
-        con.setRequestMethod("HEAD");
-        final int responseCode = con.getResponseCode();
-        if (responseCode >= 200 && responseCode < 300) {
-          return classifiedUrl.toString();
-        } else {
-          return "";
+        try {
+          con.setRequestMethod("HEAD");
+          final int responseCode = con.getResponseCode();
+          if (responseCode >= 200 && responseCode < 300) {
+            return classifiedUrl.toString();
+          } else {
+            return "";
+          }
+        } finally {
+          con.disconnect();
         }
       } catch (Exception e) {
         return "";

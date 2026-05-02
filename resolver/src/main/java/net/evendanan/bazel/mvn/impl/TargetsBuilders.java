@@ -151,6 +151,7 @@ public class TargetsBuilders {
         // alias mechanism.
         .map(dependencyTools::targetName)
         .map(name -> String.format(Locale.US, ":%s", name))
+        .sorted()
         .collect(Collectors.toList());
   }
 
@@ -180,12 +181,10 @@ public class TargetsBuilders {
   public static class HttpTargetsBuilder implements TargetsBuilder {
     private static final char[] hexArray = "0123456789abcdef".toCharArray();
     private final boolean calculateSha;
-    private final byte[] readBuffer;
     private final Function<Dependency, URI> downloader;
 
     public HttpTargetsBuilder(boolean calculateSha, Function<Dependency, URI> downloader) {
       this.calculateSha = calculateSha;
-      this.readBuffer = calculateSha ? new byte[4096] : new byte[0];
       this.downloader = downloader;
     }
 
@@ -205,6 +204,7 @@ public class TargetsBuilders {
       if (calculateSha && !dependency.mavenCoordinate().version().contains("SNAPSHOT")) {
         try (InputStream inputStream = downloader.apply(dependency).toURL().openStream()) {
           final MessageDigest digest = MessageDigest.getInstance("SHA-256");
+          final byte[] readBuffer = new byte[4096];
 
           int bytesCount;
           while ((bytesCount = inputStream.read(readBuffer)) != -1) {

@@ -37,7 +37,7 @@ public class ProgressTimer {
     report("Finished. %s", TaskTiming.humanReadableTime(finish.totalTime - finish.startTime));
   }
 
-  private void report(String text, Object... args) {
+  private synchronized void report(String text, Object... args) {
     String msg = String.format(Locale.ROOT, text, args);
     System.out.println(String.format(Locale.ROOT, "[%s] %s", title, msg));
   }

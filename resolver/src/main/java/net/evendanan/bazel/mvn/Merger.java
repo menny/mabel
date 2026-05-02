@@ -14,6 +14,7 @@ import java.io.OutputStreamWriter;
 import java.net.URI;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -234,7 +235,7 @@ public class Merger {
 
     final Serialization serialization = new Serialization();
     final List<ResolutionOutput> resolutions =
-        options.artifacts.stream()
+        options.artifacts.parallelStream()
             .map(
                 inputFile -> {
                   System.out.print('.');
@@ -309,6 +310,7 @@ public class Merger {
                     return Dependency.builder(d).exports(Collections.emptyList()).build();
                   }
                 })
+            .sorted(Comparator.comparing(dependencyTools::mavenCoordinates))
             .collect(Collectors.toList());
 
     System.out.println();
@@ -340,7 +342,7 @@ public class Merger {
             "Constructing Bazel targets",
             "%d out of %d (%.2f%%%s): %s...");
     List<TargetsToWrite> targetsToWritePairs =
-        resolvedDependencies.stream()
+        resolvedDependencies.parallelStream()
             .peek(d -> timer.taskDone(dependencyTools.mavenCoordinates(d)))
             .map(
                 dependency ->
@@ -358,7 +360,7 @@ public class Merger {
 
     System.out.print("Writing targets to files...");
     List<Target> repositoryRules =
-        targetsToWritePairs.stream()
+        targetsToWritePairs.parallelStream()
             .map(t -> t.repositoryRules)
             .flatMap(List::stream)
             .collect(Collectors.toList());
@@ -368,7 +370,7 @@ public class Merger {
             options.public_targets_category, rootDependencies, resolvedDependencies);
 
     List<Target> targets =
-        targetsToWritePairs.stream()
+        targetsToWritePairs.parallelStream()
             .map(t -> t.targets)
             .flatMap(List::stream)
             .map(visibilityFixer)
