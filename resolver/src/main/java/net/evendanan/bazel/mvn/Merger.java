@@ -358,7 +358,7 @@ public class Merger {
 
     System.out.print("Writing targets to files...");
     List<Target> repositoryRules =
-        targetsToWritePairs.stream()
+        targetsToWritePairs.parallelStream()
             .map(t -> t.repositoryRules)
             .flatMap(List::stream)
             .collect(Collectors.toList());
@@ -368,7 +368,7 @@ public class Merger {
             options.public_targets_category, rootDependencies, resolvedDependencies);
 
     List<Target> targets =
-        targetsToWritePairs.stream()
+        targetsToWritePairs.parallelStream()
             .map(t -> t.targets)
             .flatMap(List::stream)
             .map(visibilityFixer)
