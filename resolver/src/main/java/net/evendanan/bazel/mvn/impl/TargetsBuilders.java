@@ -151,6 +151,7 @@ public class TargetsBuilders {
         // alias mechanism.
         .map(dependencyTools::targetName)
         .map(name -> String.format(Locale.US, ":%s", name))
+        .sorted()
         .collect(Collectors.toList());
   }
 

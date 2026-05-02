@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -79,6 +80,7 @@ public class GraphUtils {
             Stream.concat(dependency.dependencies().stream(), dependency.exports().stream()),
             dependency.runtimeDependencies().stream())
         .distinct()
+        .sorted(Comparator.comparing(MavenCoordinate::toMavenString))
         .forEach(child -> dfsTraveller(child, dependencyMap, level + 1, visitor, seenDependencies));
 
     seenDependencies.remove(mavenCoordinate);
@@ -106,6 +108,7 @@ public class GraphUtils {
               Stream.concat(dependency.dependencies().stream(), dependency.exports().stream()),
               dependency.runtimeDependencies().stream())
           .distinct()
+          .sorted(Comparator.comparing(MavenCoordinate::toMavenString))
           .forEach(queue::add);
     }
   }

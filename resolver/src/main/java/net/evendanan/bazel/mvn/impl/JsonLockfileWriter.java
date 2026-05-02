@@ -10,10 +10,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import net.evendanan.bazel.mvn.api.RuleWriter;
 import net.evendanan.bazel.mvn.api.Target;
 
@@ -42,9 +42,9 @@ public class JsonLockfileWriter implements RuleWriter {
   @Override
   public void write(Collection<Target> targets) throws IOException {
     // We need to process both repository rules (http_file) and import rules (jvm_import, etc)
-    // and combine their information into a single lockfile entry per artifact
+    // combine their information into a single lockfile entry per artifact
 
-    Map<String, ArtifactInfo> artifactMap = new HashMap<>();
+    Map<String, ArtifactInfo> artifactMap = new TreeMap<>();
 
     for (Target target : targets) {
       String mavenCoordinate = target.getMavenCoordinates();
