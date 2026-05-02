@@ -14,6 +14,7 @@ import java.io.OutputStreamWriter;
 import java.net.URI;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -309,6 +310,7 @@ public class Merger {
                     return Dependency.builder(d).exports(Collections.emptyList()).build();
                   }
                 })
+            .sorted(Comparator.comparing(dependencyTools::mavenCoordinates))
             .collect(Collectors.toList());
 
     System.out.println();
