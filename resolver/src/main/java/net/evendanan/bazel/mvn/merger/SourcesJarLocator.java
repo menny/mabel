@@ -57,12 +57,16 @@ public class SourcesJarLocator {
                 Locale.US, "%s-%s.jar", url.substring(0, extStartIndex), SOURCES_CLASSIFIER);
         final URL classifiedUrl = new URL(urlWithClassifier);
         HttpURLConnection con = mConnectionFactory.openUrlConnection(classifiedUrl);
-        con.setRequestMethod("HEAD");
-        final int responseCode = con.getResponseCode();
-        if (responseCode >= 200 && responseCode < 300) {
-          return classifiedUrl.toString();
-        } else {
-          return "";
+        try {
+          con.setRequestMethod("HEAD");
+          final int responseCode = con.getResponseCode();
+          if (responseCode >= 200 && responseCode < 300) {
+            return classifiedUrl.toString();
+          } else {
+            return "";
+          }
+        } finally {
+          con.disconnect();
         }
       } catch (Exception e) {
         return "";

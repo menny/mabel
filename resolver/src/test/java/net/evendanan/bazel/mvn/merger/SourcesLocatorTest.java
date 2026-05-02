@@ -144,6 +144,7 @@ public class SourcesLocatorTest {
 
     Mockito.verify(httpURLConnection1).getResponseCode();
     Mockito.verify(httpURLConnection1).setRequestMethod("HEAD");
+    Mockito.verify(httpURLConnection1).disconnect();
     Mockito.verifyNoMoreInteractions(httpURLConnection1);
 
     Mockito.verifyZeroInteractions(httpURLConnection2, httpURLConnection3);
@@ -155,7 +156,7 @@ public class SourcesLocatorTest {
     private final Map<URL, Integer> buildsCounter = new ConcurrentHashMap<>();
     private final Map<URL, HttpURLConnection> returnedConnections = new ConcurrentHashMap<>();
 
-    private boolean openFailure = false;
+    private volatile boolean openFailure = false;
 
     @Override
     public HttpURLConnection openUrlConnection(final URL url) throws IOException {
