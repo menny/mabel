@@ -234,7 +234,7 @@ public class Merger {
 
     final Serialization serialization = new Serialization();
     final List<ResolutionOutput> resolutions =
-        options.artifacts.stream()
+        options.artifacts.parallelStream()
             .map(
                 inputFile -> {
                   System.out.print('.');
