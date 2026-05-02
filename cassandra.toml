@@ -1,0 +1,13 @@
+# Cassandra AI Review Configuration
+# This file centralizes static settings for the reviewer.
+# Precedence: CLI Arguments > Configuration File > Defaults
+
+provider = "google"
+model = "gemini-3-flash-preview"
+
+# Additive guidelines to supplement the main prompt.
+# These can be local file paths or named prompts from the library.
+supplemental-guidelines = [
+    ".github/ai-reviewer/code-reuse.md",
+    ".github/ai-reviewer/drive-by-fixes.md"
+]

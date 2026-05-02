@@ -17,11 +17,6 @@ jobs:
         with:
           fetch-depth: 0 # Important: fetch all history for diffing
 
-      - name: Diagnostic (Key Format)
-        run: |
-          echo "Key starts with: $(echo "${{ secrets.CASSANDRA_APP_PRIVATE_KEY }}" | head -n 1)"
-          echo "Key line count: $(echo "${{ secrets.CASSANDRA_APP_PRIVATE_KEY }}" | wc -l)"
-
       - name: Generate GitHub App Token
         id: app-token
         uses: actions/create-github-app-token@v1
