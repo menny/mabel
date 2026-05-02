@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -83,10 +82,10 @@ public class RuleClassifiers {
           final String jarEntryName = jarEntry.getName();
           if (jarEntryName.equalsIgnoreCase(
               "META-INF/services/javax.annotation.processing.Processor")) {
-            String content =
-                CharStreams.toString(new InputStreamReader(zipInputStream, Charsets.UTF_8));
+            List<String> lines =
+                CharStreams.readLines(new InputStreamReader(zipInputStream, Charsets.UTF_8));
 
-            parseServicesProcessorFileContent(content).ifPresent(detectedModules::add);
+            parseServicesProcessorFileContent(lines).ifPresent(detectedModules::add);
             break;
           }
           zipInputStream.closeEntry();
@@ -98,10 +97,10 @@ public class RuleClassifiers {
     }
 
     private static Optional<TargetsBuilder> parseServicesProcessorFileContent(
-        String processorContent) {
-      if (processorContent != null && processorContent.length() > 0) {
+        List<String> processorContent) {
+      if (processorContent != null && processorContent.size() > 0) {
         final List<String> processors =
-            Arrays.stream(processorContent.split("\n", -1))
+            processorContent.stream()
                 .filter(s -> s != null && s.length() > 0)
                 .filter(s -> !s.startsWith("#"))
                 .map(String::trim)
