@@ -1,3 +1,4 @@
+---
 name: AI Code Review
 on:
   pull_request:
@@ -13,17 +14,13 @@ jobs:
       issues: write
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Important: fetch all history for diffing
-
+        uses: actions/checkout@v6.0.2
       - name: Generate GitHub App Token
         id: app-token
         uses: actions/create-github-app-token@v1
         with:
           app-id: 3562238
           private-key: ${{ secrets.CASSANDRA_APP_PRIVATE_KEY }}
-
       - name: Run Cassandra AI Review
         uses: menny/cassandra@v0.3.0
         with:
