@@ -2,6 +2,7 @@ package net.evendanan.bazel.mvn.impl;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
+import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.net.URI;
 import java.security.MessageDigest;
@@ -202,7 +203,8 @@ public class TargetsBuilders {
               .addString("downloaded_file_path", getFilenameFromUrl(dependency.url()));
 
       if (calculateSha && !dependency.mavenCoordinate().version().contains("SNAPSHOT")) {
-        try (InputStream inputStream = downloader.apply(dependency).toURL().openStream()) {
+        try (InputStream inputStream =
+            new BufferedInputStream(downloader.apply(dependency).toURL().openStream())) {
           final MessageDigest digest = MessageDigest.getInstance("SHA-256");
           final byte[] readBuffer = new byte[4096];
 

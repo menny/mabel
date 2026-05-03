@@ -1,11 +1,12 @@
 package net.evendanan.bazel.mvn.impl;
 
 import com.google.common.base.Charsets;
+import com.google.common.io.CharStreams;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -81,15 +82,11 @@ public class RuleClassifiers {
           final String jarEntryName = jarEntry.getName();
           if (jarEntryName.equalsIgnoreCase(
               "META-INF/services/javax.annotation.processing.Processor")) {
-            StringBuilder contentBuilder = new StringBuilder();
-            final byte[] buffer = new byte[1024];
-            int read = 0;
-            while ((read = zipInputStream.read(buffer, 0, buffer.length)) >= 0) {
-              contentBuilder.append(new String(buffer, 0, read, Charsets.UTF_8));
-            }
+            List<String> lines =
+                CharStreams.readLines(new InputStreamReader(zipInputStream, Charsets.UTF_8));
 
-            parseServicesProcessorFileContent(contentBuilder.toString())
-                .ifPresent(detectedModules::add);
+            parseServicesProcessorFileContent(lines).ifPresent(detectedModules::add);
+            break;
           }
           zipInputStream.closeEntry();
           jarEntry = zipInputStream.getNextJarEntry();
@@ -100,17 +97,17 @@ public class RuleClassifiers {
     }
 
     private static Optional<TargetsBuilder> parseServicesProcessorFileContent(
-        String processorContent) {
-      if (processorContent != null && processorContent.length() > 0) {
+        List<String> processorContent) {
+      if (!processorContent.isEmpty()) {
         final List<String> processors =
-            Arrays.stream(processorContent.split("\n", -1))
+            processorContent.stream()
                 .filter(s -> s != null && s.length() > 0)
                 .filter(s -> !s.startsWith("#"))
                 .map(String::trim)
                 .filter(s -> !s.isEmpty())
                 .collect(Collectors.toList());
 
-        if (processors.size() > 0) {
+        if (!processors.isEmpty()) {
           return Optional.of(new TargetsBuilders.JavaPluginFormatter(processors));
         }
       }
