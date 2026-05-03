@@ -70,8 +70,7 @@ public class Resolver {
           "Failed to create folder for json file: " + parentFolder.getAbsolutePath());
     }
 
-    try (final BufferedWriter writer =
-        Files.newBufferedWriter(outputFile.toPath(), Charsets.UTF_8)) {
+    try (final BufferedWriter writer = Files.newBufferedWriter(outputFile.toPath(), Charsets.UTF_8)) {
       new Serialization()
           .serialize(
               ResolutionOutput.create(
