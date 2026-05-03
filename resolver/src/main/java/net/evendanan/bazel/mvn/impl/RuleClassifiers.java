@@ -98,7 +98,7 @@ public class RuleClassifiers {
 
     private static Optional<TargetsBuilder> parseServicesProcessorFileContent(
         List<String> processorContent) {
-      if (processorContent != null && processorContent.size() > 0) {
+      if (!processorContent.isEmpty()) {
         final List<String> processors =
             processorContent.stream()
                 .filter(s -> s != null && s.length() > 0)
@@ -107,7 +107,7 @@ public class RuleClassifiers {
                 .filter(s -> !s.isEmpty())
                 .collect(Collectors.toList());
 
-        if (processors.size() > 0) {
+        if (!processors.isEmpty()) {
           return Optional.of(new TargetsBuilders.JavaPluginFormatter(processors));
         }
       }
