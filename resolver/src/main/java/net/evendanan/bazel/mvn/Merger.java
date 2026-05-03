@@ -8,7 +8,6 @@ import com.google.common.base.Charsets;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.URI;
@@ -239,7 +238,8 @@ public class Merger {
             .map(
                 inputFile -> {
                   System.out.print('.');
-                  try (final FileReader reader = new FileReader(inputFile, Charsets.UTF_8)) {
+                  try (final java.io.BufferedReader reader =
+                      java.nio.file.Files.newBufferedReader(inputFile.toPath(), Charsets.UTF_8)) {
                     return serialization.deserialize(reader);
                   } catch (Exception e) {
                     throw new RuntimeException(e);

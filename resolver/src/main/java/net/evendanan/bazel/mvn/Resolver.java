@@ -9,7 +9,6 @@ import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
 import com.google.devtools.bazel.workspace.maven.adapter.MigrationToolingGraphResolver;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -69,7 +68,8 @@ public class Resolver {
           "Failed to create folder for json file: " + parentFolder.getAbsolutePath());
     }
 
-    try (final FileWriter writer = new FileWriter(outputFile, Charsets.UTF_8, false)) {
+    try (final java.io.BufferedWriter writer =
+        java.nio.file.Files.newBufferedWriter(outputFile.toPath(), Charsets.UTF_8)) {
       new Serialization()
           .serialize(
               ResolutionOutput.create(
