@@ -202,7 +202,8 @@ public class TargetsBuilders {
               .addString("downloaded_file_path", getFilenameFromUrl(dependency.url()));
 
       if (calculateSha && !dependency.mavenCoordinate().version().contains("SNAPSHOT")) {
-        try (InputStream inputStream = downloader.apply(dependency).toURL().openStream()) {
+        try (InputStream inputStream =
+            new java.io.BufferedInputStream(downloader.apply(dependency).toURL().openStream())) {
           final MessageDigest digest = MessageDigest.getInstance("SHA-256");
           final byte[] readBuffer = new byte[4096];
 
