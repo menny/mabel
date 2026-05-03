@@ -239,7 +239,8 @@ public class Merger {
                 inputFile -> {
                   System.out.print('.');
                   try (final java.io.BufferedReader reader =
-                      java.nio.file.Files.newBufferedReader(inputFile.toPath(), Charsets.UTF_8)) {
+                      java.nio.file.Files.newBufferedReader(
+                          java.nio.file.Paths.get(inputFile), Charsets.UTF_8)) {
                     return serialization.deserialize(reader);
                   } catch (Exception e) {
                     throw new RuntimeException(e);

@@ -19,7 +19,6 @@ import java.util.Objects;
 import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import java.util.jar.JarInputStream;
 import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
 import java.util.zip.ZipEntry;
@@ -80,82 +79,82 @@ public class AddJarManifestEntry {
     Objects.requireNonNull(source, "Source jar must be set.");
     Objects.requireNonNull(out, "Output path must be set.");
 
-    if (isJarSigned(source)) {
-      verboseLog("Signed jar. Will not modify: " + source);
-      Files.createDirectories(out.getParent());
-      Files.copy(source, out, REPLACE_EXISTING);
-      return;
-    }
+    try (JarFile jarFile = new JarFile(source.toFile(), false)) {
+      if (isJarSigned(jarFile)) {
+        verboseLog("Signed jar. Will not modify: " + source);
+        Files.createDirectories(out.getParent());
+        Files.copy(source, out, REPLACE_EXISTING);
+        return;
+      }
 
-    addEntryToManifest(out, source, toAdd, toRemove);
+      addEntryToManifest(out, source, jarFile, toAdd, toRemove);
+    }
   }
 
-  private static boolean isJarSigned(Path source) throws IOException {
-    try (InputStream is = Files.newInputStream(source);
-        JarInputStream jis = new JarInputStream(is)) {
-      for (ZipEntry entry = jis.getNextEntry(); entry != null; entry = jis.getNextJarEntry()) {
-        if (entry.isDirectory()) {
-          continue;
-        }
-        if (entry.getName().startsWith("META-INF/") && entry.getName().endsWith(".SF")) {
-          return true;
-        }
+  private static boolean isJarSigned(JarFile jarFile) throws IOException {
+    Enumeration<JarEntry> entries = jarFile.entries();
+    while (entries.hasMoreElements()) {
+      JarEntry entry = entries.nextElement();
+      if (entry.isDirectory()) {
+        continue;
+      }
+      if (entry.getName().startsWith("META-INF/") && entry.getName().endsWith(".SF")) {
+        return true;
       }
     }
     return false;
   }
 
   public static void addEntryToManifest(
-      Path out, Path source, List<String> toAdd, List<String> toRemove) throws IOException {
-    try (JarFile jarFile = new JarFile(source.toFile(), false)) {
-      try (OutputStream fos = Files.newOutputStream(out);
-          ZipOutputStream zos = new JarOutputStream(fos)) {
+      Path out, Path source, JarFile jarFile, List<String> toAdd, List<String> toRemove)
+      throws IOException {
+    try (OutputStream fos = Files.newOutputStream(out);
+        ZipOutputStream zos = new JarOutputStream(fos)) {
 
-        // Rewrite the manifest first
-        Manifest manifest = jarFile.getManifest();
-        if (manifest == null) {
-          manifest = new Manifest();
-          manifest.getMainAttributes().put(MANIFEST_VERSION, "1.0");
+      // Rewrite the manifest first
+      Manifest manifest = jarFile.getManifest();
+      if (manifest == null) {
+        manifest = new Manifest();
+        manifest.getMainAttributes().put(MANIFEST_VERSION, "1.0");
+      }
+      amendManifest(manifest, toAdd, toRemove);
+
+      ZipEntry newManifestEntry = new ZipEntry(JarFile.MANIFEST_NAME);
+      newManifestEntry.setTime(DEFAULT_TIMESTAMP);
+      zos.putNextEntry(newManifestEntry);
+      manifest.write(zos);
+
+      Enumeration<JarEntry> entries = jarFile.entries();
+      while (entries.hasMoreElements()) {
+        JarEntry sourceEntry = entries.nextElement();
+        String name = sourceEntry.getName();
+
+        ZipEntry outEntry = new ZipEntry(name);
+        outEntry.setMethod(sourceEntry.getMethod());
+        outEntry.setTime(sourceEntry.getTime());
+        outEntry.setComment(sourceEntry.getComment());
+        outEntry.setExtra(sourceEntry.getExtra());
+
+        if (JarFile.MANIFEST_NAME.equals(name)) {
+          continue;
         }
-        amendManifest(manifest, toAdd, toRemove);
 
-        ZipEntry newManifestEntry = new ZipEntry(JarFile.MANIFEST_NAME);
-        newManifestEntry.setTime(DEFAULT_TIMESTAMP);
-        zos.putNextEntry(newManifestEntry);
-        manifest.write(zos);
+        if (sourceEntry.getMethod() == ZipEntry.STORED) {
+          outEntry.setSize(sourceEntry.getSize());
+          outEntry.setCrc(sourceEntry.getCrc());
+        }
 
-        Enumeration<JarEntry> entries = jarFile.entries();
-        while (entries.hasMoreElements()) {
-          JarEntry sourceEntry = entries.nextElement();
-          String name = sourceEntry.getName();
-
-          ZipEntry outEntry = new ZipEntry(name);
-          outEntry.setMethod(sourceEntry.getMethod());
-          outEntry.setTime(sourceEntry.getTime());
-          outEntry.setComment(sourceEntry.getComment());
-          outEntry.setExtra(sourceEntry.getExtra());
-
-          if (JarFile.MANIFEST_NAME.equals(name)) {
+        try (InputStream in = jarFile.getInputStream(sourceEntry)) {
+          zos.putNextEntry(outEntry);
+          ByteStreams.copy(in, zos);
+        } catch (ZipException e) {
+          if (e.getMessage().contains("duplicate entry:")) {
+            // If there is a duplicate entry we keep the first one we saw.
+            verboseLog(
+                "WARN: Skipping duplicate jar entry " + outEntry.getName() + " in " + source);
             continue;
-          }
-
-          if (sourceEntry.getMethod() == ZipEntry.STORED) {
-            outEntry.setSize(sourceEntry.getSize());
-            outEntry.setCrc(sourceEntry.getCrc());
-          }
-
-          try (InputStream in = jarFile.getInputStream(sourceEntry)) {
-            zos.putNextEntry(outEntry);
-            ByteStreams.copy(in, zos);
-          } catch (ZipException e) {
-            if (e.getMessage().contains("duplicate entry:")) {
-              // If there is a duplicate entry we keep the first one we saw.
-              verboseLog(
-                  "WARN: Skipping duplicate jar entry " + outEntry.getName() + " in " + source);
-              continue;
-            } else {
-              throw e;
-            }
+          } else {
+            throw e;
           }
         }
       }
