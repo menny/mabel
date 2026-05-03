@@ -79,16 +79,19 @@ public class AddJarManifestEntry {
     Objects.requireNonNull(source, "Source jar must be set.");
     Objects.requireNonNull(out, "Output path must be set.");
 
+    boolean isSigned;
     try (JarFile jarFile = new JarFile(source.toFile(), false)) {
-      if (isJarSigned(jarFile)) {
-        verboseLog("Signed jar. Will not modify: " + source);
-        Files.createDirectories(out.getParent());
-        Files.copy(source, out, REPLACE_EXISTING);
+      isSigned = isJarSigned(jarFile);
+      if (!isSigned) {
+        addEntryToManifest(out, source, jarFile, toAdd, toRemove);
         return;
       }
-
-      addEntryToManifest(out, source, jarFile, toAdd, toRemove);
     }
+
+    // JarFile is now closed, safe to copy on Windows
+    verboseLog("Signed jar. Will not modify: " + source);
+    Files.createDirectories(out.getParent());
+    Files.copy(source, out, REPLACE_EXISTING);
   }
 
   private static boolean isJarSigned(JarFile jarFile) throws IOException {
@@ -105,7 +108,23 @@ public class AddJarManifestEntry {
     return false;
   }
 
+  /**
+   * Public API for adding an entry to the manifest.
+   *
+   * @param out The output path for the modified jar.
+   * @param source The source jar path.
+   * @param toAdd List of manifest entries to add.
+   * @param toRemove List of manifest entries to remove.
+   * @throws IOException If an I/O error occurs.
+   */
   public static void addEntryToManifest(
+      Path out, Path source, List<String> toAdd, List<String> toRemove) throws IOException {
+    try (JarFile jarFile = new JarFile(source.toFile(), false)) {
+      addEntryToManifest(out, source, jarFile, toAdd, toRemove);
+    }
+  }
+
+  private static void addEntryToManifest(
       Path out, Path source, JarFile jarFile, List<String> toAdd, List<String> toRemove)
       throws IOException {
     try (OutputStream fos = Files.newOutputStream(out);

@@ -8,8 +8,10 @@ import com.beust.jcommander.converters.IParameterSplitter;
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
 import com.google.devtools.bazel.workspace.maven.adapter.MigrationToolingGraphResolver;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -68,8 +70,8 @@ public class Resolver {
           "Failed to create folder for json file: " + parentFolder.getAbsolutePath());
     }
 
-    try (final java.io.BufferedWriter writer =
-        java.nio.file.Files.newBufferedWriter(outputFile.toPath(), Charsets.UTF_8)) {
+    try (final BufferedWriter writer =
+        Files.newBufferedWriter(outputFile.toPath(), Charsets.UTF_8)) {
       new Serialization()
           .serialize(
               ResolutionOutput.create(

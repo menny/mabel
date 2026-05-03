@@ -5,8 +5,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -75,8 +77,7 @@ public class JsonLockfileWriter implements RuleWriter {
 
     root.add("artifacts", artifacts);
 
-    try (java.io.BufferedWriter writer =
-        java.nio.file.Files.newBufferedWriter(outputFile.toPath(), Charsets.UTF_8)) {
+    try (BufferedWriter writer = Files.newBufferedWriter(outputFile.toPath(), Charsets.UTF_8)) {
       gson.toJson(root, writer);
     }
   }
