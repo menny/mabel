@@ -5,12 +5,15 @@ import static net.evendanan.bazel.mvn.merger.GraphUtils.dfsTraveller;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 import com.google.common.base.Charsets;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -238,9 +241,8 @@ public class Merger {
             .map(
                 inputFile -> {
                   System.out.print('.');
-                  try (final java.io.BufferedReader reader =
-                      java.nio.file.Files.newBufferedReader(
-                          java.nio.file.Paths.get(inputFile), Charsets.UTF_8)) {
+                  try (final BufferedReader reader =
+                      Files.newBufferedReader(Paths.get(inputFile), Charsets.UTF_8)) {
                     return serialization.deserialize(reader);
                   } catch (Exception e) {
                     throw new RuntimeException(e);
