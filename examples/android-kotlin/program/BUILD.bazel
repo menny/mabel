@@ -1,6 +1,6 @@
-load("@rules_android//android:rules.bzl", "android_binary")
-load("@rules_kotlin//kotlin:android.bzl", "kt_android_library")
 load("@mabel//rules:mabel.bzl", "artifact", "mabel_rule")
+load("@rules_android//rules:rules.bzl", "android_binary")
+load("@rules_kotlin//kotlin:android.bzl", "kt_android_library")
 load(":g_artifact.bzl", "g_artifact")
 
 mabel_rule(

@@ -1,6 +1,5 @@
-load("@rules_android//rules:rules.bzl", "android_binary")
 load("@mabel//rules:mabel.bzl", "artifact", "mabel_rule")
-
+load("@rules_android//rules:rules.bzl", "android_binary")
 load(":g_artifact.bzl", "g_artifact")
 
 mabel_rule(
