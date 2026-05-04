@@ -17,3 +17,4 @@ verify_example plain_java
 verify_example java_plugin
 verify_example kotlin
 verify_example android
+verify_example android-kotlin

@@ -1,9 +1,10 @@
 load("@mabel//rules:mabel.bzl", "artifact", "mabel_rule")
+load("@rules_android//rules:rules.bzl", "android_binary")
 load(":g_artifact.bzl", "g_artifact")
 
 mabel_rule(
     name = "main_deps",
-    lockfile_path = ":maven_install.json",
+    lockfile_path = "program/maven_install.json",
     maven_deps = [
         g_artifact("androidx.fragment:fragment:1.1.0-alpha02"),
         g_artifact("androidx.appcompat:appcompat:1.0.2"),
@@ -26,7 +27,6 @@ android_binary(
     resource_files = glob(["res/**/*"]),
     visibility = ["//visibility:public"],
     deps = [
-        "@mvn_android//androidx/annotation/annotation",
         "@mvn_android//androidx/appcompat/appcompat",
         "@mvn_android//androidx/fragment/fragment",
     ],

@@ -38,7 +38,7 @@ jobs:
     container: ghcr.io/menny/android_bazel:1.22.3
     strategy:
       matrix:
-        example_name: [plain_java, java_plugin, kotlin]
+        example_name: [plain_java, java_plugin, kotlin, android, android-kotlin]
       fail-fast: false
     steps:
       - uses: actions/checkout@v6.0.1
