@@ -75,9 +75,14 @@ The project is fully adopting Bzlmod. When working on Bazel rules:
 *   **Markdown**: partial to GitHub Flavored Markdown. Keep it clean and readable.
 
 ### 5. Implementation Details
-*   **Android Support**: `mabel_rule` detects `aar` files and generates `aar_import`.
-*   **Kotlin Support**: Works seamlessly via standard JVM rules.
+*   **Android Support**: `mabel_rule` detects `aar` files and generates `aar_import` targets using `@rules_android`.
+    *   **Note**: Projects using `aar` artifacts **MUST** configure `rules_android` and the Android SDK in their `MODULE.bazel`.
+*   **Kotlin Support**: Works seamlessly via standard JVM rules or `rules_kotlin`.
 *   **Lockfile**: The JSON lockfile is the interface between the resolution phase and the repository generation phase. Its structure is critical.
+
+### 6. Version Alignment
+*   When updating Bazel rules (e.g., `rules_java`, `rules_kotlin`, `rules_android`), ensure that the versions are aligned across the main project and all `examples/`. 
+*   Inconsistent versions across integration tests can lead to false positives/negatives.
 
 ### Commit Message
 

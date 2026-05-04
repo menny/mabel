@@ -12,7 +12,7 @@ Mabel provides the `mabel_rule` rule and `artifact` macro, which automatically g
 * Generates required Java rules with transitive dependencies.
 * Allows marking dependencies as `test_only`.
 * Automatically detects which rule type to create for a given dependency:
-  * `aar_import` for Android artifacts.
+  * `aar_import` for Android artifacts (requires `@rules_android` to be configured).
   * `java_plugin` + `java_library` for annotation processors. More about this [here](#annotation-processors).
   * [`jvm_import`](rules/jvm_import/jvm_import.bzl) for anything else.
 * Allows implementation replacement for `jvm_import` and `aar_import`. These can be replaced with another rule or macro.
@@ -302,7 +302,14 @@ This macro declares a Maven dependency to be resolved and imported into your wor
 
 ### Real Examples
 
-You can find several examples under the `examples/` folder in this repository. These examples are built as part of the CI process, so they represent working use cases.
+You can find several examples under the `examples/` folder in this repository, including:
+* `plain_java`: Simple Java application.
+* `java_plugin`: Java application with annotation processors.
+* `kotlin`: Kotlin application.
+* `android`: Android application with Java.
+* `android-kotlin`: Android application with Kotlin.
+
+These examples are built as part of the CI process, so they represent working use cases.
 
 ## Detected Rules
 
