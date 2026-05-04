@@ -206,7 +206,7 @@ public class TargetsBuilders {
         try (InputStream inputStream =
             new BufferedInputStream(downloader.apply(dependency).toURL().openStream())) {
           final MessageDigest digest = MessageDigest.getInstance("SHA-256");
-          final byte[] readBuffer = new byte[4096];
+          final byte[] readBuffer = new byte[16384];
 
           int bytesCount;
           while ((bytesCount = inputStream.read(readBuffer)) != -1) {

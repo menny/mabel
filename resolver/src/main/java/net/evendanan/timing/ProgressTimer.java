@@ -13,7 +13,7 @@ public class ProgressTimer {
     this.timer.start(tasksCount);
   }
 
-  public void taskDone(String taskName) {
+  public synchronized void taskDone(String taskName) {
     final TimingData timingData = timer.taskDone();
     final String estimatedTimeLeft;
     if (timingData.doneTasks >= 3) {
@@ -32,7 +32,7 @@ public class ProgressTimer {
         taskName);
   }
 
-  public void finish() {
+  public synchronized void finish() {
     TimingData finish = timer.finish();
     report("Finished. %s", TaskTiming.humanReadableTime(finish.totalTime - finish.startTime));
   }
