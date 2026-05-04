@@ -50,7 +50,7 @@ This approach ensures reproducible builds and allows you to review dependency ch
 Add `mabel` as dependencies:
 
 ```python
-bazel_dep(name = "mabel", version = "0.31.0")  # Check latest release
+bazel_dep(name = "mabel", version = "0.50.0")  # Check latest release
 ```
 
 #### Step 2: Define Dependencies in BUILD.bazel
