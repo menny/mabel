@@ -102,9 +102,11 @@ _jvm_import_repo = repository_rule(
 )
 
 def _aar_import_repo_impl(rctx):
-    """Creates a repository with native.aar_import target."""
+    """Creates a repository with rules_android.aar_import target."""
 
     build_content = """
+load("@rules_android//rules:rules.bzl", "aar_import")
+
 aar_import(
     name = "aar",
     aar = "@{aar_repo}//file",

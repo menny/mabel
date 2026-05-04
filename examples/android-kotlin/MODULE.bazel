@@ -1,8 +1,9 @@
-module(name = "mabel_examples_android")
+module(name = "mabel_examples_android_kotlin")
 
 bazel_dep(name = "mabel", version = "0.0.0")
 bazel_dep(name = "rules_java", version = "9.3.0")
 bazel_dep(name = "rules_android", version = "0.7.2")
+bazel_dep(name = "rules_kotlin", version = "2.3.20")
 
 local_path_override(
     module_name = "mabel",
@@ -27,7 +28,7 @@ register_toolchains("@androidsdk//:sdk-toolchain", "@androidsdk//:all")
 # Maven dependencies
 mabel = use_extension("@mabel//rules:extensions.bzl", "mabel")
 mabel.install(
-    aliases_repo = "mvn_android",
+    aliases_repo = "mvn_android_kotlin",
     lockfile = "//program:maven_install.json",
 )
-use_repo(mabel, "mvn_android")
+use_repo(mabel, "mvn_android_kotlin")
