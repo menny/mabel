@@ -116,7 +116,7 @@ public class DefaultModelResolver implements ModelResolver {
     try {
       return new URL(
           url
-              + groupId.replaceAll("\\.", "/")
+              + groupId.replace('.', '/')
               + "/"
               + artifactId
               + "/"

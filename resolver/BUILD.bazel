@@ -155,6 +155,29 @@ java_library(
 )
 
 java_test(
+    name = "bazel_naming_utils_test",
+    size = "small",
+    srcs = ["src/test/java/net/evendanan/bazel/mvn/api/BazelNamingUtilsTest.java"],
+    test_class = "net.evendanan.bazel.mvn.api.BazelNamingUtilsTest",
+    deps = [
+        ":api_lib",
+        "@mvn//junit/junit",
+    ],
+)
+
+java_test(
+    name = "rule_test",
+    size = "small",
+    srcs = ["src/test/java/com/google/devtools/bazel/workspace/maven/RuleTest.java"],
+    test_class = "com.google.devtools.bazel.workspace.maven.RuleTest",
+    deps = [
+        ":graph_resolver_lib",
+        "@mvn//junit/junit",
+        "@mvn//org/eclipse/aether/aether-api",
+    ],
+)
+
+java_test(
     name = "serialization_test",
     size = "small",
     srcs = ["src/test/java/net/evendanan/bazel/mvn/api/serialization/SerializationTest.java"],

@@ -38,9 +38,8 @@ public class VersionResolver {
    * version range or returns the pinned version if is a hard or soft pin. For soft pins, if that
    * version does not exist it selects the nearest version.
    */
-  private static final Pattern VERSION_SPEC_CONTAINER = Pattern.compile("^[\\[(].+[)\\]]$");
-
   private static final Pattern VERSION_SPEC_ITEM = Pattern.compile("([\\w.]+)");
+
   private final boolean debugLogs;
   private final Aether aether;
 
@@ -69,7 +68,7 @@ public class VersionResolver {
   String resolveVersion(String groupId, String artifactId, String classifier, String versionSpec)
       throws InvalidArtifactCoordinateException {
 
-    if (VERSION_SPEC_CONTAINER.matcher(versionSpec).matches()) {
+    if (isVersionRange(versionSpec)) {
       List<String> versions;
       try {
         versions = requestVersionList(groupId, artifactId, classifier, versionSpec);
@@ -110,6 +109,15 @@ public class VersionResolver {
       // well... not really a spec, just plain version
       return versionSpec;
     }
+  }
+
+  private static boolean isVersionRange(String versionSpec) {
+    if (versionSpec.length() < 3) {
+      return false;
+    }
+    char first = versionSpec.charAt(0);
+    char last = versionSpec.charAt(versionSpec.length() - 1);
+    return (first == '[' || first == '(') && (last == ']' || last == ')');
   }
 
   /** Given a set of maven coordinates, obtains a list of valid versions in ascending order. */

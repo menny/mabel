@@ -9,7 +9,7 @@ public class DependencyTools {
   public static final DependencyTools DEFAULT = new DependencyTools();
 
   private static String normalize(String name) {
-    return name.replaceAll("[+.-]", "_");
+    return BazelNamingUtils.normalize(name);
   }
 
   public final String mavenCoordinates(Dependency dependency) {

@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import net.evendanan.bazel.mvn.api.BazelNamingUtils;
 import org.apache.maven.model.License;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.util.artifact.JavaScopes;
@@ -66,7 +67,7 @@ public class Rule implements Comparable<Rule> {
   }
 
   private static String normalizedWorkspaceName(final String name) {
-    return name.replaceAll("[.-]", "_");
+    return BazelNamingUtils.normalize(name);
   }
 
   private static String normalizeMavenName(final String name) {
@@ -178,7 +179,7 @@ public class Rule implements Comparable<Rule> {
   }
 
   private String getUri() {
-    return groupId().replaceAll("\\.", "/")
+    return groupId().replace('.', '/')
         + "/"
         + artifactId()
         + "/"
