@@ -1,13 +1,12 @@
 package net.evendanan.timing;
 
 import com.google.common.annotations.VisibleForTesting;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class TaskTiming {
 
   private long startTime;
-  private final AtomicInteger completedTasks = new AtomicInteger(0);
-  private final AtomicInteger totalTasks = new AtomicInteger(0);
+  private int completedTasks = 0;
+  private int totalTasks = 0;
 
   public static String humanReadableTime(long milliseconds) {
     final long secondsInMilli = 1000;
@@ -26,36 +25,36 @@ public class TaskTiming {
     return timeString;
   }
 
-  public TimingData start(final int totalTasksCount) {
+  public synchronized TimingData start(final int totalTasksCount) {
     startTime = getCurrentTime();
-    completedTasks.set(0);
-    totalTasks.set(totalTasksCount);
+    completedTasks = 0;
+    totalTasks = totalTasksCount;
     return generateTimingData();
   }
 
-  public TimingData updateTotalTasks(final int totalTasksCount) {
-    totalTasks.set(totalTasksCount);
+  public synchronized TimingData updateTotalTasks(final int totalTasksCount) {
+    totalTasks = totalTasksCount;
     return generateTimingData();
   }
 
-  public TimingData taskDone() {
-    completedTasks.incrementAndGet();
+  public synchronized TimingData taskDone() {
+    completedTasks++;
     return generateTimingData();
   }
 
-  public TimingData finish() {
+  public synchronized TimingData finish() {
     return generateTimingData();
   }
 
   private TimingData generateTimingData() {
     final long totalTime = getCurrentTime();
     final long duration = totalTime - startTime;
-    final int completed = completedTasks.get();
-    final int total = totalTasks.get();
-    final float ratioOfDone = completed / (float) total;
-    final long estimatedTimeLeft = (long) (duration / ratioOfDone) - duration;
+    final float ratioOfDone = (totalTasks == 0) ? 0 : completedTasks / (float) totalTasks;
+    final long estimatedTimeLeft =
+        (ratioOfDone == 0) ? 0 : (long) (duration / ratioOfDone) - duration;
 
-    return new TimingData(total, completed, startTime, totalTime, estimatedTimeLeft, ratioOfDone);
+    return new TimingData(
+        totalTasks, completedTasks, startTime, totalTime, estimatedTimeLeft, ratioOfDone);
   }
 
   @VisibleForTesting
