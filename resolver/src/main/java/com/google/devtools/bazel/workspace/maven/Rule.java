@@ -14,7 +14,6 @@
 
 package com.google.devtools.bazel.workspace.maven;
 
-import com.google.common.base.CharMatcher;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -24,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import net.evendanan.bazel.mvn.api.BazelNamingUtils;
 import org.apache.maven.model.License;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.util.artifact.JavaScopes;
@@ -66,10 +66,8 @@ public class Rule implements Comparable<Rule> {
         + normalizedWorkspaceName(version);
   }
 
-  private static final CharMatcher DOT_OR_DASH = CharMatcher.anyOf(".-").precomputed();
-
   private static String normalizedWorkspaceName(final String name) {
-    return DOT_OR_DASH.replaceFrom(name, '_');
+    return BazelNamingUtils.normalize(name);
   }
 
   private static String normalizeMavenName(final String name) {

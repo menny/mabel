@@ -1,6 +1,5 @@
 package net.evendanan.bazel.mvn.api;
 
-import com.google.common.base.CharMatcher;
 import java.util.Locale;
 import net.evendanan.bazel.mvn.api.model.Dependency;
 import net.evendanan.bazel.mvn.api.model.MavenCoordinate;
@@ -9,10 +8,8 @@ public class DependencyTools {
 
   public static final DependencyTools DEFAULT = new DependencyTools();
 
-  private static final CharMatcher NORMALIZER = CharMatcher.anyOf("+.-").precomputed();
-
   private static String normalize(String name) {
-    return NORMALIZER.replaceFrom(name, '_');
+    return BazelNamingUtils.normalize(name);
   }
 
   public final String mavenCoordinates(Dependency dependency) {

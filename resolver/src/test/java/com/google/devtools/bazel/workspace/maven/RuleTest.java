@@ -19,6 +19,8 @@ public class RuleTest {
         Rule.generateFriendlyName("com.google.guava", "guava-android").split("__")[1]);
     // Version normalization
     assertEquals("27_0_1_jre", Rule.generateFullName("a", "b", "27.0.1-jre").split("__")[2]);
+    // Plus normalization
+    assertEquals("1_2_3_", Rule.generateFullName("a", "b", "1.2.3+").split("__")[2]);
   }
 
   @Test
