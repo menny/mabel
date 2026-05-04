@@ -182,10 +182,7 @@ public class Merger {
                   fileWriter.append(NEW_LINE);
                   fileWriter.append(" * ");
                 } else {
-                  fileWriter.append("   ");
-                  for (int i = 1; i < level; i++) {
-                    fileWriter.append("   ");
-                  }
+                  fileWriter.append("   ".repeat(level));
                 }
 
                 fileWriter
