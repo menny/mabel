@@ -8,7 +8,11 @@ This document provides context and guidelines for LLM Agents working on the Mabe
 
 **Key Mechanism:**
 1.  **Resolution Phase (Java)**: A `mabel_rule` target runs a Java application (`resolver/`) that uses Maven Resolver (Aether) to resolve the dependency graph and output a JSON lockfile.
-2.  **Repository Generation Phase (Starlark)**: A module extension (`rules/extensions.bzl`) reads the lockfile and generates an external repository containing `http_file` (or `jvm_import`/`aar_import`) rules for the artifacts.
+    *   The **Lockfile** is the critical interface between the resolution phase and the repository generation phase. Its structure must be preserved if modified.
+2.  **Repository Generation Phase (Starlark)**: A module extension (`rules/extensions.bzl`) reads the lockfile and generates an external repository containing targets based on the artifact type:
+    *   **JAR**: Standard Java dependencies use `jvm_import`.
+    *   **AAR**: Android artifacts use `aar_import` (requires `@rules_android`).
+    *   **Processors**: Generates `java_plugin` + `java_library` combinations.
 
 ## Repository Structure
 
@@ -56,6 +60,7 @@ This document provides context and guidelines for LLM Agents working on the Mabe
 The project is fully adopting Bzlmod. When working on Bazel rules:
 *   Focus on `MODULE.bazel` configuration.
 *   Ensure `extensions.bzl` logic is correct for handling the lockfile and generating repositories.
+*   **Android/Kotlin Support**: Projects using `aar` artifacts **MUST** configure `rules_android` and the Android SDK in their `MODULE.bazel`. Kotlin support is handled via `rules_kotlin`.
 
 ### 2. Documentation Synchronization
 *   The `README.md` is the source of truth for users.
@@ -74,13 +79,7 @@ The project is fully adopting Bzlmod. When working on Bazel rules:
 *   **Starlark**: Follow Bazel best practices. Use `load()` statements correctly.
 *   **Markdown**: partial to GitHub Flavored Markdown. Keep it clean and readable.
 
-### 5. Implementation Details
-*   **Android Support**: `mabel_rule` detects `aar` files and generates `aar_import` targets using `@rules_android`.
-    *   **Note**: Projects using `aar` artifacts **MUST** configure `rules_android` and the Android SDK in their `MODULE.bazel`.
-*   **Kotlin Support**: Works seamlessly via standard JVM rules or `rules_kotlin`.
-*   **Lockfile**: The JSON lockfile is the interface between the resolution phase and the repository generation phase. Its structure is critical.
-
-### 6. Version Alignment
+### 5. Version Alignment
 *   When updating Bazel rules (e.g., `rules_java`, `rules_kotlin`, `rules_android`), ensure that the versions are aligned across the main project and all `examples/`. 
 *   Inconsistent versions across integration tests can lead to false positives/negatives.
 
