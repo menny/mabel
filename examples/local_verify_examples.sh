@@ -2,13 +2,14 @@
 set -e
 
 cd "$(dirname "$0")"
+PROJECT_ROOT="$(cd .. && pwd)"
 
 function verify_example() {
     local example_name="$1"
     echo "*** Verifying $example_name..."
     pushd "$example_name"
     bazel clean
-    bazel build //...
+    bazel build --override_module=mabel="$PROJECT_ROOT" //...
     popd
     echo "*** Success verifying $example_name"
 }
