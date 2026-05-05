@@ -1,0 +1,15 @@
+# Enable bzlmod for all commands
+common --enable_bzlmod
+common --noenable_workspace
+
+common --registry=file://%workspace%/../bazel-central-registry
+common --registry=https://bcr.bazel.build
+
+test --sandbox_tmpfs_path=/tmp
+
+common --java_language_version=21
+common --java_runtime_version=remotejdk_21
+common --tool_java_language_version=21
+common --tool_java_runtime_version=remotejdk_21
+
+test --build_tests_only
