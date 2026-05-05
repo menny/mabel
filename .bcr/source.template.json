@@ -1,5 +1,5 @@
 {
-    "integrity": "**CALC_SHA**",
+    "integrity": "**leave this alone**",
     "strip_prefix": "mabel-{VERSION}",
     "url": "https://github.com/menny/mabel/releases/download/{VERSION}/mabel-{VERSION}.tar.gz"
 }
