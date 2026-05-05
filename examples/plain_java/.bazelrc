@@ -2,6 +2,8 @@
 common --enable_bzlmod
 common --noenable_workspace
 
+common --override_module=mabel=../../
+
 test --sandbox_tmpfs_path=/tmp
 
 common --java_language_version=21

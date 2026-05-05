@@ -1,2 +1,3 @@
 # Enable bzlmod for all commands
 common --enable_bzlmod
+common --override_module=mabel=../../

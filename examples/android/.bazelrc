@@ -10,3 +10,5 @@ common --tool_java_language_version=21
 common --tool_java_runtime_version=remotejdk_21
 
 test --build_tests_only
+
+common --override_module=mabel=../../
