@@ -17,6 +17,7 @@ jobs:
       - name: Create Stable Archive
         run: |
           git archive --format=tar.gz --prefix=mabel-${{ env.VERSION }}/ -o mabel-${{ env.VERSION }}.tar.gz ${{ github.ref_name }}
+          echo "SHA=$(shasum -a 256 mabel-${{ env.VERSION }}.tar.gz | awk '{print $1}')" >> $GITHUB_ENV
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
@@ -25,6 +26,23 @@ jobs:
           append_body: true
           body: |
             This version of `mabel` requires Bazel 7+ and will only work with `bzlmod`.
+
+            ### Installation
+
+            To use this version, add the following to your `MODULE.bazel` file:
+
+            ```starlark
+            bazel_dep(name = "mabel", version = "${{ env.VERSION }}")
+
+            # Optional: Use the release archive directly until it is available in the BCR
+            archive_override(
+                module_name = "mabel",
+                urls = ["https://github.com/menny/mabel/releases/download/v${{ env.VERSION }}/mabel-${{ env.VERSION }}.tar.gz"],
+                integrity = "sha256-${{ env.SHA }}",
+                strip_prefix = "mabel-${{ env.VERSION }}",
+            )
+            ```
+
             ## Setup
             In your `MODULE.bazel` file:
               ```starlark
