@@ -11,3 +11,8 @@ copy_to_bin(
     name = "yamlfmt.yml",
     srcs = [".yamlfmt.yml"],
 )
+
+alias(
+    name = "format",
+    actual = "//tools:format",
+)

@@ -3,11 +3,6 @@ module(name = "mabel_examples_java_plugin")
 bazel_dep(name = "mabel", version = "0.0.0")
 bazel_dep(name = "rules_java", version = "9.3.0")
 
-local_path_override(
-    module_name = "mabel",
-    path = "../../",
-)
-
 # Maven dependencies
 mabel = use_extension("@mabel//rules:extensions.bzl", "mabel")
 mabel.install(
