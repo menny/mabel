@@ -482,32 +482,12 @@
         "bzlTransitiveDigest": "0Dcgegaroe1dfAdEdPGqHxlYOI8tsuXRXumHhNXA4lA=",
         "usagesDigest": "+cU5bEFoHV/gythEIcx+A7Na51gDMjeftGSiiKXO5SQ=",
         "recordedFileInputs": {
-          "@@//program/maven_install.json": "d67d3ed567dcfaef9890437017231a89e13e0779b97ea06bac568cc40fdb5b44",
+          "@@//program/maven_install.json": "ce0dea55946fb7432ec5ef74cea9705f077a9aab4a975db3dc93722cda1a4bc4",
           "@@mabel+//resolver/maven_install.json": "878921f485d23d0b8fc7a14e593937af6fafd9efe8d16d8f2dcd67c2e4962690"
         },
         "recordedDirentsInputs": {},
         "envVariables": {},
         "generatedRepoSpecs": {
-          "org_jetbrains_kotlin__kotlin_runtime__1_0_6__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-runtime/1.0.6/kotlin-runtime-1.0.6.jar"
-              ],
-              "downloaded_file_path": "kotlin-runtime-1.0.6.jar",
-              "sha256": "59dcf4c5fb74f95b7c9405330b5b7f9d74dfef012bc11a9d51d6e0415e639b51"
-            }
-          },
-          "org_jetbrains_kotlin__kotlin_runtime__1_0_6": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "org_jetbrains_kotlin__kotlin_runtime__1_0_6__jar",
-              "deps": [],
-              "exports": [],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
           "com_github_salomonbrys_kotson__kotson__2_5_0__jar": {
             "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
             "attributes": {
@@ -534,32 +514,6 @@
               "processor_classes": []
             }
           },
-          "org_jetbrains_kotlin__kotlin_stdlib__1_3_72__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.3.72/kotlin-stdlib-1.3.72.jar"
-              ],
-              "downloaded_file_path": "kotlin-stdlib-1.3.72.jar",
-              "sha256": "3856a7349ebacd6d1be6802b2fed9c4dc2c5a564ea92b6b945ac988243d4b16b"
-            }
-          },
-          "org_jetbrains_kotlin__kotlin_stdlib__1_3_72": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "org_jetbrains_kotlin__kotlin_stdlib__1_3_72__jar",
-              "deps": [
-                "@org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72//:jar",
-                "@org_jetbrains__annotations__13_0//:jar"
-              ],
-              "exports": [
-                "@org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72//:jar",
-                "@org_jetbrains__annotations__13_0//:jar"
-              ],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
           "com_google_code_gson__gson__2_8_0__jar": {
             "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
             "attributes": {
@@ -580,20 +534,20 @@
               "processor_classes": []
             }
           },
-          "org_jetbrains__annotations__13_0__jar": {
+          "org_jetbrains_kotlin__kotlin_runtime__1_0_6__jar": {
             "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
             "attributes": {
               "urls": [
-                "https://repo1.maven.org/maven2/org/jetbrains/annotations/13.0/annotations-13.0.jar"
+                "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-runtime/1.0.6/kotlin-runtime-1.0.6.jar"
               ],
-              "downloaded_file_path": "annotations-13.0.jar",
-              "sha256": "ace2a10dc8e2d5fd34925ecac03e4988b2c0f851650c94b8cef49ba1bd111478"
+              "downloaded_file_path": "kotlin-runtime-1.0.6.jar",
+              "sha256": "59dcf4c5fb74f95b7c9405330b5b7f9d74dfef012bc11a9d51d6e0415e639b51"
             }
           },
-          "org_jetbrains__annotations__13_0": {
+          "org_jetbrains_kotlin__kotlin_runtime__1_0_6": {
             "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
-              "jar_repo": "org_jetbrains__annotations__13_0__jar",
+              "jar_repo": "org_jetbrains_kotlin__kotlin_runtime__1_0_6__jar",
               "deps": [],
               "exports": [],
               "runtime_deps": [],
@@ -620,16 +574,62 @@
               "processor_classes": []
             }
           },
+          "org_jetbrains_kotlin__kotlin_stdlib__1_3_72__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.3.72/kotlin-stdlib-1.3.72.jar"
+              ],
+              "downloaded_file_path": "kotlin-stdlib-1.3.72.jar",
+              "sha256": "3856a7349ebacd6d1be6802b2fed9c4dc2c5a564ea92b6b945ac988243d4b16b"
+            }
+          },
+          "org_jetbrains_kotlin__kotlin_stdlib__1_3_72": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_jetbrains_kotlin__kotlin_stdlib__1_3_72__jar",
+              "deps": [
+                "@org_jetbrains__annotations__13_0//:jar",
+                "@org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72//:jar"
+              ],
+              "exports": [
+                "@org_jetbrains__annotations__13_0//:jar",
+                "@org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72//:jar"
+              ],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "org_jetbrains__annotations__13_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/jetbrains/annotations/13.0/annotations-13.0.jar"
+              ],
+              "downloaded_file_path": "annotations-13.0.jar",
+              "sha256": "ace2a10dc8e2d5fd34925ecac03e4988b2c0f851650c94b8cef49ba1bd111478"
+            }
+          },
+          "org_jetbrains__annotations__13_0": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_jetbrains__annotations__13_0__jar",
+              "deps": [],
+              "exports": [],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
           "kotlin_maven": {
             "repoRuleId": "@@mabel+//rules:extensions.bzl%_maven_alias_repo",
             "attributes": {
               "artifacts": [
-                "org.jetbrains.kotlin:kotlin-runtime:1.0.6|org_jetbrains_kotlin__kotlin_runtime__1_0_6|jar|0",
                 "com.github.salomonbrys.kotson:kotson:2.5.0|com_github_salomonbrys_kotson__kotson__2_5_0|jar|0",
-                "org.jetbrains.kotlin:kotlin-stdlib:1.3.72|org_jetbrains_kotlin__kotlin_stdlib__1_3_72|jar|0",
                 "com.google.code.gson:gson:2.8.0|com_google_code_gson__gson__2_8_0|jar|0",
-                "org.jetbrains:annotations:13.0|org_jetbrains__annotations__13_0|jar|0",
-                "org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72|org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72|jar|0"
+                "org.jetbrains.kotlin:kotlin-runtime:1.0.6|org_jetbrains_kotlin__kotlin_runtime__1_0_6|jar|0",
+                "org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72|org_jetbrains_kotlin__kotlin_stdlib_common__1_3_72|jar|0",
+                "org.jetbrains.kotlin:kotlin-stdlib:1.3.72|org_jetbrains_kotlin__kotlin_stdlib__1_3_72|jar|0",
+                "org.jetbrains:annotations:13.0|org_jetbrains__annotations__13_0|jar|0"
               ]
             }
           },

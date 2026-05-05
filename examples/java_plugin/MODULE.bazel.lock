@@ -473,72 +473,12 @@
         "bzlTransitiveDigest": "0Dcgegaroe1dfAdEdPGqHxlYOI8tsuXRXumHhNXA4lA=",
         "usagesDigest": "pPxPMUdQ5x0FnnlLsn/kwHG1yEuAdLltiQAVnGbBaSc=",
         "recordedFileInputs": {
-          "@@//program/maven_install.json": "f8470d266bdda6c872ea1ef0eedcb7f3f05684736a17d3e8c4ba8437aca7e267",
+          "@@//program/maven_install.json": "f0392920065b5a374ac80067a0d89b3bfccaef3b68e550f4b26f2713ce5fbd74",
           "@@mabel+//resolver/maven_install.json": "878921f485d23d0b8fc7a14e593937af6fafd9efe8d16d8f2dcd67c2e4962690"
         },
         "recordedDirentsInputs": {},
         "envVariables": {},
         "generatedRepoSpecs": {
-          "javax_inject__javax_inject__1__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/javax/inject/javax.inject/1/javax.inject-1.jar"
-              ],
-              "downloaded_file_path": "javax.inject-1.jar",
-              "sha256": "91c77044a50c481636c32d916fd89c9118a72195390452c81065080f957de7ff"
-            }
-          },
-          "javax_inject__javax_inject__1": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "javax_inject__javax_inject__1__jar",
-              "deps": [],
-              "exports": [],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "com_squareup__javapoet__1_11_1__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/com/squareup/javapoet/1.11.1/javapoet-1.11.1.jar"
-              ],
-              "downloaded_file_path": "javapoet-1.11.1.jar",
-              "sha256": "9cbf2107be499ec6e95afd36b58e3ca122a24166cdd375732e51267d64058e90"
-            }
-          },
-          "com_squareup__javapoet__1_11_1": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "com_squareup__javapoet__1_11_1__jar",
-              "deps": [],
-              "exports": [],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "com_google_errorprone__error_prone_annotations__2_1_3__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.1.3/error_prone_annotations-2.1.3.jar"
-              ],
-              "downloaded_file_path": "error_prone_annotations-2.1.3.jar",
-              "sha256": "03d0329547c13da9e17c634d1049ea2ead093925e290567e1a364fd6b1fc7ff8"
-            }
-          },
-          "com_google_errorprone__error_prone_annotations__2_1_3": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "com_google_errorprone__error_prone_annotations__2_1_3__jar",
-              "deps": [],
-              "exports": [],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
           "com_google_auto_value__auto_value_annotations__1_6_3__jar": {
             "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
             "attributes": {
@@ -553,46 +493,6 @@
             "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
               "jar_repo": "com_google_auto_value__auto_value_annotations__1_6_3__jar",
-              "deps": [],
-              "exports": [],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "com_google_code_findbugs__jsr305__1_3_9__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar"
-              ],
-              "downloaded_file_path": "jsr305-1.3.9.jar",
-              "sha256": "905721a0eea90a81534abb7ee6ef4ea2e5e645fa1def0a5cd88402df1b46c9ed"
-            }
-          },
-          "com_google_code_findbugs__jsr305__1_3_9": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "com_google_code_findbugs__jsr305__1_3_9__jar",
-              "deps": [],
-              "exports": [],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "javax_annotation__jsr250_api__1_0__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/javax/annotation/jsr250-api/1.0/jsr250-api-1.0.jar"
-              ],
-              "downloaded_file_path": "jsr250-api-1.0.jar",
-              "sha256": "a1a922d0d9b6d183ed3800dfac01d1e1eb159f0e8c6f94736931c1def54a941f"
-            }
-          },
-          "javax_annotation__jsr250_api__1_0": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "javax_annotation__jsr250_api__1_0__jar",
               "deps": [],
               "exports": [],
               "runtime_deps": [],
@@ -625,41 +525,111 @@
               ]
             }
           },
-          "org_codehaus_mojo__animal_sniffer_annotations__1_14__jar": {
+          "com_google_code_findbugs__jsr305__1_3_9__jar": {
             "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
             "attributes": {
               "urls": [
-                "https://repo1.maven.org/maven2/org/codehaus/mojo/animal-sniffer-annotations/1.14/animal-sniffer-annotations-1.14.jar"
+                "https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar"
               ],
-              "downloaded_file_path": "animal-sniffer-annotations-1.14.jar",
-              "sha256": "2068320bd6bad744c3673ab048f67e30bef8f518996fa380033556600669905d"
+              "downloaded_file_path": "jsr305-1.3.9.jar",
+              "sha256": "905721a0eea90a81534abb7ee6ef4ea2e5e645fa1def0a5cd88402df1b46c9ed"
             }
           },
-          "org_codehaus_mojo__animal_sniffer_annotations__1_14": {
+          "com_google_code_findbugs__jsr305__1_3_9": {
             "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
-              "jar_repo": "org_codehaus_mojo__animal_sniffer_annotations__1_14__jar",
+              "jar_repo": "com_google_code_findbugs__jsr305__1_3_9__jar",
               "deps": [],
               "exports": [],
               "runtime_deps": [],
               "processor_classes": []
             }
           },
-          "com_google_errorprone__javac_shaded__9_dev_r4023_3__jar": {
+          "com_google_dagger__dagger_compiler__2_19__jar": {
             "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
             "attributes": {
               "urls": [
-                "https://repo1.maven.org/maven2/com/google/errorprone/javac-shaded/9-dev-r4023-3/javac-shaded-9-dev-r4023-3.jar"
+                "https://repo1.maven.org/maven2/com/google/dagger/dagger-compiler/2.19/dagger-compiler-2.19.jar"
               ],
-              "downloaded_file_path": "javac-shaded-9-dev-r4023-3.jar",
-              "sha256": "65bfccf60986c47fbc17c9ebab0be626afc41741e0a6ec7109e0768817a36f30"
+              "downloaded_file_path": "dagger-compiler-2.19.jar",
+              "sha256": "27a4b202a2de908182edb261f8c0a264e08e5e4733d7514bc7fbf0d31da5c0fc"
             }
           },
-          "com_google_errorprone__javac_shaded__9_dev_r4023_3": {
+          "com_google_dagger__dagger_compiler__2_19": {
             "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
-              "jar_repo": "com_google_errorprone__javac_shaded__9_dev_r4023_3__jar",
-              "deps": [],
+              "jar_repo": "com_google_dagger__dagger_compiler__2_19__jar",
+              "deps": [
+                "@com_google_dagger__dagger__2_19//:jar",
+                "@com_google_dagger__dagger_producers__2_19//:jar",
+                "@com_google_dagger__dagger_spi__2_19//:jar",
+                "@com_google_googlejavaformat__google_java_format__1_5//:jar",
+                "@com_google_guava__guava__25_0_jre//:jar",
+                "@com_squareup__javapoet__1_11_1//:jar",
+                "@javax_annotation__jsr250_api__1_0//:jar",
+                "@javax_inject__javax_inject__1//:jar"
+              ],
+              "exports": [
+                "@com_google_dagger__dagger__2_19//:jar",
+                "@com_google_dagger__dagger_producers__2_19//:jar",
+                "@com_google_dagger__dagger_spi__2_19//:jar",
+                "@com_google_googlejavaformat__google_java_format__1_5//:jar",
+                "@com_google_guava__guava__25_0_jre//:jar",
+                "@com_squareup__javapoet__1_11_1//:jar",
+                "@javax_annotation__jsr250_api__1_0//:jar",
+                "@javax_inject__javax_inject__1//:jar"
+              ],
+              "runtime_deps": [],
+              "processor_classes": [
+                "dagger.internal.codegen.ComponentProcessor"
+              ]
+            }
+          },
+          "com_google_dagger__dagger_producers__2_19__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/com/google/dagger/dagger-producers/2.19/dagger-producers-2.19.jar"
+              ],
+              "downloaded_file_path": "dagger-producers-2.19.jar",
+              "sha256": "a17663abe0fc38b676026950907d4c5f5e2bf338375415861eaff6e3bdb0b768"
+            }
+          },
+          "com_google_dagger__dagger_producers__2_19": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "com_google_dagger__dagger_producers__2_19__jar",
+              "deps": [
+                "@com_google_dagger__dagger__2_19//:jar",
+                "@com_google_guava__guava__25_0_jre//:jar",
+                "@javax_inject__javax_inject__1//:jar",
+                "@org_checkerframework__checker_compat_qual__2_5_3//:jar"
+              ],
+              "exports": [],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "com_google_dagger__dagger_spi__2_19__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/com/google/dagger/dagger-spi/2.19/dagger-spi-2.19.jar"
+              ],
+              "downloaded_file_path": "dagger-spi-2.19.jar",
+              "sha256": "e7a6379d82c841f6aac2866948ad1eed716528707814602842a8d844ce04e2e1"
+            }
+          },
+          "com_google_dagger__dagger_spi__2_19": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "com_google_dagger__dagger_spi__2_19__jar",
+              "deps": [
+                "@com_google_dagger__dagger__2_19//:jar",
+                "@com_google_dagger__dagger_producers__2_19//:jar",
+                "@com_google_guava__guava__25_0_jre//:jar",
+                "@javax_inject__javax_inject__1//:jar"
+              ],
               "exports": [],
               "runtime_deps": [],
               "processor_classes": []
@@ -689,117 +659,41 @@
               "processor_classes": []
             }
           },
-          "com_google_j2objc__j2objc_annotations__1_1__jar": {
+          "com_google_errorprone__error_prone_annotations__2_1_3__jar": {
             "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
             "attributes": {
               "urls": [
-                "https://repo1.maven.org/maven2/com/google/j2objc/j2objc-annotations/1.1/j2objc-annotations-1.1.jar"
+                "https://repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.1.3/error_prone_annotations-2.1.3.jar"
               ],
-              "downloaded_file_path": "j2objc-annotations-1.1.jar",
-              "sha256": "2994a7eb78f2710bd3d3bfb639b2c94e219cedac0d4d084d516e78c16dddecf6"
+              "downloaded_file_path": "error_prone_annotations-2.1.3.jar",
+              "sha256": "03d0329547c13da9e17c634d1049ea2ead093925e290567e1a364fd6b1fc7ff8"
             }
           },
-          "com_google_j2objc__j2objc_annotations__1_1": {
+          "com_google_errorprone__error_prone_annotations__2_1_3": {
             "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
-              "jar_repo": "com_google_j2objc__j2objc_annotations__1_1__jar",
+              "jar_repo": "com_google_errorprone__error_prone_annotations__2_1_3__jar",
               "deps": [],
               "exports": [],
               "runtime_deps": [],
               "processor_classes": []
             }
           },
-          "org_checkerframework__checker_compat_qual__2_5_3__jar": {
+          "com_google_errorprone__javac_shaded__9_dev_r4023_3__jar": {
             "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
             "attributes": {
               "urls": [
-                "https://repo1.maven.org/maven2/org/checkerframework/checker-compat-qual/2.5.3/checker-compat-qual-2.5.3.jar"
+                "https://repo1.maven.org/maven2/com/google/errorprone/javac-shaded/9-dev-r4023-3/javac-shaded-9-dev-r4023-3.jar"
               ],
-              "downloaded_file_path": "checker-compat-qual-2.5.3.jar",
-              "sha256": "d76b9afea61c7c082908023f0cbc1427fab9abd2df915c8b8a3e7a509bccbc6d"
+              "downloaded_file_path": "javac-shaded-9-dev-r4023-3.jar",
+              "sha256": "65bfccf60986c47fbc17c9ebab0be626afc41741e0a6ec7109e0768817a36f30"
             }
           },
-          "org_checkerframework__checker_compat_qual__2_5_3": {
+          "com_google_errorprone__javac_shaded__9_dev_r4023_3": {
             "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
-              "jar_repo": "org_checkerframework__checker_compat_qual__2_5_3__jar",
+              "jar_repo": "com_google_errorprone__javac_shaded__9_dev_r4023_3__jar",
               "deps": [],
-              "exports": [],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "com_google_dagger__dagger_spi__2_19__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/com/google/dagger/dagger-spi/2.19/dagger-spi-2.19.jar"
-              ],
-              "downloaded_file_path": "dagger-spi-2.19.jar",
-              "sha256": "e7a6379d82c841f6aac2866948ad1eed716528707814602842a8d844ce04e2e1"
-            }
-          },
-          "com_google_dagger__dagger_spi__2_19": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "com_google_dagger__dagger_spi__2_19__jar",
-              "deps": [
-                "@com_google_dagger__dagger_producers__2_19//:jar",
-                "@com_google_dagger__dagger__2_19//:jar",
-                "@javax_inject__javax_inject__1//:jar",
-                "@com_google_guava__guava__25_0_jre//:jar"
-              ],
-              "exports": [],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "com_google_guava__guava__25_0_jre__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/com/google/guava/guava/25.0-jre/guava-25.0-jre.jar"
-              ],
-              "downloaded_file_path": "guava-25.0-jre.jar",
-              "sha256": "3fd4341776428c7e0e5c18a7c10de129475b69ab9d30aeafbb5c277bb6074fa9"
-            }
-          },
-          "com_google_guava__guava__25_0_jre": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "com_google_guava__guava__25_0_jre__jar",
-              "deps": [
-                "@com_google_code_findbugs__jsr305__1_3_9//:jar",
-                "@com_google_errorprone__error_prone_annotations__2_1_3//:jar",
-                "@org_codehaus_mojo__animal_sniffer_annotations__1_14//:jar",
-                "@org_checkerframework__checker_compat_qual__2_5_3//:jar",
-                "@com_google_j2objc__j2objc_annotations__1_1//:jar"
-              ],
-              "exports": [],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "com_google_dagger__dagger_producers__2_19__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/com/google/dagger/dagger-producers/2.19/dagger-producers-2.19.jar"
-              ],
-              "downloaded_file_path": "dagger-producers-2.19.jar",
-              "sha256": "a17663abe0fc38b676026950907d4c5f5e2bf338375415861eaff6e3bdb0b768"
-            }
-          },
-          "com_google_dagger__dagger_producers__2_19": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "com_google_dagger__dagger_producers__2_19__jar",
-              "deps": [
-                "@com_google_dagger__dagger__2_19//:jar",
-                "@javax_inject__javax_inject__1//:jar",
-                "@com_google_guava__guava__25_0_jre//:jar",
-                "@org_checkerframework__checker_compat_qual__2_5_3//:jar"
-              ],
               "exports": [],
               "runtime_deps": [],
               "processor_classes": []
@@ -828,67 +722,173 @@
               "processor_classes": []
             }
           },
-          "com_google_dagger__dagger_compiler__2_19__jar": {
+          "com_google_guava__guava__25_0_jre__jar": {
             "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
             "attributes": {
               "urls": [
-                "https://repo1.maven.org/maven2/com/google/dagger/dagger-compiler/2.19/dagger-compiler-2.19.jar"
+                "https://repo1.maven.org/maven2/com/google/guava/guava/25.0-jre/guava-25.0-jre.jar"
               ],
-              "downloaded_file_path": "dagger-compiler-2.19.jar",
-              "sha256": "27a4b202a2de908182edb261f8c0a264e08e5e4733d7514bc7fbf0d31da5c0fc"
+              "downloaded_file_path": "guava-25.0-jre.jar",
+              "sha256": "3fd4341776428c7e0e5c18a7c10de129475b69ab9d30aeafbb5c277bb6074fa9"
             }
           },
-          "com_google_dagger__dagger_compiler__2_19": {
+          "com_google_guava__guava__25_0_jre": {
             "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
-              "jar_repo": "com_google_dagger__dagger_compiler__2_19__jar",
+              "jar_repo": "com_google_guava__guava__25_0_jre__jar",
               "deps": [
-                "@javax_annotation__jsr250_api__1_0//:jar",
-                "@com_squareup__javapoet__1_11_1//:jar",
-                "@com_google_dagger__dagger_producers__2_19//:jar",
-                "@com_google_dagger__dagger__2_19//:jar",
-                "@javax_inject__javax_inject__1//:jar",
-                "@com_google_dagger__dagger_spi__2_19//:jar",
-                "@com_google_googlejavaformat__google_java_format__1_5//:jar",
-                "@com_google_guava__guava__25_0_jre//:jar"
+                "@com_google_code_findbugs__jsr305__1_3_9//:jar",
+                "@com_google_errorprone__error_prone_annotations__2_1_3//:jar",
+                "@com_google_j2objc__j2objc_annotations__1_1//:jar",
+                "@org_checkerframework__checker_compat_qual__2_5_3//:jar",
+                "@org_codehaus_mojo__animal_sniffer_annotations__1_14//:jar"
               ],
-              "exports": [
-                "@javax_annotation__jsr250_api__1_0//:jar",
-                "@com_squareup__javapoet__1_11_1//:jar",
-                "@com_google_dagger__dagger_producers__2_19//:jar",
-                "@com_google_dagger__dagger__2_19//:jar",
-                "@javax_inject__javax_inject__1//:jar",
-                "@com_google_dagger__dagger_spi__2_19//:jar",
-                "@com_google_googlejavaformat__google_java_format__1_5//:jar",
-                "@com_google_guava__guava__25_0_jre//:jar"
-              ],
+              "exports": [],
               "runtime_deps": [],
-              "processor_classes": [
-                "dagger.internal.codegen.ComponentProcessor"
-              ]
+              "processor_classes": []
+            }
+          },
+          "com_google_j2objc__j2objc_annotations__1_1__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/com/google/j2objc/j2objc-annotations/1.1/j2objc-annotations-1.1.jar"
+              ],
+              "downloaded_file_path": "j2objc-annotations-1.1.jar",
+              "sha256": "2994a7eb78f2710bd3d3bfb639b2c94e219cedac0d4d084d516e78c16dddecf6"
+            }
+          },
+          "com_google_j2objc__j2objc_annotations__1_1": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "com_google_j2objc__j2objc_annotations__1_1__jar",
+              "deps": [],
+              "exports": [],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "com_squareup__javapoet__1_11_1__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/com/squareup/javapoet/1.11.1/javapoet-1.11.1.jar"
+              ],
+              "downloaded_file_path": "javapoet-1.11.1.jar",
+              "sha256": "9cbf2107be499ec6e95afd36b58e3ca122a24166cdd375732e51267d64058e90"
+            }
+          },
+          "com_squareup__javapoet__1_11_1": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "com_squareup__javapoet__1_11_1__jar",
+              "deps": [],
+              "exports": [],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "javax_annotation__jsr250_api__1_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/javax/annotation/jsr250-api/1.0/jsr250-api-1.0.jar"
+              ],
+              "downloaded_file_path": "jsr250-api-1.0.jar",
+              "sha256": "a1a922d0d9b6d183ed3800dfac01d1e1eb159f0e8c6f94736931c1def54a941f"
+            }
+          },
+          "javax_annotation__jsr250_api__1_0": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "javax_annotation__jsr250_api__1_0__jar",
+              "deps": [],
+              "exports": [],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "javax_inject__javax_inject__1__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/javax/inject/javax.inject/1/javax.inject-1.jar"
+              ],
+              "downloaded_file_path": "javax.inject-1.jar",
+              "sha256": "91c77044a50c481636c32d916fd89c9118a72195390452c81065080f957de7ff"
+            }
+          },
+          "javax_inject__javax_inject__1": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "javax_inject__javax_inject__1__jar",
+              "deps": [],
+              "exports": [],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "org_checkerframework__checker_compat_qual__2_5_3__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/checkerframework/checker-compat-qual/2.5.3/checker-compat-qual-2.5.3.jar"
+              ],
+              "downloaded_file_path": "checker-compat-qual-2.5.3.jar",
+              "sha256": "d76b9afea61c7c082908023f0cbc1427fab9abd2df915c8b8a3e7a509bccbc6d"
+            }
+          },
+          "org_checkerframework__checker_compat_qual__2_5_3": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_checkerframework__checker_compat_qual__2_5_3__jar",
+              "deps": [],
+              "exports": [],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "org_codehaus_mojo__animal_sniffer_annotations__1_14__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/codehaus/mojo/animal-sniffer-annotations/1.14/animal-sniffer-annotations-1.14.jar"
+              ],
+              "downloaded_file_path": "animal-sniffer-annotations-1.14.jar",
+              "sha256": "2068320bd6bad744c3673ab048f67e30bef8f518996fa380033556600669905d"
+            }
+          },
+          "org_codehaus_mojo__animal_sniffer_annotations__1_14": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_codehaus_mojo__animal_sniffer_annotations__1_14__jar",
+              "deps": [],
+              "exports": [],
+              "runtime_deps": [],
+              "processor_classes": []
             }
           },
           "maven": {
             "repoRuleId": "@@mabel+//rules:extensions.bzl%_maven_alias_repo",
             "attributes": {
               "artifacts": [
-                "javax.inject:javax.inject:1|javax_inject__javax_inject__1|jar|0",
-                "com.squareup:javapoet:1.11.1|com_squareup__javapoet__1_11_1|jar|0",
-                "com.google.errorprone:error_prone_annotations:2.1.3|com_google_errorprone__error_prone_annotations__2_1_3|jar|0",
                 "com.google.auto.value:auto-value-annotations:1.6.3|com_google_auto_value__auto_value_annotations__1_6_3|jar|0",
-                "com.google.code.findbugs:jsr305:1.3.9|com_google_code_findbugs__jsr305__1_3_9|jar|0",
-                "javax.annotation:jsr250-api:1.0|javax_annotation__jsr250_api__1_0|jar|0",
                 "com.google.auto.value:auto-value:1.6.3|com_google_auto_value__auto_value__1_6_3|processor|5",
-                "org.codehaus.mojo:animal-sniffer-annotations:1.14|org_codehaus_mojo__animal_sniffer_annotations__1_14|jar|0",
-                "com.google.errorprone:javac-shaded:9-dev-r4023-3|com_google_errorprone__javac_shaded__9_dev_r4023_3|jar|0",
-                "com.google.dagger:dagger:2.19|com_google_dagger__dagger__2_19|jar|0",
-                "com.google.j2objc:j2objc-annotations:1.1|com_google_j2objc__j2objc_annotations__1_1|jar|0",
-                "org.checkerframework:checker-compat-qual:2.5.3|org_checkerframework__checker_compat_qual__2_5_3|jar|0",
-                "com.google.dagger:dagger-spi:2.19|com_google_dagger__dagger_spi__2_19|jar|0",
-                "com.google.guava:guava:25.0-jre|com_google_guava__guava__25_0_jre|jar|0",
+                "com.google.code.findbugs:jsr305:1.3.9|com_google_code_findbugs__jsr305__1_3_9|jar|0",
+                "com.google.dagger:dagger-compiler:2.19|com_google_dagger__dagger_compiler__2_19|processor|1",
                 "com.google.dagger:dagger-producers:2.19|com_google_dagger__dagger_producers__2_19|jar|0",
+                "com.google.dagger:dagger-spi:2.19|com_google_dagger__dagger_spi__2_19|jar|0",
+                "com.google.dagger:dagger:2.19|com_google_dagger__dagger__2_19|jar|0",
+                "com.google.errorprone:error_prone_annotations:2.1.3|com_google_errorprone__error_prone_annotations__2_1_3|jar|0",
+                "com.google.errorprone:javac-shaded:9-dev-r4023-3|com_google_errorprone__javac_shaded__9_dev_r4023_3|jar|0",
                 "com.google.googlejavaformat:google-java-format:1.5|com_google_googlejavaformat__google_java_format__1_5|jar|0",
-                "com.google.dagger:dagger-compiler:2.19|com_google_dagger__dagger_compiler__2_19|processor|1"
+                "com.google.guava:guava:25.0-jre|com_google_guava__guava__25_0_jre|jar|0",
+                "com.google.j2objc:j2objc-annotations:1.1|com_google_j2objc__j2objc_annotations__1_1|jar|0",
+                "com.squareup:javapoet:1.11.1|com_squareup__javapoet__1_11_1|jar|0",
+                "javax.annotation:jsr250-api:1.0|javax_annotation__jsr250_api__1_0|jar|0",
+                "javax.inject:javax.inject:1|javax_inject__javax_inject__1|jar|0",
+                "org.checkerframework:checker-compat-qual:2.5.3|org_checkerframework__checker_compat_qual__2_5_3|jar|0",
+                "org.codehaus.mojo:animal-sniffer-annotations:1.14|org_codehaus_mojo__animal_sniffer_annotations__1_14|jar|0"
               ]
             }
           },
