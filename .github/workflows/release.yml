@@ -17,7 +17,7 @@ jobs:
       - name: Create Stable Archive
         run: |
           git archive --format=tar.gz --prefix=mabel-${{ env.VERSION }}/ -o mabel-${{ env.VERSION }}.tar.gz ${{ github.ref_name }}
-          echo "SHA=$(shasum -a 256 mabel-${{ env.VERSION }}.tar.gz | awk '{print $1}')" >> $GITHUB_ENV
+          echo "SHA=$(openssl dgst -sha256 -binary mabel-${{ env.VERSION }}.tar.gz | openssl base64)" >> $GITHUB_ENV
       - name: Release
         uses: softprops/action-gh-release@v2
         with:

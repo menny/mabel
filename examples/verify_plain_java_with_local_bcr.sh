@@ -15,9 +15,8 @@ cd "$(dirname "$0")/plain_java"
 
 echo "*** Verifying plain_java with local BCR at $BCR_PATH..."
 
-# We ensure there is no module override and point to the local BCR.
+# We point to the local BCR.
 BAZEL_FLAGS=(
-    "--override_module=mabel="
     "--registry=file://$BCR_PATH"
     "--registry=https://bcr.bazel.build"
 )
