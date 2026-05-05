@@ -4,7 +4,9 @@ module(name = "mabel")
 
 bazel_dep(name = "bazel_lib", version = "3.0.0")
 bazel_dep(name = "bazel_skylib", version = "1.8.2")
-bazel_dep(name = "rules_multitool", version = "1.9.0")
+
+bazel_dep(name = "rules_multitool", version = "1.9.0", dev_dependency = True)
+
 bazel_dep(name = "rules_java", version = "9.3.0")
 bazel_dep(name = "rules_android", version = "0.7.2")
 bazel_dep(name = "platforms", version = "1.0.0")
@@ -13,8 +15,7 @@ multitool = use_extension("@rules_multitool//multitool:extension.bzl", "multitoo
 multitool.hub(lockfile = "//tools:multitool.lock.json")
 use_repo(multitool, "multitool")
 
-bazel_dep(name = "aspect_rules_lint", version = "1.10.2")
-
+bazel_dep(name = "aspect_rules_lint", version = "1.10.2", dev_dependency = True)
 bazel_dep(
     name = "buildifier_prebuilt",
     version = "8.2.1",
