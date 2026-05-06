@@ -1,3 +1,4 @@
+load("@aspect_rules_lint//format:defs.bzl", "format_multirun")
 load("@bazel_skylib//rules:native_binary.bzl", "native_binary")
 
 package(default_visibility = ["//visibility:public"])
@@ -42,4 +43,12 @@ java_binary(
     ],
     main_class = "com.google.googlejavaformat.java.Main",
     runtime_deps = ["@google-java-format//jar"],
+)
+
+format_multirun(
+    name = "format",
+    java = "//tools:java-format",
+    starlark = "@buildifier_prebuilt//:buildifier",
+    visibility = ["//visibility:public"],
+    yaml = "//tools:yamlfmt_runner",
 )

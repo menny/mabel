@@ -52,7 +52,7 @@ This document provides context and guidelines for LLM Agents working on the Mabe
 ## Lint and Format
 
 - don't try to fix linting or formatting issues, we have auto-fixers for that. This is applicable for _all_ code in the codebase.
-- You can run the auto-fixers with `bazel run //tools/format:format`. This is applicable for _all_ code in the codebase.
+- You can run the auto-fixers with `bazel run //:format`. This is applicable for _all_ code in the codebase.
 
 ## Guidelines for Agents
 
@@ -85,7 +85,7 @@ The project is fully adopting Bzlmod. When working on Bazel rules:
 
 ### Commit Message
 
-Before creating a commit always run `bazel run //tools/format:format`.
+Before creating a commit always run `bazel run //:format`.
 
 When creating a commit message, follow these guidelines:
 

@@ -14,5 +14,5 @@ copy_to_bin(
 
 alias(
     name = "format",
-    actual = "//tools/format",
+    actual = "//tools:format",
 )
