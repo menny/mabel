@@ -45,10 +45,10 @@ java_binary(
     runtime_deps = ["@google-java-format//jar"],
 )
 
-# `run`ing this target will format the entire repo
 format_multirun(
     name = "format",
-    java = ":java-format",
+    java = "//tools:java-format",
     starlark = "@buildifier_prebuilt//:buildifier",
-    yaml = ":yamlfmt_runner",
+    visibility = ["//visibility:public"],
+    yaml = "//tools:yamlfmt_runner",
 )
