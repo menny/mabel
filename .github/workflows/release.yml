@@ -44,35 +44,30 @@ jobs:
             ```
 
             ## Setup
-            In your `MODULE.bazel` file:
-              ```starlark
-              bazel_dep(name = "mabel", version = "${{ env.VERSION }}")
-              ```
+            To add dependencies, define those in a `BUILD.bazel` file:
+            ```starlark
+            load("@mabel//rules:mabel.bzl", "artifact", "mabel_rule")
 
-              To add dependencies, define those in a `BUILD.bazel` file:
-              ```starlark
-              load("@mabel//rules:mabel.bzl", "artifact", "mabel_rule")
+            mabel_rule(
+                name = "mvn_deps",
+                lockfile_path = " mvn_install.json",
+                maven_deps = [
+                    artifact("com.google.guava:guava:20.0"),
+                ],
+            )
+            ```
 
-              mabel_rule(
-                  name = "mvn_deps",
-                  lockfile_path = " mvn_install.json",
-                  maven_deps = [
-                      artifact("com.google.guava:guava:20.0"),
-                  ],
-              )
-              ```
+            Then in your MODULE.bazel file:
+            ```starlark
+            mabel = use_extension("@mabel//rules:extensions.bzl", "mabel")
+            mabel.install(
+                aliases_repo = "mvn",
+                lockfile = "//:mvn_install.json",
+            )
+            use_repo(mabel, "mvn")
+            ```
 
-              Then in your MODULE.bazel file:
-              ```starlark
-              mabel = use_extension("@mabel//rules:extensions.bzl", "mabel")
-              mabel.install(
-                  aliases_repo = "mvn",
-                  lockfile = "//:mvn_install.json",
-              )
-              use_repo(mabel, "mvn")
-              ```
-
-              Read more in the [README](https://github.com/menny/mabel#usage).
+            Read more in the [README](https://github.com/menny/mabel#usage).
       - name: Update README.md
         run: |
           DEFAULT_BRANCH=$(git ls-remote --symref origin HEAD | awk '/^ref: refs\/heads\//{sub(/refs\/heads\//, "", $2); print $2}')
