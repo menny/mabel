@@ -1,4 +1,3 @@
-load("@aspect_rules_lint//format:defs.bzl", "format_multirun")
 load("@bazel_skylib//rules:native_binary.bzl", "native_binary")
 
 package(default_visibility = ["//visibility:public"])
@@ -43,12 +42,4 @@ java_binary(
     ],
     main_class = "com.google.googlejavaformat.java.Main",
     runtime_deps = ["@google-java-format//jar"],
-)
-
-# `run`ing this target will format the entire repo
-format_multirun(
-    name = "format",
-    java = ":java-format",
-    starlark = "@buildifier_prebuilt//:buildifier",
-    yaml = ":yamlfmt_runner",
 )

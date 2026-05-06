@@ -40,7 +40,7 @@ This document provides context and guidelines for LLM Agents working on the Mabe
     ```
 *   **Run Checkstyle**:
     ```bash
-    bazel test //resolver:checkstyle
+    bazel test //resolver/lint:checkstyle
     ```
 *   **Verify Examples (Integration Test)**:
     ```bash
@@ -52,7 +52,7 @@ This document provides context and guidelines for LLM Agents working on the Mabe
 ## Lint and Format
 
 - don't try to fix linting or formatting issues, we have auto-fixers for that. This is applicable for _all_ code in the codebase.
-- You can run the auto-fixers with `bazel run //tools:format`. This is applicable for _all_ code in the codebase.
+- You can run the auto-fixers with `bazel run //tools/format:format`. This is applicable for _all_ code in the codebase.
 
 ## Guidelines for Agents
 
@@ -75,7 +75,7 @@ The project is fully adopting Bzlmod. When working on Bazel rules:
 *   Do not remove examples unless explicitly instructed.
 
 ### 4. Code Style
-*   **Java**: Follow standard Java conventions. Checkstyle is enforced (`bazel test //resolver:checkstyle`).
+*   **Java**: Follow standard Java conventions. Checkstyle is enforced (`bazel test //resolver/lint:checkstyle`).
 *   **Starlark**: Follow Bazel best practices. Use `load()` statements correctly.
 *   **Markdown**: partial to GitHub Flavored Markdown. Keep it clean and readable.
 
@@ -85,7 +85,7 @@ The project is fully adopting Bzlmod. When working on Bazel rules:
 
 ### Commit Message
 
-Before creating a commit always run `bazel run //tools:format`.
+Before creating a commit always run `bazel run //tools/format:format`.
 
 When creating a commit message, follow these guidelines:
 
