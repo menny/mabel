@@ -12,6 +12,7 @@ function verify_example() {
     bazel build --override_module=mabel="$PROJECT_ROOT" //...
     bazel run --override_module=mabel="$PROJECT_ROOT" //program:main_deps
     bazel build --override_module=mabel="$PROJECT_ROOT" //...
+    bazel clean --expunge
     popd
     echo "*** Success verifying $example_name"
 }

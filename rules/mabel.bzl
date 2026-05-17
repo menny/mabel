@@ -1,4 +1,6 @@
 """Defining mabel bazel rules."""
+load("@rules_java//java/common:java_common.bzl", "java_common")
+
 TransitiveDataInfo = provider(doc = "Internal provider for connectin resolving and merging.", fields = ["graph_file", "type"])
 
 def _impl_resolver(ctx):
@@ -40,7 +42,7 @@ _mabel_maven_dependency_graph_resolving_rule = rule(
         "repositories": attr.string_list(allow_empty = False, default = DEFAULT_MAVEN_SERVERS, doc = "List of URLs that point to Maven servers. Defaut is Maven-Central."),
         "test_only": attr.bool(default = False, doc = "Should this artifact be marked as test_only. Default is False.", mandatory = False),
         "type": attr.string(mandatory = True, default = "inherit", values = ["inherit", "jar", "aar", "naive", "processor", "auto"], doc = "The type of artifact targets to generate."),
-        "_jdk": attr.label(default = Label("@bazel_tools//tools/jdk:current_java_runtime"), providers = [java_common.JavaRuntimeInfo]),
+        "_jdk": attr.label(default = Label("@rules_java//toolchains:current_java_runtime"), providers = [java_common.JavaRuntimeInfo]),
         "_resolver": attr.label(executable = True, allow_files = True, cfg = "exec", default = Label("//resolver:resolver_bin")),
     },
     outputs = {"out": "%{name}-transitive-graph.data"},
@@ -150,7 +152,7 @@ mabel_rule = rule(
         "output_graph_to_file": attr.bool(default = False, doc = "If set to True, will output the graph to dependencies.txt. Default is False.", mandatory = False),
         "public_targets_category": attr.string(mandatory = False, default = "all", values = ["requested_deps", "recursive_exports", "all"], doc = "Set public visibility of resolved targets. Default is 'all'. Can be: 'requested_deps', 'recursive_exports', 'all'."),
         "version_conflict_resolver": attr.string(mandatory = False, default = "latest_version", values = ["latest_version", "breadth_first"], doc = "Defines the strategy used to resolve version-conflicts. Default is 'latest_version'. Can be: 'latest_version', 'breadth_first'."),
-        "_jdk": attr.label(default = Label("@bazel_tools//tools/jdk:current_java_runtime"), providers = [java_common.JavaRuntimeInfo]),
+        "_jdk": attr.label(default = Label("@rules_java//toolchains:current_java_runtime"), providers = [java_common.JavaRuntimeInfo]),
         "_merger": attr.label(executable = True, allow_single_file = True, cfg = "exec", default = Label("//resolver:merger_bin_deploy.jar")),
     },
     outputs = {"out": "%{name}-generate-deps.sh"},
