@@ -1,5 +1,10 @@
 {
     "integrity": "**leave this alone**",
     "strip_prefix": "mabel-{VERSION}",
-    "url": "https://github.com/menny/mabel/releases/download/v{VERSION}/mabel-{VERSION}.tar.gz"
+    "url": "https://github.com/menny/mabel/releases/download/v{VERSION}/mabel-{VERSION}.tar.gz",
+    "patches": {
+        "module_version.patch": "sha256-PzVo2XkvHeXhCWTdPeWnpXz8sPAxI5OjhSxQeDksPT8=",
+        "test_project_version.patch": "sha256-m9+v8PtGD4TXEagBswF3Nsv+FKx9GoGFycjbZZxsvq4="
+    },
+    "patch_strip": 1
 }
