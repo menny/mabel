@@ -1,4 +1,5 @@
 """Defining mabel bazel rules."""
+
 load("@rules_java//java/common:java_common.bzl", "java_common")
 
 TransitiveDataInfo = provider(doc = "Internal provider for connectin resolving and merging.", fields = ["graph_file", "type"])
