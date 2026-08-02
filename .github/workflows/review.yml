@@ -25,7 +25,7 @@ jobs:
           app-id: 3562238
           private-key: ${{ secrets.CASSANDRA_APP_PRIVATE_KEY }}
       - name: Run Cassandra AI Review
-        uses: menny/cassandra@v0.3.0
+        uses: menny/cassandra@v0.7.0
         with:
           reviewer_github_token: ${{ steps.app-token.outputs.token }}
           provider_api_key: ${{ secrets.GEMINI_API_KEY }}
