@@ -1,5 +1,5 @@
 provider = "google"
-model = "gemini-3-flash-preview"
+model = "gemini-3.6-flash"
 
 # Additive guidelines to supplement the main prompt.
 # These can be local file paths or named prompts from the library.
