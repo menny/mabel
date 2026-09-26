@@ -1,7 +1,7 @@
 module(name = "mabel_examples_kotlin")
 
 bazel_dep(name = "mabel", version = "0.0.0")
-bazel_dep(name = "rules_java", version = "9.3.0")
+bazel_dep(name = "rules_java", version = "9.9.0")
 bazel_dep(name = "rules_kotlin", version = "2.3.20")
 
 # Maven dependencies
