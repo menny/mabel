@@ -1,5 +1,7 @@
 load("@aspect_rules_lint//format:defs.bzl", "format_multirun")
 load("@bazel_skylib//rules:native_binary.bzl", "native_binary")
+load("@buildifier_prebuilt//:rules.bzl", "buildifier_test")
+load("@rules_java//java:defs.bzl", "java_binary")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -49,6 +51,20 @@ format_multirun(
     name = "format",
     java = "//tools:java-format",
     starlark = "@buildifier_prebuilt//:buildifier",
+    starlark_fix_args = [
+        "-mode=fix",
+        "-lint=fix",
+        "--warnings=-positional-args",
+    ],
     visibility = ["//visibility:public"],
     yaml = "//tools:yamlfmt_runner",
+)
+
+buildifier_test(
+    name = "buildifier_lint",
+    lint_mode = "warn",
+    lint_warnings = ["-positional-args"],
+    mode = "check",
+    no_sandbox = True,
+    workspace = "//:MODULE.bazel",
 )

@@ -384,7 +384,7 @@
     },
     "@@mabel+//rules:extensions.bzl%mabel": {
       "general": {
-        "bzlTransitiveDigest": "waHA/FEWfH5CjYugmg6Ov6q744BJBSae+9TZkk3UU3o=",
+        "bzlTransitiveDigest": "EqSM9U3CfNdEMgB2x2gIPIF2F7Lwt+djPCgJYkRxGP4=",
         "usagesDigest": "pPxPMUdQ5x0FnnlLsn/kwHG1yEuAdLltiQAVnGbBaSc=",
         "recordedInputs": [
           "REPO_MAPPING:mabel+,bazel_tools bazel_tools",

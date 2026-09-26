@@ -84,6 +84,7 @@ def _jvm_import_impl(ctx):
         ),
     ]
 
+# buildifier: disable=attr-licenses
 jvm_import = rule(
     attrs = {
         "deps": attr.label_list(
