@@ -1,8 +1,8 @@
 module(name = "mabel_examples_android")
 
 bazel_dep(name = "mabel", version = "0.0.0")
-bazel_dep(name = "rules_java", version = "9.3.0")
-bazel_dep(name = "rules_android", version = "0.7.2")
+bazel_dep(name = "rules_java", version = "9.9.0")
+bazel_dep(name = "rules_android", version = "0.7.3")
 
 # Android SDK and tools
 remote_android_extensions = use_extension(
