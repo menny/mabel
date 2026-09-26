@@ -2,6 +2,8 @@ load("@bazel_lib//lib:copy_to_bin.bzl", "copy_to_bin")
 
 package(default_visibility = ["//visibility:public"])
 
+exports_files(["MODULE.bazel"])
+
 copy_to_bin(
     name = "gitignore",
     srcs = [".gitignore"],

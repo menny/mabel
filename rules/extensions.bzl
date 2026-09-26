@@ -139,7 +139,14 @@ def get_file_path_from_maven_name(group_id, artifact_id):
     return group_id.replace(".", "/") + "/" + artifact_id
 
 def parse_maven_coordinate(coordinate):
-    """Parse a Maven coordinate string into (groupId, artifactId, version)."""
+    """Parse a Maven coordinate string into (groupId, artifactId, version).
+
+    Args:
+      coordinate: Maven coordinate in group:artifact:version format.
+
+    Returns:
+      A tuple of (groupId, artifactId, version).
+    """
     parts = coordinate.split(":")
     if len(parts) < 3:
         fail("Invalid Maven coordinate: {}".format(coordinate))
@@ -166,7 +173,7 @@ def _maven_alias_repo_impl(rctx):
         target_type = parts[2]
         processor_classes_count = int(parts[3]) if len(parts) > 3 else 0
 
-        group_id, artifact_id, version = parse_maven_coordinate(maven_coordinate)
+        group_id, artifact_id, _version = parse_maven_coordinate(maven_coordinate)
 
         # Create the directory path: com/google/guava/guava
         file_path = get_file_path_from_maven_name(group_id, artifact_id)

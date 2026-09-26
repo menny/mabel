@@ -322,7 +322,7 @@
   "moduleExtensions": {
     "//rules:extensions.bzl%mabel": {
       "general": {
-        "bzlTransitiveDigest": "0Dcgegaroe1dfAdEdPGqHxlYOI8tsuXRXumHhNXA4lA=",
+        "bzlTransitiveDigest": "bP3cVA1PI3jiY+pILjozVf2WWiYjPuH+MzE3plmIrsM=",
         "usagesDigest": "KHQuMiQXlD1q6CkLcE686p7u/BxDJQucDBL81qCnyjM=",
         "recordedFileInputs": {
           "@@//resolver/maven_install.json": "878921f485d23d0b8fc7a14e593937af6fafd9efe8d16d8f2dcd67c2e4962690"

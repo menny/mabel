@@ -396,7 +396,7 @@
     },
     "@@mabel+//rules:extensions.bzl%mabel": {
       "general": {
-        "bzlTransitiveDigest": "0Dcgegaroe1dfAdEdPGqHxlYOI8tsuXRXumHhNXA4lA=",
+        "bzlTransitiveDigest": "bP3cVA1PI3jiY+pILjozVf2WWiYjPuH+MzE3plmIrsM=",
         "usagesDigest": "XWnXd2ychkILEsFreitbSqxJlSup9ju5hTIRgUHylD8=",
         "recordedFileInputs": {
           "@@//program/maven_install.json": "36140c718035f1bbe4fcd219a870ccb2f7907db8c9c942ff084cbee11a0573a8",

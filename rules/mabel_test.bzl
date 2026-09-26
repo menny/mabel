@@ -1,7 +1,7 @@
 """Tests for mabel.bzl artifact macro."""
 
 load("@bazel_skylib//lib:unittest.bzl", "analysistest", "asserts")
-load("//rules:mabel.bzl", "DEFAULT_MAVEN_SERVERS", "TransitiveDataInfo", "artifact")
+load("//rules:mabel.bzl", "TransitiveDataInfo", "artifact")
 
 def _artifact_basic_test_impl(ctx):
     env = analysistest.begin(ctx)
@@ -64,7 +64,10 @@ def _has_arg(args, expected):
 artifact_basic_test = analysistest.make(_artifact_basic_test_impl)
 artifact_custom_test = analysistest.make(_artifact_custom_test_impl)
 
+# buildifier: disable=unnamed-macro
 def mabel_test_suite():
+    """Test suite for mabel artifact rules."""
+
     # Test 1: Basic usage
     basic_label = artifact("com.example:foo:1.0")
 

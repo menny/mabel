@@ -1,3 +1,5 @@
+"""Unit tests for extensions.bzl helper functions."""
+
 load("@bazel_skylib//lib:unittest.bzl", "asserts", "unittest")
 load("//rules:extensions.bzl", "get_file_path_from_maven_name", "parse_maven_coordinate")
 
