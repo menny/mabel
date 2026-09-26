@@ -19,7 +19,7 @@ use_repo(multitool, "multitool")
 bazel_dep(name = "aspect_rules_lint", version = "1.13.0", dev_dependency = True)
 bazel_dep(
     name = "buildifier_prebuilt",
-    version = "8.5.1.4",
+    version = "10.1.0",
     dev_dependency = True,
 )
 
