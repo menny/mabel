@@ -11,6 +11,9 @@ if [[ -f "${PROJECT_ROOT}/tools/hermetiq-credential-helper.sh" ]]; then
     "--credential_helper=lb.bb.cloud-grpc.hermetiq.io=${PROJECT_ROOT}/tools/hermetiq-credential-helper.sh"
     "--workspace_status_command=${PROJECT_ROOT}/tools/set-build-metadata.sh"
     "--remote_executor="
+    "--remote_download_outputs=all"
+    "--jobs=HOST_CPUS*2"
+    "--features=-check_unknown_includes"
   )
 fi
 
