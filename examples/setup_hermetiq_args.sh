@@ -14,6 +14,11 @@ if [[ -f "${PROJECT_ROOT}/tools/hermetiq-credential-helper.sh" ]]; then
     "--remote_download_outputs=all"
     "--jobs=HOST_CPUS*2"
     "--features=-check_unknown_includes"
+    "--host_features=-check_unknown_includes"
+    "--copt=-no-canonical-prefixes"
+    "--host_copt=-no-canonical-prefixes"
+    "--copt=-fno-canonical-system-headers"
+    "--host_copt=-fno-canonical-system-headers"
   )
 fi
 
