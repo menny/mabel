@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
 set -eu
-printf 'STABLE_BRANCH %s\n' "$(git rev-parse --abbrev-ref HEAD)"
-printf 'COMMIT_SHA %s\n' "$(git rev-parse HEAD)"
-printf 'STABLE_REPO %s\n' "$(git config --get remote.origin.url || printf local)"
+
+BRANCH="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "unknown")"
+COMMIT="$(git rev-parse HEAD 2>/dev/null || echo "unknown")"
+REPO="$(git config --get remote.origin.url 2>/dev/null || echo "local")"
+
+printf 'STABLE_BRANCH %s\n' "$BRANCH"
+printf 'COMMIT_SHA %s\n' "$COMMIT"
+printf 'STABLE_REPO %s\n' "$REPO"
+
 case "${CI:-}" in
   true|TRUE|1)
     ROLE="CI"
