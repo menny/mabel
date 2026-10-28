@@ -22,7 +22,8 @@ build --remote_upload_local_results=false
 build --remote_cache_async
 build --remote_download_toplevel
 
-# Hermetiq remote exec
-build --remote_executor=grpcs://lb.bb.cloud-grpc.hermetiq.io
-build --remote_default_exec_properties=pool=sizeclass
-build --jobs=HOST_CPUS*8
+# Hermetiq remote exec (only enabled on Linux since executors run Linux)
+common --enable_platform_specific_config
+build:linux --remote_executor=grpcs://lb.bb.cloud-grpc.hermetiq.io
+build:linux --remote_default_exec_properties=pool=sizeclass
+build:linux --jobs=HOST_CPUS*8
