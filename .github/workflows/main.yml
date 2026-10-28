@@ -28,9 +28,7 @@ jobs:
       - name: build
         run: ./scripts/ci_build.sh
       - name: formating
-        run: |
-          bazel run //:format
-          if [[ $(git status --porcelain) ]]; then echo "**** run 'bazel run //:format' to fix formatting errors"; exit 1; fi
+        run: bazel run //tools:format.check
       - name: test
         run: ./scripts/ci_test.sh
       - name: verify-rules-generation
