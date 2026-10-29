@@ -1,5 +1,5 @@
 {
-  "lockFileVersion": 24,
+  "lockFileVersion": 28,
   "registryFileHashes": {
     "https://bcr.bazel.build/bazel_registry.json": "8a28e4aff06ee60aed2a8c281907fb8bcbf3b753c91fb5a5c57da3215d5b3497",
     "https://bcr.bazel.build/modules/abseil-cpp/20210324.2/MODULE.bazel": "7cd0312e064fde87c8d1cd79ba06c876bd23630c83466e9500321be55c96ace2",
@@ -18,11 +18,14 @@
     "https://bcr.bazel.build/modules/abseil-py/2.1.0/source.json": "0e8fc4f088ce07099c1cd6594c20c7ddbb48b4b3c0849b7d94ba94be88ff042b",
     "https://bcr.bazel.build/modules/apple_support/1.11.1/MODULE.bazel": "1843d7cd8a58369a444fc6000e7304425fba600ff641592161d9f15b179fb896",
     "https://bcr.bazel.build/modules/apple_support/1.15.1/MODULE.bazel": "a0556fefca0b1bb2de8567b8827518f94db6a6e7e7d632b4c48dc5f865bc7c85",
-    "https://bcr.bazel.build/modules/apple_support/1.23.1/MODULE.bazel": "53763fed456a968cf919b3240427cf3a9d5481ec5466abc9d5dc51bc70087442",
+    "https://bcr.bazel.build/modules/apple_support/1.21.0/MODULE.bazel": "ac1824ed5edf17dee2fdd4927ada30c9f8c3b520be1b5fd02a5da15bc10bff3e",
+    "https://bcr.bazel.build/modules/apple_support/1.21.1/MODULE.bazel": "5809fa3efab15d1f3c3c635af6974044bac8a4919c62238cce06acee8a8c11f1",
     "https://bcr.bazel.build/modules/apple_support/1.24.2/MODULE.bazel": "0e62471818affb9f0b26f128831d5c40b074d32e6dda5a0d3852847215a41ca4",
-    "https://bcr.bazel.build/modules/apple_support/1.24.2/source.json": "2c22c9827093250406c5568da6c54e6fdf0ef06238def3d99c71b12feb057a8d",
+    "https://bcr.bazel.build/modules/apple_support/2.5.2/MODULE.bazel": "bb1b7081e390a8d3885f642cb0073dfcf8e7a36525e079fa8f5835af7079c0fe",
+    "https://bcr.bazel.build/modules/apple_support/2.5.2/source.json": "dd51ee925a550e92b55eb41c4c809a967da311a2d2520241252a238a48b39c4c",
     "https://bcr.bazel.build/modules/bazel_features/1.1.0/MODULE.bazel": "cfd42ff3b815a5f39554d97182657f8c4b9719568eb7fded2b9135f084bf760b",
     "https://bcr.bazel.build/modules/bazel_features/1.1.1/MODULE.bazel": "27b8c79ef57efe08efccbd9dd6ef70d61b4798320b8d3c134fd571f78963dbcd",
+    "https://bcr.bazel.build/modules/bazel_features/1.10.0/MODULE.bazel": "f75e8807570484a99be90abcd52b5e1f390362c258bcb73106f4544957a48101",
     "https://bcr.bazel.build/modules/bazel_features/1.11.0/MODULE.bazel": "f9382337dd5a474c3b7d334c2f83e50b6eaedc284253334cf823044a26de03e8",
     "https://bcr.bazel.build/modules/bazel_features/1.13.0/MODULE.bazel": "c14c33c7c3c730612bdbe14ebbb5e61936b6f11322ea95a6e91cd1ba962f94df",
     "https://bcr.bazel.build/modules/bazel_features/1.15.0/MODULE.bazel": "d38ff6e517149dc509406aca0db3ad1efdd890a85e049585b7234d04238e2a4d",
@@ -37,8 +40,10 @@
     "https://bcr.bazel.build/modules/bazel_features/1.30.0/MODULE.bazel": "a14b62d05969a293b80257e72e597c2da7f717e1e69fa8b339703ed6731bec87",
     "https://bcr.bazel.build/modules/bazel_features/1.33.0/MODULE.bazel": "8b8dc9d2a4c88609409c3191165bccec0e4cb044cd7a72ccbe826583303459f6",
     "https://bcr.bazel.build/modules/bazel_features/1.36.0/MODULE.bazel": "596cb62090b039caf1cad1d52a8bc35cf188ca9a4e279a828005e7ee49a1bec3",
-    "https://bcr.bazel.build/modules/bazel_features/1.36.0/source.json": "279625cafa5b63cc0a8ee8448d93bc5ac1431f6000c50414051173fd22a6df3c",
     "https://bcr.bazel.build/modules/bazel_features/1.4.1/MODULE.bazel": "e45b6bb2350aff3e442ae1111c555e27eac1d915e77775f6fdc4b351b758b5d7",
+    "https://bcr.bazel.build/modules/bazel_features/1.42.1/MODULE.bazel": "275a59b5406ff18c01739860aa70ad7ccb3cfb474579411decca11c93b951080",
+    "https://bcr.bazel.build/modules/bazel_features/1.48.1/MODULE.bazel": "8f43b2b90bd70402825ab07a85bf26079935271e2662a1df37fe0de969aa3ecf",
+    "https://bcr.bazel.build/modules/bazel_features/1.48.1/source.json": "51e583aa55c57be5dd40ddb94af205d2f916cf9971aa1c561e5fb3dbbd20bad4",
     "https://bcr.bazel.build/modules/bazel_features/1.9.0/MODULE.bazel": "885151d58d90d8d9c811eb75e3288c11f850e1d6b481a8c9f766adee4712358b",
     "https://bcr.bazel.build/modules/bazel_features/1.9.1/MODULE.bazel": "8f679097876a9b609ad1f60249c49d68bfab783dd9be012faf9d82547b14815a",
     "https://bcr.bazel.build/modules/bazel_lib/3.0.0-rc.0/MODULE.bazel": "d6e00979a98ac14ada5e31c8794708b41434d461e7e7ca39b59b765e6d233b18",
@@ -65,8 +70,8 @@
     "https://bcr.bazel.build/modules/bazel_worker_java/0.0.11/source.json": "48b9b9c55f69cc360a54a712f47b889dd3d367ce2d45c3ccec242e9af86fe9cd",
     "https://bcr.bazel.build/modules/buildifier_prebuilt/7.3.1/MODULE.bazel": "537faf0ad9f5892910074b8e43b4c91c96f1d5d86b6ed04bdbe40cf68aa48b68",
     "https://bcr.bazel.build/modules/buildifier_prebuilt/7.3.1/source.json": "55153a5e6ca9c8a7e266c4b46b951e8a010d25ec6062bc35d5d4f89925796bad",
-    "https://bcr.bazel.build/modules/buildozer/7.1.2/MODULE.bazel": "2e8dd40ede9c454042645fd8d8d0cd1527966aa5c919de86661e62953cd73d84",
-    "https://bcr.bazel.build/modules/buildozer/7.1.2/source.json": "c9028a501d2db85793a6996205c8de120944f50a0d570438fcae0457a5f9d1f8",
+    "https://bcr.bazel.build/modules/buildozer/8.5.1/MODULE.bazel": "a35d9561b3fc5b18797c330793e99e3b834a473d5fbd3d7d7634aafc9bdb6f8f",
+    "https://bcr.bazel.build/modules/buildozer/8.5.1/source.json": "e3386e6ff4529f2442800dee47ad28d3e6487f36a1f75ae39ae56c70f0cd2fbd",
     "https://bcr.bazel.build/modules/gazelle/0.32.0/MODULE.bazel": "b499f58a5d0d3537f3cf5b76d8ada18242f64ec474d8391247438bf04f58c7b8",
     "https://bcr.bazel.build/modules/gazelle/0.33.0/MODULE.bazel": "a13a0f279b462b784fb8dd52a4074526c4a2afe70e114c7d09066097a46b3350",
     "https://bcr.bazel.build/modules/gazelle/0.34.0/MODULE.bazel": "abdd8ce4d70978933209db92e436deb3a8b737859e9354fb5fd11fb5c2004c8a",
@@ -84,6 +89,8 @@
     "https://bcr.bazel.build/modules/jsoncpp/1.9.6/MODULE.bazel": "2f8d20d3b7d54143213c4dfc3d98225c42de7d666011528dc8fe91591e2e17b0",
     "https://bcr.bazel.build/modules/jsoncpp/1.9.6/source.json": "a04756d367a2126c3541682864ecec52f92cdee80a35735a3cb249ce015ca000",
     "https://bcr.bazel.build/modules/libpfm/4.11.0/MODULE.bazel": "45061ff025b301940f1e30d2c16bea596c25b176c8b6b3087e92615adbd52902",
+    "https://bcr.bazel.build/modules/libxml2/2.15.3/MODULE.bazel": "a6bffafd8aa8b0c13eaa4bf25d55be188ec8548549395f03e98c39bab264adaa",
+    "https://bcr.bazel.build/modules/libxml2/2.15.3/source.json": "fd7c420cb14981416c9fadd0db555bd1e249355e0e5b63b2ce15b92996b5fbfb",
     "https://bcr.bazel.build/modules/nlohmann_json/3.6.1/MODULE.bazel": "6f7b417dcc794d9add9e556673ad25cb3ba835224290f4f848f8e2db1e1fca74",
     "https://bcr.bazel.build/modules/nlohmann_json/3.6.1/source.json": "f448c6e8963fdfa7eb831457df83ad63d3d6355018f6574fb017e8169deb43a9",
     "https://bcr.bazel.build/modules/package_metadata/0.0.3/MODULE.bazel": "77890552ecea9e284b5424c9de827a58099348763a4359e975c359a83d4faa83",
@@ -109,7 +116,6 @@
     "https://bcr.bazel.build/modules/protobuf/29.0-rc2.bcr.1/MODULE.bazel": "52f4126f63a2f0bbf36b99c2a87648f08467a4eaf92ba726bc7d6a500bbf770c",
     "https://bcr.bazel.build/modules/protobuf/29.0-rc2/MODULE.bazel": "6241d35983510143049943fc0d57937937122baf1b287862f9dc8590fc4c37df",
     "https://bcr.bazel.build/modules/protobuf/29.0-rc3/MODULE.bazel": "33c2dfa286578573afc55a7acaea3cada4122b9631007c594bf0729f41c8de92",
-    "https://bcr.bazel.build/modules/protobuf/29.0/MODULE.bazel": "319dc8bf4c679ff87e71b1ccfb5a6e90a6dbc4693501d471f48662ac46d04e4e",
     "https://bcr.bazel.build/modules/protobuf/29.1/MODULE.bazel": "557c3457560ff49e122ed76c0bc3397a64af9574691cb8201b4e46d4ab2ecb95",
     "https://bcr.bazel.build/modules/protobuf/3.19.0/MODULE.bazel": "6b5fbb433f760a99a22b18b6850ed5784ef0e9928a72668b66e4d7ccd47db9b0",
     "https://bcr.bazel.build/modules/protobuf/3.19.2/MODULE.bazel": "532ffe5f2186b69fdde039efe6df13ba726ff338c6bc82275ad433013fa10573",
@@ -128,14 +134,14 @@
     "https://bcr.bazel.build/modules/re2/2025-11-05.bcr.1/MODULE.bazel": "3d9d4995833fc0334fc5c88b56a05288dd25d651544cd7b2233bbd6357bbeba0",
     "https://bcr.bazel.build/modules/re2/2025-11-05.bcr.1/source.json": "7df1394aabda1c9bc188a302f5d54b1c657924edd04ebc57d2be29dbd7efd141",
     "https://bcr.bazel.build/modules/rules_android/0.1.1/MODULE.bazel": "48809ab0091b07ad0182defb787c4c5328bd3a278938415c00a7b69b50c4d3a8",
-    "https://bcr.bazel.build/modules/rules_android/0.7.3/MODULE.bazel": "1fbc49fb397d31d74be83fe63eb0a5dc1a79df172ca90772166c35ab4cd67e7b",
-    "https://bcr.bazel.build/modules/rules_android/0.7.3/source.json": "80ffccd224a7f9b665f32360a64ba4228ba85c75fd0f6af43e290660147bb151",
+    "https://bcr.bazel.build/modules/rules_android/0.8.0/MODULE.bazel": "92961a7a1218694a31fa748eba164db2721f5c42f2d7ed3325c52b19d00ae2f5",
+    "https://bcr.bazel.build/modules/rules_android/0.8.0/source.json": "efec84c34a78d0b6a23b7a07d51e810942428a5b980857284806d0a59762591f",
     "https://bcr.bazel.build/modules/rules_apple/3.16.0/MODULE.bazel": "0d1caf0b8375942ce98ea944be754a18874041e4e0459401d925577624d3a54a",
-    "https://bcr.bazel.build/modules/rules_apple/3.16.0/source.json": "d8b5fe461272018cc07cfafce11fe369c7525330804c37eec5a82f84cd475366",
+    "https://bcr.bazel.build/modules/rules_apple/4.1.0/MODULE.bazel": "76e10fd4a48038d3fc7c5dc6e63b7063bbf5304a2e3bd42edda6ec660eebea68",
+    "https://bcr.bazel.build/modules/rules_apple/4.1.0/source.json": "8ee81e1708756f81b343a5eb2b2f0b953f1d25c4ab3d4a68dc02754872e80715",
     "https://bcr.bazel.build/modules/rules_cc/0.0.1/MODULE.bazel": "cb2aa0747f84c6c3a78dad4e2049c154f08ab9d166b1273835a8174940365647",
     "https://bcr.bazel.build/modules/rules_cc/0.0.10/MODULE.bazel": "ec1705118f7eaedd6e118508d3d26deba2a4e76476ada7e0e3965211be012002",
     "https://bcr.bazel.build/modules/rules_cc/0.0.13/MODULE.bazel": "0e8529ed7b323dad0775ff924d2ae5af7640b23553dfcd4d34344c7e7a867191",
-    "https://bcr.bazel.build/modules/rules_cc/0.0.14/MODULE.bazel": "5e343a3aac88b8d7af3b1b6d2093b55c347b8eefc2e7d1442f7a02dc8fea48ac",
     "https://bcr.bazel.build/modules/rules_cc/0.0.15/MODULE.bazel": "6704c35f7b4a72502ee81f61bf88706b54f06b3cbe5558ac17e2e14666cd5dcc",
     "https://bcr.bazel.build/modules/rules_cc/0.0.16/MODULE.bazel": "7661303b8fc1b4d7f532e54e9d6565771fea666fbdf839e0a86affcd02defe87",
     "https://bcr.bazel.build/modules/rules_cc/0.0.17/MODULE.bazel": "2ae1d8f4238ec67d7185d8861cb0a2cdf4bc608697c331b95bf990e69b62e64a",
@@ -144,10 +150,12 @@
     "https://bcr.bazel.build/modules/rules_cc/0.0.8/MODULE.bazel": "964c85c82cfeb6f3855e6a07054fdb159aced38e99a5eecf7bce9d53990afa3e",
     "https://bcr.bazel.build/modules/rules_cc/0.0.9/MODULE.bazel": "836e76439f354b89afe6a911a7adf59a6b2518fafb174483ad78a2a2fde7b1c5",
     "https://bcr.bazel.build/modules/rules_cc/0.1.1/MODULE.bazel": "2f0222a6f229f0bf44cd711dc13c858dad98c62d52bd51d8fc3a764a83125513",
+    "https://bcr.bazel.build/modules/rules_cc/0.1.2/MODULE.bazel": "557ddc3a96858ec0d465a87c0a931054d7dcfd6583af2c7ed3baf494407fd8d0",
     "https://bcr.bazel.build/modules/rules_cc/0.1.5/MODULE.bazel": "88dfc9361e8b5ae1008ac38f7cdfd45ad738e4fa676a3ad67d19204f045a1fd8",
     "https://bcr.bazel.build/modules/rules_cc/0.2.0/MODULE.bazel": "b5c17f90458caae90d2ccd114c81970062946f49f355610ed89bebf954f5783c",
     "https://bcr.bazel.build/modules/rules_cc/0.2.13/MODULE.bazel": "eecdd666eda6be16a8d9dc15e44b5c75133405e820f620a234acc4b1fdc5aa37",
     "https://bcr.bazel.build/modules/rules_cc/0.2.14/MODULE.bazel": "353c99ed148887ee89c54a17d4100ae7e7e436593d104b668476019023b58df8",
+    "https://bcr.bazel.build/modules/rules_cc/0.2.15/MODULE.bazel": "6a0a4a75a57aa6dc888300d848053a58c6b12a29f89d4304e1c41448514ec6e8",
     "https://bcr.bazel.build/modules/rules_cc/0.2.17/MODULE.bazel": "1849602c86cb60da8613d2de887f9566a6d354a6df6d7009f9d04a14402f9a84",
     "https://bcr.bazel.build/modules/rules_cc/0.2.17/source.json": "3832f45d145354049137c0090df04629d9c2b5493dc5c2bf46f1834040133a07",
     "https://bcr.bazel.build/modules/rules_cc/0.2.8/MODULE.bazel": "f1df20f0bf22c28192a794f29b501ee2018fa37a3862a1a2132ae2940a23a642",
@@ -162,36 +170,30 @@
     "https://bcr.bazel.build/modules/rules_go/0.59.0/source.json": "1df17bb7865cfc029492c30163cee891d0dd8658ea0d5bfdf252c4b6db5c1ef6",
     "https://bcr.bazel.build/modules/rules_java/4.0.0/MODULE.bazel": "5a78a7ae82cd1a33cef56dc578c7d2a46ed0dca12643ee45edbb8417899e6f74",
     "https://bcr.bazel.build/modules/rules_java/5.3.5/MODULE.bazel": "a4ec4f2db570171e3e5eb753276ee4b389bae16b96207e9d3230895c99644b86",
-    "https://bcr.bazel.build/modules/rules_java/6.0.0/MODULE.bazel": "8a43b7df601a7ec1af61d79345c17b31ea1fedc6711fd4abfd013ea612978e39",
     "https://bcr.bazel.build/modules/rules_java/6.3.0/MODULE.bazel": "a97c7678c19f236a956ad260d59c86e10a463badb7eb2eda787490f4c969b963",
-    "https://bcr.bazel.build/modules/rules_java/6.4.0/MODULE.bazel": "e986a9fe25aeaa84ac17ca093ef13a4637f6107375f64667a15999f77db6c8f6",
     "https://bcr.bazel.build/modules/rules_java/6.5.2/MODULE.bazel": "1d440d262d0e08453fa0c4d8f699ba81609ed0e9a9a0f02cd10b3e7942e61e31",
     "https://bcr.bazel.build/modules/rules_java/7.1.0/MODULE.bazel": "30d9135a2b6561c761bd67bd4990da591e6bdc128790ce3e7afd6a3558b2fb64",
     "https://bcr.bazel.build/modules/rules_java/7.10.0/MODULE.bazel": "530c3beb3067e870561739f1144329a21c851ff771cd752a49e06e3dc9c2e71a",
     "https://bcr.bazel.build/modules/rules_java/7.12.2/MODULE.bazel": "579c505165ee757a4280ef83cda0150eea193eed3bef50b1004ba88b99da6de6",
     "https://bcr.bazel.build/modules/rules_java/7.2.0/MODULE.bazel": "06c0334c9be61e6cef2c8c84a7800cef502063269a5af25ceb100b192453d4ab",
-    "https://bcr.bazel.build/modules/rules_java/7.3.2/MODULE.bazel": "50dece891cfdf1741ea230d001aa9c14398062f2b7c066470accace78e412bc2",
     "https://bcr.bazel.build/modules/rules_java/7.4.0/MODULE.bazel": "a592852f8a3dd539e82ee6542013bf2cadfc4c6946be8941e189d224500a8934",
     "https://bcr.bazel.build/modules/rules_java/7.6.1/MODULE.bazel": "2f14b7e8a1aa2f67ae92bc69d1ec0fa8d9f827c4e17ff5e5f02e91caa3b2d0fe",
-    "https://bcr.bazel.build/modules/rules_java/8.14.0/MODULE.bazel": "717717ed40cc69994596a45aec6ea78135ea434b8402fb91b009b9151dd65615",
     "https://bcr.bazel.build/modules/rules_java/8.3.2/MODULE.bazel": "7336d5511ad5af0b8615fdc7477535a2e4e723a357b6713af439fe8cf0195017",
     "https://bcr.bazel.build/modules/rules_java/8.5.1/MODULE.bazel": "d8a9e38cc5228881f7055a6079f6f7821a073df3744d441978e7a43e20226939",
     "https://bcr.bazel.build/modules/rules_java/8.6.0/MODULE.bazel": "9c064c434606d75a086f15ade5edb514308cccd1544c2b2a89bbac4310e41c71",
     "https://bcr.bazel.build/modules/rules_java/8.6.1/MODULE.bazel": "f4808e2ab5b0197f094cabce9f4b006a27766beb6a9975931da07099560ca9c2",
+    "https://bcr.bazel.build/modules/rules_java/9.1.0/MODULE.bazel": "ee63f27e36a3fada80342869361182f120a9819c74320e8e65b1e04ba0cd7a9d",
     "https://bcr.bazel.build/modules/rules_java/9.3.0/MODULE.bazel": "f657c72d65ac449caae9abf2e68e66c0d36f9416848c4c4903d0b3234229e7f2",
     "https://bcr.bazel.build/modules/rules_java/9.9.0/MODULE.bazel": "6b2092957b4849ffcbb84d5c7fe0d5a4582f5e3062bc84d607122ac4ef832e55",
     "https://bcr.bazel.build/modules/rules_java/9.9.0/source.json": "9c4e694db18812d19b5c1e279ba9dffc1adc3fcac163896829f374a7c426fe12",
     "https://bcr.bazel.build/modules/rules_jvm_external/4.4.2/MODULE.bazel": "a56b85e418c83eb1839819f0b515c431010160383306d13ec21959ac412d2fe7",
     "https://bcr.bazel.build/modules/rules_jvm_external/5.1/MODULE.bazel": "33f6f999e03183f7d088c9be518a63467dfd0be94a11d0055fe2d210f89aa909",
     "https://bcr.bazel.build/modules/rules_jvm_external/5.2/MODULE.bazel": "d9351ba35217ad0de03816ef3ed63f89d411349353077348a45348b096615036",
-    "https://bcr.bazel.build/modules/rules_jvm_external/5.3/MODULE.bazel": "bf93870767689637164657731849fb887ad086739bd5d360d90007a581d5527d",
-    "https://bcr.bazel.build/modules/rules_jvm_external/6.1/MODULE.bazel": "75b5fec090dbd46cf9b7d8ea08cf84a0472d92ba3585b476f44c326eda8059c4",
     "https://bcr.bazel.build/modules/rules_jvm_external/6.2/MODULE.bazel": "36a6e52487a855f33cb960724eb56547fa87e2c98a0474c3acad94339d7f8e99",
     "https://bcr.bazel.build/modules/rules_jvm_external/6.3/MODULE.bazel": "c998e060b85f71e00de5ec552019347c8bca255062c990ac02d051bb80a38df0",
     "https://bcr.bazel.build/modules/rules_jvm_external/6.7/MODULE.bazel": "e717beabc4d091ecb2c803c2d341b88590e9116b8bf7947915eeb33aab4f96dd",
     "https://bcr.bazel.build/modules/rules_jvm_external/6.9/MODULE.bazel": "07c5db05527db7744a54fcffd653e1550d40e0540207a7f7e6d0a4de5bef8274",
     "https://bcr.bazel.build/modules/rules_jvm_external/6.9/source.json": "b12970214f3cc144b26610caeb101fa622d910f1ab3d98f0bae1058edbd00bd4",
-    "https://bcr.bazel.build/modules/rules_kotlin/1.9.0/MODULE.bazel": "ef85697305025e5a61f395d4eaede272a5393cee479ace6686dba707de804d59",
     "https://bcr.bazel.build/modules/rules_kotlin/1.9.5/MODULE.bazel": "043a16a572f610558ec2030db3ff0c9938574e7dd9f58bded1bb07c0192ef025",
     "https://bcr.bazel.build/modules/rules_kotlin/1.9.6/MODULE.bazel": "d269a01a18ee74d0335450b10f62c9ed81f2321d7958a2934e44272fe82dcef3",
     "https://bcr.bazel.build/modules/rules_kotlin/1.9.6/source.json": "2faa4794364282db7c06600b7e5e34867a564ae91bda7cae7c29c64e9466b7d5",
@@ -220,11 +222,12 @@
     "https://bcr.bazel.build/modules/rules_python/0.33.2/MODULE.bazel": "3e036c4ad8d804a4dad897d333d8dce200d943df4827cb849840055be8d2e937",
     "https://bcr.bazel.build/modules/rules_python/0.37.2/MODULE.bazel": "b5ffde91410745750b6c13be1c5dc4555ef5bc50562af4a89fd77807fdde626a",
     "https://bcr.bazel.build/modules/rules_python/0.4.0/MODULE.bazel": "9208ee05fd48bf09ac60ed269791cf17fb343db56c8226a720fbb1cdf467166c",
-    "https://bcr.bazel.build/modules/rules_python/0.40.0/MODULE.bazel": "9d1a3cd88ed7d8e39583d9ffe56ae8a244f67783ae89b60caafc9f5cf318ada7",
+    "https://bcr.bazel.build/modules/rules_python/1.3.0/MODULE.bazel": "8361d57eafb67c09b75bf4bbe6be360e1b8f4f18118ab48037f2bd50aa2ccb13",
     "https://bcr.bazel.build/modules/rules_python/1.4.1/MODULE.bazel": "8991ad45bdc25018301d6b7e1d3626afc3c8af8aaf4bc04f23d0b99c938b73a6",
     "https://bcr.bazel.build/modules/rules_python/1.6.0/MODULE.bazel": "7e04ad8f8d5bea40451cf80b1bd8262552aa73f841415d20db96b7241bd027d8",
     "https://bcr.bazel.build/modules/rules_python/1.6.3/MODULE.bazel": "a7b80c42cb3de5ee2a5fa1abc119684593704fcd2fec83165ebe615dec76574f",
-    "https://bcr.bazel.build/modules/rules_python/1.6.3/source.json": "f0be74977e5604a6526c8a416cda22985093ff7d5d380d41722d7e44015cc419",
+    "https://bcr.bazel.build/modules/rules_python/1.7.0/MODULE.bazel": "d01f995ecd137abf30238ad9ce97f8fc3ac57289c8b24bd0bf53324d937a14f8",
+    "https://bcr.bazel.build/modules/rules_python/1.7.0/source.json": "028a084b65dcf8f4dc4f82f8778dbe65df133f234b316828a82e060d81bdce32",
     "https://bcr.bazel.build/modules/rules_robolectric/4.14.1.2/MODULE.bazel": "d44fec647d0aeb67b9f3b980cf68ba634976f3ae7ccd6c07d790b59b87a4f251",
     "https://bcr.bazel.build/modules/rules_robolectric/4.14.1.2/source.json": "37c10335f2361c337c5c1f34ed36d2da70534c23088062b33a8bdaab68aa9dea",
     "https://bcr.bazel.build/modules/rules_shell/0.2.0/MODULE.bazel": "fda8a652ab3c7d8fee214de05e7a9916d8b28082234e8d2c0094505c5268ed3c",
@@ -234,17 +237,18 @@
     "https://bcr.bazel.build/modules/rules_shell/0.6.1/source.json": "20ec05cd5e592055e214b2da8ccb283c7f2a421ea0dc2acbf1aa792e11c03d0c",
     "https://bcr.bazel.build/modules/rules_swift/1.16.0/MODULE.bazel": "4a09f199545a60d09895e8281362b1ff3bb08bbde69c6fc87aff5b92fcc916ca",
     "https://bcr.bazel.build/modules/rules_swift/2.1.1/MODULE.bazel": "494900a80f944fc7aa61500c2073d9729dff0b764f0e89b824eb746959bc1046",
-    "https://bcr.bazel.build/modules/rules_swift/2.1.1/source.json": "40fc69dfaac64deddbb75bd99cdac55f4427d9ca0afbe408576a65428427a186",
+    "https://bcr.bazel.build/modules/rules_swift/2.4.0/MODULE.bazel": "1639617eb1ede28d774d967a738b4a68b0accb40650beadb57c21846beab5efd",
+    "https://bcr.bazel.build/modules/rules_swift/3.1.2/MODULE.bazel": "72c8f5cf9d26427cee6c76c8e3853eb46ce6b0412a081b2b6db6e8ad56267400",
+    "https://bcr.bazel.build/modules/rules_swift/3.1.2/source.json": "e85761f3098a6faf40b8187695e3de6d97944e98abd0d8ce579cb2daf6319a66",
     "https://bcr.bazel.build/modules/stardoc/0.5.1/MODULE.bazel": "1a05d92974d0c122f5ccf09291442580317cdd859f07a8655f1db9a60374f9f8",
     "https://bcr.bazel.build/modules/stardoc/0.5.3/MODULE.bazel": "c7f6948dae6999bf0db32c1858ae345f112cacf98f174c7a8bb707e41b974f1c",
-    "https://bcr.bazel.build/modules/stardoc/0.5.6/MODULE.bazel": "c43dabc564990eeab55e25ed61c07a1aadafe9ece96a4efabb3f8bf9063b71ef",
     "https://bcr.bazel.build/modules/stardoc/0.6.2/MODULE.bazel": "7060193196395f5dd668eda046ccbeacebfd98efc77fed418dbe2b82ffaa39fd",
     "https://bcr.bazel.build/modules/stardoc/0.7.0/MODULE.bazel": "05e3d6d30c099b6770e97da986c53bd31844d7f13d41412480ea265ac9e8079c",
-    "https://bcr.bazel.build/modules/stardoc/0.7.1/MODULE.bazel": "3548faea4ee5dda5580f9af150e79d0f6aea934fc60c1cc50f4efdd9420759e7",
     "https://bcr.bazel.build/modules/stardoc/0.7.2/MODULE.bazel": "fc152419aa2ea0f51c29583fab1e8c99ddefd5b3778421845606ee628629e0e5",
     "https://bcr.bazel.build/modules/stardoc/0.7.2/source.json": "58b029e5e901d6802967754adf0a9056747e8176f017cfe3607c0851f4d42216",
     "https://bcr.bazel.build/modules/swift_argument_parser/1.3.1.1/MODULE.bazel": "5e463fbfba7b1701d957555ed45097d7f984211330106ccd1352c6e0af0dcf91",
-    "https://bcr.bazel.build/modules/swift_argument_parser/1.3.1.1/source.json": "32bd87e5f4d7acc57c5b2ff7c325ae3061d5e242c0c4c214ae87e0f1c13e54cb",
+    "https://bcr.bazel.build/modules/swift_argument_parser/1.3.1.2/MODULE.bazel": "75aab2373a4bbe2a1260b9bf2a1ebbdbf872d3bd36f80bff058dccd82e89422f",
+    "https://bcr.bazel.build/modules/swift_argument_parser/1.3.1.2/source.json": "5fba48bbe0ba48761f9e9f75f92876cafb5d07c0ce059cc7a8027416de94a05b",
     "https://bcr.bazel.build/modules/upb/0.0.0-20220923-a547704/MODULE.bazel": "7298990c00040a0e2f121f6c32544bab27d4452f80d9ce51349b1a28f3005c43",
     "https://bcr.bazel.build/modules/upb/0.0.0-20230516-61a97ef/MODULE.bazel": "c0df5e35ad55e264160417fd0875932ee3c9dda63d9fccace35ac62f45e1b6f9",
     "https://bcr.bazel.build/modules/zlib/1.2.11/MODULE.bazel": "07b389abc85fdbca459b69e2ec656ae5622873af3f845e1c9d80fe179f3effa0",
@@ -257,11 +261,12 @@
   "moduleExtensions": {
     "@@buildifier_prebuilt+//:defs.bzl%buildifier_prebuilt_deps_extension": {
       "general": {
-        "bzlTransitiveDigest": "UuPPKtgkayflJh3xnoDcElnjA0xyLYaim0cMSFV12v8=",
+        "bzlTransitiveDigest": "ji6iKsh7yjl6MSM1w9QOsvLX5118dGDkoEt1pfoFq6k=",
         "usagesDigest": "eWMDBEn8E8CrwAPXrlrjIap2pseSMhxDyDdrntHBOOE=",
-        "recordedFileInputs": {},
-        "recordedDirentsInputs": {},
-        "envVariables": {},
+        "recordedInputs": [
+          "REPO_MAPPING:buildifier_prebuilt+,bazel_skylib bazel_skylib+",
+          "REPO_MAPPING:buildifier_prebuilt+,bazel_tools bazel_tools"
+        ],
         "generatedRepoSpecs": {
           "buildifier_darwin_amd64": {
             "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
@@ -379,31 +384,18 @@
               "assets_json": "[{\"arch\":\"amd64\",\"name\":\"buildifier\",\"platform\":\"darwin\",\"sha256\":\"375f823103d01620aaec20a0c29c6cbca99f4fd0725ae30b93655c6704f44d71\",\"version\":\"v7.3.1\"},{\"arch\":\"arm64\",\"name\":\"buildifier\",\"platform\":\"darwin\",\"sha256\":\"5a6afc6ac7a09f5455ba0b89bd99d5ae23b4174dc5dc9d6c0ed5ce8caac3f813\",\"version\":\"v7.3.1\"},{\"arch\":\"amd64\",\"name\":\"buildifier\",\"platform\":\"linux\",\"sha256\":\"5474cc5128a74e806783d54081f581662c4be8ae65022f557e9281ed5dc88009\",\"version\":\"v7.3.1\"},{\"arch\":\"arm64\",\"name\":\"buildifier\",\"platform\":\"linux\",\"sha256\":\"0bf86c4bfffaf4f08eed77bde5b2082e4ae5039a11e2e8b03984c173c34a561c\",\"version\":\"v7.3.1\"},{\"arch\":\"amd64\",\"name\":\"buildifier\",\"platform\":\"windows\",\"sha256\":\"370cd576075ad29930a82f5de132f1a1de4084c784a82514bd4da80c85acf4a8\",\"version\":\"v7.3.1\"},{\"arch\":\"amd64\",\"name\":\"buildozer\",\"platform\":\"darwin\",\"sha256\":\"854c9583efc166602276802658cef3f224d60898cfaa60630b33d328db3b0de2\",\"version\":\"v7.3.1\"},{\"arch\":\"arm64\",\"name\":\"buildozer\",\"platform\":\"darwin\",\"sha256\":\"31b1bfe20d7d5444be217af78f94c5c43799cdf847c6ce69794b7bf3319c5364\",\"version\":\"v7.3.1\"},{\"arch\":\"amd64\",\"name\":\"buildozer\",\"platform\":\"linux\",\"sha256\":\"3305e287b3fcc68b9a35fd8515ee617452cd4e018f9e6886b6c7cdbcba8710d4\",\"version\":\"v7.3.1\"},{\"arch\":\"arm64\",\"name\":\"buildozer\",\"platform\":\"linux\",\"sha256\":\"0b5a2a717ac4fc911e1fec8d92af71dbb4fe95b10e5213da0cc3d56cea64a328\",\"version\":\"v7.3.1\"},{\"arch\":\"amd64\",\"name\":\"buildozer\",\"platform\":\"windows\",\"sha256\":\"58d41ce53257c5594c9bc86d769f580909269f68de114297f46284fbb9023dcf\",\"version\":\"v7.3.1\"}]"
             }
           }
-        },
-        "recordedRepoMappingEntries": [
-          [
-            "buildifier_prebuilt+",
-            "bazel_skylib",
-            "bazel_skylib+"
-          ],
-          [
-            "buildifier_prebuilt+",
-            "bazel_tools",
-            "bazel_tools"
-          ]
-        ]
+        }
       }
     },
     "@@mabel+//rules:extensions.bzl%mabel": {
       "general": {
-        "bzlTransitiveDigest": "bP3cVA1PI3jiY+pILjozVf2WWiYjPuH+MzE3plmIrsM=",
+        "bzlTransitiveDigest": "ebt81UblieE0AqxQbpDfcboUr6MRRaQU3rTyHmYIBkA=",
         "usagesDigest": "XWnXd2ychkILEsFreitbSqxJlSup9ju5hTIRgUHylD8=",
-        "recordedFileInputs": {
-          "@@//program/maven_install.json": "36140c718035f1bbe4fcd219a870ccb2f7907db8c9c942ff084cbee11a0573a8",
-          "@@mabel+//resolver/maven_install.json": "878921f485d23d0b8fc7a14e593937af6fafd9efe8d16d8f2dcd67c2e4962690"
-        },
-        "recordedDirentsInputs": {},
-        "envVariables": {},
+        "recordedInputs": [
+          "REPO_MAPPING:mabel+,bazel_tools bazel_tools",
+          "FILE:@@//program/maven_install.json 36140c718035f1bbe4fcd219a870ccb2f7907db8c9c942ff084cbee11a0573a8",
+          "FILE:@@mabel+//resolver/maven_install.json 30e3f3d234056a279ad2599e65e3f049c6b5712f7161d7d2253a80c21a9647a1"
+        ],
         "generatedRepoSpecs": {
           "aopalliance__aopalliance__1_0__jar": {
             "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
@@ -995,342 +987,42 @@
               ]
             }
           },
-          "org_codehaus_plexus__plexus_component_annotations__1_6__jar": {
+          "com_beust__jcommander__1_72__jar": {
             "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
             "attributes": {
               "urls": [
-                "https://repo1.maven.org/maven2/org/codehaus/plexus/plexus-component-annotations/1.6/plexus-component-annotations-1.6.jar"
+                "https://repo1.maven.org/maven2/com/beust/jcommander/1.72/jcommander-1.72.jar"
               ],
-              "downloaded_file_path": "plexus-component-annotations-1.6.jar",
-              "sha256": "2b3a6ca5f19a9ad490bc233f45e68d3093c8c01b4acc3c1d14bad4ca7c7ff438"
+              "downloaded_file_path": "jcommander-1.72.jar",
+              "sha256": "e0de160b129b2414087e01fe845609cd55caec6820cfd4d0c90fabcc7bdb8c1e"
             }
           },
-          "org_codehaus_plexus__plexus_component_annotations__1_6": {
+          "com_beust__jcommander__1_72": {
             "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
-              "jar_repo": "org_codehaus_plexus__plexus_component_annotations__1_6__jar",
+              "jar_repo": "com_beust__jcommander__1_72__jar",
               "deps": [],
               "exports": [],
               "runtime_deps": [],
               "processor_classes": []
             }
           },
-          "org_slf4j__jcl_over_slf4j__1_6_2__jar": {
+          "com_google_auto_value__auto_value_annotations__1_7__jar": {
             "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
             "attributes": {
               "urls": [
-                "https://repo1.maven.org/maven2/org/slf4j/jcl-over-slf4j/1.6.2/jcl-over-slf4j-1.6.2.jar"
+                "https://repo1.maven.org/maven2/com/google/auto/value/auto-value-annotations/1.7/auto-value-annotations-1.7.jar"
               ],
-              "downloaded_file_path": "jcl-over-slf4j-1.6.2.jar",
-              "sha256": "ff95d8cbe80a47f23ba1cbb099b032e98721442f431852db6cf09303816d4b2c"
+              "downloaded_file_path": "auto-value-annotations-1.7.jar",
+              "sha256": "b134bab5082e9f49f2b45802573c78e0726e059b645323645da03e328e501f86"
             }
           },
-          "org_slf4j__jcl_over_slf4j__1_6_2": {
+          "com_google_auto_value__auto_value_annotations__1_7": {
             "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
-              "jar_repo": "org_slf4j__jcl_over_slf4j__1_6_2__jar",
-              "deps": [
-                "@org_slf4j__slf4j_api__1_7_25//:jar"
-              ],
-              "exports": [],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "org_eclipse_aether__aether_transport_http__1_1_0__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/org/eclipse/aether/aether-transport-http/1.1.0/aether-transport-http-1.1.0.jar"
-              ],
-              "downloaded_file_path": "aether-transport-http-1.1.0.jar",
-              "sha256": "9356e876bca03730e8048048a19cc83d9d84ff3ab07c13bfc555023674a3524c"
-            }
-          },
-          "org_eclipse_aether__aether_transport_http__1_1_0": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "org_eclipse_aether__aether_transport_http__1_1_0__jar",
-              "deps": [
-                "@org_eclipse_aether__aether_util__1_1_0//:jar",
-                "@org_slf4j__jcl_over_slf4j__1_6_2//:jar",
-                "@org_apache_httpcomponents__httpclient__4_5_13//:jar",
-                "@org_eclipse_aether__aether_spi__1_1_0//:jar",
-                "@org_eclipse_aether__aether_api__1_1_0//:jar"
-              ],
-              "exports": [
-                "@org_eclipse_aether__aether_util__1_1_0//:jar",
-                "@org_slf4j__jcl_over_slf4j__1_6_2//:jar",
-                "@org_apache_httpcomponents__httpclient__4_5_13//:jar",
-                "@org_eclipse_aether__aether_spi__1_1_0//:jar",
-                "@org_eclipse_aether__aether_api__1_1_0//:jar"
-              ],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "org_codehaus_plexus__plexus_utils__3_3_0__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/org/codehaus/plexus/plexus-utils/3.3.0/plexus-utils-3.3.0.jar"
-              ],
-              "downloaded_file_path": "plexus-utils-3.3.0.jar",
-              "sha256": "76d174792540e2775af94d03d10fb2d3c776e2cd0ac0ebf427d3e570072bb9ce"
-            }
-          },
-          "org_codehaus_plexus__plexus_utils__3_3_0": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "org_codehaus_plexus__plexus_utils__3_3_0__jar",
+              "jar_repo": "com_google_auto_value__auto_value_annotations__1_7__jar",
               "deps": [],
               "exports": [],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "net_bytebuddy__byte_buddy__1_9_3__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/net/bytebuddy/byte-buddy/1.9.3/byte-buddy-1.9.3.jar"
-              ],
-              "downloaded_file_path": "byte-buddy-1.9.3.jar",
-              "sha256": "a27350be602caea67a33d31281496c84c69b5ab34ddc228e9ff2253fc8f9cd31"
-            }
-          },
-          "net_bytebuddy__byte_buddy__1_9_3": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "net_bytebuddy__byte_buddy__1_9_3__jar",
-              "deps": [],
-              "exports": [],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "org_codehaus_plexus__plexus_interpolation__1_26__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/org/codehaus/plexus/plexus-interpolation/1.26/plexus-interpolation-1.26.jar"
-              ],
-              "downloaded_file_path": "plexus-interpolation-1.26.jar",
-              "sha256": "b3b5412ce17889103ea564bcdfcf9fb3dfa540344ffeac6b538a73c9d7182662"
-            }
-          },
-          "org_codehaus_plexus__plexus_interpolation__1_26": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "org_codehaus_plexus__plexus_interpolation__1_26__jar",
-              "deps": [],
-              "exports": [],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "com_google_code_gson__gson__2_8_5__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.5/gson-2.8.5.jar"
-              ],
-              "downloaded_file_path": "gson-2.8.5.jar",
-              "sha256": "233a0149fc365c9f6edbd683cfe266b19bdc773be98eabdaf6b3c924b48e7d81"
-            }
-          },
-          "com_google_code_gson__gson__2_8_5": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "com_google_code_gson__gson__2_8_5__jar",
-              "deps": [],
-              "exports": [],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "org_hamcrest__hamcrest_core__1_3__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"
-              ],
-              "downloaded_file_path": "hamcrest-core-1.3.jar",
-              "sha256": "66fdef91e9739348df7a096aa384a5685f4e875584cce89386a7a47251c4d8e9"
-            }
-          },
-          "org_hamcrest__hamcrest_core__1_3": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "org_hamcrest__hamcrest_core__1_3__jar",
-              "deps": [],
-              "exports": [],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "org_eclipse_aether__aether_transport_classpath__1_1_0__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/org/eclipse/aether/aether-transport-classpath/1.1.0/aether-transport-classpath-1.1.0.jar"
-              ],
-              "downloaded_file_path": "aether-transport-classpath-1.1.0.jar",
-              "sha256": "036cd51c716d002aeec1adb62f8ba99d1a1efa4d258cc07954576ad599de8bc9"
-            }
-          },
-          "org_eclipse_aether__aether_transport_classpath__1_1_0": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "org_eclipse_aether__aether_transport_classpath__1_1_0__jar",
-              "deps": [
-                "@org_eclipse_aether__aether_util__1_1_0//:jar",
-                "@org_eclipse_aether__aether_spi__1_1_0//:jar",
-                "@org_eclipse_aether__aether_api__1_1_0//:jar"
-              ],
-              "exports": [
-                "@org_eclipse_aether__aether_util__1_1_0//:jar",
-                "@org_eclipse_aether__aether_spi__1_1_0//:jar",
-                "@org_eclipse_aether__aether_api__1_1_0//:jar"
-              ],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "org_apache_maven_wagon__wagon_provider_api__1_0__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/org/apache/maven/wagon/wagon-provider-api/1.0/wagon-provider-api-1.0.jar"
-              ],
-              "downloaded_file_path": "wagon-provider-api-1.0.jar",
-              "sha256": "b28dd1302ac34433d8d1b45fb254e093cd7b47277441af2018c8a3a4d8c1a60d"
-            }
-          },
-          "org_apache_maven_wagon__wagon_provider_api__1_0": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "org_apache_maven_wagon__wagon_provider_api__1_0__jar",
-              "deps": [
-                "@org_codehaus_plexus__plexus_utils__3_3_0//:jar"
-              ],
-              "exports": [],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "org_apache_commons__commons_lang3__3_8_1__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.8.1/commons-lang3-3.8.1.jar"
-              ],
-              "downloaded_file_path": "commons-lang3-3.8.1.jar",
-              "sha256": "dac807f65b07698ff39b1b07bfef3d87ae3fd46d91bbf8a2bc02b2a831616f68"
-            }
-          },
-          "org_apache_commons__commons_lang3__3_8_1": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "org_apache_commons__commons_lang3__3_8_1__jar",
-              "deps": [],
-              "exports": [],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "junit__junit__4_12__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/junit/junit/4.12/junit-4.12.jar"
-              ],
-              "downloaded_file_path": "junit-4.12.jar",
-              "sha256": "59721f0805e223d84b90677887d9ff567dc534d7c502ca903c0c2b17f05c116a"
-            }
-          },
-          "junit__junit__4_12": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "junit__junit__4_12__jar",
-              "deps": [
-                "@org_hamcrest__hamcrest_core__1_3//:jar"
-              ],
-              "exports": [
-                "@org_hamcrest__hamcrest_core__1_3//:jar"
-              ],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "org_eclipse_aether__aether_api__1_1_0__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/org/eclipse/aether/aether-api/1.1.0/aether-api-1.1.0.jar"
-              ],
-              "downloaded_file_path": "aether-api-1.1.0.jar",
-              "sha256": "e196bd5e61c5fc3139fb3d12161b122ce657bab6a34c38f1e338a3aab18992f5"
-            }
-          },
-          "org_eclipse_aether__aether_api__1_1_0": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "org_eclipse_aether__aether_api__1_1_0__jar",
-              "deps": [],
-              "exports": [],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "org_apache_httpcomponents__httpclient__4_5_13__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.5.13/httpclient-4.5.13.jar"
-              ],
-              "downloaded_file_path": "httpclient-4.5.13.jar",
-              "sha256": "6fe9026a566c6a5001608cf3fc32196641f6c1e5e1986d1037ccdbd5f31ef743"
-            }
-          },
-          "org_apache_httpcomponents__httpclient__4_5_13": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "org_apache_httpcomponents__httpclient__4_5_13__jar",
-              "deps": [
-                "@org_apache_httpcomponents__httpcore__4_4_13//:jar",
-                "@commons_codec__commons_codec__1_11//:jar",
-                "@commons_logging__commons_logging__1_2//:jar"
-              ],
-              "exports": [
-                "@org_apache_httpcomponents__httpcore__4_4_13//:jar",
-                "@commons_codec__commons_codec__1_11//:jar",
-                "@commons_logging__commons_logging__1_2//:jar"
-              ],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "org_apache_maven__maven_repository_metadata__3_8_1__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/org/apache/maven/maven-repository-metadata/3.8.1/maven-repository-metadata-3.8.1.jar"
-              ],
-              "downloaded_file_path": "maven-repository-metadata-3.8.1.jar",
-              "sha256": "ed400ae8d4782e8b865571637c5244e3b79fea4829b8a0870c714c1094f2dda5"
-            }
-          },
-          "org_apache_maven__maven_repository_metadata__3_8_1": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "org_apache_maven__maven_repository_metadata__3_8_1__jar",
-              "deps": [
-                "@org_codehaus_plexus__plexus_utils__3_3_0//:jar"
-              ],
-              "exports": [
-                "@org_codehaus_plexus__plexus_utils__3_3_0//:jar"
-              ],
               "runtime_deps": [],
               "processor_classes": []
             }
@@ -1361,79 +1053,279 @@
               ]
             }
           },
-          "org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4__jar": {
+          "com_google_code_gson__gson__2_8_5__jar": {
             "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
             "attributes": {
               "urls": [
-                "https://repo1.maven.org/maven2/org/eclipse/sisu/org.eclipse.sisu.inject/0.3.4/org.eclipse.sisu.inject-0.3.4.jar"
+                "https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.5/gson-2.8.5.jar"
               ],
-              "downloaded_file_path": "org.eclipse.sisu.inject-0.3.4.jar",
-              "sha256": "8c0e6aa7f35593016f2c5e78b604b57f023cdaca3561fe2fe36f2b5dbbae1d16"
+              "downloaded_file_path": "gson-2.8.5.jar",
+              "sha256": "233a0149fc365c9f6edbd683cfe266b19bdc773be98eabdaf6b3c924b48e7d81"
             }
           },
-          "org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4": {
+          "com_google_code_gson__gson__2_8_5": {
             "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
-              "jar_repo": "org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4__jar",
+              "jar_repo": "com_google_code_gson__gson__2_8_5__jar",
               "deps": [],
               "exports": [],
               "runtime_deps": [],
-              "processor_classes": [
-                "org.eclipse.sisu.space.SisuIndexAPT6"
-              ]
+              "processor_classes": []
             }
           },
-          "org_mockito__mockito_core__2_23_4__jar": {
+          "com_google_guava__guava__27_0_1_jre__jar": {
             "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
             "attributes": {
               "urls": [
-                "https://repo1.maven.org/maven2/org/mockito/mockito-core/2.23.4/mockito-core-2.23.4.jar"
+                "https://repo1.maven.org/maven2/com/google/guava/guava/27.0.1-jre/guava-27.0.1-jre.jar"
               ],
-              "downloaded_file_path": "mockito-core-2.23.4.jar",
-              "sha256": "d77e018b6bc211d78ddcec54bc508732c4677b9a9eb9103793be85441b20bc5d"
+              "downloaded_file_path": "guava-27.0.1-jre.jar",
+              "sha256": "e1c814fd04492a27c38e0317eabeaa1b3e950ec8010239e400fe90ad6c9107b4"
             }
           },
-          "org_mockito__mockito_core__2_23_4": {
+          "com_google_guava__guava__27_0_1_jre": {
             "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
-              "jar_repo": "org_mockito__mockito_core__2_23_4__jar",
+              "jar_repo": "com_google_guava__guava__27_0_1_jre__jar",
               "deps": [
-                "@net_bytebuddy__byte_buddy_agent__1_9_3//:jar",
-                "@net_bytebuddy__byte_buddy__1_9_3//:jar",
-                "@org_objenesis__objenesis__2_6//:jar"
+                "@com_google_code_findbugs__jsr305__3_0_2//:jar",
+                "@com_google_errorprone__error_prone_annotations__2_2_0//:jar",
+                "@com_google_guava__failureaccess__1_0_1//:jar",
+                "@com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava//:jar",
+                "@com_google_j2objc__j2objc_annotations__1_1//:jar",
+                "@org_checkerframework__checker_qual__2_5_2//:jar",
+                "@org_codehaus_mojo__animal_sniffer_annotations__1_17//:jar"
               ],
               "exports": [
-                "@net_bytebuddy__byte_buddy_agent__1_9_3//:jar",
-                "@net_bytebuddy__byte_buddy__1_9_3//:jar",
-                "@org_objenesis__objenesis__2_6//:jar"
+                "@com_google_code_findbugs__jsr305__3_0_2//:jar",
+                "@com_google_errorprone__error_prone_annotations__2_2_0//:jar",
+                "@com_google_guava__failureaccess__1_0_1//:jar",
+                "@com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava//:jar",
+                "@com_google_j2objc__j2objc_annotations__1_1//:jar",
+                "@org_checkerframework__checker_qual__2_5_2//:jar",
+                "@org_codehaus_mojo__animal_sniffer_annotations__1_17//:jar"
               ],
               "runtime_deps": [],
               "processor_classes": []
             }
           },
-          "org_eclipse_aether__aether_transport_file__1_1_0__jar": {
+          "commons_codec__commons_codec__1_11__jar": {
             "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
             "attributes": {
               "urls": [
-                "https://repo1.maven.org/maven2/org/eclipse/aether/aether-transport-file/1.1.0/aether-transport-file-1.1.0.jar"
+                "https://repo1.maven.org/maven2/commons-codec/commons-codec/1.11/commons-codec-1.11.jar"
               ],
-              "downloaded_file_path": "aether-transport-file-1.1.0.jar",
-              "sha256": "e519cd8726d282c03999fb591dbd811eb96b00068ee6c7984035ee98b7f64b91"
+              "downloaded_file_path": "commons-codec-1.11.jar",
+              "sha256": "e599d5318e97aa48f42136a2927e6dfa4e8881dff0e6c8e3109ddbbff51d7b7d"
             }
           },
-          "org_eclipse_aether__aether_transport_file__1_1_0": {
+          "commons_codec__commons_codec__1_11": {
             "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
             "attributes": {
-              "jar_repo": "org_eclipse_aether__aether_transport_file__1_1_0__jar",
+              "jar_repo": "commons_codec__commons_codec__1_11__jar",
+              "deps": [],
+              "exports": [],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "junit__junit__4_12__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/junit/junit/4.12/junit-4.12.jar"
+              ],
+              "downloaded_file_path": "junit-4.12.jar",
+              "sha256": "59721f0805e223d84b90677887d9ff567dc534d7c502ca903c0c2b17f05c116a"
+            }
+          },
+          "junit__junit__4_12": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "junit__junit__4_12__jar",
               "deps": [
-                "@org_eclipse_aether__aether_util__1_1_0//:jar",
-                "@org_eclipse_aether__aether_spi__1_1_0//:jar",
-                "@org_eclipse_aether__aether_api__1_1_0//:jar"
+                "@org_hamcrest__hamcrest_core__1_3//:jar"
               ],
               "exports": [
-                "@org_eclipse_aether__aether_util__1_1_0//:jar",
+                "@org_hamcrest__hamcrest_core__1_3//:jar"
+              ],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "net_bytebuddy__byte_buddy_agent__1_9_3__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/net/bytebuddy/byte-buddy-agent/1.9.3/byte-buddy-agent-1.9.3.jar"
+              ],
+              "downloaded_file_path": "byte-buddy-agent-1.9.3.jar",
+              "sha256": "547288e013a9d1f4a4ce2ab84c24e3edda6e433c7fa6b2c3c3613932671b05b1"
+            }
+          },
+          "net_bytebuddy__byte_buddy_agent__1_9_3": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "net_bytebuddy__byte_buddy_agent__1_9_3__jar",
+              "deps": [],
+              "exports": [],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "net_bytebuddy__byte_buddy__1_9_3__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/net/bytebuddy/byte-buddy/1.9.3/byte-buddy-1.9.3.jar"
+              ],
+              "downloaded_file_path": "byte-buddy-1.9.3.jar",
+              "sha256": "a27350be602caea67a33d31281496c84c69b5ab34ddc228e9ff2253fc8f9cd31"
+            }
+          },
+          "net_bytebuddy__byte_buddy__1_9_3": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "net_bytebuddy__byte_buddy__1_9_3__jar",
+              "deps": [],
+              "exports": [],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "org_apache_commons__commons_lang3__3_8_1__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.8.1/commons-lang3-3.8.1.jar"
+              ],
+              "downloaded_file_path": "commons-lang3-3.8.1.jar",
+              "sha256": "dac807f65b07698ff39b1b07bfef3d87ae3fd46d91bbf8a2bc02b2a831616f68"
+            }
+          },
+          "org_apache_commons__commons_lang3__3_8_1": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_apache_commons__commons_lang3__3_8_1__jar",
+              "deps": [],
+              "exports": [],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "org_apache_httpcomponents__httpclient__4_5_13__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.5.13/httpclient-4.5.13.jar"
+              ],
+              "downloaded_file_path": "httpclient-4.5.13.jar",
+              "sha256": "6fe9026a566c6a5001608cf3fc32196641f6c1e5e1986d1037ccdbd5f31ef743"
+            }
+          },
+          "org_apache_httpcomponents__httpclient__4_5_13": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_apache_httpcomponents__httpclient__4_5_13__jar",
+              "deps": [
+                "@commons_codec__commons_codec__1_11//:jar",
+                "@commons_logging__commons_logging__1_2//:jar",
+                "@org_apache_httpcomponents__httpcore__4_4_13//:jar"
+              ],
+              "exports": [
+                "@commons_codec__commons_codec__1_11//:jar",
+                "@commons_logging__commons_logging__1_2//:jar",
+                "@org_apache_httpcomponents__httpcore__4_4_13//:jar"
+              ],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "org_apache_maven_wagon__wagon_provider_api__1_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/apache/maven/wagon/wagon-provider-api/1.0/wagon-provider-api-1.0.jar"
+              ],
+              "downloaded_file_path": "wagon-provider-api-1.0.jar",
+              "sha256": "b28dd1302ac34433d8d1b45fb254e093cd7b47277441af2018c8a3a4d8c1a60d"
+            }
+          },
+          "org_apache_maven_wagon__wagon_provider_api__1_0": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_apache_maven_wagon__wagon_provider_api__1_0__jar",
+              "deps": [
+                "@org_codehaus_plexus__plexus_utils__3_3_0//:jar"
+              ],
+              "exports": [],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "org_apache_maven__maven_aether_provider__3_3_9__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/apache/maven/maven-aether-provider/3.3.9/maven-aether-provider-3.3.9.jar"
+              ],
+              "downloaded_file_path": "maven-aether-provider-3.3.9.jar",
+              "sha256": "f46962583d812cd4459a4cc963113b9c52f1f9b169172354693bc9efa0b3e3cb"
+            }
+          },
+          "org_apache_maven__maven_aether_provider__3_3_9": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_apache_maven__maven_aether_provider__3_3_9__jar",
+              "deps": [
+                "@org_apache_commons__commons_lang3__3_8_1//:jar",
+                "@org_apache_maven__maven_model__3_8_1//:jar",
+                "@org_apache_maven__maven_model_builder__3_8_1//:jar",
+                "@org_apache_maven__maven_repository_metadata__3_8_1//:jar",
+                "@org_codehaus_plexus__plexus_component_annotations__1_6//:jar",
+                "@org_codehaus_plexus__plexus_utils__3_3_0//:jar",
+                "@org_eclipse_aether__aether_api__1_1_0//:jar",
+                "@org_eclipse_aether__aether_impl__1_1_0//:jar",
                 "@org_eclipse_aether__aether_spi__1_1_0//:jar",
-                "@org_eclipse_aether__aether_api__1_1_0//:jar"
+                "@org_eclipse_aether__aether_util__1_1_0//:jar"
+              ],
+              "exports": [
+                "@org_apache_commons__commons_lang3__3_8_1//:jar",
+                "@org_apache_maven__maven_model__3_8_1//:jar",
+                "@org_apache_maven__maven_model_builder__3_8_1//:jar",
+                "@org_apache_maven__maven_repository_metadata__3_8_1//:jar",
+                "@org_codehaus_plexus__plexus_component_annotations__1_6//:jar",
+                "@org_codehaus_plexus__plexus_utils__3_3_0//:jar",
+                "@org_eclipse_aether__aether_api__1_1_0//:jar",
+                "@org_eclipse_aether__aether_impl__1_1_0//:jar",
+                "@org_eclipse_aether__aether_spi__1_1_0//:jar",
+                "@org_eclipse_aether__aether_util__1_1_0//:jar"
+              ],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "org_apache_maven__maven_artifact__3_8_1__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/apache/maven/maven-artifact/3.8.1/maven-artifact-3.8.1.jar"
+              ],
+              "downloaded_file_path": "maven-artifact-3.8.1.jar",
+              "sha256": "9dbd3db15ac4816471e72981cb06ef90f3ffa8be6628dddf7135f7bd69bee0c0"
+            }
+          },
+          "org_apache_maven__maven_artifact__3_8_1": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_apache_maven__maven_artifact__3_8_1__jar",
+              "deps": [
+                "@org_apache_commons__commons_lang3__3_8_1//:jar",
+                "@org_codehaus_plexus__plexus_utils__3_3_0//:jar"
+              ],
+              "exports": [
+                "@org_apache_commons__commons_lang3__3_8_1//:jar",
+                "@org_codehaus_plexus__plexus_utils__3_3_0//:jar"
               ],
               "runtime_deps": [],
               "processor_classes": []
@@ -1474,404 +1366,22 @@
             "attributes": {
               "jar_repo": "org_apache_maven__maven_model_builder__3_8_1__jar",
               "deps": [
-                "@org_apache_maven__maven_artifact__3_8_1//:jar",
-                "@org_codehaus_plexus__plexus_utils__3_3_0//:jar",
-                "@org_apache_maven__maven_builder_support__3_8_1//:jar",
-                "@org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4//:jar",
                 "@javax_inject__javax_inject__1//:jar",
-                "@org_codehaus_plexus__plexus_interpolation__1_26//:jar",
-                "@org_apache_maven__maven_model__3_8_1//:jar"
-              ],
-              "exports": [
                 "@org_apache_maven__maven_artifact__3_8_1//:jar",
-                "@org_codehaus_plexus__plexus_utils__3_3_0//:jar",
                 "@org_apache_maven__maven_builder_support__3_8_1//:jar",
-                "@org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4//:jar",
-                "@javax_inject__javax_inject__1//:jar",
+                "@org_apache_maven__maven_model__3_8_1//:jar",
                 "@org_codehaus_plexus__plexus_interpolation__1_26//:jar",
-                "@org_apache_maven__maven_model__3_8_1//:jar"
-              ],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "com_google_guava__guava__27_0_1_jre__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/com/google/guava/guava/27.0.1-jre/guava-27.0.1-jre.jar"
-              ],
-              "downloaded_file_path": "guava-27.0.1-jre.jar",
-              "sha256": "e1c814fd04492a27c38e0317eabeaa1b3e950ec8010239e400fe90ad6c9107b4"
-            }
-          },
-          "com_google_guava__guava__27_0_1_jre": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "com_google_guava__guava__27_0_1_jre__jar",
-              "deps": [
-                "@com_google_code_findbugs__jsr305__3_0_2//:jar",
-                "@com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava//:jar",
-                "@org_checkerframework__checker_qual__2_5_2//:jar",
-                "@com_google_errorprone__error_prone_annotations__2_2_0//:jar",
-                "@org_codehaus_mojo__animal_sniffer_annotations__1_17//:jar",
-                "@com_google_guava__failureaccess__1_0_1//:jar",
-                "@com_google_j2objc__j2objc_annotations__1_1//:jar"
-              ],
-              "exports": [
-                "@com_google_code_findbugs__jsr305__3_0_2//:jar",
-                "@com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava//:jar",
-                "@org_checkerframework__checker_qual__2_5_2//:jar",
-                "@com_google_errorprone__error_prone_annotations__2_2_0//:jar",
-                "@org_codehaus_mojo__animal_sniffer_annotations__1_17//:jar",
-                "@com_google_guava__failureaccess__1_0_1//:jar",
-                "@com_google_j2objc__j2objc_annotations__1_1//:jar"
-              ],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "org_eclipse_aether__aether_transport_wagon__1_1_0__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/org/eclipse/aether/aether-transport-wagon/1.1.0/aether-transport-wagon-1.1.0.jar"
-              ],
-              "downloaded_file_path": "aether-transport-wagon-1.1.0.jar",
-              "sha256": "c915ea61e451e4137879706f8b79d7d34f8c9ef140cf0e1f09bd8a54a11297f2"
-            }
-          },
-          "org_eclipse_aether__aether_transport_wagon__1_1_0": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "org_eclipse_aether__aether_transport_wagon__1_1_0__jar",
-              "deps": [
-                "@org_eclipse_aether__aether_util__1_1_0//:jar",
-                "@org_apache_maven_wagon__wagon_provider_api__1_0//:jar",
-                "@org_eclipse_aether__aether_spi__1_1_0//:jar",
-                "@org_eclipse_aether__aether_api__1_1_0//:jar"
-              ],
-              "exports": [
-                "@org_eclipse_aether__aether_util__1_1_0//:jar",
-                "@org_apache_maven_wagon__wagon_provider_api__1_0//:jar",
-                "@org_eclipse_aether__aether_spi__1_1_0//:jar",
-                "@org_eclipse_aether__aether_api__1_1_0//:jar"
-              ],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "org_eclipse_aether__aether_connector_basic__1_1_0__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/org/eclipse/aether/aether-connector-basic/1.1.0/aether-connector-basic-1.1.0.jar"
-              ],
-              "downloaded_file_path": "aether-connector-basic-1.1.0.jar",
-              "sha256": "4431d8edf172815349a444a34376aa3229f89952d01bae748f42c5f0b4680d93"
-            }
-          },
-          "org_eclipse_aether__aether_connector_basic__1_1_0": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "org_eclipse_aether__aether_connector_basic__1_1_0__jar",
-              "deps": [
-                "@org_eclipse_aether__aether_util__1_1_0//:jar",
-                "@org_eclipse_aether__aether_spi__1_1_0//:jar",
-                "@org_eclipse_aether__aether_api__1_1_0//:jar"
-              ],
-              "exports": [
-                "@org_eclipse_aether__aether_util__1_1_0//:jar",
-                "@org_eclipse_aether__aether_spi__1_1_0//:jar",
-                "@org_eclipse_aether__aether_api__1_1_0//:jar"
-              ],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "com_beust__jcommander__1_72__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/com/beust/jcommander/1.72/jcommander-1.72.jar"
-              ],
-              "downloaded_file_path": "jcommander-1.72.jar",
-              "sha256": "e0de160b129b2414087e01fe845609cd55caec6820cfd4d0c90fabcc7bdb8c1e"
-            }
-          },
-          "com_beust__jcommander__1_72": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "com_beust__jcommander__1_72__jar",
-              "deps": [],
-              "exports": [],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "org_objenesis__objenesis__2_6__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/org/objenesis/objenesis/2.6/objenesis-2.6.jar"
-              ],
-              "downloaded_file_path": "objenesis-2.6.jar",
-              "sha256": "5e168368fbc250af3c79aa5fef0c3467a2d64e5a7bd74005f25d8399aeb0708d"
-            }
-          },
-          "org_objenesis__objenesis__2_6": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "org_objenesis__objenesis__2_6__jar",
-              "deps": [],
-              "exports": [],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "com_google_auto_value__auto_value_annotations__1_7__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/com/google/auto/value/auto-value-annotations/1.7/auto-value-annotations-1.7.jar"
-              ],
-              "downloaded_file_path": "auto-value-annotations-1.7.jar",
-              "sha256": "b134bab5082e9f49f2b45802573c78e0726e059b645323645da03e328e501f86"
-            }
-          },
-          "com_google_auto_value__auto_value_annotations__1_7": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "com_google_auto_value__auto_value_annotations__1_7__jar",
-              "deps": [],
-              "exports": [],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "commons_codec__commons_codec__1_11__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/commons-codec/commons-codec/1.11/commons-codec-1.11.jar"
-              ],
-              "downloaded_file_path": "commons-codec-1.11.jar",
-              "sha256": "e599d5318e97aa48f42136a2927e6dfa4e8881dff0e6c8e3109ddbbff51d7b7d"
-            }
-          },
-          "commons_codec__commons_codec__1_11": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "commons_codec__commons_codec__1_11__jar",
-              "deps": [],
-              "exports": [],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "org_eclipse_aether__aether_impl__1_1_0__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/org/eclipse/aether/aether-impl/1.1.0/aether-impl-1.1.0.jar"
-              ],
-              "downloaded_file_path": "aether-impl-1.1.0.jar",
-              "sha256": "0bf7dfbbcde79ce0ded7712f191c7ecd28f5a4fa16f4f6bfbfaa7c2f98e5c234"
-            }
-          },
-          "org_eclipse_aether__aether_impl__1_1_0": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "org_eclipse_aether__aether_impl__1_1_0__jar",
-              "deps": [
-                "@org_eclipse_aether__aether_util__1_1_0//:jar",
-                "@org_eclipse_aether__aether_spi__1_1_0//:jar",
-                "@org_eclipse_aether__aether_api__1_1_0//:jar"
-              ],
-              "exports": [
-                "@org_eclipse_aether__aether_util__1_1_0//:jar",
-                "@org_eclipse_aether__aether_spi__1_1_0//:jar",
-                "@org_eclipse_aether__aether_api__1_1_0//:jar"
-              ],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "org_slf4j__slf4j_nop__1_7_25__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/org/slf4j/slf4j-nop/1.7.25/slf4j-nop-1.7.25.jar"
-              ],
-              "downloaded_file_path": "slf4j-nop-1.7.25.jar",
-              "sha256": "6cb127138f41b5a869f9ecdd061ad17799a0e3fe7204600797154eb0432eeb12"
-            }
-          },
-          "org_slf4j__slf4j_nop__1_7_25": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "org_slf4j__slf4j_nop__1_7_25__jar",
-              "deps": [
-                "@org_slf4j__slf4j_api__1_7_25//:jar"
-              ],
-              "exports": [
-                "@org_slf4j__slf4j_api__1_7_25//:jar"
-              ],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "org_apache_maven__maven_aether_provider__3_3_9__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/org/apache/maven/maven-aether-provider/3.3.9/maven-aether-provider-3.3.9.jar"
-              ],
-              "downloaded_file_path": "maven-aether-provider-3.3.9.jar",
-              "sha256": "f46962583d812cd4459a4cc963113b9c52f1f9b169172354693bc9efa0b3e3cb"
-            }
-          },
-          "org_apache_maven__maven_aether_provider__3_3_9": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "org_apache_maven__maven_aether_provider__3_3_9__jar",
-              "deps": [
-                "@org_apache_maven__maven_model_builder__3_8_1//:jar",
-                "@org_apache_commons__commons_lang3__3_8_1//:jar",
-                "@org_apache_maven__maven_repository_metadata__3_8_1//:jar",
-                "@org_eclipse_aether__aether_impl__1_1_0//:jar",
-                "@org_codehaus_plexus__plexus_component_annotations__1_6//:jar",
-                "@org_eclipse_aether__aether_util__1_1_0//:jar",
                 "@org_codehaus_plexus__plexus_utils__3_3_0//:jar",
-                "@org_eclipse_aether__aether_spi__1_1_0//:jar",
-                "@org_eclipse_aether__aether_api__1_1_0//:jar",
-                "@org_apache_maven__maven_model__3_8_1//:jar"
+                "@org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4//:jar"
               ],
               "exports": [
-                "@org_apache_maven__maven_model_builder__3_8_1//:jar",
-                "@org_apache_commons__commons_lang3__3_8_1//:jar",
-                "@org_apache_maven__maven_repository_metadata__3_8_1//:jar",
-                "@org_eclipse_aether__aether_impl__1_1_0//:jar",
-                "@org_codehaus_plexus__plexus_component_annotations__1_6//:jar",
-                "@org_eclipse_aether__aether_util__1_1_0//:jar",
+                "@javax_inject__javax_inject__1//:jar",
+                "@org_apache_maven__maven_artifact__3_8_1//:jar",
+                "@org_apache_maven__maven_builder_support__3_8_1//:jar",
+                "@org_apache_maven__maven_model__3_8_1//:jar",
+                "@org_codehaus_plexus__plexus_interpolation__1_26//:jar",
                 "@org_codehaus_plexus__plexus_utils__3_3_0//:jar",
-                "@org_eclipse_aether__aether_spi__1_1_0//:jar",
-                "@org_eclipse_aether__aether_api__1_1_0//:jar",
-                "@org_apache_maven__maven_model__3_8_1//:jar"
-              ],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "org_eclipse_aether__aether_spi__1_1_0__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/org/eclipse/aether/aether-spi/1.1.0/aether-spi-1.1.0.jar"
-              ],
-              "downloaded_file_path": "aether-spi-1.1.0.jar",
-              "sha256": "dd9e79b759f813269ff15f849c9ebb1999bd7bc988e2b399f7581089fd368acb"
-            }
-          },
-          "org_eclipse_aether__aether_spi__1_1_0": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "org_eclipse_aether__aether_spi__1_1_0__jar",
-              "deps": [
-                "@org_eclipse_aether__aether_api__1_1_0//:jar"
-              ],
-              "exports": [
-                "@org_eclipse_aether__aether_api__1_1_0//:jar"
-              ],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "org_slf4j__slf4j_api__1_7_25__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar"
-              ],
-              "downloaded_file_path": "slf4j-api-1.7.25.jar",
-              "sha256": "18c4a0095d5c1da6b817592e767bb23d29dd2f560ad74df75ff3961dbde25b79"
-            }
-          },
-          "org_slf4j__slf4j_api__1_7_25": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "org_slf4j__slf4j_api__1_7_25__jar",
-              "deps": [],
-              "exports": [],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "org_eclipse_aether__aether_util__1_1_0__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/org/eclipse/aether/aether-util/1.1.0/aether-util-1.1.0.jar"
-              ],
-              "downloaded_file_path": "aether-util-1.1.0.jar",
-              "sha256": "556f083dd35fe7f430ac4a7705784191e39df6df89abc31b30cb538f53828d62"
-            }
-          },
-          "org_eclipse_aether__aether_util__1_1_0": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "org_eclipse_aether__aether_util__1_1_0__jar",
-              "deps": [
-                "@org_eclipse_aether__aether_api__1_1_0//:jar"
-              ],
-              "exports": [
-                "@org_eclipse_aether__aether_api__1_1_0//:jar"
-              ],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "net_bytebuddy__byte_buddy_agent__1_9_3__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/net/bytebuddy/byte-buddy-agent/1.9.3/byte-buddy-agent-1.9.3.jar"
-              ],
-              "downloaded_file_path": "byte-buddy-agent-1.9.3.jar",
-              "sha256": "547288e013a9d1f4a4ce2ab84c24e3edda6e433c7fa6b2c3c3613932671b05b1"
-            }
-          },
-          "net_bytebuddy__byte_buddy_agent__1_9_3": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "net_bytebuddy__byte_buddy_agent__1_9_3__jar",
-              "deps": [],
-              "exports": [],
-              "runtime_deps": [],
-              "processor_classes": []
-            }
-          },
-          "org_apache_maven__maven_artifact__3_8_1__jar": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
-            "attributes": {
-              "urls": [
-                "https://repo1.maven.org/maven2/org/apache/maven/maven-artifact/3.8.1/maven-artifact-3.8.1.jar"
-              ],
-              "downloaded_file_path": "maven-artifact-3.8.1.jar",
-              "sha256": "9dbd3db15ac4816471e72981cb06ef90f3ffa8be6628dddf7135f7bd69bee0c0"
-            }
-          },
-          "org_apache_maven__maven_artifact__3_8_1": {
-            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
-            "attributes": {
-              "jar_repo": "org_apache_maven__maven_artifact__3_8_1__jar",
-              "deps": [
-                "@org_apache_commons__commons_lang3__3_8_1//:jar",
-                "@org_codehaus_plexus__plexus_utils__3_3_0//:jar"
-              ],
-              "exports": [
-                "@org_apache_commons__commons_lang3__3_8_1//:jar",
-                "@org_codehaus_plexus__plexus_utils__3_3_0//:jar"
+                "@org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4//:jar"
               ],
               "runtime_deps": [],
               "processor_classes": []
@@ -1901,93 +1411,552 @@
               "processor_classes": []
             }
           },
+          "org_apache_maven__maven_repository_metadata__3_8_1__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/apache/maven/maven-repository-metadata/3.8.1/maven-repository-metadata-3.8.1.jar"
+              ],
+              "downloaded_file_path": "maven-repository-metadata-3.8.1.jar",
+              "sha256": "ed400ae8d4782e8b865571637c5244e3b79fea4829b8a0870c714c1094f2dda5"
+            }
+          },
+          "org_apache_maven__maven_repository_metadata__3_8_1": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_apache_maven__maven_repository_metadata__3_8_1__jar",
+              "deps": [
+                "@org_codehaus_plexus__plexus_utils__3_3_0//:jar"
+              ],
+              "exports": [
+                "@org_codehaus_plexus__plexus_utils__3_3_0//:jar"
+              ],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "org_codehaus_plexus__plexus_component_annotations__1_6__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/codehaus/plexus/plexus-component-annotations/1.6/plexus-component-annotations-1.6.jar"
+              ],
+              "downloaded_file_path": "plexus-component-annotations-1.6.jar",
+              "sha256": "2b3a6ca5f19a9ad490bc233f45e68d3093c8c01b4acc3c1d14bad4ca7c7ff438"
+            }
+          },
+          "org_codehaus_plexus__plexus_component_annotations__1_6": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_codehaus_plexus__plexus_component_annotations__1_6__jar",
+              "deps": [],
+              "exports": [],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "org_codehaus_plexus__plexus_interpolation__1_26__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/codehaus/plexus/plexus-interpolation/1.26/plexus-interpolation-1.26.jar"
+              ],
+              "downloaded_file_path": "plexus-interpolation-1.26.jar",
+              "sha256": "b3b5412ce17889103ea564bcdfcf9fb3dfa540344ffeac6b538a73c9d7182662"
+            }
+          },
+          "org_codehaus_plexus__plexus_interpolation__1_26": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_codehaus_plexus__plexus_interpolation__1_26__jar",
+              "deps": [],
+              "exports": [],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "org_codehaus_plexus__plexus_utils__3_3_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/codehaus/plexus/plexus-utils/3.3.0/plexus-utils-3.3.0.jar"
+              ],
+              "downloaded_file_path": "plexus-utils-3.3.0.jar",
+              "sha256": "76d174792540e2775af94d03d10fb2d3c776e2cd0ac0ebf427d3e570072bb9ce"
+            }
+          },
+          "org_codehaus_plexus__plexus_utils__3_3_0": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_codehaus_plexus__plexus_utils__3_3_0__jar",
+              "deps": [],
+              "exports": [],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "org_eclipse_aether__aether_api__1_1_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/eclipse/aether/aether-api/1.1.0/aether-api-1.1.0.jar"
+              ],
+              "downloaded_file_path": "aether-api-1.1.0.jar",
+              "sha256": "e196bd5e61c5fc3139fb3d12161b122ce657bab6a34c38f1e338a3aab18992f5"
+            }
+          },
+          "org_eclipse_aether__aether_api__1_1_0": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_eclipse_aether__aether_api__1_1_0__jar",
+              "deps": [],
+              "exports": [],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "org_eclipse_aether__aether_connector_basic__1_1_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/eclipse/aether/aether-connector-basic/1.1.0/aether-connector-basic-1.1.0.jar"
+              ],
+              "downloaded_file_path": "aether-connector-basic-1.1.0.jar",
+              "sha256": "4431d8edf172815349a444a34376aa3229f89952d01bae748f42c5f0b4680d93"
+            }
+          },
+          "org_eclipse_aether__aether_connector_basic__1_1_0": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_eclipse_aether__aether_connector_basic__1_1_0__jar",
+              "deps": [
+                "@org_eclipse_aether__aether_api__1_1_0//:jar",
+                "@org_eclipse_aether__aether_spi__1_1_0//:jar",
+                "@org_eclipse_aether__aether_util__1_1_0//:jar"
+              ],
+              "exports": [
+                "@org_eclipse_aether__aether_api__1_1_0//:jar",
+                "@org_eclipse_aether__aether_spi__1_1_0//:jar",
+                "@org_eclipse_aether__aether_util__1_1_0//:jar"
+              ],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "org_eclipse_aether__aether_impl__1_1_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/eclipse/aether/aether-impl/1.1.0/aether-impl-1.1.0.jar"
+              ],
+              "downloaded_file_path": "aether-impl-1.1.0.jar",
+              "sha256": "0bf7dfbbcde79ce0ded7712f191c7ecd28f5a4fa16f4f6bfbfaa7c2f98e5c234"
+            }
+          },
+          "org_eclipse_aether__aether_impl__1_1_0": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_eclipse_aether__aether_impl__1_1_0__jar",
+              "deps": [
+                "@org_eclipse_aether__aether_api__1_1_0//:jar",
+                "@org_eclipse_aether__aether_spi__1_1_0//:jar",
+                "@org_eclipse_aether__aether_util__1_1_0//:jar"
+              ],
+              "exports": [
+                "@org_eclipse_aether__aether_api__1_1_0//:jar",
+                "@org_eclipse_aether__aether_spi__1_1_0//:jar",
+                "@org_eclipse_aether__aether_util__1_1_0//:jar"
+              ],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "org_eclipse_aether__aether_spi__1_1_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/eclipse/aether/aether-spi/1.1.0/aether-spi-1.1.0.jar"
+              ],
+              "downloaded_file_path": "aether-spi-1.1.0.jar",
+              "sha256": "dd9e79b759f813269ff15f849c9ebb1999bd7bc988e2b399f7581089fd368acb"
+            }
+          },
+          "org_eclipse_aether__aether_spi__1_1_0": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_eclipse_aether__aether_spi__1_1_0__jar",
+              "deps": [
+                "@org_eclipse_aether__aether_api__1_1_0//:jar"
+              ],
+              "exports": [
+                "@org_eclipse_aether__aether_api__1_1_0//:jar"
+              ],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "org_eclipse_aether__aether_transport_classpath__1_1_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/eclipse/aether/aether-transport-classpath/1.1.0/aether-transport-classpath-1.1.0.jar"
+              ],
+              "downloaded_file_path": "aether-transport-classpath-1.1.0.jar",
+              "sha256": "036cd51c716d002aeec1adb62f8ba99d1a1efa4d258cc07954576ad599de8bc9"
+            }
+          },
+          "org_eclipse_aether__aether_transport_classpath__1_1_0": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_eclipse_aether__aether_transport_classpath__1_1_0__jar",
+              "deps": [
+                "@org_eclipse_aether__aether_api__1_1_0//:jar",
+                "@org_eclipse_aether__aether_spi__1_1_0//:jar",
+                "@org_eclipse_aether__aether_util__1_1_0//:jar"
+              ],
+              "exports": [
+                "@org_eclipse_aether__aether_api__1_1_0//:jar",
+                "@org_eclipse_aether__aether_spi__1_1_0//:jar",
+                "@org_eclipse_aether__aether_util__1_1_0//:jar"
+              ],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "org_eclipse_aether__aether_transport_file__1_1_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/eclipse/aether/aether-transport-file/1.1.0/aether-transport-file-1.1.0.jar"
+              ],
+              "downloaded_file_path": "aether-transport-file-1.1.0.jar",
+              "sha256": "e519cd8726d282c03999fb591dbd811eb96b00068ee6c7984035ee98b7f64b91"
+            }
+          },
+          "org_eclipse_aether__aether_transport_file__1_1_0": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_eclipse_aether__aether_transport_file__1_1_0__jar",
+              "deps": [
+                "@org_eclipse_aether__aether_api__1_1_0//:jar",
+                "@org_eclipse_aether__aether_spi__1_1_0//:jar",
+                "@org_eclipse_aether__aether_util__1_1_0//:jar"
+              ],
+              "exports": [
+                "@org_eclipse_aether__aether_api__1_1_0//:jar",
+                "@org_eclipse_aether__aether_spi__1_1_0//:jar",
+                "@org_eclipse_aether__aether_util__1_1_0//:jar"
+              ],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "org_eclipse_aether__aether_transport_http__1_1_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/eclipse/aether/aether-transport-http/1.1.0/aether-transport-http-1.1.0.jar"
+              ],
+              "downloaded_file_path": "aether-transport-http-1.1.0.jar",
+              "sha256": "9356e876bca03730e8048048a19cc83d9d84ff3ab07c13bfc555023674a3524c"
+            }
+          },
+          "org_eclipse_aether__aether_transport_http__1_1_0": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_eclipse_aether__aether_transport_http__1_1_0__jar",
+              "deps": [
+                "@org_apache_httpcomponents__httpclient__4_5_13//:jar",
+                "@org_eclipse_aether__aether_api__1_1_0//:jar",
+                "@org_eclipse_aether__aether_spi__1_1_0//:jar",
+                "@org_eclipse_aether__aether_util__1_1_0//:jar",
+                "@org_slf4j__jcl_over_slf4j__1_6_2//:jar"
+              ],
+              "exports": [
+                "@org_apache_httpcomponents__httpclient__4_5_13//:jar",
+                "@org_eclipse_aether__aether_api__1_1_0//:jar",
+                "@org_eclipse_aether__aether_spi__1_1_0//:jar",
+                "@org_eclipse_aether__aether_util__1_1_0//:jar",
+                "@org_slf4j__jcl_over_slf4j__1_6_2//:jar"
+              ],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "org_eclipse_aether__aether_transport_wagon__1_1_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/eclipse/aether/aether-transport-wagon/1.1.0/aether-transport-wagon-1.1.0.jar"
+              ],
+              "downloaded_file_path": "aether-transport-wagon-1.1.0.jar",
+              "sha256": "c915ea61e451e4137879706f8b79d7d34f8c9ef140cf0e1f09bd8a54a11297f2"
+            }
+          },
+          "org_eclipse_aether__aether_transport_wagon__1_1_0": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_eclipse_aether__aether_transport_wagon__1_1_0__jar",
+              "deps": [
+                "@org_apache_maven_wagon__wagon_provider_api__1_0//:jar",
+                "@org_eclipse_aether__aether_api__1_1_0//:jar",
+                "@org_eclipse_aether__aether_spi__1_1_0//:jar",
+                "@org_eclipse_aether__aether_util__1_1_0//:jar"
+              ],
+              "exports": [
+                "@org_apache_maven_wagon__wagon_provider_api__1_0//:jar",
+                "@org_eclipse_aether__aether_api__1_1_0//:jar",
+                "@org_eclipse_aether__aether_spi__1_1_0//:jar",
+                "@org_eclipse_aether__aether_util__1_1_0//:jar"
+              ],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "org_eclipse_aether__aether_util__1_1_0__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/eclipse/aether/aether-util/1.1.0/aether-util-1.1.0.jar"
+              ],
+              "downloaded_file_path": "aether-util-1.1.0.jar",
+              "sha256": "556f083dd35fe7f430ac4a7705784191e39df6df89abc31b30cb538f53828d62"
+            }
+          },
+          "org_eclipse_aether__aether_util__1_1_0": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_eclipse_aether__aether_util__1_1_0__jar",
+              "deps": [
+                "@org_eclipse_aether__aether_api__1_1_0//:jar"
+              ],
+              "exports": [
+                "@org_eclipse_aether__aether_api__1_1_0//:jar"
+              ],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/eclipse/sisu/org.eclipse.sisu.inject/0.3.4/org.eclipse.sisu.inject-0.3.4.jar"
+              ],
+              "downloaded_file_path": "org.eclipse.sisu.inject-0.3.4.jar",
+              "sha256": "8c0e6aa7f35593016f2c5e78b604b57f023cdaca3561fe2fe36f2b5dbbae1d16"
+            }
+          },
+          "org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4__jar",
+              "deps": [],
+              "exports": [],
+              "runtime_deps": [],
+              "processor_classes": [
+                "org.eclipse.sisu.space.SisuIndexAPT6"
+              ]
+            }
+          },
+          "org_hamcrest__hamcrest_core__1_3__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"
+              ],
+              "downloaded_file_path": "hamcrest-core-1.3.jar",
+              "sha256": "66fdef91e9739348df7a096aa384a5685f4e875584cce89386a7a47251c4d8e9"
+            }
+          },
+          "org_hamcrest__hamcrest_core__1_3": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_hamcrest__hamcrest_core__1_3__jar",
+              "deps": [],
+              "exports": [],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "org_mockito__mockito_core__2_23_4__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/mockito/mockito-core/2.23.4/mockito-core-2.23.4.jar"
+              ],
+              "downloaded_file_path": "mockito-core-2.23.4.jar",
+              "sha256": "d77e018b6bc211d78ddcec54bc508732c4677b9a9eb9103793be85441b20bc5d"
+            }
+          },
+          "org_mockito__mockito_core__2_23_4": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_mockito__mockito_core__2_23_4__jar",
+              "deps": [
+                "@net_bytebuddy__byte_buddy__1_9_3//:jar",
+                "@net_bytebuddy__byte_buddy_agent__1_9_3//:jar",
+                "@org_objenesis__objenesis__2_6//:jar"
+              ],
+              "exports": [
+                "@net_bytebuddy__byte_buddy__1_9_3//:jar",
+                "@net_bytebuddy__byte_buddy_agent__1_9_3//:jar",
+                "@org_objenesis__objenesis__2_6//:jar"
+              ],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "org_objenesis__objenesis__2_6__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/objenesis/objenesis/2.6/objenesis-2.6.jar"
+              ],
+              "downloaded_file_path": "objenesis-2.6.jar",
+              "sha256": "5e168368fbc250af3c79aa5fef0c3467a2d64e5a7bd74005f25d8399aeb0708d"
+            }
+          },
+          "org_objenesis__objenesis__2_6": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_objenesis__objenesis__2_6__jar",
+              "deps": [],
+              "exports": [],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "org_slf4j__jcl_over_slf4j__1_6_2__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/slf4j/jcl-over-slf4j/1.6.2/jcl-over-slf4j-1.6.2.jar"
+              ],
+              "downloaded_file_path": "jcl-over-slf4j-1.6.2.jar",
+              "sha256": "ff95d8cbe80a47f23ba1cbb099b032e98721442f431852db6cf09303816d4b2c"
+            }
+          },
+          "org_slf4j__jcl_over_slf4j__1_6_2": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_slf4j__jcl_over_slf4j__1_6_2__jar",
+              "deps": [
+                "@org_slf4j__slf4j_api__1_7_25//:jar"
+              ],
+              "exports": [],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "org_slf4j__slf4j_api__1_7_25__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar"
+              ],
+              "downloaded_file_path": "slf4j-api-1.7.25.jar",
+              "sha256": "18c4a0095d5c1da6b817592e767bb23d29dd2f560ad74df75ff3961dbde25b79"
+            }
+          },
+          "org_slf4j__slf4j_api__1_7_25": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_slf4j__slf4j_api__1_7_25__jar",
+              "deps": [],
+              "exports": [],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
+          "org_slf4j__slf4j_nop__1_7_25__jar": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_file",
+            "attributes": {
+              "urls": [
+                "https://repo1.maven.org/maven2/org/slf4j/slf4j-nop/1.7.25/slf4j-nop-1.7.25.jar"
+              ],
+              "downloaded_file_path": "slf4j-nop-1.7.25.jar",
+              "sha256": "6cb127138f41b5a869f9ecdd061ad17799a0e3fe7204600797154eb0432eeb12"
+            }
+          },
+          "org_slf4j__slf4j_nop__1_7_25": {
+            "repoRuleId": "@@mabel+//rules:extensions.bzl%_jvm_import_repo",
+            "attributes": {
+              "jar_repo": "org_slf4j__slf4j_nop__1_7_25__jar",
+              "deps": [
+                "@org_slf4j__slf4j_api__1_7_25//:jar"
+              ],
+              "exports": [
+                "@org_slf4j__slf4j_api__1_7_25//:jar"
+              ],
+              "runtime_deps": [],
+              "processor_classes": []
+            }
+          },
           "mvn": {
             "repoRuleId": "@@mabel+//rules:extensions.bzl%_maven_alias_repo",
             "attributes": {
               "artifacts": [
-                "org.codehaus.plexus:plexus-component-annotations:1.6|org_codehaus_plexus__plexus_component_annotations__1_6|jar|0",
-                "org.slf4j:jcl-over-slf4j:1.6.2|org_slf4j__jcl_over_slf4j__1_6_2|jar|0",
-                "org.eclipse.aether:aether-transport-http:1.1.0|org_eclipse_aether__aether_transport_http__1_1_0|jar|0",
-                "org.codehaus.plexus:plexus-utils:3.3.0|org_codehaus_plexus__plexus_utils__3_3_0|jar|0",
-                "javax.inject:javax.inject:1|javax_inject__javax_inject__1|jar|0",
-                "net.bytebuddy:byte-buddy:1.9.3|net_bytebuddy__byte_buddy__1_9_3|jar|0",
-                "org.codehaus.plexus:plexus-interpolation:1.26|org_codehaus_plexus__plexus_interpolation__1_26|jar|0",
-                "com.google.code.gson:gson:2.8.5|com_google_code_gson__gson__2_8_5|jar|0",
-                "org.hamcrest:hamcrest-core:1.3|org_hamcrest__hamcrest_core__1_3|jar|0",
-                "org.eclipse.aether:aether-transport-classpath:1.1.0|org_eclipse_aether__aether_transport_classpath__1_1_0|jar|0",
-                "org.apache.maven.wagon:wagon-provider-api:1.0|org_apache_maven_wagon__wagon_provider_api__1_0|jar|0",
-                "org.apache.commons:commons-lang3:3.8.1|org_apache_commons__commons_lang3__3_8_1|jar|0",
-                "commons-logging:commons-logging:1.2|commons_logging__commons_logging__1_2|jar|0",
-                "junit:junit:4.12|junit__junit__4_12|jar|0",
-                "org.eclipse.aether:aether-api:1.1.0|org_eclipse_aether__aether_api__1_1_0|jar|0",
-                "org.apache.httpcomponents:httpclient:4.5.13|org_apache_httpcomponents__httpclient__4_5_13|jar|0",
-                "org.apache.maven:maven-repository-metadata:3.8.1|org_apache_maven__maven_repository_metadata__3_8_1|jar|0",
+                "com.beust:jcommander:1.72|com_beust__jcommander__1_72|jar|0",
+                "com.google.auto.value:auto-value-annotations:1.7|com_google_auto_value__auto_value_annotations__1_7|jar|0",
                 "com.google.auto.value:auto-value:1.7|com_google_auto_value__auto_value__1_7|processor|5",
-                "org.eclipse.sisu:org.eclipse.sisu.inject:0.3.4|org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4|processor|1",
-                "org.mockito:mockito-core:2.23.4|org_mockito__mockito_core__2_23_4|jar|0",
-                "org.eclipse.aether:aether-transport-file:1.1.0|org_eclipse_aether__aether_transport_file__1_1_0|jar|0",
+                "com.google.code.findbugs:jsr305:3.0.2|com_google_code_findbugs__jsr305__3_0_2|jar|0",
+                "com.google.code.gson:gson:2.8.5|com_google_code_gson__gson__2_8_5|jar|0",
+                "com.google.errorprone:error_prone_annotations:2.2.0|com_google_errorprone__error_prone_annotations__2_2_0|jar|0",
+                "com.google.guava:failureaccess:1.0.1|com_google_guava__failureaccess__1_0_1|jar|0",
+                "com.google.guava:guava:27.0.1-jre|com_google_guava__guava__27_0_1_jre|jar|0",
                 "com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava|com_google_guava__listenablefuture__9999_0_empty_to_avoid_conflict_with_guava|jar|0",
+                "com.google.j2objc:j2objc-annotations:1.1|com_google_j2objc__j2objc_annotations__1_1|jar|0",
+                "commons-codec:commons-codec:1.11|commons_codec__commons_codec__1_11|jar|0",
+                "commons-logging:commons-logging:1.2|commons_logging__commons_logging__1_2|jar|0",
+                "javax.inject:javax.inject:1|javax_inject__javax_inject__1|jar|0",
+                "junit:junit:4.12|junit__junit__4_12|jar|0",
+                "net.bytebuddy:byte-buddy-agent:1.9.3|net_bytebuddy__byte_buddy_agent__1_9_3|jar|0",
+                "net.bytebuddy:byte-buddy:1.9.3|net_bytebuddy__byte_buddy__1_9_3|jar|0",
+                "org.apache.commons:commons-lang3:3.8.1|org_apache_commons__commons_lang3__3_8_1|jar|0",
+                "org.apache.httpcomponents:httpclient:4.5.13|org_apache_httpcomponents__httpclient__4_5_13|jar|0",
                 "org.apache.httpcomponents:httpcore:4.4.13|org_apache_httpcomponents__httpcore__4_4_13|jar|0",
+                "org.apache.maven.wagon:wagon-provider-api:1.0|org_apache_maven_wagon__wagon_provider_api__1_0|jar|0",
+                "org.apache.maven:maven-aether-provider:3.3.9|org_apache_maven__maven_aether_provider__3_3_9|jar|0",
+                "org.apache.maven:maven-artifact:3.8.1|org_apache_maven__maven_artifact__3_8_1|jar|0",
                 "org.apache.maven:maven-builder-support:3.8.1|org_apache_maven__maven_builder_support__3_8_1|jar|0",
                 "org.apache.maven:maven-model-builder:3.8.1|org_apache_maven__maven_model_builder__3_8_1|jar|0",
-                "com.google.guava:guava:27.0.1-jre|com_google_guava__guava__27_0_1_jre|jar|0",
-                "org.eclipse.aether:aether-transport-wagon:1.1.0|org_eclipse_aether__aether_transport_wagon__1_1_0|jar|0",
-                "org.eclipse.aether:aether-connector-basic:1.1.0|org_eclipse_aether__aether_connector_basic__1_1_0|jar|0",
-                "com.beust:jcommander:1.72|com_beust__jcommander__1_72|jar|0",
-                "org.objenesis:objenesis:2.6|org_objenesis__objenesis__2_6|jar|0",
-                "com.google.auto.value:auto-value-annotations:1.7|com_google_auto_value__auto_value_annotations__1_7|jar|0",
-                "com.google.errorprone:error_prone_annotations:2.2.0|com_google_errorprone__error_prone_annotations__2_2_0|jar|0",
+                "org.apache.maven:maven-model:3.8.1|org_apache_maven__maven_model__3_8_1|jar|0",
+                "org.apache.maven:maven-repository-metadata:3.8.1|org_apache_maven__maven_repository_metadata__3_8_1|jar|0",
                 "org.checkerframework:checker-qual:2.5.2|org_checkerframework__checker_qual__2_5_2|jar|0",
-                "commons-codec:commons-codec:1.11|commons_codec__commons_codec__1_11|jar|0",
-                "com.google.j2objc:j2objc-annotations:1.1|com_google_j2objc__j2objc_annotations__1_1|jar|0",
-                "org.eclipse.aether:aether-impl:1.1.0|org_eclipse_aether__aether_impl__1_1_0|jar|0",
-                "org.slf4j:slf4j-nop:1.7.25|org_slf4j__slf4j_nop__1_7_25|jar|0",
-                "org.apache.maven:maven-aether-provider:3.3.9|org_apache_maven__maven_aether_provider__3_3_9|jar|0",
-                "org.eclipse.aether:aether-spi:1.1.0|org_eclipse_aether__aether_spi__1_1_0|jar|0",
-                "org.slf4j:slf4j-api:1.7.25|org_slf4j__slf4j_api__1_7_25|jar|0",
-                "org.eclipse.aether:aether-util:1.1.0|org_eclipse_aether__aether_util__1_1_0|jar|0",
-                "com.google.code.findbugs:jsr305:3.0.2|com_google_code_findbugs__jsr305__3_0_2|jar|0",
-                "net.bytebuddy:byte-buddy-agent:1.9.3|net_bytebuddy__byte_buddy_agent__1_9_3|jar|0",
-                "org.apache.maven:maven-artifact:3.8.1|org_apache_maven__maven_artifact__3_8_1|jar|0",
-                "com.google.guava:failureaccess:1.0.1|com_google_guava__failureaccess__1_0_1|jar|0",
                 "org.codehaus.mojo:animal-sniffer-annotations:1.17|org_codehaus_mojo__animal_sniffer_annotations__1_17|jar|0",
-                "org.apache.maven:maven-model:3.8.1|org_apache_maven__maven_model__3_8_1|jar|0"
+                "org.codehaus.plexus:plexus-component-annotations:1.6|org_codehaus_plexus__plexus_component_annotations__1_6|jar|0",
+                "org.codehaus.plexus:plexus-interpolation:1.26|org_codehaus_plexus__plexus_interpolation__1_26|jar|0",
+                "org.codehaus.plexus:plexus-utils:3.3.0|org_codehaus_plexus__plexus_utils__3_3_0|jar|0",
+                "org.eclipse.aether:aether-api:1.1.0|org_eclipse_aether__aether_api__1_1_0|jar|0",
+                "org.eclipse.aether:aether-connector-basic:1.1.0|org_eclipse_aether__aether_connector_basic__1_1_0|jar|0",
+                "org.eclipse.aether:aether-impl:1.1.0|org_eclipse_aether__aether_impl__1_1_0|jar|0",
+                "org.eclipse.aether:aether-spi:1.1.0|org_eclipse_aether__aether_spi__1_1_0|jar|0",
+                "org.eclipse.aether:aether-transport-classpath:1.1.0|org_eclipse_aether__aether_transport_classpath__1_1_0|jar|0",
+                "org.eclipse.aether:aether-transport-file:1.1.0|org_eclipse_aether__aether_transport_file__1_1_0|jar|0",
+                "org.eclipse.aether:aether-transport-http:1.1.0|org_eclipse_aether__aether_transport_http__1_1_0|jar|0",
+                "org.eclipse.aether:aether-transport-wagon:1.1.0|org_eclipse_aether__aether_transport_wagon__1_1_0|jar|0",
+                "org.eclipse.aether:aether-util:1.1.0|org_eclipse_aether__aether_util__1_1_0|jar|0",
+                "org.eclipse.sisu:org.eclipse.sisu.inject:0.3.4|org_eclipse_sisu__org_eclipse_sisu_inject__0_3_4|processor|1",
+                "org.hamcrest:hamcrest-core:1.3|org_hamcrest__hamcrest_core__1_3|jar|0",
+                "org.mockito:mockito-core:2.23.4|org_mockito__mockito_core__2_23_4|jar|0",
+                "org.objenesis:objenesis:2.6|org_objenesis__objenesis__2_6|jar|0",
+                "org.slf4j:jcl-over-slf4j:1.6.2|org_slf4j__jcl_over_slf4j__1_6_2|jar|0",
+                "org.slf4j:slf4j-api:1.7.25|org_slf4j__slf4j_api__1_7_25|jar|0",
+                "org.slf4j:slf4j-nop:1.7.25|org_slf4j__slf4j_nop__1_7_25|jar|0"
               ]
             }
           }
-        },
-        "recordedRepoMappingEntries": [
-          [
-            "mabel+",
-            "bazel_tools",
-            "bazel_tools"
-          ]
-        ]
-      }
-    },
-    "@@rules_android+//rules/android_sdk_repository:rule.bzl%android_sdk_repository_extension": {
-      "general": {
-        "bzlTransitiveDigest": "qHbR00gVzVzkxX+PRtv4UGcUFMtBz7TK9CNYUWH8nIE=",
-        "usagesDigest": "x1HLqlqAwv0KTxojlsMXLqzK2rEGmh0n16qUmbSgEak=",
-        "recordedFileInputs": {},
-        "recordedDirentsInputs": {},
-        "envVariables": {},
-        "generatedRepoSpecs": {
-          "androidsdk": {
-            "repoRuleId": "@@rules_android+//rules/android_sdk_repository:rule.bzl%_android_sdk_repository",
-            "attributes": {}
-          }
-        },
-        "recordedRepoMappingEntries": []
+        }
       }
     },
     "@@rules_kotlin+//src/main/starlark/core/repositories:bzlmod_setup.bzl%rules_kotlin_extensions": {
       "general": {
-        "bzlTransitiveDigest": "nvW/NrBXlAmiQw99EMGKkLaD2KbNp2mQDlxdfpr+0Ls=",
+        "bzlTransitiveDigest": "WDuVCwqV73DvcHB5Of+02lhUZgPxr9MqtpvMRyUi0eQ=",
         "usagesDigest": "QI2z8ZUR+mqtbwsf2fLqYdJAkPOHdOV+tF2yVAUgRzw=",
-        "recordedFileInputs": {},
-        "recordedDirentsInputs": {},
-        "envVariables": {},
+        "recordedInputs": [
+          "REPO_MAPPING:rules_kotlin+,bazel_tools bazel_tools"
+        ],
         "generatedRepoSpecs": {
           "com_github_jetbrains_kotlin_git": {
             "repoRuleId": "@@rules_kotlin+//src/main/starlark/core/repositories:compiler.bzl%kotlin_compiler_git_repository",
@@ -2035,23 +2004,185 @@
               ]
             }
           }
-        },
-        "recordedRepoMappingEntries": [
-          [
-            "rules_kotlin+",
-            "bazel_tools",
-            "bazel_tools"
-          ]
-        ]
+        }
+      }
+    },
+    "@@rules_python+//python/extensions:config.bzl%config": {
+      "general": {
+        "bzlTransitiveDigest": "L+2ZCpb7GIJqvWaXpzkfk/80d916sIFVmSPzrSm6of8=",
+        "usagesDigest": "ZVSXMAGpD+xzVNPuvF1IoLBkty7TROO0+akMapt1pAg=",
+        "recordedInputs": [
+          "REPO_MAPPING:rules_python+,bazel_tools bazel_tools",
+          "REPO_MAPPING:rules_python+,pypi__build rules_python++config+pypi__build",
+          "REPO_MAPPING:rules_python+,pypi__click rules_python++config+pypi__click",
+          "REPO_MAPPING:rules_python+,pypi__colorama rules_python++config+pypi__colorama",
+          "REPO_MAPPING:rules_python+,pypi__importlib_metadata rules_python++config+pypi__importlib_metadata",
+          "REPO_MAPPING:rules_python+,pypi__installer rules_python++config+pypi__installer",
+          "REPO_MAPPING:rules_python+,pypi__more_itertools rules_python++config+pypi__more_itertools",
+          "REPO_MAPPING:rules_python+,pypi__packaging rules_python++config+pypi__packaging",
+          "REPO_MAPPING:rules_python+,pypi__pep517 rules_python++config+pypi__pep517",
+          "REPO_MAPPING:rules_python+,pypi__pip rules_python++config+pypi__pip",
+          "REPO_MAPPING:rules_python+,pypi__pip_tools rules_python++config+pypi__pip_tools",
+          "REPO_MAPPING:rules_python+,pypi__pyproject_hooks rules_python++config+pypi__pyproject_hooks",
+          "REPO_MAPPING:rules_python+,pypi__setuptools rules_python++config+pypi__setuptools",
+          "REPO_MAPPING:rules_python+,pypi__tomli rules_python++config+pypi__tomli",
+          "REPO_MAPPING:rules_python+,pypi__wheel rules_python++config+pypi__wheel",
+          "REPO_MAPPING:rules_python+,pypi__zipp rules_python++config+pypi__zipp"
+        ],
+        "generatedRepoSpecs": {
+          "rules_python_internal": {
+            "repoRuleId": "@@rules_python+//python/private:internal_config_repo.bzl%internal_config_repo",
+            "attributes": {
+              "transition_setting_generators": {},
+              "transition_settings": []
+            }
+          },
+          "pypi__build": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "url": "https://files.pythonhosted.org/packages/e2/03/f3c8ba0a6b6e30d7d18c40faab90807c9bb5e9a1e3b2fe2008af624a9c97/build-1.2.1-py3-none-any.whl",
+              "sha256": "75e10f767a433d9a86e50d83f418e83efc18ede923ee5ff7df93b6cb0306c5d4",
+              "type": "zip",
+              "build_file_content": "package(default_visibility = [\"//visibility:public\"])\n\nload(\"@rules_python//python:py_library.bzl\", \"py_library\")\n\npy_library(\n    name = \"lib\",\n    srcs = glob([\"**/*.py\"]),\n    data = glob([\"**/*\"], exclude=[\n        # These entries include those put into user-installed dependencies by\n        # data_exclude to avoid non-determinism.\n        \"**/*.py\",\n        \"**/*.pyc\",\n        \"**/*.pyc.*\",  # During pyc creation, temp files named *.pyc.NNN are created\n        \"**/*.dist-info/RECORD\",\n        \"BUILD\",\n        \"WORKSPACE\",\n    ]),\n    # This makes this directory a top-level in the python import\n    # search path for anything that depends on this.\n    imports = [\".\"],\n)\n"
+            }
+          },
+          "pypi__click": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "url": "https://files.pythonhosted.org/packages/00/2e/d53fa4befbf2cfa713304affc7ca780ce4fc1fd8710527771b58311a3229/click-8.1.7-py3-none-any.whl",
+              "sha256": "ae74fb96c20a0277a1d615f1e4d73c8414f5a98db8b799a7931d1582f3390c28",
+              "type": "zip",
+              "build_file_content": "package(default_visibility = [\"//visibility:public\"])\n\nload(\"@rules_python//python:py_library.bzl\", \"py_library\")\n\npy_library(\n    name = \"lib\",\n    srcs = glob([\"**/*.py\"]),\n    data = glob([\"**/*\"], exclude=[\n        # These entries include those put into user-installed dependencies by\n        # data_exclude to avoid non-determinism.\n        \"**/*.py\",\n        \"**/*.pyc\",\n        \"**/*.pyc.*\",  # During pyc creation, temp files named *.pyc.NNN are created\n        \"**/*.dist-info/RECORD\",\n        \"BUILD\",\n        \"WORKSPACE\",\n    ]),\n    # This makes this directory a top-level in the python import\n    # search path for anything that depends on this.\n    imports = [\".\"],\n)\n"
+            }
+          },
+          "pypi__colorama": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "url": "https://files.pythonhosted.org/packages/d1/d6/3965ed04c63042e047cb6a3e6ed1a63a35087b6a609aa3a15ed8ac56c221/colorama-0.4.6-py2.py3-none-any.whl",
+              "sha256": "4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6",
+              "type": "zip",
+              "build_file_content": "package(default_visibility = [\"//visibility:public\"])\n\nload(\"@rules_python//python:py_library.bzl\", \"py_library\")\n\npy_library(\n    name = \"lib\",\n    srcs = glob([\"**/*.py\"]),\n    data = glob([\"**/*\"], exclude=[\n        # These entries include those put into user-installed dependencies by\n        # data_exclude to avoid non-determinism.\n        \"**/*.py\",\n        \"**/*.pyc\",\n        \"**/*.pyc.*\",  # During pyc creation, temp files named *.pyc.NNN are created\n        \"**/*.dist-info/RECORD\",\n        \"BUILD\",\n        \"WORKSPACE\",\n    ]),\n    # This makes this directory a top-level in the python import\n    # search path for anything that depends on this.\n    imports = [\".\"],\n)\n"
+            }
+          },
+          "pypi__importlib_metadata": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "url": "https://files.pythonhosted.org/packages/2d/0a/679461c511447ffaf176567d5c496d1de27cbe34a87df6677d7171b2fbd4/importlib_metadata-7.1.0-py3-none-any.whl",
+              "sha256": "30962b96c0c223483ed6cc7280e7f0199feb01a0e40cfae4d4450fc6fab1f570",
+              "type": "zip",
+              "build_file_content": "package(default_visibility = [\"//visibility:public\"])\n\nload(\"@rules_python//python:py_library.bzl\", \"py_library\")\n\npy_library(\n    name = \"lib\",\n    srcs = glob([\"**/*.py\"]),\n    data = glob([\"**/*\"], exclude=[\n        # These entries include those put into user-installed dependencies by\n        # data_exclude to avoid non-determinism.\n        \"**/*.py\",\n        \"**/*.pyc\",\n        \"**/*.pyc.*\",  # During pyc creation, temp files named *.pyc.NNN are created\n        \"**/*.dist-info/RECORD\",\n        \"BUILD\",\n        \"WORKSPACE\",\n    ]),\n    # This makes this directory a top-level in the python import\n    # search path for anything that depends on this.\n    imports = [\".\"],\n)\n"
+            }
+          },
+          "pypi__installer": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "url": "https://files.pythonhosted.org/packages/e5/ca/1172b6638d52f2d6caa2dd262ec4c811ba59eee96d54a7701930726bce18/installer-0.7.0-py3-none-any.whl",
+              "sha256": "05d1933f0a5ba7d8d6296bb6d5018e7c94fa473ceb10cf198a92ccea19c27b53",
+              "type": "zip",
+              "build_file_content": "package(default_visibility = [\"//visibility:public\"])\n\nload(\"@rules_python//python:py_library.bzl\", \"py_library\")\n\npy_library(\n    name = \"lib\",\n    srcs = glob([\"**/*.py\"]),\n    data = glob([\"**/*\"], exclude=[\n        # These entries include those put into user-installed dependencies by\n        # data_exclude to avoid non-determinism.\n        \"**/*.py\",\n        \"**/*.pyc\",\n        \"**/*.pyc.*\",  # During pyc creation, temp files named *.pyc.NNN are created\n        \"**/*.dist-info/RECORD\",\n        \"BUILD\",\n        \"WORKSPACE\",\n    ]),\n    # This makes this directory a top-level in the python import\n    # search path for anything that depends on this.\n    imports = [\".\"],\n)\n"
+            }
+          },
+          "pypi__more_itertools": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "url": "https://files.pythonhosted.org/packages/50/e2/8e10e465ee3987bb7c9ab69efb91d867d93959095f4807db102d07995d94/more_itertools-10.2.0-py3-none-any.whl",
+              "sha256": "686b06abe565edfab151cb8fd385a05651e1fdf8f0a14191e4439283421f8684",
+              "type": "zip",
+              "build_file_content": "package(default_visibility = [\"//visibility:public\"])\n\nload(\"@rules_python//python:py_library.bzl\", \"py_library\")\n\npy_library(\n    name = \"lib\",\n    srcs = glob([\"**/*.py\"]),\n    data = glob([\"**/*\"], exclude=[\n        # These entries include those put into user-installed dependencies by\n        # data_exclude to avoid non-determinism.\n        \"**/*.py\",\n        \"**/*.pyc\",\n        \"**/*.pyc.*\",  # During pyc creation, temp files named *.pyc.NNN are created\n        \"**/*.dist-info/RECORD\",\n        \"BUILD\",\n        \"WORKSPACE\",\n    ]),\n    # This makes this directory a top-level in the python import\n    # search path for anything that depends on this.\n    imports = [\".\"],\n)\n"
+            }
+          },
+          "pypi__packaging": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "url": "https://files.pythonhosted.org/packages/49/df/1fceb2f8900f8639e278b056416d49134fb8d84c5942ffaa01ad34782422/packaging-24.0-py3-none-any.whl",
+              "sha256": "2ddfb553fdf02fb784c234c7ba6ccc288296ceabec964ad2eae3777778130bc5",
+              "type": "zip",
+              "build_file_content": "package(default_visibility = [\"//visibility:public\"])\n\nload(\"@rules_python//python:py_library.bzl\", \"py_library\")\n\npy_library(\n    name = \"lib\",\n    srcs = glob([\"**/*.py\"]),\n    data = glob([\"**/*\"], exclude=[\n        # These entries include those put into user-installed dependencies by\n        # data_exclude to avoid non-determinism.\n        \"**/*.py\",\n        \"**/*.pyc\",\n        \"**/*.pyc.*\",  # During pyc creation, temp files named *.pyc.NNN are created\n        \"**/*.dist-info/RECORD\",\n        \"BUILD\",\n        \"WORKSPACE\",\n    ]),\n    # This makes this directory a top-level in the python import\n    # search path for anything that depends on this.\n    imports = [\".\"],\n)\n"
+            }
+          },
+          "pypi__pep517": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "url": "https://files.pythonhosted.org/packages/25/6e/ca4a5434eb0e502210f591b97537d322546e4833dcb4d470a48c375c5540/pep517-0.13.1-py3-none-any.whl",
+              "sha256": "31b206f67165b3536dd577c5c3f1518e8fbaf38cbc57efff8369a392feff1721",
+              "type": "zip",
+              "build_file_content": "package(default_visibility = [\"//visibility:public\"])\n\nload(\"@rules_python//python:py_library.bzl\", \"py_library\")\n\npy_library(\n    name = \"lib\",\n    srcs = glob([\"**/*.py\"]),\n    data = glob([\"**/*\"], exclude=[\n        # These entries include those put into user-installed dependencies by\n        # data_exclude to avoid non-determinism.\n        \"**/*.py\",\n        \"**/*.pyc\",\n        \"**/*.pyc.*\",  # During pyc creation, temp files named *.pyc.NNN are created\n        \"**/*.dist-info/RECORD\",\n        \"BUILD\",\n        \"WORKSPACE\",\n    ]),\n    # This makes this directory a top-level in the python import\n    # search path for anything that depends on this.\n    imports = [\".\"],\n)\n"
+            }
+          },
+          "pypi__pip": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "url": "https://files.pythonhosted.org/packages/8a/6a/19e9fe04fca059ccf770861c7d5721ab4c2aebc539889e97c7977528a53b/pip-24.0-py3-none-any.whl",
+              "sha256": "ba0d021a166865d2265246961bec0152ff124de910c5cc39f1156ce3fa7c69dc",
+              "type": "zip",
+              "build_file_content": "package(default_visibility = [\"//visibility:public\"])\n\nload(\"@rules_python//python:py_library.bzl\", \"py_library\")\n\npy_library(\n    name = \"lib\",\n    srcs = glob([\"**/*.py\"]),\n    data = glob([\"**/*\"], exclude=[\n        # These entries include those put into user-installed dependencies by\n        # data_exclude to avoid non-determinism.\n        \"**/*.py\",\n        \"**/*.pyc\",\n        \"**/*.pyc.*\",  # During pyc creation, temp files named *.pyc.NNN are created\n        \"**/*.dist-info/RECORD\",\n        \"BUILD\",\n        \"WORKSPACE\",\n    ]),\n    # This makes this directory a top-level in the python import\n    # search path for anything that depends on this.\n    imports = [\".\"],\n)\n"
+            }
+          },
+          "pypi__pip_tools": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "url": "https://files.pythonhosted.org/packages/0d/dc/38f4ce065e92c66f058ea7a368a9c5de4e702272b479c0992059f7693941/pip_tools-7.4.1-py3-none-any.whl",
+              "sha256": "4c690e5fbae2f21e87843e89c26191f0d9454f362d8acdbd695716493ec8b3a9",
+              "type": "zip",
+              "build_file_content": "package(default_visibility = [\"//visibility:public\"])\n\nload(\"@rules_python//python:py_library.bzl\", \"py_library\")\n\npy_library(\n    name = \"lib\",\n    srcs = glob([\"**/*.py\"]),\n    data = glob([\"**/*\"], exclude=[\n        # These entries include those put into user-installed dependencies by\n        # data_exclude to avoid non-determinism.\n        \"**/*.py\",\n        \"**/*.pyc\",\n        \"**/*.pyc.*\",  # During pyc creation, temp files named *.pyc.NNN are created\n        \"**/*.dist-info/RECORD\",\n        \"BUILD\",\n        \"WORKSPACE\",\n    ]),\n    # This makes this directory a top-level in the python import\n    # search path for anything that depends on this.\n    imports = [\".\"],\n)\n"
+            }
+          },
+          "pypi__pyproject_hooks": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "url": "https://files.pythonhosted.org/packages/ae/f3/431b9d5fe7d14af7a32340792ef43b8a714e7726f1d7b69cc4e8e7a3f1d7/pyproject_hooks-1.1.0-py3-none-any.whl",
+              "sha256": "7ceeefe9aec63a1064c18d939bdc3adf2d8aa1988a510afec15151578b232aa2",
+              "type": "zip",
+              "build_file_content": "package(default_visibility = [\"//visibility:public\"])\n\nload(\"@rules_python//python:py_library.bzl\", \"py_library\")\n\npy_library(\n    name = \"lib\",\n    srcs = glob([\"**/*.py\"]),\n    data = glob([\"**/*\"], exclude=[\n        # These entries include those put into user-installed dependencies by\n        # data_exclude to avoid non-determinism.\n        \"**/*.py\",\n        \"**/*.pyc\",\n        \"**/*.pyc.*\",  # During pyc creation, temp files named *.pyc.NNN are created\n        \"**/*.dist-info/RECORD\",\n        \"BUILD\",\n        \"WORKSPACE\",\n    ]),\n    # This makes this directory a top-level in the python import\n    # search path for anything that depends on this.\n    imports = [\".\"],\n)\n"
+            }
+          },
+          "pypi__setuptools": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "url": "https://files.pythonhosted.org/packages/90/99/158ad0609729111163fc1f674a5a42f2605371a4cf036d0441070e2f7455/setuptools-78.1.1-py3-none-any.whl",
+              "sha256": "c3a9c4211ff4c309edb8b8c4f1cbfa7ae324c4ba9f91ff254e3d305b9fd54561",
+              "type": "zip",
+              "build_file_content": "package(default_visibility = [\"//visibility:public\"])\n\nload(\"@rules_python//python:py_library.bzl\", \"py_library\")\n\npy_library(\n    name = \"lib\",\n    srcs = glob([\"**/*.py\"]),\n    data = glob([\"**/*\"], exclude=[\n        # These entries include those put into user-installed dependencies by\n        # data_exclude to avoid non-determinism.\n        \"**/*.py\",\n        \"**/*.pyc\",\n        \"**/*.pyc.*\",  # During pyc creation, temp files named *.pyc.NNN are created\n        \"**/*.dist-info/RECORD\",\n        \"BUILD\",\n        \"WORKSPACE\",\n    ]),\n    # This makes this directory a top-level in the python import\n    # search path for anything that depends on this.\n    imports = [\".\"],\n)\n"
+            }
+          },
+          "pypi__tomli": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "url": "https://files.pythonhosted.org/packages/97/75/10a9ebee3fd790d20926a90a2547f0bf78f371b2f13aa822c759680ca7b9/tomli-2.0.1-py3-none-any.whl",
+              "sha256": "939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc",
+              "type": "zip",
+              "build_file_content": "package(default_visibility = [\"//visibility:public\"])\n\nload(\"@rules_python//python:py_library.bzl\", \"py_library\")\n\npy_library(\n    name = \"lib\",\n    srcs = glob([\"**/*.py\"]),\n    data = glob([\"**/*\"], exclude=[\n        # These entries include those put into user-installed dependencies by\n        # data_exclude to avoid non-determinism.\n        \"**/*.py\",\n        \"**/*.pyc\",\n        \"**/*.pyc.*\",  # During pyc creation, temp files named *.pyc.NNN are created\n        \"**/*.dist-info/RECORD\",\n        \"BUILD\",\n        \"WORKSPACE\",\n    ]),\n    # This makes this directory a top-level in the python import\n    # search path for anything that depends on this.\n    imports = [\".\"],\n)\n"
+            }
+          },
+          "pypi__wheel": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "url": "https://files.pythonhosted.org/packages/7d/cd/d7460c9a869b16c3dd4e1e403cce337df165368c71d6af229a74699622ce/wheel-0.43.0-py3-none-any.whl",
+              "sha256": "55c570405f142630c6b9f72fe09d9b67cf1477fcf543ae5b8dcb1f5b7377da81",
+              "type": "zip",
+              "build_file_content": "package(default_visibility = [\"//visibility:public\"])\n\nload(\"@rules_python//python:py_library.bzl\", \"py_library\")\n\npy_library(\n    name = \"lib\",\n    srcs = glob([\"**/*.py\"]),\n    data = glob([\"**/*\"], exclude=[\n        # These entries include those put into user-installed dependencies by\n        # data_exclude to avoid non-determinism.\n        \"**/*.py\",\n        \"**/*.pyc\",\n        \"**/*.pyc.*\",  # During pyc creation, temp files named *.pyc.NNN are created\n        \"**/*.dist-info/RECORD\",\n        \"BUILD\",\n        \"WORKSPACE\",\n    ]),\n    # This makes this directory a top-level in the python import\n    # search path for anything that depends on this.\n    imports = [\".\"],\n)\n"
+            }
+          },
+          "pypi__zipp": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "url": "https://files.pythonhosted.org/packages/da/55/a03fd7240714916507e1fcf7ae355bd9d9ed2e6db492595f1a67f61681be/zipp-3.18.2-py3-none-any.whl",
+              "sha256": "dce197b859eb796242b0622af1b8beb0a722d52aa2f57133ead08edd5bf5374e",
+              "type": "zip",
+              "build_file_content": "package(default_visibility = [\"//visibility:public\"])\n\nload(\"@rules_python//python:py_library.bzl\", \"py_library\")\n\npy_library(\n    name = \"lib\",\n    srcs = glob([\"**/*.py\"]),\n    data = glob([\"**/*\"], exclude=[\n        # These entries include those put into user-installed dependencies by\n        # data_exclude to avoid non-determinism.\n        \"**/*.py\",\n        \"**/*.pyc\",\n        \"**/*.pyc.*\",  # During pyc creation, temp files named *.pyc.NNN are created\n        \"**/*.dist-info/RECORD\",\n        \"BUILD\",\n        \"WORKSPACE\",\n    ]),\n    # This makes this directory a top-level in the python import\n    # search path for anything that depends on this.\n    imports = [\".\"],\n)\n"
+            }
+          }
+        }
       }
     },
     "@@rules_python+//python/uv:uv.bzl%uv": {
       "general": {
-        "bzlTransitiveDigest": "xfNZ/WmfkC9N/pNH0cmucTOrqBa966d9iMmmX54m1UM=",
-        "usagesDigest": "icnInV8HDGrRQf9x8RMfxWfBHgT3OgRlYovS/9POEJw=",
-        "recordedFileInputs": {},
-        "recordedDirentsInputs": {},
-        "envVariables": {},
+        "bzlTransitiveDigest": "IgkgxNrtlAec7OnaFrWoCC5NQhHcY/aIz4jsqcNMm8Y=",
+        "usagesDigest": "H8dQoNZcoqP+Mu0tHZTi4KHATzvNkM5ePuEqoQdklIU=",
+        "recordedInputs": [
+          "REPO_MAPPING:rules_python+,bazel_tools bazel_tools",
+          "REPO_MAPPING:rules_python+,platforms platforms"
+        ],
         "generatedRepoSpecs": {
           "uv": {
             "repoRuleId": "@@rules_python+//python/uv/private:uv_toolchains_repo.bzl%uv_toolchains_repo",
@@ -2071,19 +2202,7 @@
               "toolchain_target_settings": {}
             }
           }
-        },
-        "recordedRepoMappingEntries": [
-          [
-            "rules_python+",
-            "bazel_tools",
-            "bazel_tools"
-          ],
-          [
-            "rules_python+",
-            "platforms",
-            "platforms"
-          ]
-        ]
+        }
       }
     }
   },
@@ -2414,5 +2533,6 @@
         ]
       }
     }
-  }
+  },
+  "factsVersions": {}
 }

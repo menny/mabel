@@ -17,9 +17,13 @@ if [[ -f "${PROJECT_ROOT}/tools/hermetiq-credential-helper.sh" ]]; then
     "--host_features=-check_unknown_includes"
     "--copt=-no-canonical-prefixes"
     "--host_copt=-no-canonical-prefixes"
-    "--copt=-fno-canonical-system-headers"
-    "--host_copt=-fno-canonical-system-headers"
   )
+  if [[ "$(uname -s)" != "Darwin" ]]; then
+    extra_build_args+=(
+      "--copt=-fno-canonical-system-headers"
+      "--host_copt=-fno-canonical-system-headers"
+    )
+  fi
 fi
 
 case "${CI:-}" in
