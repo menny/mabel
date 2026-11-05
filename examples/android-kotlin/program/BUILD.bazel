@@ -30,6 +30,7 @@ mabel_rule(
             repositories = ["https://jitpack.io/"],
         ),
     ],
+    tags = ["manual"],
 )
 
 kt_android_library(

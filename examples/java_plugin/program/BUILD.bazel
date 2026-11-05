@@ -21,6 +21,7 @@ mabel_rule(
         artifact("com.google.auto.value:auto-value-annotations:1.6.3"),
     ],
     output_graph_to_file = True,
+    tags = ["manual"],
 )
 
 java_binary(

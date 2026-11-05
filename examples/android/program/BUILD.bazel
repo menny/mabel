@@ -10,6 +10,7 @@ mabel_rule(
         g_artifact("androidx.appcompat:appcompat:1.0.2"),
         g_artifact("androidx.annotation:annotation:1.0.0"),
     ],
+    tags = ["manual"],
 )
 
 android_binary(
