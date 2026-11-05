@@ -118,6 +118,7 @@ mabel_rule(
         ),
     ],
     public_targets_category = "requested_deps",
+    tags = ["manual"],
 )
 
 java_library(

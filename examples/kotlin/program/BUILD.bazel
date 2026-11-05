@@ -8,6 +8,7 @@ mabel_rule(
         artifact("com.github.salomonbrys.kotson:kotson:2.5.0"),
         artifact("org.jetbrains.kotlin:kotlin-stdlib:1.3.72"),
     ],
+    tags = ["manual"],
 )
 
 kt_jvm_binary(

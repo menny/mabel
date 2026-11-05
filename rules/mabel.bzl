@@ -64,6 +64,7 @@ def artifact(coordinate, maven_exclude_deps = [], repositories = DEFAULT_MAVEN_S
             test_only = test_only,
             exports_generation_type = exports_generation_type,
             debug_logs = debug_logs,
+            tags = ["manual"],
             visibility = ["//visibility:private"],
         )
     return ":%s" % rule_name
@@ -132,7 +133,10 @@ def _impl_merger(ctx):
 
 mabel_rule = rule(
     implementation = _impl_merger,
-    doc = """Generates a JSON lockfile which describes a Maven dependecy graph based on the provided `maven_deps` values.""",
+    doc = """Generates a JSON lockfile which describes a Maven dependecy graph based on the provided `maven_deps` values.
+
+Note: It is recommended to add `tags = ["manual"]` to this target so it is excluded from wildcard builds (`bazel build //...`) and only executed when explicitly run with `bazel run`.
+""",
     executable = True,
     attrs = {
         "artifacts_path": attr.string(default = "", doc = "Cache location to download artifacts into. Empty means `[user-home-folder]/.mabel/artifacts/`", mandatory = False),

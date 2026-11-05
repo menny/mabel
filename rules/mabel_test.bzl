@@ -96,3 +96,8 @@ def mabel_test_suite():
 
     if basic_label != dup_label:
         fail("artifact() macro should be idempotent and return the same label for the same coordinate. Expected {}, got {}".format(basic_label, dup_label))
+
+    # Test 4: Verify manual tag on artifact targets
+    basic_rule = native.existing_rule(basic_label.lstrip(":"))
+    if "manual" not in basic_rule.get("tags", []):
+        fail("artifact() targets must unconditionally have 'manual' tag. Got: {}".format(basic_rule.get("tags")))
